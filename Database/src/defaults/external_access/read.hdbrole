@@ -1,7 +1,11 @@
 {
 	"role":{
-		"name": "osr.edw.platform.roles.dac::read",
-		"schema_privileges":[ { "privileges":[ "SELECT" ] } ]
-	
-     }
+		"name": "osr.sec.edw.platform.dac::read",
+		"schema_privileges":[ { "privileges":[ "SELECT" ] } ],
+	     "schema_roles" : [
+          {
+              "names" : [ "osr.sec.edw.platform.rms.dac::read" ]
+          }
+      ]
+    }
 }

@@ -44,6 +44,11 @@ modules:
       properties:
         key: logical-OSR-EDW-SOURCE-RMS-grantor
         service: '~{OSR-EDW-SOURCE-RMS-grantor-service}'
+    - name: OSR-EDW-SOURCE-TMR-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: logical-OSR-EDW-SOURCE-TMR-grantor
+        service: '~{OSR-EDW-SOURCE-TMR-grantor-service}'
 
 resources:
 # - name: OSR_EDW_PLATFORM-uaa
@@ -76,6 +81,13 @@ resources:
      OSR-EDW-SOURCE-RMS-grantor-service: '${service-name}'
    parameters:
      service-name: OSR_EDW_SOURCE_RMS-deploy
+#     service-name: D043051-lufb2asszmec20vd-OSR_EDW_SOURCE_RMS-OSR_EDW_SOURCE_RMS-container
+   type: org.cloudfoundry.existing-service
+ - name: OSR-EDW-SOURCE-TMR-grantor
+   properties:
+     OSR-EDW-SOURCE-TMR-grantor-service: '${service-name}'
+   parameters:
+     service-name: OSR_EDW_SOURCE_TMR-deploy
    type: org.cloudfoundry.existing-service
  - name: OSR_EDW_PLATFORM-dws
    properties:
