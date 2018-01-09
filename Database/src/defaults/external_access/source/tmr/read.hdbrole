@@ -1,0 +1,28 @@
+{
+	"role":{
+		"name": "osr.sec.edw.platform.tmr.dac::read",
+		"schema_privileges":[ { "privileges":[ "SELECT" ] } ],
+	    "object_privileges":[ 
+	      { 
+	        "name":"osr.edw.propagation.md.tmr::CDS_CUST.DSO.CUSTCONTACT.active_data", 
+	        "type":"SYNONYM", 
+	        "privileges":[ "SELECT" ] 
+	      },
+	       { 
+	        "name":"osr.edw.propagation.md.tmr::CDS_CUST.DSO.CUSTMAIN.active_data", 
+	        "type":"SYNONYM", 
+	        "privileges":[ "SELECT" ] 
+	      },
+	       { 
+	        "name":"osr.edw.staging.md.tmr::CDS_CUST.DSO.CUSTCONTACT.active_data", 
+	        "type":"SYNONYM", 
+	        "privileges":[ "SELECT" ] 
+	      },
+	       { 
+	        "name":"osr.edw.staging.md.tmr::CDS_CUST.DSO.CUSTMAIN.active_data", 
+	        "type":"SYNONYM", 
+	        "privileges":[ "SELECT" ] 
+	      }    
+	    ]
+    }
+}
