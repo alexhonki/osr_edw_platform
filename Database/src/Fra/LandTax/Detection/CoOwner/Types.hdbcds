@@ -1,0 +1,147 @@
+namespace osr.edw.platform.fra.ltx.coowner;
+
+context Types {
+
+    // Keys for Detection Object LTPCLBP
+    entity WS_LTPCLBP {
+        TAXYRSTARTDT : String(8);
+        INTRENOPL    : String(13);
+        PLNO         : String(20);
+        BPARTNER     : String(10);
+    };
+
+    // Keys for Detection Object LTPCLCOOWN
+    entity WS_LTPCLCOOWN {
+        TAXYRSTARTDT : String(8);
+        INTRENOPL    : String(13);
+        PLNO         : String(20);
+        CO_OWNER_ID  : String(32);
+    };
+
+
+    // Data for Rule
+    entity DATA_FOR_RULE {
+        TAXYRSTARTDT : String(8);
+        INTRENOPL    : String(13);
+        PLNO         : String(20);
+        BPARTNER     : String(10);
+        CO_OWNER_ID  : String(32);
+        FISCAL_YEAR  : String(4);
+        FY_EDATE     : String(8);
+        TAXYRENDDT   : String(8);
+        CODE_ID      : String(2);
+    };
+    entity PARAM {
+ 		OWNER_COUNT_THRESHOLD	 : Integer;
+ 	 	ORG_COUNT_RANGE_LOW	 	 : Integer;
+ 	 	ORG_COUNT_RANGE_HIGH 	 : Integer;
+ 		TRT_COUNT_THRESHOLD		 : Integer;
+ 		COY_COUNT_THRESHOLD		 : Integer;
+ 		IND_COUNT_THRESHOLD		: Integer;
+ 		AVG3YRVAL_THRESHOLD		 : Decimal(15,2);
+    };
+    entity OWNER_CNT_PARAM {
+ 		OWNER_COUNT_THRESHOLD	 : Integer;
+ 	 	ORG_COUNT_RANGE_LOW	 	 : Integer;
+ 	 	ORG_COUNT_RANGE_HIGH 	 : Integer;
+ 		TRT_COUNT_THRESHOLD		 : Integer;
+ 		COY_COUNT_THRESHOLD		 : Integer;
+ 		IND_COUNT_THRESHOLD		: Integer;
+    };
+
+    // Co-Owner Parcl Total Values  	
+    entity PCL_TOT_VAL_PARAM {
+        AVG3YRVAL_THRESHOLD : Decimal(15, 2);
+    };
+    entity PRE_RESULT {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        BPARTNER         : String(10);
+        DETECTION_RESULT : Integer;
+    };
+    entity PCL_TOT_VAL_RESULT {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        BPARTNER         : String(10);
+        DETECTION_RESULT : Integer;
+        RISK_AMOUNT      : Decimal(23, 2);
+        CURRENCY         : String(5);
+    };
+    entity RESULT {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        BPARTNER         : String(10);
+        DETECTION_RESULT : Integer;
+        RISK_AMOUNT      : Decimal(23, 2);
+        CURRENCY         : String(5);
+    };
+    entity TEXT {
+        TAXYRSTARTDT : String(8);
+        INTRENOPL    : String(13);
+        PLNO         : String(20);
+        BPARTNER     : String(10);
+        TEXT         : String(255);
+        MSGID        : String(20);
+        MSGNO        : String(3);
+        MSGV1        : String(50);
+        MSGV2        : String(50);
+        MSGV3        : String(50);
+        MSGV4        : String(50);
+        MSGV1_FC     : String(100);
+        MSGV2_FC     : String(100);
+        MSGV3_FC     : String(100);
+        MSGV4_FC     : String(100);
+    };
+    entity PRESULT_RISK_AMNT_LTPCLCOOWN {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        CO_OWNER_ID      : String(32);
+        DETECTION_RESULT : Integer;
+        RISK_AMOUNT      : Decimal(23, 2);
+        CURRENCY         : String(5);
+    };
+    entity PRESULT_LTPCLCOOWN {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        CO_OWNER_ID      : String(32);
+        DETECTION_RESULT : Integer;
+    };
+    entity RESULT_RISK_AMNT_LTPCLCOOWN {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        CO_OWNER_ID      : String(32);
+        DETECTION_RESULT : Integer;
+        RISK_AMOUNT      : Decimal(23, 2);
+        CURRENCY         : String(5);
+    };
+    entity RESULT_LTPCLCOOWN {
+        TAXYRSTARTDT     : String(8);
+        INTRENOPL        : String(13);
+        PLNO             : String(20);
+        CO_OWNER_ID      : String(32);
+        DETECTION_RESULT : Integer;
+    };
+    entity TEXT_LTPCLCOOWN {
+        TAXYRSTARTDT : String(8);
+        INTRENOPL    : String(13);
+        PLNO         : String(20);
+        CO_OWNER_ID  : String(32);
+        TEXT         : String(255);
+        MSGID        : String(20);
+        MSGNO        : String(3);
+        MSGV1        : String(50);
+        MSGV2        : String(50);
+        MSGV3        : String(50);
+        MSGV4        : String(50);
+        MSGV1_FC     : String(100);
+        MSGV2_FC     : String(100);
+        MSGV3_FC     : String(100);
+        MSGV4_FC     : String(100);
+    };
+};

@@ -1,0 +1,17 @@
+FUNCTION "osr.edw.platform.fra.ltx::FuncLandUseCode" ( )
+       RETURNS TABLE 
+       (
+        CLIENT       NVARCHAR(3),
+    	LAND_USE_CD  NVARCHAR(3),
+		TEXT		 NVARCHAR(40)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+	SELECT
+	"CLIENT",
+	"LAND_USE_CD",
+	"TEXT"
+	FROM "osr.edw.staging.md.rms::CDS_LAND.DSO.LTLNDUSE.active_data";
+END;
