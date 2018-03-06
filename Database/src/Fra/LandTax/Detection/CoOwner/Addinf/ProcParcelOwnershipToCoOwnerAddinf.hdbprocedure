@@ -1,0 +1,26 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.ai::ProcParcelOwnershipToCoOwnerAddinf" (
+	IN 	parameters 			"osr.edw.platform.fra.ltx.coowner::Types.PARAM",
+	IN  it_result 			"osr.edw.platform.fra.ltx.coowner::Types.PRESULT_RISK_AMNT_LTPCLCOOWN",
+	IN  it_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_FOR_RULE",
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_RISK_AMNT_LTPCLCOOWN"
+)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+/***************************** 
+	Write your procedure logic 
+ *****************************/
+ 
+ et_result = 
+ SELECT
+ "TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "INTRENOPL" AS "INTRENOPL", 
+ "PLNO" AS "PLNO",
+ "CO_OWNER_ID",
+ "DETECTION_RESULT",
+ "RISK_AMOUNT",
+ "CURRENCY"
+ FROM :it_result;
+
+END

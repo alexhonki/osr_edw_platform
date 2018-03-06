@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::ParcelCoOwnerAssocToCoOwner" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Parcel Co-Owner Assoc. to Co-Owner"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::FuncParcelCoOwnerAssocToCoOwner" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::FuncParcelCoOwnerAssocToCoOwner</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::FuncParcelCoOwnerAssocToCoOwner">
+  <attributes>
+    <attribute id="TAXYRSTARTDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="FuncParcelCoOwnerAssocToCoOwner" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="FuncParcelCoOwnerAssocToCoOwner" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="PLNO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="FuncParcelCoOwnerAssocToCoOwner" columnName="PLNO"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="FuncParcelCoOwnerAssocToCoOwner" columnName="CO_OWNER_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
