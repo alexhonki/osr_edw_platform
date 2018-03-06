@@ -1,0 +1,119 @@
+FUNCTION "osr.edw.platform.fra.ltx.coowner::FuncCoOwnerInvObj"
+	RETURNS TABLE 
+       (
+        CO_OWNER_ID		NVARCHAR(32),
+        BPARTNER		NVARCHAR(10),
+        BPARTNER_TEXT	NVARCHAR(40),
+        PLNO			NVARCHAR(20)
+    	)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+ lt_parcel_val = 
+ SELECT
+ "PCL_COOWNER"."CO_OWNER_ID" AS "CO_OWNER_ID",
+ "VAL"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "VAL"."INTRENOPL" AS "INTRENOPL",
+ "PCL_COOWNER"."PLNO" AS "PLNO",
+ "VAL"."AVG3YRVAL" AS "AVG3YRVAL"
+ FROM 
+ "osr.edw.platform.fra.ltx::ParcelCoOwner" AS "PCL_COOWNER"
+ INNER JOIN 
+ "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL"
+ ON  "PCL_COOWNER"."TAXYRSTARTDT" = "VAL"."TAXYRSTARTDT"
+ AND "PCL_COOWNER"."INTRENOPL" = "VAL"."INTRENOPL"
+ WHERE EXISTS (
+	SELECT * FROM "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
+	WHERE "PCL_COOWNER"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+ )
+ ;
+ 
+ lt_parcel_for_addid = 
+ SELECT
+ "CO_OWNER_ID",
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "AVG3YRVAL",
+  RANK ( ) OVER (
+  PARTITION BY "CO_OWNER_ID"
+  ORDER BY "AVG3YRVAL" DESC ) 
+  AS "RANK"
+ FROM :lt_parcel_val
+ ;
+ 
+ lt_parcel_for_addid_row = 
+  SELECT 
+ ROW_NUMBER() OVER (PARTITION BY "CO_OWNER_ID", "TAXYRSTARTDT"  ORDER BY "PLNO" ASC ) AS "ROW_NUM",
+ "CO_OWNER_ID",
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO"
+ FROM :lt_parcel_for_addid
+ WHERE "RANK" = 1
+ ;
+ 
+ 
+ lt_bp_rel_val = 
+ SELECT
+ "PCL_VAL"."CO_OWNER_ID",
+ "PCL_VAL"."TAXYRSTARTDT",
+ "PCL_VAL"."INTRENOPL",
+ "PCL_VAL"."PLNO",
+ "OWNERSHIP"."BPARTNER", 
+ "OWNERSHIP"."OWNERPERCENT", 
+ "OWNERSHIP"."OWNERPERCENT" * "PCL_VAL"."AVG3YRVAL" AS "BP_REL_VAL"
+ FROM 
+ :lt_parcel_val AS "PCL_VAL"
+ INNER JOIN 
+ "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "OWNERSHIP"
+ ON  "PCL_VAL"."TAXYRSTARTDT" = "OWNERSHIP"."TAXYRSTARTDT"
+ AND "PCL_VAL"."INTRENOPL" = "OWNERSHIP"."INTRENOPL"
+ ;
+ 
+
+ lt_bp_for_addid = 
+ SELECT
+ "CO_OWNER_ID",
+ "TAXYRSTARTDT",
+ "BPARTNER",
+ "BP_REL_VAL",
+  RANK ( ) OVER 
+  (
+  PARTITION BY "CO_OWNER_ID", "TAXYRSTARTDT"
+  ORDER BY "BP_REL_VAL" DESC 
+  ) 
+  AS "RANK"
+ FROM :lt_bp_rel_val
+ ;
+ 
+ lt_bp_for_addid_row = 
+ SELECT
+ ROW_NUMBER() OVER (PARTITION BY "CO_OWNER_ID", "TAXYRSTARTDT"  ORDER BY "BPARTNER" ASC ) AS "ROW_NUM",
+ "CO_OWNER_ID",
+ "TAXYRSTARTDT",
+ "BPARTNER",
+ "BP_REL_VAL"
+ FROM :lt_bp_for_addid
+ WHERE "RANK" = 1
+ ;
+ 
+  RETURN 
+  SELECT DISTINCT 
+	"INV"."CO_OWNER_ID",
+	"BP"."BPARTNER" AS "BPARTNER",
+	'' AS "BPARTNER_TEXT",
+	"PCL"."PLNO" AS "PLNO" 
+	FROM 
+	"osr.edw.platform.fra.ltx::ParcelCoOwner" AS "INV"
+	INNER JOIN 
+	:lt_parcel_for_addid_row AS "PCL"
+	ON "INV"."CO_OWNER_ID" = "PCL"."CO_OWNER_ID"
+	INNER JOIN
+	:lt_bp_for_addid_row AS "BP"
+	ON "INV"."CO_OWNER_ID" = "BP"."CO_OWNER_ID"
+	WHERE "PCL"."ROW_NUM" = 1 
+	  AND "BP"."ROW_NUM" = 1
+ 	;
+END;

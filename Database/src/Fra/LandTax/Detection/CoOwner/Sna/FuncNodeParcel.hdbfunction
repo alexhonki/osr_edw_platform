@@ -1,0 +1,27 @@
+FUNCTION "osr.edw.platform.fra.ltx.coowner.sna::FuncParcel" ()
+       RETURNS TABLE 
+       (
+        ID1		NVARCHAR(40),
+        ID2		NVARCHAR(40),
+        ID3		NVARCHAR(40),
+        ID4		NVARCHAR(40),
+        ID5		NVARCHAR(40),
+        LABEL	NVARCHAR(60), 
+        STYLE	NVARCHAR(15)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+	RETURN
+ 	SELECT
+	"INTRENO" AS "ID1",
+	'' AS "ID2",
+	'' AS "ID3",
+	'' AS "ID4",
+	'' AS "ID5",
+	"PLNO" AS "LABEL",
+	 '' AS "STYLE"
+	FROM "osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data";
+	
+END;

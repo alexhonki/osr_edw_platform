@@ -1,0 +1,170 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.ex::ProcParcelCoOwnerTotValAboveThresholdExec" (
+	IN  it_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_FOR_RULE",
+	IN 	parameters	 		"osr.edw.platform.fra.ltx.coowner::Types.PCL_TOT_VAL_PARAM",
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_RISK_AMNT_LTPCLCOOWN",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLCOOWN"
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+ DECLARE lv_value_threshold INTEGER;
+ SELECT "AVG3YRVAL_THRESHOLD" INTO lv_value_threshold FROM :PARAMETERS LIMIT 1;
+
+ lt_parcel_coowner = SELECT DISTINCT "TAXYRSTARTDT", "INTRENOPL", "PLNO", "CO_OWNER_ID" FROM :it_data_for_rule;
+ 
+ --Rate Table
+ lt_rate = 
+ SELECT
+ "RATE_CODE", 
+ "VALID_FROM", 
+ "VALID_TO", 
+ "TOP_RATE_IND", 
+ "MIN_VALUE", 
+ "MAX_VALUE", 
+ "BASE_AMOUNT", 
+ "TAX_PERCENT", 
+ "ABSURCHARGE", 
+ "ABSURBASE_AMT",
+ RANK ( ) OVER ( PARTITION BY "RATE_CODE", "VALID_FROM", "VALID_TO" ORDER BY "MIN_VALUE" ASC ) 
+ AS "RATE_BAND"
+ FROM "osr.edw.staging.md.rms::CDS_LAND.DSO.LTAXRATE.active_data"
+ WHERE "RATE_CODE" = 'C'
+ ;
+ 
+
+ lt_parcel_coowner_val = 
+ SELECT
+ "PCL_CO_OWNER"."CO_OWNER_ID" AS "CO_OWNER_ID",
+ "PCL_CO_OWNER"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "PCL_CO_OWNER"."INTRENOPL" AS "INTRENOPL",
+ "PCL_CO_OWNER"."PLNO" AS "PLNO",
+ "VAL"."AVG3YRVAL" AS "AVG3YRVAL"
+ FROM 
+ :lt_parcel_coowner AS "PCL_CO_OWNER"
+ INNER JOIN "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL" 
+ ON  "PCL_CO_OWNER"."TAXYRSTARTDT" = "VAL"."TAXYRSTARTDT"
+ AND "PCL_CO_OWNER"."INTRENOPL" = "VAL"."INTRENOPL"
+ ;
+ 
+ lt_value_aggregated = 
+ SELECT 
+ "TAXYRSTARTDT",
+ "CO_OWNER_ID",
+ SUM("AVG3YRVAL") AS "AVG3YRVAL"
+ FROM :lt_parcel_coowner_val
+ GROUP BY 
+ "TAXYRSTARTDT",
+ "CO_OWNER_ID"
+ HAVING SUM("AVG3YRVAL") > :lv_value_threshold
+ ;
+ 
+
+ lt_parcel_estimated_tax = 
+ SELECT 
+ "PCL_COOWNER"."TAXYRSTARTDT",
+ "PCL_COOWNER"."INTRENOPL",
+ "PCL_COOWNER"."CO_OWNER_ID",
+ --SUM("TAX"."ESTIMATED_PLTAX") AS "ESTIMATED_PLTAX"
+ 0 AS "ESTIMATED_PLTAX"
+ FROM 
+ :lt_value_aggregated AS "VAL"
+ INNER JOIN 
+ :lt_parcel_coowner AS "PCL_COOWNER"
+ ON  "VAL"."TAXYRSTARTDT" = "PCL_COOWNER"."TAXYRSTARTDT"
+ AND "VAL"."CO_OWNER_ID" = "PCL_COOWNER"."CO_OWNER_ID"
+ --INNER JOIN
+ --"osr.edw.staging.td.rms::CDS_LAND.DSO.LTAXBPPL.active_data" AS "TAX"
+ --ON  "PCL_COOWNER"."TAXYRSTARTDT" = "TAX"."VALIDFROM"
+ --AND "PCL_COOWNER"."INTRENOPL" = "TAX"."INTRENO_PL"
+ --GROUP BY 
+ --"PCL_COOWNER"."TAXYRSTARTDT",
+ --"PCL_COOWNER"."INTRENOPL",
+ --"PCL_COOWNER"."CO_OWNER_ID"
+ ;
+ 
+ lt_landtax_aggregted = 
+ SELECT 
+ "VAL"."TAXYRSTARTDT",
+ "VAL"."CO_OWNER_ID",
+ "VAL"."AVG3YRVAL",
+ "RATE"."BASE_AMOUNT" + ("VAL"."AVG3YRVAL" - "RATE"."MIN_VALUE")*"RATE"."TAX_PERCENT"/100 AS "ESTIMATED_TAX", 
+ "VAL"."AVG3YRVAL"/"RATE"."MIN_VALUE" AS "RATIO_TO_MIN_VAL",
+ "RATE"."RATE_BAND"
+ FROM 
+ :lt_value_aggregated AS "VAL", :lt_rate AS "RATE"
+ WHERE "VAL"."TAXYRSTARTDT" = "RATE"."VALID_FROM"
+   AND "VAL"."AVG3YRVAL" >= "RATE"."MIN_VALUE"
+   AND "VAL"."AVG3YRVAL" <= "RATE"."MAX_VALUE"
+ ;
+ 
+ lt_result =
+ SELECT
+  RANK ( ) OVER 
+  (
+  PARTITION BY "PCL_CO_OWNER_VAL"."INTRENOPL", "PCL_CO_OWNER_VAL"."PLNO", "PCL_CO_OWNER_VAL"."CO_OWNER_ID" 
+  ORDER BY "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" DESC 
+  ) 
+  AS "RANK",
+ "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "PCL_CO_OWNER_VAL"."INTRENOPL" AS "INTRENOPL",
+ "PCL_CO_OWNER_VAL"."PLNO" AS "PLNO",
+ "PCL_CO_OWNER_VAL"."CO_OWNER_ID" AS "CO_OWNER_ID",
+ "PCL_CO_OWNER_VAL"."AVG3YRVAL"/"TAX_VAL"."AVG3YRVAL"*"TAX_VAL"."ESTIMATED_TAX" - "TAX"."ESTIMATED_PLTAX" AS "RISK_AMOUNT", 
+ "TAX_VAL"."RATIO_TO_MIN_VAL",
+ "TAX_VAL"."RATE_BAND", 
+ "PCL_CO_OWNER_VAL"."AVG3YRVAL"/"TAX_VAL"."AVG3YRVAL"*"TAX_VAL"."ESTIMATED_TAX" AS "ESTIMATED_PLTAX_NEW", 
+ "TAX"."ESTIMATED_PLTAX" AS "ESTIMATED_PLTAX"
+ FROM 
+ :lt_parcel_coowner_val AS "PCL_CO_OWNER_VAL"
+ INNER JOIN 
+ :lt_parcel_estimated_tax AS "TAX"
+ ON  "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" = "TAX"."TAXYRSTARTDT"
+ AND "PCL_CO_OWNER_VAL"."INTRENOPL" = "TAX"."INTRENOPL"
+ INNER JOIN 
+ :lt_landtax_aggregted AS "TAX_VAL"
+ ON  "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" = "TAX_VAL"."TAXYRSTARTDT"
+ AND "PCL_CO_OWNER_VAL"."CO_OWNER_ID" = "TAX_VAL"."CO_OWNER_ID"
+
+ ;
+ 
+ et_result = 
+ SELECT
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "CO_OWNER_ID",
+ 100 AS "DETECTION_RESULT",
+ CASE WHEN "RANK" = 1 THEN "RISK_AMOUNT" ELSE 0 END AS "RISK_AMOUNT",
+ 'AUD' AS "CURRENCY"
+ FROM :lt_result
+ ;
+ 
+ et_text = 
+ SELECT
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "CO_OWNER_ID",
+ CHAR(13)|| CHAR(10) ||
+ 'New estimated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Estimated tax $' || "ESTIMATED_PLTAX" || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Additional estmated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW"-"ESTIMATED_PLTAX", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Ratio to Min. Value ' || TO_DECIMAL("RATIO_TO_MIN_VAL", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Band ' || "RATE_BAND" 
+ AS "TEXT",
+ '' AS "MSGID",
+ '' AS "MSGNO",
+ '' AS "MSGV1",
+ '' AS "MSGV2",
+ '' AS "MSGV3",
+ '' AS "MSGV4",
+ '' AS "MSGV1_FC",
+ '' AS "MSGV2_FC",
+ '' AS "MSGV3_FC",
+ '' AS "MSGV4_FC"
+ FROM :lt_result
+ ;
+  
+END;
