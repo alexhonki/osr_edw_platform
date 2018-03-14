@@ -26,14 +26,14 @@ BEGIN
             rtrim(ltrim("BP"."PARTNER",'0') || ':' || "BP"."NAME_ORG1" || char(32) || "BP"."NAME_ORG2" || char(32) || "BP"."NAME_ORG3" || char(32) || "BP"."NAME_ORG4",char(32))
          END 
          AS "LABEL",
-         --CASE WHEN "BP"."TYPE" = '2' AND "BP_REL"."PARTNER1" IS NOT NULL THEN 'ZBP_TRUST'
-         --     WHEN "BP"."TYPE" = '2' AND "BP_REL"."PARTNER1" IS NULL THEN 'ZBP_COMPANY'
-         --ELSE 'ZBP_PERSON'
-         --END 
-	     '' AS "STYLE"
+         CASE WHEN "BP"."TYPE" = '2' AND "BP_REL"."PARTNER1" IS NOT NULL THEN 'ZBP_TRUST'
+              WHEN "BP"."TYPE" = '2' AND "BP_REL"."PARTNER1" IS NULL THEN 'ZBP_COMPANY'
+         ELSE 'ZBP_PERSON'
+         END
+	     AS "STYLE"
        FROM "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" AS "BP"
-       --LEFT OUTER JOIN "osr.edw.staging.md.rms::CDS_BP.DSO.BUT050.active_data" AS "BP_REL"
-       --ON "BP"."PARTNER" = "BP_REL"."PARTNER1"
+       LEFT OUTER JOIN "osr.edw.staging.md.rms::CDS_BP.DSO.BUT050.active_data" AS "BP_REL"
+       ON "BP"."PARTNER" = "BP_REL"."PARTNER1"
        ;
 	
 END;

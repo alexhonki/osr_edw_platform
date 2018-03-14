@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::Facts" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Facts"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::FuncFacts" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::FuncFacts</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::FuncFacts">
+  <attributes>
+    <attribute id="CLIENT" hidden="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="UNIMPRVAL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UNIMPRVAL"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="UNIMPRVAL"/>
+    </attribute>
+    <attribute id="PARISH" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARISH"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="PARISH"/>
+    </attribute>
+    <attribute id="LGA" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LGA"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="LGA"/>
+    </attribute>
+    <attribute id="TENURE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENURE"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="TENURE"/>
+    </attribute>
+    <attribute id="LANDUSECODE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDUSECODE"/>
+      <keyMapping columnObjectName="FuncFacts" columnName="LANDUSECODE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
