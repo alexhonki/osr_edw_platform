@@ -50,7 +50,7 @@ modules:
       properties:
         key: logical-OSR-EDW-SOURCE-TMR-grantor
         service: '~{OSR-EDW-SOURCE-TMR-grantor-service}'
-
+    - name: acs-ext-access-grantor
 resources:
 # - name: OSR_EDW_PLATFORM-uaa
 #   type: com.sap.xs.uaa
@@ -104,4 +104,6 @@ resources:
 #   parameters:
 #      service-name: OSR_EDW_PLATFORM-container
    type: com.sap.xs.hdi-container
-
+ - name: acs-ext-access-grantor
+   type: org.cloudfoundry.existing-service
+   description: acs-ext-access-grantor
