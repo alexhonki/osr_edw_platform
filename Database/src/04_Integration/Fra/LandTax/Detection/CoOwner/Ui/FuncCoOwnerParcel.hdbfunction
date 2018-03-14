@@ -1,0 +1,45 @@
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::FuncCoOwnerParcel" ( )
+	RETURNS TABLE 
+       (
+    	DB_KEY			NVARCHAR(32),
+    	ALERT_ID		NVARCHAR(20),
+    	INVEST_OBJ_TYPE NVARCHAR(10),
+        INTRENOPL		NVARCHAR(13),
+        PLNO			NVARCHAR(20),
+        XPL				NVARCHAR(60),
+        LANDUSECODE 	NVARCHAR(3),
+        LGA				NVARCHAR(6),
+        LGA_TEXT		NVARCHAR(40)
+    	)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+	SELECT
+	DISTINCT 
+	"ALERT"."DB_KEY",
+	"ALERT"."ALERT_ID",
+	"ALERT"."INVEST_OBJ_TYPE",
+	"PCL_COOWNER"."INTRENOPL",
+	"VILMPL"."PLNO",
+	"VILMPL"."XPL",
+	"FACTS"."LANDUSECODE",
+	"FACTS"."LGA",
+	"LTLGA"."TEXT" AS "LGA_TEXT"
+	FROM 
+	"osr.edw.platform.fra::AlertRoot" AS "ALERT"
+	INNER JOIN 
+	"osr.edw.platform.fra.ltx::ParcelCoOwner" AS "PCL_COOWNER"
+	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
+	LEFT OUTER JOIN
+	"osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data" AS "VILMPL"
+	ON "PCL_COOWNER"."INTRENOPL" = "VILMPL"."INTRENO" 
+	LEFT OUTER JOIN 
+	"osr.edw.platform.fra.ltx::Facts" AS "FACTS"
+	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "FACTS"."TAXYRSTARTDT" 
+	AND "PCL_COOWNER"."INTRENOPL" = "FACTS"."INTRENOPL" 
+	LEFT OUTER JOIN
+	"osr.edw.staging.md.rms::CDS_LAND.DSO.LTLGA.active_data" AS "LTLGA"
+	ON "FACTS"."LGA" = "LTLGA"."LGA_CODE"
+	;
+END;

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::BusinessPartnerOwnerType" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" defaultClient="$$client$$">
+<descriptions defaultDescription="BusinessPartnerOwnerType"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::FuncBusinessPartnerOwnerType" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::FuncBusinessPartnerOwnerType</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::FuncBusinessPartnerOwnerType">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="PARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="PERIODBEGIN" order="3" semanticType="date.businessDateFrom" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIODBEGIN"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="PERIODBEGIN"/>
+    </attribute>
+    <attribute id="DATE_TO" order="4" semanticType="date.businessDateTo" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_TO"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="DATE_TO"/>
+    </attribute>
+    <attribute id="DATE_FROM" order="5" semanticType="date.businessDateFrom" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_FROM"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="DATE_FROM"/>
+    </attribute>
+    <attribute id="PERIODEND" order="6" semanticType="date.businessDateTo" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIODEND"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="PERIODEND"/>
+    </attribute>
+    <attribute id="CODEID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CODEID"/>
+      <keyMapping columnObjectName="FuncBusinessPartnerOwnerType" columnName="CODEID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
