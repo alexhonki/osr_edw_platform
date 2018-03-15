@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerATSDealing" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Co-Owner ATS Dealing"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NodeID"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Investigation Object Type"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Internal Key of Real Estate Object"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="PLNO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Parcel Number"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="PLNO"/>
+    </attribute>
+    <attribute id="PROCESS_DATE" order="6" semanticType="date" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Process Date"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="PROCESS_DATE"/>
+    </attribute>
+    <attribute id="POSESSION_DATE" order="7" semanticType="date" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Possession Date"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="POSESSION_DATE"/>
+    </attribute>
+    <attribute id="ATS_DEALING_NBR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATS Dealing Number"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="ATS_DEALING_NBR"/>
+    </attribute>
+    <attribute id="ATS_DEALING_REF" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATS Dealing Reference"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="ATS_DEALING_REF"/>
+    </attribute>
+    <attribute id="DEALING_TYPE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATS Dealing Type Code"/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="DEALING_TYPE"/>
+    </attribute>
+    <attribute id="DEALING_TYPE_DEC" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATS Dealing Type Descr."/>
+      <keyMapping columnObjectName="TF_CoOwnerATSDealing" columnName="DEALING_TYPE_DEC"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
