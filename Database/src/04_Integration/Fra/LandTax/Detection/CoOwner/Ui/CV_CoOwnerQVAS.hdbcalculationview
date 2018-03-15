@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerQVAS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Co-Owner QVAS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NodeID"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Investigation Object Type"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDT" order="4" displayAttribute="false" attributeHierarchyActive="false" semanticType="date.businessDateFrom">
+      <descriptions defaultDescription="Tax Year Start Date"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Internal Key of Real Estate Object"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="PLNO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Parcel Number"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="PLNO"/>
+    </attribute>
+    <attribute id="NANO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Number of Notice of Assessment"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="NANO"/>
+    </attribute>
+    <attribute id="NAVALVALIDFROM" order="11" displayAttribute="false" attributeHierarchyActive="false" semanticType="date.businessDateFrom">
+      <descriptions defaultDescription="Assessed Value Valid From"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="NAVALVALIDFROM"/>
+    </attribute>
+  
+    <attribute id="VALCURR" order="12" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Currency"/>
+      <keyMapping columnObjectName="TF_CoOwnerQVAS" columnName="VALCURR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="AVG3YRVAL" order="7" aggregationType="sum" measureType="amount" semanticType="amount">
+      <descriptions defaultDescription="Three Year Average Value"/>
+      <unitCurrencyAttribute attributeName="VALCURR"/>
+      <measureMapping columnObjectName="TF_CoOwnerQVAS" columnName="AVG3YRVAL"/>
+    </measure>
+    <measure id="UNIMPRVAL" order="8" aggregationType="sum" measureType="amount" semanticType="amount">
+      <descriptions defaultDescription="Unimproved Value"/>
+      <unitCurrencyAttribute attributeName="VALCURR"/>
+      <measureMapping columnObjectName="TF_CoOwnerQVAS" columnName="UNIMPRVAL"/>
+    </measure>
+    <measure id="RELVNTVAL" order="10" aggregationType="sum" measureType="amount" semanticType="amount">
+      <descriptions defaultDescription="Relevant Value"/>
+      <unitCurrencyAttribute attributeName="VALCURR"/>
+      <measureMapping columnObjectName="TF_CoOwnerQVAS" columnName="RELVNTVAL"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario> 
