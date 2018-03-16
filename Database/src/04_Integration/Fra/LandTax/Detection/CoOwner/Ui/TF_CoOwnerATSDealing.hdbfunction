@@ -4,6 +4,7 @@ FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing" ( )
     	DB_KEY				NVARCHAR(32),
     	ALERT_ID			NVARCHAR(20),
     	INVEST_OBJ_TYPE 	NVARCHAR(10),
+    	CO_OWNER_ID			NVARCHAR(32),	
     	TAXYRSTARTDT		NVARCHAR(8),
 		INTRENOPL			NVARCHAR(13),
 		PLNO				NVARCHAR(10),
@@ -23,6 +24,7 @@ BEGIN
 	"ALERT"."DB_KEY",
 	"ALERT"."ALERT_ID",
 	"ALERT"."INVEST_OBJ_TYPE",
+	"PCL_COOWNER"."CO_OWNER_ID",
 	"PCL_COOWNER"."TAXYRSTARTDT",
 	"PCL_COOWNER"."INTRENOPL",
 	"VILMPL"."PLNO",
@@ -45,7 +47,8 @@ BEGIN
 	"osr.edw.staging.md.rms::CDS_LAND.DSO.LTPLATS.active_data" AS "LTPLATS"
 	ON "PCL_COOWNER"."INTRENOPL" = "LTPLATS"."INTRENO" 
 	--LEFT OUTER JOIN 
-	--"osr.edw.staging.md.rms::CDS_LAND.DSO.LTPLATS.active_data" AS "ATS_DTTX"
+	--"osr.edw.staging.md.rms::CDS_LAND.DSO.ATS_DTTX.active_data" AS "ATS_DTTX"
+	--ON "LTPLATS"."DEALING_TYPE" = "ATS_DTTX"."DEALING_TYPE"
 	;
 	
 END;
