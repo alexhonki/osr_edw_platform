@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerParcel" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Aggregation" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
+<descriptions defaultDescription="Co-Owner Parcel"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerParcel" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerParcel</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerParcel">
+  <attributes>
+    <attribute id="DB_KEY" attributeHierarchyActive="false" displayAttribute="false" order="1">
+      <descriptions defaultDescription="NodeID"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" attributeHierarchyActive="false" displayAttribute="false" order="2">
+      <descriptions defaultDescription="Alert"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" attributeHierarchyActive="false" displayAttribute="false" order="3">
+      <descriptions defaultDescription="Investigation Object Type"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Co-Owner ID"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="INTRENOPL" attributeHierarchyActive="false" displayAttribute="false" order="5">
+      <descriptions defaultDescription="Internal Key of Real Estate Object"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="PLNO" attributeHierarchyActive="false" displayAttribute="false" order="6">
+      <descriptions defaultDescription="Parcel Number"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="PLNO"/>
+    </attribute>
+    <attribute id="XPL" attributeHierarchyActive="false" displayAttribute="false" order="7">
+      <descriptions defaultDescription="Parcel Address"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="XPL"/>
+    </attribute>
+    <attribute id="LANDUSECODE" attributeHierarchyActive="false" displayAttribute="false" order="8">
+      <descriptions defaultDescription="Land Use Code"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LANDUSECODE"/>
+    </attribute>
+    <attribute id="LGA" attributeHierarchyActive="false" displayAttribute="false" order="9" descriptionColumnName="LGA_TEXT">
+      <descriptions defaultDescription="LGA"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LGA"/>
+    </attribute>
+    <attribute id="LGA_TEXT" attributeHierarchyActive="false" displayAttribute="false" order="10">
+      <descriptions defaultDescription="LGA Text"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LGA_TEXT"/>
+    </attribute>
+  
+    <attribute id="AREAUNIT" order="12" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Measurement Unit"/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="AREAUNIT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="AREA" order="11" semanticType="quantity" aggregationType="sum" measureType="quantity">
+      <descriptions defaultDescription="Area"/>
+      <unitCurrencyAttribute attributeName="AREAUNIT"/>
+      <measureMapping columnObjectName="TF_CoOwnerParcel" columnName="AREA"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
+      <upperLeftCorner y="85" x="40"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

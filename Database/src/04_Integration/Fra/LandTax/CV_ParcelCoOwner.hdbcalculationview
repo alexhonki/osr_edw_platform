@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_ParcelCoOwner" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" defaultClient="$$client$$">
+<descriptions defaultDescription="ParcelCoOwner"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_ParcelCoOwner" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_ParcelCoOwner</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_ParcelCoOwner">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="CO_OWNER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="CO_OWNER"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="PLNO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="PLNO"/>
+    </attribute>
+    <attribute id="VALIDFROM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALIDFROM"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="VALIDFROM"/>
+    </attribute>
+    <attribute id="VALIDTO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALIDTO"/>
+      <keyMapping columnObjectName="TF_ParcelCoOwner" columnName="VALIDTO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="311" y="112"/>
+    
+      <rectangleSize width="140"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

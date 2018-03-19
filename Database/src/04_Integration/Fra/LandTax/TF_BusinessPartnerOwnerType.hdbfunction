@@ -1,0 +1,27 @@
+FUNCTION "osr.edw.platform.fra.ltx::TF_BusinessPartnerOwnerType" ( )
+       RETURNS TABLE
+       (
+        CLIENT  	NVARCHAR(3),
+    	PARTNER		NVARCHAR(10),
+    	PERIODBEGIN NVARCHAR(8),
+		DATE_TO 	DECIMAL(15,0),
+		DATE_FROM	DECIMAL(15,0),
+		PERIODEND	NVARCHAR(8), 
+		CODEID      NVARCHAR(2)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+    RETURN
+	SELECT
+	"CLIENT",
+	"PARTNER",
+	"PERIODBEGIN",
+	"DATE_TO",
+	"DATE_FROM",
+	"PERIODEND",
+	"CODEID"
+	FROM "osr.edw.staging.md.rms::CDS_BP.DSO.ZBUT0000UZQMZ7.active_data";
+	
+END;

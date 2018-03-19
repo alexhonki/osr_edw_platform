@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_Facts" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Facts"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_Facts" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_Facts</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_Facts">
+  <attributes>
+    <attribute id="CLIENT" hidden="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="UNIMPRVAL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UNIMPRVAL"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="UNIMPRVAL"/>
+    </attribute>
+    <attribute id="PARISH" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARISH"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="PARISH"/>
+    </attribute>
+    <attribute id="LGA" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LGA"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="LGA"/>
+    </attribute>
+    <attribute id="TENURE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENURE"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="TENURE"/>
+    </attribute>
+    <attribute id="LANDUSECODE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDUSECODE"/>
+      <keyMapping columnObjectName="TF_Facts" columnName="LANDUSECODE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

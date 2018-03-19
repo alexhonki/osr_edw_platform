@@ -1,0 +1,32 @@
+FUNCTION "osr.edw.platform.fra.ltx::TF_LandUseCode" ( )
+       RETURNS TABLE 
+       (
+    	CLIENT			NVARCHAR(3),
+    	LAND_USE_CD		NVARCHAR(2),
+    	PERIOD_BEGIN	NVARCHAR(8),
+    	PERIOD_END		NVARCHAR(8),
+		CODE_DESC		NVARCHAR(60),
+        ACTIVE			NVARCHAR(1),
+        INDIVORG		NVARCHAR(3),
+        TAX_RATE		NVARCHAR(4), 
+		ABSURCHARGE 	NVARCHAR(1)
+    	)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+	RETURN 
+	SELECT
+	TOP 1
+	'400' AS "CLIENT", 
+	'' AS "LAND_USE_CD",
+	'' AS "PERIOD_BEGIN",
+	'' AS "PERIOD_END",
+	'' AS "CODE_DESC",
+	'' AS "ACTIVE",
+	'' AS "INDIVORG",
+	'' AS "TAX_RATE",
+	'' AS "ABSURCHARGE"
+	FROM "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data";
+	
+END;

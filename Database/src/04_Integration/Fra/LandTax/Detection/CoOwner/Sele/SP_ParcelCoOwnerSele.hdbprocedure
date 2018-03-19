@@ -1,0 +1,45 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelCoOwnerSele" (
+	IN  it_workset    		"osr.edw.platform.fra.ltx.coowner::Types.WS_LTPCLCOOWN",
+	OUT et_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_FOR_RULE"
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+ lt_data = 
+ SELECT 
+ "PCL_BP"."TAXYRSTARTDT", 
+ "PCL_BP"."INTRENOPL",
+ "PCL_BP"."BPARTNER", 
+ "WS"."CO_OWNER_ID", 
+ "WS"."PLNO" AS "PLNO",
+ to_nvarchar((to_int(left("PCL_BP"."TAXYRSTARTDT",4)) + 1)) || '0630' AS "TAXYRENDDT",
+ to_int(left("PCL_BP"."TAXYRSTARTDT",4)) AS "FISCAL_YEAR", 
+ left("PCL_BP"."TAXYRSTARTDT",4) || '0630' AS "FY_EDATE"
+ FROM 
+ "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
+ INNER JOIN
+ :it_workset AS "WS"
+ ON  "PCL_BP"."TAXYRSTARTDT" = "WS"."TAXYRSTARTDT"
+ AND "PCL_BP"."INTRENOPL" = "WS"."INTRENOPL"
+ ;
+
+ et_data_for_rule =  
+ SELECT
+ "DATA"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "DATA"."INTRENOPL" AS "INTRENOPL", 
+ "DATA"."PLNO" AS "PLNO",
+ "DATA"."BPARTNER" AS "BPARTNER",
+ "DATA"."CO_OWNER_ID" AS "CO_OWNER_ID",
+ "DATA"."FISCAL_YEAR" AS "FISCAL_YEAR", 
+ "DATA"."FY_EDATE" AS "FY_EDATE", 
+ "DATA"."TAXYRENDDT" AS "TAXYRENDDT", 
+ "BP"."CODEID" AS "CODE_ID"
+ FROM :lt_data AS "DATA", "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
+ WHERE "DATA"."BPARTNER" = "BP"."PARTNER"
+   AND left("BP"."DATE_TO",8)   >= "DATA"."FY_EDATE"
+   AND left("BP"."DATE_FROM",8) <= "DATA"."FY_EDATE"
+ ;  
+ 
+ END;
