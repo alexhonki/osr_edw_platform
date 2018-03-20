@@ -1,0 +1,28 @@
+namespace DataWareHouse.Database;
+
+@Comment : 'History'
+type historyT {
+    @Comment : 'User'
+    BY     : String(200);
+
+    @Comment : 'Date Time'
+    "DATE" : UTCDateTime;
+};
+
+@Comment : 'Customer ID'
+type CustomerIdT : Integer64;
+
+@Comment : 'Location Data'
+type locationT {
+    @Comment : 'City'
+    CITY         : String(200);
+
+    @Comment : 'Region'
+    REGION       : String(200);
+
+    @Comment : 'Country'
+    COUNTRY      : String(100);
+
+    @Comment : 'Country Code'
+    COUNTRY_CODE : String(5);
+};

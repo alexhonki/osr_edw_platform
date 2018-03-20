@@ -1,0 +1,67 @@
+{
+  "taskList": {
+    "1": {
+      "inline": {
+        "type": "START",
+        "taskGroup": "com.sap.dwf.toe.executionControl"
+      }
+    },
+    "2": {
+      "inline": {
+        "type": "executeFlowGraph",
+        "taskGroup": "hanaNative",
+        "description": "Capacity Events LTCNEXMD",
+        "parameterValues": [
+          {
+            "id": "flowGraphName",
+            "value": "osr.edw.integration.ti.ltax::FG_BT_LOAD_CAPACITY_LTCNEXMD"
+          }
+        ]
+      },
+      "preconditions": [
+        {
+          "from": "1",
+          "status": "NEUTRAL"
+        }
+      ]
+    },
+    "3": {
+      "inline": {
+        "type": "activate",
+        "taskGroup": "ndso",
+        "description": "Capacity Events LTCNEXMD DSO",
+        "parameterValues": [
+          {
+            "id": "dataStoreName",
+            "value": "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD"
+          }
+        ]
+      },
+      "preconditions": [
+        {
+          "from": "2",
+          "status": "OK"
+        }
+      ]
+    },
+    "4": {
+      "inline": {
+        "type": "executeProcedure",
+        "taskGroup": "hanaNative",
+        "description": "Load Delta For LTCNEXMD Events",
+        "parameterValues": [
+          {
+            "id": "procName",
+            "value": "DataWareHouse.Database::PR_DELTA_MERGE_LTCNEXMD_CUSTOMEREVENTS"
+          }
+        ]
+      },
+      "preconditions": [
+        {
+          "from": "3",
+          "status": "OK"
+        }
+      ]
+    }
+  }
+}
