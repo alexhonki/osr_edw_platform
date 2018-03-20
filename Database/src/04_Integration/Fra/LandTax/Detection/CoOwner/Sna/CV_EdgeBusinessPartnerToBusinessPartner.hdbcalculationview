@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.sna::CV_EdgeBusinessPartnerToBusinessPartner" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Edge: Business Partner to Business Partner"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner.sna::TF_EdgeBusinessPartnerToBusinessPartner" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner.sna::TF_EdgeBusinessPartnerToBusinessPartner</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner.sna::TF_EdgeBusinessPartnerToBusinessPartner">
+  <attributes>
+    <attribute id="SOURCE_NODE_ID1" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_NODE_ID1"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="SOURCE_NODE_ID1"/>
+    </attribute>
+    <attribute id="SOURCE_NODE_ID2" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_NODE_ID2"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="SOURCE_NODE_ID2"/>
+    </attribute>
+    <attribute id="SOURCE_NODE_ID3" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_NODE_ID3"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="SOURCE_NODE_ID3"/>
+    </attribute>
+    <attribute id="SOURCE_NODE_ID4" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_NODE_ID4"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="SOURCE_NODE_ID4"/>
+    </attribute>
+    <attribute id="SOURCE_NODE_ID5" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_NODE_ID5"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="SOURCE_NODE_ID5"/>
+    </attribute>
+    <attribute id="TARGET_NODE_ID1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_NODE_ID1"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="TARGET_NODE_ID1"/>
+    </attribute>
+    <attribute id="TARGET_NODE_ID2" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_NODE_ID2"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="TARGET_NODE_ID2"/>
+    </attribute>
+    <attribute id="TARGET_NODE_ID3" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_NODE_ID3"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="TARGET_NODE_ID3"/>
+    </attribute>
+    <attribute id="TARGET_NODE_ID4" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_NODE_ID4"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="TARGET_NODE_ID4"/>
+    </attribute>
+    <attribute id="TARGET_NODE_ID5" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARGET_NODE_ID5"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="TARGET_NODE_ID5"/>
+    </attribute>
+    <attribute id="LABEL" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LABEL"/>
+      <keyMapping columnObjectName="TF_EdgeBusinessPartnerToBusinessPartner" columnName="LABEL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
