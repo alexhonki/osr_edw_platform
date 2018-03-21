@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Co-Owner Detection Object"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_CoOwnerDetObj" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_CoOwnerDetObj</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_CoOwnerDetObj">
+  <attributes>
+    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="TAXYRENDDT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRENDDT"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="TAXYRENDDT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="PLNO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="PLNO"/>
+    </attribute>
+    <attribute id="PLNO_VALIDFROM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO_VALIDFROM"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="PLNO_VALIDFROM"/>
+    </attribute>
+    <attribute id="PLNO_VALIDTO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO_VALIDTO"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="PLNO_VALIDTO"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="CO_OWNER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="CO_OWNER"/>
+    </attribute>
+    <attribute id="PCL_OWNER_CNT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PCL_OWNER_CNT"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="PCL_OWNER_CNT"/>
+    </attribute>
+    <attribute id="PARISH" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARISH"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="PARISH"/>
+    </attribute>
+    <attribute id="LGA" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LGA"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="LGA"/>
+    </attribute>
+    <attribute id="TENURE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENURE"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="TENURE"/>
+    </attribute>
+    <attribute id="LANDUSECODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDUSECODE"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="LANDUSECODE"/>
+    </attribute>
+    <attribute id="LANDTAXYR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDTAXYR"/>
+      <keyMapping columnObjectName="TF_CoOwnerDetObj" columnName="LANDTAXYR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

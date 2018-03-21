@@ -1,0 +1,31 @@
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP_CZ" ( )
+	RETURNS TABLE 
+       (
+    	DB_KEY			NVARCHAR(32),
+    	ALERT_ID		NVARCHAR(20),
+    	INVEST_OBJ_TYPE NVARCHAR(10),
+    	CO_OWNER_ID		NVARCHAR(32),
+        BPARTNER		NVARCHAR(10),
+        BPARTNER_NAME	NVARCHAR(80)
+    	)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+	SELECT
+	"ALERT"."DB_KEY",
+	"ALERT"."ALERT_ID",
+	"ALERT"."INVEST_OBJ_TYPE",
+	"PCL_COOWNER"."CO_OWNER_ID",
+	"ALERT"."INV_OBJ_ADD_ID3" AS "BPARTNER", 
+	"BUT000"."NAME_ORG1" AS "BPARTNER_NAME"
+	FROM 
+	"osr.edw.platform.fra::CV_AlertRoot" AS "ALERT"
+	INNER JOIN 
+	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
+	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
+	LEFT OUTER JOIN
+	"osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
+	ON LPAD(LTRIM("ALERT"."INV_OBJ_ADD_ID3",'0'),10,'0') = "BUT000"."PARTNER" 
+	;
+END;
