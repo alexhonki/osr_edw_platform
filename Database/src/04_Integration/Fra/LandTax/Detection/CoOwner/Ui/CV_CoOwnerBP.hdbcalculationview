@@ -1,63 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Projection" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Projection" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
 <descriptions defaultDescription="Co-Owner BP"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange/>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INVEST_OBJ_TYPE">
+        <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="CO_OWNER_ID">
+        <descriptions defaultDescription="CO_OWNER_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INTRENOPL">
+        <descriptions defaultDescription="INTRENOPL"/>
+      </viewAttribute>
+      <viewAttribute id="PLNO">
+        <descriptions defaultDescription="PLNO"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER_NAME">
+        <descriptions defaultDescription="BPARTNER_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="VALIDFROM">
+        <descriptions defaultDescription="VALIDFROM"/>
+      </viewAttribute>
+      <viewAttribute id="VALIDTO">
+        <descriptions defaultDescription="VALIDTO"/>
+      </viewAttribute>
+      <viewAttribute id="OWNERPERCENT" aggregationType="sum">
+        <descriptions defaultDescription="OWNERPERCENT"/>
+      </viewAttribute>
+      <viewAttribute id="CODE_ID">
+        <descriptions defaultDescription="CODE_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INVEST_OBJ_TYPE" source="INVEST_OBJ_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CO_OWNER_ID" source="CO_OWNER_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INTRENOPL" source="INTRENOPL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLNO" source="PLNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER_NAME" source="BPARTNER_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALIDFROM" source="VALIDFROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALIDTO" source="VALIDTO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OWNERPERCENT" source="OWNERPERCENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CODE_ID" source="CODE_ID"/>
+      <parameterMapping xsi:type="Param:ParameterMapping" parameterNameOtherView="IV_ALERT_ID" parameterName="IP_ALERT_ID"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
   <attributes>
-    <attribute id="DB_KEY" attributeHierarchyActive="false" displayAttribute="false" order="1">
-      <descriptions defaultDescription="NodeID"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="DB_KEY"/>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" attributeHierarchyActive="false" displayAttribute="false" order="2">
-      <descriptions defaultDescription="Alert"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="ALERT_ID"/>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="INVEST_OBJ_TYPE" attributeHierarchyActive="false" displayAttribute="false" order="3">
-      <descriptions defaultDescription="Investigation Object Type"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="INVEST_OBJ_TYPE"/>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INVEST_OBJ_TYPE"/>
     </attribute>
     <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Co-Owner ID"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="CO_OWNER_ID"/>
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CO_OWNER_ID"/>
     </attribute>
-    <attribute id="INTRENOPL" attributeHierarchyActive="false" displayAttribute="false" order="5">
-      <descriptions defaultDescription="Internal Key of Real Estate Object"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="INTRENOPL"/>
+    <attribute id="INTRENOPL" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INTRENOPL"/>
     </attribute>
-  
-    <attribute id="BPARTNER" attributeHierarchyActive="false" displayAttribute="false" order="6" descriptionColumnName="BPARTNER_NAME">
-      <descriptions defaultDescription="Business Partner"/>
-  
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="BPARTNER"/>
-  
+    <attribute id="PLNO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PLNO"/>
     </attribute>
-    <attribute id="BPARTNER_NAME" attributeHierarchyActive="false" displayAttribute="false" order="7">
-      <descriptions defaultDescription="Business Partner Name"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="BPARTNER_NAME"/>
+    <attribute id="BPARTNER" order="7" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BPARTNER_NAME">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BPARTNER"/>
     </attribute>
-    <attribute id="VALIDFROM" attributeHierarchyActive="false" displayAttribute="false" order="8" semanticType="date.businessDateFrom">
-      <descriptions defaultDescription="Date of Start of Relationship"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="VALIDFROM"/>
+    <attribute id="BPARTNER_NAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER_NAME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BPARTNER_NAME"/>
     </attribute>
-    <attribute id="VALIDTO" attributeHierarchyActive="false" displayAttribute="false" order="9" semanticType="date.businessDateTo">
-      <descriptions defaultDescription="Date of End of Relationship"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="VALIDTO"/>
+    <attribute id="VALIDFROM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALIDFROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALIDFROM"/>
     </attribute>
-    <attribute id="OWNERPERCENT" attributeHierarchyActive="false" displayAttribute="false" order="10">
-      <descriptions defaultDescription="Ownership Percentage"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="OWNERPERCENT"/>
+    <attribute id="VALIDTO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALIDTO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALIDTO"/>
     </attribute>
-    <attribute id="CODE_ID" attributeHierarchyActive="false" displayAttribute="false" order="11">
-      <descriptions defaultDescription="Land Use Code"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="CODE_ID"/>
-    </attribute></attributes>
+    <attribute id="OWNERPERCENT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OWNERPERCENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="OWNERPERCENT"/>
+    </attribute>
+    <attribute id="CODE_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CODE_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CODE_ID"/>
+    </attribute>
+  </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
   <calculatedMeasures/>
@@ -66,7 +135,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
-      <upperLeftCorner y="85" x="40"/>
+      <upperLeftCorner y="112" x="92"/>
+    
+      <rectangleSize width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="140"/>
     </shape>
   </shapes>
 </layout>
