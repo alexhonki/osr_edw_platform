@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP_CZ" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Co-Owner BP(CZ Type)"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP_CZ" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP_CZ</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP_CZ">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NodeID"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP_CZ" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP_CZ" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Investigation Object Type"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP_CZ" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Co-Owner ID"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP_CZ" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="BPARTNER" order="5" descriptionColumnName="BPARTNER_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP_CZ" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="BPARTNER_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner Name"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP_CZ" columnName="BPARTNER_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
