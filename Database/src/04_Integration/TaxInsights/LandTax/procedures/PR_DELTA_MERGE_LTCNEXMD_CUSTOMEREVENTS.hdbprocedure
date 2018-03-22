@@ -1,4 +1,4 @@
-PROCEDURE "DataWareHouse.Database::PR_DELTA_MERGE_LTCNEXMD_CUSTOMEREVENTS" ( )
+PROCEDURE "osr.edw.integration.ti.ltax::PR_DELTA_MERGE_LTCNEXMD_CUSTOMEREVENTS" ( )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
    --DEFAULT SCHEMA <default_schema_name>
@@ -13,7 +13,7 @@ BEGIN
    	SELECT MAX("technicalKey.id")INTO ACTIVATION_ID FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.idGen" WHERE "technicalAttributes.type"='ACTIVATION_REQUEST';
    	
 		-- insert into customer Events Table
-	UPSERT "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
+			UPSERT "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
 		"EVENT_ID.ID", -- Not Generated yet
 		"EVENT_GROUP",
 		"EVENT_NAME",
@@ -24,8 +24,7 @@ BEGIN
 		"INIT_TS",
 		"END_TS"	
 	)	
-		SELECT 
-			-- "SAP_CRI"."sap.cri.db.sequences::AppEventID".NEXTVAL AS "ID",
+	SELECT 
 			TO_BIGINT(TAXPAYER.PARTNER) "CUST_ID", 
 			181 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
@@ -37,10 +36,9 @@ BEGIN
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.change_log" as EVENTS_LTCNEXMD
-		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
+		INNER JOIN (select * from "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" where BPEXT IN ('00000000000002547642','00000000000002352854','00000000000002503219','00000000000002548125','00000000000002343599','00000000000002473249','00000000000002360224','00000000000002360248','00000000000002678120','00000000000002502040','00000000000002669092')  ) as TAXPAYER ON
 		TAXPAYER.BPEXT LIKE '%'||EVENTS_LTCNEXMD.BPARTNER ||'%' WHERE "technicalKey.activationId" = ACTIVATION_ID and "technicalAttributes.recordMode" = 'N' and INVALID_EXMD='';
-
-		UPSERT  "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
+	UPSERT  "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
 		"EVENT_ID.ID", -- Not Generated yet
 		"EVENT_GROUP",
 		"EVENT_NAME",
@@ -52,22 +50,21 @@ BEGIN
 		"END_TS"	
 	)
 		SELECT 
-			-- "SAP_CRI"."sap.cri.db.sequences::AppEventID".NEXTVAL AS "ID",
 			TO_BIGINT(TAXPAYER.PARTNER) "CUST_ID", 
-			182 as EVENT_ID,
+			181 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
-			'Removed Concession' as EVENT_NAME,
+			'Received Concession' as EVENT_NAME,
 			CAST(VALIDFROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
-			'Removed Concession' as DESCRIPTION,
+			'Received Concession' as DESCRIPTION,
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.change_log" as EVENTS_LTCNEXMD
-		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
+		INNER JOIN (select * from "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" where BPEXT IN ('00000000000002547642','00000000000002352854','00000000000002503219','00000000000002548125','00000000000002343599','00000000000002473249','00000000000002360224','00000000000002360248','00000000000002678120','00000000000002502040','00000000000002669092')  ) as TAXPAYER ON
 		TAXPAYER.BPEXT LIKE '%'||EVENTS_LTCNEXMD.BPARTNER ||'%' WHERE "technicalKey.activationId" = ACTIVATION_ID and "technicalAttributes.recordMode" = 'N' and CAST(VALIDTO AS DATE) < cast(NOW() as date) and INVALID_EXMD='';
 		
-			UPSERT  "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
+					UPSERT  "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
 		"EVENT_ID.ID", -- Not Generated yet
 		"EVENT_GROUP",
 		"EVENT_NAME",
@@ -79,19 +76,19 @@ BEGIN
 		"END_TS"	
 	)
 		SELECT 
-			-- "SAP_CRI"."sap.cri.db.sequences::AppEventID".NEXTVAL AS "ID",
 			TO_BIGINT(TAXPAYER.PARTNER) "CUST_ID", 
-			186 as EVENT_ID,
+			181 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
-			'Invalid Concession' as EVENT_NAME,
+			'Received Concession' as EVENT_NAME,
 			CAST(VALIDFROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
-			'Invalid Concession' as DESCRIPTION,
+			'Received Concession' as DESCRIPTION,
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.change_log" as EVENTS_LTCNEXMD
-		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
+		INNER JOIN (select * from "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" where BPEXT IN ('00000000000002547642','00000000000002352854','00000000000002503219','00000000000002548125','00000000000002343599','00000000000002473249','00000000000002360224','00000000000002360248','00000000000002678120','00000000000002502040','00000000000002669092')  ) as TAXPAYER ON
 		TAXPAYER.BPEXT LIKE '%'||EVENTS_LTCNEXMD.BPARTNER ||'%' WHERE "technicalKey.activationId" = ACTIVATION_ID and "technicalAttributes.recordMode" = 'N'  and INVALID_EXMD='X';
 		
+	
 END
