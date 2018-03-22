@@ -25,7 +25,7 @@ BEGIN
  		FROM 
 		(
 		SELECT "TAXYRSTARTDT", "INTRENOPL", "BPARTNER"
-			FROM "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data"
+			FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
 			ORDER BY "TAXYRSTARTDT", "INTRENOPL","BPARTNER" ASC
 		)
 		GROUP BY "TAXYRSTARTDT", "INTRENOPL"
@@ -33,7 +33,7 @@ BEGIN
  
  lt_bp_count = 
  SELECT "TAXYRSTARTDT", "INTRENOPL", count("BPARTNER") AS "PCL_OWNER_CNT"
- FROM "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data"
+ FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
  GROUP BY "TAXYRSTARTDT", "INTRENOPL"
  HAVING count("BPARTNER") >= 5;
  
@@ -47,7 +47,7 @@ BEGIN
 	 "TENURE",
 	 "LANDUSECODE",
 	 "AVG3YRVAL" 
-	FROM "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRES.active_data";
+	FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data";
 	
   lt_out = 
   SELECT 
@@ -83,7 +83,7 @@ BEGIN
   --"_SYS_BI"."M_FISCAL_CALENDAR" AS "FISC_CAL"
   --ON "PCL_COOWNER"."TAXYRSTARTDT" = "FISC_CAL"."DATE"
   INNER JOIN
-  "osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
+  "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
   ON  "PCL_COOWNER"."INTRENOPL" = "PCL"."INTRENO"
   --WHERE "FISC_CAL"."CALENDAR_VARIANT" = 'Z6'
   ;

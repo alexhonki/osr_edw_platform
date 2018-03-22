@@ -41,10 +41,10 @@ BEGIN
 	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	INNER JOIN 
-	"osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data" AS "VILMPL"
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "VILMPL"
 	ON "PCL_COOWNER"."INTRENOPL" = "VILMPL"."INTRENO"
 	INNER JOIN 
-	"osr.edw.staging.md.rms::CDS_LAND.DSO.LTPLATS.active_data" AS "LTPLATS"
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTPLATS.active_data" AS "LTPLATS"
 	ON "PCL_COOWNER"."INTRENOPL" = "LTPLATS"."INTRENO" 
 	--LEFT OUTER JOIN 
 	--"osr.edw.staging.md.rms::CDS_LAND.DSO.ATS_DTTX.active_data" AS "ATS_DTTX"

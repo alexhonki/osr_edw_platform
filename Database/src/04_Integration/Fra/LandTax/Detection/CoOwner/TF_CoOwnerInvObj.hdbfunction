@@ -20,11 +20,11 @@ BEGIN
  FROM 
  "osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
  INNER JOIN 
- "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL"
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL"
  ON  "PCL_COOWNER"."TAXYRSTARTDT" = "VAL"."TAXYRSTARTDT"
  AND "PCL_COOWNER"."INTRENOPL" = "VAL"."INTRENOPL"
  WHERE EXISTS (
-	SELECT * FROM "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
+	SELECT * FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
 	WHERE "PCL_COOWNER"."INTRENOPL" = "PCL_BP"."INTRENOPL"
  )
  ;
@@ -67,7 +67,7 @@ BEGIN
  FROM 
  :lt_parcel_val AS "PCL_VAL"
  INNER JOIN 
- "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "OWNERSHIP"
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "OWNERSHIP"
  ON  "PCL_VAL"."TAXYRSTARTDT" = "OWNERSHIP"."TAXYRSTARTDT"
  AND "PCL_VAL"."INTRENOPL" = "OWNERSHIP"."INTRENOPL"
  ;

@@ -26,11 +26,11 @@ BEGIN
  	(
  	SELECT "LTPLRESB"."MANDT", "LTPLRESB"."TAXYRSTARTDT", "LTPLRESB"."INTRENOPL", STRING_AGG("LTPLRESB"."BPARTNER", '|' ORDER BY "LTPLRESB"."BPARTNER" ASC) AS "CO_OWNER"
  		FROM  
- 		"osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ 		"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
 		WHERE EXISTS (
 		SELECT * FROM (
 			SELECT "MANDT", "TAXYRSTARTDT", "INTRENOPL", count("BPARTNER")
-				FROM "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data"
+				FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
 				GROUP BY "MANDT", "TAXYRSTARTDT", "INTRENOPL"
 				HAVING count("BPARTNER") >= 5
 		) AS "CNT_FILTER"
@@ -41,7 +41,7 @@ BEGIN
 	GROUP BY "LTPLRESB"."MANDT", "LTPLRESB"."TAXYRSTARTDT", "LTPLRESB"."INTRENOPL"
 	) AS "LTPCLCOOWN"
 	INNER JOIN 
-	"osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
 	ON  "LTPCLCOOWN"."MANDT"	 = "PCL"."MANDT"
 	AND "LTPCLCOOWN"."INTRENOPL" = "PCL"."INTRENO"
 	;
