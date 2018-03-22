@@ -27,9 +27,9 @@ BEGIN
  "BP_REL"."OWNERFRACTION", 
  "BP_REL"."OWNERFACTOR"
  FROM
- "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "BP_REL"
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "BP_REL"
  INNER JOIN 
- "osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
+ "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
  ON "BP_REL"."INTRENOPL" = "PCL"."INTRENO"
  ;
  

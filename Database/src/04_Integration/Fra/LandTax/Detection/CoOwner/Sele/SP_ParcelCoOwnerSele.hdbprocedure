@@ -18,7 +18,7 @@ BEGIN
  to_int(left("PCL_BP"."TAXYRSTARTDT",4)) AS "FISCAL_YEAR", 
  left("PCL_BP"."TAXYRSTARTDT",4) || '0630' AS "FY_EDATE"
  FROM 
- "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
  INNER JOIN
  :it_workset AS "WS"
  ON  "PCL_BP"."TAXYRSTARTDT" = "WS"."TAXYRSTARTDT"

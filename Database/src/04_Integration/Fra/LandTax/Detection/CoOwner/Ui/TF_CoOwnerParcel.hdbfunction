@@ -38,18 +38,18 @@ BEGIN
 	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	INNER JOIN
-	"osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRES.active_data" AS "LTPLRES"
+	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "LTPLRES"
 	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "LTPLRES"."TAXYRSTARTDT" 
 	AND "PCL_COOWNER"."INTRENOPL" = "LTPLRES"."INTRENOPL" 
 	LEFT OUTER JOIN
-	"osr.edw.staging.md.rms::CDS_LAND.DSO.VILMPL.active_data" AS "VILMPL"
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "VILMPL"
 	ON "PCL_COOWNER"."INTRENOPL" = "VILMPL"."INTRENO" 
 	LEFT OUTER JOIN 
 	"osr.edw.platform.fra.ltx::CV_Facts" AS "FACTS"
 	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "FACTS"."TAXYRSTARTDT" 
 	AND "PCL_COOWNER"."INTRENOPL" = "FACTS"."INTRENOPL" 
 	LEFT OUTER JOIN
-	"osr.edw.staging.md.rms::CDS_LAND.DSO.LTLGA.active_data" AS "LTLGA"
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTLGA.active_data" AS "LTLGA"
 	ON "FACTS"."LGA" = "LTLGA"."LGA_CODE"
 	
 	;

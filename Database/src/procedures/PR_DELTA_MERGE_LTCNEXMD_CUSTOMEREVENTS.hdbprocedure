@@ -37,7 +37,7 @@ BEGIN
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.change_log" as EVENTS_LTCNEXMD
-		INNER JOIN "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
+		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
 		TAXPAYER.BPEXT LIKE '%'||EVENTS_LTCNEXMD.BPARTNER ||'%' WHERE "technicalKey.activationId" = ACTIVATION_ID and "technicalAttributes.recordMode" = 'N' and INVALID_EXMD='';
 
 		UPSERT  "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
@@ -64,7 +64,7 @@ BEGIN
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.change_log" as EVENTS_LTCNEXMD
-		INNER JOIN "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
+		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
 		TAXPAYER.BPEXT LIKE '%'||EVENTS_LTCNEXMD.BPARTNER ||'%' WHERE "technicalKey.activationId" = ACTIVATION_ID and "technicalAttributes.recordMode" = 'N' and CAST(VALIDTO AS DATE) < cast(NOW() as date) and INVALID_EXMD='';
 		
 			UPSERT  "DataWareHouse.Database::app.CustomerEvents"("CUST_ID.ID",
@@ -91,7 +91,7 @@ BEGIN
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		FROM "osr.edw.integration.ti.ltax::Capacity_Events.LTCNEXMD.change_log" as EVENTS_LTCNEXMD
-		INNER JOIN "osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
+		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" as TAXPAYER ON
 		TAXPAYER.BPEXT LIKE '%'||EVENTS_LTCNEXMD.BPARTNER ||'%' WHERE "technicalKey.activationId" = ACTIVATION_ID and "technicalAttributes.recordMode" = 'N'  and INVALID_EXMD='X';
 		
 END

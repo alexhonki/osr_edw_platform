@@ -29,7 +29,7 @@ BEGIN
  "ABSURBASE_AMT",
  RANK ( ) OVER ( PARTITION BY "RATE_CODE", "VALID_FROM", "VALID_TO" ORDER BY "MIN_VALUE" ASC ) 
  AS "RATE_BAND"
- FROM "osr.edw.staging.md.rms::CDS_LAND.DSO.LTAXRATE.active_data"
+ FROM "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTAXRATE.active_data"
  WHERE "RATE_CODE" = 'C'
  ;
  
@@ -43,7 +43,7 @@ BEGIN
  "VAL"."AVG3YRVAL" AS "AVG3YRVAL"
  FROM 
  :lt_parcel_coowner AS "PCL_CO_OWNER"
- INNER JOIN "osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL" 
+ INNER JOIN "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL" 
  ON  "PCL_CO_OWNER"."TAXYRSTARTDT" = "VAL"."TAXYRSTARTDT"
  AND "PCL_CO_OWNER"."INTRENOPL" = "VAL"."INTRENOPL"
  ;
@@ -74,7 +74,7 @@ BEGIN
  ON  "VAL"."TAXYRSTARTDT" = "PCL_COOWNER"."TAXYRSTARTDT"
  AND "VAL"."CO_OWNER_ID" = "PCL_COOWNER"."CO_OWNER_ID"
  INNER JOIN
- "osr.edw.staging.md.rms::CDS_LAND.DSO.LTAXBPPL.active_data" AS "TAX"
+ "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTAXBPPL.active_data" AS "TAX"
  ON  "PCL_COOWNER"."TAXYRSTARTDT" = "TAX"."VALIDFROM"
  AND "PCL_COOWNER"."INTRENOPL" = "TAX"."INTRENO_PL"
  GROUP BY 

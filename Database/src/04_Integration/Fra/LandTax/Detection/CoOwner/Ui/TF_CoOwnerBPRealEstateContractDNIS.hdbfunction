@@ -27,15 +27,15 @@ BEGIN
 	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	INNER JOIN 
-	"osr.edw.staging.td.rms::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
 	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT" 
 	AND "PCL_COOWNER"."INTRENOPL" = "LTPLRESB"."INTRENOPL" 
 	INNER JOIN
-	"osr.edw.staging.td.rms::CDS_LAND.DSO.VICNCN.active_data" AS "VICNCN"
+	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.VICNCN.active_data" AS "VICNCN"
 	ON  "LTPLRESB"."INTRENOPL" = "VICNCN"."INTRENO" 
 	AND "LTPLRESB"."BPARTNER" = "VICNCN"."ZZ_PARTNER" 
 	LEFT OUTER JOIN
-	"osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
 	ON "LTPLRESB"."BPARTNER" = "BUT000"."PARTNER" 
 	WHERE "VICNCN"."DNIS" = 'X'
 	;

@@ -25,7 +25,7 @@ BEGIN
 	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	LEFT OUTER JOIN
-	"osr.edw.staging.md.rms::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
 	ON LPAD(LTRIM("ALERT"."INV_OBJ_ADD_ID3",'0'),10,'0') = "BUT000"."PARTNER" 
 	;
 END;
