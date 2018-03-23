@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS" ( )
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS" ( IN IP_ALERT_ID NVARCHAR(20) )
 	RETURNS TABLE 
        (
     	DB_KEY			NVARCHAR(32),
@@ -43,6 +43,7 @@ BEGIN
 	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "LTPLRES"
 	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "LTPLRES"."TAXYRSTARTDT" 
 	AND "PCL_COOWNER"."INTRENOPL" = "LTPLRES"."INTRENOPL" 
+	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	;
 	
 END;

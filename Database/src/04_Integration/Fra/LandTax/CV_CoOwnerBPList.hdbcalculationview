@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_CoOwnerBPList" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Co-Owner Business Partner List"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_CoOwnerBPList" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_CoOwnerBPList</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_CoOwnerBPList">
+  <attributes>
+    <attribute id="CO_OWNER_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Co-Owner ID"/>
+      <keyMapping columnObjectName="TF_CoOwnerBPList" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="BPARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner"/>
+      <keyMapping columnObjectName="TF_CoOwnerBPList" columnName="BPARTNER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

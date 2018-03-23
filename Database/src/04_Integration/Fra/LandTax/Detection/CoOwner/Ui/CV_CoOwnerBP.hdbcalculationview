@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Projection" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Projection" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
 <descriptions defaultDescription="Co-Owner BP"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
@@ -11,14 +11,19 @@
     </variableProperties>
   </variable>
 </localVariables>
-<variableMappings/>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="COLUMN_ENGINE">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
       <viewAttribute id="DB_KEY">
         <descriptions defaultDescription="DB_KEY"/>

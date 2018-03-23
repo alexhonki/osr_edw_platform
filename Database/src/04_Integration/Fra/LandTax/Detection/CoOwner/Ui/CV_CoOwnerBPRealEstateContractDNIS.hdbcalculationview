@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBPRealEstateContractDNIS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBPRealEstateContractDNIS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Co-Owner BP Real Estate Contract DNIS"/>
-<localVariables/>
-<variableMappings/>
-<dataSources>
-  <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS</resourceUri>
-  </DataSource>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings><dataSources>
+<DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS" type="TABLE_FUNCTION">
+  <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS</resourceUri>
+</DataSource>
 </dataSources>
 <calculationViews/>
 <logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS">

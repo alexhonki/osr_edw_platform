@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerQVAS" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Aggregation" schemaVersion="3.0" dataCategory="CUBE" applyPrivilegeType="NONE">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerQVAS" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Aggregation" schemaVersion="3.0" dataCategory="CUBE" applyPrivilegeType="NONE">
 <descriptions defaultDescription="Co-Owner QVAS"/>
-<localVariables/>
-<variableMappings/>
-<dataSources>
-  <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS</resourceUri>
-  </DataSource>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings><dataSources>
+<DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS" type="TABLE_FUNCTION">
+  <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS</resourceUri>
+</DataSource>
 </dataSources>
 <calculationViews/>
 <logicalModel id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerQVAS">

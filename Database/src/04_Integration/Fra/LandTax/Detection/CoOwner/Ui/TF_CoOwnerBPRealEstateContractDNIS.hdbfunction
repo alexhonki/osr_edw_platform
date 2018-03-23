@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS" ( )
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS" ( IN IP_ALERT_ID NVARCHAR(20) )
        RETURNS TABLE (
     	DB_KEY			NVARCHAR(32),
     	ALERT_ID		NVARCHAR(20),
@@ -38,5 +38,6 @@ BEGIN
 	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
 	ON "LTPLRESB"."BPARTNER" = "BUT000"."PARTNER" 
 	WHERE "VICNCN"."DNIS" = 'X'
+	  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	;
 END;

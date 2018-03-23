@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP" (IV_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBP" ( IN IP_ALERT_ID NVARCHAR(20) )
 	RETURNS TABLE 
        (
     	DB_KEY			NVARCHAR(32),
@@ -44,9 +44,9 @@ BEGIN
 	"PCL_COOWNER"."PLNO",
 	"LTPLRESB"."BPARTNER", 
 	CASE WHEN "BUT000"."TYPE" = '1' THEN
-		"BUT000"."NAME_ORG1" || CHAR(32) || "BUT000"."NAME_ORG2" || CHAR(32) || "BUT000"."NAME_ORG3" || CHAR(32) || "BUT000"."NAME_ORG4"
-	ELSE
 		"BUT000"."NAME_FIRST" || CHAR(32) || "BUT000"."NAMEMIDDLE" || CHAR(32) || "BUT000"."NAME_LAST"
+	ELSE
+		"BUT000"."NAME_ORG1" || CHAR(32) || "BUT000"."NAME_ORG2" || CHAR(32) || "BUT000"."NAME_ORG3" || CHAR(32) || "BUT000"."NAME_ORG4"
 	END
 	AS "BPARTNER_NAME",
 	"LTPLRESB"."VALIDFROM", 
@@ -64,7 +64,7 @@ BEGIN
 	LEFT OUTER JOIN
 	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
 	ON "LTPLRESB"."BPARTNER" = "BUT000"."PARTNER" 
-	WHERE "ALERT"."ALERT_ID" = :IV_ALERT_ID
+	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	) AS "DATA", 
 	"osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
 	WHERE "DATA"."BPARTNER" = "BP"."PARTNER"

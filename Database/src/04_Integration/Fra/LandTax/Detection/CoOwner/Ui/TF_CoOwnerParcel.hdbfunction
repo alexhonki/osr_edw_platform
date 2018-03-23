@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerParcel" ( )
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerParcel" ( IN IP_ALERT_ID NVARCHAR(20) )
 	RETURNS TABLE 
        (
     	DB_KEY			NVARCHAR(32),
@@ -51,6 +51,7 @@ BEGIN
 	LEFT OUTER JOIN
 	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTLGA.active_data" AS "LTLGA"
 	ON "FACTS"."LGA" = "LTLGA"."LGA_CODE"
+	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	
 	;
 END;

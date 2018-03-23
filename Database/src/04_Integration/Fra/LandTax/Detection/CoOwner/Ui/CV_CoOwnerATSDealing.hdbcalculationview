@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerATSDealing" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Aggregation" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
-<descriptions defaultDescription="Co-Owner ATS Dealing"/>
-<localVariables/>
-<variableMappings/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerATSDealing" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Aggregation" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
+<descriptions defaultDescription="Co-Owner ATS Dealing">
+</descriptions>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings><!--
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
+-->
 <dataSources>
   <DataSource id="osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing</resourceUri>

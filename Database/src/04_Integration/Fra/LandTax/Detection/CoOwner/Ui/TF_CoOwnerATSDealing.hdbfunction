@@ -1,6 +1,5 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing" ( )
-	RETURNS TABLE 
-       (
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerATSDealing" ( IN IP_ALERT_ID NVARCHAR(20) )
+	RETURNS TABLE (
     	DB_KEY				NVARCHAR(32),
     	ALERT_ID			NVARCHAR(20),
     	INVEST_OBJ_TYPE 	NVARCHAR(10),
@@ -46,6 +45,7 @@ BEGIN
 	INNER JOIN 
 	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTPLATS.active_data" AS "LTPLATS"
 	ON "PCL_COOWNER"."INTRENOPL" = "LTPLATS"."INTRENO" 
+	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	--LEFT OUTER JOIN 
 	--"osr.edw.staging.md.rms::CDS_LAND.DSO.ATS_DTTX.active_data" AS "ATS_DTTX"
 	--ON "LTPLATS"."DEALING_TYPE" = "ATS_DTTX"."DEALING_TYPE"
