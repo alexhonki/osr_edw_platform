@@ -31,7 +31,7 @@ BEGIN
          ELSE 'ZBP_PERSON'
          END
 	     AS "STYLE"
-       FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BP"
+       FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BP"
        LEFT OUTER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" AS "BP_REL"
        ON "BP"."PARTNER" = "BP_REL"."PARTNER1"
        ;

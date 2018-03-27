@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS" ( )
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPRealEstateContractDNIS" ( IN IP_ALERT_ID NVARCHAR(20) )
        RETURNS TABLE (
     	DB_KEY			NVARCHAR(32),
     	ALERT_ID		NVARCHAR(20),
@@ -35,8 +35,10 @@ BEGIN
 	ON  "LTPLRESB"."INTRENOPL" = "VICNCN"."INTRENO" 
 	AND "LTPLRESB"."BPARTNER" = "VICNCN"."ZZ_PARTNER" 
 	LEFT OUTER JOIN
-	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
+	"osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BUT000"
 	ON "LTPLRESB"."BPARTNER" = "BUT000"."PARTNER" 
 	WHERE "VICNCN"."DNIS" = 'X'
+	  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
+	  AND "LTPLRESB"."TAXYRSTARTDT" >= TO_NVARCHAR(TO_INT(LEFT(CURRENT_DATE,4)) - 5) || '0701'
 	;
 END;

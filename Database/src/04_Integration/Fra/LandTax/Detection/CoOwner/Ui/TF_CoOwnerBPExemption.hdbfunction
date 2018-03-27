@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPExemption" ( )
+FUNCTION "osr.edw.platform.fra.ltx.coowner.ui::TF_CoOwnerBPExemption" ( IN IP_ALERT_ID NVARCHAR(20) )
        RETURNS TABLE     
        (
     	DB_KEY			NVARCHAR(32),
@@ -36,6 +36,8 @@ BEGIN
 	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" AS "LTCNEXMD"
 	ON  "LTPLRESB"."INTRENOPL" = "LTCNEXMD"."INTRENOPL" 
 	AND "LTPLRESB"."BPARTNER" = "LTCNEXMD"."BPARTNER" 
+	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+	  AND "LTPLRESB"."TAXYRSTARTDT" >= TO_NVARCHAR(TO_INT(LEFT(CURRENT_DATE,4)) - 5) || '0701'
 	;
 	
 END;
