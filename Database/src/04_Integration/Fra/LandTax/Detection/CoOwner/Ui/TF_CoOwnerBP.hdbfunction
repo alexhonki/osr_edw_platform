@@ -62,9 +62,10 @@ BEGIN
 	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT" 
 	AND "PCL_COOWNER"."INTRENOPL" = "LTPLRESB"."INTRENOPL" 
 	LEFT OUTER JOIN
-	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BUT000"
+	"osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BUT000"
 	ON "LTPLRESB"."BPARTNER" = "BUT000"."PARTNER" 
 	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+	  AND "LTPLRESB"."TAXYRSTARTDT" >= TO_NVARCHAR(TO_INT(LEFT(CURRENT_DATE,4)) - 5) || '0701'
 	) AS "DATA", 
 	"osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
 	WHERE "DATA"."BPARTNER" = "BP"."PARTNER"
