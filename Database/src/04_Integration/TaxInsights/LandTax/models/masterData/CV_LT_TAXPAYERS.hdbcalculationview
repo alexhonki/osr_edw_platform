@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_LT_TAXPAYERS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.integration.ti.ltax::TF_LT_CLIENTS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.integration.ti.ltax::TF_LT_CLIENTS</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_LTCNRESV">
+    <viewAttributes>
+      <viewAttribute id="ZZ_PARTNER">
+        <descriptions defaultDescription="ZZ_PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ACTIVE">
+        <descriptions defaultDescription="ACTIVE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax::TF_LT_CLIENTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="ZZ_PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVE" source="ACTIVE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_BUT000">
+    <viewAttributes>
+      <viewAttribute id="NAME_FIRST">
+        <descriptions defaultDescription="NAME_FIRST"/>
+      </viewAttribute>
+      <viewAttribute id="NAMEMIDDLE">
+        <descriptions defaultDescription="NAMEMIDDLE"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LAST">
+        <descriptions defaultDescription="NAME_LAST"/>
+      </viewAttribute>
+    
+      <viewAttribute id="CRUSR">
+        <descriptions defaultDescription="CRUSR"/>
+      </viewAttribute>
+      <viewAttribute id="CRDAT">
+        <descriptions defaultDescription="CRDAT"/>
+      </viewAttribute>
+      <viewAttribute id="CHUSR">
+        <descriptions defaultDescription="CHUSR"/>
+      </viewAttribute>
+      <viewAttribute id="CHDAT">
+        <descriptions defaultDescription="CHDAT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAMEMIDDLE" source="NAMEMIDDLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CRUSR" source="CRUSR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CRDAT" source="CRDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHUSR" source="CHUSR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHDAT" source="CHDAT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ACTIVE">
+        <descriptions defaultDescription="ACTIVE"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_FIRST">
+        <descriptions defaultDescription="NAME_FIRST"/>
+      </viewAttribute>
+      <viewAttribute id="NAMEMIDDLE">
+        <descriptions defaultDescription="NAMEMIDDLE"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LAST">
+        <descriptions defaultDescription="NAME_LAST"/>
+      </viewAttribute>
+      <viewAttribute id="CREATEDBY">
+        <descriptions defaultDescription="CRUSR"/>
+      </viewAttribute>
+      <viewAttribute id="CREATEDDATE">
+        <descriptions defaultDescription="CRDAT"/>
+      </viewAttribute>
+      <viewAttribute id="CHANGEDBY">
+        <descriptions defaultDescription="CHUSR"/>
+      </viewAttribute>
+      <viewAttribute id="CHANGEDDATE">
+        <descriptions defaultDescription="CHDAT"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$ZZ_PARTNER$PARTNER"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="NAME" datatype="VARCHAR" length="120" expressionLanguage="COLUMN_ENGINE">
+        <formula>&quot;NAME_FIRST&quot;+&quot;NAMEMIDDLE&quot;+&quot;NAME_LAST&quot;</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="INIT_TS" datatype="INTEGER" expressionLanguage="SQL">
+    
+        <formula>(YEAR(&quot;INIT_DATE&quot;)*100) + MONTH(&quot;INIT_DATE&quot;)</formula>
+    
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="END_TS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>(YEAR(&quot;END_DATE&quot;)*100) + MONTH(&quot;END_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="IS_SENSITIVE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>0</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CUST_ID" datatype="NVARCHAR" length="10" expressionLanguage="SQL">
+        <formula>&quot;PARTNER&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="P_LTCNRESV">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVE" source="ACTIVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="ZZ_PARTNER"/>
+    </input>
+    <input node="P_BUT000">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAMEMIDDLE" source="NAMEMIDDLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDBY" source="CRUSR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDDATE" source="CRDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDBY" source="CHUSR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDDATE" source="CHDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="PARTNER"/>
+    </input>
+    <joinAttribute name="JOIN$ZZ_PARTNER$PARTNER"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="CUST_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
+    </attribute>
+    <attribute id="EXT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="Join_1" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="INIT_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="INIT_DATE"/>
+    </attribute>
+    <attribute id="END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="END_DATE"/>
+    </attribute>
+    <attribute id="ACTIVE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTIVE"/>
+      <keyMapping columnObjectName="Join_1" columnName="ACTIVE"/>
+    </attribute>
+    <attribute id="NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULLNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME"/>
+    </attribute>
+    <attribute id="INIT_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="INIT_TS"/>
+    </attribute>
+  
+    <attribute id="END_TS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="END_TS"/>
+    </attribute>
+    <attribute id="CREATEDBY" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CRUSR"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREATEDBY"/>
+    </attribute>
+    <attribute id="CREATEDDATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CRDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREATEDDATE"/>
+    </attribute>
+    <attribute id="CHANGEDBY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHUSR"/>
+      <keyMapping columnObjectName="Join_1" columnName="CHANGEDBY"/>
+    </attribute>
+    <attribute id="CHANGEDDATE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CHANGEDDATE"/>
+    </attribute>
+    <attribute id="IS_SENSITIVE" order="13" replaceNull="true" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_SENSITIVE"/>
+      <keyMapping columnObjectName="Join_1" columnName="IS_SENSITIVE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_LTCNRESV" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="19" y="451"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_BUT000" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="240" y="486"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="107" y="221"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="P_LTCNRESV" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_BUT000" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
