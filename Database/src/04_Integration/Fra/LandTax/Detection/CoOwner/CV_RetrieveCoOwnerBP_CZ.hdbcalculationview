@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_RetrieveCoOwnerBP_CZ" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_RetrieveCoOwnerBP_CZ"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerBP_CZ" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerBP_CZ</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerBP_CZ">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerBP_CZ" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerBP_CZ" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerBP_CZ" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerBP_CZ" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="CO_OWNER_BP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_BP"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerBP_CZ" columnName="CO_OWNER_BP"/>
+    </attribute>
+    <attribute id="TRANSFER_DATE" order="6" semanticType="date" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRANSFER_DATE"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerBP_CZ" columnName="TRANSFER_DATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

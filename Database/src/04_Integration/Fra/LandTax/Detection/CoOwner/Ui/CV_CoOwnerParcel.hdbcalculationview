@@ -44,7 +44,7 @@
       <descriptions defaultDescription="Internal Key of Real Estate Object"/>
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="INTRENOPL"/>
     </attribute>
-    <attribute id="PLNO" attributeHierarchyActive="false" displayAttribute="false" order="6">
+    <attribute id="PLNO" attributeHierarchyActive="false" displayAttribute="false" order="6" descriptionColumnName="XPL">
       <descriptions defaultDescription="Parcel Number"/>
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="PLNO"/>
     </attribute>
@@ -52,20 +52,24 @@
       <descriptions defaultDescription="Parcel Address"/>
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="XPL"/>
     </attribute>
-    <attribute id="LANDUSECODE" attributeHierarchyActive="false" displayAttribute="false" order="8">
-      <descriptions defaultDescription="Land Use Code"/>
+    <attribute id="LANDUSECODE" order="8" descriptionColumnName="LANDUSECODE_DESC" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDUSECODE"/>
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LANDUSECODE"/>
     </attribute>
-    <attribute id="LGA" attributeHierarchyActive="false" displayAttribute="false" order="9" descriptionColumnName="LGA_TEXT">
+    <attribute id="LANDUSECODE_DESC" attributeHierarchyActive="false" displayAttribute="false" order="9">
+      <descriptions defaultDescription="Land Use Code Descr."/>
+      <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LANDUSECODE_DESC"/>
+    </attribute>
+    <attribute id="LGA" attributeHierarchyActive="false" displayAttribute="false" order="10" descriptionColumnName="LGA_TEXT">
       <descriptions defaultDescription="LGA"/>
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LGA"/>
     </attribute>
-    <attribute id="LGA_TEXT" attributeHierarchyActive="false" displayAttribute="false" order="10">
+    <attribute id="LGA_TEXT" attributeHierarchyActive="false" displayAttribute="false" order="11">
       <descriptions defaultDescription="LGA Text"/>
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="LGA_TEXT"/>
     </attribute>
   
-    <attribute id="AREAUNIT" order="12" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="AREAUNIT" order="13" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Measurement Unit"/>
   
       <keyMapping columnObjectName="TF_CoOwnerParcel" columnName="AREAUNIT"/>
@@ -74,7 +78,7 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="AREA" order="11" semanticType="quantity" aggregationType="sum" measureType="quantity">
+    <measure id="AREA" order="12" semanticType="quantity" aggregationType="sum" measureType="quantity">
       <descriptions defaultDescription="Area"/>
       <unitCurrencyAttribute attributeName="AREAUNIT"/>
       <measureMapping columnObjectName="TF_CoOwnerParcel" columnName="AREA"/>
