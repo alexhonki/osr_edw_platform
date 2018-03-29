@@ -3,6 +3,9 @@
 		"name": "osr.sec.edw.platform.dac::read",
 		"schema_privileges":[{  "privileges":[ "SELECT", "SELECT CDS METADATA", "EXECUTE" ]}],
 		"schema_roles":[ { "names": ["osr.sec.edw.platform.rms.dac::read", "osr.sec.edw.platform.tmr.dac::read", "osr.sec.edw.platform.crm.dac::read"]} ],
-		"object_privileges":[{ "name":"osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj", "type":"VIEW", "privileges":[ "SELECT" ]}]
+		"object_privileges":[{ "name":"osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj", "type":"VIEW", "privileges":[ "SELECT" ]},
+		{ "name":"osr.edw.platform.fra.ltx.coowner::TF_CoOwnerDetObj", "type":"FUNCTION", "privileges":[ "EXECUTE" ]}]
     }
 }
+
+
