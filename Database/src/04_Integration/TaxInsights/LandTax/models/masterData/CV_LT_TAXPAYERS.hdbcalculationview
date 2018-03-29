@@ -134,12 +134,14 @@
       <calculatedViewAttribute id="IS_SENSITIVE" datatype="INTEGER" expressionLanguage="SQL">
         <formula>0</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="CUST_ID" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute id="CUST_ID" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
         <formula>int(&quot;PARTNER&quot;)</formula>
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="EXT_ID" datatype="VARCHAR" length="32" expressionLanguage="COLUMN_ENGINE">
+    
         <formula>string(&quot;PARTNER&quot;)</formula>
+    
       </calculatedViewAttribute>
       <calculatedViewAttribute id="INIT_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
         <formula>TO_TIMESTAMP(&quot;INIT_DATE&quot;)</formula>
@@ -210,22 +212,22 @@
       <descriptions defaultDescription="IS_SENSITIVE"/>
       <keyMapping columnObjectName="Join_1" columnName="IS_SENSITIVE"/>
     </attribute>
-  
-    <attribute id="CUST_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CUST_ID"/>
-      <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
-    </attribute>
-    <attribute id="EXT_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EXT_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EXT_ID"/>
       <keyMapping columnObjectName="Join_1" columnName="EXT_ID"/>
     </attribute>
-    <attribute id="INIT_DATE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_DATE" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_DATE"/>
       <keyMapping columnObjectName="Join_1" columnName="INIT_DATE_TS"/>
     </attribute>
-    <attribute id="END_DATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_DATE" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_DATE"/>
       <keyMapping columnObjectName="Join_1" columnName="END_DATE_TS"/>
+    </attribute>
+  
+    <attribute id="CUST_ID" key="true" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
