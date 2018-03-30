@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS_REACTION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" enforceSqlExecution="false" outputViewType="Projection" cacheInvalidationPeriod="NONE">
+<descriptions defaultDescription="CV_LT_TAXPAYERS_REACTION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.integration.ti.ltax::TF_LT_REACTED_CUSTOMER" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.integration.ti.ltax::TF_LT_REACTED_CUSTOMER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DEBTOR_REACTIONS">
+    <viewAttributes>
+      <viewAttribute id="GPART">
+        <descriptions defaultDescription="GPART"/>
+      </viewAttribute>
+      <viewAttribute id="FINYEAR">
+        <descriptions defaultDescription="FINYEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="INIT_DATE" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_BEFORE(&quot;FINYEAR&quot;, '-'),&quot;INIT_DATE_MONTH&quot;)))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="REACTION_TYPE" datatype="VARCHAR" length="100" expressionLanguage="SQL">
+        <formula>'DEBTOR_INITIAL_ASSESSMENT'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_DATE" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_AFTER(&quot;FINYEAR&quot;, '-'),&quot;END_DATE_MONTH&quot;)))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="INIT_TS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>TO_INT(CONCAT(SUBSTR_BEFORE(&quot;FINYEAR&quot;, '-'),'07'))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_TS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>TO_INT(CONCAT(SUBSTR_AFTER(&quot;FINYEAR&quot;, '-'),'06'))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="REACTION_VALUE" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="INIT_DATE_MONTH" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>'-07-01'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_DATE_MONTH" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>'-06-30'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax::TF_LT_REACTED_CUSTOMER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GPART" source="GPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINYEAR" source="FINYEAR"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DEBTOR_REACTIONS">
+  <attributes>
+    <attribute id="CUST_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GPART"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="GPART"/>
+    </attribute>
+    <attribute id="INIT_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_DATE"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="INIT_DATE"/>
+    </attribute>
+    <attribute id="REACTION_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REACTION_TYPE"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="REACTION_TYPE"/>
+    </attribute>
+    <attribute id="END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_DATE"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="END_DATE"/>
+    </attribute>
+    <attribute id="INIT_TS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_TS"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="INIT_TS"/>
+    </attribute>
+    <attribute id="END_TS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_TS"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="END_TS"/>
+    </attribute>
+    <attribute id="REACTION_VALUE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REACTION_VALUE"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="REACTION_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    <shape expanded="true" modelObjectName="DEBTOR_REACTIONS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="94" y="418"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
