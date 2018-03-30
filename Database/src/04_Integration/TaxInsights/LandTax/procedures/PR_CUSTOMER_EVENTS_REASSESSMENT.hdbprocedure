@@ -12,7 +12,7 @@ BEGIN
    	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
 	SELECT * FROM (
 	SELECT 
-	a.GPART as CUST_ID,
+	c.CUST_ID as CUST_ID,
 	236 as EVENT_ID,
 	'Re-Assessment' as EVENT_GROUP,
 	CONCAT('Re-Assessment Posted - ORG -  ',
@@ -32,13 +32,14 @@ BEGIN
 	NULL  as END_TS
 	from "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" as a
 	INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID =a.GPART
 	WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='ORG' and a.GPART >= '0001000335' and a.GPART <= '0001076855'
-	GROUP BY a.GPART,BUDAT
+	GROUP BY c.CUST_ID,BUDAT
 	
 	UNION ALL 
 	
 	SELECT 
-	a.GPART as CUST_ID,
+	c.CUST_ID as CUST_ID,
 	236 as EVENT_ID,
 	'Re-Assessment' as EVENT_GROUP,
 	CONCAT('Re-Assessment Posted - IND -  ',
@@ -60,8 +61,9 @@ BEGIN
 	NULL  as END_TS
 	from "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" as a
 	INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = a.GPART
 	WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='IND' and a.GPART >= '0001000335' and a.GPART <= '0001076855'
-	GROUP BY a.GPART,BUDAT
+	GROUP BY c.CUST_ID,BUDAT
 	) WHERE EVENT_NAME is not null;
 	
 END
