@@ -72,9 +72,6 @@
       <viewAttribute id="DUEAMOUNT" aggregationType="sum">
         <descriptions defaultDescription="DUEAMOUNT"/>
       </viewAttribute>
-      <viewAttribute id="FINYEAR">
-        <descriptions defaultDescription="FINYEAR"/>
-      </viewAttribute>
       <viewAttribute id="INIT_DATE" aggregationType="min">
         <descriptions defaultDescription="INIT_DATE"/>
       </viewAttribute>
@@ -93,7 +90,6 @@
     <input node="P_TF_LT_CUSTOMER_VALUES">
       <mapping xsi:type="Calculation:AttributeMapping" target="GPART" source="GPART"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DUEAMOUNT" source="DUEAMOUNT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINYEAR" source="FINYEAR"/>
     </input>
     <input node="P_CV_LT_TAXPAYERS">
       <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
@@ -107,7 +103,7 @@
 </calculationViews>
 <logicalModel id="J_CUSTOMER_VALUES">
   <attributes>
-    <attribute id="GPART" order="1" attributeHierarchyActive="false" displayAttribute="false">
+    <attribute id="CUST_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="GPART"/>
       <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="GPART"/>
     </attribute>
@@ -115,23 +111,19 @@
       <descriptions defaultDescription="DUEAMOUNT"/>
       <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="DUEAMOUNT"/>
     </attribute>
-    <attribute id="FINYEAR" order="3" attributeHierarchyActive="false" displayAttribute="false">
-      <descriptions defaultDescription="FINYEAR"/>
-      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="FINYEAR"/>
-    </attribute>
-    <attribute id="INIT_DATE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+    <attribute id="INIT_DATE" order="3" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="INIT_DATE"/>
       <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="INIT_DATE"/>
     </attribute>
-    <attribute id="END_DATE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+    <attribute id="END_DATE" order="4" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="END_DATE"/>
       <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="END_DATE"/>
     </attribute>
-    <attribute id="INIT_TS" order="6" attributeHierarchyActive="false" displayAttribute="false">
+    <attribute id="INIT_TS" order="5" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="INIT_TS"/>
       <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="INIT_TS"/>
     </attribute>
-    <attribute id="END_TS" order="7" attributeHierarchyActive="false" displayAttribute="false">
+    <attribute id="END_TS" order="6" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="END_TS"/>
       <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="END_TS"/>
     </attribute>
