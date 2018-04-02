@@ -1,0 +1,23 @@
+namespace osr.edw.integration.ti.ltax;
+using osr.edw.integration.ti.ltax :: CustomerIdT;
+context text {
+    entity cleanText {
+        key ID          : Integer;
+        key TRANS_ID    : CustomerIdT;
+        key CUST_ID     : CustomerIdT;
+            //   		LANGUAGE_CODE	: hana.VARCHAR(2) default 'en';
+            DESCRIPTION : String(5000);
+    }
+    technical configuration {
+        column store;
+        fulltext index Index_CleanedText on (DESCRIPTION)
+            fast preprocess off
+            //configuration 'EXTRACTION_CORE_VOICEOFCUSTOMER'
+            text analysis on;
+    };
+
+    entity StopWords {
+        key LANGUAGE_CODE : hana.VARCHAR(2);
+        key STOPWORD      : String(100);
+    };
+};
