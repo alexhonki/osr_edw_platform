@@ -44,8 +44,10 @@
         <formula>'-06-30'</formula>
       </calculatedViewAttribute>
     
-      <calculatedViewAttribute id="CUST_ID" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute id="CUST_ID" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
+    
         <formula>int(&quot;GPART&quot;)</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -84,7 +86,9 @@
   
     <attribute id="CUST_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CUST_ID"/>
+  
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="CUST_ID"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
