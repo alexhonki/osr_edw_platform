@@ -1,0 +1,20 @@
+FUNCTION "osr.edw.integration.ti.ltax::TF_LT_CUSTOMER_VALUES" ( )
+       RETURNS TABLE (
+        GPART NVARCHAR(10),
+		DUEAMOUNT BIGINT,
+		FINYEAR NVARCHAR(10)
+       )    
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+/*****************************  
+       Write your function logic 
+ *****************************/ 
+RETURN  SELECT GPART , SUM(BETRH) DUEAMOUNT, FINYEAR FROM( SELECT  GPART, BETRH ,"osr.edw.integration.ti.ltax::TF_LT_GET_FIN_YEAR"(BUDAT).FINYEAR FINYEAR, 
+		FAEDN
+		FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" DEBTOR INNER JOIN 
+		"osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" TAXPAYER ON TAXPAYER.EXT_ID = DEBTOR.GPART
+		WHERE  GPART > '0001000335' and GPART <= '0001076855') GROUP BY GPART, FINYEAR HAVING SUM(BETRH) > 0;
+
+
+END;
