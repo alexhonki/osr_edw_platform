@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="osr.edw.integration.ti.ltax::CV_LT_TAXPAYER_VALUES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" enforceSqlExecution="false" outputViewType="Projection" cacheInvalidationPeriod="NONE">
+<descriptions defaultDescription="CV_LT_TAXPAYER_VALUES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax::TF_LT_CUSTOMER_VALUES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.integration.ti.ltax::TF_LT_CUSTOMER_VALUES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_CV_LT_TAXPAYERS">
+    <viewAttributes>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TS">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TS">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+      <viewAttribute id="EXT_ID">
+        <descriptions defaultDescription="EXT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CUST_ID">
+        <descriptions defaultDescription="CUST_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TS" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TS" source="END_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXT_ID" source="EXT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TF_LT_CUSTOMER_VALUES">
+    <viewAttributes>
+      <viewAttribute id="GPART">
+        <descriptions defaultDescription="GPART"/>
+      </viewAttribute>
+      <viewAttribute id="DUEAMOUNT" aggregationType="sum">
+        <descriptions defaultDescription="DUEAMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="FINYEAR">
+        <descriptions defaultDescription="FINYEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax::TF_LT_CUSTOMER_VALUES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GPART" source="GPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DUEAMOUNT" source="DUEAMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINYEAR" source="FINYEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_CUSTOMER_VALUES" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="GPART">
+        <descriptions defaultDescription="GPART"/>
+      </viewAttribute>
+      <viewAttribute id="DUEAMOUNT" aggregationType="sum">
+        <descriptions defaultDescription="DUEAMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE" aggregationType="min">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE" aggregationType="min">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TS" aggregationType="sum">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TS" aggregationType="sum">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="P_TF_LT_CUSTOMER_VALUES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GPART" source="GPART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DUEAMOUNT" source="DUEAMOUNT"/>
+    </input>
+    <input node="P_CV_LT_TAXPAYERS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TS" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TS" source="END_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GPART" source="EXT_ID"/>
+    </input>
+    <joinAttribute name="GPART"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="J_CUSTOMER_VALUES">
+  <attributes>
+    <attribute id="CUST_ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+      <descriptions defaultDescription="GPART"/>
+      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="GPART"/>
+    </attribute>
+    <attribute id="DUEAMOUNT" order="2" attributeHierarchyActive="false" displayAttribute="false">
+      <descriptions defaultDescription="DUEAMOUNT"/>
+      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="DUEAMOUNT"/>
+    </attribute>
+    <attribute id="INIT_DATE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+      <descriptions defaultDescription="INIT_DATE"/>
+      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="INIT_DATE"/>
+    </attribute>
+    <attribute id="END_DATE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+      <descriptions defaultDescription="END_DATE"/>
+      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="END_DATE"/>
+    </attribute>
+    <attribute id="INIT_TS" order="5" attributeHierarchyActive="false" displayAttribute="false">
+      <descriptions defaultDescription="INIT_TS"/>
+      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="INIT_TS"/>
+    </attribute>
+    <attribute id="END_TS" order="6" attributeHierarchyActive="false" displayAttribute="false">
+      <descriptions defaultDescription="END_TS"/>
+      <keyMapping columnObjectName="J_CUSTOMER_VALUES" columnName="END_TS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_CV_LT_TAXPAYERS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="230" y="298"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_TF_LT_CUSTOMER_VALUES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="6" y="282"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="false" modelObjectName="J_CUSTOMER_VALUES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="184"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="P_TF_LT_CUSTOMER_VALUES" modelObjectNameSpace="J_CUSTOMER_VALUES" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_CV_LT_TAXPAYERS" modelObjectNameSpace="J_CUSTOMER_VALUES" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

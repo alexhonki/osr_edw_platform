@@ -43,6 +43,10 @@
       <calculatedViewAttribute id="END_DATE_MONTH" datatype="VARCHAR" length="13" expressionLanguage="SQL">
         <formula>'-06-30'</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CUST_ID" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(&quot;GPART&quot;)</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.integration.ti.ltax::TF_LT_REACTED_CUSTOMER">
@@ -53,33 +57,34 @@
 </calculationViews>
 <logicalModel id="DEBTOR_REACTIONS">
   <attributes>
-    <attribute id="CUST_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GPART"/>
-      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="GPART"/>
-    </attribute>
-    <attribute id="INIT_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_DATE" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_DATE"/>
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="INIT_DATE"/>
     </attribute>
-    <attribute id="REACTION_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="REACTION_TYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REACTION_TYPE"/>
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="REACTION_TYPE"/>
     </attribute>
-    <attribute id="END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_DATE"/>
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="END_DATE"/>
     </attribute>
-    <attribute id="INIT_TS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_TS" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_TS"/>
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="INIT_TS"/>
     </attribute>
-    <attribute id="END_TS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_TS" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_TS"/>
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="END_TS"/>
     </attribute>
-    <attribute id="REACTION_VALUE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="REACTION_VALUE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REACTION_VALUE"/>
       <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="REACTION_VALUE"/>
+    </attribute>
+  
+    <attribute id="CUST_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID"/>
+      <keyMapping columnObjectName="DEBTOR_REACTIONS" columnName="CUST_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
