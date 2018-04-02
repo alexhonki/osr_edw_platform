@@ -20,6 +20,16 @@
       <viewAttribute id="CUST_ID">
         <descriptions defaultDescription="CUST_ID"/>
       </viewAttribute>
+    
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TS">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TS">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="AGE" datatype="DECIMAL" length="4" scale="1" expressionLanguage="COLUMN_ENGINE">
@@ -34,6 +44,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TS" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TS" source="END_TS"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -54,6 +68,19 @@
     <attribute id="END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_DATE"/>
       <keyMapping columnObjectName="Projection_1" columnName="END_DATE"/>
+    </attribute>
+  
+    <attribute id="INIT_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INIT_DATE"/>
+    </attribute>
+    <attribute id="INIT_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_TS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INIT_TS"/>
+    </attribute>
+    <attribute id="END_TS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_TS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="END_TS"/>
     </attribute>
   </attributes>
   <calculatedAttributes>
