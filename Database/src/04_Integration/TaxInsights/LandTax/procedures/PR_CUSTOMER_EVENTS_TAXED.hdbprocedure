@@ -1,0 +1,29 @@
+PROCEDURE "osr.edw.integration.ti.ltax::PR_CUSTOMER_EVENTS_TAXED" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Get the events for Taxed -  One year or multiyear
+   *************************************/
+   	
+   	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
+	select
+	c.CUST_ID as CUST_ID,
+	4 as EVENT_ID,
+	'Taxed' as EVENT_GROUP,
+	'Taxed -  One year or multiyear' as EVENT_NAME,
+	to_date(BUDAT,'YYYYMMDD') as INIT_DATE,
+	to_date(BUDAT,'YYYYMMDD') as END_DATE,
+	EVENT_VALUE,
+	'Number of years taxed' as DESCRIPTION,
+	LEFT(BUDAT,6) as INIT_TS,
+	LEFT(BUDAT,6)  as END_TS
+	from 
+	(SELECT GPART,BUDAT,count(distinct FBNUM) as EVENT_VALUE FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" 
+	WHERE KOFIZ='LT' and BLART='AB' and HVORG='4000' and TVORG='0150' and GPART >= '0001000335' and GPART <= '0001076855'
+	GROUP BY GPART,BUDAT) as b
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = b.GPART;
+END
