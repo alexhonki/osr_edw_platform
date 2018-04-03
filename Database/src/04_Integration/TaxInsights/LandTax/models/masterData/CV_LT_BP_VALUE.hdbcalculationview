@@ -12,7 +12,7 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="P_RESV" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_RESV">
     <viewAttributes>
       <viewAttribute id="TAXYRSTARTDT" aggregationType="min">
         <descriptions defaultDescription="TAXYRSTARTDT"/>
@@ -88,7 +88,11 @@
         <descriptions defaultDescription="ZZ_PARTNER"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CUST_ID1" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(&quot;ZZ_PARTNER&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="P_RESV">
       <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRSTARTDT" source="TAXYRSTARTDT"/>
@@ -108,9 +112,6 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
     <viewAttributes>
-      <viewAttribute id="CUST_ID" aggregationType="sum">
-        <descriptions defaultDescription="CUST_ID"/>
-      </viewAttribute>
       <viewAttribute id="INIT_DATE" aggregationType="min">
         <descriptions defaultDescription="TAXYRSTARTDT"/>
       </viewAttribute>
@@ -119,6 +120,10 @@
       </viewAttribute>
       <viewAttribute id="TOTBPRELVNTVAL" aggregationType="sum">
         <descriptions defaultDescription="TOTBPRELVNTVAL"/>
+      </viewAttribute>
+    
+      <viewAttribute id="CUST_ID1" aggregationType="sum">
+        <descriptions defaultDescription="CUST_ID1"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -137,10 +142,11 @@
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="Join_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="TAXYRSTARTDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="TAXYRENDDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TOTBPRELVNTVAL" source="TOTBPRELVNTVAL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID1" source="CUST_ID1"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -154,25 +160,26 @@
       <descriptions defaultDescription="ATTRIBUTE_VALUE"/>
       <keyMapping columnObjectName="Projection_3" columnName="ATTRIBUTE_VALUE"/>
     </attribute>
-    <attribute id="CUST_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CUST_ID"/>
-      <keyMapping columnObjectName="Projection_3" columnName="CUST_ID"/>
-    </attribute>
-    <attribute id="INIT_TS" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_TS" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_TS"/>
       <keyMapping columnObjectName="Projection_3" columnName="INIT_TS"/>
     </attribute>
-    <attribute id="END_TS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_TS" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_TS"/>
       <keyMapping columnObjectName="Projection_3" columnName="END_TS"/>
     </attribute>
-    <attribute id="INIT_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TAXYRSTARTDT"/>
       <keyMapping columnObjectName="Projection_3" columnName="INIT_DATE"/>
     </attribute>
-    <attribute id="END_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TAXYRENDDT"/>
       <keyMapping columnObjectName="Projection_3" columnName="END_DATE"/>
+    </attribute>
+  
+    <attribute id="CUST_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID1"/>
+      <keyMapping columnObjectName="Projection_3" columnName="CUST_ID1"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
