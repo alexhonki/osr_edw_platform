@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.integration.ti.ltax.views::CV_FIRST_TIME_TP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="osr.edw.integration.ti.ltax.views::CV_FIRST_TIME_TP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" enforceSqlExecution="false" outputViewType="Projection" cacheInvalidationPeriod="NONE">
 <descriptions defaultDescription="CV_FIRST_TIME_TP"/>
 <localVariables/>
 <variableMappings/>
@@ -73,13 +73,13 @@
       <viewAttribute id="TAXYRENDDT" aggregationType="min">
         <descriptions defaultDescription="TAXYRENDDT"/>
       </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$ZZ_PARTNER$ZZ_PARTNER"/>
+      <viewAttribute id="JOIN$ZZ_PARTNER$ZZ_PARTNER" hidden="true"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="CUST_ID" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute datatype="BIGINT" id="CUST_ID" expressionLanguage="COLUMN_ENGINE">
         <formula>int(&quot;ZZ_PARTNER&quot;)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="ATTRIBUTE_VALUE" datatype="VARCHAR" length="200" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute datatype="VARCHAR" id="ATTRIBUTE_VALUE" length="200" expressionLanguage="COLUMN_ENGINE">
         <formula>if((date(&quot;TAXYRSTARTDT&quot;)=&quot;INIT_DATE&quot;), 'Yes', 'No')</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -100,34 +100,47 @@
 </calculationViews>
 <logicalModel id="Join_1">
   <attributes>
-    <attribute id="CUST_ID" key="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CUST_ID" key="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="CUST_ID"/>
       <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
     </attribute>
-    <attribute id="ATTRIBUTE_VALUE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ATTRIBUTE_VALUE" order="2" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ATTRIBUTE_VALUE"/>
       <keyMapping columnObjectName="Join_1" columnName="ATTRIBUTE_VALUE"/>
     </attribute>
-    <attribute id="INIT_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_DATE" order="5" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="TAXYRSTARTDT"/>
       <keyMapping columnObjectName="Join_1" columnName="TAXYRSTARTDT"/>
     </attribute>
-    <attribute id="END_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_DATE" order="6" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="TAXYRENDDT"/>
       <keyMapping columnObjectName="Join_1" columnName="TAXYRENDDT"/>
     </attribute>
   </attributes>
   <calculatedAttributes>
-    <calculatedAttribute id="ATTRIBUTE_ID" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false" key="true">
+    <calculatedAttribute id="ATTRIBUTE_ID" order="3" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false" key="true">
       <descriptions defaultDescription="ATTRIBUTE_ID"/>
       <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
         <formula>1</formula>
       </keyCalculation>
       </calculatedAttribute>
-    <calculatedAttribute id="ATTRIBUTE_INS" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <calculatedAttribute id="ATTRIBUTE_INS" order="4" semanticType="empty" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ATTRIBUTE_INS"/>
       <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
         <formula>1</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  
+    <calculatedAttribute id="INIT_TS" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_TS"/>
+      <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
+        <formula>(YEAR(&quot;INIT_DATE&quot;)*100) + MONTH(&quot;INIT_DATE&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+    <calculatedAttribute id="END_TS" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_TS"/>
+      <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
+        <formula>(YEAR(&quot;END_DATE&quot;)*100) + MONTH(&quot;END_DATE&quot;)</formula>
       </keyCalculation>
       </calculatedAttribute>
   </calculatedAttributes>
