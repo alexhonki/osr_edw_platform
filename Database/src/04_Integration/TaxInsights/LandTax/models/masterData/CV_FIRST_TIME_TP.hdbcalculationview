@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.integration.ti.ltax.views::CV_FIRST_TIME_TP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_FIRST_TIME_TP"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.integration.ti.ltax::TF_GET_FIRST_TIME_TP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.integration.ti.ltax::TF_GET_FIRST_TIME_TP</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax::TF_LT_CLIENTS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.integration.ti.ltax::TF_LT_CLIENTS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ZZ_PARTNER">
+        <descriptions defaultDescription="ZZ_PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRSTARTDT" aggregationType="min">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRENDDT" aggregationType="min">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax::TF_GET_FIRST_TIME_TP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="ZZ_PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRSTARTDT" source="TAXYRSTARTDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRENDDT" source="TAXYRENDDT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="ZZ_PARTNER">
+        <descriptions defaultDescription="ZZ_PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ACTIVE">
+        <descriptions defaultDescription="ACTIVE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax::TF_LT_CLIENTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="ZZ_PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVE" source="ACTIVE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ZZ_PARTNER">
+        <descriptions defaultDescription="ZZ_PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRSTARTDT" aggregationType="min">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRENDDT" aggregationType="min">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$ZZ_PARTNER$ZZ_PARTNER"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CUST_ID" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(&quot;ZZ_PARTNER&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ATTRIBUTE_VALUE" datatype="VARCHAR" length="200" expressionLanguage="COLUMN_ENGINE">
+        <formula>if((date(&quot;TAXYRSTARTDT&quot;)=&quot;INIT_DATE&quot;), 'Yes', 'No')</formula>
+      </calculatedViewAttribute></calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRSTARTDT" source="TAXYRSTARTDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRENDDT" source="TAXYRENDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$ZZ_PARTNER" source="ZZ_PARTNER"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="ZZ_PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$ZZ_PARTNER" source="ZZ_PARTNER"/>
+    </input>
+    <filter>&quot;TAXYRSTARTDT&quot;&gt;=&quot;INIT_DATE&quot; and &quot;TAXYRENDDT&quot;&lt;=&quot;END_DATE&quot;</filter>
+    <joinAttribute name="JOIN$ZZ_PARTNER$ZZ_PARTNER"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="CUST_ID" key="true" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
+    </attribute>
+    <attribute id="ATTRIBUTE_VALUE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATTRIBUTE_VALUE"/>
+      <keyMapping columnObjectName="Join_1" columnName="ATTRIBUTE_VALUE"/>
+    </attribute>
+    <attribute id="INIT_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="TAXYRSTARTDT"/>
+    </attribute>
+    <attribute id="END_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRENDDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="TAXYRENDDT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="ATTRIBUTE_ID" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false" key="true">
+      <descriptions defaultDescription="ATTRIBUTE_ID"/>
+      <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+    <calculatedAttribute id="ATTRIBUTE_INS" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATTRIBUTE_INS"/>
+      <keyCalculation datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="55" y="352"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="250" y="349"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="140" y="203"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

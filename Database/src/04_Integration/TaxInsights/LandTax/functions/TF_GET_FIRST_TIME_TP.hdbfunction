@@ -1,0 +1,17 @@
+FUNCTION "osr.edw.integration.ti.ltax::TF_GET_FIRST_TIME_TP" ( )
+       RETURNS TABLE (
+        ZZ_PARTNER NVARCHAR(10),
+		TAXYRSTARTDT TIMESTAMP,
+		TAXYRENDDT TIMESTAMP,
+		TOTBPRELVNTVAL DECIMAL
+       )  
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+/*****************************  
+       Write your function logic 
+ *****************************/ 
+ RETURN select DISTINCT "ZZ_PARTNER", TO_TIMESTAMP("TAXYRSTARTDT") AS "TAXYRSTARTDT", TO_TIMESTAMP("TAXYRENDDT") AS "TAXYRENDDT", "TOTBPRELVNTVAL"
+ FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data"
+	WHERE  TAXAMOUNT > 0;
+END;
