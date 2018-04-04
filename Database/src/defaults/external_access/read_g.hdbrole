@@ -1,6 +1,7 @@
 {
 	"role":{
 		"name": "osr.sec.edw.platform.dac::read_g#",
-		"schema_privileges":[ { "privileges_with_grant_option" : [ "SELECT", "EXECUTE" ]  } ]
+		"schema_privileges":[ { "privileges_with_grant_option" : [ "SELECT", "SELECT CDS METADATA", "EXECUTE" ]  } ],
+		"schema_roles":[ { "names": ["osr.sec.edw.platform.rms.dac::read_g#"]} ]
      }
 }
