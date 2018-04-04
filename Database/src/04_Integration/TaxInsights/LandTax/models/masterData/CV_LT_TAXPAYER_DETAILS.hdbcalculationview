@@ -7,8 +7,8 @@
   <DataSource id="osr.edw.integration.ti.ltax::TF_LT_CLIENTS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.integration.ti.ltax::TF_LT_CLIENTS</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data">
-    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data</resourceUri>
+  <DataSource id="osr.edw.staging.rms.synonym::CV_BUT000_Current">
+    <resourceUri>osr.edw.staging.rms.synonym::CV_BUT000_Current</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -38,6 +38,12 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_BUT000">
     <viewAttributes>
+      <viewAttribute id="BIRTHDT">
+        <descriptions defaultDescription="BIRTHDT"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LAST">
+        <descriptions defaultDescription="NAME_LAST"/>
+      </viewAttribute>
       <viewAttribute id="NAME_FIRST">
         <descriptions defaultDescription="NAME_FIRST"/>
       </viewAttribute>
@@ -47,37 +53,31 @@
       <viewAttribute id="PARTNER">
         <descriptions defaultDescription="PARTNER"/>
       </viewAttribute>
-      <viewAttribute id="NAME_LAST">
-        <descriptions defaultDescription="NAME_LAST"/>
-      </viewAttribute>
       <viewAttribute id="CRUSR">
         <descriptions defaultDescription="CRUSR"/>
       </viewAttribute>
       <viewAttribute id="CRDAT">
         <descriptions defaultDescription="CRDAT"/>
       </viewAttribute>
-      <viewAttribute id="CHUSR">
-        <descriptions defaultDescription="CHUSR"/>
-      </viewAttribute>
       <viewAttribute id="CHDAT">
         <descriptions defaultDescription="CHDAT"/>
       </viewAttribute>
-      <viewAttribute id="BIRTHDT">
-        <descriptions defaultDescription="BIRTHDT"/>
+      <viewAttribute id="CHUSR">
+        <descriptions defaultDescription="CHUSR"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data">
+    <input node="osr.edw.staging.rms.synonym::CV_BUT000_Current">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NAMEMIDDLE" source="NAMEMIDDLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CRUSR" source="CRUSR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CRDAT" source="CRDAT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CHUSR" source="CHUSR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CHDAT" source="CHDAT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHUSR" source="CHUSR"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
@@ -91,6 +91,12 @@
       <viewAttribute id="ACTIVE">
         <descriptions defaultDescription="ACTIVE"/>
       </viewAttribute>
+      <viewAttribute id="BIRTHDT">
+        <descriptions defaultDescription="BIRTHDT"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LAST">
+        <descriptions defaultDescription="NAME_LAST"/>
+      </viewAttribute>
       <viewAttribute id="NAME_FIRST">
         <descriptions defaultDescription="NAME_FIRST"/>
       </viewAttribute>
@@ -100,23 +106,17 @@
       <viewAttribute id="PARTNER">
         <descriptions defaultDescription="PARTNER"/>
       </viewAttribute>
-      <viewAttribute id="NAME_LAST">
-        <descriptions defaultDescription="NAME_LAST"/>
-      </viewAttribute>
       <viewAttribute id="CREATEDBY">
         <descriptions defaultDescription="CRUSR"/>
       </viewAttribute>
       <viewAttribute id="CREATEDDATE">
         <descriptions defaultDescription="CRDAT"/>
       </viewAttribute>
-      <viewAttribute id="CHANGEDBY">
-        <descriptions defaultDescription="CHUSR"/>
-      </viewAttribute>
       <viewAttribute id="CHANGEDDATE">
         <descriptions defaultDescription="CHDAT"/>
       </viewAttribute>
-      <viewAttribute id="BIRTHDT">
-        <descriptions defaultDescription="BIRTHDT"/>
+      <viewAttribute id="CHANGEDBY">
+        <descriptions defaultDescription="CHUSR"/>
       </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$ZZ_PARTNER$PARTNER"/>
     </viewAttributes>
@@ -154,15 +154,15 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="ZZ_PARTNER"/>
     </input>
     <input node="P_BUT000">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="NAMEMIDDLE" source="NAMEMIDDLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDBY" source="CRUSR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDDATE" source="CRDAT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDBY" source="CHUSR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDDATE" source="CHDAT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDBY" source="CHUSR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="PARTNER"/>
     </input>
     <joinAttribute name="JOIN$ZZ_PARTNER$PARTNER"/>
@@ -170,89 +170,88 @@
 </calculationViews>
 <logicalModel id="Join_1">
   <attributes>
-    <attribute id="PARTNER" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PARTNER"/>
-      <keyMapping columnObjectName="Join_1" columnName="PARTNER"/>
-    </attribute>
-    <attribute id="NAME_LAST" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="NAME_LAST"/>
-      <keyMapping columnObjectName="Join_1" columnName="NAME_LAST"/>
-    </attribute>
-    <attribute id="CREATEDBY" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CRUSR"/>
-      <keyMapping columnObjectName="Join_1" columnName="CREATEDBY"/>
-    </attribute>
-    <attribute id="CREATEDDATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CRDAT"/>
-      <keyMapping columnObjectName="Join_1" columnName="CREATEDDATE"/>
-    </attribute>
-    <attribute id="CHANGEDBY" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CHUSR"/>
-      <keyMapping columnObjectName="Join_1" columnName="CHANGEDBY"/>
-    </attribute>
-    <attribute id="CHANGEDDATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CHDAT"/>
-      <keyMapping columnObjectName="Join_1" columnName="CHANGEDDATE"/>
-    </attribute>
-    <attribute id="NAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME"/>
       <keyMapping columnObjectName="Join_1" columnName="NAME"/>
     </attribute>
-    <attribute id="INIT_TS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_TS" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_TS"/>
       <keyMapping columnObjectName="Join_1" columnName="INIT_TS"/>
     </attribute>
-    <attribute id="END_TS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_TS" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_TS"/>
       <keyMapping columnObjectName="Join_1" columnName="END_TS"/>
     </attribute>
-    <attribute id="IS_SENSITIVE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IS_SENSITIVE" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_SENSITIVE"/>
       <keyMapping columnObjectName="Join_1" columnName="IS_SENSITIVE"/>
     </attribute>
-    <attribute id="CUST_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CUST_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CUST_ID"/>
       <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
     </attribute>
-    <attribute id="EXT_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EXT_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EXT_ID"/>
       <keyMapping columnObjectName="Join_1" columnName="EXT_ID"/>
     </attribute>
-    <attribute id="INIT_DATE_TS" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_DATE_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_DATE_TS"/>
       <keyMapping columnObjectName="Join_1" columnName="INIT_DATE_TS"/>
     </attribute>
-    <attribute id="END_DATE_TS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_DATE_TS" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_DATE_TS"/>
       <keyMapping columnObjectName="Join_1" columnName="END_DATE_TS"/>
     </attribute>
   
-    <attribute id="BIRTHDT" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BIRTHDT"/>
-  
-      <keyMapping columnObjectName="Join_1" columnName="BIRTHDT"/>
-  
-    </attribute>
-  
-    <attribute id="INIT_DATE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INIT_DATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_DATE"/>
+  
       <keyMapping columnObjectName="Join_1" columnName="INIT_DATE"/>
+  
     </attribute>
-    <attribute id="END_DATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="END_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="END_DATE"/>
       <keyMapping columnObjectName="Join_1" columnName="END_DATE"/>
     </attribute>
-    <attribute id="ACTIVE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ACTIVE" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACTIVE"/>
       <keyMapping columnObjectName="Join_1" columnName="ACTIVE"/>
     </attribute>
-    <attribute id="NAME_FIRST" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BIRTHDT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTHDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTHDT"/>
+    </attribute>
+    <attribute id="NAME_LAST" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME_LAST"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME_LAST"/>
+    </attribute>
+    <attribute id="NAME_FIRST" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_FIRST"/>
       <keyMapping columnObjectName="Join_1" columnName="NAME_FIRST"/>
     </attribute>
-    <attribute id="NAMEMIDDLE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NAMEMIDDLE" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAMEMIDDLE"/>
       <keyMapping columnObjectName="Join_1" columnName="NAMEMIDDLE"/>
+    </attribute>
+    <attribute id="PARTNER" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="Join_1" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="CREATEDBY" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CRUSR"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREATEDBY"/>
+    </attribute>
+    <attribute id="CREATEDDATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CRDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREATEDDATE"/>
+    </attribute>
+    <attribute id="CHANGEDDATE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CHANGEDDATE"/>
+    </attribute>
+    <attribute id="CHANGEDBY" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHUSR"/>
+      <keyMapping columnObjectName="Join_1" columnName="CHANGEDBY"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
