@@ -7,6 +7,21 @@
   <DataSource id="osr.edw.integration.ti.ltax.views::CV_LT_BP_VALUE">
     <resourceUri>osr.edw.integration.ti.ltax.views::CV_LT_BP_VALUE</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_FIRST_TIME_TP">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_FIRST_TIME_TP</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_CUST_PARCEL_COUNT">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_CUST_PARCEL_COUNT</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_PARTNER_TYPE">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_PARTNER_TYPE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_TAXPAYER_PPRCODE">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_TAXPAYER_PPRCODE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_CUST_AGE_GROUP">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_CUST_AGE_GROUP</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Total_BP_Value">
@@ -71,7 +86,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="Total_BP_Value">
+    <input node="Total_BP_Value" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
@@ -79,6 +94,232 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TIME_SEGMENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TIME_SEGMENT"/>
+    </input>
+  
+    <input node="P_FIRST_TIME_TP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TIME_SEGMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TIME_SEGMENT"/>
+    </input>
+    <input node="P_PARCEL_COUNT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TIME_SEGMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TIME_SEGMENT"/>
+    </input>
+    <input node="P_TP_TYPE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TS"/>
+    </input>
+    <input node="P_TP_PPRCODE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TS"/>
+    </input>
+    <input node="P_AGEGROUP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="AGE_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TS"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_FIRST_TIME_TP">
+    <viewAttributes>
+      <viewAttribute id="CUST_ID">
+        <descriptions defaultDescription="CUST_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_VALUE">
+        <descriptions defaultDescription="ATTRIBUTE_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_ID">
+        <descriptions defaultDescription="ATTRIBUTE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TIME_SEGMENT">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TIME_SEGMENT">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_FIRST_TIME_TP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TS"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_PARCEL_COUNT">
+    <viewAttributes>
+      <viewAttribute id="CUST_ID">
+        <descriptions defaultDescription="CUST_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_VALUE">
+        <descriptions defaultDescription="ATTRIBUTE_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_ID">
+        <descriptions defaultDescription="ATTRIBUTE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TIME_SEGMENT">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TIME_SEGMENT">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_CUST_PARCEL_COUNT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TIME_SEGMENT" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TIME_SEGMENT" source="END_TS"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TP_TYPE">
+    <viewAttributes>
+      <viewAttribute id="CUST_ID">
+        <descriptions defaultDescription="CUST_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_ID">
+        <descriptions defaultDescription="ATTRIBUTE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TS">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TS">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_VALUE">
+        <descriptions defaultDescription="INDIVORG"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_PARTNER_TYPE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TS" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TS" source="END_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TP_PPRCODE">
+    <viewAttributes>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_VALUE">
+        <descriptions defaultDescription="POST_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_ID">
+        <descriptions defaultDescription="ATTRIBUTE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CUST_ID">
+        <descriptions defaultDescription="CUST_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TS">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TS">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_TAXPAYER_PPRCODE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="ATTRIBUTE_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_ID" source="ATTRIBUTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TS" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TS" source="END_TS"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_AGEGROUP">
+    <viewAttributes>
+      <viewAttribute id="CUST_ID">
+        <descriptions defaultDescription="CUST_ID"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE">
+        <descriptions defaultDescription="END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="AGE_GROUP">
+        <descriptions defaultDescription="AGE_GROUP"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_DATE">
+        <descriptions defaultDescription="INIT_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="INIT_TS">
+        <descriptions defaultDescription="INIT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="END_TS">
+        <descriptions defaultDescription="END_TS"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ATTRIBUTE_ID" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>3</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_CUST_AGE_GROUP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CUST_ID" source="CUST_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGE_GROUP" source="AGE_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_TS" source="INIT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_TS" source="END_TS"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -121,15 +362,38 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="537.4112054636321" y="112"/>
+    
+      <rectangleSize width="140"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Total_BP_Value" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="10" y="360"/>
+      <upperLeftCorner x="281.9999999999999" y="441.9999976158142"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape expanded="true" modelObjectName="Attributes" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="100" y="202"/>
+      <upperLeftCorner x="471.9999999999999" y="236.9999988079071"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_FIRST_TIME_TP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="661.9999999999999" y="441.9999976158142"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_PARCEL_COUNT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="471.9999999999999" y="441.9999976158142"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_TP_TYPE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="441.9999976158142"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_TP_PPRCODE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="851.9999999999999" y="441.9999976158142"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_AGEGROUP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="376" y="569"/>
       <rectangleSize height="30" width="140"/>
     </shape>
   </shapes>

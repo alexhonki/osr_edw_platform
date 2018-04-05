@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.integration.ti.ltax.views::CV_TAXPAYER_PPRCODE" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TAXPAYER_PPRCODE"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.integration.ti.ltax::TF_GET_PPRCODE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.integration.ti.ltax::TF_GET_PPRCODE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYER_DETAILS">
+    <resourceUri>osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYER_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_PPRCODE">
+    <viewAttributes>
+      <viewAttribute id="TAXYRSTARTDT" aggregationType="min">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="POST_CODE">
+        <descriptions defaultDescription="POST_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRENDDT" aggregationType="min">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute id="ZZ_PARTNER">
+        <descriptions defaultDescription="ZZ_PARTNER"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax::TF_GET_PPRCODE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRSTARTDT" source="TAXYRSTARTDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POST_CODE" source="POST_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRENDDT" source="TAXYRENDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="ZZ_PARTNER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_CUST">
+    <viewAttributes>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYER_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="INIT_DATE" aggregationType="min">
+        <descriptions defaultDescription="TAXYRSTARTDT"/>
+      </viewAttribute>
+      <viewAttribute id="ATTRIBUTE_VALUE">
+        <descriptions defaultDescription="POST_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="END_DATE" aggregationType="min">
+        <descriptions defaultDescription="TAXYRENDDT"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$ZZ_PARTNER$PARTNER"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ATTRIBUTE_ID" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>4</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CUST_ID" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
+        <formula>string(&quot;PARTNER&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="INIT_TS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>(YEAR(&quot;INIT_DATE&quot;)*100)+MONTH(&quot;INIT_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="END_TS" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>(YEAR(&quot;END_DATE&quot;)*100) + MONTH(&quot;END_DATE&quot;)
+</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="P_PPRCODE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="TAXYRSTARTDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATTRIBUTE_VALUE" source="POST_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="TAXYRENDDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="ZZ_PARTNER"/>
+    </input>
+    <input node="P_CUST">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="PARTNER"/>
+    </input>
+    <joinAttribute name="JOIN$ZZ_PARTNER$PARTNER"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="INIT_DATE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="INIT_DATE"/>
+    </attribute>
+    <attribute id="ATTRIBUTE_VALUE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POST_CODE"/>
+      <keyMapping columnObjectName="Join_1" columnName="ATTRIBUTE_VALUE"/>
+    </attribute>
+    <attribute id="END_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRENDDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="END_DATE"/>
+    </attribute>
+    <attribute id="ATTRIBUTE_ID" key="true" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATTRIBUTE_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="ATTRIBUTE_ID"/>
+    </attribute>
+    <attribute id="CUST_ID" key="true" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CUST_ID"/>
+    </attribute>
+    <attribute id="INIT_TS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INIT_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="INIT_TS"/>
+    </attribute>
+    <attribute id="END_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="END_TS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_PPRCODE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="56" y="304"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_CUST" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="254" y="304"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="135" y="217"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="P_PPRCODE" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_CUST" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

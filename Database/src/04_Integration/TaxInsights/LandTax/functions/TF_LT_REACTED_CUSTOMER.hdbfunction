@@ -11,6 +11,10 @@ BEGIN
 /*****************************  
        Write your function logic 
  *****************************/ 
+ /*Use clearing date to determine if the taxpayer is a debtor. 
+ The below logic is for open debt. Use Current date in case clearing date is blank. 
+ Consider difference between initial and reassessment. For now if they become a debtor once in the year during initial assessment or reassessment we keep them as debtor in the Reactions table.
+ Delimit only to Land Tax payers using revenue stream (KOFIZ == LT).*/
 RETURN  SELECT GPART , SUM(BETRH) DUEAMOUNT, FINYEAR, SUM(DEBTOR) ISDEBTOR  FROM( SELECT  GPART, BETRH ,"osr.edw.integration.ti.ltax::TF_LT_GET_FIN_YEAR"(BUDAT).FINYEAR FINYEAR, 
 		(CASE WHEN CURRENT_DATE > FAEDN THEN 1
 		      WHEN CURRENT_DATE <= FAEDN THEN 0 END ) AS DEBTOR, FAEDN

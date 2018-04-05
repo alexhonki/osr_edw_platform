@@ -72,7 +72,9 @@
   
     <attribute id="INIT_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_DATE"/>
+  
       <keyMapping columnObjectName="Projection_1" columnName="INIT_DATE"/>
+  
     </attribute>
     <attribute id="INIT_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INIT_TS"/>
@@ -86,7 +88,7 @@
   <calculatedAttributes>
     <calculatedAttribute id="AGE_GROUP" order="5" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AGE_GROUP"/>
-      <keyCalculation datatype="VARCHAR" expressionLanguage="COLUMN_ENGINE" length="13">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="200">
         <formula>if(&quot;AGE&quot;&gt;=0 and &quot;AGE&quot;&lt;=20,'0-20',
 if(&quot;AGE&quot;&gt;=21 and &quot;AGE&quot;&lt;=25,'21-25',
 if(&quot;AGE&quot;&gt;=26 and &quot;AGE&quot;&lt;=30,'26-30',
