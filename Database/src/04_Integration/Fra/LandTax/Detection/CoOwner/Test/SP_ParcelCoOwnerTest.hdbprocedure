@@ -1,0 +1,39 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelCoOwnerTest" ( )
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+	
+	LT_WORKING_SET = SELECT * FROM "osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj";
+	
+    -- Call of Detection Method LTX_CO_OWNER_CONS Weighting Factor: 100
+    LT_PARAM_DM_1 =
+      SELECT
+        TO_INTEGER( '5' )                       AS "OWNER_COUNT_THRESHOLD",
+        TO_INTEGER( '1' )                       AS "ORG_COUNT_RANGE_LOW",
+        TO_INTEGER( '99' )                      AS "ORG_COUNT_RANGE_HIGH",
+        TO_INTEGER( '0' )                       AS "TRT_COUNT_THRESHOLD",
+        TO_INTEGER( '0' )                       AS "COY_COUNT_THRESHOLD",
+        TO_INTEGER( '0' )                       AS "IND_COUNT_THRESHOLD",
+        TO_DECIMAL( '1000000', 000015, 000002 ) AS "AVG3YRVAL_THRESHOLD"
+         FROM  "osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj";
+         
+    
+  CALL "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelCoOwnerSele"(
+    :LT_WORKING_SET,
+    LT_OUTPUT_READ_1 );
+
+  CALL  "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelOwnershipToCoOwnerExec"(
+    :LT_OUTPUT_READ_1,
+    :LT_PARAM_DM_1,
+    LT_OUTPUT_RULE_1,
+    LT_TEXT );
+
+  CALL "osr.edw.platform.fra.ltx.coowner.ai::SP_ParcelOwnershipToCoOwnerAddinf" (
+    :LT_PARAM_DM_1,
+    :LT_OUTPUT_RULE_1,
+    :LT_OUTPUT_READ_1,
+    LT_RESULT );
+    
+ END;
