@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_LandUseCode" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Land Use Code"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_LandUseCode" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_LandUseCode</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_LandUseCode">
+  <attributes>
+    <attribute id="LAND_USE_CD" order="1" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="TEXT">
+      <descriptions defaultDescription="Land Use Code"/>
+      <keyMapping columnObjectName="TF_LandUseCode" columnName="LAND_USE_CD"/>
+    </attribute>
+    <attribute id="TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Land Use Code Descr."/>
+      <keyMapping columnObjectName="TF_LandUseCode" columnName="TEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

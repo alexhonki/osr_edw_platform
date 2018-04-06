@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_LocalGovernmentAuthority" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Local Government Authority"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_LGA" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_LGA</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_LGA">
+  <attributes>
+    <attribute id="LGA_CODE" order="1" descriptionColumnName="TEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Local Government Authority (LGA)"/>
+      <keyMapping columnObjectName="TF_LGA" columnName="LGA_CODE"/>
+    </attribute>
+    <attribute id="TEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Local Government Authority Descr."/>
+      <keyMapping columnObjectName="TF_LGA" columnName="TEXT"/>
+    </attribute>
+    <attribute id="VAL_OFFICE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QVAS Regional Office"/>
+      <keyMapping columnObjectName="TF_LGA" columnName="VAL_OFFICE"/>
+    </attribute>
+    <attribute id="ACTIVE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Active"/>
+      <keyMapping columnObjectName="TF_LGA" columnName="ACTIVE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
