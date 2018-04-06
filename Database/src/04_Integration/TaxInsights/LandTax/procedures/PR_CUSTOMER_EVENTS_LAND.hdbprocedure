@@ -1,0 +1,55 @@
+PROCEDURE "osr.edw.integration.ti.ltax::PR_CUSTOMER_EVENTS_LAND" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Get the events for Land
+   *************************************/
+
+   	V_VIBPOBJREL = 
+   	SELECT *
+   	, DAYS_BETWEEN(VALIDTO,LEAD(VALIDFROM) OVER(PARTITION BY PARTNER,INTRENO ORDER BY VALIDFROM ASC)) as DAYDIFF_LEAD
+   	, DAYS_BETWEEN(LAG(VALIDTO)  OVER(PARTITION BY PARTNER,INTRENO ORDER BY VALIDFROM ASC) , VALIDFROM) as DAYDIFF_LAG
+   	FROM "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VIBPOBJREL.active_data" WHERE ROLE='TR0800' AND PARTNER >= '0001000335' and PARTNER <= '0001076855';
+
+	/*Acquired Land*/
+   	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
+	select
+	c.CUST_ID as CUST_ID,
+	5 as EVENT_ID,
+	'Land' as EVENT_GROUP,
+	'Acquired Land' as EVENT_NAME,
+	(CASE WHEN a.VALIDFROM<=0 THEN CAST(DERF as date) 
+	ELSE CAST(a.VALIDFROM as date) END) as INIT_DATE,
+	NULL as END_DATE,
+	1 as EVENT_VALUE,
+	'BP Acquired land' as DESCRIPTION,
+	(CASE WHEN a.VALIDFROM<=0 THEN LEFT(DERF,6) 
+	ELSE LEFT(a.VALIDFROM,6) END) as INIT_TS,
+	NULL  as END_TS
+	from :V_VIBPOBJREL a
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = a.PARTNER
+	LEFT JOIN "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" b on a.INTRENO=b.INTRENO
+	WHERE (DAYDIFF_LAG IS NULL OR DAYDIFF_LAG>=365);
+	
+	/*Lost Land*/
+	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
+	select DISTINCT
+	c.CUST_ID as CUST_ID,
+	6 as EVENT_ID,
+	'Land' as EVENT_GROUP,
+	'Lost Land' as EVENT_NAME,
+	CAST(a.VALIDTO as date)  as INIT_DATE,
+	NULL as END_DATE,
+	1 as EVENT_VALUE,
+	'BP Lost land' as DESCRIPTION,
+	LEFT(a.VALIDTO ,6) as INIT_TS,
+	NULL  as END_TS
+	from :V_VIBPOBJREL  a 
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = a.PARTNER
+	WHERE DAYDIFF_LEAD>=365 OR DAYDIFF_LEAD IS NULL;
+
+END
