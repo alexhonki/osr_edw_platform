@@ -15,6 +15,7 @@ BEGIN
 
 	RETURN
  	SELECT
+ 	DISTINCT
 	"CO_OWNER_ID" AS "ID1",
 	'' AS "ID2",
 	'' AS "ID3",
@@ -22,6 +23,6 @@ BEGIN
 	'' AS "ID5",
 	"CO_OWNER_ID" AS "LABEL",
 	 '' AS "STYLE"
-	FROM "osr.edw.platform.fra.ltx.coowner::CV_CoOwnerInvObjs";
+	FROM "osr.edw.platform.fra.ltx::CV_ParcelCoOwner";
 	
 END;

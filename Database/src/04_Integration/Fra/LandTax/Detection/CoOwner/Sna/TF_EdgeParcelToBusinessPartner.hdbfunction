@@ -43,8 +43,13 @@ BEGIN
 	 TO_INT("OWNERFACTOR") ||
 	 char(32) || 
 	 right("VALIDFROM",2) || '.' || right(left("VALIDFROM",6),2) || '.' || left("VALIDFROM",4) ||
+	 CASE 
+	 WHEN "VALIDTO" = '99991231' THEN 
+	 char(32) || 'onwards'
+	 ELSE 
 	 '-' || 
 	 right("VALIDTO",2) || '.' || right(left("VALIDTO",6),2) || '.' || left("VALIDTO",4)
+	 END
 	 AS "LABEL", 
 	 "VALIDFROM",
 	 RANK() OVER ( PARTITION BY "INTRENOPL", "BPARTNER" ORDER BY "VALIDFROM" DESC ) AS "RANK"
