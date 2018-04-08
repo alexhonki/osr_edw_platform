@@ -1,0 +1,47 @@
+PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_LAND_EVALUATION" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+    AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+   
+   	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
+   	
+   	/*New Land Evaluations*/
+		   SELECT SAP.CUST_ID AS CUST_ID, 
+			228 AS EVENT_ID, 
+			'Land' AS EVENT_GROUP, 
+			'Receive new land evaluation' AS EVENT_NAME, 
+			CAST(VALIDFROM as date) AS INIT_DATE, 
+			NULL AS END_DATE, 
+			count(*) AS EVENT_VALUE, 
+			'Receive new land evaluation' AS DESCRIPTION, 
+			LEFT(VALIDFROM,6)  as INIT_TS,
+			NULL AS END_TS
+		FROM (
+				SELECT a.ZZ_PARTNER, 
+					c.VALIDFROM
+				FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data" AS a
+					LEFT OUTER JOIN "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.VILMNA.active_data" AS b
+					ON a.NANO = b.NANO
+					INNER JOIN "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.VILMNAVAL.active_data" AS c
+					ON b.INTRENO = c.INTRENO
+						AND a.TAXYRSTARTDT = CONCAT(
+								YEAR(c.VALIDFROM), 
+								'0701'
+							)
+				WHERE NASTMNTTYPE != 'ANV'
+			) AS a
+			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			ON SAP.EXT_ID = a.ZZ_PARTNER
+		WHERE a.ZZ_PARTNER >= '0001000335'
+			AND A.ZZ_PARTNER <= '0001076855'
+		GROUP BY CUST_ID, 
+			VALIDFROM;
+
+   
+END
