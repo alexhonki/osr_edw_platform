@@ -1,0 +1,29 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelBPSele" (
+	IN  it_workset    		"osr.edw.platform.fra.ltx.coowner::Types.WS_LTPCLBP",
+	OUT et_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_FOR_RULE"
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+ et_data_for_rule =  
+ SELECT
+ "DATA"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "DATA"."INTRENOPL" AS "INTRENOPL", 
+ "DATA"."PLNO" AS "PLNO",
+ "DATA"."BPARTNER" AS "BPARTNER",
+ '' AS "CO_OWNER_ID",
+ to_int(left("DATA"."TAXYRSTARTDT",4)) AS "FISCAL_YEAR", 
+ left("DATA"."TAXYRSTARTDT",4) || '0630' AS "FY_EDATE",
+  to_nvarchar((to_int(left("DATA"."TAXYRSTARTDT",4)) + 1)) || '0630' AS "TAXYRENDDT",
+ "BP"."CODEID" AS "CODE_ID"
+  FROM 
+  :it_workset AS "DATA",
+  "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
+  WHERE "DATA"."BPARTNER" = "BP"."PARTNER"
+	AND left("BP"."DATE_TO",8)   >= left("DATA"."TAXYRSTARTDT",4) 
+	AND left("BP"."DATE_FROM",8) <= left("DATA"."TAXYRSTARTDT",4) 
+ ;  
+ 
+ END;

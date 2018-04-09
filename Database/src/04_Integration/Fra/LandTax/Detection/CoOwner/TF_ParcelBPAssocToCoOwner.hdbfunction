@@ -1,0 +1,32 @@
+FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner.hdbfunction" ( )
+	RETURNS TABLE 
+       (
+    	TAXYRSTARTDT NVARCHAR(8),
+		INTRENOPL	 NVARCHAR(13),
+		PLNO		 NVARCHAR(20),
+		BPARTNER     NVARCHAR(10),
+		CO_OWNER_ID  NVARCHAR(32)
+    	)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	
+	RETURN
+	SELECT 
+	"PCL_BY_BP"."TAXYRSTARTDT", 
+	"PCL_BY_BP"."INTRENOPL",
+	"PCL"."PLNO",
+	"PCL_BY_BP"."BPARTNER",
+	"PCL_COOWNER"."CO_OWNER_ID" AS "CO_OWNER_ID"
+	FROM 
+	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BY_BP"
+	INNER JOIN 
+	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
+	ON  "PCL_BY_BP"."TAXYRSTARTDT" = "PCL_COOWNER"."TAXYRSTARTDT"
+	AND "PCL_BY_BP"."INTRENOPL" = "PCL_COOWNER"."INTRENOPL"
+	INNER JOIN
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
+	ON  "PCL_BY_BP"."INTRENOPL" = "PCL"."INTRENO"
+	;
+
+END;
