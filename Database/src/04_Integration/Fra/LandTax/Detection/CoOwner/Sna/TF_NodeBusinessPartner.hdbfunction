@@ -21,7 +21,7 @@ BEGIN
          '' AS "ID4",
          '' AS "ID5",
          CASE WHEN "TYPE" = '1'
-         	THEN ltrim("BP"."PARTNER",'0') || ':' || "BP"."NAME_LAST" || char(32) || "BP"."NAME_FIRST" || char(32) || "BP"."NAMEMIDDLE"
+         	THEN ltrim("BP"."PARTNER",'0') || ':' ||  "BP"."NAME_FIRST" || char(32) || "BP"."NAMEMIDDLE" || char(32) || "BP"."NAME_LAST"
          ELSE
             rtrim(ltrim("BP"."PARTNER",'0') || ':' || "BP"."NAME_ORG1" || char(32) || "BP"."NAME_ORG2" || char(32) || "BP"."NAME_ORG3" || char(32) || "BP"."NAME_ORG4",char(32))
          END 
