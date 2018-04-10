@@ -118,7 +118,9 @@
       <viewAttribute id="CHANGEDBY">
         <descriptions defaultDescription="CHUSR"/>
       </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$ZZ_PARTNER$PARTNER"/>
+      <viewAttribute id="ZZ_PARTNER">
+        <descriptions defaultDescription="ZZ_PARTNER"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="NAME" datatype="VARCHAR" length="200" expressionLanguage="COLUMN_ENGINE">
@@ -134,7 +136,7 @@
         <formula>0</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CUST_ID" datatype="BIGINT" expressionLanguage="COLUMN_ENGINE">
-        <formula>int(&quot;PARTNER&quot;)</formula>
+        <formula>int(&quot;ZZ_PARTNER&quot;)</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="EXT_ID" datatype="VARCHAR" length="32" expressionLanguage="COLUMN_ENGINE">
         <formula>string(&quot;PARTNER&quot;)</formula>
@@ -151,7 +153,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="INIT_DATE" source="INIT_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="END_DATE" source="END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVE" source="ACTIVE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="ZZ_PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="ZZ_PARTNER"/>
     </input>
     <input node="P_BUT000">
       <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
@@ -163,9 +165,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CREATEDDATE" source="CRDAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDDATE" source="CHDAT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CHANGEDBY" source="CHUSR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ZZ_PARTNER$PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZ_PARTNER" source="PARTNER"/>
     </input>
-    <joinAttribute name="JOIN$ZZ_PARTNER$PARTNER"/>
+    <joinAttribute name="ZZ_PARTNER"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Join_1">
