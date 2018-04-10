@@ -1,8 +1,8 @@
 PROCEDURE "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerExec" (
 	IN  it_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_LTPCLBP",
 	IN 	parameters	 		"osr.edw.platform.fra.ltx.coowner::Types.PARAM",
-	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.PRESULT_RISK_AMNT_LTPCLCOOWN",
-	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLCOOWN"
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_LTPCLBP",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLBP"
 ) 
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -292,26 +292,36 @@ BEGIN
  
  et_result = 
  SELECT
- "TAXYRSTARTDT",
- "INTRENOPL",
- "PLNO",
- "CO_OWNER_ID",
+ "RESULT"."TAXYRSTARTDT",
+ "RESULT"."INTRENOPL",
+ "RESULT"."PLNO",
+ "PCL_BP"."BPARTNER",
  100 AS "DETECTION_RESULT",
- CASE WHEN "RANK" = 1 THEN "RISK_AMOUNT" ELSE 0 END AS "RISK_AMOUNT",
+ CASE WHEN "RANK" = 1 THEN "RISK_AMOUNT"*"LTPLRESB"."OWNERPERCENT" ELSE 0 END AS "RISK_AMOUNT",
  'AUD' AS "CURRENCY"
- FROM :lt_result
+ FROM 
+ :lt_result AS "RESULT"
+ INNER JOIN
+ :it_data_for_rule AS "PCL_BP"
+ ON  "RESULT"."TAXYRSTARTDT" = "PCL_BP"."TAXYRSTARTDT"
+ AND "RESULT"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+ INNER JOIN
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ ON  "PCL_BP"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT"
+ AND "PCL_BP"."INTRENOPL" = "LTPLRESB"."INTRENOPL"
+ 
  ;
  
  et_text = 
  SELECT
- "TAXYRSTARTDT",
- "INTRENOPL",
- "PLNO",
- "CO_OWNER_ID",
+ "RESULT"."TAXYRSTARTDT",
+ "RESULT"."INTRENOPL",
+ "RESULT"."PLNO",
+ "PCL_BP"."BPARTNER",
  CHAR(13)|| CHAR(10) ||
- 'New estimated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'New estimated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW"*"LTPLRESB"."OWNERPERCENT", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
  'Estimated tax $' || "ESTIMATED_PLTAX" || '; ' || CHAR(13)|| CHAR(10) ||
- 'Additional estmated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW"-"ESTIMATED_PLTAX", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Additional estmated tax $' || TO_DECIMAL(("ESTIMATED_PLTAX_NEW"-"ESTIMATED_PLTAX")*"LTPLRESB"."OWNERPERCENT", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
  'Ratio to Min. Value ' || TO_DECIMAL("RATIO_TO_MIN_VAL", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
  'Band ' || "RATE_BAND" 
  AS "TEXT",
@@ -325,7 +335,16 @@ BEGIN
  '' AS "MSGV2_FC",
  '' AS "MSGV3_FC",
  '' AS "MSGV4_FC"
- FROM :lt_result
+ FROM 
+ :lt_result AS "RESULT"
+ INNER JOIN
+ :it_data_for_rule AS "PCL_BP"
+ ON  "RESULT"."TAXYRSTARTDT" = "PCL_BP"."TAXYRSTARTDT"
+ AND "RESULT"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+ INNER JOIN
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ ON  "PCL_BP"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT"
+ AND "PCL_BP"."INTRENOPL" = "LTPLRESB"."INTRENOPL"
  ;
   
 END;
