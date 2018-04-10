@@ -56,59 +56,37 @@ BEGIN
 	ON  "LTPCLCOOWN"."INTRENOPL" = "PCL"."INTRENO"
 	;
 	
-	
  --BP count
  lt_bp_count = 
  SELECT "TAXYRSTARTDT", "INTRENOPL", count("BPARTNER") AS "OWNER_COUNT"
- FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
+ FROM :it_data_for_rule
  GROUP BY "TAXYRSTARTDT", "INTRENOPL";
  
  --BP count where BP is organization
  lt_org_count = 
  SELECT  "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "ORG_COUNT"
- FROM 
- "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "DATA",
- "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
- WHERE  "BP"."CODEID" LIKE 'C%' OR "BP"."CODEID" LIKE 'T%'
-    AND "DATA"."BPARTNER" = "BP"."PARTNER"
-	AND left("BP"."DATE_TO",8)   >= left("DATA"."TAXYRSTARTDT",4) 
-	AND left("BP"."DATE_FROM",8) <= left("DATA"."TAXYRSTARTDT",4) 
+ FROM :it_data_for_rule AS "DATA"
  GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
  
  --BP count where BP owner type = Company
  lt_coy_count = 
  SELECT "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "COY_COUNT"
- FROM 
- "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "DATA",
- "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
- WHERE  "BP"."CODEID" LIKE 'C%'
-    AND "DATA"."BPARTNER" = "BP"."PARTNER"
-	AND left("BP"."DATE_TO",8)   >= left("DATA"."TAXYRSTARTDT",4) 
-	AND left("BP"."DATE_FROM",8) <= left("DATA"."TAXYRSTARTDT",4) 
+ FROM :it_data_for_rule AS "DATA"
+ WHERE  "DATA"."CODE_ID" LIKE 'C%'
  GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
  
  --BP count where BP owner type = Trust
  lt_trt_count = 
  SELECT  "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "TRT_COUNT"
- FROM 
- "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "DATA",
- "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
- WHERE  "BP"."CODEID" LIKE 'T%'
-    AND "DATA"."BPARTNER" = "BP"."PARTNER"
-	AND left("BP"."DATE_TO",8)   >= left("DATA"."TAXYRSTARTDT",4) 
-	AND left("BP"."DATE_FROM",8) <= left("DATA"."TAXYRSTARTDT",4) 
+ FROM :it_data_for_rule AS "DATA"
+ WHERE  "DATA"."CODE_ID" LIKE 'T%'
  GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
  
 --BP count where BP is individual
  lt_ind_count = 
  SELECT  "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "IND_COUNT"
- FROM 
- "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "DATA",
- "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
- WHERE  "BP"."CODEID" LIKE 'N%'
-    AND "DATA"."BPARTNER" = "BP"."PARTNER"
-	AND left("BP"."DATE_TO",8)   >= left("DATA"."TAXYRSTARTDT",4) 
-	AND left("BP"."DATE_FROM",8) <= left("DATA"."TAXYRSTARTDT",4) 
+ FROM :it_data_for_rule AS "DATA"
+ WHERE  "DATA"."CODE_ID" LIKE 'N%'
  GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
  
  --Parcel owner count

@@ -17,7 +17,7 @@ FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj" ( )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
-	
+				
   RETURN
   SELECT 
   --TO_INT("FISC_CAL"."FISCAL_YEAR") - 1 AS "GJAHR", 
@@ -38,10 +38,6 @@ BEGIN
   TO_NVARCHAR(TO_INT(LEFT("PCL_BY_BP"."TAXYRSTARTDT",4)) + 1) AS  "LANDTAXYR"
   FROM 
   "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BY_BP"
-  --INNER JOIN 
-  --:lt_bp_count AS "BP_CNT"
-  --ON  "PCL_BY_BP"."INTRENOPL" = "BP_CNT"."INTRENOPL"
-  --AND "PCL_BY_BP"."TAXYRSTARTDT" = "BP_CNT"."TAXYRSTARTDT"
   INNER JOIN 
   "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "PCL_FACT"
   ON  "PCL_BY_BP"."INTRENOPL" = "PCL_FACT"."INTRENOPL"
