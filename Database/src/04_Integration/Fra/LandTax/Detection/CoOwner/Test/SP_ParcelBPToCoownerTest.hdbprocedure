@@ -1,4 +1,7 @@
-PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelBPToCoownerTest" ( )
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelBPToCoownerTest" (
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.PRESULT_RISK_AMNT_LTPCLCOOWN",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLCOOWN"
+	)
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
 	READS SQL DATA AS
@@ -32,7 +35,7 @@ BEGIN
   CALL  "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerExec"(
     :LT_OUTPUT_READ_1,
     :LT_PARAM_DM_1,
-    LT_OUTPUT_RULE_1,
-    LT_TEXT );
+    ET_RESULT,
+    ET_TEXT );
 
  END;

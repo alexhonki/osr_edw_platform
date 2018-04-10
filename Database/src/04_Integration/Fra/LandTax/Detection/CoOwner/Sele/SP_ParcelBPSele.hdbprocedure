@@ -1,6 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelBPSele" (
 	IN  it_workset    		"osr.edw.platform.fra.ltx.coowner::Types.WS_LTPCLBP",
-	OUT et_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_FOR_RULE"
+	OUT et_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_LTPCLBP"
 ) 
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -13,7 +13,6 @@ BEGIN
  "DATA"."INTRENOPL" AS "INTRENOPL", 
  "DATA"."PLNO" AS "PLNO",
  "DATA"."BPARTNER" AS "BPARTNER",
- '' AS "CO_OWNER_ID",
  to_int(left("DATA"."TAXYRSTARTDT",4)) AS "FISCAL_YEAR", 
  left("DATA"."TAXYRSTARTDT",4) || '0630' AS "FY_EDATE",
   to_nvarchar((to_int(left("DATA"."TAXYRSTARTDT",4)) + 1)) || '0630' AS "TAXYRENDDT",
