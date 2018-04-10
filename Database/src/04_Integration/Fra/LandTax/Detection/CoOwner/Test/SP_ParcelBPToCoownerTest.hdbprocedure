@@ -1,0 +1,41 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelBPToCoownerTest" (
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_LTPCLBP",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLBP"
+	)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+	
+	LT_WORKING_SET = 
+	SELECT
+	"TAXYRSTARTDT",
+    "INTRENOPL",
+    "PLNO",
+    "BPARTNER"
+	FROM "osr.edw.platform.fra.ltx.coowner::CV_ParcelBPDetObj";
+	
+    LT_PARAM_DM_1 =
+      SELECT
+        TO_INTEGER( '5' )                       AS "OWNER_COUNT_THRESHOLD",
+        TO_INTEGER( '1' )                       AS "ORG_COUNT_RANGE_LOW",
+        TO_INTEGER( '99' )                      AS "ORG_COUNT_RANGE_HIGH",
+        TO_INTEGER( '0' )                       AS "TRT_COUNT_THRESHOLD",
+        TO_INTEGER( '0' )                       AS "COY_COUNT_THRESHOLD",
+        TO_INTEGER( '0' )                       AS "IND_COUNT_THRESHOLD",
+        TO_DECIMAL( '1000000', 000015, 000002 ) AS "AVG3YRVAL_THRESHOLD"
+         FROM  "osr.edw.platform.fra.ltx.coowner::CV_ParcelBPDetObj";
+         
+    
+  CALL "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelBPSele"(
+    :LT_WORKING_SET,
+    LT_OUTPUT_READ_1 );
+
+  CALL  "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerExec"(
+    :LT_OUTPUT_READ_1,
+    :LT_PARAM_DM_1,
+    ET_RESULT,
+    ET_TEXT );
+
+ END;

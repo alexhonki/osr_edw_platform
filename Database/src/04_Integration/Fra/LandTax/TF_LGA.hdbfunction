@@ -1,0 +1,21 @@
+FUNCTION "osr.edw.platform.fra.ltx::TF_LGA" ( )
+       RETURNS TABLE 
+       (
+    	LGA_CODE		NVARCHAR(6),
+    	TEXT			NVARCHAR(40),
+    	VAL_OFFICE      NVARCHAR(6),
+    	ACTIVE			NVARCHAR(1)
+    	)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+	RETURN 
+	SELECT
+	"LGA_CODE",
+	"TEXT",
+	"VAL_OFFICE",
+	"ACTIVE"
+	FROM "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTLGA.active_data";
+	
+END;

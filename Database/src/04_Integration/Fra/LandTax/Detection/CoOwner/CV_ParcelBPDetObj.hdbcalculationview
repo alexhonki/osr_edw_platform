@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_ParcelBPDetObj" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Parcel by BP Detection Object"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj">
+  <attributes>
+    <attribute id="TAXYRENDDT" order="1" semanticType="date.businessDateFrom" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRENDDT"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="TAXYRENDDT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="PLNO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="PLNO"/>
+    </attribute>
+    <attribute id="PLNO_VALIDFROM" order="4" semanticType="date.businessDateFrom" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO_VALIDFROM"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="PLNO_VALIDFROM"/>
+    </attribute>
+    <attribute id="PLNO_VALIDTO" order="5" semanticType="date.businessDateTo" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO_VALIDTO"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="PLNO_VALIDTO"/>
+    </attribute>
+    <attribute id="BPARTNER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="PARISH" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARISH"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="PARISH"/>
+    </attribute>
+    <attribute id="LGA" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LGA"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="LGA"/>
+    </attribute>
+    <attribute id="TENURE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENURE"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="TENURE"/>
+    </attribute>
+    <attribute id="LANDUSECODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDUSECODE"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="LANDUSECODE"/>
+    </attribute>
+    <attribute id="GJAHR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="LANDTAXYR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANDTAXYR"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="LANDTAXYR"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="TAXYRSTARTDT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

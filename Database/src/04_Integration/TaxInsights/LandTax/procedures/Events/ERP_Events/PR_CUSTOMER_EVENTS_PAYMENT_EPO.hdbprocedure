@@ -1,0 +1,71 @@
+PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_PAYMENT_EPO" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+    AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+   
+   /*EPO Fufilment*/
+	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
+	select 
+		SAP.CUST_ID as CUST_ID,
+		232 as EVENT_ID,
+		'Payment' as EVENT_GROUP,
+		'EPO Fufilled with DEGF=100' as EVENT_NAME,
+		CAST(DUEDATE as date) as INIT_DATE,
+		NULL as END_DATE,
+		1 as EVENT_VALUE,
+		'EPO Fufilled with DEGF=100' as DESCRIPTION,
+		LEFT(DUEDATE,6)  as INIT_TS,
+		NULL  as END_TS
+	from(
+		SELECT DISTINCT GPART,DUEDATE FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKPP.active_data" a 
+		LEFT JOIN (SELECT PPKEY,MAX(PRDAT) as DueDate FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKPPD.active_data" GROUP BY PPKEY) b 
+		ON  a.PPKEY=b.PPKEY
+		WHERE a.PPKEY IN (
+		SELECT PPKEY FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKPPP.active_data"
+		WHERE OPBEL IN (
+		SELECT OPBEL FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" WHERE KOFIZ='LT' 
+		)) AND DEGFF=100 AND PPCAT='Z7'
+		) a
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
+	WHERE a.GPART >= '0001000335' and a.GPART <= '0001076855'
+	;
+	
+	
+	
+	/*PP Fufilment*/
+	/*Promise to pay fufilled*/
+	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
+	select 
+		SAP.CUST_ID as CUST_ID,
+		232 as EVENT_ID,
+		'Payment' as EVENT_GROUP,
+		'Instalment Plan Fufilled with DEGF=100' as EVENT_NAME,
+		CAST(DUEDATE as date) as INIT_DATE,
+		NULL as END_DATE,
+		1 as EVENT_VALUE,
+		'Instalment Plan Fufilled with DEGF=100' as DESCRIPTION,
+		LEFT(DUEDATE,6)  as INIT_TS,
+		NULL  as END_TS
+	from(
+		SELECT DISTINCT GPART,DUEDATE FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKPP.active_data" a 
+		LEFT JOIN (SELECT PPKEY,MAX(PRDAT) as DueDate FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKPPD.active_data" GROUP BY PPKEY) b 
+		ON  a.PPKEY=b.PPKEY
+		WHERE a.PPKEY IN (
+		SELECT PPKEY FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKPPP.active_data"
+		WHERE OPBEL IN (
+		SELECT OPBEL FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" WHERE KOFIZ='LT'
+		)) AND DEGFF=100  AND PPCAT!='Z7'
+		) a
+	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
+	WHERE a.GPART >= '0001000335' and a.GPART <= '0001076855';
+	
+	
+
+   
+END

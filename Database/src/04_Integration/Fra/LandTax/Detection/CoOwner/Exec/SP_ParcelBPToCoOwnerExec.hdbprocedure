@@ -1,0 +1,328 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerExec" (
+	IN  it_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_LTPCLBP",
+	IN 	parameters	 		"osr.edw.platform.fra.ltx.coowner::Types.PARAM",
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_LTPCLBP",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLBP"
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+ DECLARE lv_owner_cnt_threshold INTEGER DEFAULT 5;
+ DECLARE lv_org_cnt_range_low  INTEGER;
+ DECLARE lv_org_cnt_range_high INTEGER;
+ DECLARE lv_trt_cnt_threshold INTEGER;
+ DECLARE lv_coy_cnt_threshold INTEGER;
+ DECLARE lv_ind_cnt_threshold INTEGER;
+ DECLARE lv_value_threshold INTEGER;
+
+ SELECT "OWNER_COUNT_THRESHOLD" INTO lv_owner_cnt_threshold FROM :PARAMETERS LIMIT 1;
+ SELECT "ORG_COUNT_RANGE_LOW"  INTO lv_org_cnt_range_low FROM :PARAMETERS LIMIT 1;
+ SELECT "ORG_COUNT_RANGE_HIGH" INTO lv_org_cnt_range_high FROM :PARAMETERS LIMIT 1;
+ SELECT "TRT_COUNT_THRESHOLD" INTO lv_trt_cnt_threshold FROM :PARAMETERS LIMIT 1;
+ SELECT "COY_COUNT_THRESHOLD" INTO lv_coy_cnt_threshold FROM :PARAMETERS LIMIT 1;
+ SELECT "IND_COUNT_THRESHOLD" INTO lv_ind_cnt_threshold FROM :PARAMETERS LIMIT 1;
+ 
+ SELECT "AVG3YRVAL_THRESHOLD" INTO lv_value_threshold FROM :PARAMETERS LIMIT 1;
+
+ lt_coowner_data = 
+  	SELECT
+ 	"LTPCLCOOWN"."TAXYRSTARTDT",
+ 	"LTPCLCOOWN"."INTRENOPL", 
+ 	"PCL"."PLNO",
+ 	"PCL"."VALIDFROM",
+ 	"PCL"."VALIDTO",
+ 	LEFT("CO_OWNER",600) AS "CO_OWNER", CAST(HASH_MD5(TO_BINARY("CO_OWNER")) AS NVARCHAR) AS "CO_OWNER_ID"
+ 	FROM 
+ 	(
+ 	SELECT "LTPLRESB"."TAXYRSTARTDT", "LTPLRESB"."INTRENOPL", STRING_AGG("LTPLRESB"."BPARTNER", '|' ORDER BY "LTPLRESB"."BPARTNER" ASC) AS "CO_OWNER"
+ 		FROM  
+ 		"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+		WHERE EXISTS (
+		SELECT * FROM (
+			SELECT "TAXYRSTARTDT", "INTRENOPL", count("BPARTNER")
+				FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
+				GROUP BY "TAXYRSTARTDT", "INTRENOPL"
+				HAVING count("BPARTNER") >= 5
+		) AS "CNT_FILTER"
+		WHERE "LTPLRESB"."TAXYRSTARTDT" = "CNT_FILTER"."TAXYRSTARTDT"
+		  AND "LTPLRESB"."INTRENOPL"	= "CNT_FILTER"."INTRENOPL"
+		)
+	GROUP BY  "LTPLRESB"."TAXYRSTARTDT", "LTPLRESB"."INTRENOPL"
+	) AS "LTPCLCOOWN"
+	INNER JOIN 
+	"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
+	ON  "LTPCLCOOWN"."INTRENOPL" = "PCL"."INTRENO"
+	;
+	
+ --BP count
+ lt_bp_count = 
+ SELECT "TAXYRSTARTDT", "INTRENOPL", count("BPARTNER") AS "OWNER_COUNT"
+ FROM :it_data_for_rule
+ GROUP BY "TAXYRSTARTDT", "INTRENOPL";
+ 
+ --BP count where BP is organization
+ lt_org_count = 
+ SELECT  "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "ORG_COUNT"
+ FROM :it_data_for_rule AS "DATA"
+ GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
+ 
+ --BP count where BP owner type = Company
+ lt_coy_count = 
+ SELECT "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "COY_COUNT"
+ FROM :it_data_for_rule AS "DATA"
+ WHERE  "DATA"."CODE_ID" LIKE 'C%'
+ GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
+ 
+ --BP count where BP owner type = Trust
+ lt_trt_count = 
+ SELECT  "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "TRT_COUNT"
+ FROM :it_data_for_rule AS "DATA"
+ WHERE  "DATA"."CODE_ID" LIKE 'T%'
+ GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
+ 
+--BP count where BP is individual
+ lt_ind_count = 
+ SELECT  "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL", count("DATA"."BPARTNER") AS "IND_COUNT"
+ FROM :it_data_for_rule AS "DATA"
+ WHERE  "DATA"."CODE_ID" LIKE 'N%'
+ GROUP BY "DATA"."TAXYRSTARTDT", "DATA"."INTRENOPL";
+ 
+ --Parcel owner count
+ lt_owner_count = 
+ SELECT "TAXYRSTARTDT", "INTRENOPL", "OWNER_COUNT", 0 AS "COY_COUNT", 0 AS "TRT_COUNT", 0 AS "IND_COUNT", 0 AS "ORG_COUNT" FROM :lt_bp_count
+ UNION 
+ SELECT "TAXYRSTARTDT", "INTRENOPL", 0 AS "OWNER_COUNT", "COY_COUNT", 0 AS "TRT_COUNT", 0 AS "IND_COUNT", 0 AS "ORG_COUNT" FROM :lt_coy_count
+ UNION
+ SELECT "TAXYRSTARTDT", "INTRENOPL", 0 AS "OWNER_COUNT", 0 AS "COY_COUNT", "TRT_COUNT", 0 AS "IND_COUNT", 0 AS "ORG_COUNT" FROM :lt_trt_count
+ UNION
+ SELECT "TAXYRSTARTDT", "INTRENOPL", 0 AS "OWNER_COUNT", 0 AS "COY_COUNT", 0 AS "TRT_COUNT", "IND_COUNT", 0 AS "ORG_COUNT" FROM :lt_ind_count
+ UNION
+ SELECT "TAXYRSTARTDT", "INTRENOPL", 0 AS "OWNER_COUNT", 0 AS "COY_COUNT", 0 AS "TRT_COUNT", 0 AS "IND_COUNT", "ORG_COUNT" FROM :lt_org_count
+ ;
+ 
+ --Consolidated owner count info
+ lt_owner_count = 
+ SELECT 
+ "TAXYRSTARTDT", 
+ "INTRENOPL", 
+ SUM("OWNER_COUNT") AS "OWNER_COUNT", 
+ SUM("COY_COUNT") AS "COY_COUNT", 
+ SUM("TRT_COUNT") AS "TRT_COUNT", 
+ SUM("IND_COUNT") AS "IND_COUNT",
+ SUM("ORG_COUNT") AS "ORG_COUNT"
+ FROM :lt_owner_count
+ GROUP BY "TAXYRSTARTDT", "INTRENOPL";
+
+ --Above the owner count threshold
+ lt_owner_count_filter = 
+ SELECT "TAXYRSTARTDT", "INTRENOPL"
+ FROM :lt_owner_count
+ WHERE "OWNER_COUNT" >= :lv_owner_cnt_threshold
+   AND "COY_COUNT" 	 >= :lv_coy_cnt_threshold
+   AND "TRT_COUNT"   >= :lv_trt_cnt_threshold
+   AND "IND_COUNT"   >= :lv_ind_cnt_threshold
+   AND "ORG_COUNT"   >= :lv_org_cnt_range_low
+   AND "ORG_COUNT"   <= :lv_org_cnt_range_high
+ ;
+
+ 
+ lt_coowner_data =  
+ SELECT * FROM 
+ :lt_coowner_data AS "DATA" 
+ WHERE EXISTS (
+ 	SELECT * FROM :lt_owner_count_filter AS "CNT_FILTER"
+ 	WHERE "DATA"."TAXYRSTARTDT" = "CNT_FILTER"."TAXYRSTARTDT"
+	  AND "DATA"."INTRENOPL" = "CNT_FILTER"."INTRENOPL"
+ )
+ ;
+ 
+ lt_data = 
+ SELECT * FROM 
+ :lt_coowner_data AS "DATA" 
+ WHERE EXISTS (
+ 	SELECT * FROM :it_data_for_rule AS "DETOBJ_FILTER"
+ 	WHERE "DATA"."TAXYRSTARTDT" = "DETOBJ_FILTER"."TAXYRSTARTDT"
+	  AND "DATA"."INTRENOPL" = "DETOBJ_FILTER"."INTRENOPL"
+ )
+ ;
+ 
+
+	
+ --Parcel Co-Owner after owner count checking
+ lt_parcel_coowner = SELECT DISTINCT "TAXYRSTARTDT", "INTRENOPL", "PLNO", "CO_OWNER_ID" FROM :lt_data;
+
+ 
+ --Rate Table
+ lt_rate = 
+ SELECT
+ "RATE_CODE", 
+ "VALID_FROM", 
+ "VALID_TO", 
+ "TOP_RATE_IND", 
+ "MIN_VALUE", 
+ "MAX_VALUE", 
+ "BASE_AMOUNT", 
+ "TAX_PERCENT", 
+ "ABSURCHARGE", 
+ "ABSURBASE_AMT",
+ RANK ( ) OVER ( PARTITION BY "RATE_CODE", "VALID_FROM", "VALID_TO" ORDER BY "MIN_VALUE" ASC ) 
+ AS "RATE_BAND"
+ FROM "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTAXRATE.active_data"
+ WHERE "RATE_CODE" = 'C'
+ ;
+ 
+
+ lt_parcel_coowner_val = 
+ SELECT
+ "PCL_CO_OWNER"."CO_OWNER_ID" AS "CO_OWNER_ID",
+ "PCL_CO_OWNER"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "PCL_CO_OWNER"."INTRENOPL" AS "INTRENOPL",
+ "PCL_CO_OWNER"."PLNO" AS "PLNO",
+ "VAL"."AVG3YRVAL" AS "AVG3YRVAL"
+ FROM 
+ :lt_parcel_coowner AS "PCL_CO_OWNER"
+ INNER JOIN "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL" 
+ ON  "PCL_CO_OWNER"."TAXYRSTARTDT" = "VAL"."TAXYRSTARTDT"
+ AND "PCL_CO_OWNER"."INTRENOPL" = "VAL"."INTRENOPL"
+ ;
+ 
+ lt_value_aggregated = 
+ SELECT 
+ "TAXYRSTARTDT",
+ "CO_OWNER_ID",
+ SUM("AVG3YRVAL") AS "AVG3YRVAL"
+ FROM :lt_parcel_coowner_val
+ GROUP BY 
+ "TAXYRSTARTDT",
+ "CO_OWNER_ID"
+ HAVING SUM("AVG3YRVAL") > :lv_value_threshold
+ ;
+ 
+
+ lt_parcel_estimated_tax = 
+ SELECT 
+ "PCL_COOWNER"."TAXYRSTARTDT",
+ "PCL_COOWNER"."INTRENOPL",
+ "PCL_COOWNER"."CO_OWNER_ID",
+ SUM("TAX"."ESTIMATED_PLTAX") AS "ESTIMATED_PLTAX"
+ FROM 
+ :lt_value_aggregated AS "VAL"
+ INNER JOIN 
+ :lt_parcel_coowner AS "PCL_COOWNER"
+ ON  "VAL"."TAXYRSTARTDT" = "PCL_COOWNER"."TAXYRSTARTDT"
+ AND "VAL"."CO_OWNER_ID" = "PCL_COOWNER"."CO_OWNER_ID"
+ INNER JOIN
+ "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTAXBPPL.active_data" AS "TAX"
+ ON  "PCL_COOWNER"."TAXYRSTARTDT" = "TAX"."VALIDFROM"
+ AND "PCL_COOWNER"."INTRENOPL" = "TAX"."INTRENO_PL"
+ GROUP BY 
+ "PCL_COOWNER"."TAXYRSTARTDT",
+ "PCL_COOWNER"."INTRENOPL",
+ "PCL_COOWNER"."CO_OWNER_ID"
+ ;
+ 
+ lt_landtax_aggregted = 
+ SELECT 
+ "VAL"."TAXYRSTARTDT",
+ "VAL"."CO_OWNER_ID",
+ "VAL"."AVG3YRVAL",
+ "RATE"."BASE_AMOUNT" + ("VAL"."AVG3YRVAL" - "RATE"."MIN_VALUE")*"RATE"."TAX_PERCENT"/100 AS "ESTIMATED_TAX", 
+ "VAL"."AVG3YRVAL"/"RATE"."MIN_VALUE" AS "RATIO_TO_MIN_VAL",
+ "RATE"."RATE_BAND"
+ FROM 
+ :lt_value_aggregated AS "VAL", :lt_rate AS "RATE"
+ WHERE "VAL"."TAXYRSTARTDT" = "RATE"."VALID_FROM"
+   AND "VAL"."AVG3YRVAL" >= "RATE"."MIN_VALUE"
+   AND "VAL"."AVG3YRVAL" <= "RATE"."MAX_VALUE"
+ ;
+ 
+ lt_result =
+ SELECT
+  RANK ( ) OVER 
+  (
+  PARTITION BY "PCL_CO_OWNER_VAL"."INTRENOPL", "PCL_CO_OWNER_VAL"."PLNO", "PCL_CO_OWNER_VAL"."CO_OWNER_ID" 
+  ORDER BY "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" DESC 
+  ) 
+  AS "RANK",
+ "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" AS "TAXYRSTARTDT",
+ "PCL_CO_OWNER_VAL"."INTRENOPL" AS "INTRENOPL",
+ "PCL_CO_OWNER_VAL"."PLNO" AS "PLNO",
+ "PCL_CO_OWNER_VAL"."CO_OWNER_ID" AS "CO_OWNER_ID",
+ "PCL_CO_OWNER_VAL"."AVG3YRVAL"/"TAX_VAL"."AVG3YRVAL"*"TAX_VAL"."ESTIMATED_TAX" - "TAX"."ESTIMATED_PLTAX" AS "RISK_AMOUNT", 
+ "TAX_VAL"."RATIO_TO_MIN_VAL",
+ "TAX_VAL"."RATE_BAND", 
+ "PCL_CO_OWNER_VAL"."AVG3YRVAL"/"TAX_VAL"."AVG3YRVAL"*"TAX_VAL"."ESTIMATED_TAX" AS "ESTIMATED_PLTAX_NEW", 
+ "TAX"."ESTIMATED_PLTAX" AS "ESTIMATED_PLTAX"
+ FROM 
+ :lt_parcel_coowner_val AS "PCL_CO_OWNER_VAL"
+ INNER JOIN 
+ :lt_parcel_estimated_tax AS "TAX"
+ ON  "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" = "TAX"."TAXYRSTARTDT"
+ AND "PCL_CO_OWNER_VAL"."INTRENOPL" = "TAX"."INTRENOPL"
+ INNER JOIN 
+ :lt_landtax_aggregted AS "TAX_VAL"
+ ON  "PCL_CO_OWNER_VAL"."TAXYRSTARTDT" = "TAX_VAL"."TAXYRSTARTDT"
+ AND "PCL_CO_OWNER_VAL"."CO_OWNER_ID" = "TAX_VAL"."CO_OWNER_ID"
+
+ ;
+ 
+ et_result = 
+ SELECT
+ "RESULT"."TAXYRSTARTDT",
+ "RESULT"."INTRENOPL",
+ "RESULT"."PLNO",
+ "PCL_BP"."BPARTNER",
+ 100 AS "DETECTION_RESULT",
+ CASE WHEN "RANK" = 1 THEN "RISK_AMOUNT"*"LTPLRESB"."OWNERPERCENT" ELSE 0 END AS "RISK_AMOUNT",
+ 'AUD' AS "CURRENCY"
+ FROM 
+ :lt_result AS "RESULT"
+ INNER JOIN
+ :it_data_for_rule AS "PCL_BP"
+ ON  "RESULT"."TAXYRSTARTDT" = "PCL_BP"."TAXYRSTARTDT"
+ AND "RESULT"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+ INNER JOIN
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ ON  "PCL_BP"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT"
+ AND "PCL_BP"."INTRENOPL" = "LTPLRESB"."INTRENOPL"
+ 
+ ;
+ 
+ et_text = 
+ SELECT
+ "RESULT"."TAXYRSTARTDT",
+ "RESULT"."INTRENOPL",
+ "RESULT"."PLNO",
+ "PCL_BP"."BPARTNER",
+ CHAR(13)|| CHAR(10) ||
+ 'New estimated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW"*"LTPLRESB"."OWNERPERCENT", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Estimated tax $' || "ESTIMATED_PLTAX" || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Additional estmated tax $' || TO_DECIMAL(("ESTIMATED_PLTAX_NEW"-"ESTIMATED_PLTAX")*"LTPLRESB"."OWNERPERCENT", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Ratio to Min. Value ' || TO_DECIMAL("RATIO_TO_MIN_VAL", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Band ' || "RATE_BAND" 
+ AS "TEXT",
+ '' AS "MSGID",
+ '' AS "MSGNO",
+ '' AS "MSGV1",
+ '' AS "MSGV2",
+ '' AS "MSGV3",
+ '' AS "MSGV4",
+ '' AS "MSGV1_FC",
+ '' AS "MSGV2_FC",
+ '' AS "MSGV3_FC",
+ '' AS "MSGV4_FC"
+ FROM 
+ :lt_result AS "RESULT"
+ INNER JOIN
+ :it_data_for_rule AS "PCL_BP"
+ ON  "RESULT"."TAXYRSTARTDT" = "PCL_BP"."TAXYRSTARTDT"
+ AND "RESULT"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+ INNER JOIN
+ "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ ON  "PCL_BP"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT"
+ AND "PCL_BP"."INTRENOPL" = "LTPLRESB"."INTRENOPL"
+ ;
+  
+END;

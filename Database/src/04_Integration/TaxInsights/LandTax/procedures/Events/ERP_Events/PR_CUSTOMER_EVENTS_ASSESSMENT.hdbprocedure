@@ -1,4 +1,4 @@
-PROCEDURE "osr.edw.integration.ti.ltax::PR_CUSTOMER_EVENTS_ASSESSMENT" ( )
+PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_ASSESSMENT" ( )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
    --DEFAULT SCHEMA <default_schema_name>
@@ -62,7 +62,7 @@ UNION ALL
 		from "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" as a
 		INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
 		INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
-		WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='IND' AND GPART >= '0001000335' and GPART <= '0001076855'
+		WHERE HVORG='4000' and TVORG='0150'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='IND' AND GPART >= '0001000335' and GPART <= '0001076855'
 		GROUP BY SAP.CUST_ID, BUDAT
 
 		) WHERE EVENT_NAME is not null;

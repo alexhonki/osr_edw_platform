@@ -31,6 +31,18 @@ context Types {
         TAXYRENDDT   : String(8);
         CODE_ID      : String(2);
     };
+    
+    entity DATA_LTPCLBP {
+        TAXYRSTARTDT : String(8);
+        INTRENOPL    : String(13);
+        PLNO         : String(20);
+        BPARTNER     : String(10);
+        FISCAL_YEAR  : String(4);
+        FY_EDATE     : String(8);
+        TAXYRENDDT   : String(8);
+        CODE_ID      : String(2);
+    };
+    
     entity PARAM {
  		OWNER_COUNT_THRESHOLD	 : Integer;
  	 	ORG_COUNT_RANGE_LOW	 	 : Integer;
@@ -69,7 +81,8 @@ context Types {
         RISK_AMOUNT      : Decimal(23, 2);
         CURRENCY         : String(5);
     };
-    entity RESULT {
+    
+    entity RESULT_LTPCLBP {
         TAXYRSTARTDT     : String(8);
         INTRENOPL        : String(13);
         PLNO             : String(20);
@@ -78,7 +91,7 @@ context Types {
         RISK_AMOUNT      : Decimal(23, 2);
         CURRENCY         : String(5);
     };
-    entity TEXT {
+    entity TEXT_LTPCLBP {
         TAXYRSTARTDT : String(8);
         INTRENOPL    : String(13);
         PLNO         : String(20);

@@ -23,10 +23,22 @@ BEGIN
  "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "VAL"
  ON  "PCL_COOWNER"."TAXYRSTARTDT" = "VAL"."TAXYRSTARTDT"
  AND "PCL_COOWNER"."INTRENOPL" = "VAL"."INTRENOPL"
- WHERE EXISTS (
-	SELECT * FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BP"
-	WHERE "PCL_COOWNER"."INTRENOPL" = "PCL_BP"."INTRENOPL"
- )
+ ;
+
+
+ lt_parcel_val_latest = 
+ SELECT
+ "CO_OWNER_ID",
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "AVG3YRVAL",
+  RANK ( ) OVER (
+  PARTITION BY "CO_OWNER_ID"
+  ORDER BY "TAXYRSTARTDT" DESC ) 
+  AS "YEAR_RANK"
+ FROM :lt_parcel_val AS "PCL_VAL"
+ WHERE "AVG3YRVAL" > 0
  ;
  
  lt_parcel_for_addid = 
@@ -40,7 +52,8 @@ BEGIN
   PARTITION BY "CO_OWNER_ID"
   ORDER BY "AVG3YRVAL" DESC ) 
   AS "RANK"
- FROM :lt_parcel_val
+ FROM :lt_parcel_val_latest AS "PCL_VAL"
+ WHERE "YEAR_RANK" = 1
  ;
  
  lt_parcel_for_addid_row = 
@@ -65,7 +78,7 @@ BEGIN
  "OWNERSHIP"."OWNERPERCENT", 
  "OWNERSHIP"."OWNERPERCENT" * "PCL_VAL"."AVG3YRVAL" AS "BP_REL_VAL"
  FROM 
- :lt_parcel_val AS "PCL_VAL"
+ :lt_parcel_val_latest AS "PCL_VAL"
  INNER JOIN 
  "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "OWNERSHIP"
  ON  "PCL_VAL"."TAXYRSTARTDT" = "OWNERSHIP"."TAXYRSTARTDT"
@@ -81,7 +94,7 @@ BEGIN
  "BP_REL_VAL",
   RANK ( ) OVER 
   (
-  PARTITION BY "CO_OWNER_ID", "TAXYRSTARTDT"
+  PARTITION BY "CO_OWNER_ID"
   ORDER BY "BP_REL_VAL" DESC 
   ) 
   AS "RANK"
@@ -99,10 +112,11 @@ BEGIN
  WHERE "RANK" = 1
  ;
  
+ 
   RETURN 
   SELECT DISTINCT 
 	"INV"."CO_OWNER_ID",
-	"BP"."BPARTNER" AS "BPARTNER",
+    "BP"."BPARTNER" AS "BPARTNER",
 	'' AS "BPARTNER_TEXT",
 	"PCL"."PLNO" AS "PLNO" 
 	FROM 
