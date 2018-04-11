@@ -1,0 +1,53 @@
+PROCEDURE "osr.edw.integration.ti.ltax::PR_LTI_TAXPAYERS" ( 
+OUT COUNT_CUST INT )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   DECLARE LV_TIMESTAMP TIMESTAMP;
+   DECLARE LV_DATE DATE;
+   DECLARE LV_TIME TIME;
+    SELECT MAX("CHANGED.DATE") into LV_TIMESTAMP FROM "osr.edw.integration.ti.ltax::app.Customer";
+	IF LV_TIMESTAMP IS NULL THEN 
+		LV_TIMESTAMP = TO_TIMESTAMP('1900-01-01');
+	END IF;
+	LV_DATE = TO_DATE(LV_TIMESTAMP);
+	LV_TIME = TO_TIME(LV_TIMESTAMP);
+	LT_RESV_CUSTOMERS = SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, ZZ_PARTNER AS EXT_ID, 0 AS "STATUS", 0 AS "IS_SENSITIVE", INIT_DATE, END_DATE, "CREATED.DATE", 
+						"CREATED.DATE" AS "CHANGED.DATE", CURRENT_USER AS "CREATED.USER", CURRENT_USER AS "CHANGED.USER", 
+						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
+						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS
+							
+							FROM (SELECT ZZ_PARTNER,
+								  MIN(TO_DATE("TAXYRSTARTDT")) AS "INIT_DATE", MAX(TO_DATE("TAXYRENDDT")) AS "END_DATE", 
+								  max(to_timestamp(concat(concat(to_varchar(to_date(CHDATE)),' '),to_varchar(to_time(CHTIME))))) AS "CREATED.DATE"
+							      FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data" AS A 
+							      WHERE  A.TAXAMOUNT > 0
+								  GROUP BY A.ZZ_PARTNER) WHERE "CREATED.DATE" > lv_timestamp ;
+	UPSERT "osr.edw.integration.ti.ltax::app.Customer" 
+	("CUST_ID", 
+	"EXT_ID", 
+	"STATUS", 
+	"IS_SENSITIVE", 
+	"INIT_DATE", 
+	"END_DATE", 
+	"CREATED.DATE", 
+	"CHANGED.DATE",
+	"CREATED.BY",
+	"CHANGED.BY",
+	"INIT_TS",
+	"END_TS", 
+	"NAME")
+	SELECT A.CUST_ID, A.EXT_ID, A.STATUS, A.IS_SENSITIVE, A.INIT_DATE, A.END_DATE, A."CREATED.DATE", A."CHANGED.DATE",
+			"CREATED.USER", "CHANGED.USER", A."INIT_TS", A."END_TS", 
+			CONCAT(CONCAT(CONCAT(B."NAME_FIRST", ' '),CONCAT(B."NAMEMIDDLE", ' ')),CONCAT(B."NAME_LAST", ' ')) AS "NAME" FROM :LT_RESV_CUSTOMERS AS A 
+	INNER JOIN "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS B ON A.EXT_ID = B.PARTNER;
+	
+	 SELECT COUNT(*) INTO COUNT_CUST FROM :LT_RESV_CUSTOMERS;
+	 --RETURN COUNT_CUST;
+END
