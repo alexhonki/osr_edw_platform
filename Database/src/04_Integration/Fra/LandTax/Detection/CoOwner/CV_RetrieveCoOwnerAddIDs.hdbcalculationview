@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_CoOwnerInvObjs" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="Co-Owner Investigation Object"/>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_RetrieveCoOwnerAddIDs" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Retrieve Co-Owner Additional IDs"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_CoOwnerInvObj" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_CoOwnerInvObj</resourceUri>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerAddIDs" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerAddIDs</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_CoOwnerInvObj">
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerAddIDs">
   <attributes>
     <attribute id="CO_OWNER_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CO_OWNER_ID"/>
-      <keyMapping columnObjectName="TF_CoOwnerInvObj" columnName="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerAddIDs" columnName="CO_OWNER_ID"/>
     </attribute>
     <attribute id="BPARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
-      <keyMapping columnObjectName="TF_CoOwnerInvObj" columnName="BPARTNER"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerAddIDs" columnName="BPARTNER"/>
     </attribute>
     <attribute id="PLNO" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PLNO"/>
-      <keyMapping columnObjectName="TF_CoOwnerInvObj" columnName="PLNO"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerAddIDs" columnName="PLNO"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

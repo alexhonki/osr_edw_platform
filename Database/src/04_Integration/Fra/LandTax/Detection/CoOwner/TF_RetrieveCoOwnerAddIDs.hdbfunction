@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_CoOwnerInvObj"
+FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerAddIDs" ( )
 	RETURNS TABLE 
        (
         CO_OWNER_ID		NVARCHAR(32),
@@ -8,13 +8,7 @@ FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_CoOwnerInvObj"
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
-	RETURN 
-	SELECT DISTINCT "CO_OWNER_ID", '' AS "BPARTNER", '' AS "PLNO"
-	FROM 
-	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner"
-	;
 
-/*
  lt_parcel_val = 
  SELECT
  "PCL_COOWNER"."CO_OWNER_ID" AS "CO_OWNER_ID",
@@ -134,6 +128,5 @@ BEGIN
 	WHERE "PCL"."ROW_NUM" = 1 
 	  AND "BP"."ROW_NUM" = 1
  	;
-*/
 
 END;
