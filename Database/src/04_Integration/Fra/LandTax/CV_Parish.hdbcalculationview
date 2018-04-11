@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_Parish" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Parish"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_Parish" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_Parish</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_Parish">
+  <attributes>
+    <attribute id="PARISH_ID" order="1" descriptionColumnName="PARISH_NAME" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Parish ID"/>
+      <keyMapping columnObjectName="TF_Parish" columnName="PARISH_ID"/>
+    </attribute>
+    <attribute id="PARISH_NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Parish Name"/>
+      <keyMapping columnObjectName="TF_Parish" columnName="PARISH_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

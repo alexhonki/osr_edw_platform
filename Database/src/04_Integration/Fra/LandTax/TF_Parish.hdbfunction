@@ -1,0 +1,13 @@
+FUNCTION "osr.edw.platform.fra.ltx::TF_Parish" ( )
+       RETURNS TABLE (
+    	PARISH_ID		NVARCHAR(5),
+    	PARISH_NAME		NVARCHAR(40)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	
+	RETURN 
+	SELECT "PARISH_ID", "PARISH_NAME"
+	FROM "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTPARISH.active_data";
+END;
