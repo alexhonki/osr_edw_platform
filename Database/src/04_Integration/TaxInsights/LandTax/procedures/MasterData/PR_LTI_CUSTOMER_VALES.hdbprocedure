@@ -1,0 +1,50 @@
+PROCEDURE "osr.edw.integration.ti.ltax::PR_LTI_CUSTOMER_VALES" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+   
+   DECLARE LV_VALUE_ID INT;
+	SELECT TOP 1 VALUE_ID INTO LV_VALUE_ID FROM "osr.edw.integration.ti.ltax::app.ValueTypes";
+   
+
+   UPSERT "osr.edw.integration.ti.ltax::app.CustomerValues" (
+	"CUST_ID",
+	"VALUE_ID",
+	"VALUE",
+	"TIME_SEGMENT",
+	"INIT_DATE",
+	"END_DATE",
+	"INIT_TIME_SEGMENT",
+	"END_TIME_SEGMENT"
+	)
+	SELECT	CUST_ID, 
+			VALUE_ID, 
+			TO_DOUBLE("DUEAMOUNT") AS "VALUE",
+			TO_INT(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'07')) AS "TIME_SEGMENT",
+			TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'-07-01'))) AS "INIT_DATE",
+			TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_AFTER("FINYEAR", '-'),'-06-30'))) AS "END_DATE",
+			TO_INT(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'07')) AS "INIT_TIME_SEGMENT",
+			TO_INT(CONCAT(SUBSTR_AFTER("FINYEAR", '-'),'06')) AS "END_TIME_SEGMENT"
+		 FROM 
+		(
+		SELECT CUST_ID ,SUM(BETRH) DUEAMOUNT, FINYEAR, :LV_VALUE_ID AS "VALUE_ID"   FROM
+			(SELECT  CUST_ID, BETRH ,"osr.edw.integration.ti.ltax::TF_LT_GET_FIN_YEAR"(BUDAT).FINYEAR FINYEAR, FAEDN
+			FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" DEBTOR INNER JOIN 
+			"osr.edw.integration.ti.ltax::app.Customer" TAXPAYER ON TAXPAYER.EXT_ID = DEBTOR.GPART
+			WHERE  GPART > '0001000335' AND GPART <= '0001076855' AND KOFIZ='LT' AND HVORG = '4000' AND TVORG IN ('0150','0190')
+			) 
+			GROUP BY CUST_ID, FINYEAR HAVING SUM(BETRH)>0
+		);							
+
+
+   
+   
+   
+END

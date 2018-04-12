@@ -138,7 +138,7 @@ context app {
             @Comment : 'Record ID/Row ID'
         key RECORD_ID         : Integer64 generated always as identity(start with 1 increment by 1);
             TIME_SEGMENT      : Integer not null;
-            CUST_ID           : association[1] to Customer { CUST_ID as ID };
+            CUST_ID           : CustomerIdT;
             VALUE_ID          : Integer;
             VALUE             : BinaryFloat; // Double
             INIT_DATE         : UTCDateTime;
