@@ -55,6 +55,11 @@ modules:
       properties:
         key: logical-OSR-EDW-SOURCE-CRM-grantor
         service: '~{OSR-EDW-SOURCE-CRM-grantor-service}'
+    - name: OSR-LTI-BACKEND-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: logical-OSR-LTI-BACKEND-grantor
+        service: '~{OSR-LTI-BACKEND-grantor-service}'        
     - name: acs-ext-access-grantor
     - name: edw-ext-access-grantor
 resources:
@@ -90,6 +95,15 @@ resources:
      service-name: OSR_EDW_SOURCE_RMS-deploy
 #     service-name: D043051-lufb2asszmec20vd-OSR_EDW_SOURCE_RMS-OSR_EDW_SOURCE_RMS-container
    type: org.cloudfoundry.existing-service
+   
+ - name: OSR-LTI-BACKEND-grantor
+   properties:
+     OSR-LTI-BACKEND-grantor-service: '${service-name}'
+   parameters:
+     service-name: hdi_core_db
+#     service-name: D043051-lufb2asszmec20vd-OSR_EDW_SOURCE_RMS-OSR_EDW_SOURCE_RMS-container
+   type: org.cloudfoundry.existing-service
+   
  - name: OSR-EDW-SOURCE-TMR-grantor
    properties:
      OSR-EDW-SOURCE-TMR-grantor-service: '${service-name}'
