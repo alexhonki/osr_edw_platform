@@ -1,0 +1,79 @@
+PROCEDURE "osr.edw.integration.ti.ltax::PR_LTI_TAXPAYER_ATTRIBUTES" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   LT_RESV_CUSTOMERS =  SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
+						  ZZ_PARTNER AS EXT_ID,
+						  INIT_DATE, END_DATE,
+						  ((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
+						  ((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
+						  "BIRTHDT"
+						  FROM
+							(SELECT A."ZZ_PARTNER",
+							  MIN(TO_DATE(A."TAXYRSTARTDT")) AS "INIT_DATE",
+							  MAX(TO_DATE(A."TAXYRENDDT")) AS "END_DATE",
+							  TO_DATE(C."BIRTHDT") AS "BIRTHDT"
+							  FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data" AS A 
+							  INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS B ON B.EXT_ID = A.ZZ_PARTNER
+							  INNER JOIN "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS C ON A.ZZ_PARTNER = C.PARTNER
+							  WHERE  A.TAXAMOUNT > 0
+							  GROUP BY A.ZZ_PARTNER,C."BIRTHDT" ) ;
+    
+    --Age Group Attribute
+    --End Date from Customer table or it should be Current Time Stamp??
+    LT_CUSTOMER_AGE_GROUP = SELECT
+    						CUST_ID,INIT_DATE,END_DATE,INIT_TS,END_TS,
+						    CASE WHEN ("AGE">=0 and "AGE"<=20 ) THEN '0-20' 
+						    WHEN ("AGE">20 and "AGE"<=25 ) THEN '21-25'
+						    WHEN ("AGE">25 and "AGE"<=30 ) THEN '26-30'
+						    WHEN ("AGE">30 and "AGE"<=35 ) THEN '31-35'
+						    WHEN ("AGE">35 and "AGE"<=40 ) THEN '36-40'
+						    WHEN ("AGE">40 and "AGE"<=45 ) THEN '41-45'
+						    WHEN ("AGE">45 and "AGE"<=50 ) THEN '46-50'
+						    WHEN ("AGE">50 and "AGE"<=55 ) THEN '51-55'
+						    WHEN ("AGE">55 and "AGE"<=60 ) THEN '56-60'
+						    WHEN ("AGE">60               ) THEN '60 PLUS' 
+						    ELSE 'NOT APPLICABLE' END AS "ATTRIBUTE_VALUE",
+						    'AGE_GROUP' AS "ATTRIBUTE_NAME"
+						    FROM
+						    (SELECT CUST_ID,INIT_DATE,END_DATE,INIT_TS,END_TS,
+						    ROUND(DAYS_BETWEEN("BIRTHDT","END_DATE")/365,1) "AGE" 
+						    FROM :LT_RESV_CUSTOMERS ); 
+						    
+	-- Customer Attributes Table
+	LT_CUST_ATTRIBUTES  = SELECT CUST_ID,
+						  B.ATTRIBUTE_ID AS "ATTRIBUTE_ID",
+						  ATTRIBUTE_VALUE,
+						  INIT_DATE,
+						  END_DATE,
+						  INIT_TS,
+						  END_TS
+						  FROM :LT_CUSTOMER_AGE_GROUP AS A
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
+						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME;
+						  
+	UPSERT "osr.edw.integration.ti.ltax::app.CustomerAttributes"
+	("CUST_ID",
+	"ATTRIBUTE_ID",
+	"ATTRIBUTE_VALUE",
+	"INIT_DATE",
+	"END_DATE",
+	"INIT_TIME_SEGMENT",
+	"END_TIME_SEGMENT"
+	)
+    SELECT CUST_ID,
+		   ATTRIBUTE_ID,
+		   ATTRIBUTE_VALUE,
+		   INIT_DATE,
+		   END_DATE,
+		   INIT_TS,
+		   END_TS 
+		   FROM :LT_CUST_ATTRIBUTES;
+						
+						  
+END

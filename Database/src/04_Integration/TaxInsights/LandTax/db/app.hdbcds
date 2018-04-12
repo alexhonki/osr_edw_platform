@@ -92,8 +92,8 @@ context app {
     entity CustomerAttributes {
             @Comment : 'Record ID'
         key RECORD_ID         : Integer64 generated always as identity(start with 1 increment by 1);
-            CUST_ID           : association[1] to Customer { CUST_ID as ID };
-            ATTRIBUTE_ID      : association[1] to AttributeTypes { ATTRIBUTE_ID as ID };
+            CUST_ID           : CustomerIdT;
+            ATTRIBUTE_ID      : Integer;
 
             @Comment : 'Attribute Value'
             ATTRIBUTE_VALUE   : String(200);
