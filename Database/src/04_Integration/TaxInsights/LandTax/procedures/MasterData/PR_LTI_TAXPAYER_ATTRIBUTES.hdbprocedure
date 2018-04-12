@@ -14,10 +14,9 @@ BEGIN
 						  TAXYRSTARTDT AS "INIT_DATE",
 						  TAXYRENDDT AS "END_DATE",
 						  INDIVORG,
-						  --INIT_DATE, END_DATE,
-						  --((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
-						  --((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
-						  BIRTHDT
+						  TOTBPRELVNTVAL,
+						  BIRTHDT,
+						  PARCELCNT
 						  FROM
 							(SELECT A."ZZ_PARTNER",
 							 -- MIN(TO_DATE(A."TAXYRSTARTDT")) AS "INIT_DATE",
@@ -25,7 +24,9 @@ BEGIN
 							  TO_TIMESTAMP(A."TAXYRSTARTDT") AS "TAXYRSTARTDT", 
 							  TO_TIMESTAMP(A."TAXYRENDDT") AS "TAXYRENDDT",
 							  TO_DATE(C."BIRTHDT") AS "BIRTHDT",
-							  A."INDIVORG" AS "INDIVORG"
+							  A."INDIVORG" AS "INDIVORG",
+							  A."TOTBPRELVNTVAL" AS "TOTBPRELVNTVAL",
+							  A."PARCELCNT" AS "PARCELCNT"
 							  FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data" AS A 
 							  INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS B ON B.EXT_ID = A.ZZ_PARTNER
 							  INNER JOIN "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS C ON A.ZZ_PARTNER = C.PARTNER
@@ -33,13 +34,21 @@ BEGIN
 							 -- GROUP BY A.ZZ_PARTNER,C."BIRTHDT" 
 							  ) ;
 							  
+							  
 	
-	LT_RESV_TEMP = SELECT CUST_ID, 
+	LT_AGE_TEMP = SELECT CUST_ID, 
 						  MIN(TO_DATE(TAXYRSTARTDT)) AS "INIT_DATE",
 						  MAX(TO_DATE(TAXYRENDDT)) AS "END_DATE",
 						  BIRTHDT
 						  FROM :LT_RESV_CUSTOMERS
 						  GROUP BY CUST_ID,BIRTHDT;
+						  
+	LT_BP_VALUE_TEMP = SELECT CUST_ID, 
+						  MIN(TO_DATE(TAXYRSTARTDT)) AS "INIT_DATE",
+						  MAX(TO_DATE(TAXYRENDDT)) AS "END_DATE",
+						  TOTBPRELVNTVAL
+						  FROM :LT_RESV_CUSTOMERS
+						  GROUP BY CUST_ID,TOTBPRELVNTVAL;
     
     --Age Group Attribute
     --End Date from Customer table or it should be Current Time Stamp??
@@ -62,7 +71,7 @@ BEGIN
 						    FROM
 						    (SELECT CUST_ID,INIT_DATE,END_DATE,
 						    ROUND(DAYS_BETWEEN("BIRTHDT","END_DATE")/365,1) "AGE" 
-						    FROM :LT_RESV_TEMP ); 
+						    FROM :LT_AGE_TEMP ); 
 						    
 	--Partner Type
 	LT_PARTNER_TYPE     = SELECT 
@@ -72,7 +81,52 @@ BEGIN
     						to_varchar(INDIVORG) AS "ATTRIBUTE_VALUE",
     						'TAXPAYER TYPE' AS "ATTRIBUTE_NAME"
     						FROM :LT_RESV_CUSTOMERS;
-						    
+    						
+    --BP Value
+    LT_BP_VALUE         = SELECT
+    						CUST_ID,INIT_DATE,END_DATE,
+    						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
+    						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
+    						 TO_NVARCHAR(TOTBPRELVNTVAL) AS "ATTRIBUTE_VALUE",
+    						'CUSTOMER_SEGMENT' AS "ATTRIBUTE_NAME" 
+    						FROM :LT_BP_VALUE_TEMP;
+    						
+    -- Parcel Count
+    LT_PARCEL_COUNT    = SELECT 
+							CUST_ID,INIT_DATE,END_DATE,
+    						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
+    						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
+    						to_varchar(PARCELCNT) AS "ATTRIBUTE_VALUE",
+    						'PARCEL COUNT' AS "ATTRIBUTE_NAME"
+    						FROM :LT_RESV_CUSTOMERS;
+    						
+    -- First Time Tax Payer
+    LT_FIRST_TIME_TP  =  SELECT 
+							A.CUST_ID,A.INIT_DATE,A.END_DATE,
+    						((YEAR(A."INIT_DATE")*100) + MONTH(A."INIT_DATE")) AS INIT_TS,
+    						((YEAR(A."END_DATE")*100) + MONTH(A."END_DATE")) AS END_TS,
+    						 CASE WHEN A.INIT_DATE = B.INIT_DATE THEN 'Yes' ELSE 'No' END AS "ATTRIBUTE_VALUE",
+    						'FIRST TIME TAX PAYER' AS "ATTRIBUTE_NAME"
+    						FROM :LT_RESV_CUSTOMERS AS A
+    						INNER JOIN :LT_AGE_TEMP AS B
+    						ON A.CUST_ID = B.CUST_ID ;
+	
+	LT_PPR_CODE =     SELECT
+    						CUST_ID,INIT_DATE,END_DATE,
+    						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
+    						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
+    						POST_CODE AS "ATTRIBUTE_VALUE",
+    						'PPR POSTCODE' AS "ATTRIBUTE_NAME"
+    						FROM (SELECT DISTINCT  TO_BIGINT("ZZ_PARTNER") AS CUST_ID ,to_timestamp(TAXYRSTARTDT) as INIT_DATE ,to_timestamp(TAXYRENDDT) as END_DATE,
+						(CASE WHEN a.POST_CODE1 is not null THEN a.POST_CODE1
+						WHEN a.POST_CODE2 is not null and POST_CODE1 is null THEN POST_CODE2
+						WHEN a.POST_CODE3 is not null and POST_CODE2 is null THEN POST_CODE3
+						ELSE '' END) as POST_CODE  FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data" as l 
+						LEFT JOIN "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.VIBPADDRREL.active_data" as v
+						ON v.INTRENO=l.INTRENOPL
+						LEFT JOIN "osr.edw.staging.rms.synonym::CV_ADRC_Current" as a
+						on v.ADDRNO=a.ADDRNUMBER
+						WHERE CONCESSCODE='R');					    
 	-- Customer Attributes Table
 	LT_CUST_ATTRIBUTES  = ( SELECT CUST_ID,
 						  B.ATTRIBUTE_ID AS "ATTRIBUTE_ID",
@@ -95,6 +149,58 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_PARTNER_TYPE AS A
+						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
+						  
+						  UNION
+						  
+						  ( SELECT CUST_ID,
+						  B.ATTRIBUTE_ID AS "ATTRIBUTE_ID",
+						  ATTRIBUTE_VALUE,
+						  INIT_DATE,
+						  END_DATE,
+						  INIT_TS,
+						  END_TS
+						  FROM :LT_BP_VALUE AS A
+						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
+						  
+						  UNION
+						  
+						  ( SELECT CUST_ID,
+						  B.ATTRIBUTE_ID AS "ATTRIBUTE_ID",
+						  ATTRIBUTE_VALUE,
+						  INIT_DATE,
+						  END_DATE,
+						  INIT_TS,
+						  END_TS
+						  FROM :LT_PARCEL_COUNT AS A
+						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
+						  
+						   UNION
+						  
+						  ( SELECT CUST_ID,
+						  B.ATTRIBUTE_ID AS "ATTRIBUTE_ID",
+						  ATTRIBUTE_VALUE,
+						  INIT_DATE,
+						  END_DATE,
+						  INIT_TS,
+						  END_TS
+						  FROM :LT_FIRST_TIME_TP AS A
+						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
+						  
+						   UNION
+						  
+						  ( SELECT CUST_ID,
+						  B.ATTRIBUTE_ID AS "ATTRIBUTE_ID",
+						  ATTRIBUTE_VALUE,
+						  INIT_DATE,
+						  END_DATE,
+						  INIT_TS,
+						  END_TS
+						  FROM :LT_PPR_CODE AS A
 						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  ;
