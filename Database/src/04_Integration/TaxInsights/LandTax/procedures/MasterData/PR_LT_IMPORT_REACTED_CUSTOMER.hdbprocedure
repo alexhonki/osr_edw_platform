@@ -1,0 +1,40 @@
+PROCEDURE "osr.edw.integration.ti.ltax::PR_LT_IMPORT_REACTED_CUSTOMER" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+  -- READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+  Use clearing date to determine if the taxpayer is a debtor. 
+ The below logic is for open debt. Use Current date in case clearing date is blank. 
+ Consider difference between initial and reassessment. For now if they become a debtor once in the year during initial assessment or reassessment we keep them as debtor in the Reactions table.
+ Delimit only to Land Tax payers using revenue stream (KOFIZ == LT). 
+   *************************************/
+   
+  
+	UPSERT "osr.edw.integration.ti.ltax::app.CustomerReactions" (
+		"CUST_ID",
+		"REACTION_TYPE",
+		"REACTION_VALUE",
+		"END_DATE",
+		"INIT_DATE",
+		"INIT_TS",
+		"END_TS" )
+      	 SELECT CUST_ID, 'DEBTOR_INITIAL_ASSESSMENT' AS "REACTION_TYPE", 1 AS "REACTION_VALUE",
+									 TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_AFTER("FINYEAR", '-'),'-06-30'))) AS "END_DATE",
+									 TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'-07-01'))) AS "INIT_DATE",
+									 TO_INT(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'07')) AS "INIT_TS",
+									 TO_INT(CONCAT(SUBSTR_AFTER("FINYEAR", '-'),'06')) AS "END_TS"
+									 FROM ( 
+									      SELECT CUST_ID , SUM(BETRH) DUEAMOUNT, FINYEAR, SUM(DEBTOR) ISDEBTOR  FROM( 
+									    		SELECT  TAXPAYER.CUST_ID AS "CUST_ID", BETRH ,"osr.edw.integration.ti.ltax::TF_LT_GET_FIN_YEAR"(FAEDN).FINYEAR FINYEAR, 
+												"osr.edw.integration.ti.ltax::TF_LT_CHECK_IF_TP_DEBTOR"(AUGDT,FAEDN).ISDEBTOR AS DEBTOR, FAEDN
+												FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" DEBTOR_DATA 
+														INNER JOIN 
+												"osr.edw.integration.ti.ltax::app.Customer" TAXPAYER ON TAXPAYER.EXT_ID = DEBTOR_DATA.GPART
+												WHERE  GPART > '0001000335' AND GPART <= '0001076855'  AND KOFIZ='LT') 
+												GROUP BY CUST_ID, FINYEAR HAVING SUM(DEBTOR) > 0 AND SUM(BETRH) > 0
+									 );
+
+END

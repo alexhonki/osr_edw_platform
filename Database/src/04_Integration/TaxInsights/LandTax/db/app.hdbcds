@@ -151,7 +151,7 @@ context app {
     @Comment : 'Customer Reactions'
     entity CustomerReactions {
         key RECORD_ID      : Integer64 generated always as identity(start with 1 increment by 1);
-            CUST_ID        : association[1] to Customer { CUST_ID as ID };
+            CUST_ID        : CustomerIdT;
             REACTION_TYPE  : String(100);
             INIT_DATE      : UTCTimestamp;
             END_DATE       : UTCTimestamp;
