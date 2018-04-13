@@ -24,8 +24,8 @@ BEGIN
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
-		INNER JOIN  "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD='' and BPARTNER >= '0001000335' and BPARTNER <= '0001076855' 
+		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
+		where INVALID_EXMD=''  
 	
 	UNION ALL
 	
@@ -42,8 +42,8 @@ BEGIN
 			LEFT(VALIDFROM,6)   as INIT_TS,
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
-		INNER JOIN  "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=A.BPARTNER
-		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD='' and BPARTNER >= '0001000335' and BPARTNER <= '0001076855' 
+		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
+		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''
 	
 	UNION ALL
 	
@@ -60,8 +60,8 @@ BEGIN
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
-		INNER JOIN  "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD='X' and BPARTNER >= '0001000335' and BPARTNER <= '0001076855' 
+		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
+		where INVALID_EXMD='X' 
 
 );
    
