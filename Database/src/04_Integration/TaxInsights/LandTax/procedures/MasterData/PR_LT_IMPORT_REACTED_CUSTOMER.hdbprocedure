@@ -33,7 +33,7 @@ BEGIN
 												FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" DEBTOR_DATA 
 														INNER JOIN 
 												"osr.edw.integration.ti.ltax::app.Customer" TAXPAYER ON TAXPAYER.EXT_ID = DEBTOR_DATA.GPART
-												WHERE  GPART > '0001000335' AND GPART <= '0001076855'  AND KOFIZ='LT') 
+												WHERE  KOFIZ='LT') 
 												GROUP BY CUST_ID, FINYEAR HAVING SUM(DEBTOR) > 0 AND SUM(BETRH) > 0
 									 );
 
