@@ -20,12 +20,11 @@ BEGIN
 	"ALERT"."ALERT_ID",
 	"ALERT"."INVEST_OBJ_TYPE",
 	"PCL_COOWNER"."CO_OWNER_ID",
-	"PCL_COOWNER"."INTRENOPL",
-	"PCL_COOWNER"."PLNO"
+	"PCL_COOWNER"."INTRENOPL"
 	FROM 
 	"osr.edw.platform.fra::CV_AlertRoot" AS "ALERT"
 	INNER JOIN 
-	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
+	"osr.edw.platform.fra.ltx::CV_ParcelOwnershipByCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	  AND "PCL_COOWNER"."TAXYRSTARTDT" >= TO_NVARCHAR(TO_INT(LEFT(CURRENT_DATE,4)) - 5) || '0701'
