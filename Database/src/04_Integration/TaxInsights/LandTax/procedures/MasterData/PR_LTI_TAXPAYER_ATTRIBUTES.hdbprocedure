@@ -7,7 +7,7 @@ BEGIN
    /*************************************
        Write your procedure logic 
    *************************************/
-   LT_RESV_CUSTOMERS =  SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
+   LT_RESV_CUSTOMERS  =  SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
 						  ZZ_PARTNER AS EXT_ID,
 						  TAXYRSTARTDT,
 						  TAXYRENDDT,
@@ -102,9 +102,9 @@ BEGIN
 							CUST_ID,INIT_DATE,END_DATE,
     						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
     						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
-    						CASE WHEN (PARCELCNT>=1 and PARCELCNT<=2 ) THEN '1 TO 2'
-    						WHEN (PARCELCNT>=3 and PARCELCNT<=5 ) THEN '3 TO 5'
-    						WHEN (PARCELCNT>=6 and PARCELCNT<=15 ) THEN '6 TO 15'
+    						CASE WHEN (PARCELCNT>=1 and PARCELCNT<=2 ) THEN '01 TO 02'
+    						WHEN (PARCELCNT>=3 and PARCELCNT<=5 ) THEN '03 TO 05'
+    						WHEN (PARCELCNT>=6 and PARCELCNT<=15 ) THEN '06 TO 15'
     						WHEN (PARCELCNT>=16 and PARCELCNT<=55 ) THEN '16 TO 55'
     						WHEN (PARCELCNT>=56  ) THEN '56+'
     						END AS "ATTRIBUTE_VALUE",

@@ -28,6 +28,7 @@ BEGIN
 							      FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data" AS A 
 							      WHERE  A.TAXAMOUNT > 0
 								  GROUP BY A.ZZ_PARTNER) WHERE "CREATED.DATE" > lv_timestamp ;
+								  
 	UPSERT "osr.edw.integration.ti.ltax::app.Customer" 
 	("CUST_ID", 
 	"EXT_ID", 
