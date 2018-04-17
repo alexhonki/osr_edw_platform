@@ -65,13 +65,15 @@ BEGIN
 						    WHEN ("AGE">45 and "AGE"<=50 ) THEN '46-50'
 						    WHEN ("AGE">50 and "AGE"<=55 ) THEN '51-55'
 						    WHEN ("AGE">55 and "AGE"<=60 ) THEN '56-60'
-						    WHEN ("AGE">60               ) THEN '60 PLUS' 
+						    WHEN ("AGE">60 and  "AGE"<=75 ) THEN '61-75' 
+						    WHEN ("AGE">75                ) THEN '75 PLUS' 
 						    ELSE 'NOT APPLICABLE' END AS "ATTRIBUTE_VALUE",
 						    'AGE_GROUP' AS "ATTRIBUTE_NAME"
 						    FROM
 						    (SELECT CUST_ID,INIT_DATE,END_DATE,
 						    ROUND(DAYS_BETWEEN("BIRTHDT","END_DATE")/365,1) "AGE" 
-						    FROM :LT_AGE_TEMP ); 
+						    FROM :LT_AGE_TEMP 
+						    WHERE BIRTHDT > '0000-00-00' ); 
 						    
 	--Partner Type
 	LT_PARTNER_TYPE     = SELECT 
