@@ -16,7 +16,7 @@ FUNCTION "osr.edw.platform.fra.ltx.coowner.sna::TF_EdgeParcelToBusinessPartner" 
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
-
+/*
  lt_pcl_by_bp = 
  SELECT 
  DISTINCT 
@@ -31,6 +31,19 @@ BEGIN
  INNER JOIN 
  "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" AS "PCL"
  ON "BP_REL"."INTRENOPL" = "PCL"."INTRENO"
+ ;
+ */
+ lt_pcl_by_bp = 
+  SELECT 
+ "INTRENO" AS "INTRENOPL", 
+ "PARTNER" AS "BPARTNER", 
+ "VALIDFROM" AS "VALIDFROM", 
+ "VALIDTO" AS "VALIDTO", 
+ "BRUTEIL" AS "OWNERFRACTION", 
+ "RFAKT" AS "OWNERFACTOR"
+ FROM
+"osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VIBPOBJREL.active_data"
+ WHERE "ROLE" = 'TR0800'
  ;
  
  
@@ -51,11 +64,10 @@ BEGIN
 	 right("VALIDTO",2) || '.' || right(left("VALIDTO",6),2) || '.' || left("VALIDTO",4)
 	 END
 	 AS "LABEL", 
-	 "VALIDFROM",
-	 RANK() OVER ( PARTITION BY "INTRENOPL", "BPARTNER" ORDER BY "VALIDFROM" DESC ) AS "RANK"
+	 "VALIDFROM"
 FROM  :lt_pcl_by_bp
 ;
-
+/*
 lt_data_aggr = 
 SELECT 	 
 "INTRENOPL",
@@ -65,6 +77,7 @@ FROM :lt_data
 GROUP BY 
 "INTRENOPL",
 "BPARTNER";
+*/
 
 	RETURN
  	 SELECT 
@@ -79,6 +92,6 @@ GROUP BY
 	 '' AS "TARGET_NODE_ID4",
 	 '' AS "TARGET_NODE_ID5",
 	 "LABEL"
-	 FROM :lt_data_aggr;
+	 FROM :lt_data;
 
 END;
