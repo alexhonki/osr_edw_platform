@@ -18,8 +18,7 @@ BEGIN
 				AND HVORG = '4000'
 				AND (TVORG IN ('0150', '0190'))
 				AND (AUGRD IN ('01', '08', '15', ''))
-				AND GPART >= '0001000335'
-				AND GPART <= '0001076855';
+			;
 			
 		/*Final payment for AB*/
 		/*Check if last item has been cleared*/	
@@ -44,7 +43,7 @@ BEGIN
 			) AS t
 			ON t.OPBEL = TEMP.OPBEL
 				AND t.MAXRN = TEMP.RN
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = TEMP.GPART
 		WHERE AUGDT != '1900-01-01'
 			AND AUGDT > 0
@@ -83,7 +82,7 @@ BEGIN
 			) AS t
 			ON t.OPBEL = TEMP.OPBEL
 				AND t.MAXRN > TEMP.RN
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = TEMP.GPART
 		WHERE AUGDT != '1900-01-01'
 			AND AUGDT > 0
@@ -115,12 +114,11 @@ BEGIN
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" AS A
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = A.GPART
 		WHERE HVORG = '0040'
 			AND (AUGRD NOT IN ('4', '14', '5', '99'))
-			AND GPART >= '0001000335'
-			AND GPART <= '0001076855';
+			;
 	
    
 END

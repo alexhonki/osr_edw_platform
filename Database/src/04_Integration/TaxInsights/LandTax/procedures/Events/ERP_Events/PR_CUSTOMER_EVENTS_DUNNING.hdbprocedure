@@ -21,7 +21,7 @@ BEGIN
 			LEFT(BUDAT,6) as INIT_TS,
 			NULL as END_TS 
 			from "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
 			WHERE HVORG='4050' and TVORG='0525'AND KOFIZ='LT' and BETRH>0 AND AUGRD NOT IN ('04','14','05','99');
 
    

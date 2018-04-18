@@ -22,6 +22,6 @@ BEGIN
 	LEFT(ZZTFLD2WCKOA,6)  as INIT_TS,
 	LEFT(ZZTFLD2ACBOA,6)  as END_TS
 	from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ZBUT0000HJCXO9.active_data" a
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = a.PARTNER
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" c on c.EXT_ID = a.PARTNER
 	WHERE ZZTFLDPVC3OA!='' AND ZZTFLD2WCKOA!=00000000 AND ZZTFLD2WCKOA>=20100101;
 END
