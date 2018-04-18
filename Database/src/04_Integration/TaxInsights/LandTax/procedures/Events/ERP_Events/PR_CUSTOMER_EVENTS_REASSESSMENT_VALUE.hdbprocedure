@@ -28,8 +28,8 @@ BEGIN
 			GROUP BY GPART,BUDAT
 			HAVING SUM(BETRH)>0
 		) a
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
-	where a.GPART >= '0001000335' and a.GPART <= '0001076855'
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
+
 
 UNION ALL 
 
@@ -50,8 +50,8 @@ UNION ALL
 			GROUP BY GPART,BUDAT
 			HAVING SUM(BETRH)<0
 		) a
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
-	where a.GPART >= '0001000335' and a.GPART <= '0001076855'
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
+
 
 );
 
