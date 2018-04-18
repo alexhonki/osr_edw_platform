@@ -5,7 +5,14 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
 	 AS
 BEGIN
    /*************************************
-       Write your procedure logic 
+       BUT021_FS - Table for Time dependent address Usage
+    		ADR_KIND - Address Type ('LTX_ADD' - Land Tax Residential Address , 'LTX_ADD2' - Land Tax Service Address, 'XXDEFAULT' - Standard Address )
+    		
+    		Need to Figure out if any Address of above mentioned Types are changed.
+    		Table BUT021_FS will hold all the Address changes with validity Period(Valid From and Valid To For an Address)
+    		
+    	
+    	Introduce Row Number for each Partner 
    *************************************/
    
    INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents" 
@@ -30,7 +37,7 @@ BEGIN
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'LTX_ADD'  
-				) WHERE RN>=1
+				) WHERE RN>1
 			) 
 		
 		UNION ALL
@@ -52,7 +59,7 @@ BEGIN
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'LTX_ADD2'
-				) WHERE RN>=1
+				) WHERE RN>1
 			) 
 		
 		UNION ALL
@@ -74,7 +81,7 @@ BEGIN
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'XXDEFAULT'
-				) WHERE RN>=1
+				) WHERE RN>1
 			) 
    
    );
