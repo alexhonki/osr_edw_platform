@@ -1,4 +1,5 @@
 PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelCoOwnerTest" (
+	IN iv_co_owner_id		NVARCHAR(32),
 	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.PRESULT_RISK_AMNT_LTPCLCOOWN",
 	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLCOOWN"
 )
@@ -7,9 +8,15 @@ PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelCoOwnerTest" (
 	READS SQL DATA AS
 BEGIN
 
-	
-	LT_WORKING_SET = SELECT * FROM "osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj";
-	
+	IF :iv_co_owner_id = null or :iv_co_owner_id = '' THEN
+		LT_WORKING_SET = 
+		SELECT * FROM "osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj";
+	ELSE
+		LT_WORKING_SET = 
+		SELECT * FROM "osr.edw.platform.fra.ltx.coowner::CV_CoOwnerDetObj"
+			WHERE "CO_OWNER_ID" = :iv_co_owner_id;
+	END IF
+	;
     -- Call of Detection Method LTX_CO_OWNER_CONS Weighting Factor: 100
     LT_PARAM_DM_1 =
       SELECT
