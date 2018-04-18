@@ -15,8 +15,8 @@ BEGIN
  DECLARE LV_END_FIN_YEAR NVARCHAR(4);
  
  
- SELECT MONTH(POSTINGDATE) INTO LV_MONTH FROM "osr.edw.integration.ti.ltax.synonyms::dummy";
- SELECT YEAR(POSTINGDATE) INTO LV_YEAR FROM "osr.edw.integration.ti.ltax.synonyms::dummy";
+ SELECT MONTH(POSTINGDATE) INTO LV_MONTH FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ SELECT YEAR(POSTINGDATE) INTO LV_YEAR FROM "osr.hana.platform.synonym::SYS.DUMMY";
  
  IF :LV_MONTH > 6 THEN
   LV_START_FIN_YEAR = TO_NVARCHAR(:LV_YEAR);

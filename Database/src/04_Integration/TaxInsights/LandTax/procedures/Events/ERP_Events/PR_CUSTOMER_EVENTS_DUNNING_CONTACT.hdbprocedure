@@ -31,11 +31,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P001'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -57,11 +57,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P004'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -83,11 +83,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P005'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -109,11 +109,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P006'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -135,11 +135,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P006A'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -161,11 +161,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P007'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -187,11 +187,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P007a'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -213,11 +213,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P011'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -239,11 +239,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P008'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 
 		UNION ALL
 
@@ -265,11 +265,11 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P010'
-			AND a.GPART BETWEEN '0001000335' AND '0001076855'
+		
 	);
 
 

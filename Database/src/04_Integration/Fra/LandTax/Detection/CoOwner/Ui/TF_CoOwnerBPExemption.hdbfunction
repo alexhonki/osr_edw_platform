@@ -26,7 +26,7 @@ BEGIN
 	FROM 
 	"osr.edw.platform.fra::CV_AlertRoot" AS "ALERT"
 	INNER JOIN 
-	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
+	"osr.edw.platform.fra.ltx::CV_ParcelOwnershipByCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	INNER JOIN 
 	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"

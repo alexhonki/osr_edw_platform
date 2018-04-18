@@ -7,7 +7,7 @@ BEGIN
    /*************************************
        Write your procedure logic 
    *************************************/
-   LT_RESV_CUSTOMERS =  SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
+   LT_RESV_CUSTOMERS =   SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
 						  ZZ_PARTNER AS EXT_ID,
 						  TAXYRSTARTDT,
 						  TAXYRENDDT,
@@ -65,13 +65,15 @@ BEGIN
 						    WHEN ("AGE">45 and "AGE"<=50 ) THEN '46-50'
 						    WHEN ("AGE">50 and "AGE"<=55 ) THEN '51-55'
 						    WHEN ("AGE">55 and "AGE"<=60 ) THEN '56-60'
-						    WHEN ("AGE">60               ) THEN '60 PLUS' 
+						    WHEN ("AGE">60 and  "AGE"<=75 ) THEN '61-75' 
+						    WHEN ("AGE">75                ) THEN '75 PLUS' 
 						    ELSE 'NOT APPLICABLE' END AS "ATTRIBUTE_VALUE",
 						    'AGE_GROUP' AS "ATTRIBUTE_NAME"
 						    FROM
 						    (SELECT CUST_ID,INIT_DATE,END_DATE,
 						    ROUND(DAYS_BETWEEN("BIRTHDT","END_DATE")/365,1) "AGE" 
-						    FROM :LT_AGE_TEMP ); 
+						    FROM :LT_AGE_TEMP 
+						    WHERE BIRTHDT > '0000-00-00' ); 
 						    
 	--Partner Type
 	LT_PARTNER_TYPE     = SELECT 
@@ -87,7 +89,13 @@ BEGIN
     						CUST_ID,INIT_DATE,END_DATE,
     						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
     						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
-    						 TO_NVARCHAR(TOTBPRELVNTVAL) AS "ATTRIBUTE_VALUE",
+    						 CASE WHEN (TOTBPRELVNTVAL>=0 and TOTBPRELVNTVAL<150000 ) THEN '0 TO 150K'
+    						 WHEN (TOTBPRELVNTVAL>=150000 and TOTBPRELVNTVAL<500000 ) THEN '150K TO 500K'
+    						 WHEN (TOTBPRELVNTVAL>=500000 and TOTBPRELVNTVAL<1000000 ) THEN '500K TO 1M'
+    						 WHEN (TOTBPRELVNTVAL>=1000000 and TOTBPRELVNTVAL<5000000 ) THEN '1M TO 5M'
+    						 WHEN (TOTBPRELVNTVAL>=5000000 and TOTBPRELVNTVAL<15000000 ) THEN '5M TO 15M'
+    						 WHEN (TOTBPRELVNTVAL>=15000000 ) THEN '15M+'
+    						 END  AS "ATTRIBUTE_VALUE",
     						'CUSTOMER_SEGMENT' AS "ATTRIBUTE_NAME" 
     						FROM :LT_BP_VALUE_TEMP;
     						
@@ -136,7 +144,7 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_CUSTOMER_AGE_GROUP AS A
-						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  
 						  UNION
@@ -149,7 +157,7 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_PARTNER_TYPE AS A
-						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  
 						  UNION
@@ -162,7 +170,7 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_BP_VALUE AS A
-						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  
 						  UNION
@@ -175,7 +183,7 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_PARCEL_COUNT AS A
-						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  
 						   UNION
@@ -188,7 +196,7 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_FIRST_TIME_TP AS A
-						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  
 						   UNION
@@ -201,7 +209,7 @@ BEGIN
 						  INIT_TS,
 						  END_TS
 						  FROM :LT_PPR_CODE AS A
-						  INNER JOIN "osr.lti.backend.db::app.AttributeTypes" AS B
+						  INNER JOIN "osr.edw.integration.ti.ltax::app.AttributeTypes" AS B
 						  ON A."ATTRIBUTE_NAME" = B.ATTRIBUTE_NAME )
 						  ;
 						  

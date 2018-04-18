@@ -25,7 +25,7 @@ BEGIN
 			229 as EVENT_ID,
 			'Contact' as EVENT_GROUP,
 			'Changed Land Tax Service Address' as EVENT_NAME,
-			CAST(VALID_FROM as date) as INIT_DATE,
+			cast(VALID_FROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
 			'Changed Land Tax Service Address' as DESCRIPTION,
@@ -35,7 +35,7 @@ BEGIN
 			SELECT CUST_ID, PARTNER, LEFT(VALID_FROM,8) AS VALID_FROM FROM (
 				select SAP.CUST_ID AS CUST_ID ,PARTNER,VALID_FROM, ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) RN 
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
-				INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=B.PARTNER
+				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'LTX_ADD'  
 				) WHERE RN>1
 			) 
@@ -47,7 +47,7 @@ BEGIN
 			230 as EVENT_ID,
 			'Contact' as EVENT_GROUP,
 			'Changed Land Tax Residential Address' as EVENT_NAME,
-			CAST(VALID_FROM as date) as INIT_DATE,
+			cast(VALID_FROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
 			'Changed Land Tax Residential Address' as DESCRIPTION,
@@ -57,7 +57,7 @@ BEGIN
 			SELECT CUST_ID, PARTNER, LEFT(VALID_FROM,8) AS VALID_FROM FROM (
 				select SAP.CUST_ID AS CUST_ID ,PARTNER,VALID_FROM, ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) RN 
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
-				INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=B.PARTNER
+				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'LTX_ADD2'
 				) WHERE RN>1
 			) 
@@ -69,7 +69,7 @@ BEGIN
 			231 as EVENT_ID,
 			'Contact' as EVENT_GROUP,
 			'Changed Standard Address' as EVENT_NAME,
-			CAST(VALID_FROM as date) as INIT_DATE,
+			cast(VALID_FROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
 			'Changed Standard Address' as DESCRIPTION,
@@ -79,7 +79,7 @@ BEGIN
 			SELECT CUST_ID, PARTNER, LEFT(VALID_FROM,8) AS VALID_FROM FROM (
 				select SAP.CUST_ID AS CUST_ID ,PARTNER,VALID_FROM, ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) RN 
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
-				INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=B.PARTNER
+				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'XXDEFAULT'
 				) WHERE RN>1
 			) 
