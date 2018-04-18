@@ -29,7 +29,7 @@ BEGIN
 				select SAP.CUST_ID AS CUST_ID ,PARTNER,VALID_FROM, ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) RN 
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
-				where ADR_KIND = 'LTX_ADD'
+				where ADR_KIND = 'LTX_ADD'  
 				) WHERE RN>=1
 			) 
 		
@@ -51,7 +51,7 @@ BEGIN
 				select SAP.CUST_ID AS CUST_ID ,PARTNER,VALID_FROM, ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) RN 
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
-				where ADR_KIND = 'LTX_ADD2' 
+				where ADR_KIND = 'LTX_ADD2'
 				) WHERE RN>=1
 			) 
 		
@@ -73,7 +73,7 @@ BEGIN
 				select SAP.CUST_ID AS CUST_ID ,PARTNER,VALID_FROM, ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) RN 
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
-				where ADR_KIND = 'XXDEFAULT' 
+				where ADR_KIND = 'XXDEFAULT'
 				) WHERE RN>=1
 			) 
    

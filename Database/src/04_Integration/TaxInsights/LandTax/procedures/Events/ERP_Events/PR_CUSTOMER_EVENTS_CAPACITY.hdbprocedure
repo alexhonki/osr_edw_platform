@@ -26,7 +26,7 @@ BEGIN
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
 		where INVALID_EXMD=''  
-	
+
 	UNION ALL
 	
 		/*Removed Concession*/
@@ -43,8 +43,8 @@ BEGIN
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''
-	
+		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD='' 
+
 	UNION ALL
 	
 		/*Invalid Concession*/

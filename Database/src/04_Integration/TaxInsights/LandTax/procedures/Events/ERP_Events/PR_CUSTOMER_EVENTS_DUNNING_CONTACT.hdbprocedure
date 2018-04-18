@@ -31,7 +31,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P001'
@@ -57,7 +57,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P004'
@@ -83,7 +83,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P005'
@@ -109,7 +109,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P006'
@@ -135,7 +135,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P006A'
@@ -161,7 +161,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P007'
@@ -187,7 +187,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P007a'
@@ -213,7 +213,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P011'
@@ -239,7 +239,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P008'
@@ -265,7 +265,7 @@ FROM (
 			) AS INIT_TS, 
 			NULL AS END_TS
 		FROM "osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO" AS a
-			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
+			INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" AS SAP
 			ON SAP.EXT_ID = a.GPART
 		WHERE STRAT = '02'
 			AND STEP = 'P010'

@@ -25,5 +25,5 @@ BEGIN
 	(SELECT GPART,BUDAT,count(distinct FBNUM) as EVENT_VALUE FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" 
 	WHERE KOFIZ='LT' and BLART='AB' and HVORG='4000' and TVORG='0150' and GPART >= '0001000335' and GPART <= '0001076855'
 	GROUP BY GPART,BUDAT) as b
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = b.GPART;
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" c on c.EXT_ID = b.GPART;
 END
