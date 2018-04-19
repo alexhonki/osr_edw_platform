@@ -15,7 +15,7 @@ BEGIN
    
 		select 
 			CUST_ID as CUST_ID,
-			229 as EVENT_ID,
+			26 as EVENT_ID,
 			'Contact' as EVENT_GROUP,
 			'Changed Land Tax Service Address' as EVENT_NAME,
 			cast(VALID_FROM as date) as INIT_DATE,
@@ -30,14 +30,14 @@ BEGIN
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'LTX_ADD'  
-				) WHERE RN>=1
+				) WHERE RN>1
 			) 
 		
 		UNION ALL
 		
 		select 
 			CUST_ID as CUST_ID,
-			230 as EVENT_ID,
+			25 as EVENT_ID,
 			'Contact' as EVENT_GROUP,
 			'Changed Land Tax Residential Address' as EVENT_NAME,
 			cast(VALID_FROM as date) as INIT_DATE,
@@ -52,14 +52,14 @@ BEGIN
 				from "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS B 	
 				INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=B.PARTNER
 				where ADR_KIND = 'LTX_ADD2'
-				) WHERE RN>=1
+				) WHERE RN>1
 			) 
 		
 		UNION ALL
 		
 		select 
 			CUST_ID as CUST_ID,
-			231 as EVENT_ID,
+			24 as EVENT_ID,
 			'Contact' as EVENT_GROUP,
 			'Changed Standard Address' as EVENT_NAME,
 			cast(VALID_FROM as date) as INIT_DATE,

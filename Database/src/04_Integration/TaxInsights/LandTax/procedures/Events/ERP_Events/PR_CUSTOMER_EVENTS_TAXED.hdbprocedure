@@ -12,7 +12,7 @@ BEGIN
    	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
 	select
 	c.CUST_ID as CUST_ID,
-	4 as EVENT_ID,
+	52 as EVENT_ID,
 	'Taxed' as EVENT_GROUP,
 	'Taxed -  One year or multiyear' as EVENT_NAME,
 	to_date(BUDAT,'YYYYMMDD') as INIT_DATE,
