@@ -13,7 +13,7 @@ BEGIN
   select * from( 
 	   select  DISTINCT
 			SAP.CUST_ID as CUST_ID,
-			240 as EVENT_ID,
+			10 as EVENT_ID,
 			'Re-Assessment' as EVENT_GROUP,
 			'Re-Assessment Value Higher than Initial Assessment' as EVENT_NAME ,
 			CAST(BUDAT as date) as INIT_DATE,
@@ -28,14 +28,14 @@ BEGIN
 			GROUP BY GPART,BUDAT
 			HAVING SUM(BETRH)>0
 		) a
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
-	where a.GPART >= '0001000335' and a.GPART <= '0001076855'
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
+
 
 UNION ALL 
 
 	select  DISTINCT
 			SAP.CUST_ID as CUST_ID,
-			241 as EVENT_ID,
+			11 as EVENT_ID,
 			'Re-Assessment' as EVENT_GROUP,
 			'Re-Assessment Value Lower than Initial Assessment' as EVENT_NAME ,
 			CAST(BUDAT as date) as INIT_DATE,
@@ -50,8 +50,8 @@ UNION ALL
 			GROUP BY GPART,BUDAT
 			HAVING SUM(BETRH)<0
 		) a
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" as SAP on SAP.EXT_ID=a.GPART
-	where a.GPART >= '0001000335' and a.GPART <= '0001076855'
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
+
 
 );
 
