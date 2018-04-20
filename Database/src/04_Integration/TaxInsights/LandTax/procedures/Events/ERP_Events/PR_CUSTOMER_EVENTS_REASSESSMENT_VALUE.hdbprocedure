@@ -26,7 +26,7 @@ BEGIN
   select * from( 
 	   select  DISTINCT
 			SAP.CUST_ID as CUST_ID,
-			240 as EVENT_ID,
+			10 as EVENT_ID,
 			'Re-Assessment' as EVENT_GROUP,
 			'Re-Assessment Value Higher than Initial Assessment' as EVENT_NAME ,
 			CAST(BUDAT as date) as INIT_DATE,
@@ -50,7 +50,7 @@ UNION ALL
     =====================================================================*/  
 	select  DISTINCT
 			SAP.CUST_ID as CUST_ID,
-			241 as EVENT_ID,
+			11 as EVENT_ID,
 			'Re-Assessment' as EVENT_GROUP,
 			'Re-Assessment Value Lower than Initial Assessment' as EVENT_NAME ,
 			CAST(BUDAT as date) as INIT_DATE,
