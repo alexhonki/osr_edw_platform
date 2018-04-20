@@ -12,14 +12,18 @@ BEGIN
     		Table BUT021_FS will hold all the Address changes with validity Period(Valid From and Valid To For an Address)
     		
     	
-    	Introduce Row Number for each Partner 
+    	Sort By Partner and Valid From and Generate Row Number for each Partner ValidFrom combination(ROW_NUMBER() OVER(PARTITION BY PARTNER ORDER BY VALID_FROM ASC) ).
+    	If  row number > 1 , it means address has been changed atleast once. 
+    		Get Only those records for which Adrress has been changed atleast once.
    *************************************/
    
    INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents" 
    
    select * from
    (
-   
+   /* ===================================================================
+       Land Tax Residential Address Change
+    =====================================================================*/
 		select 
 			CUST_ID as CUST_ID,
 			229 as EVENT_ID,
@@ -41,7 +45,9 @@ BEGIN
 			) 
 		
 		UNION ALL
-		
+	 /* ===================================================================
+       Land Tax Service Address Change
+    =====================================================================*/
 		select 
 			CUST_ID as CUST_ID,
 			230 as EVENT_ID,
@@ -63,7 +69,9 @@ BEGIN
 			) 
 		
 		UNION ALL
-		
+	/* ===================================================================
+       Standard Address Change
+    =====================================================================*/
 		select 
 			CUST_ID as CUST_ID,
 			231 as EVENT_ID,

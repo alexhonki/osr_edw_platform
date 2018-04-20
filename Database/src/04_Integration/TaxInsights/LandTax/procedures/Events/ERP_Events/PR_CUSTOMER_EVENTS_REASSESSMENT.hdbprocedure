@@ -5,10 +5,23 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
    --READS SQL DATA 
    AS
 BEGIN
-   /*************************************
-       Get the events for RE-ASSESSMENT posted for IND/ORG
+    /***********Re-Assessment Posting**************************
+    DFKKOP - Item table for Contract Account Document
+		KOFIZ - Account Determination ID - ('LT' for LandTax)
+		BETRH - Net Due Amount
+		BUDAT - Posting Date
+		HVORG - Main Transaction for Line Item ('4000'  Assessment - TAA)
+		TVORG - Sub Transactions ('190'  - Land Tax Comm Reassessment)
+		AUGRD - Clearing Reason(01 - Incoming Payment, 08 - Account Maintenance, 15 - Automatic Clearing)
+	/OSRQLD/LTCNRESV - LAND TAX Contract Results View
+		INDIVORG - Taxpayer is  Individual or organisation
+		
+		Get sum of BETRH(Due Amount), Per Customer per Posting Date For Subtransaction type 190(Reassessment) , and Clearing reason in 01, 08, 15, ''
    *************************************/
-   	
+   
+   /*============================================
+	  For Organization
+    ============================================*/
    	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
 	SELECT * FROM (
 		SELECT 
@@ -37,7 +50,9 @@ BEGIN
 		GROUP BY c.CUST_ID,BUDAT
 	
 	UNION ALL 
-	
+	/*============================================
+	  For Individual
+    ============================================*/
 	SELECT 
 	c.CUST_ID as CUST_ID,
 	236 as EVENT_ID,

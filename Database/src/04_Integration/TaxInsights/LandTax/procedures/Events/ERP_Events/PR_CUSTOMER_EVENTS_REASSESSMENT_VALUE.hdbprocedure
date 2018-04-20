@@ -4,12 +4,25 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
    --DEFAULT SCHEMA <default_schema_name>
     AS
 BEGIN
-   /*************************************
-       Write your procedure logic 
-   *************************************/
+   /****************Reaassessment Value*****************************************************************
+    DFKKOP - Item table for Contract Account Document
+		KOFIZ - Account Determination ID - ('LT' for LandTax)
+		BETRH - Net Due Amount
+		BUDAT - Posting Date
+		HVORG - Main Transaction for Line Item ('4000'  Assessment - TAA)
+		TVORG - Sub Transactions ('190'  - Land Tax Comm REASSESSMENT)
+		AUGRD - Clearing Reason(04 - Write-Off, 14 - Mass Write-Off, 05 - Reversal, 99- Mass process )
+		
+		Get sum of BETRH(Due Amount), Per Customer per Posting Date For Subtransaction type 190 , and Clearing reason other than 04, 14, 05, 99
+		
+		If Reassessment Value is higher than the Initial Assessment then there will be Entries(Subtrans - 190) with +ve Value
+		If Reassessment value is lower than the initial Assessment then there wil be entries with -Ve Values
+   *************************************************************************************************************************/
   
   INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents" 
-  
+  /* ===================================================================
+       Reassessment Value is Higher than Initial Assessment
+    =====================================================================*/  
   select * from( 
 	   select  DISTINCT
 			SAP.CUST_ID as CUST_ID,
@@ -32,7 +45,9 @@ BEGIN
 
 
 UNION ALL 
-
+  /* ===================================================================
+       Reassessment Value is Lower than Initial Assessment
+    =====================================================================*/  
 	select  DISTINCT
 			SAP.CUST_ID as CUST_ID,
 			241 as EVENT_ID,
