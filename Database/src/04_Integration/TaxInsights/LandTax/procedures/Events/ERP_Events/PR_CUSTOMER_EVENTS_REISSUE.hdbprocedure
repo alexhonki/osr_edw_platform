@@ -7,6 +7,15 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
 BEGIN
    /*************************************
        Get the events for RE-ISSUE
+       /OSRQLD/LTAXASFB - Table for Land Tax Assessment Form Bundle number
+    	  ASSESS_FBNUM - Assessment Payment Reference Code
+    	  REISSUE_DATE - Latest Reissue Date
+       DFKKOP - Item table for Contract Account Document
+    	  FBNUM - FormB. Number
+    	  
+    	  --- NEED TO VERIFY FUNCTIONAL CORRECTNESS - SIGNIFICANCE OF ACCESS_FBNUM AND FBNUM
+    	  
+    == Left Join with DFKKOP only helps in fetching GPART which further has Inner Join with app.Customer to only get the results for Active Taxpayers
    *************************************/
    	
    	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
@@ -24,7 +33,7 @@ BEGIN
 	from (
 	SELECT DISTINCT c.CUST_ID, a.REISSUE_DATE FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTAXASFB.active_data" a 
 	LEFT JOIN "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" b on b.FBNUM=a.ASSESS_FBNUM
-	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = b.GPART
+	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" c on c.EXT_ID = b.GPART
 	WHERE a.REISSUE_DATE>0
 	);
 END

@@ -6,6 +6,13 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
 BEGIN
    /*************************************
        Write your procedure logic 
+       VILMNA - Table for Notice of Assessment
+    		NANO - Number of Notice of Assessment
+    		INTRENO - Internal Key of Real Estate Object
+       VILMNAVAL - Table for Notice of Assessment: Annual Values
+    		NANO - Number of Notice of Assessment
+    		INTRENO - Internal Key of Real Estate Object
+    		NASTMNTTYPE	- Determination Type in Notice of Assessment(ANV  - LAST YEAR EVALUATION)
    *************************************/
    
    
@@ -38,8 +45,6 @@ BEGIN
 			) AS a
 			INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" AS SAP
 			ON SAP.EXT_ID = a.ZZ_PARTNER
-		WHERE a.ZZ_PARTNER >= '0001000335'
-			AND A.ZZ_PARTNER <= '0001076855'
 		GROUP BY CUST_ID, 
 			VALIDFROM;
 

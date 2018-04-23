@@ -1,0 +1,40 @@
+PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_LAND_OWNERSHIP" ( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+    BUT000 - 
+    	DEATHDT - Death Date of Business Partner
+    VIBPOBJREL - 
+    	ROLE -      'TR0800' - Owner of land
+    	
+    LT_TEMP - Get all the Dead(DEATHDT > 0) buisness partner From BUT000 Joining with VIBOBJREL with Role as Owner(TR0800)
+    	    	This will give us all the Dead BP's Parcel(INTRENO) details with ValidFrom, ValidTo, and DeathDate 
+    	
+    There would be a self Join on table VIBPOBJREL for INTRENO(Parcel No of Dead business Partner) For partner Excluding Dead ones.
+    Only need to consider those entries for Which ValidFrom <=  DeathDate(MAX VALIDTO of Parcel would be the DeathDate) of Business Partner
+    	As we only need to Check if ownership was increased due to Death or new parcel gain happened Due to Death.
+    	
+    If it's a new Parcel gain scenario then by  Death Date, there will be only one entry in VIBPOBJREL for that parcel, customer combination
+    
+    If it's increase in ownership then by death date, there will be multiple entries in VIBPOBJREL for that parcel, customer combination
+    
+    
+    
+   *************************************/
+   
+ LT_TEMP = select B1.PARTNER, VALIDFROM, VALIDTO, B1.INTRENO AS INTRENO, DEATHDT FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS a1 inner join
+           "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VIBPOBJREL.active_data" AS b1 on a1.PARTNER = b1.PARTNER where a1.DEATHDT > 0 and ROLE='TR0800';
+  
+   
+SELECT PARTNER, count(INTRENO), max(VALIDTO) FROM(
+	SELECT a.partner ,a.intreno, A.VALIDFROM, B.DEATHDT AS VALIDTO  from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VIBPOBJREL.active_data" a 
+INNER JOIN
+	(SELECT INTRENO, MAX(VALIDTO) AS DEATHDT FROM :LT_TEMP GROUP BY INTRENO) b 
+ON a.INTRENO = b.INTRENO
+	WHERE a.PARTNER NOT IN (SELECT PARTNER FROM :LT_TEMP) AND A.VALIDFROM<=B.DEATHDT
+) GROUP BY PARTNER, INTRENO;
+
+END
