@@ -30,7 +30,7 @@ BEGIN
 	'' AS "TARGET_NODE_ID4",
 	'' AS "TARGET_NODE_ID5",
 	'' AS "LABEL"
-	FROM "osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "CO_OWNER" 
+	FROM "osr.edw.platform.fra.ltx::CV_ParcelOwnershipByCoOwner" AS "CO_OWNER" 
 	INNER JOIN "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
 	ON  "CO_OWNER"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT" 
     AND "CO_OWNER"."INTRENOPL"    = "LTPLRESB"."INTRENOPL";

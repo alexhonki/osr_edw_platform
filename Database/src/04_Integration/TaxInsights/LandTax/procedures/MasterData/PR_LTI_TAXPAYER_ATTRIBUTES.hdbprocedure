@@ -7,7 +7,7 @@ BEGIN
    /*************************************
        Write your procedure logic 
    *************************************/
-   LT_RESV_CUSTOMERS =  SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
+   LT_RESV_CUSTOMERS =   SELECT TO_BIGINT("ZZ_PARTNER") AS CUST_ID, 
 						  ZZ_PARTNER AS EXT_ID,
 						  TAXYRSTARTDT,
 						  TAXYRENDDT,
@@ -65,13 +65,15 @@ BEGIN
 						    WHEN ("AGE">45 and "AGE"<=50 ) THEN '46-50'
 						    WHEN ("AGE">50 and "AGE"<=55 ) THEN '51-55'
 						    WHEN ("AGE">55 and "AGE"<=60 ) THEN '56-60'
-						    WHEN ("AGE">60               ) THEN '60 PLUS' 
+						    WHEN ("AGE">60 and  "AGE"<=75 ) THEN '61-75' 
+						    WHEN ("AGE">75                ) THEN '75 PLUS' 
 						    ELSE 'NOT APPLICABLE' END AS "ATTRIBUTE_VALUE",
 						    'AGE_GROUP' AS "ATTRIBUTE_NAME"
 						    FROM
 						    (SELECT CUST_ID,INIT_DATE,END_DATE,
 						    ROUND(DAYS_BETWEEN("BIRTHDT","END_DATE")/365,1) "AGE" 
-						    FROM :LT_AGE_TEMP ); 
+						    FROM :LT_AGE_TEMP 
+						    WHERE BIRTHDT > '0000-00-00' ); 
 						    
 	--Partner Type
 	LT_PARTNER_TYPE     = SELECT 
@@ -79,7 +81,7 @@ BEGIN
     						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
     						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
     						to_varchar(INDIVORG) AS "ATTRIBUTE_VALUE",
-    						'TAXPAYER TYPE' AS "ATTRIBUTE_NAME"
+    						'TAXPAYER_TYPE' AS "ATTRIBUTE_NAME"
     						FROM :LT_RESV_CUSTOMERS;
     						
     --BP Value
@@ -102,13 +104,13 @@ BEGIN
 							CUST_ID,INIT_DATE,END_DATE,
     						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
     						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
-    						CASE WHEN (PARCELCNT>=1 and PARCELCNT<=2 ) THEN '1 TO 2'
-    						WHEN (PARCELCNT>=3 and PARCELCNT<=5 ) THEN '3 TO 5'
-    						WHEN (PARCELCNT>=6 and PARCELCNT<=15 ) THEN '6 TO 15'
-    						WHEN (PARCELCNT>=16 and PARCELCNT<=55 ) THEN '16 TO 55'
-    						WHEN (PARCELCNT>=56  ) THEN '56+'
+    						CASE WHEN (PARCELCNT>=1 and PARCELCNT<=2) THEN '01 TO 02' 
+    						WHEN (PARCELCNT>=3 and PARCELCNT<=5) THEN '03 TO 05' 
+    						WHEN (PARCELCNT>=6 and PARCELCNT<=15) THEN '06 TO 15'
+    						WHEN (PARCELCNT>=16 and PARCELCNT<=55) THEN '16 TO 55'
+    						WHEN (PARCELCNT>55                   ) THEN '55 PLUS' 
     						END AS "ATTRIBUTE_VALUE",
-    						'PARCEL COUNT' AS "ATTRIBUTE_NAME"
+    						'PARCEL_COUNT' AS "ATTRIBUTE_NAME"
     						FROM :LT_RESV_CUSTOMERS;
     						
     -- First Time Tax Payer
@@ -117,7 +119,7 @@ BEGIN
     						((YEAR(A."INIT_DATE")*100) + MONTH(A."INIT_DATE")) AS INIT_TS,
     						((YEAR(A."END_DATE")*100) + MONTH(A."END_DATE")) AS END_TS,
     						 CASE WHEN A.INIT_DATE = B.INIT_DATE THEN 'Yes' ELSE 'No' END AS "ATTRIBUTE_VALUE",
-    						'FIRST TIME TAX PAYER' AS "ATTRIBUTE_NAME"
+    						'FIRST_TIME_TAX_PAYER' AS "ATTRIBUTE_NAME"
     						FROM :LT_RESV_CUSTOMERS AS A
     						INNER JOIN :LT_AGE_TEMP AS B
     						ON A.CUST_ID = B.CUST_ID ;
@@ -127,7 +129,7 @@ BEGIN
     						((YEAR("INIT_DATE")*100) + MONTH("INIT_DATE")) AS INIT_TS,
     						((YEAR("END_DATE")*100) + MONTH("END_DATE")) AS END_TS,
     						POST_CODE AS "ATTRIBUTE_VALUE",
-    						'PPR POSTCODE' AS "ATTRIBUTE_NAME"
+    						'PPR_POSTCODE' AS "ATTRIBUTE_NAME"
     						FROM (SELECT DISTINCT  TO_BIGINT("ZZ_PARTNER") AS CUST_ID ,to_timestamp(TAXYRSTARTDT) as INIT_DATE ,to_timestamp(TAXYRENDDT) as END_DATE,
 						(CASE WHEN a.POST_CODE1 is not null THEN a.POST_CODE1
 						WHEN a.POST_CODE2 is not null and POST_CODE1 is null THEN POST_CODE2

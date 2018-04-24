@@ -5,13 +5,31 @@ PROCEDURE "osr.edw.integration.ti.ltax::PR_LT_IMPORT_REACTED_CUSTOMER" ( )
   -- READS SQL DATA 
    AS
 BEGIN
-   /*************************************
-  Use clearing date to determine if the taxpayer is a debtor. 
- The below logic is for open debt. Use Current date in case clearing date is blank. 
- Consider difference between initial and reassessment. For now if they become a debtor once in the year during initial assessment or reassessment we keep them as debtor in the Reactions table.
- Delimit only to Land Tax payers using revenue stream (KOFIZ == LT). 
-   *************************************/
-   
+/*********************************************************************
+DFKKOP - Item table for Contract Account Document
+	KOFIZ - Account Determination ID - ('LT' for LandTax)
+	BETRH - Net Due Amount
+	FAEDN - Due date for net payment
+	AUGDT - Clearing Date
+	PERSL - Key for Period Assignment(e.g. If Assessment was done for 2010 then Period key would be 2011 here)
+	HVORG - Main Transaction for Line Item ('4000'  Assessment - TAA)
+	AUGBT - Clearing amount in clearing currency 
+	
+
+ 1 - Get those entry from DFKKOP which are relevant for LandTax(KOFIZ = LT) with Main Transaction as Assessment(HVORG = 4000)
+ 2 - Group By Customer Id and Period Key(PERSL) on Above data. After step 2, We will have data Max Due Date(FAEDn), Max Clearing Date(AUGDT), Sum of DueAmount(BETRH), Sum of Cleared Amount(AUGBT) Per Cust_id per Period Key.
+ 3 - Check if A customer is a debtor or not in a Period Key(PERSL)
+	 - If Sum of Dueamount in a Period Key > Sum Of Cleared Amount in that period key (Means Payment was not done or partially done )
+		Check if MAX Due Date > Current Date
+				 Customer is a Debtor
+			  Else
+				 Customer is not a debtor
+	 - Else (Sum of DueAmount is equal to Sum of Cleared Amount)
+		Check if max Clearing Date > Max Due Date
+				Customer is a Debtor
+			  Else 
+				 Customer is not a debtor
+************************************************************************/
   
 	UPSERT "osr.edw.integration.ti.ltax::app.CustomerReactions" (
 		"CUST_ID",
@@ -21,20 +39,22 @@ BEGIN
 		"INIT_DATE",
 		"INIT_TS",
 		"END_TS" )
-      	 SELECT CUST_ID, 'DEBTOR_INITIAL_ASSESSMENT' AS "REACTION_TYPE", 1 AS "REACTION_VALUE",
-									 TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_AFTER("FINYEAR", '-'),'-06-30'))) AS "END_DATE",
-									 TO_TIMESTAMP(TO_DATE(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'-07-01'))) AS "INIT_DATE",
-									 TO_INT(CONCAT(SUBSTR_BEFORE("FINYEAR", '-'),'07')) AS "INIT_TS",
-									 TO_INT(CONCAT(SUBSTR_AFTER("FINYEAR", '-'),'06')) AS "END_TS"
+      	  SELECT CUST_ID, 'DEBTOR_INITIAL_ASSESSMENT' AS "REACTION_TYPE", 1 AS "REACTION_VALUE",
+									 TO_TIMESTAMP(MAX_DUE_DATE) AS "END_DATE",
+									 TO_TIMESTAMP(MAX_DUE_DATE) AS "INIT_DATE",
+									 TO_INT(CONCAT(YEAR(MAX_DUE_DATE),LPAD(MONTH(MAX_DUE_DATE),2,0))) AS "INIT_TS",
+									 TO_INT(CONCAT(YEAR(MAX_DUE_DATE),LPAD(MONTH(MAX_DUE_DATE),2,0))) AS "END_TS"
 									 FROM ( 
-									      SELECT CUST_ID , SUM(BETRH) DUEAMOUNT, FINYEAR, SUM(DEBTOR) ISDEBTOR  FROM( 
-									    		SELECT  TAXPAYER.CUST_ID AS "CUST_ID", BETRH ,"osr.edw.integration.ti.ltax::TF_LT_GET_FIN_YEAR"(FAEDN).FINYEAR FINYEAR, 
-												"osr.edw.integration.ti.ltax::TF_LT_CHECK_IF_TP_DEBTOR"(AUGDT,FAEDN).ISDEBTOR AS DEBTOR, FAEDN
-												FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" DEBTOR_DATA 
+											SELECT CUST_ID,"osr.edw.integration.ti.ltax::TF_LT_CHECK_IF_TP_DEBTOR"(MAX_CLEARING_DATE, MAX_DUE_DATE, DUEAMOUNT , CLEAREDAMOUNT).ISDEBTOR AS ISDEBTOR, MAX_DUE_DATE
+											FROM(
+													SELECT CUST_ID, MAX("FAEDN") AS "MAX_DUE_DATE", MAX("AUGDT") AS "MAX_CLEARING_DATE", SUM("BETRH") AS "DUEAMOUNT", SUM("AUGBT") AS "CLEAREDAMOUNT" FROM 
+													 (
+													   SELECT  TAXPAYER.CUST_ID AS "CUST_ID", BETRH , FAEDN, AUGDT, AUGBT, PERSL
+														FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data" DEBTOR_DATA 
 														INNER JOIN 
-												"osr.edw.integration.ti.ltax::app.Customer" TAXPAYER ON TAXPAYER.EXT_ID = DEBTOR_DATA.GPART
-												WHERE  KOFIZ='LT') 
-												GROUP BY CUST_ID, FINYEAR HAVING SUM(DEBTOR) > 0 AND SUM(BETRH) > 0
-									 );
-
+												    	"osr.edw.integration.ti.ltax::app.Customer" TAXPAYER ON TAXPAYER.EXT_ID = DEBTOR_DATA.GPART
+														WHERE  KOFIZ='LT' AND HVORG = '4000'
+													 ) 
+											GROUP BY CUST_ID, PERSL)
+										) WHERE ISDEBTOR = 1 ;
 END

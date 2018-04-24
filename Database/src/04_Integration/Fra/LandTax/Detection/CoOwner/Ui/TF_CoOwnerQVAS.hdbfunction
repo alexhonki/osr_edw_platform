@@ -37,13 +37,14 @@ BEGIN
 	FROM 
 	"osr.edw.platform.fra::CV_AlertRoot" AS "ALERT"
 	INNER JOIN 
-	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
+	"osr.edw.platform.fra.ltx::CV_ParcelOwnershipByCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	INNER JOIN 
 	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRES.active_data" AS "LTPLRES"
 	ON  "PCL_COOWNER"."TAXYRSTARTDT" = "LTPLRES"."TAXYRSTARTDT" 
 	AND "PCL_COOWNER"."INTRENOPL" = "LTPLRES"."INTRENOPL" 
 	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+	  AND ("LTPLRES"."NANO" <> '' OR "LTPLRES"."NANO" IS NOT NULL )
 	  AND "LTPLRES"."TAXYRSTARTDT" >= TO_NVARCHAR(TO_INT(LEFT(CURRENT_DATE,4)) - 5) || '0701'
 	;
 	
