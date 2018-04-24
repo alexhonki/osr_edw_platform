@@ -28,7 +28,7 @@ BEGIN
 	 
 	 -- Use REGEX to replace non-letters and punctuations /* Lower the text */
 --TBC	
-TBL_SOURCE_TEXT = SELECT TOP 1000 Z_RUN_SEQ_ID AS ID,  LOWER(REPLACE_REGEXPR('([^a-zA-Z])' IN "DESCRIPTION" WITH ' ' OCCURRENCE ALL)) AS "DESCRIPTION", OBJECT_ID AS CUST_ID, OBJECT_ID AS TRANS_ID FROM "osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMD_ORDERADMH";
+TBL_SOURCE_TEXT = SELECT TOP 1000 Z_RUN_SEQ_ID AS ID,  LOWER(REPLACE_REGEXPR('([^a-zA-Z])' IN "DESCRIPTION" WITH ' ' OCCURRENCE ALL)) AS "DESCRIPTION", OBJECT_ID AS CUST_ID, OBJECT_ID AS TRANS_ID FROM "osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data";
 		
 		
 	-- Remove all stopwords from the text. Insert the clean text to the CleanedText table

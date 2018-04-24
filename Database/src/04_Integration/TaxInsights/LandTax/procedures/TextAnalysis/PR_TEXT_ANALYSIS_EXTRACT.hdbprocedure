@@ -42,7 +42,7 @@ BEGIN
 						YEAR(TO_TIMESTAMP(b."CREATED_AT", 'YYYYMMDDHH24MISS')) * 100 + MONTH(TO_TIMESTAMP(b."CREATED_AT", 'YYYYMMDDHH24MISS')) AS "END_TS",
 						b."DESCRIPTION"
 					FROM "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" a
-					INNER JOIN "osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMD_ORDERADMH" b on a."CUST_ID" = b."OBJECT_ID"; -- this will be BPNum;
+					INNER JOIN "osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data" b on a."CUST_ID" = b."OBJECT_ID"; -- this will be BPNum;
 					-- TO DO - ORDERADMH TABLE TO BE REPLACED BY THE VIEW WHICH WOULD GIVE DESCRIPTION AND BUSINESS PARTNER
 		
 	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents" 
