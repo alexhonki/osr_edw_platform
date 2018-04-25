@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.integration.ti.ltax::CV_LT_CRM_INTERACTION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_LT_CRM_INTERACTION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH">
+    <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK">
+    <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDPARTNER">
+    <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDPARTNER</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.rms.synonym::CV_BUT000_Current">
+    <resourceUri>osr.edw.staging.rms.synonym::CV_BUT000_Current</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_ORDERADM_H" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="GUID">
+        <descriptions defaultDescription="GUID"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECT_ID">
+        <descriptions defaultDescription="OBJECT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="POSTING_DATE">
+        <descriptions defaultDescription="POSTING_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="DESCRIPTION">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="CREATED_AT" aggregationType="sum">
+        <descriptions defaultDescription="CREATED_AT"/>
+      </viewAttribute>
+      <viewAttribute id="CHANGED_AT" aggregationType="sum">
+        <descriptions defaultDescription="CHANGED_AT"/>
+      </viewAttribute>
+      <viewAttribute id="PROCESS_TYPE">
+        <descriptions defaultDescription="PROCESS_TYPE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_AT" source="CREATED_AT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHANGED_AT" source="CHANGED_AT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    </input>
+    <filter>&quot;PROCESS_TYPE&quot;='ZFC0'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_ACTIVITY_H">
+    <viewAttributes>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="GUID">
+        <descriptions defaultDescription="GUID"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY">
+        <descriptions defaultDescription="CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECTIVE">
+        <descriptions defaultDescription="OBJECTIVE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="ORDERADM_ACTIVITYH" cardinality="C1_1" joinType="inner" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="GUID">
+        <descriptions defaultDescription="GUID"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECT_ID">
+        <descriptions defaultDescription="OBJECT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY">
+        <descriptions defaultDescription="CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECTIVE">
+        <descriptions defaultDescription="OBJECTIVE"/>
+      </viewAttribute>
+      <viewAttribute id="DESCRIPTION">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="PROCESS_TYPE">
+        <descriptions defaultDescription="PROCESS_TYPE"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$CLIENT$CLIENT"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CATEGORY_DESC" datatype="VARCHAR" length="100" expressionLanguage="SQL">
+        <formula>'TEST TEXT'</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="PARTNER_FCT" datatype="VARCHAR" length="8" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;PROCESS_TYPE&quot;='ZFC0', '00000009', '')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="CRMD_ORDERADM_H">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$CLIENT" source="CLIENT"/>
+    </input>
+    <input node="CRMD_ACTIVITY_H">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$CLIENT" source="CLIENT"/>
+    </input>
+    <filter>&quot;OBJECTIVE&quot;='LND'</filter>
+    <joinAttribute name="GUID"/>
+    <joinAttribute name="JOIN$CLIENT$CLIENT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_LINK" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="GUID_HI">
+        <descriptions defaultDescription="GUID_HI"/>
+      </viewAttribute>
+      <viewAttribute id="GUID_SET">
+        <descriptions defaultDescription="GUID_SET"/>
+      </viewAttribute>
+      <viewAttribute id="OBJTYPE_SET">
+        <descriptions defaultDescription="OBJTYPE_SET"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID_HI" source="GUID_HI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID_SET" source="GUID_SET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJTYPE_SET" source="OBJTYPE_SET"/>
+    </input>
+    <filter>&quot;OBJTYPE_SET&quot;='07'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="ORDERADMH_LINK" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="GUID">
+        <descriptions defaultDescription="GUID"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECT_ID">
+        <descriptions defaultDescription="OBJECT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY">
+        <descriptions defaultDescription="CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECTIVE">
+        <descriptions defaultDescription="OBJECTIVE"/>
+      </viewAttribute>
+      <viewAttribute id="DESCRIPTION">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY_DESC">
+        <descriptions defaultDescription="CATEGORY_DESC"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_FCT">
+        <descriptions defaultDescription="PARTNER_FCT"/>
+      </viewAttribute>
+      <viewAttribute id="GUID_SET">
+        <descriptions defaultDescription="GUID_SET"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="ORDERADM_ACTIVITYH">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_FCT" source="PARTNER_FCT"/>
+    </input>
+    <input node="CRMD_LINK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID_SET" source="GUID_SET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID_HI"/>
+    </input>
+    <joinAttribute name="GUID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CRMDPARTNER">
+    <viewAttributes>
+      <viewAttribute id="GUID">
+        <descriptions defaultDescription="GUID"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_FCT">
+        <descriptions defaultDescription="PARTNER_FCT"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_NO">
+        <descriptions defaultDescription="PARTNER_NO"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDPARTNER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_FCT" source="PARTNER_FCT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_NO" source="PARTNER_NO"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="PARTNER_ORDERADMH" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PARTNER_NO">
+        <descriptions defaultDescription="PARTNER_NO"/>
+      </viewAttribute>
+      <viewAttribute id="GUID">
+        <descriptions defaultDescription="GUID"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECT_ID">
+        <descriptions defaultDescription="OBJECT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY">
+        <descriptions defaultDescription="CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECTIVE">
+        <descriptions defaultDescription="OBJECTIVE"/>
+      </viewAttribute>
+      <viewAttribute id="DESCRIPTION">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY_DESC">
+        <descriptions defaultDescription="CATEGORY_DESC"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$GUID$GUID_SET"/>
+      <viewAttribute hidden="true" id="JOIN$PARTNER_FCT$PARTNER_FCT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="CRMDPARTNER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_NO" source="PARTNER_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GUID$GUID_SET" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_FCT$PARTNER_FCT" source="PARTNER_FCT"/>
+    </input>
+    <input node="ORDERADMH_LINK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GUID$GUID_SET" source="GUID_SET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_FCT$PARTNER_FCT" source="PARTNER_FCT"/>
+    </input>
+    <joinAttribute name="JOIN$GUID$GUID_SET"/>
+    <joinAttribute name="JOIN$PARTNER_FCT$PARTNER_FCT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="BUT000">
+    <viewAttributes>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_GUID">
+        <descriptions defaultDescription="PARTNER_GUID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.rms.synonym::CV_BUT000_Current">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID" source="PARTNER_GUID"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="ORDERADM_BUT000" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="OBJECT_ID">
+        <descriptions defaultDescription="OBJECT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY">
+        <descriptions defaultDescription="CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="OBJECTIVE">
+        <descriptions defaultDescription="OBJECTIVE"/>
+      </viewAttribute>
+      <viewAttribute id="DESCRIPTION">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY_DESC">
+        <descriptions defaultDescription="CATEGORY_DESC"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$PARTNER_NO$PARTNER_GUID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="PARTNER_ORDERADMH">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_NO$PARTNER_GUID" source="PARTNER_NO"/>
+    </input>
+    <input node="BUT000">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_NO$PARTNER_GUID" source="PARTNER_GUID"/>
+    </input>
+    <joinAttribute name="JOIN$PARTNER_NO$PARTNER_GUID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="ORDERADM_BUT000">
+  <attributes>
+    <attribute id="OBJECT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="ORDERADM_BUT000" columnName="OBJECT_ID"/>
+    </attribute>
+    <attribute id="CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CATEGORY"/>
+      <keyMapping columnObjectName="ORDERADM_BUT000" columnName="CATEGORY"/>
+    </attribute>
+    <attribute id="OBJECTIVE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECTIVE"/>
+      <keyMapping columnObjectName="ORDERADM_BUT000" columnName="OBJECTIVE"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="ORDERADM_BUT000" columnName="DESCRIPTION"/>
+    </attribute>
+    <attribute id="CATEGORY_DESC" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CATEGORY_DESC"/>
+      <keyMapping columnObjectName="ORDERADM_BUT000" columnName="CATEGORY_DESC"/>
+    </attribute>
+    <attribute id="PARTNER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="ORDERADM_BUT000" columnName="PARTNER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="CUST_ID" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_ID"/>
+      <keyCalculation datatype="BIGINT" expressionLanguage="SQL">
+        <formula>TO_BIGINT(&quot;PARTNER&quot;)</formula>
+      </keyCalculation>
+    </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="CRMD_ORDERADM_H" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="64" y="704"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CRMD_ACTIVITY_H" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="291" y="704"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ORDERADM_ACTIVITYH" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="176" y="587"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="CRMD_ORDERADM_H" modelObjectNameSpace="ORDERADM_ACTIVITYH" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CRMD_ACTIVITY_H" modelObjectNameSpace="ORDERADM_ACTIVITYH" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CRMD_LINK" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-100" y="595"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ORDERADMH_LINK" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="30" y="465"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="ORDERADM_ACTIVITYH" modelObjectNameSpace="ORDERADMH_LINK" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="CRMD_LINK" modelObjectNameSpace="ORDERADMH_LINK" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="CRMDPARTNER" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-153" y="465"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="PARTNER_ORDERADMH" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-30" y="335"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="CRMDPARTNER" modelObjectNameSpace="PARTNER_ORDERADMH" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="ORDERADMH_LINK" modelObjectNameSpace="PARTNER_ORDERADMH" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="BUT000" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="170" y="335"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ORDERADM_BUT000" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="209"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="PARTNER_ORDERADMH" modelObjectNameSpace="ORDERADM_BUT000" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="BUT000" modelObjectNameSpace="ORDERADM_BUT000" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
