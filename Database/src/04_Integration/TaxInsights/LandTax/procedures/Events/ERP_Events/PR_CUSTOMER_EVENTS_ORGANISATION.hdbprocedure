@@ -7,6 +7,21 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
 BEGIN
    /*************************************
        Get the events for Organisation Events
+       ZBUT0000HJCXO9 - Financial Status
+    	ZZTFLDPVC3OA  - Financial Status
+	    					ADMINISTRATOR
+							BANKRUPT
+							DEED OF COMPANY
+							LIQUIDATION
+							Merged Duplicate Business Partner
+							MORTGAGEE
+							RECEIVER
+							RECEIVER MANAGER
+							SOLVENT
+    	ZZTFLD2WCKOA - Period Begin
+    	ZZTFLD2WCKOA - Period End
+    	
+    	Different Values of Financial Status would result in different Organization Events
    *************************************/
    	
    	INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"

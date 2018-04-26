@@ -5,7 +5,11 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
     AS
 BEGIN
    /*************************************
-       Write your procedure logic 
+       /OSRQLD/LTCNEXMD - Land tax: Contract exemption/deductions per parcel and nano
+         INVALID_EXMD - Invalid Exemp/Ded ('X' - Yes , '' - No)
+         Received Concession - If it's not an invalid Exemption/Deduction (INVALID_EXMD = '')
+         Removed Concession - If it's not an invalid Exemption but Current Date > ValidTo of the Exemption/Deduction Received
+         Invalid Concession - If it's an invalid Exemption(INVALID_EXMD = 'X')
    *************************************/
    
     INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents" 
