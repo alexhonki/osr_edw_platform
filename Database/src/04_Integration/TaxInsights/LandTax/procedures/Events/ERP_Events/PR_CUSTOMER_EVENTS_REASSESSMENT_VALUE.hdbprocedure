@@ -13,7 +13,7 @@ BEGIN
 		TVORG - Sub Transactions ('190'  - Land Tax Comm REASSESSMENT)
 		AUGRD - Clearing Reason(04 - Write-Off, 14 - Mass Write-Off, 05 - Reversal, 99- Mass process )
 		
-		Get sum of BETRH(Due Amount), Per Customer per Posting Date For Subtransaction type 190 , and Clearing reason other than 04, 14, 05, 99
+		Get sum of BETRH(Due Amount), Per Customer per Posting Date per Form Bundle number For Subtransaction type 190 , and Clearing reason other than 04, 14, 05, 99
 		
 		If Reassessment Value is higher than the Initial Assessment then there will be Entries(Subtrans - 190) with +ve Value
 		If Reassessment value is lower than the initial Assessment then there wil be entries with -Ve Values
@@ -37,8 +37,8 @@ BEGIN
 			NULL  as END_TS
 	FROM (
 			SELECT GPART,BUDAT, SUM(BETRH) FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data"
-			WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT'  AND AUGRD NOT IN ('04','14','05','99')
-			GROUP BY GPART,BUDAT
+			WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' 
+			GROUP BY GPART,BUDAT,FBNUM
 			HAVING SUM(BETRH)>0
 		) a
 	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
@@ -61,8 +61,8 @@ UNION ALL
 			NULL  as END_TS
 	FROM (
 			SELECT GPART,BUDAT, SUM(BETRH) FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFKKOP.active_data"
-			WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT'  AND AUGRD NOT IN ('04','14','05','99')
-			GROUP BY GPART,BUDAT
+			WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' 
+			GROUP BY GPART,BUDAT,FBNUM
 			HAVING SUM(BETRH)<0
 		) a
 	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART

@@ -16,7 +16,7 @@ BEGIN
 	/OSRQLD/LTCNRESV - LAND TAX Contract Results View
 		INDIVORG - Taxpayer is  Individual or organisation
 		
-		Get sum of BETRH(Due Amount), Per Customer per Posting Date For Subtransaction type 190(Reassessment) , and Clearing reason in 01, 08, 15, ''
+		Get sum of BETRH(Due Amount), Per Customer per Posting Date per Form Bundle Number For Subtransaction type 190(Reassessment) , and Clearing reason in 01, 08, 15, ''
    *************************************/
    
    /*============================================
@@ -50,7 +50,7 @@ BEGIN
 		INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
 		INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" c on c.EXT_ID =a.GPART
 		WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='ORG'
-		GROUP BY c.CUST_ID,BUDAT
+		GROUP BY c.CUST_ID,BUDAT,FBNUM
 	
 	UNION ALL 
 	/*============================================
@@ -85,7 +85,7 @@ BEGIN
 	INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
 	INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" c on c.EXT_ID = a.GPART
 	WHERE HVORG='4000' and TVORG='0190'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='IND' 
-	GROUP BY c.CUST_ID,BUDAT
+	GROUP BY c.CUST_ID,BUDAT,FBNUM
 	) WHERE EVENT_NAME is not null;
 	
 END
