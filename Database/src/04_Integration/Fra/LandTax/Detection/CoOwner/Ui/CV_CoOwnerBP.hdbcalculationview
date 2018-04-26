@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Projection" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.ltx.coowner.ui::CV_CoOwnerBP" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Co-Owner BP"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
@@ -7,7 +7,6 @@
     <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
       <valueDomain type="empty"/>
       <selection multiLine="false" type="Single"/>
-      <defaultRange/>
     </variableProperties>
   </variable>
 </localVariables>
@@ -33,46 +32,46 @@
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="INVEST_OBJ_TYPE"/>
-    </attribute>
-    <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CO_OWNER_ID"/>
-      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="CO_OWNER_ID"/>
-    </attribute>
-    <attribute id="INTRENOPL" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INTRENOPL" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INTRENOPL"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="INTRENOPL"/>
     </attribute>
-    <attribute id="PLNO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PLNO" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PLNO"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="PLNO"/>
     </attribute>
-    <attribute id="BPARTNER" order="7" displayAttribute="false" attributeHierarchyActive="false" descriptionColumnName="BPARTNER_NAME">
+    <attribute id="BPARTNER" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="BPARTNER"/>
     </attribute>
-    <attribute id="BPARTNER_NAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BPARTNER_NAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER_NAME"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="BPARTNER_NAME"/>
     </attribute>
-    <attribute id="VALIDFROM" order="9" displayAttribute="false" attributeHierarchyActive="false" semanticType="date.businessDateFrom">
+    <attribute id="VALIDFROM" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALIDFROM"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="VALIDFROM"/>
     </attribute>
-    <attribute id="VALIDTO" order="10" displayAttribute="false" attributeHierarchyActive="false" semanticType="date.businessDateTo">
+    <attribute id="VALIDTO" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALIDTO"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="VALIDTO"/>
     </attribute>
-    <attribute id="CODE_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CODE_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CODE_ID"/>
       <keyMapping columnObjectName="TF_CoOwnerBP" columnName="CODE_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_CoOwnerBP" columnName="CO_OWNER_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="OWNERPERCENT" order="11" aggregationType="sum" measureType="simple">
+    <measure id="OWNERPERCENT" order="5" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="OWNERPERCENT"/>
       <measureMapping columnObjectName="TF_CoOwnerBP" columnName="OWNERPERCENT"/>
     </measure>
@@ -82,10 +81,9 @@
 </logicalModel>
 <layout>
   <shapes>
-    <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
-      <upperLeftCorner y="112" x="92"/>
-    
-      <rectangleSize width="140"/>
-    </shape></shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>
