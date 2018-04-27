@@ -5,7 +5,15 @@ PROCEDURE "osr.edw.integration.ti.ltax.procedure.events.erp::PR_CUSTOMER_EVENTS_
     AS
 BEGIN
    /*************************************
-       Write your procedure logic 
+    DFKKOP - Item table for Contract Account Document
+		KOFIZ - Account Determination ID - ('LT' for LandTax)
+		BETRH - Net Due Amount
+		HVORG - Main Transaction for Line Item ('4050'  Sundry Court Costs)
+		AUGBT - Clearing amount in clearing currency 
+		TVORGV- Sub Transaction ( 0525 - Charge Registration Fees)
+		AUGRD - Clearing Reason(04 - Write-Off, 14 - Mass Write-Off, 05 - Reversal, 99 - Mass process)
+		
+		Check whether Registration Fee was charged to a Customer or not for Main transaction as 4050
    *************************************/
    
     INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"

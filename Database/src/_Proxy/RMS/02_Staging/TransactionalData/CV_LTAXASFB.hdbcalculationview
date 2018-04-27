@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_LTAXASFB" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_LTAXASFB"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTAXASFB.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTAXASFB.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTAXASFB.active_data">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="INTRENO_CN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENO_CN"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="INTRENO_CN"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDATE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="TAXYRSTARTDATE"/>
+    </attribute>
+    <attribute id="ASSESS_FBNUM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSESS_FBNUM"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="ASSESS_FBNUM"/>
+    </attribute>
+    <attribute id="REISSUE_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REISSUE_DATE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="REISSUE_DATE"/>
+    </attribute>
+    <attribute id="REISSUE_DUE_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REISSUE_DUE_DATE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="REISSUE_DUE_DATE"/>
+    </attribute>
+    <attribute id="REISSUE_DEF_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REISSUE_DEF_DATE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="REISSUE_DEF_DATE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTAXASFB.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

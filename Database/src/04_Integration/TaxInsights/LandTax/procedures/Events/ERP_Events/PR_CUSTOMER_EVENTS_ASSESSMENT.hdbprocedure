@@ -15,7 +15,7 @@ BEGIN
 	/OSRQLD/LTCNRESV - LAND TAX Contract Results View
 		INDIVORG - Taxpayer is  Individual or organisation
 		
-		Get sum of BETRH(Due Amount), Per Customer per Posting Date For Subtransaction type 150 , and Clearing reason in 01, 08, 15, ''
+		Get sum of BETRH(Due Amount), Per Customer per Posting Date per Form Bundle Number For Subtransaction type 150 , and Clearing reason in 01, 08, 15, ''
    *************************************/
    
    /*============================================
@@ -24,7 +24,7 @@ BEGIN
    
    INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents"
    select * FROM (
-		select DISTINCT
+		select 
 			SAP.CUST_ID as CUST_ID,
 			CASE WHEN SUM(BETRH)<1450 THEN 1 
 				WHEN SUM(BETRH)>=1450 AND SUM(BETRH)<=33750 THEN 2 
@@ -50,13 +50,13 @@ BEGIN
 		INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
 		INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
 		WHERE HVORG='4000' and TVORG='0150'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '')  and b.INDIVORG='ORG'
-		GROUP BY SAP.CUST_ID, BUDAT
+		GROUP BY SAP.CUST_ID, BUDAT, FBNUM
 
 UNION ALL
 	/*============================================
 	  For Individual
     ============================================*/
-		select  DISTINCT
+		select 
 			SAP.CUST_ID as CUST_ID,
 			CASE WHEN SUM(BETRH)<500 THEN 5 
 				WHEN SUM(BETRH)>=500 AND SUM(BETRH)<=4500 THEN 6 
@@ -85,7 +85,7 @@ UNION ALL
 		INNER JOIN (SELECT DISTINCT ZZ_PARTNER, INDIVORG FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCNRESV.active_data") as b ON a.GPART=b.ZZ_PARTNER
 		INNER JOIN "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=a.GPART
 		WHERE HVORG='4000' and TVORG='0150'  AND KOFIZ='LT' and BETRH>0 AND AUGRD IN ('01','08','15', '') and b.INDIVORG='IND'
-		GROUP BY SAP.CUST_ID, BUDAT
+		GROUP BY SAP.CUST_ID, BUDAT, FBNUM
 
 		) WHERE EVENT_NAME is not null;
    
