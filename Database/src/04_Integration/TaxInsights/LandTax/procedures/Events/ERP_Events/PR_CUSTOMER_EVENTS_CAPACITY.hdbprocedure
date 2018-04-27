@@ -16,7 +16,7 @@ BEGIN
     
 	select * from(
 		/*Received Concession*/
-		select DISTINCT NANO,
+		select
 			SAP.CUST_ID as CUST_ID,
 			21 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
@@ -29,10 +29,9 @@ BEGIN
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD=''  AND CONCESSCODE = 'H'
+		where INVALID_EXMD=''  AND CONCESSCODE = 'H' 
 	UNION ALL
-			select * from(
-		/*Received Concession*/
+
 		select
 			SAP.CUST_ID as CUST_ID,
 			100 as EVENT_ID,
@@ -80,8 +79,6 @@ BEGIN
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
 		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''  AND CONCESSCODE = 'P'
-
-
 
 );
    
