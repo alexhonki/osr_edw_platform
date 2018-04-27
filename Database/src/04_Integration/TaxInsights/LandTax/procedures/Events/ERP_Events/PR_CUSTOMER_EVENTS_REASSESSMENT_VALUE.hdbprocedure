@@ -24,7 +24,7 @@ BEGIN
        Reassessment Value is Higher than Initial Assessment
     =====================================================================*/  
   select * from( 
-	   select  DISTINCT
+	   select  
 			SAP.CUST_ID as CUST_ID,
 			10 as EVENT_ID,
 			'Re-Assessment' as EVENT_GROUP,
@@ -48,7 +48,7 @@ UNION ALL
   /* ===================================================================
        Reassessment Value is Lower than Initial Assessment
     =====================================================================*/  
-	select  DISTINCT
+	select  
 			SAP.CUST_ID as CUST_ID,
 			11 as EVENT_ID,
 			'Re-Assessment' as EVENT_GROUP,

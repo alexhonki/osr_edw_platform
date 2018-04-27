@@ -16,11 +16,11 @@ BEGIN
     
 	select * from(
 		/*Received Concession*/
-		select
+		select DISTINCT NANO,
 			SAP.CUST_ID as CUST_ID,
 			21 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
-			'Received Concession' as EVENT_NAME,
+			'Received Concession For Home' as EVENT_NAME,
 			CAST(VALIDFROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
@@ -29,43 +29,59 @@ BEGIN
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD=''  
-
+		where INVALID_EXMD=''  AND CONCESSCODE = 'H'
 	UNION ALL
-	
-		/*Removed Concession*/
-		select 
+			select * from(
+		/*Received Concession*/
+		select
 			SAP.CUST_ID as CUST_ID,
-			22 as EVENT_ID,
+			100 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
-			'Removed Concession' as EVENT_NAME,
-			CAST(VALIDTO as date) as INIT_DATE,
-			NULL as END_DATE,
-			1  as EVENT_VALUE,
-			'Removed Concession' as DESCRIPTION,
-			LEFT(VALIDFROM,6)   as INIT_TS,
-			NULL  as END_TS
-		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
-		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD='' 
-
-	UNION ALL
-	
-		/*Invalid Concession*/
-		select 
-			SAP.CUST_ID as CUST_ID,
-			23 as EVENT_ID,
-			'Capacity' as EVENT_GROUP,
-			'Invalid Concession' as EVENT_NAME,
+			'Received Concession For Primary production' as EVENT_NAME,
 			CAST(VALIDFROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
-			'Invalid Concession' as DESCRIPTION,
+			'Received Concession' as DESCRIPTION,
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD='X' 
+		where INVALID_EXMD=''  AND CONCESSCODE = 'P'
+	UNION ALL
+		select 
+			SAP.CUST_ID as CUST_ID,
+			101 as EVENT_ID,
+			'Capacity' as EVENT_GROUP,
+			'Removed Concession For Home' as EVENT_NAME,
+			CAST(VALIDTO as date) as INIT_DATE,
+			NULL as END_DATE,
+			1  as EVENT_VALUE,
+			'Removed Concession For Home' as DESCRIPTION,
+			LEFT(VALIDFROM,6)   as INIT_TS,
+			NULL  as END_TS
+		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
+		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
+		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''  AND CONCESSCODE = 'H'
+
+	UNION ALL
+		
+		/*Removed Concession*/
+		select 
+			SAP.CUST_ID as CUST_ID,
+			101 as EVENT_ID,
+			'Capacity' as EVENT_GROUP,
+			'Removed Concession For Primary Production' as EVENT_NAME,
+			CAST(VALIDTO as date) as INIT_DATE,
+			NULL as END_DATE,
+			1  as EVENT_VALUE,
+			'Removed Concession For Primary Production' as DESCRIPTION,
+			LEFT(VALIDFROM,6)   as INIT_TS,
+			NULL  as END_TS
+		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
+		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
+		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''  AND CONCESSCODE = 'P'
+
+
 
 );
    
