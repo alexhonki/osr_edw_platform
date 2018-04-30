@@ -11,7 +11,9 @@ BEGIN
          Removed Concession - If it's not an invalid Exemption but Current Date > ValidTo of the Exemption/Deduction Received
          Invalid Concession - If it's an invalid Exemption(INVALID_EXMD = 'X')
    *************************************/
-   
+   LT_TEMP_RESV = SELECT CONCESSCODE, ZZ_PARTNER ,INTRENOPL , TAXYRSTARTDT
+                , LAG(CONCESSCODE)  OVER(PARTITION BY ZZ_PARTNER,INTRENOPL ORDER BY TAXYRSTARTDT ASC) as CONCESSCODE_LAG
+                FROM "osr.edw.source.td.rms.synonym::CDS_LAND.TAB.LTCNRESV";
     INSERT INTO "osr.edw.integration.ti.ltax::app.CustomerEvents" 
     
 	select * from(
@@ -20,47 +22,28 @@ BEGIN
 			SAP.CUST_ID as CUST_ID,
 			21 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
-			'Received Concession For Home' as EVENT_NAME,
+			CASE WHEN CONCESSCODE = 'H' THEN
+			'Received Concession For Home' 
+			 WHEN CONCESSCODE = 'P' THEN
+			'Received Concession For Primary Production'
+			ELSE 
+			'Received Concession For Other Concession'
+			END as EVENT_NAME,
 			CAST(VALIDFROM as date) as INIT_DATE,
 			NULL as END_DATE,
 			1 as EVENT_VALUE,
-			'Received Concession' as DESCRIPTION,
+			CASE WHEN CONCESSCODE = 'H' THEN
+			'Received Concession For Home' 
+			 WHEN CONCESSCODE = 'P' THEN
+			'Received Concession For Primary Production'
+			ELSE 
+			'Received Concession For Other Concession'
+			END as DESCRIPTION,
 			LEFT(VALIDFROM,6)  as INIT_TS,
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD=''  AND CONCESSCODE = 'H' 
-	UNION ALL
-
-		select
-			SAP.CUST_ID as CUST_ID,
-			100 as EVENT_ID,
-			'Capacity' as EVENT_GROUP,
-			'Received Concession For Primary production' as EVENT_NAME,
-			CAST(VALIDFROM as date) as INIT_DATE,
-			NULL as END_DATE,
-			1 as EVENT_VALUE,
-			'Received Concession' as DESCRIPTION,
-			LEFT(VALIDFROM,6)  as INIT_TS,
-			NULL  as END_TS
-		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
-		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where INVALID_EXMD=''  AND CONCESSCODE = 'P'
-	UNION ALL
-		select 
-			SAP.CUST_ID as CUST_ID,
-			101 as EVENT_ID,
-			'Capacity' as EVENT_GROUP,
-			'Removed Concession For Home' as EVENT_NAME,
-			CAST(VALIDTO as date) as INIT_DATE,
-			NULL as END_DATE,
-			1  as EVENT_VALUE,
-			'Removed Concession For Home' as DESCRIPTION,
-			LEFT(VALIDFROM,6)   as INIT_TS,
-			NULL  as END_TS
-		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
-		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''  AND CONCESSCODE = 'H'
+		where INVALID_EXMD=''  
 
 	UNION ALL
 		
@@ -69,17 +52,61 @@ BEGIN
 			SAP.CUST_ID as CUST_ID,
 			101 as EVENT_ID,
 			'Capacity' as EVENT_GROUP,
-			'Removed Concession For Primary Production' as EVENT_NAME,
+			CASE WHEN CONCESSCODE = 'H' THEN
+			'Removed Concession For Home' 
+			 WHEN CONCESSCODE = 'P' THEN
+			'Removed Concession For Primary Production'
+			ELSE 
+			'Removed Concession For Other Concession'
+			END as EVENT_NAME,
 			CAST(VALIDTO as date) as INIT_DATE,
 			NULL as END_DATE,
 			1  as EVENT_VALUE,
-			'Removed Concession For Primary Production' as DESCRIPTION,
-			LEFT(VALIDFROM,6)   as INIT_TS,
+			CASE WHEN CONCESSCODE = 'H' THEN
+			'Removed Concession For Home' 
+			 WHEN CONCESSCODE = 'P' THEN
+			'Removed Concession For Primary Production'
+			ELSE 
+			'Removed Concession For Other Concession'
+			END as DESCRIPTION,
+			LEFT(VALIDTO,6)   as INIT_TS,
 			NULL  as END_TS
 		from "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.LTCNEXMD.active_data" as A
 		INNER JOIN  "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.BPARTNER
-		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD=''  AND CONCESSCODE = 'P'
-
+		where CAST(VALIDTO AS DATE)<cast(NOW() as date) and  INVALID_EXMD='' 
+		
+		UNION ALL
+		/*SubDivider Concession - Received*/
+		select 
+			SAP.CUST_ID as CUST_ID,
+			102 as EVENT_ID,
+			'Capacity' as EVENT_GROUP,
+			'Received Concession For Subdivider Discount'  as EVENT_NAME,
+			CAST(TAXYRSTARTDT as date) as INIT_DATE,
+			NULL as END_DATE,
+			1  as EVENT_VALUE,
+			'Received Concession For Subdivider Discount' as DESCRIPTION,
+			LEFT(TAXYRSTARTDT,6)   as INIT_TS,
+			NULL  as END_TS 
+	      FROM :LT_TEMP_RESV as A INNER JOIN
+          "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.ZZ_PARTNER 
+          WHERE CONCESSCODE = '*' AND (CONCESSCODE_LAG IS NULL OR CONCESSCODE_LAG != '*') 
+			UNION ALL
+		/*SubDivider Concession - Removed*/
+		select 
+			SAP.CUST_ID as CUST_ID,
+			103 as EVENT_ID,
+			'Capacity' as EVENT_GROUP,
+			'Removed Concession For Subdivider Discount'  as EVENT_NAME,
+			CAST(TAXYRSTARTDT as date) as INIT_DATE,
+			NULL as END_DATE,
+			1  as EVENT_VALUE,
+			'Removed Concession For Subdivider Discount' as DESCRIPTION,
+			LEFT(TAXYRSTARTDT,6)   as INIT_TS,
+			NULL  as END_TS 
+	      FROM :LT_TEMP_RESV as A INNER JOIN
+          "osr.edw.integration.ti.ltax::app.Customer" as SAP on SAP.EXT_ID=A.ZZ_PARTNER 
+          WHERE (CONCESSCODE = '' OR CONCESSCODE != '*') AND CONCESSCODE_LAG ='*'
 );
    
 END
