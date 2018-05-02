@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_RetrieveCoOwnerParcelValByAlert" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Retrieve Co-Owner Parcel Val. by Alert"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerParcelValByAlert" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerParcelValByAlert</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_RetrieveCoOwnerParcelValByAlert">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="CO_OWNER_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="CO_OWNER_ID"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="INTRENOPL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="AVG3YRVAL" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="AVG3YRVAL"/>
+      <measureMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="AVG3YRVAL"/>
+    </measure>
+    <measure id="PERCENTAGE" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PERCENTAGE"/>
+      <measureMapping columnObjectName="TF_RetrieveCoOwnerParcelValByAlert" columnName="PERCENTAGE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

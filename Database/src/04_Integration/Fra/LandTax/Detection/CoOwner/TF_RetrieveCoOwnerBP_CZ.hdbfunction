@@ -25,7 +25,7 @@ BEGIN
 	INNER JOIN 
 	"osr.edw.platform.fra.ltx::CV_ParcelOwnershipByCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
-	--WHERE "PCL_COOWNER"."TAXYRSTARTDT" >= TO_NVARCHAR(TO_INT(LEFT(CURRENT_DATE,4)) - 5) || '0701'
+	WHERE "ALERT"."INVEST_OBJ_TYPE" = 'LTCOOWNER'
 	;
 	
 	lt_alert_parcel_conca = 

@@ -37,6 +37,7 @@ BEGIN
 	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
 	ON "ALERT"."INVEST_OBJ_ID" = "PCL_COOWNER"."CO_OWNER_ID"
 	WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+	  AND "ALERT"."INVEST_OBJ_TYPE" = 'LTCOOWNER'
 	)
 	WHERE "RANK" = 1;
 	
