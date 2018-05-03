@@ -10,6 +10,9 @@
   <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH">
     <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT</resourceUri>
+  </DataSource>
   <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK">
     <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK</resourceUri>
   </DataSource>
@@ -18,9 +21,6 @@
   </DataSource>
   <DataSource id="osr.edw.staging.rms.synonym::CV_BUT000_Current">
     <resourceUri>osr.edw.staging.rms.synonym::CV_BUT000_Current</resourceUri>
-  </DataSource>
-  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT">
-    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -119,6 +119,9 @@
       <viewAttribute id="DIRECTION">
         <descriptions defaultDescription="DIRECTION"/>
       </viewAttribute>
+      <viewAttribute id="POSTING_DATE">
+        <descriptions defaultDescription="POSTING_DATE"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$CLIENT$CLIENT"/>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -132,6 +135,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$CLIENT" source="CLIENT"/>
     </input>
     <input node="CRM_ACT_DESC">
@@ -184,6 +188,31 @@
     <joinAttribute name="CLIENT"/>
     <joinAttribute name="CATEGORY"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_ACTIVITY_TEXT" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="DESCRIPTION">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+    
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="CATEGORY">
+        <descriptions defaultDescription="CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="LANGU">
+        <descriptions defaultDescription="LANGU"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
+    </input>
+    <filter>&quot;LANGU&quot;='E'</filter>
+  </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_LINK" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="GUID_HI">
@@ -235,6 +264,10 @@
       <viewAttribute id="DIRECTION">
         <descriptions defaultDescription="DIRECTION"/>
       </viewAttribute>
+    
+      <viewAttribute id="POSTING_DATE">
+        <descriptions defaultDescription="POSTING_DATE"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -248,6 +281,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
     </input>
     <input node="CRMD_LINK">
       <mapping xsi:type="Calculation:AttributeMapping" target="GUID_SET" source="GUID_SET"/>
@@ -302,6 +337,9 @@
       <viewAttribute id="DIRECTION">
         <descriptions defaultDescription="DIRECTION"/>
       </viewAttribute>
+      <viewAttribute id="POSTING_DATE">
+        <descriptions defaultDescription="POSTING_DATE"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$GUID_SET$GUID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -314,6 +352,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GUID_SET$GUID" source="GUID_SET"/>
     </input>
     <input node="CRMDPARTNER">
@@ -355,6 +394,9 @@
       <viewAttribute id="DIRECTION">
         <descriptions defaultDescription="DIRECTION"/>
       </viewAttribute>
+      <viewAttribute id="POSTING_DATE">
+        <descriptions defaultDescription="POSTING_DATE"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$PARTNER_NO$PARTNER_GUID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -364,6 +406,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_NO$PARTNER_GUID" source="PARTNER_NO"/>
     </input>
     <input node="BUT000">
@@ -371,31 +414,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_NO$PARTNER_GUID" source="PARTNER_GUID"/>
     </input>
     <joinAttribute name="JOIN$PARTNER_NO$PARTNER_GUID"/>
-  </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_ACTIVITY_TEXT" filterExpressionLanguage="COLUMN_ENGINE">
-    <viewAttributes>
-      <viewAttribute id="CLIENT">
-        <descriptions defaultDescription="CLIENT"/>
-      </viewAttribute>
-      <viewAttribute id="LANGU">
-        <descriptions defaultDescription="LANGU"/>
-      </viewAttribute>
-      <viewAttribute id="CATEGORY">
-        <descriptions defaultDescription="CATEGORY"/>
-      </viewAttribute>
-      <viewAttribute id="DESCRIPTION">
-        <descriptions defaultDescription="DESCRIPTION"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT">
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
-    </input>
-    <filter>&quot;LANGU&quot;='E'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Distinct_records">
     <viewAttributes>
@@ -417,6 +435,10 @@
       <viewAttribute id="COUNT_OBJECT_ID" aggregationType="count">
         <descriptions defaultDescription="OBJECT_ID"/>
       </viewAttribute>
+    
+      <viewAttribute id="POSTING_DATE">
+        <descriptions defaultDescription="POSTING_DATE"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -427,6 +449,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="COUNT_OBJECT_ID" source="OBJECT_ID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -452,6 +476,11 @@
       <descriptions defaultDescription="DIRECTION"/>
       <keyMapping columnObjectName="Distinct_records" columnName="DIRECTION"/>
     </attribute>
+  
+    <attribute id="POSTING_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTING_DATE"/>
+      <keyMapping columnObjectName="Distinct_records" columnName="POSTING_DATE"/>
+    </attribute>
   </attributes>
   <calculatedAttributes>
     <calculatedAttribute id="CUST_ID" order="1" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
@@ -468,21 +497,21 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="629.8123900286679" y="112"/>
+      <upperLeftCorner x="629" y="112"/>
     
       <rectangleSize width="140"/>
     </shape>
   
     <shape expanded="true" modelObjectName="CRMD_ORDERADM_H" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="351.911745449237" y="901.9999940395355"/>
+      <upperLeftCorner x="351" y="901"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape expanded="true" modelObjectName="CRMD_ACTIVITY_H" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999994" y="1041.9999928474426"/>
+      <upperLeftCorner x="91" y="1041"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape expanded="true" modelObjectName="ORDERADM_ACTIVITYH" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="138.66666666666657" y="761.9999952316284"/>
+      <upperLeftCorner x="138" y="761"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape modelObjectName="CRMD_ORDERADM_H" modelObjectNameSpace="ORDERADM_ACTIVITYH" modelObjectType="JoinNodeInput">
@@ -494,7 +523,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="CRM_ACT_DESC" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="115.3333333333332" y="901.9999940395355"/>
+      <upperLeftCorner x="115" y="901"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape modelObjectName="CRMD_ACTIVITY_H" modelObjectNameSpace="CRM_ACT_DESC" modelObjectType="JoinNodeInput">
@@ -506,12 +535,17 @@
       <rectangleSize width="250"/>
     </shape>
   
+    <shape expanded="true" modelObjectName="CRMD_ACTIVITY_TEXT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="281" y="1041"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  
     <shape expanded="true" modelObjectName="CRMD_LINK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="436.54894667511985" y="761.9999952316284"/>
+      <upperLeftCorner x="436" y="761"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape expanded="true" modelObjectName="ORDERADMH_LINK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="161.99999999999994" y="621.9999964237213"/>
+      <upperLeftCorner x="161" y="621"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape modelObjectName="ORDERADM_ACTIVITYH" modelObjectNameSpace="ORDERADMH_LINK" modelObjectType="JoinNodeInput">
@@ -523,12 +557,12 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="CRMDPARTNER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="535.3878171549017" y="621.9999964237213"/>
+      <upperLeftCorner x="535" y="621"/>
       <rectangleSize height="30" width="140"/>
     </shape>
   
     <shape expanded="true" modelObjectName="PARTNER_ORDERADMH" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="185.33333333333331" y="481.9999976158142"/>
+      <upperLeftCorner x="185" y="481"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape modelObjectName="ORDERADMH_LINK" modelObjectNameSpace="PARTNER_ORDERADMH" modelObjectType="JoinNodeInput">
@@ -540,11 +574,11 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="BUT000" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="647.670881098663" y="481.9999976158142"/>
+      <upperLeftCorner x="647" y="481"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape expanded="true" modelObjectName="ORDERADM_BUT000" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="609.9126843922388" y="341.9999988079071"/>
+      <upperLeftCorner x="609" y="341"/>
       <rectangleSize height="30" width="140"/>
     </shape>
     <shape modelObjectName="PARTNER_ORDERADMH" modelObjectNameSpace="ORDERADM_BUT000" modelObjectType="JoinNodeInput">
@@ -555,13 +589,8 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-  
-    <shape expanded="true" modelObjectName="CRMD_ACTIVITY_TEXT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="281.9999999999997" y="1041.9999928474426"/>
-      <rectangleSize height="30" width="140"/>
-    </shape>
     <shape expanded="true" modelObjectName="Distinct_records" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="609.9126843922388" y="236.9999988079071"/>
+      <upperLeftCorner x="609" y="236"/>
       <rectangleSize height="30" width="140"/>
     </shape>
   </shapes>
