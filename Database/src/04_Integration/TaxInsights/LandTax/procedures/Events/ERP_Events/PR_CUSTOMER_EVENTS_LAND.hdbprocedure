@@ -48,7 +48,7 @@ BEGIN
 	from :V_VIBPOBJREL a
 	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = a.PARTNER
 	LEFT JOIN "osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.VILMPL.active_data" b on a.INTRENO=b.INTRENO
-	WHERE (DAYDIFF_LAG IS NULL OR DAYDIFF_LAG> 0);
+	WHERE (DAYDIFF_LAG IS NULL OR DAYDIFF_LAG> 1);
 	
 	/*Lost Land*/
 	/*=========================================================================================================================
@@ -73,6 +73,6 @@ BEGIN
 	NULL  as END_TS
 	from :V_VIBPOBJREL  a 
 	INNER JOIN "osr.edw.integration.ti.ltax.views::CV_LT_TAXPAYERS" c on c.EXT_ID = a.PARTNER
-	WHERE ( DAYDIFF_LEAD>0 OR DAYDIFF_LEAD IS NULL ) and (a.VALIDTO != '99991231');
+	WHERE ( DAYDIFF_LEAD>1 OR DAYDIFF_LEAD IS NULL ) and (a.VALIDTO != '99991231');
 
 END
