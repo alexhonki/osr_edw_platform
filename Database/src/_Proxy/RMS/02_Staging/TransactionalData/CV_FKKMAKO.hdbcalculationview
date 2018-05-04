@@ -1,355 +1,355 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_FKKMAKO" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" id="osr.edw.staging.td.rms.proxy::CV_FKKMAKO" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" enforceSqlExecution="false" outputViewType="Projection" cacheInvalidationPeriod="NONE">
 <descriptions defaultDescription="CV_FKKMAKO"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.FKKMAKO.active_data">
-    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.FKKMAKO.active_data</resourceUri>
+  <DataSource id="osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO">
+    <resourceUri>osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.FKKMAKO.active_data">
+<logicalModel id="osr.edw.source.td.rms.synonym::CDS_PSCD.TAB.FKKMAKO">
   <attributes>
-    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MANDT" order="1" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MANDT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MANDT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MANDT"/>
     </attribute>
-    <attribute id="LAUFD" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="LAUFD" order="2" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="LAUFD"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="LAUFD"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="LAUFD"/>
     </attribute>
-    <attribute id="LAUFI" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="LAUFI" order="3" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="LAUFI"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="LAUFI"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="LAUFI"/>
     </attribute>
-    <attribute id="GPART" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GPART" order="4" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="GPART"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="GPART"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="GPART"/>
     </attribute>
-    <attribute id="VKONT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VKONT" order="5" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="VKONT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="VKONT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="VKONT"/>
     </attribute>
-    <attribute id="MAZAE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MAZAE" order="6" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MAZAE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MAZAE"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MAZAE"/>
     </attribute>
-    <attribute id="AUSDT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="AUSDT" order="7" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="AUSDT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="AUSDT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="AUSDT"/>
     </attribute>
-    <attribute id="MDRKD" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MDRKD" order="8" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MDRKD"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MDRKD"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MDRKD"/>
     </attribute>
-    <attribute id="MAHNV" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MAHNV" order="9" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MAHNV"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MAHNV"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MAHNV"/>
     </attribute>
-    <attribute id="MGRUP" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MGRUP" order="10" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MGRUP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MGRUP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MGRUP"/>
     </attribute>
-    <attribute id="VKONTGRP" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VKONTGRP" order="11" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="VKONTGRP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="VKONTGRP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="VKONTGRP"/>
     </attribute>
-    <attribute id="VTREFGRP" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VTREFGRP" order="12" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="VTREFGRP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="VTREFGRP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="VTREFGRP"/>
     </attribute>
-    <attribute id="ITEMGRP" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ITEMGRP" order="13" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ITEMGRP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="ITEMGRP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="ITEMGRP"/>
     </attribute>
-    <attribute id="ITEMGRP_LAST" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ITEMGRP_LAST" order="14" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ITEMGRP_LAST"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="ITEMGRP_LAST"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="ITEMGRP_LAST"/>
     </attribute>
-    <attribute id="GRPFIELD" order="15" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GRPFIELD" order="15" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="GRPFIELD"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="GRPFIELD"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="GRPFIELD"/>
     </attribute>
-    <attribute id="GRPFIELD_LAST" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GRPFIELD_LAST" order="16" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="GRPFIELD_LAST"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="GRPFIELD_LAST"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="GRPFIELD_LAST"/>
     </attribute>
-    <attribute id="STRAT" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STRAT" order="17" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STRAT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STRAT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STRAT"/>
     </attribute>
-    <attribute id="STEP" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STEP" order="18" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STEP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STEP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STEP"/>
     </attribute>
-    <attribute id="STEP_LAST" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STEP_LAST" order="19" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STEP_LAST"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STEP_LAST"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STEP_LAST"/>
     </attribute>
-    <attribute id="STEP_REPLACED" order="20" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STEP_REPLACED" order="20" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STEP_REPLACED"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STEP_REPLACED"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STEP_REPLACED"/>
     </attribute>
-    <attribute id="STRAT_CHAMP" order="21" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STRAT_CHAMP" order="21" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STRAT_CHAMP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STRAT_CHAMP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STRAT_CHAMP"/>
     </attribute>
-    <attribute id="TESTS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TESTS" order="22" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="TESTS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="TESTS"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="TESTS"/>
     </attribute>
-    <attribute id="LIMITED" order="23" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="LIMITED" order="23" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="LIMITED"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="LIMITED"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="LIMITED"/>
     </attribute>
-    <attribute id="RELEA" order="24" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RELEA" order="24" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RELEA"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RELEA"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RELEA"/>
     </attribute>
-    <attribute id="RELDATE" order="25" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RELDATE" order="25" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RELDATE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RELDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RELDATE"/>
     </attribute>
-    <attribute id="RELGROUP" order="26" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RELGROUP" order="26" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RELGROUP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RELGROUP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RELGROUP"/>
     </attribute>
-    <attribute id="NEXDT" order="27" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NEXDT" order="27" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="NEXDT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="NEXDT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="NEXDT"/>
     </attribute>
-    <attribute id="OPBUK" order="28" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="OPBUK" order="28" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="OPBUK"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="OPBUK"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="OPBUK"/>
     </attribute>
-    <attribute id="STDBK" order="29" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STDBK" order="29" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STDBK"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STDBK"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STDBK"/>
     </attribute>
-    <attribute id="GSBER" order="30" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GSBER" order="30" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="GSBER"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="GSBER"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="GSBER"/>
     </attribute>
-    <attribute id="SPART" order="31" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SPART" order="31" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="SPART"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="SPART"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="SPART"/>
     </attribute>
-    <attribute id="VTREF" order="32" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VTREF" order="32" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="VTREF"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="VTREF"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="VTREF"/>
     </attribute>
-    <attribute id="SUBAP" order="33" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUBAP" order="33" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="SUBAP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="SUBAP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="SUBAP"/>
     </attribute>
-    <attribute id="VKNT1" order="34" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VKNT1" order="34" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="VKNT1"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="VKNT1"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="VKNT1"/>
     </attribute>
-    <attribute id="ABWMA" order="35" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABWMA" order="35" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ABWMA"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="ABWMA"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="ABWMA"/>
     </attribute>
-    <attribute id="MAHNS" order="36" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MAHNS" order="36" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MAHNS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MAHNS"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MAHNS"/>
     </attribute>
-    <attribute id="MSTYP" order="37" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MSTYP" order="37" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MSTYP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MSTYP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MSTYP"/>
     </attribute>
-    <attribute id="WAERS" order="38" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="38" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="WAERS"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="WAERS"/>
     </attribute>
-    <attribute id="MSALM" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MSALM" order="39" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MSALM"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MSALM"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MSALM"/>
     </attribute>
-    <attribute id="MSALH" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MSALH" order="40" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MSALH"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MSALH"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MSALH"/>
     </attribute>
-    <attribute id="RSALM" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RSALM" order="41" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RSALM"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RSALM"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RSALM"/>
     </attribute>
-    <attribute id="CHGID" order="42" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CHGID" order="42" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="CHGID"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="CHGID"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="CHGID"/>
     </attribute>
-    <attribute id="MGE1M" order="43" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MGE1M" order="43" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MGE1M"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MGE1M"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MGE1M"/>
     </attribute>
-    <attribute id="MG1BL" order="44" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MG1BL" order="44" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MG1BL"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MG1BL"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MG1BL"/>
     </attribute>
-    <attribute id="MG1TY" order="45" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MG1TY" order="45" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MG1TY"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MG1TY"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MG1TY"/>
     </attribute>
-    <attribute id="POST1" order="46" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POST1" order="46" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="POST1"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="POST1"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="POST1"/>
     </attribute>
-    <attribute id="MGE2M" order="47" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MGE2M" order="47" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MGE2M"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MGE2M"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MGE2M"/>
     </attribute>
-    <attribute id="MG2BL" order="48" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MG2BL" order="48" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MG2BL"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MG2BL"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MG2BL"/>
     </attribute>
-    <attribute id="MG2TY" order="49" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MG2TY" order="49" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MG2TY"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MG2TY"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MG2TY"/>
     </attribute>
-    <attribute id="POST2" order="50" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POST2" order="50" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="POST2"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="POST2"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="POST2"/>
     </attribute>
-    <attribute id="MGE3M" order="51" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MGE3M" order="51" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MGE3M"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MGE3M"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MGE3M"/>
     </attribute>
-    <attribute id="MG3BL" order="52" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MG3BL" order="52" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MG3BL"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MG3BL"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MG3BL"/>
     </attribute>
-    <attribute id="MG3TY" order="53" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MG3TY" order="53" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MG3TY"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MG3TY"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MG3TY"/>
     </attribute>
-    <attribute id="POST3" order="54" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POST3" order="54" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="POST3"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="POST3"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="POST3"/>
     </attribute>
-    <attribute id="MINTM" order="55" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MINTM" order="55" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MINTM"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MINTM"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MINTM"/>
     </attribute>
-    <attribute id="MIBEL" order="56" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MIBEL" order="56" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="MIBEL"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="MIBEL"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="MIBEL"/>
     </attribute>
-    <attribute id="BONIT" order="57" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BONIT" order="57" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="BONIT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="BONIT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="BONIT"/>
     </attribute>
-    <attribute id="XMSTO" order="58" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="XMSTO" order="58" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="XMSTO"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="XMSTO"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="XMSTO"/>
     </attribute>
-    <attribute id="NRZAS" order="59" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NRZAS" order="59" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="NRZAS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="NRZAS"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="NRZAS"/>
     </attribute>
-    <attribute id="XINFO" order="60" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="XINFO" order="60" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="XINFO"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="XINFO"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="XINFO"/>
     </attribute>
-    <attribute id="FRDAT" order="61" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FRDAT" order="61" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="FRDAT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="FRDAT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="FRDAT"/>
     </attribute>
-    <attribute id="COKEY" order="62" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="COKEY" order="62" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="COKEY"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="COKEY"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="COKEY"/>
     </attribute>
-    <attribute id="XCOLL" order="63" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="XCOLL" order="63" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="XCOLL"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="XCOLL"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="XCOLL"/>
     </attribute>
-    <attribute id="RFZAS" order="64" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RFZAS" order="64" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RFZAS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RFZAS"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RFZAS"/>
     </attribute>
-    <attribute id="TODAT" order="65" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TODAT" order="65" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="TODAT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="TODAT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="TODAT"/>
     </attribute>
-    <attribute id="STAKZ" order="66" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STAKZ" order="66" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STAKZ"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STAKZ"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STAKZ"/>
     </attribute>
-    <attribute id="CHECKBOX" order="67" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CHECKBOX" order="67" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="CHECKBOX"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="CHECKBOX"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="CHECKBOX"/>
     </attribute>
-    <attribute id="SUCPC" order="68" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUCPC" order="68" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="SUCPC"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="SUCPC"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="SUCPC"/>
     </attribute>
-    <attribute id="ABWTP" order="69" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABWTP" order="69" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ABWTP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="ABWTP"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="ABWTP"/>
     </attribute>
-    <attribute id="ABWBL" order="70" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABWBL" order="70" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="ABWBL"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="ABWBL"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="ABWBL"/>
     </attribute>
-    <attribute id="STUDT" order="71" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STUDT" order="71" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="STUDT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="STUDT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="STUDT"/>
     </attribute>
-    <attribute id="SUCDT" order="72" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SUCDT" order="72" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="SUCDT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="SUCDT"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="SUCDT"/>
     </attribute>
-    <attribute id="SCDST" order="73" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SCDST" order="73" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="SCDST"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="SCDST"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="SCDST"/>
     </attribute>
-    <attribute id="SCORE" order="74" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SCORE" order="74" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="SCORE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="SCORE"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="SCORE"/>
     </attribute>
-    <attribute id="RANK" order="75" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RANK" order="75" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RANK"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RANK"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RANK"/>
     </attribute>
-    <attribute id="DEBT_SET" order="76" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DEBT_SET" order="76" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="DEBT_SET"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="DEBT_SET"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="DEBT_SET"/>
     </attribute>
-    <attribute id="KATALOGART" order="77" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KATALOGART" order="77" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="KATALOGART"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="KATALOGART"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="KATALOGART"/>
     </attribute>
-    <attribute id="CODEGRUPPE" order="78" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CODEGRUPPE" order="78" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="CODEGRUPPE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="CODEGRUPPE"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="CODEGRUPPE"/>
     </attribute>
-    <attribute id="CODE" order="79" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CODE" order="79" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="CODE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="CODE"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="CODE"/>
     </attribute>
-    <attribute id="RC_USER" order="80" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RC_USER" order="80" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="RC_USER"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="RC_USER"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="RC_USER"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="81" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TYPE" order="81" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="82" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="82" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="Z_CHANGE_TIME"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="83" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_SOURCE_SYS" order="83" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="84" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="84" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="85" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_SEQ_ID" order="85" attributeHierarchyActive="false" displayAttribute="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.FKKMAKO.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_PSCD.TAB.FKKMAKO" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
