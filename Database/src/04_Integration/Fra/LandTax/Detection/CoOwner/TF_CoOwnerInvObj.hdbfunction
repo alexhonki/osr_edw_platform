@@ -3,13 +3,19 @@ FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_CoOwnerInvObj"
        (
         CO_OWNER_ID		NVARCHAR(32),
         BPARTNER		NVARCHAR(10),
-        PLNO			NVARCHAR(20)
+        PLNO			NVARCHAR(20),
+        ACCESS_GROUP    NVARCHAR(20)
     	)
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
 	RETURN 
-	SELECT DISTINCT "CO_OWNER_ID", '' AS "BPARTNER", '' AS "PLNO"
+	SELECT 
+	DISTINCT 
+	"CO_OWNER_ID", 
+	'' AS "BPARTNER", 
+	'' AS "PLNO",
+	'LTX_COOWNER' AS "ACCESS_GROUP"
 	FROM 
 	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner"
 	;
