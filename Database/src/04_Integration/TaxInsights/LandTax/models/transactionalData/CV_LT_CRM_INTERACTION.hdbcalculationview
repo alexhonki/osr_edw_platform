@@ -456,40 +456,35 @@
 </calculationViews>
 <logicalModel id="Distinct_records">
   <attributes>
-    <attribute id="OBJECT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="OBJECT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBJECT_ID"/>
       <keyMapping columnObjectName="Distinct_records" columnName="OBJECT_ID"/>
     </attribute>
-    <attribute id="DESCRIPTION" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DESCRIPTION" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DESCRIPTION"/>
       <keyMapping columnObjectName="Distinct_records" columnName="DESCRIPTION"/>
     </attribute>
-    <attribute id="CATEGORY_DESC" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CATEGORY_DESC" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CATEGORY_DESC"/>
       <keyMapping columnObjectName="Distinct_records" columnName="CATEGORY_DESC"/>
     </attribute>
-    <attribute id="PARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PARTNER" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTNER"/>
       <keyMapping columnObjectName="Distinct_records" columnName="PARTNER"/>
     </attribute>
-    <attribute id="DIRECTION" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DIRECTION" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DIRECTION"/>
       <keyMapping columnObjectName="Distinct_records" columnName="DIRECTION"/>
     </attribute>
   
-    <attribute id="POSTING_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POSTING_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POSTING_DATE"/>
+  
       <keyMapping columnObjectName="Distinct_records" columnName="POSTING_DATE"/>
+  
     </attribute>
   </attributes>
-  <calculatedAttributes>
-    <calculatedAttribute id="CUST_ID" order="1" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CUST_ID"/>
-      <keyCalculation datatype="BIGINT" expressionLanguage="SQL">
-        <formula>TO_BIGINT(&quot;PARTNER&quot;)</formula>
-      </keyCalculation>
-      </calculatedAttribute>
-  </calculatedAttributes>
+  <calculatedAttributes/>
   <baseMeasures/>
   <calculatedMeasures/>
   <restrictedMeasures/>
