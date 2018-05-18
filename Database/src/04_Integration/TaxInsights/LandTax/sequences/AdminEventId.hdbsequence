@@ -1,2 +1,0 @@
-SEQUENCE "osr.edw.integration.ti.ltax.sequences::AdminEventId" START WITH 1 MAXVALUE 1999999999
-RESET BY SELECT IFNULL(MAX("EVENT_ID.ID"), 1) + 1 FROM "osr.edw.integration.ti.ltax::app.CustomerEvents"
