@@ -7,17 +7,17 @@
   <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data">
     <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH">
-    <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH</resourceUri>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDACTIVITYH.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDACTIVITYH.active_data</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT">
-    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT</resourceUri>
+  <DataSource id="osr.edw.staging.md.crm.synonym::CDS_CRM.DSO.CRMCACTCATT.active_data">
+    <resourceUri>osr.edw.staging.md.crm.synonym::CDS_CRM.DSO.CRMCACTCATT.active_data</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK">
-    <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK</resourceUri>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDPARTNER">
-    <resourceUri>osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDPARTNER</resourceUri>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDPARTNER.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDPARTNER.active_data</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.staging.rms.synonym::CV_BUT000_Current">
     <resourceUri>osr.edw.staging.rms.synonym::CV_BUT000_Current</resourceUri>
@@ -50,6 +50,10 @@
       <viewAttribute id="PROCESS_TYPE">
         <descriptions defaultDescription="PROCESS_TYPE"/>
       </viewAttribute>
+    
+      <viewAttribute id="Z_RUN_SEQ_ID" aggregationType="sum">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -62,6 +66,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CREATED_AT" source="CREATED_AT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CHANGED_AT" source="CHANGED_AT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
     </input></calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_ACTIVITY_H">
     <viewAttributes>
@@ -84,7 +90,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDACTIVITYH">
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDACTIVITYH.active_data">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
@@ -122,6 +128,9 @@
       <viewAttribute id="POSTING_DATE">
         <descriptions defaultDescription="POSTING_DATE"/>
       </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID" aggregationType="sum">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$CLIENT$CLIENT"/>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -136,6 +145,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DESCRIPTION" source="DESCRIPTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PROCESS_TYPE" source="PROCESS_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$CLIENT" source="CLIENT"/>
     </input>
     <input node="CRM_ACT_DESC">
@@ -205,7 +215,7 @@
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMCACTCATT">
+    <input node="osr.edw.staging.md.crm.synonym::CDS_CRM.DSO.CRMCACTCATT.active_data">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY" source="CATEGORY"/>
@@ -227,7 +237,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDLINK">
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data">
       <mapping xsi:type="Calculation:AttributeMapping" target="GUID_HI" source="GUID_HI"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GUID_SET" source="GUID_SET"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJTYPE_SET" source="OBJTYPE_SET"/>
@@ -268,6 +278,10 @@
       <viewAttribute id="POSTING_DATE">
         <descriptions defaultDescription="POSTING_DATE"/>
       </viewAttribute>
+    
+      <viewAttribute id="Z_RUN_SEQ_ID" aggregationType="sum">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -283,6 +297,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
     </input>
     <input node="CRMD_LINK">
       <mapping xsi:type="Calculation:AttributeMapping" target="GUID_SET" source="GUID_SET"/>
@@ -304,7 +320,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.td.crm.synonym::CDS_CRM.TAB.CRMDPARTNER">
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDPARTNER.active_data">
       <mapping xsi:type="Calculation:AttributeMapping" target="GUID" source="GUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_FCT" source="PARTNER_FCT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_NO" source="PARTNER_NO"/>
@@ -340,6 +356,9 @@
       <viewAttribute id="POSTING_DATE">
         <descriptions defaultDescription="POSTING_DATE"/>
       </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID" aggregationType="sum">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$GUID_SET$GUID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -353,6 +372,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECTIVE" source="OBJECTIVE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$GUID_SET$GUID" source="GUID_SET"/>
     </input>
     <input node="CRMDPARTNER">
@@ -397,6 +417,9 @@
       <viewAttribute id="POSTING_DATE">
         <descriptions defaultDescription="POSTING_DATE"/>
       </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID" aggregationType="sum">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$PARTNER_NO$PARTNER_GUID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -407,6 +430,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CATEGORY_DESC" source="CATEGORY_DESC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIRECTION" source="DIRECTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PARTNER_NO$PARTNER_GUID" source="PARTNER_NO"/>
     </input>
     <input node="BUT000">
@@ -439,6 +463,10 @@
       <viewAttribute id="POSTING_DATE">
         <descriptions defaultDescription="POSTING_DATE"/>
       </viewAttribute>
+    
+      <viewAttribute id="Z_RUN_SEQ_ID" aggregationType="sum">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -451,6 +479,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="COUNT_OBJECT_ID" source="OBJECT_ID"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="POSTING_DATE" source="POSTING_DATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -481,6 +511,13 @@
       <descriptions defaultDescription="POSTING_DATE"/>
   
       <keyMapping columnObjectName="Distinct_records" columnName="POSTING_DATE"/>
+  
+    </attribute>
+  
+    <attribute id="Z_RUN_SEQ_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+  
+      <keyMapping columnObjectName="Distinct_records" columnName="Z_RUN_SEQ_ID"/>
   
     </attribute>
   </attributes>
