@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_BUT021FS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_BUT021FS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_BUT021FS"/>
 <localVariables/>
 <variableMappings/>
@@ -11,23 +11,23 @@
 <calculationViews/>
 <logicalModel id="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data">
   <attributes>
-    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="CLIENT"/>
       <keyMapping columnObjectName="CDS_BP.DSO.BUT021FS.active_data" columnName="CLIENT"/>
     </attribute>
-    <attribute id="PARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="PARTNER"/>
       <keyMapping columnObjectName="CDS_BP.DSO.BUT021FS.active_data" columnName="PARTNER"/>
     </attribute>
-    <attribute id="VALID_TO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VALID_TO" order="3" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="VALID_TO"/>
       <keyMapping columnObjectName="CDS_BP.DSO.BUT021FS.active_data" columnName="VALID_TO"/>
     </attribute>
-    <attribute id="ADR_KIND" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ADR_KIND" order="4" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="ADR_KIND"/>
       <keyMapping columnObjectName="CDS_BP.DSO.BUT021FS.active_data" columnName="ADR_KIND"/>
     </attribute>
-    <attribute id="ADDRNUMBER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ADDRNUMBER" order="5" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="ADDRNUMBER"/>
       <keyMapping columnObjectName="CDS_BP.DSO.BUT021FS.active_data" columnName="ADDRNUMBER"/>
     </attribute>

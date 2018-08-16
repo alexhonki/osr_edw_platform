@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.propagation.tmr.proxy::CV_CUSTCONTACT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" analyticViewCompatibilityMode="false">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.propagation.tmr.proxy::CV_CUSTCONTACT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" analyticViewCompatibilityMode="false">
 <descriptions defaultDescription="CV_CUSTCONTACT"/>
 <localVariables/>
 <variableMappings/>
@@ -75,7 +75,7 @@
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
       <keyMapping columnObjectName="CDS_CUSTOMER.CUSTCONTACT.active_data" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_SEQ_ID" order="17" displayAttribute="false" attributeHierarchyActive="false" key="true">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
       <keyMapping columnObjectName="CDS_CUSTOMER.CUSTCONTACT.active_data" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
