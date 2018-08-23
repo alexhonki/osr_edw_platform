@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.hana.platform::CV_ACTIVE_STATEMENTS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV ACTIVE STATEMENTS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.hana.platform.synonym::SYS.M_ACTIVE_STATEMENTS">
+    <resourceUri>osr.hana.platform.synonym::SYS.M_ACTIVE_STATEMENTS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.hana.platform.synonym::SYS.M_ACTIVE_STATEMENTS">
+  <attributes>
+    <attribute id="HOST" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HOST"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="HOST"/>
+    </attribute>
+    <attribute id="PORT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PORT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="PORT"/>
+    </attribute>
+    <attribute id="CONNECTION_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONNECTION_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="CONNECTION_ID"/>
+    </attribute>
+    <attribute id="STATEMENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="STATEMENT_ID"/>
+    </attribute>
+    <attribute id="START_MVCC_TIMESTAMP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="START_MVCC_TIMESTAMP"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="START_MVCC_TIMESTAMP"/>
+    </attribute>
+    <attribute id="COMPILED_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPILED_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="COMPILED_TIME"/>
+    </attribute>
+    <attribute id="STATEMENT_STATUS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_STATUS"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="STATEMENT_STATUS"/>
+    </attribute>
+    <attribute id="STATEMENT_STRING" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_STRING"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="STATEMENT_STRING"/>
+    </attribute>
+    <attribute id="ALLOCATED_MEMORY_SIZE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALLOCATED_MEMORY_SIZE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="ALLOCATED_MEMORY_SIZE"/>
+    </attribute>
+    <attribute id="USED_MEMORY_SIZE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USED_MEMORY_SIZE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="USED_MEMORY_SIZE"/>
+    </attribute>
+    <attribute id="PLAN_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLAN_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="PLAN_ID"/>
+    </attribute>
+    <attribute id="LAST_EXECUTED_TIME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAST_EXECUTED_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="LAST_EXECUTED_TIME"/>
+    </attribute>
+    <attribute id="LAST_ACTION_TIME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAST_ACTION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="LAST_ACTION_TIME"/>
+    </attribute>
+    <attribute id="RECOMPILE_COUNT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECOMPILE_COUNT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="RECOMPILE_COUNT"/>
+    </attribute>
+    <attribute id="EXECUTION_COUNT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXECUTION_COUNT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="EXECUTION_COUNT"/>
+    </attribute>
+    <attribute id="AVG_EXECUTION_TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AVG_EXECUTION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="AVG_EXECUTION_TIME"/>
+    </attribute>
+    <attribute id="MAX_EXECUTION_TIME" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_EXECUTION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MAX_EXECUTION_TIME"/>
+    </attribute>
+    <attribute id="MIN_EXECUTION_TIME" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_EXECUTION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MIN_EXECUTION_TIME"/>
+    </attribute>
+    <attribute id="TOTAL_EXECUTION_TIME" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_EXECUTION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_EXECUTION_TIME"/>
+    </attribute>
+    <attribute id="AVG_CURSOR_DURATION" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AVG_CURSOR_DURATION"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="AVG_CURSOR_DURATION"/>
+    </attribute>
+    <attribute id="MAX_CURSOR_DURATION" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_CURSOR_DURATION"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MAX_CURSOR_DURATION"/>
+    </attribute>
+    <attribute id="MIN_CURSOR_DURATION" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_CURSOR_DURATION"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MIN_CURSOR_DURATION"/>
+    </attribute>
+    <attribute id="TOTAL_CURSOR_DURATION" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_CURSOR_DURATION"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_CURSOR_DURATION"/>
+    </attribute>
+    <attribute id="AVG_EXECUTION_MEMORY_SIZE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AVG_EXECUTION_MEMORY_SIZE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="AVG_EXECUTION_MEMORY_SIZE"/>
+    </attribute>
+    <attribute id="MAX_EXECUTION_MEMORY_SIZE" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_EXECUTION_MEMORY_SIZE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MAX_EXECUTION_MEMORY_SIZE"/>
+    </attribute>
+    <attribute id="MIN_EXECUTION_MEMORY_SIZE" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_EXECUTION_MEMORY_SIZE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MIN_EXECUTION_MEMORY_SIZE"/>
+    </attribute>
+    <attribute id="TOTAL_EXECUTION_MEMORY_SIZE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_EXECUTION_MEMORY_SIZE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_EXECUTION_MEMORY_SIZE"/>
+    </attribute>
+    <attribute id="AVG_LOCKWAIT_TIME" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AVG_LOCKWAIT_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="AVG_LOCKWAIT_TIME"/>
+    </attribute>
+    <attribute id="MAX_LOCKWAIT_TIME" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_LOCKWAIT_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MAX_LOCKWAIT_TIME"/>
+    </attribute>
+    <attribute id="MIN_LOCKWAIT_TIME" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_LOCKWAIT_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MIN_LOCKWAIT_TIME"/>
+    </attribute>
+    <attribute id="TOTAL_LOCKWAIT_COUNT" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_LOCKWAIT_COUNT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_LOCKWAIT_COUNT"/>
+    </attribute>
+    <attribute id="TOTAL_LOCKWAIT_TIME" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_LOCKWAIT_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_LOCKWAIT_TIME"/>
+    </attribute>
+    <attribute id="AVG_PREPARATION_TIME" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AVG_PREPARATION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="AVG_PREPARATION_TIME"/>
+    </attribute>
+    <attribute id="MAX_PREPARATION_TIME" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAX_PREPARATION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MAX_PREPARATION_TIME"/>
+    </attribute>
+    <attribute id="MIN_PREPARATION_TIME" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MIN_PREPARATION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="MIN_PREPARATION_TIME"/>
+    </attribute>
+    <attribute id="TOTAL_PREPARATION_TIME" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_PREPARATION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_PREPARATION_TIME"/>
+    </attribute>
+    <attribute id="TOTAL_PREPARATION_COUNT" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_PREPARATION_COUNT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="TOTAL_PREPARATION_COUNT"/>
+    </attribute>
+    <attribute id="HAS_HOLDABLE_CURSOR" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HAS_HOLDABLE_CURSOR"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="HAS_HOLDABLE_CURSOR"/>
+    </attribute>
+    <attribute id="CURSOR_TYPE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURSOR_TYPE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="CURSOR_TYPE"/>
+    </attribute>
+    <attribute id="PARENT_STATEMENT_ID" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_STATEMENT_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="PARENT_STATEMENT_ID"/>
+    </attribute>
+    <attribute id="APPLICATION_SOURCE" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLICATION_SOURCE"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="APPLICATION_SOURCE"/>
+    </attribute>
+    <attribute id="WORKLOAD_CLASS_NAME" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WORKLOAD_CLASS_NAME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_STATEMENTS" columnName="WORKLOAD_CLASS_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

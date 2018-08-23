@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.hana.platform::CV_ACTIVE_PROCEDURES" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV ACTIVE PROCEDURES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.hana.platform.synonym::SYS.M_ACTIVE_PROCEDURES">
+    <resourceUri>osr.hana.platform.synonym::SYS.M_ACTIVE_PROCEDURES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.hana.platform.synonym::SYS.M_ACTIVE_PROCEDURES">
+  <attributes>
+    <attribute id="PROCEDURE_HOST" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCEDURE_HOST"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="PROCEDURE_HOST"/>
+    </attribute>
+    <attribute id="PROCEDURE_PORT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCEDURE_PORT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="PROCEDURE_PORT"/>
+    </attribute>
+    <attribute id="PROCEDURE_SCHEMA_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCEDURE_SCHEMA_NAME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="PROCEDURE_SCHEMA_NAME"/>
+    </attribute>
+    <attribute id="PROCEDURE_NAME" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCEDURE_NAME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="PROCEDURE_NAME"/>
+    </attribute>
+    <attribute id="PROCEDURE_CONNECTION_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCEDURE_CONNECTION_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="PROCEDURE_CONNECTION_ID"/>
+    </attribute>
+    <attribute id="PROCEDURE_TRANSACTION_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCEDURE_TRANSACTION_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="PROCEDURE_TRANSACTION_ID"/>
+    </attribute>
+    <attribute id="STATEMENT_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_ID"/>
+    </attribute>
+    <attribute id="STATEMENT_STRING" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_STRING"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_STRING"/>
+    </attribute>
+    <attribute id="STATEMENT_PARAMETERS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_PARAMETERS"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_PARAMETERS"/>
+    </attribute>
+    <attribute id="STATEMENT_STATUS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_STATUS"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_STATUS"/>
+    </attribute>
+    <attribute id="STATEMENT_EXECUTION_COUNT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_EXECUTION_COUNT"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_EXECUTION_COUNT"/>
+    </attribute>
+    <attribute id="STATEMENT_DEPTH" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_DEPTH"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_DEPTH"/>
+    </attribute>
+    <attribute id="STATEMENT_COMPILE_TIME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_COMPILE_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_COMPILE_TIME"/>
+    </attribute>
+    <attribute id="STATEMENT_EXECUTION_TIME" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_EXECUTION_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_EXECUTION_TIME"/>
+    </attribute>
+    <attribute id="STATEMENT_START_TIME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_START_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_START_TIME"/>
+    </attribute>
+    <attribute id="STATEMENT_END_TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_END_TIME"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_END_TIME"/>
+    </attribute>
+    <attribute id="STATEMENT_CONNECTION_ID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_CONNECTION_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_CONNECTION_ID"/>
+    </attribute>
+    <attribute id="STATEMENT_TRANSACTION_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATEMENT_TRANSACTION_ID"/>
+      <keyMapping columnObjectName="SYS.M_ACTIVE_PROCEDURES" columnName="STATEMENT_TRANSACTION_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
