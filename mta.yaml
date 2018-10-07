@@ -30,7 +30,8 @@ modules:
     - name:  OSR_EDW_PLATFORM-Backend
       properties:
        service_url: ${default-url}
-
+   build-parameters:
+      timeout: 30m
  - name: OSR_EDW_PLATFORM-Database
    type: hdb
 #   parameters:
