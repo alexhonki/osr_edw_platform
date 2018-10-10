@@ -1,0 +1,47 @@
+FUNCTION "osr.edw.source.rms.forms.proxy::TF_GET_9LIA_001_01" ( )
+       RETURNS TABLE (
+          CLIENT                 NVARCHAR(3)       ,
+--          RECORD_ID              NVARCHAR(100)     ,
+          PARENT_ID              NVARCHAR(100)     ,
+--          OBJECT_ID              NVARCHAR(32)      ,
+--          INITIAL_FLAGS          NVARCHAR(800)     ,
+		  FIELDINDEX			 INTEGER,
+          C_UTI_D_FROM           NVARCHAR(8)       ,
+          C_UTI_D_TO             NVARCHAR(8)       ,
+          C_UTI_D_BASE_TAX       DECIMAL(23, 4)  ,
+          C_UTI_D_DAYS_OVERDUE   INTEGER         ,
+          C_UTI_D_DAILY_UTI      DECIMAL(23, 4)  ,
+          C_UTI_D_YEARLY_RATE    DECIMAL(15, 2)  ,
+          C_UTI_D_UTI_AMOUNT     DECIMAL(23, 4)  ,
+          C_UTI_D_PAYMENT        DECIMAL(23, 4)  ,
+          C_UTI_D_ALLOC_FEE      DECIMAL(23, 4)  ,
+          C_UTI_D_ALLOC_BASE     DECIMAL(23, 4)  
+--          Z_RUN_SEQ_ID           INTEGER         ,
+--          Z_CHANGE_TYPE          NVARCHAR(1)       ,
+--          Z_CHANGE_TIME          TIMESTAMP    ,
+--          Z_SOURCE_SYS           NVARCHAR(5)       ,
+--          Z_RUN_ROW_NO           INTEGER         
+       )
+     LANGUAGE SQLSCRIPT
+     SQL SECURITY INVOKER AS 
+/**********************************************************************************************
+ ISR scenario 9LIA ver. 001 sub-table UTI_TABLE
+ **********************************************************************************************/ 
+BEGIN 
+return
+SELECT
+CLIENT,
+PARENT_ID,
+(ROW_NUMBER ( ) OVER ( PARTITION BY PARENT_ID) - 1) as FIELDINDEX,
+C_UTI_D_FROM,
+C_UTI_D_TO,
+C_UTI_D_BASE_TAX,
+C_UTI_D_DAYS_OVERDUE,
+C_UTI_D_DAILY_UTI,
+C_UTI_D_YEARLY_RATE,
+C_UTI_D_UTI_AMOUNT,
+C_UTI_D_PAYMENT,
+C_UTI_D_ALLOC_FEE,
+C_UTI_D_ALLOC_BASE
+FROM "osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000001.active_data";
+END;
