@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001_CURRENT" ( )
+FUNCTION "osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001_LV" ( )
 RETURNS TABLE (
 MANDT NVARCHAR(3),
 RETURN_ID NVARCHAR(32),
@@ -78,7 +78,7 @@ FORM.C_CURRENCY
 FROM
 (SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001"()) AS FORM
 INNER JOIN
-(SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001_CURRENT_VER"()) AS VER
+(SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001_LVV"()) AS VER
 ON
 FORM.MANDT = VER.CLIENT AND
 FORM.OBJECT_ID = VER.OBJECT_ID AND
