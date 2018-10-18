@@ -4,15 +4,15 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.synonym::CV_FORM_9LIA_000">
+    <resourceUri>osr.edw.staging.rms.synonym::CV_FORM_9LIA_000</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV">
     <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:UnionView" id="UnionFormScenarioVer">
+  <calculationView xsi:type="Calculation:UnionView" id="UnionFormScenarioVer" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="A_BANK_ACCOUNT_NO_NEW">
         <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
@@ -287,7 +287,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.synonym::CV_FORM_9LIA_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NO_NEW" source="A_BANK_ACCOUNT_NO_NEW"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_NON_COMP_PER" source="C_NON_COMP_PER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_RED" source="A_POSTAGE_RED"/>
@@ -470,14 +470,17 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_TS" source="FORM_STATUS_TS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_BRANCH" source="C_BANK_BRANCH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_A_UTI" source="A_A_UTI"/>
-    </input>
-  </calculationView>
+    </input></calculationView>
 </calculationViews>
 <logicalModel id="UnionFormScenarioVer">
   <attributes>
     <attribute id="A_BANK_ACCOUNT_NO_NEW" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="A_BANK_ACCOUNT_NO_NEW"/>
+    </attribute>
+    <attribute id="C_NON_COMP_PER" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_NON_COMP_PER"/>
+      <keyMapping columnObjectName="UnionFormScenarioVer" columnName="C_NON_COMP_PER"/>
     </attribute>
     <attribute id="A_UTI_REASON" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_UTI_REASON"/>
@@ -526,6 +529,10 @@
     <attribute id="RETURN_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RETURN_ID"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="C_NO_OF_UTI_DAYS" order="19" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
+      <keyMapping columnObjectName="UnionFormScenarioVer" columnName="C_NO_OF_UTI_DAYS"/>
     </attribute>
     <attribute id="RECEIPT_TS" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECEIPT_TS"/>
@@ -595,6 +602,10 @@
       <descriptions defaultDescription="A_EMAIL_ADDRESS"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="A_EMAIL_ADDRESS"/>
     </attribute>
+    <attribute id="FIELDINDEX" order="48" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <keyMapping columnObjectName="UnionFormScenarioVer" columnName="FIELDINDEX"/>
+    </attribute>
     <attribute id="C_BSB" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_BSB"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="C_BSB"/>
@@ -610,6 +621,10 @@
     <attribute id="FBTYP" order="53" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBTYP"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="C_UTI_D_DAYS_OVERDUE" order="54" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
+      <keyMapping columnObjectName="UnionFormScenarioVer" columnName="C_UTI_D_DAYS_OVERDUE"/>
     </attribute>
     <attribute id="A_MOBILE_NO" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_MOBILE_NO"/>
@@ -635,6 +650,10 @@
       <descriptions defaultDescription="FBNUM"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="FBNUM"/>
     </attribute>
+    <attribute id="A_FIRST_INSTRUMENT" order="66" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
+      <keyMapping columnObjectName="UnionFormScenarioVer" columnName="A_FIRST_INSTRUMENT"/>
+    </attribute>
     <attribute id="FORM_CLASS" order="68" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FORM_CLASS"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="FORM_CLASS"/>
@@ -654,6 +673,10 @@
     <attribute id="VERSION" order="72" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VERSION"/>
       <keyMapping columnObjectName="UnionFormScenarioVer" columnName="VERSION"/>
+    </attribute>
+    <attribute id="A_SEC_INSTRUMENT" order="76" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
+      <keyMapping columnObjectName="UnionFormScenarioVer" columnName="A_SEC_INSTRUMENT"/>
     </attribute>
     <attribute id="FORM_STATUS" order="78" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FORM_STATUS"/>
@@ -686,10 +709,6 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="C_NON_COMP_PER" order="2" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_NON_COMP_PER"/>
-      <measureMapping columnObjectName="UnionFormScenarioVer" columnName="C_NON_COMP_PER"/>
-    </measure>
     <measure id="A_POSTAGE_RED" order="3" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="A_POSTAGE_RED"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="A_POSTAGE_RED"/>
@@ -705,10 +724,6 @@
     <measure id="C_POSTAGE_FEES" order="13" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_POSTAGE_FEES"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="C_POSTAGE_FEES"/>
-    </measure>
-    <measure id="C_NO_OF_UTI_DAYS" order="19" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
-      <measureMapping columnObjectName="UnionFormScenarioVer" columnName="C_NO_OF_UTI_DAYS"/>
     </measure>
     <measure id="C_POSTAGE_TOTAL" order="20" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_POSTAGE_TOTAL"/>
@@ -754,17 +769,9 @@
       <descriptions defaultDescription="A_ORIG_UTI"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="A_ORIG_UTI"/>
     </measure>
-    <measure id="FIELDINDEX" order="48" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="FIELDINDEX"/>
-      <measureMapping columnObjectName="UnionFormScenarioVer" columnName="FIELDINDEX"/>
-    </measure>
     <measure id="C_PAY_RECEIVED" order="51" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_PAY_RECEIVED"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="C_PAY_RECEIVED"/>
-    </measure>
-    <measure id="C_UTI_D_DAYS_OVERDUE" order="54" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
-      <measureMapping columnObjectName="UnionFormScenarioVer" columnName="C_UTI_D_DAYS_OVERDUE"/>
     </measure>
     <measure id="A_ORIG_PENALTY" order="55" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="A_ORIG_PENALTY"/>
@@ -786,10 +793,6 @@
       <descriptions defaultDescription="A_ORIG_FEES"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="A_ORIG_FEES"/>
     </measure>
-    <measure id="A_FIRST_INSTRUMENT" order="66" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
-      <measureMapping columnObjectName="UnionFormScenarioVer" columnName="A_FIRST_INSTRUMENT"/>
-    </measure>
     <measure id="C_UTI_D_UTI_AMOUNT" order="67" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_UTI_D_UTI_AMOUNT"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="C_UTI_D_UTI_AMOUNT"/>
@@ -805,10 +808,6 @@
     <measure id="A_PT_INCREASE" order="75" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="A_PT_INCREASE"/>
       <measureMapping columnObjectName="UnionFormScenarioVer" columnName="A_PT_INCREASE"/>
-    </measure>
-    <measure id="A_SEC_INSTRUMENT" order="76" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
-      <measureMapping columnObjectName="UnionFormScenarioVer" columnName="A_SEC_INSTRUMENT"/>
     </measure>
     <measure id="C_UTI_D_PAYMENT" order="77" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_UTI_D_PAYMENT"/>
@@ -846,12 +845,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="UnionFormScenarioVer" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="93" y="224"/>
-      <rectangleSize height="30" width="140"/>
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
