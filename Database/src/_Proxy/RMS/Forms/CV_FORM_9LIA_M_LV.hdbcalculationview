@@ -4,11 +4,14 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_LV">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_LV</resourceUri>
+  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV">
+    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000">
     <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
+    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -299,7 +302,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_LV" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY" source="C_TOTAL_LIABILITY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI" source="C_UTI"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE" source="C_CONFIRM_DATE"/>
@@ -491,7 +494,102 @@
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_BANK_BRANCH" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_A_UTI" null="true" value=""/>
     </input>
-  
+    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY" source="C_TOTAL_LIABILITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI" source="C_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE" source="C_CONFIRM_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NO_NEW" source="A_BANK_ACCOUNT_NO_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_NON_COMP_PER" source="C_NON_COMP_PER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_RED" source="A_POSTAGE_RED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_BASE" source="C_UTI_D_ALLOC_BASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_UTI_REASON" source="A_UTI_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDED_BY" source="SUPERSEDED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_UTI_REMITT" source="A_UTI_REMITT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_DATE_PAID" source="A_DATE_PAID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NAME_NEW" source="A_BANK_ACCOUNT_NAME_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NAME" source="A_CONT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_START_DATE" source="C_UTI_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_POSTAGE_FEES" source="C_POSTAGE_FEES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDE_TO" source="SUPERSEDE_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_DUE_DATE" source="A_ORIG_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_NAME_NEW" source="A_BANK_NAME_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NO" source="A_CONT_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID_1" source="RETURN_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_NO_OF_UTI_DAYS" source="C_NO_OF_UTI_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_POSTAGE_TOTAL" source="C_POSTAGE_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS" source="RECEIPT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_AFAD" source="A_ORIG_AFAD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_BRANCH_NEW" source="A_BANK_BRANCH_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONFIRM" source="A_CONFIRM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DAILY_UTI_AMT" source="C_DAILY_UTI_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_TITLE" source="A_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEMPLATE_VER" source="TEMPLATE_VER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_FROM" source="C_UTI_D_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SOURCE" source="A_SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_ORIG" source="C_TOTAL_ORIG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_NUMBER" source="FORM_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_ID" source="C_LEG_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_GROSS" source="A_ORIG_GROSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCH_ID" source="BATCH_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_TO" source="C_UTI_D_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_TOT_DUTY" source="A_ORIG_TOT_DUTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE_1" source="C_CONFIRM_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID" source="CASE_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_DESC" source="C_LEG_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_PAID_PAY" source="A_ORIG_PAID_PAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_TOTAL" source="C_UTI_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_REMITT" source="A_PT_REMITT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATOR_NUMBER" source="LOCATOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_BASE_TAX" source="C_UTI_D_BASE_TAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_UTI" source="A_ORIG_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_EMAIL_ADDRESS" source="A_EMAIL_ADDRESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BSB" source="C_BSB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_ID_1" source="C_LEG_ID_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_RECEIVED" source="C_PAY_RECEIVED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_REASON" source="A_PT_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAYS_OVERDUE" source="C_UTI_D_DAYS_OVERDUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_PENALTY" source="A_ORIG_PENALTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_MOBILE_NO" source="A_MOBILE_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA" source="TIMESTAMP_DELTA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_ACCOUNT_NO" source="C_BANK_ACCOUNT_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_DESC_1" source="C_LEG_DESC_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_1" source="C_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REFUND_OPTION" source="A_REFUND_OPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TAX" source="C_PENALTY_TAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAILY_UTI" source="C_UTI_D_DAILY_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_FEES" source="A_ORIG_FEES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_FIRST_INSTRUMENT" source="A_FIRST_INSTRUMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_UTI_AMOUNT" source="C_UTI_D_UTI_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_CLASS" source="FORM_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_ACCOUNT_NAME" source="C_BANK_ACCOUNT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CURRENCY" source="A_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BK_DET_CORRECT" source="A_BK_DET_CORRECT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TOTAL" source="C_PENALTY_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_YEARLY_RATE" source="C_UTI_D_YEARLY_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_INCREASE" source="A_PT_INCREASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SEC_INSTRUMENT" source="A_SEC_INSTRUMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_PAYMENT" source="C_UTI_D_PAYMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS" source="FORM_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_NAME" source="C_BANK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CURRENCY" source="C_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BSB_NEW" source="A_BSB_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAYABLE_TXN" source="C_PAYABLE_TXN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_LOW_AMT_PAY" source="A_LOW_AMT_PAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE" source="C_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_INC" source="A_POSTAGE_INC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_FEE" source="C_UTI_D_ALLOC_FEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY_1" source="C_TOTAL_LIABILITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_TS" source="FORM_STATUS_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_BRANCH" source="C_BANK_BRANCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_A_UTI" source="A_A_UTI"/>
+    </input>
     <filter>&quot;FIELDINDEX&quot; = '0'</filter>
   </calculationView>
 </calculationViews>
