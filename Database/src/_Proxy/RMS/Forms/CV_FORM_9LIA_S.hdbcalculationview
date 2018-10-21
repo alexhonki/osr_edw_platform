@@ -4,8 +4,8 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000</resourceUri>
+  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_000</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.source.rms.forms.proxy::TF_GET_9LIA_001_01" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.source.rms.forms.proxy::TF_GET_9LIA_001_01</resourceUri>
@@ -97,14 +97,10 @@
       </viewAttribute>
       <viewAttribute id="C_UTI_D_DAYS_OVERDUE">
         <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
-      </viewAttribute>
-      <viewAttribute id="C_UTI_D_DAYS_OVERDUE_1" aggregationType="sum">
-        <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
-      </viewAttribute>
-    </viewAttributes>
+      </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
+    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
@@ -132,10 +128,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_PAYMENT" source="C_UTI_D_PAYMENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_FEE" source="C_UTI_D_ALLOC_FEE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_BASE" source="C_UTI_D_ALLOC_BASE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAYS_OVERDUE" source="C_UTI_D_DAYS_OVERDUE"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_UTI_D_DAYS_OVERDUE_1" null="true" value=""/>
-    </input>
-    <input node="TF_GET_9LIA_001_01">
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAYS_OVERDUE" source="C_UTI_D_DAYS_OVERDUE"/></input>
+    <input node="TF_GET_9LIA_001_01" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="MANDT" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RETURN_ID" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FORM" null="true" value=""/>
@@ -163,18 +157,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_PAYMENT" source="C_UTI_D_PAYMENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_FEE" source="C_UTI_D_ALLOC_FEE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_BASE" source="C_UTI_D_ALLOC_BASE"/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_UTI_D_DAYS_OVERDUE" null="true" value=""/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAYS_OVERDUE_1" source="C_UTI_D_DAYS_OVERDUE"/>
-    </input>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_UTI_D_DAYS_OVERDUE" null="true" value=""/></input>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="TF_GET_9LIA_001_01">
     <viewAttributes>
-      <viewAttribute id="CLIENT">
-        <descriptions defaultDescription="CLIENT"/>
-      </viewAttribute>
-      <viewAttribute id="PARENT_ID">
-        <descriptions defaultDescription="PARENT_ID"/>
-      </viewAttribute>
       <viewAttribute id="FIELDINDEX">
         <descriptions defaultDescription="FIELDINDEX"/>
       </viewAttribute>
@@ -186,9 +172,6 @@
       </viewAttribute>
       <viewAttribute id="C_UTI_D_BASE_TAX" aggregationType="sum">
         <descriptions defaultDescription="C_UTI_D_BASE_TAX"/>
-      </viewAttribute>
-      <viewAttribute id="C_UTI_D_DAYS_OVERDUE">
-        <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
       </viewAttribute>
       <viewAttribute id="C_UTI_D_DAILY_UTI" aggregationType="sum">
         <descriptions defaultDescription="C_UTI_D_DAILY_UTI"/>
@@ -208,7 +191,16 @@
       <viewAttribute id="C_UTI_D_ALLOC_BASE" aggregationType="sum">
         <descriptions defaultDescription="C_UTI_D_ALLOC_BASE"/>
       </viewAttribute>
-    </viewAttributes>
+    
+      <viewAttribute id="C_UTI_D_DAYS_OVERDUE">
+        <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
+      </viewAttribute>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_ID">
+        <descriptions defaultDescription="PARENT_ID"/>
+      </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="osr.edw.source.rms.forms.proxy::TF_GET_9LIA_001_01">
@@ -254,7 +246,7 @@
       <descriptions defaultDescription="TIMESTAMP_DELTA"/>
       <keyMapping columnObjectName="Union_1" columnName="TIMESTAMP_DELTA"/>
     </attribute>
-    <attribute id="FIELDINDEX" order="7">
+    <attribute id="FIELDINDEX" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FIELDINDEX"/>
       <keyMapping columnObjectName="Union_1" columnName="FIELDINDEX"/>
     </attribute>
@@ -310,7 +302,7 @@
       <descriptions defaultDescription="C_UTI_D_TO"/>
       <keyMapping columnObjectName="Union_1" columnName="C_UTI_D_TO"/>
     </attribute>
-    <attribute id="C_UTI_D_DAYS_OVERDUE" order="28">
+    <attribute id="C_UTI_D_DAYS_OVERDUE" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
       <keyMapping columnObjectName="Union_1" columnName="C_UTI_D_DAYS_OVERDUE"/>
     </attribute>

@@ -4,14 +4,14 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV</resourceUri>
+  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_001_LV" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_001_LV</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000">
     <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000</resourceUri>
+  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_000</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -302,7 +302,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_001_LV" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_001_LV" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY" source="C_TOTAL_LIABILITY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI" source="C_UTI"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE" source="C_CONFIRM_DATE"/>
@@ -494,7 +494,7 @@
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_BANK_BRANCH" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_A_UTI" null="true" value=""/>
     </input>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_000">
+    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_9LIA_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY" source="C_TOTAL_LIABILITY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI" source="C_UTI"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE" source="C_CONFIRM_DATE"/>
