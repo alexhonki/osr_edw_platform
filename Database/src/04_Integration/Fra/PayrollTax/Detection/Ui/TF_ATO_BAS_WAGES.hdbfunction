@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.PayrollTax.Detection.Ui::TF_ATO_BAS_WAGES"( )
+FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_WAGES"( )
 RETURNS TABLE
 (
 FINANCIAL_YEAR			INTEGER,
@@ -21,5 +21,6 @@ BEGIN
 	110000			AS "FBT_INST_AMT",
 	'AUD'			AS "WAERS"
 	FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+	--FROM "osr.edw.staging.md.ato.synonym::CDS_BAS.DSO.BASNIND.active_data";
 	
 END;

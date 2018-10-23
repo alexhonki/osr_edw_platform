@@ -1,0 +1,32 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_ATO_ITR_NIND_EMPLOYER"( )
+RETURNS TABLE
+(
+INCM_YR					INTEGER,
+ABN						NVARCHAR(20),
+ACN						NVARCHAR(9),
+CLNT_TYP				NVARCHAR(3),
+NON_IDV_NM_LN_1			NVARCHAR(200),
+NON_IDV_NM_LN_2			NVARCHAR(200),
+TRDNG_NM_LN_1			NVARCHAR(200),
+TRDNG_NM_LN_2			NVARCHAR(200),
+PARENT_FULL_NM_TXT		NVARCHAR(200)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+	SELECT 
+	TOP 1
+	'2018'						AS "INCM_YR",
+	'98163427852'				AS "ABN",
+	'163427852'					AS "ACN",
+	'COY'						AS "CLNT_TYP",
+	'QUEST SECURITY PTY LTD'	AS "NON_IDV_NM_LN_1",
+	''							AS "NON_IDV_NM_LN_2",
+	''							AS "TRDNG_NM_LN_1",
+	''							AS "TRDNG_NM_LN_2",
+	''							AS "PARENT_FULL_NM_TXT"
+	FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+	--FROM "osr.edw.staging.md.ato.synonym::CDS_BAS.DSO.ITRNIND.active_data";
+	
+END;	
