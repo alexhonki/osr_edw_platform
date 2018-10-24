@@ -132,7 +132,15 @@
         <descriptions defaultDescription="A_FRINGE_BENEFI"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="C_LODGE_DATE" datatype="DATE" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(not( ISNULL(&quot;C_LODGE_DATE_A&quot;) and &quot;C_LODGE_DATE_A&quot; =' '), 
+&quot;C_LODGE_DATE_A&quot;, &quot;A_ILODGE_DATE_A&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="C_GRP_STATUS" datatype="VARCHAR" length="40" expressionLanguage="COLUMN_ENGINE">
+        <formula>case(&quot;C_GRP_STATUS_A&quot;, 'Non-Grouped', 'NG', 'Group Member', 'GM', 'Designated Group Employer', 'DGE')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.source.rms.forms.proxy::TF_FORM_IPA1_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
@@ -267,6 +275,17 @@
     <attribute id="RETURN_ID" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RETURN_ID"/>
       <keyMapping columnObjectName="Union_1" columnName="RETURN_ID"/>
+    </attribute>
+  
+    <attribute id="C_LODGE_DATE" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LODGE_DATE"/>
+  
+      <keyMapping columnObjectName="Union_1" columnName="C_LODGE_DATE"/>
+  
+    </attribute>
+    <attribute id="C_GRP_STATUS" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_GRP_STATUS"/>
+      <keyMapping columnObjectName="Union_1" columnName="C_GRP_STATUS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
