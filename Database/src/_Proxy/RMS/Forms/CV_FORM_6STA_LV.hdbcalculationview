@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_LV" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_LV" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_FORM_6STA"/>
 <localVariables/>
 <variableMappings/>
@@ -17,6 +17,7 @@
       <viewAttribute id="RETURN_ID">
         <descriptions defaultDescription="RETURN_ID"/>
       </viewAttribute>
+    
       <viewAttribute id="FIELDINDEX">
         <descriptions defaultDescription="FIELDINDEX"/>
       </viewAttribute>
@@ -146,102 +147,6 @@
       <viewAttribute id="OBJECT_ID">
         <descriptions defaultDescription="OBJECT_ID"/>
       </viewAttribute>
-      <viewAttribute id="A_F_GROSS_SAL_W" aggregationType="sum">
-        <descriptions defaultDescription="A_F_GROSS_SAL_W"/>
-      </viewAttribute>
-      <viewAttribute id="A_ALLOWANCE" aggregationType="sum">
-        <descriptions defaultDescription="A_ALLOWANCE"/>
-      </viewAttribute>
-      <viewAttribute id="A_BONUS" aggregationType="sum">
-        <descriptions defaultDescription="A_BONUS"/>
-      </viewAttribute>
-      <viewAttribute id="A_COMMISSION" aggregationType="sum">
-        <descriptions defaultDescription="A_COMMISSION"/>
-      </viewAttribute>
-      <viewAttribute id="A_DIRECTOR_FEE" aggregationType="sum">
-        <descriptions defaultDescription="A_DIRECTOR_FEE"/>
-      </viewAttribute>
-      <viewAttribute id="A_EMPL_SUP_CONT" aggregationType="sum">
-        <descriptions defaultDescription="A_EMPL_SUP_CONT"/>
-      </viewAttribute>
-      <viewAttribute id="A_FRINGE_BENEFI" aggregationType="sum">
-        <descriptions defaultDescription="A_FRINGE_BENEFI"/>
-      </viewAttribute>
-      <viewAttribute id="A_ELIG_TERM_PMT" aggregationType="sum">
-        <descriptions defaultDescription="A_ELIG_TERM_PMT"/>
-      </viewAttribute>
-      <viewAttribute id="A_APPRENT_PMT" aggregationType="sum">
-        <descriptions defaultDescription="A_APPRENT_PMT"/>
-      </viewAttribute>
-      <viewAttribute id="A_TRAINEES_PMT" aggregationType="sum">
-        <descriptions defaultDescription="A_TRAINEES_PMT"/>
-      </viewAttribute>
-      <viewAttribute id="A_OTH_NON_TAX_W" aggregationType="sum">
-        <descriptions defaultDescription="A_OTH_NON_TAX_W"/>
-      </viewAttribute>
-      <viewAttribute id="A_TOT_INT_WAGE" aggregationType="sum">
-        <descriptions defaultDescription="A_TOT_INT_WAGE"/>
-      </viewAttribute>
-      <viewAttribute id="A_CONTRACTORS" aggregationType="sum">
-        <descriptions defaultDescription="A_CONTRACTORS"/>
-      </viewAttribute>
-      <viewAttribute id="A_SHARE_SCHEMES" aggregationType="sum">
-        <descriptions defaultDescription="A_SHARE_SCHEMES"/>
-      </viewAttribute>
-      <viewAttribute id="A_TOT_QLD_GM" aggregationType="sum">
-        <descriptions defaultDescription="A_TOT_QLD_GM"/>
-      </viewAttribute>
-      <viewAttribute id="C_TOT_QLD_TXBLE" aggregationType="sum">
-        <descriptions defaultDescription="C_TOT_QLD_TXBLE"/>
-      </viewAttribute>
-      <viewAttribute id="C_TOT_QLD_NON_T" aggregationType="sum">
-        <descriptions defaultDescription="C_TOT_QLD_NON_T"/>
-      </viewAttribute>
-      <viewAttribute id="C_DEDUCTION_ALL" aggregationType="sum">
-        <descriptions defaultDescription="C_DEDUCTION_ALL"/>
-      </viewAttribute>
-      <viewAttribute id="C_TAX_AMOUNT" aggregationType="sum">
-        <descriptions defaultDescription="C_TAX_AMOUNT"/>
-      </viewAttribute>
-      <viewAttribute id="C_TOT_LIAB_CRED" aggregationType="sum">
-        <descriptions defaultDescription="C_TOT_LIAB_CRED"/>
-      </viewAttribute>
-      <viewAttribute id="C_BP_A">
-        <descriptions defaultDescription="C_BP_A"/>
-      </viewAttribute>
-      <viewAttribute id="C_DEC_DATE_A">
-        <descriptions defaultDescription="C_DEC_DATE_A"/>
-      </viewAttribute>
-      <viewAttribute id="A_TOT_INT_GM" aggregationType="sum">
-        <descriptions defaultDescription="A_TOT_INT_GM"/>
-      </viewAttribute>
-      <viewAttribute id="C_PAY_TAX_AMOUN" aggregationType="sum">
-        <descriptions defaultDescription="C_PAY_TAX_AMOUN"/>
-      </viewAttribute>
-      <viewAttribute id="C_TOT_PAID_PAYA" aggregationType="sum">
-        <descriptions defaultDescription="C_TOT_PAID_PAYA"/>
-      </viewAttribute>
-      <viewAttribute id="C_PAY_TAX_LIAB_" aggregationType="sum">
-        <descriptions defaultDescription="C_PAY_TAX_LIAB_"/>
-      </viewAttribute>
-      <viewAttribute id="C_TOT_GRP_AUST_W" aggregationType="sum">
-        <descriptions defaultDescription="C_TOT_GRP_AUST_W"/>
-      </viewAttribute>
-      <viewAttribute id="C_UTI_ACCR_2_DT" aggregationType="sum">
-        <descriptions defaultDescription="C_UTI_ACCR_2_DT"/>
-      </viewAttribute>
-      <viewAttribute id="C_END_DATE_A">
-        <descriptions defaultDescription="C_END_DATE_A"/>
-      </viewAttribute>
-      <viewAttribute id="C_START_DATE_A">
-        <descriptions defaultDescription="C_START_DATE_A"/>
-      </viewAttribute>
-      <viewAttribute id="C_LODGE_DATE">
-        <descriptions defaultDescription="C_LODGE_DATE"/>
-      </viewAttribute>
-      <viewAttribute id="C_GRP_STATUS">
-        <descriptions defaultDescription="C_GRP_STATUS"/>
-      </viewAttribute>
       <viewAttribute id="A_GRP_STAT_ENT">
         <descriptions defaultDescription="A_GRP_STAT_ENT"/>
       </viewAttribute>
@@ -250,6 +155,7 @@
     <restrictedViewAttributes/>
     <input node="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_M_LV" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
@@ -293,42 +199,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID" source="CASE_GUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_F_GROSS_SAL_W" source="A_F_GROSS_SAL_W"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_ALLOWANCE" source="A_ALLOWANCE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_BONUS" source="A_BONUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_COMMISSION" source="A_COMMISSION"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_DIRECTOR_FEE" source="A_DIRECTOR_FEE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_EMPL_SUP_CONT" source="A_EMPL_SUP_CONT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_FRINGE_BENEFI" source="A_FRINGE_BENEFI"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_ELIG_TERM_PMT" source="A_ELIG_TERM_PMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_APPRENT_PMT" source="A_APPRENT_PMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_TRAINEES_PMT" source="A_TRAINEES_PMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_OTH_NON_TAX_W" source="A_OTH_NON_TAX_W"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_TOT_INT_WAGE" source="A_TOT_INT_WAGE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONTRACTORS" source="A_CONTRACTORS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_SHARE_SCHEMES" source="A_SHARE_SCHEMES"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_TOT_QLD_GM" source="A_TOT_QLD_GM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_QLD_TXBLE" source="C_TOT_QLD_TXBLE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_QLD_NON_T" source="C_TOT_QLD_NON_T"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_DEDUCTION_ALL" source="C_DEDUCTION_ALL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_TAX_AMOUNT" source="C_TAX_AMOUNT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_LIAB_CRED" source="C_TOT_LIAB_CRED"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_BP_A" source="C_BP_A"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_DEC_DATE_A" source="C_DEC_DATE_A"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="A_TOT_INT_GM" source="A_TOT_INT_GM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_TAX_AMOUN" source="C_PAY_TAX_AMOUN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_PAID_PAYA" source="C_TOT_PAID_PAYA"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_TAX_LIAB_" source="C_PAY_TAX_LIAB_"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_GRP_AUST_W" source="C_TOT_GRP_AUST_W"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_ACCR_2_DT" source="C_UTI_ACCR_2_DT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_END_DATE_A" source="C_END_DATE_A"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_START_DATE_A" source="C_START_DATE_A"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_LODGE_DATE" source="C_LODGE_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_GRP_STATUS" source="C_GRP_STATUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_GRP_STAT_ENT" source="A_GRP_STAT_ENT"/>
     </input>
     <input node="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_S" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+    
       <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
@@ -372,38 +247,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID" source="CASE_GUID"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="OBJECT_ID" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_F_GROSS_SAL_W" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_ALLOWANCE" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_BONUS" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_COMMISSION" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_DIRECTOR_FEE" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_EMPL_SUP_CONT" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_FRINGE_BENEFI" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_ELIG_TERM_PMT" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_APPRENT_PMT" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_TRAINEES_PMT" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_OTH_NON_TAX_W" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_TOT_INT_WAGE" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_CONTRACTORS" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_SHARE_SCHEMES" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_TOT_QLD_GM" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_TOT_QLD_TXBLE" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_TOT_QLD_NON_T" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_DEDUCTION_ALL" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_TAX_AMOUNT" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_TOT_LIAB_CRED" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_BP_A" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_DEC_DATE_A" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_TOT_INT_GM" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_PAY_TAX_AMOUN" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_TOT_PAID_PAYA" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_PAY_TAX_LIAB_" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_TOT_GRP_AUST_W" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_UTI_ACCR_2_DT" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_END_DATE_A" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_START_DATE_A" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_LODGE_DATE" null="true" value=""/>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_GRP_STATUS" null="true" value=""/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="A_GRP_STAT_ENT" null="true" value=""/>
     </input>
   </calculationView>
@@ -414,6 +257,7 @@
       <descriptions defaultDescription="RETURN_ID"/>
       <keyMapping columnObjectName="Union_1" columnName="RETURN_ID"/>
     </attribute>
+  
     <attribute id="FIELDINDEX" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FIELDINDEX"/>
       <keyMapping columnObjectName="Union_1" columnName="FIELDINDEX"/>
@@ -586,146 +430,15 @@
       <descriptions defaultDescription="OBJECT_ID"/>
       <keyMapping columnObjectName="Union_1" columnName="OBJECT_ID"/>
     </attribute>
-    <attribute id="C_BP_A" order="65" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_BP_A"/>
-      <keyMapping columnObjectName="Union_1" columnName="C_BP_A"/>
-    </attribute>
-    <attribute id="C_DEC_DATE_A" order="66" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_DEC_DATE_A"/>
-      <keyMapping columnObjectName="Union_1" columnName="C_DEC_DATE_A"/>
-    </attribute>
-    <attribute id="C_END_DATE_A" order="73" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_END_DATE_A"/>
-      <keyMapping columnObjectName="Union_1" columnName="C_END_DATE_A"/>
-    </attribute>
-    <attribute id="C_START_DATE_A" order="74" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_START_DATE_A"/>
-      <keyMapping columnObjectName="Union_1" columnName="C_START_DATE_A"/>
-    </attribute>
-    <attribute id="C_LODGE_DATE" order="75" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_LODGE_DATE"/>
-      <keyMapping columnObjectName="Union_1" columnName="C_LODGE_DATE"/>
-    </attribute>
-    <attribute id="C_GRP_STATUS" order="76" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_GRP_STATUS"/>
-      <keyMapping columnObjectName="Union_1" columnName="C_GRP_STATUS"/>
-    </attribute>
-    <attribute id="A_GRP_STAT_ENT" order="77" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_GRP_STAT_ENT" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_GRP_STAT_ENT"/>
       <keyMapping columnObjectName="Union_1" columnName="A_GRP_STAT_ENT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="A_F_GROSS_SAL_W" order="45" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_F_GROSS_SAL_W"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_F_GROSS_SAL_W"/>
-    </measure>
-    <measure id="A_ALLOWANCE" order="46" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_ALLOWANCE"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_ALLOWANCE"/>
-    </measure>
-    <measure id="A_BONUS" order="47" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_BONUS"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_BONUS"/>
-    </measure>
-    <measure id="A_COMMISSION" order="48" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_COMMISSION"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_COMMISSION"/>
-    </measure>
-    <measure id="A_DIRECTOR_FEE" order="49" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_DIRECTOR_FEE"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_DIRECTOR_FEE"/>
-    </measure>
-    <measure id="A_EMPL_SUP_CONT" order="50" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_EMPL_SUP_CONT"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_EMPL_SUP_CONT"/>
-    </measure>
-    <measure id="A_FRINGE_BENEFI" order="51" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_FRINGE_BENEFI"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_FRINGE_BENEFI"/>
-    </measure>
-    <measure id="A_ELIG_TERM_PMT" order="52" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_ELIG_TERM_PMT"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_ELIG_TERM_PMT"/>
-    </measure>
-    <measure id="A_APPRENT_PMT" order="53" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_APPRENT_PMT"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_APPRENT_PMT"/>
-    </measure>
-    <measure id="A_TRAINEES_PMT" order="54" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_TRAINEES_PMT"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_TRAINEES_PMT"/>
-    </measure>
-    <measure id="A_OTH_NON_TAX_W" order="55" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_OTH_NON_TAX_W"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_OTH_NON_TAX_W"/>
-    </measure>
-    <measure id="A_TOT_INT_WAGE" order="56" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_TOT_INT_WAGE"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_TOT_INT_WAGE"/>
-    </measure>
-    <measure id="A_CONTRACTORS" order="57" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_CONTRACTORS"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_CONTRACTORS"/>
-    </measure>
-    <measure id="A_SHARE_SCHEMES" order="58" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_SHARE_SCHEMES"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_SHARE_SCHEMES"/>
-    </measure>
-    <measure id="A_TOT_QLD_GM" order="59" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_TOT_QLD_GM"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_TOT_QLD_GM"/>
-    </measure>
-    <measure id="C_TOT_QLD_TXBLE" order="60" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TOT_QLD_TXBLE"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_TOT_QLD_TXBLE"/>
-    </measure>
-    <measure id="C_TOT_QLD_NON_T" order="61" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TOT_QLD_NON_T"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_TOT_QLD_NON_T"/>
-    </measure>
-    <measure id="C_DEDUCTION_ALL" order="62" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_DEDUCTION_ALL"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_DEDUCTION_ALL"/>
-    </measure>
-    <measure id="C_TAX_AMOUNT" order="63" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TAX_AMOUNT"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_TAX_AMOUNT"/>
-    </measure>
-    <measure id="C_TOT_LIAB_CRED" order="64" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TOT_LIAB_CRED"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_TOT_LIAB_CRED"/>
-    </measure>
-    <measure id="A_TOT_INT_GM" order="67" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="A_TOT_INT_GM"/>
-      <measureMapping columnObjectName="Union_1" columnName="A_TOT_INT_GM"/>
-    </measure>
-    <measure id="C_PAY_TAX_AMOUN" order="68" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_PAY_TAX_AMOUN"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_PAY_TAX_AMOUN"/>
-    </measure>
-    <measure id="C_TOT_PAID_PAYA" order="69" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TOT_PAID_PAYA"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_TOT_PAID_PAYA"/>
-    </measure>
-    <measure id="C_PAY_TAX_LIAB_" order="70" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_PAY_TAX_LIAB_"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_PAY_TAX_LIAB_"/>
-    </measure>
-    <measure id="C_TOT_GRP_AUST_W" order="71" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TOT_GRP_AUST_W"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_TOT_GRP_AUST_W"/>
-    </measure>
-    <measure id="C_UTI_ACCR_2_DT" order="72" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_UTI_ACCR_2_DT"/>
-      <measureMapping columnObjectName="Union_1" columnName="C_UTI_ACCR_2_DT"/>
-    </measure>
-  </baseMeasures>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
