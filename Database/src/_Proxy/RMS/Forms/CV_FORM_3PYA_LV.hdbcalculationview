@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_LV" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_FORM_3PYA_LV"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M</resourceUri>
+  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M_LV">
+    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M_LV</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_S">
     <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_S</resourceUri>
@@ -204,7 +204,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M_LV" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_GROSS_SAL_WAGE" source="A_GROSS_SAL_WAGE"/>
     
