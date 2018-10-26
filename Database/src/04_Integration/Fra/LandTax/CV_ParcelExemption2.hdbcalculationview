@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_ParcelExemption2" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Parcel Exemption"/>
+<localVariables>
+  <variable id="IP_1" parameter="true">
+    <descriptions defaultDescription="Input1"/>
+    <variableProperties datatype="VARCHAR" length="13" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_2" parameter="true">
+    <descriptions defaultDescription="Input2"/>
+    <variableProperties datatype="VARCHAR" length="13" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.ltx::TF_ParcelExemption" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx::TF_ParcelExemption</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.ltx::TF_ParcelExemption">
+  <attributes>
+    <attribute id="INTRENOCN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Key"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="INTRENOCN"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Parcel "/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="VALIDFROM" order="3" displayAttribute="false" attributeHierarchyActive="false" semanticType="date.businessDateFrom">
+      <descriptions defaultDescription="VALIDFROM"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="VALIDFROM"/>
+    </attribute>
+    <attribute id="VALIDTO" order="4" displayAttribute="false" attributeHierarchyActive="false" semanticType="date.businessDateTo">
+      <descriptions defaultDescription="VALIDTO"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="VALIDTO"/>
+    </attribute>
+    <attribute id="INVALID_EXMD" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVALID_EXMD"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="INVALID_EXMD"/>
+    </attribute>
+    <attribute id="CONCESSCODE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONCESSCODE"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="CONCESSCODE"/>
+    </attribute>
+    <attribute id="INTRENONA" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENONA"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="INTRENONA"/>
+    </attribute>
+    <attribute id="NANO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NANO"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="NANO"/>
+    </attribute>
+    <attribute id="MULTIPARCEL" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MULTIPARCEL"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="MULTIPARCEL"/>
+    </attribute>
+    <attribute id="ENTITLEMENT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENTITLEMENT"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="ENTITLEMENT"/>
+    </attribute>
+    <attribute id="CNEXMDSTAT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CNEXMDSTAT"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="CNEXMDSTAT"/>
+    </attribute>
+    <attribute id="STATUSICON" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUSICON"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="STATUSICON"/>
+    </attribute>
+    <attribute id="CHUSER" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHUSER"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="CHUSER"/>
+    </attribute>
+    <attribute id="CHDATE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHDATE"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="CHDATE"/>
+    </attribute>
+  
+    <attribute id="CHTIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHTIME"/>
+  
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="CHTIME"/>
+  
+    </attribute>
+    <attribute id="PLNO" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="PLNO"/>
+    </attribute>
+    <attribute id="OBJNRPL" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNRPL"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="OBJNRPL"/>
+    </attribute>
+    <attribute id="RECNNR" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECNNR"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="RECNNR"/>
+    </attribute>
+    <attribute id="OBJNRCN" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNRCN"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="OBJNRCN"/>
+    </attribute>
+    <attribute id="BPARTNER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="BPNAME1" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPNAME1"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="BPNAME1"/>
+    </attribute>
+    <attribute id="BPNAME2" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPNAME2"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="BPNAME2"/>
+    </attribute>
+    <attribute id="CONV" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONV"/>
+      <keyMapping columnObjectName="TF_ParcelExemption" columnName="CONV"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CONCESSPCT" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CONCESSPCT"/>
+      <measureMapping columnObjectName="TF_ParcelExemption" columnName="CONCESSPCT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
