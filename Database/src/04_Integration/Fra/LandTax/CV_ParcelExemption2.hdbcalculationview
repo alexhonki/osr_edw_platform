@@ -2,17 +2,21 @@
 <Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx::CV_ParcelExemption2" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Parcel Exemption"/>
 <localVariables>
-  <variable id="IP_1" parameter="true">
+  <variable id="IP_VALIDFROM" parameter="true">
     <descriptions defaultDescription="Input1"/>
-    <variableProperties datatype="VARCHAR" length="13" mandatory="true">
-      <valueDomain type="empty"/>
+    <variableProperties datatype="NVARCHAR" length="8" mandatory="true" scale="null">
+      <valueDomain type="AttributeValue">
+        <attribute name="VALIDFROM"/>
+      </valueDomain>
       <selection multiLine="false" type="Single"/>
     </variableProperties>
   </variable>
-  <variable id="IP_2" parameter="true">
+  <variable id="IP_VALIDTO" parameter="true">
     <descriptions defaultDescription="Input2"/>
-    <variableProperties datatype="VARCHAR" length="13" mandatory="true">
-      <valueDomain type="empty"/>
+    <variableProperties datatype="NVARCHAR" length="8" mandatory="true" scale="null">
+      <valueDomain type="AttributeValue">
+        <attribute name="VALIDTO"/>
+      </valueDomain>
       <selection multiLine="false" type="Single"/>
     </variableProperties>
   </variable>
