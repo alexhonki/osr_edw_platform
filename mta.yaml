@@ -13,7 +13,8 @@ modules:
    requires:
 #      - name: OSR_EDW_PLATFORM-uaa
       - name: OSR_EDW_PLATFORM-dws
-
+   build-parameters:
+      timeout: 30m
  - name: OSR_EDW_PLATFORM-Backend
    type: nodejs
 #   parameters:
@@ -30,7 +31,8 @@ modules:
     - name:  OSR_EDW_PLATFORM-Backend
       properties:
        service_url: ${default-url}
-
+   build-parameters:
+      timeout: 30m
  - name: OSR_EDW_PLATFORM-Database
    type: hdb
 #   parameters:
@@ -57,6 +59,8 @@ modules:
         service: '~{OSR-EDW-SOURCE-CRM-grantor-service}'
     - name: acs-ext-access-grantor
     - name: edw-ext-access-grantor
+   build-parameters:
+      timeout: 30m
 resources:
 # - name: OSR_EDW_PLATFORM-uaa
 #   type: com.sap.xs.uaa
