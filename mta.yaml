@@ -61,6 +61,11 @@ modules:
       properties:
         key: logical-OSR-EDW-SOURCE-ASIC-grantor
         service: '~{OSR-EDW-SOURCE-ASIC-grantor-service}'
+    - name: OSR-EDW-SOURCE-ATO-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: logical-OSR-EDW-SOURCE-ATO-grantor
+        service: '~{OSR-EDW-SOURCE-ATO-grantor-service}'
     - name: OSR-EDW-SOURCE-CRM-grantor
       group: SERVICE_REPLACEMENTS
       properties:
@@ -119,6 +124,12 @@ resources:
      OSR-EDW-SOURCE-ASIC-grantor-service: '${service-name}'
    parameters:
      service-name: OSR_EDW_SOURCE_ASIC-deploy
+   type: org.cloudfoundry.existing-service
+ - name: OSR-EDW-SOURCE-ATO-grantor
+   properties:
+     OSR-EDW-SOURCE-ATO-grantor-service: '${service-name}'
+   parameters:
+     service-name: OSR_EDW_SOURCE_ATO-deploy
    type: org.cloudfoundry.existing-service
  - name: OSR-EDW-SOURCE-CRM-grantor
    properties:
