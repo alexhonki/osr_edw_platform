@@ -66,6 +66,11 @@ modules:
       properties:
         key: logical-OSR-EDW-SOURCE-ATO-grantor
         service: '~{OSR-EDW-SOURCE-ATO-grantor-service}'
+    - name: OSR-EDW-SOURCE-WCQ-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: logical-OSR-EDW-SOURCE-WCQ-grantor
+        service: '~{OSR-EDW-SOURCE-WCQ-grantor-service}'
     - name: OSR-EDW-SOURCE-CRM-grantor
       group: SERVICE_REPLACEMENTS
       properties:
@@ -131,6 +136,12 @@ resources:
    parameters:
      service-name: OSR_EDW_SOURCE_ATO-deploy
    type: org.cloudfoundry.existing-service
+ - name: OSR-EDW-SOURCE-WCQ-grantor
+   properties:
+     OSR-EDW-SOURCE-WCQ-grantor-service: '${service-name}'
+   parameters:
+     service-name: OSR_EDW_SOURCE_WCQ-deploy
+   type: org.cloudfoundry.existing-service  
  - name: OSR-EDW-SOURCE-CRM-grantor
    properties:
      OSR-EDW-SOURCE-CRM-grantor-service: '${service-name}'
