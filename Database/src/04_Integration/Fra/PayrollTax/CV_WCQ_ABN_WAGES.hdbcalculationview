@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_WCQ_ABN_WAGES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.PayrollTax::CV_WCQ_EMPLOYER_NAMES">
+    <resourceUri>osr.edw.platform.fra.PayrollTax::CV_WCQ_EMPLOYER_NAMES</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.PayrollTax::CV_WCQ_WAGES">
+    <resourceUri>osr.edw.platform.fra.PayrollTax::CV_WCQ_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="rightOuter">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="POLICY_NO">
+        <descriptions defaultDescription="POLICY_NO"/>
+      </viewAttribute>
+      <viewAttribute id="ASSESSMENT_YEAR">
+        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$POLICY_NO$POLICY_NO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.PayrollTax::CV_WCQ_EMPLOYER_NAMES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
+    </input>
+    <input node="osr.edw.platform.fra.PayrollTax::CV_WCQ_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
+    </input>
+    <joinAttribute name="JOIN$POLICY_NO$POLICY_NO"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FIN_YEAR">
+        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="ASSESSMENT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+    </input>
+    <filter>(not isnull(&quot;ABN&quot;)) and (&quot;ABN&quot;!=' ')</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="FIN_YEAR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSESSMENT_YEAR"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="FIN_YEAR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ACT_WAGES" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_WAGES"/>
+      <measureMapping columnObjectName="Aggregation_1" columnName="ACT_WAGES"/>
+    </measure>
+    <measure id="ACT_APPR_WAGES" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      <measureMapping columnObjectName="Aggregation_1" columnName="ACT_APPR_WAGES"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="342"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="osr.edw.platform.fra.PayrollTax::CV_WCQ_EMPLOYER_NAMES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.platform.fra.PayrollTax::CV_WCQ_WAGES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario> 

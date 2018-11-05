@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.PayrollTax::CV_PRT_NEWREGO_WAGES" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PRT_NEWREGO_WAGES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.PayrollTax::CV_ATO_ITR_NIND">
+    <resourceUri>osr.edw.platform.fra.PayrollTax::CV_ATO_ITR_NIND</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.PayrollTax::CV_ATO_BAS_NIND">
+    <resourceUri>osr.edw.platform.fra.PayrollTax::CV_ATO_BAS_NIND</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES">
+    <resourceUri>osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="ATO_ITR_NIND" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_BUS_INCM_AMT" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="SALARY_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="SUPER_EXPNS" aggregationType="sum">
+        <descriptions defaultDescription="SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="PURCHS_OTH_COSTS" aggregationType="sum">
+        <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
+      </viewAttribute>
+      <viewAttribute id="CONTRACTORS_PMNTS" aggregationType="sum">
+        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="PMNTS_TO_ASSOCS" aggregationType="sum">
+        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      </viewAttribute>
+      <viewAttribute id="OTHR_SLS_GOODS_SRVC_AMT" aggregationType="sum">
+        <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_INCM_OR_LOSS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_INCM_OR_LOSS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_ASSETS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_ASSETS" aggregationType="sum">
+        <descriptions defaultDescription="CURNT_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="GRS_RENT_AMT" aggregationType="sum">
+        <descriptions defaultDescription="GRS_RENT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_LIABILITIES" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_LIABILITIES" aggregationType="sum">
+        <descriptions defaultDescription="CURNT_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="PROPRIETORS_FUND" aggregationType="sum">
+        <descriptions defaultDescription="PROPRIETORS_FUND"/>
+      </viewAttribute>
+      <viewAttribute id="DISTRIBUTION" aggregationType="sum">
+        <descriptions defaultDescription="DISTRIBUTION"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ATO_AUST_WAGES_ITR" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>&quot;SALARY_WAGES&quot;+&quot;SUPER_EXPNS&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ATO_AUST_WAGES_PCON_ITR" datatype="DECIMAL" length="17" scale="2" expressionLanguage="SQL">
+        <formula>&quot;CONTRACTORS_PMNTS&quot;+&quot;ATO_AUST_WAGES_ITR&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.PayrollTax::CV_ATO_ITR_NIND">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_BUS_INCM_AMT" source="TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHS_OTH_COSTS" source="PURCHS_OTH_COSTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OTHR_SLS_GOODS_SRVC_AMT" source="OTHR_SLS_GOODS_SRVC_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_INCM_OR_LOSS" source="TOTL_INCM_OR_LOSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_ASSETS" source="TOTL_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_ASSETS" source="CURNT_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRS_RENT_AMT" source="GRS_RENT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_LIABILITIES" source="TOTL_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_LIABILITIES" source="CURNT_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPRIETORS_FUND" source="PROPRIETORS_FUND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION" source="DISTRIBUTION"/>
+    </input>
+    <filter>(not isnull(&quot;ABN&quot;)) and (&quot;ABN&quot;!=' ')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="ATO_BAS_NIND" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ATOSI_BAS" aggregationType="sum">
+        <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_ACQUISITIONS_BAS" aggregationType="sum">
+        <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT_BAS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="FBT_INST_AMT_BAS" aggregationType="sum">
+        <descriptions defaultDescription="FBT_INST_AMT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ATO_AUST_WAGES_BAS" datatype="DECIMAL" length="17" scale="2" expressionLanguage="SQL">
+        <formula>&quot;FBT_INST_AMT_BAS&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.PayrollTax::CV_ATO_BAS_NIND">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATOSI_BAS" source="GOODS_SRVC_SUPLY_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_ACQUISITIONS_BAS" source="TOTAL_ACQUISITIONS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT_BAS" source="TOTL_PMT_FOR_WRK_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT_BAS" source="FBT_INST_AMT"/>
+    </input>
+    <filter>(not isnull(&quot;ABN&quot;)) and (&quot;ABN&quot;!=' ')</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="WCQ_WAGES">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FIN_YEAR">
+        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FINANCIAL_YEAR" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(&quot;FIN_YEAR&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="sum">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_BAS" aggregationType="sum">
+        <descriptions defaultDescription="ATO_AUST_WAGES_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_ITR" aggregationType="sum">
+        <descriptions defaultDescription="ATO_AUST_WAGES_ITR"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_PCON_ITR" aggregationType="sum">
+        <descriptions defaultDescription="ATO_AUST_WAGES_PCON_ITR"/>
+      </viewAttribute>
+      <viewAttribute id="ATOSI_BAS" aggregationType="sum">
+        <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_ACQUISITIONS_BAS" aggregationType="sum">
+        <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT_BAS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="FBT_INST_AMT_BAS" aggregationType="sum">
+        <descriptions defaultDescription="FBT_INST_AMT"/>
+      </viewAttribute>
+    
+      <viewAttribute id="ACT_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_BUS_INCM_AMT" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="SALARY_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="SUPER_EXPNS" aggregationType="sum">
+        <descriptions defaultDescription="SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="PURCHS_OTH_COSTS" aggregationType="sum">
+        <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
+      </viewAttribute>
+      <viewAttribute id="CONTRACTORS_PMNTS" aggregationType="sum">
+        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="PMNTS_TO_ASSOCS" aggregationType="sum">
+        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      </viewAttribute>
+      <viewAttribute id="OTHR_SLS_GOODS_SRVC_AMT" aggregationType="sum">
+        <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_INCM_OR_LOSS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_INCM_OR_LOSS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_ASSETS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_ASSETS" aggregationType="sum">
+        <descriptions defaultDescription="CURNT_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="GRS_RENT_AMT" aggregationType="sum">
+        <descriptions defaultDescription="GRS_RENT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_LIABILITIES" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_LIABILITIES" aggregationType="sum">
+        <descriptions defaultDescription="CURNT_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="PROPRIETORS_FUND" aggregationType="sum">
+        <descriptions defaultDescription="PROPRIETORS_FUND"/>
+      </viewAttribute>
+      <viewAttribute id="DISTRIBUTION" aggregationType="sum">
+        <descriptions defaultDescription="DISTRIBUTION"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="ATO_ITR_NIND" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATO_AUST_WAGES_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_ITR" source="ATO_AUST_WAGES_ITR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_PCON_ITR" source="ATO_AUST_WAGES_PCON_ITR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATOSI_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTAL_ACQUISITIONS_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_PMT_FOR_WRK_AMT_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FBT_INST_AMT_BAS" null="true" value=""/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ACT_WAGES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ACT_APPR_WAGES" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_BUS_INCM_AMT" source="TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHS_OTH_COSTS" source="PURCHS_OTH_COSTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OTHR_SLS_GOODS_SRVC_AMT" source="OTHR_SLS_GOODS_SRVC_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_INCM_OR_LOSS" source="TOTL_INCM_OR_LOSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_ASSETS" source="TOTL_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_ASSETS" source="CURNT_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRS_RENT_AMT" source="GRS_RENT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_LIABILITIES" source="TOTL_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_LIABILITIES" source="CURNT_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPRIETORS_FUND" source="PROPRIETORS_FUND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION" source="DISTRIBUTION"/>
+    </input>
+    <input node="ATO_BAS_NIND" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_BAS" source="ATO_AUST_WAGES_BAS"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATO_AUST_WAGES_ITR" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATO_AUST_WAGES_PCON_ITR" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATOSI_BAS" source="ATOSI_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_ACQUISITIONS_BAS" source="TOTAL_ACQUISITIONS_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT_BAS" source="TOTL_PMT_FOR_WRK_AMT_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT_BAS" source="FBT_INST_AMT_BAS"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ACT_WAGES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ACT_APPR_WAGES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_BUS_INCM_AMT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALARY_WAGES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SUPER_EXPNS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PURCHS_OTH_COSTS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CONTRACTORS_PMNTS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PMNTS_TO_ASSOCS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="OTHR_SLS_GOODS_SRVC_AMT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_INCM_OR_LOSS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_ASSETS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CURNT_ASSETS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="GRS_RENT_AMT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_LIABILITIES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CURNT_LIABILITIES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROPRIETORS_FUND" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DISTRIBUTION" null="true" value=""/>
+    </input>
+    <input node="WCQ_WAGES" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATO_AUST_WAGES_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATO_AUST_WAGES_ITR" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATO_AUST_WAGES_PCON_ITR" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="ATOSI_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTAL_ACQUISITIONS_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_PMT_FOR_WRK_AMT_BAS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FBT_INST_AMT_BAS" null="true" value=""/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_BUS_INCM_AMT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SALARY_WAGES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="SUPER_EXPNS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PURCHS_OTH_COSTS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CONTRACTORS_PMNTS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PMNTS_TO_ASSOCS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="OTHR_SLS_GOODS_SRVC_AMT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_INCM_OR_LOSS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_ASSETS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CURNT_ASSETS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="GRS_RENT_AMT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOTL_LIABILITIES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="CURNT_LIABILITIES" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PROPRIETORS_FUND" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DISTRIBUTION" null="true" value=""/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_BAS">
+        <descriptions defaultDescription="ATO_AUST_WAGES_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_ITR">
+        <descriptions defaultDescription="ATO_AUST_WAGES_ITR"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_PCON_ITR">
+        <descriptions defaultDescription="ATO_AUST_WAGES_PCON_ITR"/>
+      </viewAttribute>
+      <viewAttribute id="ATOSI_BAS">
+        <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_ACQUISITIONS_BAS">
+        <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT_BAS">
+        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="FBT_INST_AMT_BAS">
+        <descriptions defaultDescription="FBT_INST_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_WAGES">
+        <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_APPR_WAGES">
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_BUS_INCM_AMT">
+        <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="SALARY_WAGES">
+        <descriptions defaultDescription="SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="SUPER_EXPNS">
+        <descriptions defaultDescription="SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="PURCHS_OTH_COSTS">
+        <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
+      </viewAttribute>
+      <viewAttribute id="CONTRACTORS_PMNTS">
+        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="PMNTS_TO_ASSOCS">
+        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      </viewAttribute>
+      <viewAttribute id="OTHR_SLS_GOODS_SRVC_AMT">
+        <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_INCM_OR_LOSS">
+        <descriptions defaultDescription="TOTL_INCM_OR_LOSS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_ASSETS">
+        <descriptions defaultDescription="TOTL_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_ASSETS">
+        <descriptions defaultDescription="CURNT_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="GRS_RENT_AMT">
+        <descriptions defaultDescription="GRS_RENT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_LIABILITIES">
+        <descriptions defaultDescription="TOTL_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_LIABILITIES">
+        <descriptions defaultDescription="CURNT_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="PROPRIETORS_FUND">
+        <descriptions defaultDescription="PROPRIETORS_FUND"/>
+      </viewAttribute>
+      <viewAttribute id="DISTRIBUTION">
+        <descriptions defaultDescription="DISTRIBUTION"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_BAS" source="ATO_AUST_WAGES_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_ITR" source="ATO_AUST_WAGES_ITR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_PCON_ITR" source="ATO_AUST_WAGES_PCON_ITR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATOSI_BAS" source="ATOSI_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_ACQUISITIONS_BAS" source="TOTAL_ACQUISITIONS_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT_BAS" source="TOTL_PMT_FOR_WRK_AMT_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT_BAS" source="FBT_INST_AMT_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_BUS_INCM_AMT" source="TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHS_OTH_COSTS" source="PURCHS_OTH_COSTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OTHR_SLS_GOODS_SRVC_AMT" source="OTHR_SLS_GOODS_SRVC_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_INCM_OR_LOSS" source="TOTL_INCM_OR_LOSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_ASSETS" source="TOTL_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_ASSETS" source="CURNT_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRS_RENT_AMT" source="GRS_RENT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_LIABILITIES" source="TOTL_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_LIABILITIES" source="CURNT_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPRIETORS_FUND" source="PROPRIETORS_FUND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION" source="DISTRIBUTION"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ATO_AUST_WAGES_BAS" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ATO_AUST_WAGES_BAS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATO_AUST_WAGES_BAS"/>
+    </measure>
+    <measure id="ATO_AUST_WAGES_ITR" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ATO_AUST_WAGES_ITR"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATO_AUST_WAGES_ITR"/>
+    </measure>
+    <measure id="ATO_AUST_WAGES_PCON_ITR" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ATO_AUST_WAGES_PCON_ITR"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATO_AUST_WAGES_PCON_ITR"/>
+    </measure>
+    <measure id="ATOSI_BAS" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATOSI_BAS"/>
+    </measure>
+    <measure id="TOTAL_ACQUISITIONS_BAS" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_ACQUISITIONS_BAS"/>
+    </measure>
+    <measure id="TOTL_PMT_FOR_WRK_AMT_BAS" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_PMT_FOR_WRK_AMT_BAS"/>
+    </measure>
+    <measure id="FBT_INST_AMT_BAS" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FBT_INST_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FBT_INST_AMT_BAS"/>
+    </measure>
+    <measure id="ACT_WAGES" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ACT_WAGES"/>
+    </measure>
+    <measure id="ACT_APPR_WAGES" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ACT_APPR_WAGES"/>
+    </measure>
+    <measure id="TOTL_BUS_INCM_AMT" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_BUS_INCM_AMT"/>
+    </measure>
+    <measure id="SALARY_WAGES" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="SALARY_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="SALARY_WAGES"/>
+    </measure>
+    <measure id="SUPER_EXPNS" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="SUPER_EXPNS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="SUPER_EXPNS"/>
+    </measure>
+    <measure id="PURCHS_OTH_COSTS" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PURCHS_OTH_COSTS"/>
+    </measure>
+    <measure id="CONTRACTORS_PMNTS" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CONTRACTORS_PMNTS"/>
+    </measure>
+    <measure id="PMNTS_TO_ASSOCS" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
+    </measure>
+    <measure id="OTHR_SLS_GOODS_SRVC_AMT" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="OTHR_SLS_GOODS_SRVC_AMT"/>
+    </measure>
+    <measure id="TOTL_INCM_OR_LOSS" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_INCM_OR_LOSS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_INCM_OR_LOSS"/>
+    </measure>
+    <measure id="TOTL_ASSETS" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_ASSETS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_ASSETS"/>
+    </measure>
+    <measure id="CURNT_ASSETS" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CURNT_ASSETS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CURNT_ASSETS"/>
+    </measure>
+    <measure id="GRS_RENT_AMT" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GRS_RENT_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GRS_RENT_AMT"/>
+    </measure>
+    <measure id="TOTL_LIABILITIES" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_LIABILITIES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_LIABILITIES"/>
+    </measure>
+    <measure id="CURNT_LIABILITIES" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CURNT_LIABILITIES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CURNT_LIABILITIES"/>
+    </measure>
+    <measure id="PROPRIETORS_FUND" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PROPRIETORS_FUND"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PROPRIETORS_FUND"/>
+    </measure>
+    <measure id="DISTRIBUTION" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="DISTRIBUTION"/>
+      <measureMapping columnObjectName="Projection_1" columnName="DISTRIBUTION"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures>
+    <measure id="ATO_AUST_WAGES_MAX" order="26" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
+      <formula>if(&quot;ATO_AUST_WAGES_BAS&quot;&gt;&quot;ATO_AUST_WAGES_ITR&quot;,&quot;ATO_AUST_WAGES_BAS&quot;,&quot;ATO_AUST_WAGES_ITR&quot;)</formula>
+      
+      </measure>
+    <measure id="MAX_WAGE" order="27" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
+      <formula>if(&quot;ATO_AUST_WAGES_MAX&quot;&gt;&quot;ACT_WAGES&quot;,&quot;ATO_AUST_WAGES_MAX&quot;,&quot;ACT_WAGES&quot;)</formula>
+      </measure>
+  </calculatedMeasures>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="379" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="ATO_ITR_NIND" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ATO_BAS_NIND" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="WCQ_WAGES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="341"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="379" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
