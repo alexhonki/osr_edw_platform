@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_PRT_THRESHOLD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PRT_THRESHOLD"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_PRT_THRESHOLD" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_PRT_THRESHOLD</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_PRT_THRESHOLD">
+  <attributes>
+    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Fiscal year"/>
+      <keyMapping columnObjectName="TF_PRT_THRESHOLD" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="INCOTYP" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Inbound Correspondence Category"/>
+      <keyMapping columnObjectName="TF_PRT_THRESHOLD" columnName="INCOTYP"/>
+    </attribute>
+    <attribute id="FROMDATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Period From date"/>
+      <keyMapping columnObjectName="TF_PRT_THRESHOLD" columnName="FROMDATE"/>
+    </attribute>
+    <attribute id="TODATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Period To Date"/>
+      <keyMapping columnObjectName="TF_PRT_THRESHOLD" columnName="TODATE"/>
+    </attribute>
+    <attribute id="WAERS" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Currency Key"/>
+      <keyMapping columnObjectName="TF_PRT_THRESHOLD" columnName="WAERS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="THRESHOLD" order="5" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="Payroll Tax Threshold"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
+      <measureMapping columnObjectName="TF_PRT_THRESHOLD" columnName="THRESHOLD"/>
+    </measure>
+    <measure id="DEDUCTION_TO" order="6" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="Default Payroll Tax Deductions"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
+      <measureMapping columnObjectName="TF_PRT_THRESHOLD" columnName="DEDUCTION_TO"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
