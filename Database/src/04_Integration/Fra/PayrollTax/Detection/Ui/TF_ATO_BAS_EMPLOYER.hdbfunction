@@ -1,0 +1,48 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_EMPLOYER"( )
+       RETURNS TABLE
+(
+FINANCIAL_YEAR		INTEGER,
+ABN					NVARCHAR(20),
+ACN					NVARCHAR(20),
+CLNT_TYP			NVARCHAR(3),
+FULL_NM_TXT			NVARCHAR(200),
+TRDNG_NM			NVARCHAR(200),	
+ANZSIC_CD			NVARCHAR(5),
+ANZSIC_TITLE		NVARCHAR(79)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+ lt_emp = 
+ SELECT 
+"A"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
+"A"."ABN" AS "ABN",
+"A"."ACN" AS "ACN",
+"A"."CLNT_TYP" AS "CLNT_TYP",
+"A"."FULL_NM_TXT" AS "FULL_NM_TXT",
+"A"."TRDNG_NM" AS "TRDNG_NM",	
+"A"."ANZSIC_CD" AS "ANZSIC_CD",
+"A"."ANZSIC_TITLE" AS "ANZSIC_TITLE"
+--FROM "osr.edw.source.td.ato::VT_BASNIND" AS "A"
+--FROM "osr.edw.staging.md.ato.synonym::CDS_BAS.DSO.BASNIND.active_data";
+FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "A"
+where 	"A"."ABN" = '11000002568';
+
+RETURN
+SELECT
+"FINANCIAL_YEAR",
+"ABN",
+"ACN",
+"CLNT_TYP",
+"FULL_NM_TXT",
+"TRDNG_NM",	
+"ANZSIC_CD",
+"ANZSIC_TITLE"
+FROM  :lt_emp;
+--FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+--
+END;
+
+
+
