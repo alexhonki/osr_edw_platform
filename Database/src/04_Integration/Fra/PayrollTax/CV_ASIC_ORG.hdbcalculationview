@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.PayrollTax::CV_ASIC_ORG" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ASIC_ORG"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data">
+    <resourceUri>osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ABN"/>
+    </attribute>
+    <attribute id="ORG_NUMBER" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NUMBER"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NUMBER"/>
+    </attribute>
+    <attribute id="ORG_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NAME"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NAME"/>
+    </attribute>
+    <attribute id="ORG_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_TYPE"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_TYPE"/>
+    </attribute>
+    <attribute id="ORG_STATUS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_STATUS"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_STATUS"/>
+    </attribute>
+    <attribute id="ORG_CLASS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_CLASS"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_CLASS"/>
+    </attribute>
+    <attribute id="ORG_SUB_CLASS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_SUB_CLASS"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_SUB_CLASS"/>
+    </attribute>
+    <attribute id="ORG_END_DT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_END_DT"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_END_DT"/>
+    </attribute>
+    <attribute id="REGN_END_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_END_DT"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="REGN_END_DT"/>
+    </attribute>
+    <attribute id="ORG_START_DT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_START_DT"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_START_DT"/>
+    </attribute>
+    <attribute id="ORG_NAME_START_DT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NAME_START_DT"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NAME_START_DT"/>
+    </attribute>
+    <attribute id="DEREGISTRATION_CODE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="DEREGISTRATION_CODE"/>
+    </attribute>
+    <attribute id="PLACE_OF_INCORP" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="PLACE_OF_INCORP"/>
+    </attribute>
+    <attribute id="REGN_START_DT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_START_DT"/>
+      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="REGN_START_DT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
