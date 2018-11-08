@@ -8,4 +8,27 @@ context Types {
         PLNO         : String(20);
         BPARTNER     : String(10);
     };
+    
+    
+    entity WS_PTNGWAGE_1 {
+        ABN             : String(11);
+        PERIOD_CATEGORY : String(10);
+ 	    PERIOD_KEY      : String(4);
+        PERIOD_END_DATE : String(8);
+        GJAHR           : String(4);
+   		};
+   		
+   	entity WS_PTNGWAGE_2 {
+        ABN             				: String(11);
+        PERIOD_CATEGORY 				: String(10);
+ 	    PERIOD_KEY      				: String(4);
+        PERIOD_END_DATE 				: String(8);
+        GJAHR           				: String(4);
+        ATO_BAS_TOTL_PMT_FOR_WRK_AMT	: Decimal(15,2);
+        ATO_ITR_SALARY_WAGES			: Decimal(15,2);
+        WCQ_ACT_WAGES					: Decimal(15,2);
+        WCQ_ACT_APPR_WAGES				: Decimal(15,2);
+        WAERS							: String(5);
+   		};	
+    
 };
