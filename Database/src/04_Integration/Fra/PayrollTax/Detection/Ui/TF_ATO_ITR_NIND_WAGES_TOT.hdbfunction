@@ -26,7 +26,7 @@ sum("A"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
 sum("A"."PMNTS_TO_ASSOCS") AS "PMNTS_TO_ASSOCS"
 --'AUD' AS "WAERS"	
 FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "A"
-where 	"A"."ABN" = '11159226116'
+--where 	"A"."ABN" = '11159226116'
 GROUP BY "INCM_YR",
 	 "ABN";
 
