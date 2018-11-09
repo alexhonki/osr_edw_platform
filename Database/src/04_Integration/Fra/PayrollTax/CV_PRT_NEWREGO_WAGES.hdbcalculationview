@@ -13,6 +13,12 @@
   <DataSource id="osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES">
     <resourceUri>osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::CV_PRT_RATE">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::CV_PRT_RATE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::CV_PRT_THRESHOLD">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::CV_PRT_THRESHOLD</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:AggregationView" id="ATO_ITR_NIND" filterExpressionLanguage="COLUMN_ENGINE">
@@ -164,7 +170,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+  <calculationView xsi:type="Calculation:UnionView" id="U_WAGES">
     <viewAttributes>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
@@ -336,7 +342,7 @@
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="DISTRIBUTION" null="true" value=""/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_WAGES">
     <viewAttributes>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
@@ -417,9 +423,13 @@
         <descriptions defaultDescription="DISTRIBUTION"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FINANCIAL_YEAR_STRING" datatype="NVARCHAR" length="4" expressionLanguage="COLUMN_ENGINE">
+        <formula>string(&quot;FINANCIAL_YEAR&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="Union_1">
+    <input node="U_WAGES">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_BAS" source="ATO_AUST_WAGES_BAS"/>
@@ -448,124 +458,358 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION" source="DISTRIBUTION"/>
     </input>
   </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_WAGES_PERIOD" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="sum">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_BAS" aggregationType="sum">
+        <descriptions defaultDescription="ATO_AUST_WAGES_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_ITR" aggregationType="sum">
+        <descriptions defaultDescription="ATO_AUST_WAGES_ITR"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_AUST_WAGES_PCON_ITR" aggregationType="sum">
+        <descriptions defaultDescription="ATO_AUST_WAGES_PCON_ITR"/>
+      </viewAttribute>
+      <viewAttribute id="ATOSI_BAS" aggregationType="sum">
+        <descriptions defaultDescription="ATOSI_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_ACQUISITIONS_BAS" aggregationType="sum">
+        <descriptions defaultDescription="TOTAL_ACQUISITIONS_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT_BAS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="FBT_INST_AMT_BAS" aggregationType="sum">
+        <descriptions defaultDescription="FBT_INST_AMT_BAS"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_BUS_INCM_AMT" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="SALARY_WAGES" aggregationType="sum">
+        <descriptions defaultDescription="SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="SUPER_EXPNS" aggregationType="sum">
+        <descriptions defaultDescription="SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="PURCHS_OTH_COSTS" aggregationType="sum">
+        <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
+      </viewAttribute>
+      <viewAttribute id="CONTRACTORS_PMNTS" aggregationType="sum">
+        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="PMNTS_TO_ASSOCS" aggregationType="sum">
+        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      </viewAttribute>
+      <viewAttribute id="OTHR_SLS_GOODS_SRVC_AMT" aggregationType="sum">
+        <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_INCM_OR_LOSS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_INCM_OR_LOSS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_ASSETS" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_ASSETS" aggregationType="sum">
+        <descriptions defaultDescription="CURNT_ASSETS"/>
+      </viewAttribute>
+      <viewAttribute id="GRS_RENT_AMT" aggregationType="sum">
+        <descriptions defaultDescription="GRS_RENT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_LIABILITIES" aggregationType="sum">
+        <descriptions defaultDescription="TOTL_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="CURNT_LIABILITIES" aggregationType="sum">
+        <descriptions defaultDescription="CURNT_LIABILITIES"/>
+      </viewAttribute>
+      <viewAttribute id="PROPRIETORS_FUND" aggregationType="sum">
+        <descriptions defaultDescription="PROPRIETORS_FUND"/>
+      </viewAttribute>
+      <viewAttribute id="DISTRIBUTION" aggregationType="sum">
+        <descriptions defaultDescription="DISTRIBUTION"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="Key for Period Assignment"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="Period To Date"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="Currency Key"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="P_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_BAS" source="ATO_AUST_WAGES_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_ITR" source="ATO_AUST_WAGES_ITR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_AUST_WAGES_PCON_ITR" source="ATO_AUST_WAGES_PCON_ITR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATOSI_BAS" source="ATOSI_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_ACQUISITIONS_BAS" source="TOTAL_ACQUISITIONS_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT_BAS" source="TOTL_PMT_FOR_WRK_AMT_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT_BAS" source="FBT_INST_AMT_BAS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_BUS_INCM_AMT" source="TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHS_OTH_COSTS" source="PURCHS_OTH_COSTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OTHR_SLS_GOODS_SRVC_AMT" source="OTHR_SLS_GOODS_SRVC_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_INCM_OR_LOSS" source="TOTL_INCM_OR_LOSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_ASSETS" source="TOTL_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_ASSETS" source="CURNT_ASSETS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRS_RENT_AMT" source="GRS_RENT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_LIABILITIES" source="TOTL_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURNT_LIABILITIES" source="CURNT_LIABILITIES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROPRIETORS_FUND" source="PROPRIETORS_FUND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DISTRIBUTION" source="DISTRIBUTION"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    </input>
+  
+    <input node="J_PRT_THRESHOLD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="GJAHR"/>
+    </input>
+    <joinAttribute name="FINANCIAL_YEAR_STRING"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_PRT_THRESHOLD" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="Fiscal Year"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="Key for Period Assignment"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="Period To Date"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="Currency Key"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="P_RATE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+    </input>
+    <input node="P_THRESHOLD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="INCOTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="TODATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+    <joinAttribute name="GJAHR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_RATE">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="Fiscal Year"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="Key for Period Assignment"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::CV_PRT_RATE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_THRESHOLD">
+    <viewAttributes>
+      <viewAttribute id="INCOTYP">
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
+      </viewAttribute>
+      <viewAttribute id="TODATE">
+        <descriptions defaultDescription="Period To Date"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="Currency Key"/>
+      </viewAttribute>
+    
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="Fiscal year"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::CV_PRT_THRESHOLD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCOTYP" source="INCOTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TODATE" source="TODATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+    </input>
+  </calculationView>
 </calculationViews>
-<logicalModel id="Projection_1">
+<logicalModel id="J_WAGES_PERIOD">
   <attributes>
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="ABN"/>
     </attribute>
     <attribute id="FINANCIAL_YEAR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+  
+    <attribute id="FINANCIAL_YEAR_STRING" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="FINANCIAL_YEAR_STRING"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Key for Period Assignment"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="PERIOD_CATEGORY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Inbound Correspondence Category"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="PERIOD_CATEGORY"/>
+    </attribute>
+    <attribute id="PERIOD_END_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Period To Date"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="PERIOD_END_DATE"/>
+    </attribute>
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Currency Key"/>
+      <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="WAERS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ATO_AUST_WAGES_BAS" order="3" aggregationType="sum" measureType="simple">
+    <measure id="ATO_AUST_WAGES_BAS" order="8" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ATO_AUST_WAGES_BAS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ATO_AUST_WAGES_BAS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="ATO_AUST_WAGES_BAS"/>
     </measure>
-    <measure id="ATO_AUST_WAGES_ITR" order="4" aggregationType="sum" measureType="simple">
+    <measure id="ATO_AUST_WAGES_ITR" order="9" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ATO_AUST_WAGES_ITR"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ATO_AUST_WAGES_ITR"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="ATO_AUST_WAGES_ITR"/>
     </measure>
-    <measure id="ATO_AUST_WAGES_PCON_ITR" order="5" aggregationType="sum" measureType="simple">
+    <measure id="ATO_AUST_WAGES_PCON_ITR" order="10" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ATO_AUST_WAGES_PCON_ITR"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ATO_AUST_WAGES_PCON_ITR"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="ATO_AUST_WAGES_PCON_ITR"/>
     </measure>
-    <measure id="ATOSI_BAS" order="6" aggregationType="sum" measureType="simple">
+    <measure id="ATOSI_BAS" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ATOSI_BAS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="ATOSI_BAS"/>
     </measure>
-    <measure id="TOTAL_ACQUISITIONS_BAS" order="7" aggregationType="sum" measureType="simple">
+    <measure id="TOTAL_ACQUISITIONS_BAS" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_ACQUISITIONS_BAS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="TOTAL_ACQUISITIONS_BAS"/>
     </measure>
-    <measure id="TOTL_PMT_FOR_WRK_AMT_BAS" order="8" aggregationType="sum" measureType="simple">
+    <measure id="TOTL_PMT_FOR_WRK_AMT_BAS" order="13" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTL_PMT_FOR_WRK_AMT_BAS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="TOTL_PMT_FOR_WRK_AMT_BAS"/>
     </measure>
-    <measure id="FBT_INST_AMT_BAS" order="9" aggregationType="sum" measureType="simple">
+    <measure id="FBT_INST_AMT_BAS" order="14" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FBT_INST_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="FBT_INST_AMT_BAS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="FBT_INST_AMT_BAS"/>
     </measure>
-    <measure id="ACT_WAGES" order="10" aggregationType="sum" measureType="simple">
+    <measure id="ACT_WAGES" order="15" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ACT_WAGES"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ACT_WAGES"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="ACT_WAGES"/>
     </measure>
-    <measure id="ACT_APPR_WAGES" order="11" aggregationType="sum" measureType="simple">
+    <measure id="ACT_APPR_WAGES" order="16" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ACT_APPR_WAGES"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ACT_APPR_WAGES"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="ACT_APPR_WAGES"/>
     </measure>
-    <measure id="TOTL_BUS_INCM_AMT" order="12" aggregationType="sum" measureType="simple">
+    <measure id="TOTL_BUS_INCM_AMT" order="17" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTL_BUS_INCM_AMT"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="TOTL_BUS_INCM_AMT"/>
     </measure>
-    <measure id="SALARY_WAGES" order="13" aggregationType="sum" measureType="simple">
+    <measure id="SALARY_WAGES" order="18" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="SALARY_WAGES"/>
-      <measureMapping columnObjectName="Projection_1" columnName="SALARY_WAGES"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="SALARY_WAGES"/>
     </measure>
-    <measure id="SUPER_EXPNS" order="14" aggregationType="sum" measureType="simple">
+    <measure id="SUPER_EXPNS" order="19" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="SUPER_EXPNS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="SUPER_EXPNS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="SUPER_EXPNS"/>
     </measure>
-    <measure id="PURCHS_OTH_COSTS" order="15" aggregationType="sum" measureType="simple">
+    <measure id="PURCHS_OTH_COSTS" order="20" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="PURCHS_OTH_COSTS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="PURCHS_OTH_COSTS"/>
     </measure>
-    <measure id="CONTRACTORS_PMNTS" order="16" aggregationType="sum" measureType="simple">
+    <measure id="CONTRACTORS_PMNTS" order="21" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="CONTRACTORS_PMNTS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="CONTRACTORS_PMNTS"/>
     </measure>
-    <measure id="PMNTS_TO_ASSOCS" order="17" aggregationType="sum" measureType="simple">
+    <measure id="PMNTS_TO_ASSOCS" order="22" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="PMNTS_TO_ASSOCS"/>
     </measure>
-    <measure id="OTHR_SLS_GOODS_SRVC_AMT" order="18" aggregationType="sum" measureType="simple">
+    <measure id="OTHR_SLS_GOODS_SRVC_AMT" order="23" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="OTHR_SLS_GOODS_SRVC_AMT"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="OTHR_SLS_GOODS_SRVC_AMT"/>
     </measure>
-    <measure id="TOTL_INCM_OR_LOSS" order="19" aggregationType="sum" measureType="simple">
+    <measure id="TOTL_INCM_OR_LOSS" order="24" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_INCM_OR_LOSS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTL_INCM_OR_LOSS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="TOTL_INCM_OR_LOSS"/>
     </measure>
-    <measure id="TOTL_ASSETS" order="20" aggregationType="sum" measureType="simple">
+    <measure id="TOTL_ASSETS" order="25" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_ASSETS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTL_ASSETS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="TOTL_ASSETS"/>
     </measure>
-    <measure id="CURNT_ASSETS" order="21" aggregationType="sum" measureType="simple">
+    <measure id="CURNT_ASSETS" order="26" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CURNT_ASSETS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="CURNT_ASSETS"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="CURNT_ASSETS"/>
     </measure>
-    <measure id="GRS_RENT_AMT" order="22" aggregationType="sum" measureType="simple">
+    <measure id="GRS_RENT_AMT" order="27" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="GRS_RENT_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="GRS_RENT_AMT"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="GRS_RENT_AMT"/>
     </measure>
-    <measure id="TOTL_LIABILITIES" order="23" aggregationType="sum" measureType="simple">
+    <measure id="TOTL_LIABILITIES" order="28" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_LIABILITIES"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTL_LIABILITIES"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="TOTL_LIABILITIES"/>
     </measure>
-    <measure id="CURNT_LIABILITIES" order="24" aggregationType="sum" measureType="simple">
+    <measure id="CURNT_LIABILITIES" order="29" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CURNT_LIABILITIES"/>
-      <measureMapping columnObjectName="Projection_1" columnName="CURNT_LIABILITIES"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="CURNT_LIABILITIES"/>
     </measure>
-    <measure id="PROPRIETORS_FUND" order="25" aggregationType="sum" measureType="simple">
+    <measure id="PROPRIETORS_FUND" order="30" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="PROPRIETORS_FUND"/>
-      <measureMapping columnObjectName="Projection_1" columnName="PROPRIETORS_FUND"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="PROPRIETORS_FUND"/>
     </measure>
-    <measure id="DISTRIBUTION" order="28" aggregationType="sum" measureType="simple">
+    <measure id="DISTRIBUTION" order="33" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="DISTRIBUTION"/>
-      <measureMapping columnObjectName="Projection_1" columnName="DISTRIBUTION"/>
+      <measureMapping columnObjectName="J_WAGES_PERIOD" columnName="DISTRIBUTION"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures>
-    <measure id="ATO_AUST_WAGES_MAX" order="26" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
+    <measure id="ATO_AUST_WAGES_MAX" order="31" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
       <formula>if(&quot;ATO_AUST_WAGES_BAS&quot;&gt;&quot;ATO_AUST_WAGES_ITR&quot;,&quot;ATO_AUST_WAGES_BAS&quot;,&quot;ATO_AUST_WAGES_ITR&quot;)</formula>
       
+      
       </measure>
-    <measure id="MAX_WAGE" order="27" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
+    <measure id="MAX_WAGE" order="32" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="17" scale="2" expressionLanguage="COLUMN_ENGINE">
       <formula>if(&quot;ATO_AUST_WAGES_MAX&quot;&gt;&quot;ACT_WAGES&quot;,&quot;ATO_AUST_WAGES_MAX&quot;,&quot;ACT_WAGES&quot;)</formula>
+      
       </measure>
   </calculatedMeasures>
   <restrictedMeasures/>
@@ -574,31 +818,64 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="379" y="112"/>
+      <upperLeftCorner x="550.2893257409594" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="ATO_ITR_NIND" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="496"/>
+      <upperLeftCorner x="91.99999999999997" y="711.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ATO_BAS_NIND" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="512" y="496"/>
+      <upperLeftCorner x="511.9999999999999" y="711.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="WCQ_WAGES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="496"/>
+      <upperLeftCorner x="301.99999999999994" y="711.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="341"/>
+    <shape expanded="true" modelObjectName="U_WAGES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="131.99999999999994" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="379" y="217"/>
+    <shape expanded="true" modelObjectName="P_WAGES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="299.6227446277829" y="394.4999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="J_WAGES_PERIOD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="550.2893257409594" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_WAGES" modelObjectNameSpace="J_WAGES_PERIOD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="261"/>
+    </shape>
+    <shape modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="J_WAGES_PERIOD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="601.2456698196344" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_RATE" modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_THRESHOLD" modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_RATE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="509.6227446277828" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_THRESHOLD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="719.6227446277829" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>

@@ -239,6 +239,19 @@
       <viewAttribute id="FINANCIAL_YEAR_STRING">
         <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="Period To Date"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="Currency Key"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="Key for Period Assignment"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -256,6 +269,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="THRESHOLD" source="THRESHOLD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_YRLY_RATE" source="PRT_YRLY_RATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_DAILY_RATE" source="PRT_DAILY_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="INCOTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="TODATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="GJAHR"/>
     </input>
     <joinAttribute name="FINANCIAL_YEAR_STRING"/>
@@ -294,6 +311,19 @@
       <viewAttribute id="FINANCIAL_YEAR_STRING">
         <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -310,6 +340,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <filter>&quot;MAX_WAGE&quot;&gt;&quot;THRESHOLD&quot;</filter>
   </calculationView>
@@ -457,6 +492,19 @@
       <viewAttribute id="ACT_WAGES">
         <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -473,6 +521,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <input node="J_ASIC_ORG_ABN">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
@@ -559,6 +612,19 @@
       <viewAttribute id="ACT_WAGES">
         <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -575,6 +641,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
   
     <input node="P_TF_PRT_NEWREGO_BP_INFO">
@@ -592,6 +663,10 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_TF_PRT_NEWREGO_BP_INFO">
     <viewAttributes>
+    
+      <viewAttribute id="ZFINYEAR">
+        <descriptions defaultDescription="ZFINYEAR"/>
+      </viewAttribute>
       <viewAttribute id="PARTNER">
         <descriptions defaultDescription="PARTNER"/>
       </viewAttribute>
@@ -600,10 +675,6 @@
       </viewAttribute>
       <viewAttribute id="DATE_TO">
         <descriptions defaultDescription="DATE_TO"/>
-      </viewAttribute>
-    
-      <viewAttribute id="ZFINYEAR">
-        <descriptions defaultDescription="ZFINYEAR"/>
       </viewAttribute>
       <viewAttribute id="ZABN">
         <descriptions defaultDescription="ZABN"/>
@@ -660,6 +731,19 @@
       <viewAttribute id="ACT_WAGES">
         <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -679,6 +763,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <filter>(not isNull(&quot;PARTNER&quot;)) and &quot;PARTNER&quot; != ' '</filter>
   </calculationView>
@@ -730,6 +819,19 @@
       <viewAttribute id="ACT_WAGES">
         <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -749,6 +851,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <input node="A_ANNUAL_RETURNS">
       <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR_RETURN" source="FISCAL_YEAR"/>
@@ -791,6 +898,19 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -799,6 +919,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_CATEGORY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_END_DATE" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="WAERS" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_KEY" null="true" value=""/>
     </input>
   
     <input node="P_WITHOUT_BP_2" emptyUnionBehavior="NO_ROW">
@@ -808,18 +933,28 @@
   
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
   
+    
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+  
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+  
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_WITH_BP_2" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
       <viewAttribute id="FINANCIAL_YEAR">
         <descriptions defaultDescription="FINANCIAL_YEAR"/>
       </viewAttribute>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
       <viewAttribute id="PRT_TAX_LIAB_DATE">
         <descriptions defaultDescription="PRT_TAX_LIAB_DATE"/>
@@ -832,6 +967,19 @@
       </viewAttribute>
       <viewAttribute id="PARTNER_RETURN">
         <descriptions defaultDescription="PARTNER_RETURN"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -852,6 +1000,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_RETURN" source="PARTNER_RETURN"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <filter>(&quot;PRT_TAX_LIAB_DATE&quot;&gt;&quot;PRT_LIAB_DATETO&quot; and &quot;DATE_TO&quot;&gt;&quot;PRT_LIAB_DATETO&quot; ) or 
 (&quot;DATE_TO&quot;&lt;&quot;PRT_LIAB_DATEFROM&quot; and &quot;PRT_TAX_LIAB_DATE&quot;&lt;&quot;PRT_LIAB_DATEFROM&quot;) and
@@ -859,20 +1012,33 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_WITHOUT_BP_2" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
       <viewAttribute id="FINANCIAL_YEAR">
         <descriptions defaultDescription="FINANCIAL_YEAR"/>
       </viewAttribute>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
       <viewAttribute id="PARTNER">
         <descriptions defaultDescription="PARTNER"/>
       </viewAttribute>
       <viewAttribute id="ACT_WAGES">
         <descriptions defaultDescription="ACT_WAGES"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -884,14 +1050,16 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <filter>&quot;ACT_WAGES&quot;&gt;0</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_WITHOUT_BP_1" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
       <viewAttribute id="FINANCIAL_YEAR">
         <descriptions defaultDescription="FINANCIAL_YEAR"/>
       </viewAttribute>
@@ -904,6 +1072,22 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <viewAttribute id="ACT_WAGES">
         <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
+    
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -914,6 +1098,11 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
     </input>
     <filter>(&quot;PARTNER&quot; =' ') or isNull(&quot;PARTNER&quot;) and 
 (&quot;ACT_WAGES&quot;!=0) and (not isNull(&quot;ACT_WAGES&quot;))</filter>
@@ -929,6 +1118,23 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Union_1" columnName="ABN"/>
     </attribute>
+  
+    <attribute id="PERIOD_CATEGORY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="Union_1" columnName="PERIOD_CATEGORY"/>
+    </attribute>
+    <attribute id="PERIOD_END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="Union_1" columnName="PERIOD_END_DATE"/>
+    </attribute>
+    <attribute id="WAERS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="Union_1" columnName="WAERS"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="Union_1" columnName="PERIOD_KEY"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
@@ -937,25 +1143,25 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="703.1262816519478" y="112"/>
+      <upperLeftCorner x="703" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="P_WAGES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="412.7283863508325" y="1426.9999916553497"/>
+      <upperLeftCorner x="412" y="1426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000017" y="1586.9999904632568"/>
+      <upperLeftCorner x="302" y="1586"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_RATE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000004" y="1586.9999904632568"/>
+      <upperLeftCorner x="92" y="1586"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_PRT_THLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666667" y="1426.9999916553497"/>
+      <upperLeftCorner x="118" y="1426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_THRESHOLD" modelObjectNameSpace="J_PRT_THLD" modelObjectType="JoinNodeInput">
@@ -967,7 +1173,7 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="145.33333333333343" y="1266.9999928474426"/>
+      <upperLeftCorner x="145" y="1266"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_WAGES" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -979,19 +1185,19 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="P_PRT_GT_THLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="456.9229607959859" y="1114.4999940395355"/>
+      <upperLeftCorner x="456" y="1114"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_REGD_ORG" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="820.1201329963812" y="1586.9999904632568"/>
+      <upperLeftCorner x="820" y="1586"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_DRGD_TODAY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="610.1201329963812" y="1586.9999904632568"/>
+      <upperLeftCorner x="610" y="1586"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_ASIC_ORG" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="636.7867996630479" y="1426.9999916553497"/>
+      <upperLeftCorner x="636" y="1426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_REGD_ORG" modelObjectNameSpace="J_ASIC_ORG" modelObjectType="JoinNodeInput">
@@ -1003,11 +1209,11 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="P_ASIC_ORG_ACTIVE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="748.3610470274143" y="1274.4999928474426"/>
+      <upperLeftCorner x="748" y="1274"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_FILTERED" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="483.58962746265263" y="946.9999952316284"/>
+      <upperLeftCorner x="483" y="946"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_PRT_GT_THLD" modelObjectNameSpace="J_FILTERED" modelObjectType="JoinNodeInput">
@@ -1019,7 +1225,7 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="J_ASIC_ORG_ABN" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="721.6943803607476" y="1106.9999940395355"/>
+      <upperLeftCorner x="721" y="1106"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_ASIC_ORG_ACTIVE" modelObjectNameSpace="J_ASIC_ORG_ABN" modelObjectType="JoinNodeInput">
@@ -1032,11 +1238,11 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
     </shape>
   
     <shape expanded="true" modelObjectName="P_ABN_ACN_MAPPING" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="538.3610470274143" y="1266.9999928474426"/>
+      <upperLeftCorner x="538" y="1266"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_ABN_BP" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="669.4902110932641" y="786.9999964237213"/>
+      <upperLeftCorner x="669" y="786"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_FILTERED" modelObjectNameSpace="J_ABN_BP" modelObjectType="JoinNodeInput">
@@ -1049,15 +1255,15 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
     </shape>
   
     <shape expanded="true" modelObjectName="P_TF_PRT_NEWREGO_BP_INFO" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="696.1568777599307" y="946.9999952316284"/>
+      <upperLeftCorner x="696" y="946"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_WITH_BP_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="400.21078588106053" y="641.9999976158142"/>
+      <upperLeftCorner x="400" y="641"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_PRT_RETURN" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="426.87745254772716" y="481.9999988079071"/>
+      <upperLeftCorner x="426" y="481"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_WITH_BP_1" modelObjectNameSpace="J_PRT_RETURN" modelObjectType="JoinNodeInput">
@@ -1069,25 +1275,25 @@ isNull(&quot;PARTNER_RETURN&quot;) and isNull(&quot;FISCAL_YEAR_RETURN&quot;)</f
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="A_ANNUAL_RETURNS" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="610.2107858810604" y="641.9999976158142"/>
+      <upperLeftCorner x="610" y="641"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="703.1262816519479" y="217"/>
+      <upperLeftCorner x="703" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_WITH_BP_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="426.87745254772716" y="356.9999988079071"/>
+      <upperLeftCorner x="426" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="P_WITHOUT_BP_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="753.9192060271135" y="489.4999988079071"/>
+      <upperLeftCorner x="753" y="489"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="P_WITHOUT_BP_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="820.2107858810604" y="641.9999976158142"/>
+      <upperLeftCorner x="820" y="641"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
