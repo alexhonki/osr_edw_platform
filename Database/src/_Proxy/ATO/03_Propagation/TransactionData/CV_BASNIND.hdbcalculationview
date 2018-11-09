@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.propagation.td.ato.proxy::CV_BASNIND" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ATO BAS Data"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.propagation.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data">
+    <resourceUri>osr.edw.propagation.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.propagation.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ABN"/>
+    </attribute>
+    <attribute id="ACN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ACN"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_CD"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="ANZSIC_TITLE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_TITLE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ANZSIC_TITLE"/>
+    </attribute>
+    <attribute id="BAS_QTR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BAS_QTR"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="BAS_QTR"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="BUS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_2" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="BUS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="BUS_LCLTY_NM" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="BUS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="BUS_PC" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_STATE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="BUS_STATE"/>
+    </attribute>
+    <attribute id="CLNT_TYP" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLNT_TYP"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="CLNT_TYP"/>
+    </attribute>
+    <attribute id="ERROR" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ERROR"/>
+    </attribute>
+    <attribute id="FULL_NM_TXT" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM_TXT"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="NAME" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="NAME"/>
+    </attribute>
+    <attribute id="PARENT_ABN" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ABN"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="PARENT_ABN"/>
+    </attribute>
+    <attribute id="PARENT_ACN" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ACN"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="PARENT_ACN"/>
+    </attribute>
+    <attribute id="PARENT_FULL_NM_TXT" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_FULL_NM_TXT"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="PARENT_FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="PATH" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="PATH"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_1" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="POS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_2" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="POS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="POS_LCLTY_NM" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_LCLTY_NM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="POS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="POS_PC" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_PC"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="POS_PC"/>
+    </attribute>
+    <attribute id="POS_STATE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_STATE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="POS_STATE"/>
+    </attribute>
+    <attribute id="TA_NUM" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TA_NUM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="TA_NUM"/>
+    </attribute>
+    <attribute id="TRDNG_NM" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRDNG_NM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="TRDNG_NM"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="STD_FIRM" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_FIRM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_FIRM"/>
+    </attribute>
+    <attribute id="STD_FIRM2" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_FIRM2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_FIRM2"/>
+    </attribute>
+    <attribute id="STD_FIRM3" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_FIRM3"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_FIRM3"/>
+    </attribute>
+    <attribute id="FIRM_EXTRA" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRM_EXTRA"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FIRM_EXTRA"/>
+    </attribute>
+    <attribute id="FIRM2_EXTRA" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRM2_EXTRA"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FIRM2_EXTRA"/>
+    </attribute>
+    <attribute id="FIRM3_EXTRA" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRM3_EXTRA"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FIRM3_EXTRA"/>
+    </attribute>
+    <attribute id="FIRM_INFO_CODE" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRM_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FIRM_INFO_CODE"/>
+    </attribute>
+    <attribute id="MATCH_FIRM" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_FIRM"/>
+    </attribute>
+    <attribute id="MATCH_FIRM_STD" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM_STD"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_FIRM_STD"/>
+    </attribute>
+    <attribute id="MATCH_FIRM2" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_FIRM2"/>
+    </attribute>
+    <attribute id="MATCH_FIRM2_STD" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM2_STD"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_FIRM2_STD"/>
+    </attribute>
+    <attribute id="MATCH_FIRM3" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM3"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_FIRM3"/>
+    </attribute>
+    <attribute id="MATCH_FIRM3_STD" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM3_STD"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_FIRM3_STD"/>
+    </attribute>
+    <attribute id="STD_ADDR_COUNTRY_NAME" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_COUNTRY_NAME"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_COUNTRY_NAME"/>
+    </attribute>
+    <attribute id="STD_ADDR_SINGLE_ADDRESS" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_SINGLE_ADDRESS"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_SINGLE_ADDRESS"/>
+    </attribute>
+    <attribute id="STD_ADDR_BUILDING_NAME" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_BUILDING_NAME"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_BUILDING_NAME"/>
+    </attribute>
+    <attribute id="STD_ADDR_ADDRESS_DELIVERY" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_ADDRESS_DELIVERY"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_ADDRESS_DELIVERY"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_ADDRESS" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_ADDRESS"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_ADDRESS"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_NAME_FULL" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_NAME_FULL"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_NAME_FULL"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_NAME" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_NAME"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_NAME"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_TYPE" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_TYPE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_TYPE"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_PREFIX" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_PREFIX"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_PREFIX"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_POSTFIX" order="67" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_POSTFIX"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_POSTFIX"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_NUMBER" order="68" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_NUMBER"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_PRIM_NUMBER"/>
+    </attribute>
+    <attribute id="STD_ADDR_LOCALITY" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_LOCALITY"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_LOCALITY"/>
+    </attribute>
+    <attribute id="STD_ADDR_REGION" order="70" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_REGION"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_REGION"/>
+    </attribute>
+    <attribute id="STD_ADDR_POSTCODE1" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_POSTCODE1"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_POSTCODE1"/>
+    </attribute>
+    <attribute id="STD_ADDR_POSTCODE2" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_POSTCODE2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_POSTCODE2"/>
+    </attribute>
+    <attribute id="ADDR_INFO_CODE" order="73" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ADDR_INFO_CODE"/>
+    </attribute>
+    <attribute id="ADDR_ASMT_INFO" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_ASMT_INFO"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ADDR_ASMT_INFO"/>
+    </attribute>
+    <attribute id="ADDR_ASMT_TYPE" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_ASMT_TYPE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ADDR_ASMT_TYPE"/>
+    </attribute>
+    <attribute id="ADDR_ASMT_LEVEL" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_ASMT_LEVEL"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ADDR_ASMT_LEVEL"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_COUNTRY" order="77" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_COUNTRY"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_COUNTRY"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_POSTCODE1" order="78" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_POSTCODE1"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_POSTCODE1"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_REGION" order="79" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_REGION"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_REGION"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_LOCALITY" order="80" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_LOCALITY"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_LOCALITY"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_LOCALITY2" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_LOCALITY2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_LOCALITY2"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_BUILDING" order="82" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_BUILDING"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_BUILDING"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_NAME" order="83" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_NAME"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_PRIM_NAME"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_NAME2" order="84" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_NAME2"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_PRIM_NAME2"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_TYPE" order="85" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_TYPE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_PRIM_TYPE"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_DIR" order="86" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_DIR"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_PRIM_DIR"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_NUMBER" order="87" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_NUMBER"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_PRIM_NUMBER"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_BLOCK" order="88" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_BLOCK"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_BLOCK"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_STAIRWELL" order="89" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_STAIRWELL"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_STAIRWELL"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_WING" order="90" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_WING"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_WING"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_FLOOR" order="91" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_FLOOR"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_FLOOR"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_UNIT" order="92" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_UNIT"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="MATCH_ADDR_UNIT"/>
+    </attribute>
+    <attribute id="ADDR_SCRIPT_CODE" order="93" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_SCRIPT_CODE"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="ADDR_SCRIPT_CODE"/>
+    </attribute>
+    <attribute id="STD_ADDR_POSTCODE_FULL" order="94" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_POSTCODE_FULL"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="STD_ADDR_POSTCODE_FULL"/>
+    </attribute>
+    <attribute id="CLEANSE_ADDRESS" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLEANSE_ADDRESS"/>
+      <keyMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="CLEANSE_ADDRESS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CAC_NUM" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CAC_NUM"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="CAC_NUM"/>
+    </measure>
+    <measure id="FBT_INST_AMT" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FBT_INST_AMT"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FBT_INST_AMT"/>
+    </measure>
+    <measure id="FINANCIAL_YEAR" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="FINANCIAL_YEAR"/>
+    </measure>
+    <measure id="GOODS_SRVC_SUPLY_AMT" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="GOODS_SRVC_SUPLY_AMT"/>
+    </measure>
+    <measure id="GST_PD_AMT" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GST_PD_AMT"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="GST_PD_AMT"/>
+    </measure>
+    <measure id="GST_PYBL_AMT" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GST_PYBL_AMT"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="GST_PYBL_AMT"/>
+    </measure>
+    <measure id="PARTITION" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PARTITION"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="PARTITION"/>
+    </measure>
+    <measure id="PMT_FOR_WRK_IT_WHDG_AMT" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="PMT_FOR_WRK_IT_WHDG_AMT"/>
+    </measure>
+    <measure id="REF_ID" order="32" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="REF_ID"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="REF_ID"/>
+    </measure>
+    <measure id="TOTAL_ACQUISITIONS" order="34" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="TOTAL_ACQUISITIONS"/>
+    </measure>
+    <measure id="TOTL_PMT_FOR_WRK_AMT" order="35" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="TOTL_PMT_FOR_WRK_AMT"/>
+    </measure>
+    <measure id="Z_CHANGE_TIME" order="37" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_CHANGE_TIME"/>
+    </measure>
+    <measure id="Z_RUN_ROW_NO" order="40" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_RUN_ROW_NO"/>
+    </measure>
+    <measure id="Z_RUN_SEQ_ID" order="41" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </measure>
+    <measure id="Cleanse_TABLE_ID" order="95" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Cleanse_TABLE_ID"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Cleanse_TABLE_ID"/>
+    </measure>
+    <measure id="Cleanse_ROW_ID" order="96" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Cleanse_ROW_ID"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="Cleanse_ROW_ID"/>
+    </measure>
+    <measure id="CLEANSE_ADDRESS_KEY" order="98" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CLEANSE_ADDRESS_KEY"/>
+      <measureMapping columnObjectName="CDS_BAS.DSO.BASNIND.active_data" columnName="CLEANSE_ADDRESS_KEY"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
