@@ -30,5 +30,20 @@ context Types {
         WCQ_ACT_APPR_WAGES				: Decimal(15,2);
         WAERS							: String(5);
    		};	
+   		
+   	 entity WS_PTNGWAGE_3 {
+        ABN             				: String(11);
+        PERIOD_CATEGORY 				: String(10);
+ 	    PERIOD_KEY      				: String(4);
+        PERIOD_END_DATE 				: String(8);
+        GJAHR           				: String(4);
+        DETECTION_RESULT                : Integer ;
+   		};	
+   		
+    entity WS_PTNGWAGE_PARAM {
+        THRESHOLD_YEARLY                : Decimal(15,2);
+           
+        };    		
+   		
     
 };

@@ -1,0 +1,33 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageAboveThld"( 
+	
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_2",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_PARAM",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_3"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+DECLARE lv_threshold Decimal(15,2) ;
+
+SELECT "THRESHOLD_YEARLY" INTO lv_threshold FROM :PARAMETERS LIMIT 1;
+
+
+ et_result =
+   SELECT 
+	  "ABN",
+	  "PERIOD_CATEGORY",
+      "PERIOD_KEY",
+      "PERIOD_END_DATE",
+      "GJAHR",
+      100 AS "DETECTION_RESULT"
+   FROM :it_data_for_rule
+   WHERE "ATO_BAS_TOTL_PMT_FOR_WRK_AMT" >= :lv_threshold
+   ;
+   
+END
