@@ -1,6 +1,8 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_RMS_BP_DATES"( )
+FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_BP_DATES"( IN IP_ALERT_ID NVARCHAR(20) )
 RETURNS TABLE
 (
+DB_KEY				NVARCHAR(32),
+ALERT_ID			NVARCHAR(20),
 IDNUMBER			NVARCHAR(60) ,
 PARTNER             NVARCHAR(10) ,
 BP_DESC             NVARCHAR(120) ,
@@ -8,7 +10,6 @@ PARTNERACCTYP       NVARCHAR(2) ,
 VALID_FROM          DECIMAL(15,0) ,
 VALID_TO            DECIMAL(15,0),
 RLTYP               NVARCHAR(6)      
-
 )
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
@@ -17,15 +18,21 @@ BEGIN
 
 BPID_DATA = 
 SELECT 
+"ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."ALERT_ID" AS "ALERT_ID",
 	"BPID"."PARTNER" AS "PARTNER",
 	"BPID"."IDNUMBER" AS "IDNUMBER",
 	"BPID"."INSTITUTE",
 	"BPID"."ENTRY_DATE",
 	"BPID"."VALID_DATE_FROM",
 	"BPID"."VALID_DATE_TO"
-FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
+FROM 
+"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
+INNER JOIN 
+"osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+ON "BPID"."PARTNER" = "ALERT"."BPARTNER"
 WHERE "BPID"."TYPE" = 'ZABN'
---AND "BPID"."PARTNER" = ('47010637242','72586670324',88009927137','93069822626')
+  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
  ;
 
 BP_NAME_DATA =
@@ -35,13 +42,18 @@ SELECT
 	"MC_NAME1",
 	"MC_NAME2",
 	TRIM("MC_NAME1" || CHAR(32) || TRIM("MC_NAME2")) AS "BP_DESC"
-FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
+FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current" 
 ;
 
 RG01_DATA = 
 SELECT "OBJID",  "VALID_TO", "VALID_FROM", "FACT_CAT_SEQ_10", "FACT_CAT_SEQ_81", "FACT_CAT_SEQ_82"
 FROM "osr.edw.source.rms.pscd.proxy::TF_DFACTS_RG01"()
-WHERE "FACT_CAT_SEQ_10" IN (SELECT "PARTNER" FROM :BPID_DATA)
+WHERE "FACT_CAT_SEQ_10"
+IN (
+SELECT 
+"BPARTNER" 
+FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() 
+WHERE "ALERT_ID" = :IP_ALERT_ID )
 ;
 
 BP_ROLE =
@@ -52,10 +64,18 @@ SELECT
 	"VALID_TO"
 FROM "osr.edw.source.md.rms.synonym::CDS_BP.TAB.BUT100"
 WHERE 	"RLTYP" = 'ZPSA'
-AND "PARTNER" IN (SELECT "PARTNER" FROM :BPID_DATA);
+AND "PARTNER"
+IN (
+SELECT 
+"BPARTNER" 
+FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() 
+WHERE "ALERT_ID" = :IP_ALERT_ID )
+;
 
 BP_DETAILS = 
 SELECT 
+"BPID"."DB_KEY" AS "DB_KEY",
+"BPID"."ALERT_ID" AS "ALERT_ID",
 	"BPID"."PARTNER"     AS "PARTNER",
 	"BPID"."IDNUMBER"    AS "IDNUMBER",
 	"BP_NAME"."BP_DESC"  AS "BP_DESC",
@@ -83,6 +103,8 @@ SELECT
 
 RETURN
 SELECT
+"DB_KEY",
+"ALERT_ID",
 "IDNUMBER" AS "IDNUMBER" ,
 "PARTNER"  AS "PARTNER",
 "BP_DESC"  AS "BP_DESC",
