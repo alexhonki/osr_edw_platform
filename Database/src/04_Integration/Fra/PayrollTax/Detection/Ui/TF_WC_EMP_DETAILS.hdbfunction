@@ -1,7 +1,10 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_WC_EMP_DETAILS"( )
+FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_WC_EMP_DETAILS"( IN IP_ALERT_ID NVARCHAR(20)  )
        RETURNS TABLE
 (
+DB_KEY				NVARCHAR(32),
+ALERT_ID			NVARCHAR(20),
 ABN				NVARCHAR(20),
+GJAHR				NVARCHAR(4),
 ACN				NVARCHAR(20),
 POLICY_NO		NVARCHAR(12),
 EMP_NAME		NVARCHAR(100),
@@ -19,10 +22,11 @@ CEASED_DATE 			DATE
        SQL SECURITY INVOKER AS 
 BEGIN 
 
- lt_emp_details = 
- SELECT 
-"A"."ABN",
+lt_emp_details =
+SELECT 
+"A"."ABN", 
 "A"."ACN",
+"A"."NAME",
 "A"."POLICY_NO",
 "A"."EMP_NAME",
 "A"."EMP_GROUP",
@@ -33,26 +37,35 @@ BEGIN
 "B"."WIC",
 "B"."WIC_DSCR",
 "A"."START_EMPLOY_DATE",
-"A"."CEASED_DATE"
-FROM "osr.edw.source.md.wcq.synonym::CDS_WCQ.TAB.POLICY" AS "A"
-INNER JOIN "osr.edw.source.td.wcq.synonym::CDS_WCQ.TAB.WAGES" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
-where 	"A"."ABN" = '11000002568';
+"A"."CEASED_DATE",
+"C"."FISCAL_YEAR" AS "ASSESSMENT_YEAR"
+FROM "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY.active_data" AS "A"
+INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
+INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "C" ON TO_DATS("B"."ASSESSMENT_TO")=TO_DATS("C"."DATE_SQL");
+--where 	"A"."ABN" = '11000002568';
 
 RETURN
 SELECT
-"ABN",
-"ACN",
-"POLICY_NO",
-"EMP_NAME",
-"EMP_GROUP",
-"POLICY_TYPE",
-"INSUR_TYPE",
-"LEGAL_ENTITY",
-"POLICY_STATUS",
-"WIC",
-"WIC_DSCR",
-"START_EMPLOY_DATE",
-"CEASED_DATE"
-FROM  :lt_emp_details;
+"ALERT"."DB_KEY",
+"ALERT"."ALERT_ID",
+"ALERT"."ABN",
+"ALERT"."GJAHR",
+"DATA"."ACN",
+"DATA"."POLICY_NO",
+"DATA"."EMP_NAME",
+"DATA"."EMP_GROUP",
+"DATA"."POLICY_TYPE",
+"DATA"."INSUR_TYPE",
+"DATA"."LEGAL_ENTITY",
+"DATA"."POLICY_STATUS",
+"DATA"."WIC",
+"DATA"."WIC_DSCR",
+"DATA"."START_EMPLOY_DATE",
+"DATA"."CEASED_DATE"
+FROM  :lt_emp_details AS "DATA"
+INNER JOIN  "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
+AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."ASSESSMENT_YEAR")
+WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
 
 END;

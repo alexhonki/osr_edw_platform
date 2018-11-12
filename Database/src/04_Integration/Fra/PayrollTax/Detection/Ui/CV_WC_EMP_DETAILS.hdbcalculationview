@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.ui::CV_WC_EMP_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_WC_EMP_DETAILS"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.ui::TF_WC_EMP_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.ui::TF_WC_EMP_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="EMP_NAME">
+        <descriptions defaultDescription="EMP_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_GROUP">
+        <descriptions defaultDescription="EMP_GROUP"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="POLICY_TYPE">
+        <descriptions defaultDescription="POLICY_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="INSUR_TYPE">
+        <descriptions defaultDescription="INSUR_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="WIC">
+        <descriptions defaultDescription="WIC"/>
+      </viewAttribute>
+      <viewAttribute id="LEGAL_ENTITY">
+        <descriptions defaultDescription="LEGAL_ENTITY"/>
+      </viewAttribute>
+      <viewAttribute id="WIC_DSCR">
+        <descriptions defaultDescription="WIC_DSCR"/>
+      </viewAttribute>
+      <viewAttribute id="START_EMPLOY_DATE">
+        <descriptions defaultDescription="START_EMPLOY_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="CEASED_DATE">
+        <descriptions defaultDescription="CEASED_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="POLICY_STATUS">
+        <descriptions defaultDescription="POLICY_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="POLICY_NO">
+        <descriptions defaultDescription="POLICY_NO"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.ui::TF_WC_EMP_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_NAME" source="EMP_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_GROUP" source="EMP_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_TYPE" source="POLICY_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INSUR_TYPE" source="INSUR_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WIC" source="WIC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEGAL_ENTITY" source="LEGAL_ENTITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WIC_DSCR" source="WIC_DSCR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="START_EMPLOY_DATE" source="START_EMPLOY_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CEASED_DATE" source="CEASED_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_STATUS" source="POLICY_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+    </input>
+    <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="EMP_NAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employer Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMP_NAME"/>
+    </attribute>
+    <attribute id="ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="EMP_GROUP" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employer Group"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMP_GROUP"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POLICY_TYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Policy Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POLICY_TYPE"/>
+    </attribute>
+    <attribute id="INSUR_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Insurance Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INSUR_TYPE"/>
+    </attribute>
+    <attribute id="WIC" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Industry Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WIC"/>
+    </attribute>
+    <attribute id="LEGAL_ENTITY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Legal Entity"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LEGAL_ENTITY"/>
+    </attribute>
+    <attribute id="WIC_DSCR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Industry Code Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WIC_DSCR"/>
+    </attribute>
+    <attribute id="START_EMPLOY_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employ Start Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="START_EMPLOY_DATE"/>
+    </attribute>
+    <attribute id="CEASED_DATE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employ End Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CEASED_DATE"/>
+    </attribute>
+    <attribute id="ACN" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACN"/>
+    </attribute>
+    <attribute id="POLICY_STATUS" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Policy Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POLICY_STATUS"/>
+    </attribute>
+    <attribute id="DB_KEY" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="POLICY_NO" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Policy Number"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POLICY_NO"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="39" y="199"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
