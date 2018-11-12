@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_FORM_IPA1_IPF1_000" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_FORM_IPA1_IPF1_000"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_IPA1_000" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_IPA1_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_IPA1_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_IPA1_000</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_IPF1_000" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_IPF1_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_IPF1_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_IPF1_000</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -143,7 +143,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_IPA1_000" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_IPA1_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_F_GROSS_SAL_W" source="A_GROSS_SAL_WAG"/>
@@ -184,7 +184,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="A_TRAINEES_PMT" source="A_TRAINEES_PMT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_FRINGE_BENEFI_1" source="A_FRINGE_BENEFI"/>
     </input>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_IPF1_000" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_IPF1_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_F_GROSS_SAL_W" source="A_F_GROSS_SAL_W"/>

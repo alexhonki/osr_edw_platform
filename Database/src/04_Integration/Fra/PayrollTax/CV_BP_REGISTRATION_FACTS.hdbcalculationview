@@ -4,14 +4,14 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.pscd.proxy::TF_DFACTS_ZPRE" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.pscd.proxy::TF_DFACTS_ZPRE</resourceUri>
+  <DataSource id="osr.edw.staging.rms.pscd.proxy::TF_DFACTS_ZPRE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.pscd.proxy::TF_DFACTS_ZPRE</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data">
     <resourceUri>osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.pscd.proxy::TF_DFACTS_RG01" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.pscd.proxy::TF_DFACTS_RG01</resourceUri>
+  <DataSource id="osr.edw.staging.rms.pscd.proxy::TF_DFACTS_RG01" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.pscd.proxy::TF_DFACTS_RG01</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -29,7 +29,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.pscd.proxy::TF_DFACTS_ZPRE">
+    <input node="osr.edw.staging.rms.pscd.proxy::TF_DFACTS_ZPRE">
       <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_OBJECT" source="OBJID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="FACT_CAT_SEQ_21"/>
     
@@ -117,7 +117,7 @@
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.pscd.proxy::TF_DFACTS_RG01">
+    <input node="osr.edw.staging.rms.pscd.proxy::TF_DFACTS_RG01">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="FACT_CAT_SEQ_70"/>

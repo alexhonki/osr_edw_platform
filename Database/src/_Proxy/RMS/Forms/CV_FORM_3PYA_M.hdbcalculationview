@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_M" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_FORM_3PYA_M" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Model for Latest Version of Main tables for 3PYA"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_000" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_000</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_001" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_001</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_001" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_001</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::CV_FORM_IPA1_IPF1_000">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::CV_FORM_IPA1_IPF1_000</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -205,7 +205,7 @@
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_000" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_F_TOTAL_PER_END" source="C_F_TOTAL_PER_END"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS" source="RECEIPT_TS"/>
@@ -268,7 +268,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="A_CURRENCY" source="A_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_BONUS" source="A_BONUS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_F_P_AND_P_FINAL" source="A_F_P_AND_P_FINAL"/></input>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_001" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_001" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_F_TOTAL_PER_END" source="C_F_TOTAL_PER_END"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS" source="RECEIPT_TS"/>
@@ -586,7 +586,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDE_TO" source="SUPERSEDE_TO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_CURRENCY" source="A_CURRENCY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_F_P_AND_P_FINAL" source="A_F_P_AND_P_FINAL"/></input>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_IPA1_IPF1_000" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::CV_FORM_IPA1_IPF1_000" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_6STA" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_FORM_6STA" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_FORM_6STA"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_M">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_6STA_M</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::CV_FORM_6STA_M">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::CV_FORM_6STA_M</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_S">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_6STA_S</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::CV_FORM_6STA_S">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::CV_FORM_6STA_S</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -153,7 +153,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_M" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::CV_FORM_6STA_M" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
@@ -201,7 +201,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="OBJECT_ID" source="OBJECT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_GRP_STAT_ENT" source="A_GRP_STAT_ENT"/>
     </input>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_6STA_S" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::CV_FORM_6STA_S" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>

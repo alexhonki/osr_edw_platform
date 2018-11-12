@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Form 9LIA"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_M">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_M</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA_M">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA_M</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_S">
-    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_S</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA_S">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA_S</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -291,7 +291,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_M" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA_M" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_PAYABLE_TXN" source="C_PAYABLE_TXN"/>
     
@@ -385,7 +385,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_BRANCH" source="C_BANK_BRANCH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_A_UTI" source="A_A_UTI"/>
     </input>
-    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA_S" emptyUnionBehavior="NO_ROW">
+    <input node="osr.edw.staging.rms.forms.proxy::CV_FORM_9LIA_S" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="C_PAYABLE_TXN" null="true" value=""/>
     

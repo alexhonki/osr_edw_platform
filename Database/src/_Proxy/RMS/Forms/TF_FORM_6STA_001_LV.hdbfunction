@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.source.rms.forms.proxy::TF_FORM_6STA_001_LV" ( )
+FUNCTION "osr.edw.staging.rms.forms.proxy::TF_FORM_6STA_001_LV" ( )
 RETURNS TABLE (
 MANDT NVARCHAR(3),
 RETURN_ID NVARCHAR(32),
@@ -100,9 +100,9 @@ FORM.A_GRP_NAME,
 FORM.A_GRP_CLT_NO,
 FORM.A_GRP_ABN
 FROM
-(SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_6STA_001"()) AS FORM
+(SELECT * FROM "osr.edw.staging.rms.forms.proxy::TF_FORM_6STA_001"()) AS FORM
 INNER JOIN
-(SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_6STA_001_LVV"()) AS VER
+(SELECT * FROM "osr.edw.staging.rms.forms.proxy::TF_FORM_6STA_001_LVV"()) AS VER
 ON
 FORM.MANDT = VER.CLIENT AND
 FORM.OBJECT_ID = VER.OBJECT_ID AND

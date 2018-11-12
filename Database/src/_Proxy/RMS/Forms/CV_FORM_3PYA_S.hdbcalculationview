@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYA_S" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_FORM_3PYA_S" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Sub tables for 3PYA"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_GET_3PYA_001_01" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_GET_3PYA_001_01</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_GET_3PYA_001_01" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_GET_3PYA_001_01</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_000" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_000</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -32,7 +32,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::TF_GET_3PYA_001_01">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_GET_3PYA_001_01">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_ID" source="PARENT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
@@ -105,7 +105,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_3PYA_000">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYA_000">
       <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>

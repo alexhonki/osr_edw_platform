@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.source.rms.forms.proxy::TF_FORM_0IDP_001_LV" ( )
+FUNCTION "osr.edw.staging.rms.forms.proxy::TF_FORM_0IDP_001_LV" ( )
 RETURNS TABLE (
 MANDT NVARCHAR(3),
 RETURN_ID NVARCHAR(32),
@@ -80,9 +80,9 @@ FORM.A_REASS_REASON,
 FORM.A_REASS_COMMENT,
 FORM.C_SENDER_ID
 FROM
-(SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_0IDP_001"()) AS FORM
+(SELECT * FROM "osr.edw.staging.rms.forms.proxy::TF_FORM_0IDP_001"()) AS FORM
 INNER JOIN
-(SELECT * FROM "osr.edw.source.rms.forms.proxy::TF_FORM_0IDP_001_LVV"()) AS VER
+(SELECT * FROM "osr.edw.staging.rms.forms.proxy::TF_FORM_0IDP_001_LVV"()) AS VER
 ON
 FORM.MANDT = VER.CLIENT AND
 FORM.OBJECT_ID = VER.OBJECT_ID AND

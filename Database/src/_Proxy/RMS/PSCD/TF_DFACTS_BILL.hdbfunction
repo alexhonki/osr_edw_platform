@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.source.rms.pscd.proxy::TF_DFACTS_BILL" ( )
+FUNCTION "osr.edw.staging.rms.pscd.proxy::TF_DFACTS_BILL" ( )
        RETURNS TABLE (
     	CLIENT             NVARCHAR(3),
     	OBART              NVARCHAR(2),
@@ -67,7 +67,7 @@ FACT_CAT_REP
 ASC
 ) AS QUAL_GENERIC
 FROM
-"osr.edw.source.rms.pscd.proxy::TF_DFACTS_SGL_VAL"()
+"osr.edw.staging.rms.pscd.proxy::TF_DFACTS_SGL_VAL"()
 WHERE FACT_TYPE = 'BILL'
 GROUP BY
 CLIENT,

@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.source.rms.pscd.proxy::TF_DFACTS_RG02" ( )
+FUNCTION "osr.edw.staging.rms.pscd.proxy::TF_DFACTS_RG02" ( )
        RETURNS TABLE (
     	CLIENT             NVARCHAR(3),
     	OBART              NVARCHAR(2),
@@ -61,7 +61,7 @@ FACT_CAT_REP
 ASC
 ) AS QUAL_GENERIC
 FROM
-"osr.edw.source.rms.pscd.proxy::TF_DFACTS_SGL_VAL"()
+"osr.edw.staging.rms.pscd.proxy::TF_DFACTS_SGL_VAL"()
 WHERE FACT_TYPE = 'RG02'
 GROUP BY
 CLIENT,

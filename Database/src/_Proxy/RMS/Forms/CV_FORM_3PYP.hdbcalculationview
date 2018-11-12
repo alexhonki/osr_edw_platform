@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.rms.forms.proxy::CV_FORM_3PYP" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_FORM_3PYP" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_FORM_3PYP"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_000" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_000</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYP_000" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_3PYP_000</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001</resourceUri>
+  <DataSource id="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYP_001" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.proxy::TF_FORM_3PYP_001</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -113,7 +113,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_000">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYP_000">
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_BASE_TAX_AMNT" source="C_BASE_TAX_AMNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA" source="TIMESTAMP_DELTA"/>
@@ -147,7 +147,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
       <mapping xsi:type="Calculation:ConstantAttributeMapping" target="OBJECT_ID" null="true" value=""/>
     </input>
-    <input node="osr.edw.source.rms.forms.proxy::TF_FORM_3PYP_001">
+    <input node="osr.edw.staging.rms.forms.proxy::TF_FORM_3PYP_001">
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_BASE_TAX_AMNT" source="C_BASE_TAX_AMNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA" source="TIMESTAMP_DELTA"/>

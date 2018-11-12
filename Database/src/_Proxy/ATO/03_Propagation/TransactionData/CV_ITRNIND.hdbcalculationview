@@ -33,6 +33,10 @@
       <descriptions defaultDescription="CLNT_TYP"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="CLNT_TYP"/>
     </attribute>
+    <attribute id="ACN" order="9" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="ACN"/>
+    </attribute>
     <attribute id="NON_IDV_NM_LN_1" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NON_IDV_NM_LN_1"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="NON_IDV_NM_LN_1"/>
@@ -100,6 +104,10 @@
     <attribute id="TA_NUM" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TA_NUM"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="TA_NUM"/>
+    </attribute>
+    <attribute id="PARENT_ACN" order="33" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ACN"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="PARENT_ACN"/>
     </attribute>
     <attribute id="PARENT_ABN" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_ABN"/>
@@ -188,10 +196,6 @@
       <descriptions defaultDescription="INCM_YR"/>
       <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="INCM_YR"/>
     </measure>
-    <measure id="ACN" order="9" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="ACN"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="ACN"/>
-    </measure>
     <measure id="TOTL_BUS_INCM_AMT" order="26" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
       <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="TOTL_BUS_INCM_AMT"/>
@@ -215,10 +219,6 @@
     <measure id="SUPER_EXPNS" order="31" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="SUPER_EXPNS"/>
       <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="SUPER_EXPNS"/>
-    </measure>
-    <measure id="PARENT_ACN" order="33" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="PARENT_ACN"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="PARENT_ACN"/>
     </measure>
     <measure id="OTHR_SLS_GOODS_SRVC_AMT" order="38" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="OTHR_SLS_GOODS_SRVC_AMT"/>
