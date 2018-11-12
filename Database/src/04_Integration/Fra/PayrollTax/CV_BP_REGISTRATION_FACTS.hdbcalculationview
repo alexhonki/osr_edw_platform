@@ -66,7 +66,7 @@
     </input>
     <filter>&quot;XOBSL&quot;!='X'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="J_DFACTS" joinType="inner">
     <viewAttributes>
       <viewAttribute id="CLIENT">
         <descriptions defaultDescription="CLIENT"/>
@@ -91,7 +91,7 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
     </input>
-    <input node="D_PFACTS_RG01">
+    <input node="P_DFACTS_RG01">
       <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DATE_TO" source="DATE_TO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_OBJECT" source="OBJID"/>
@@ -100,7 +100,7 @@
     <joinAttribute name="CONTRACT_OBJECT"/>
     <joinAttribute name="CLIENT"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="D_PFACTS_RG01">
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_DFACTS_RG01">
     <viewAttributes>
     
       <viewAttribute id="CLIENT">
@@ -124,7 +124,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DATE_TO" source="FACT_CAT_SEQ_82"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_3" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="CLIENT">
         <descriptions defaultDescription="CLIENT"/>
@@ -150,7 +150,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="Join_2">
+    <input node="J_DFACTS">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_OBJECT" source="CONTRACT_OBJECT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/>
@@ -219,19 +219,19 @@
       <rectangleSize height="30" width="160"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="J_DFACTS" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="118" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="P_DFACTS_ZPRE" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="P_DFACTS_ZPRE" modelObjectNameSpace="J_DFACTS" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="D_PFACTS_RG01" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="P_DFACTS_RG01" modelObjectNameSpace="J_DFACTS" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="D_PFACTS_RG01" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="P_DFACTS_RG01" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="302" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
@@ -239,7 +239,7 @@
       <upperLeftCorner x="328" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="J_DFACTS" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
