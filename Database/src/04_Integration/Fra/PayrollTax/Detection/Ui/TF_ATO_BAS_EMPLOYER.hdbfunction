@@ -1,8 +1,10 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_EMPLOYER"( )
+FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_EMPLOYER"( IN IP_ALERT_ID NVARCHAR(20) )
        RETURNS TABLE
 (
-FINANCIAL_YEAR		INTEGER,
+DB_KEY				NVARCHAR(32),
+ALERT_ID			NVARCHAR(20),
 ABN					NVARCHAR(20),
+GJAHR				NVARCHAR(4),
 ACN					NVARCHAR(20),
 CLNT_TYP			NVARCHAR(3),
 FULL_NM_TXT			NVARCHAR(200),
@@ -14,25 +16,40 @@ ANZSIC_TITLE		NVARCHAR(79)
        SQL SECURITY INVOKER AS 
 BEGIN 
 
- lt_emp = 
+--lt_emp = 
+RETURN
  SELECT 
-"A"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
-"A"."ABN" AS "ABN",
-"A"."ACN" AS "ACN",
-"A"."CLNT_TYP" AS "CLNT_TYP",
-"A"."FULL_NM_TXT" AS "FULL_NM_TXT",
-"A"."TRDNG_NM" AS "TRDNG_NM",	
-"A"."ANZSIC_CD" AS "ANZSIC_CD",
-"A"."ANZSIC_TITLE" AS "ANZSIC_TITLE"
+"ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."ALERT_ID" AS "ALERT_ID",
+"ALERT"."ABN" AS "ABN",
+"ALERT"."GJAHR" AS "GJAHR",
+--"DATA"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
+--"DATA"."ABN" AS "ABN",
+"DATA"."ACN" AS "ACN",
+"DATA"."CLNT_TYP" AS "CLNT_TYP",
+"DATA"."FULL_NM_TXT" AS "FULL_NM_TXT",
+"DATA"."TRDNG_NM" AS "TRDNG_NM",	
+"DATA"."ANZSIC_CD" AS "ANZSIC_CD",
+"DATA"."ANZSIC_TITLE" AS "ANZSIC_TITLE"
 --FROM "osr.edw.source.td.ato::VT_BASNIND" AS "A"
 --FROM "osr.edw.staging.md.ato.synonym::CDS_BAS.DSO.BASNIND.active_data";
-FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "A"
-where 	"A"."ABN" = '11000002568';
-
+--FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "A"
+--where 	"A"."ABN" = '11000002568';
+FROM
+"osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+INNER JOIN
+"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "DATA"
+ON  "ALERT"."ABN" = "DATA"."ABN"
+AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."FINANCIAL_YEAR")
+WHERE LEFT(RIGHT("DATA"."NAME",8),2) = 'FY'
+  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
+/*  
 RETURN
 SELECT
-"FINANCIAL_YEAR",
+"DB_KEY",
+"ALERT_ID",
 "ABN",
+"GJAHR",
 "ACN",
 "CLNT_TYP",
 "FULL_NM_TXT",
@@ -41,7 +58,7 @@ SELECT
 "ANZSIC_TITLE"
 FROM  :lt_emp;
 --FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
---
+*/
 END;
 
 

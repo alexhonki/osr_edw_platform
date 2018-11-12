@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.ui::CV_ATO_BAS_EMPLOYER" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ATO_BAS_EMPLOYER"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_EMPLOYER" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_EMPLOYER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="CLNT_TYP">
+        <descriptions defaultDescription="CLNT_TYP"/>
+      </viewAttribute>
+      <viewAttribute id="FULL_NM_TXT">
+        <descriptions defaultDescription="FULL_NM_TXT"/>
+      </viewAttribute>
+      <viewAttribute id="TRDNG_NM">
+        <descriptions defaultDescription="TRDNG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_CD">
+        <descriptions defaultDescription="ANZSIC_CD"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_TITLE">
+        <descriptions defaultDescription="ANZSIC_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_EMPLOYER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLNT_TYP" source="CLNT_TYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM_TXT" source="FULL_NM_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM" source="TRDNG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_TITLE" source="ANZSIC_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+  
+    <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ACN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACN"/>
+    </attribute>
+    <attribute id="CLNT_TYP" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Client Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CLNT_TYP"/>
+    </attribute>
+    <attribute id="FULL_NM_TXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Main Name (Legal Name)"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="TRDNG_NM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Trading Name "/>
+      <keyMapping columnObjectName="Projection_1" columnName="TRDNG_NM"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="ANZSIC_TITLE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description Of ANZSIC Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_TITLE"/>
+    </attribute>
+    <attribute id="DB_KEY" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Financial Year"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="false" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="78" y="226"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

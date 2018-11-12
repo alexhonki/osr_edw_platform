@@ -56,12 +56,12 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PMT_FOR_WRK_IT_WHDG_AMT" source="PMT_FOR_WRK_IT_WHDG_AMT"/>
     </input>
-    <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
+    <filter>'$$IP_ALERT_ID$$'</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
   <attributes>
-    <attribute id="WAERS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="2" displayAttribute="false" attributeHierarchyActive="false" semanticType="currencyCode">
       <descriptions defaultDescription="WAERS"/>
       <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
     </attribute>
@@ -84,16 +84,19 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="FBT_INST_AMT" order="1" aggregationType="sum" measureType="simple">
+    <measure id="FBT_INST_AMT" order="1" aggregationType="sum" measureType="amount" semanticType="amount">
       <descriptions defaultDescription="FBT_INST_AMT"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="FBT_INST_AMT"/>
     </measure>
-    <measure id="TOTL_PMT_FOR_WRK_AMT" order="6" aggregationType="sum" measureType="simple">
+    <measure id="TOTL_PMT_FOR_WRK_AMT" order="6" aggregationType="sum" measureType="amount" semanticType="amount">
       <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="TOTL_PMT_FOR_WRK_AMT"/>
     </measure>
-    <measure id="PMT_FOR_WRK_IT_WHDG_AMT" order="8" aggregationType="sum" measureType="simple">
+    <measure id="PMT_FOR_WRK_IT_WHDG_AMT" order="8" aggregationType="sum" measureType="amount" semanticType="amount">
       <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="PMT_FOR_WRK_IT_WHDG_AMT"/>
     </measure>
   </baseMeasures>
