@@ -18,7 +18,7 @@ SELECT DISTINCT
 "B"."PARTNER" AS "BPARTNER",
 ' ' AS "GROUP_ID"
 FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABNWages" AS "A"
-LEFT JOIN "osr.edw.platform.fra.PayrollTax::CV_PRT_NEWREGO_BP" AS "B"
+LEFT JOIN "osr.edw.platform.fra.prt::CV_PRT_NEWREGO_BP" AS "B"
 ON "A"."ABN" = "B"."ZABN"
 AND "A"."FINANCIAL_YEAR_STRING" = "B"."FISCAL_YEAR";
 

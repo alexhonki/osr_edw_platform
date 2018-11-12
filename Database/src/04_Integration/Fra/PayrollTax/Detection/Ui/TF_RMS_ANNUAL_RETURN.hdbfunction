@@ -52,7 +52,7 @@ SELECT
 "A"."C_TOT_QLD_TXBLE_WAGES"  AS "C_TOT_QLD_TXBLE_WAGES",
 "C"."IDNUMBER"               AS "IDNUMBER",
 "C". "PARTNER"               AS "PARTNER"
-FROM "osr.edw.platform.fra.PayrollTax.Detection::CV_RMS_ANNUAL_RETURN" AS "A"
+FROM "osr.edw.staging.td.rms.prt.proxy::CV_RMS_ANNUAL_RETURN" AS "A"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "B"
 ON TO_DATS("A"."C_START_DATE") = to_DATS("B"."DATE")
 INNER JOIN :BPID_DATA AS "C"

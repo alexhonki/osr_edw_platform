@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_BAS_NIND"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data">
+    <resourceUri>osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PATH">
+        <descriptions defaultDescription="PATH"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ERROR">
+        <descriptions defaultDescription="ERROR"/>
+      </viewAttribute>
+      <viewAttribute id="PARTITION">
+        <descriptions defaultDescription="PARTITION"/>
+      </viewAttribute>
+      <viewAttribute id="REF_ID">
+        <descriptions defaultDescription="REF_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="CAC_NUM">
+        <descriptions defaultDescription="CAC_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="CLNT_TYP">
+        <descriptions defaultDescription="CLNT_TYP"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="BAS_QTR">
+        <descriptions defaultDescription="BAS_QTR"/>
+      </viewAttribute>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="FULL_NM_TXT">
+        <descriptions defaultDescription="FULL_NM_TXT"/>
+      </viewAttribute>
+      <viewAttribute id="TRDNG_NM">
+        <descriptions defaultDescription="TRDNG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="POS_ADDR_LN_1">
+        <descriptions defaultDescription="POS_ADDR_LN_1"/>
+      </viewAttribute>
+      <viewAttribute id="POS_ADDR_LN_2">
+        <descriptions defaultDescription="POS_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="POS_LCLTY_NM">
+        <descriptions defaultDescription="POS_LCLTY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="POS_STATE">
+        <descriptions defaultDescription="POS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="POS_PC">
+        <descriptions defaultDescription="POS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_ADDR_LN_1">
+        <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_ADDR_LN_2">
+        <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_LCLTY_NM">
+        <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_STATE">
+        <descriptions defaultDescription="BUS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_PC">
+        <descriptions defaultDescription="BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="GOODS_SRVC_SUPLY_AMT">
+        <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_ACQUISITIONS">
+        <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT">
+        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PMT_FOR_WRK_IT_WHDG_AMT">
+        <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="FBT_INST_AMT">
+        <descriptions defaultDescription="FBT_INST_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TA_NUM">
+        <descriptions defaultDescription="TA_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_ACN">
+        <descriptions defaultDescription="PARENT_ACN"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_ABN">
+        <descriptions defaultDescription="PARENT_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_FULL_NM_TXT">
+        <descriptions defaultDescription="PARENT_FULL_NM_TXT"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_CD">
+        <descriptions defaultDescription="ANZSIC_CD"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_TITLE">
+        <descriptions defaultDescription="ANZSIC_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="GST_PYBL_AMT">
+        <descriptions defaultDescription="GST_PYBL_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="GST_PD_AMT">
+        <descriptions defaultDescription="GST_PD_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PATH" source="PATH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERROR" source="ERROR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTITION" source="PARTITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REF_ID" source="REF_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAC_NUM" source="CAC_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLNT_TYP" source="CLNT_TYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BAS_QTR" source="BAS_QTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM_TXT" source="FULL_NM_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM" source="TRDNG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_ADDR_LN_1" source="POS_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_ADDR_LN_2" source="POS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_LCLTY_NM" source="POS_LCLTY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_STATE" source="POS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_PC" source="POS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR_LN_1" source="BUS_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR_LN_2" source="BUS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_LCLTY_NM" source="BUS_LCLTY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GOODS_SRVC_SUPLY_AMT" source="GOODS_SRVC_SUPLY_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_ACQUISITIONS" source="TOTAL_ACQUISITIONS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT" source="TOTL_PMT_FOR_WRK_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMT_FOR_WRK_IT_WHDG_AMT" source="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT" source="FBT_INST_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_NUM" source="TA_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_ACN" source="PARENT_ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_ABN" source="PARENT_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_FULL_NM_TXT" source="PARENT_FULL_NM_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_TITLE" source="ANZSIC_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_PYBL_AMT" source="GST_PYBL_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_PD_AMT" source="GST_PD_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="CAC_NUM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAC_NUM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CAC_NUM"/>
+    </attribute>
+    <attribute id="CLNT_TYP" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLNT_TYP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CLNT_TYP"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="BAS_QTR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BAS_QTR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BAS_QTR"/>
+    </attribute>
+    <attribute id="ACN" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACN"/>
+    </attribute>
+    <attribute id="FULL_NM_TXT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM_TXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="TRDNG_NM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRDNG_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TRDNG_NM"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_1" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_2" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="POS_LCLTY_NM" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_LCLTY_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="POS_STATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_STATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_STATE"/>
+    </attribute>
+    <attribute id="POS_PC" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_PC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_PC"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_1" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_2" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="BUS_LCLTY_NM" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_STATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_STATE"/>
+    </attribute>
+    <attribute id="BUS_PC" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="TA_NUM" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TA_NUM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TA_NUM"/>
+    </attribute>
+    <attribute id="PARENT_ACN" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ACN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARENT_ACN"/>
+    </attribute>
+    <attribute id="PARENT_ABN" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARENT_ABN"/>
+    </attribute>
+    <attribute id="PARENT_FULL_NM_TXT" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_FULL_NM_TXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARENT_FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_CD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="ANZSIC_TITLE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_TITLE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_TITLE"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="REF_ID" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="REF_ID"/>
+      <measureMapping columnObjectName="Projection_1" columnName="REF_ID"/>
+    </measure>
+    <measure id="GOODS_SRVC_SUPLY_AMT" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GOODS_SRVC_SUPLY_AMT"/>
+    </measure>
+    <measure id="TOTAL_ACQUISITIONS" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_ACQUISITIONS"/>
+    </measure>
+    <measure id="TOTL_PMT_FOR_WRK_AMT" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_PMT_FOR_WRK_AMT"/>
+    </measure>
+    <measure id="PMT_FOR_WRK_IT_WHDG_AMT" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMT_FOR_WRK_IT_WHDG_AMT"/>
+    </measure>
+    <measure id="FBT_INST_AMT" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FBT_INST_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FBT_INST_AMT"/>
+    </measure>
+    <measure id="GST_PYBL_AMT" order="35" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GST_PYBL_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GST_PYBL_AMT"/>
+    </measure>
+    <measure id="GST_PD_AMT" order="36" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GST_PD_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GST_PD_AMT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="200"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario> 
