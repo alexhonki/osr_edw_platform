@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.staging.rms.pscd.proxy::TF_DFACTS_ZPRE" ( )
+FUNCTION "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZPRE" ( )
        RETURNS TABLE (
     	CLIENT             NVARCHAR(3),
     	OBART              NVARCHAR(2),
@@ -71,7 +71,7 @@ FACT_CAT_REP
 ASC
 ) AS QUAL_GENERIC
 FROM
-"osr.edw.staging.rms.pscd.proxy::TF_DFACTS_SGL_VAL"()
+"osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_SGL_VAL"()
 WHERE FACT_TYPE = 'ZPRE'
 GROUP BY
 CLIENT,

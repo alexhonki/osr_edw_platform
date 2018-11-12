@@ -46,7 +46,7 @@ BEGIN
 		'AUD'                                                                                         AS  "WAERS"
   FROM 
 		:it_workset AS "DATA",
-		"osr.edw.platform.fra.PayrollTax::CV_ATO_BAS_NIND" AS "ATO_BAS"
+		"osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO_BAS"
   WHERE 
 		"DATA"."ABN"   = "ATO_BAS"."ABN"
   AND	"DATA"."GJAHR" = "ATO_BAS"."FINANCIAL_YEAR"
@@ -67,7 +67,7 @@ BEGIN
 		'AUD'                                                                                         AS  "WAERS"
   FROM 
 		:it_workset AS "DATA",
-		"osr.edw.platform.fra.PayrollTax::CV_ATO_ITR_NIND" AS "ATO_ITR"
+		"osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND" AS "ATO_ITR"
   WHERE 
 		"DATA"."ABN"   = "ATO_ITR"."ABN"
   AND	"DATA"."GJAHR" = "ATO_ITR"."INCM_YR"
@@ -88,7 +88,7 @@ BEGIN
 		'AUD'                                                                                         AS  "WAERS"
   FROM 
 		:it_workset AS "DATA",
-		"osr.edw.platform.fra.PayrollTax::CV_WCQ_ABN_WAGES" AS "WCQ_ACT"
+		"osr.edw.platform.fra.prt::CV_WCQ_ABN_WAGES" AS "WCQ_ACT"
   WHERE 
 		"DATA"."ABN"   = "WCQ_ACT"."ABN"
   AND	"DATA"."GJAHR" = "WCQ_ACT"."FIN_YEAR"

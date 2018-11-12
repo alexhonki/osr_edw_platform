@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_PRT_RATE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Payroll Tax Rate"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_PRT_RATE" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_PRT_RATE</resourceUri>
+  <DataSource id="osr.edw.staging.md.rms.prt.proxy::TF_PRT_RATE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.rms.prt.proxy::TF_PRT_RATE</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_PRT_RATE">
+<logicalModel id="osr.edw.staging.md.rms.prt.proxy::TF_PRT_RATE">
   <attributes>
     <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Fiscal Year"/>
@@ -48,4 +48,4 @@
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario>
+</Calculation:scenario> 

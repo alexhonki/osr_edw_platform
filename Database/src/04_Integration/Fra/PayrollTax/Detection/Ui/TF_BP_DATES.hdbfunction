@@ -47,7 +47,7 @@ FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current"
 
 RG01_DATA = 
 SELECT "OBJID",  "VALID_TO", "VALID_FROM", "FACT_CAT_SEQ_10", "FACT_CAT_SEQ_81", "FACT_CAT_SEQ_82"
-FROM "osr.edw.staging.rms.pscd.proxy::TF_DFACTS_RG01"()
+FROM "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01"()
 WHERE "FACT_CAT_SEQ_10"
 IN (
 SELECT 

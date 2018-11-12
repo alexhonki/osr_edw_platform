@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.PayrollTax::CV_ATO_BAS_NIND" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_BAS_NIND"/>
 <localVariables/>
 <variableMappings/>
@@ -208,7 +208,7 @@
       <descriptions defaultDescription="ERROR"/>
       <keyMapping columnObjectName="Projection_1" columnName="ERROR"/>
     </attribute>
-    <attribute id="PARTITION" order="4">
+    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTITION"/>
       <keyMapping columnObjectName="Projection_1" columnName="PARTITION"/>
     </attribute>
@@ -216,7 +216,7 @@
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
     </attribute>
-    <attribute id="CAC_NUM" order="7">
+    <attribute id="CAC_NUM" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CAC_NUM"/>
       <keyMapping columnObjectName="Projection_1" columnName="CAC_NUM"/>
     </attribute>
@@ -224,7 +224,7 @@
       <descriptions defaultDescription="CLNT_TYP"/>
       <keyMapping columnObjectName="Projection_1" columnName="CLNT_TYP"/>
     </attribute>
-    <attribute id="FINANCIAL_YEAR" order="9">
+    <attribute id="FINANCIAL_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR"/>
       <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
     </attribute>
@@ -232,7 +232,7 @@
       <descriptions defaultDescription="BAS_QTR"/>
       <keyMapping columnObjectName="Projection_1" columnName="BAS_QTR"/>
     </attribute>
-    <attribute id="ACN" order="11">
+    <attribute id="ACN" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ACN"/>
     </attribute>
@@ -288,7 +288,7 @@
       <descriptions defaultDescription="TA_NUM"/>
       <keyMapping columnObjectName="Projection_1" columnName="TA_NUM"/>
     </attribute>
-    <attribute id="PARENT_ACN" order="30">
+    <attribute id="PARENT_ACN" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_ACN"/>
       <keyMapping columnObjectName="Projection_1" columnName="PARENT_ACN"/>
     </attribute>
@@ -324,7 +324,7 @@
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="41">
+    <attribute id="Z_CHANGE_TIME" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
     </attribute>
@@ -332,11 +332,11 @@
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="43">
+    <attribute id="Z_RUN_ROW_NO" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="44">
+    <attribute id="Z_RUN_SEQ_ID" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
@@ -392,4 +392,4 @@
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario>
+</Calculation:scenario> 

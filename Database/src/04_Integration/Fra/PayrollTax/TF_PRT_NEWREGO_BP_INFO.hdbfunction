@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.PayrollTax::TF_PRT_NEWREGO_BP_INFO"
+FUNCTION "osr.edw.platform.fra.prt::TF_PRT_NEWREGO_BP_INFO"
 ( 
 
 )
@@ -35,7 +35,7 @@ RETURN
   	"DATE_TO",
   	"ONLINE_FILLING_COMM",
   	rank() OVER (PARTITION BY "ZABN" ORDER BY "PARTNER", "PRT_TAX_LIAB_DATE", "DATE_TO" DESC) AS "RANK"
-	FROM "osr.edw.platform.fra.PayrollTax::CV_PRT_NEWREGO_BP"
+	FROM "osr.edw.platform.fra.prt::CV_PRT_NEWREGO_BP"
 	)
  WHERE "RANK" = 1;
 END
