@@ -1,0 +1,1584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.rms::CV_PayrollData" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PayrollData"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_0IDP">
+    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_0IDP</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA">
+    <resourceUri>osr.edw.source.rms.forms.proxy::CV_FORM_9LIA</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="0IDP">
+    <viewAttributes>
+      <viewAttribute id="C_BP">
+        <descriptions defaultDescription="C_BP"/>
+      </viewAttribute>
+      <viewAttribute id="RETURN_ID">
+        <descriptions defaultDescription="RETURN_ID"/>
+      </viewAttribute>
+      <viewAttribute id="A_ILODGE_DATE">
+        <descriptions defaultDescription="A_ILODGE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="FBTYP">
+        <descriptions defaultDescription="FBTYP"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="C_START_DATE">
+        <descriptions defaultDescription="C_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="C_GRP_STATUS">
+        <descriptions defaultDescription="C_GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDED_BY">
+        <descriptions defaultDescription="SUPERSEDED_BY"/>
+      </viewAttribute>
+      <viewAttribute id="C_FBN">
+        <descriptions defaultDescription="C_FBN"/>
+      </viewAttribute>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="A_REASS_COMMENT">
+        <descriptions defaultDescription="A_REASS_COMMENT"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDE_TO">
+        <descriptions defaultDescription="SUPERSEDE_TO"/>
+      </viewAttribute>
+      <viewAttribute id="C_SENDER_ID">
+        <descriptions defaultDescription="C_SENDER_ID"/>
+      </viewAttribute>
+      <viewAttribute id="RECEIPT_TS">
+        <descriptions defaultDescription="RECEIPT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="C_ABN">
+        <descriptions defaultDescription="C_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FORM">
+        <descriptions defaultDescription="FORM"/>
+      </viewAttribute>
+      <viewAttribute id="TEMPLATE_VER">
+        <descriptions defaultDescription="TEMPLATE_VER"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_NUMBER">
+        <descriptions defaultDescription="FORM_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="BATCH_ID">
+        <descriptions defaultDescription="BATCH_ID"/>
+      </viewAttribute>
+      <viewAttribute id="C_END_DATE">
+        <descriptions defaultDescription="C_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="CASE_GUID">
+        <descriptions defaultDescription="CASE_GUID"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATOR_NUMBER">
+        <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="C_LODGE_DATE">
+        <descriptions defaultDescription="C_LODGE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="FIELDINDEX">
+        <descriptions defaultDescription="FIELDINDEX"/>
+      </viewAttribute>
+      <viewAttribute id="C_DUE_DATE">
+        <descriptions defaultDescription="C_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="TIMESTAMP_DELTA">
+        <descriptions defaultDescription="TIMESTAMP_DELTA"/>
+      </viewAttribute>
+      <viewAttribute id="C_ASSESS_DATE">
+        <descriptions defaultDescription="C_ASSESS_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_CLASS">
+        <descriptions defaultDescription="FORM_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="VERSION">
+        <descriptions defaultDescription="VERSION"/>
+      </viewAttribute>
+      <viewAttribute id="A_YOUR_REF">
+        <descriptions defaultDescription="A_YOUR_REF"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS">
+        <descriptions defaultDescription="FORM_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS_TS">
+        <descriptions defaultDescription="FORM_STATUS_TS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BPNAME">
+        <descriptions defaultDescription="C_BPNAME"/>
+      </viewAttribute>
+      <viewAttribute id="A_REASS_REASON">
+        <descriptions defaultDescription="A_REASS_REASON"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_0IDP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BP" source="C_BP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ILODGE_DATE" source="A_ILODGE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_START_DATE" source="C_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_GRP_STATUS" source="C_GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDED_BY" source="SUPERSEDED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_FBN" source="C_FBN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REASS_COMMENT" source="A_REASS_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDE_TO" source="SUPERSEDE_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_SENDER_ID" source="C_SENDER_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS" source="RECEIPT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_ABN" source="C_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEMPLATE_VER" source="TEMPLATE_VER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_NUMBER" source="FORM_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCH_ID" source="BATCH_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_END_DATE" source="C_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID" source="CASE_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATOR_NUMBER" source="LOCATOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LODGE_DATE" source="C_LODGE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE" source="C_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA" source="TIMESTAMP_DELTA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_ASSESS_DATE" source="C_ASSESS_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_CLASS" source="FORM_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_YOUR_REF" source="A_YOUR_REF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS" source="FORM_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_TS" source="FORM_STATUS_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BPNAME" source="C_BPNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REASS_REASON" source="A_REASS_REASON"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="9LIA">
+    <viewAttributes>
+      <viewAttribute id="RETURN_ID">
+        <descriptions defaultDescription="RETURN_ID"/>
+      </viewAttribute>
+      <viewAttribute id="C_PAYABLE_TXN" aggregationType="sum">
+        <descriptions defaultDescription="C_PAYABLE_TXN"/>
+      </viewAttribute>
+      <viewAttribute id="C_TOTAL_LIABILITY" aggregationType="sum">
+        <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="C_CONFIRM_DATE">
+        <descriptions defaultDescription="C_CONFIRM_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_ACCOUNT_NO_NEW">
+        <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="C_NON_COMP_PER" aggregationType="sum">
+        <descriptions defaultDescription="C_NON_COMP_PER"/>
+      </viewAttribute>
+      <viewAttribute id="A_POSTAGE_RED" aggregationType="sum">
+        <descriptions defaultDescription="A_POSTAGE_RED"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_ALLOC_BASE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_ALLOC_BASE"/>
+      </viewAttribute>
+      <viewAttribute id="A_UTI_REASON">
+        <descriptions defaultDescription="A_UTI_REASON"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDED_BY">
+        <descriptions defaultDescription="SUPERSEDED_BY"/>
+      </viewAttribute>
+      <viewAttribute id="A_UTI_REMITT" aggregationType="sum">
+        <descriptions defaultDescription="A_UTI_REMITT"/>
+      </viewAttribute>
+      <viewAttribute id="A_DATE_PAID">
+        <descriptions defaultDescription="A_DATE_PAID"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_ACCOUNT_NAME_NEW">
+        <descriptions defaultDescription="A_BANK_ACCOUNT_NAME_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONT_NAME">
+        <descriptions defaultDescription="A_CONT_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_START_DATE">
+        <descriptions defaultDescription="C_UTI_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="C_POSTAGE_FEES" aggregationType="sum">
+        <descriptions defaultDescription="C_POSTAGE_FEES"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDE_TO">
+        <descriptions defaultDescription="SUPERSEDE_TO"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_DUE_DATE">
+        <descriptions defaultDescription="A_ORIG_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_NAME_NEW">
+        <descriptions defaultDescription="A_BANK_NAME_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONT_NO">
+        <descriptions defaultDescription="A_CONT_NO"/>
+      </viewAttribute>
+      <viewAttribute id="C_NO_OF_UTI_DAYS" aggregationType="sum">
+        <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
+      </viewAttribute>
+      <viewAttribute id="C_POSTAGE_TOTAL" aggregationType="sum">
+        <descriptions defaultDescription="C_POSTAGE_TOTAL"/>
+      </viewAttribute>
+      <viewAttribute id="RECEIPT_TS">
+        <descriptions defaultDescription="RECEIPT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_AFAD" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_AFAD"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_BRANCH_NEW">
+        <descriptions defaultDescription="A_BANK_BRANCH_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONFIRM">
+        <descriptions defaultDescription="A_CONFIRM"/>
+      </viewAttribute>
+      <viewAttribute id="FORM">
+        <descriptions defaultDescription="FORM"/>
+      </viewAttribute>
+      <viewAttribute id="C_DAILY_UTI_AMT" aggregationType="sum">
+        <descriptions defaultDescription="C_DAILY_UTI_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="A_TITLE">
+        <descriptions defaultDescription="A_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="TEMPLATE_VER">
+        <descriptions defaultDescription="TEMPLATE_VER"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_FROM">
+        <descriptions defaultDescription="C_UTI_D_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="A_SOURCE">
+        <descriptions defaultDescription="A_SOURCE"/>
+      </viewAttribute>
+      <viewAttribute id="C_TOTAL_ORIG" aggregationType="sum">
+        <descriptions defaultDescription="C_TOTAL_ORIG"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_NUMBER">
+        <descriptions defaultDescription="FORM_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_ID">
+        <descriptions defaultDescription="C_LEG_ID"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_GROSS" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_GROSS"/>
+      </viewAttribute>
+      <viewAttribute id="BATCH_ID">
+        <descriptions defaultDescription="BATCH_ID"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_TO">
+        <descriptions defaultDescription="C_UTI_D_TO"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_TOT_DUTY" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_TOT_DUTY"/>
+      </viewAttribute>
+      <viewAttribute id="CASE_GUID">
+        <descriptions defaultDescription="CASE_GUID"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_DESC">
+        <descriptions defaultDescription="C_LEG_DESC"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_PAID_PAY" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_PAID_PAY"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_TOTAL" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_TOTAL"/>
+      </viewAttribute>
+      <viewAttribute id="A_PT_REMITT" aggregationType="sum">
+        <descriptions defaultDescription="A_PT_REMITT"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATOR_NUMBER">
+        <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_BASE_TAX" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_BASE_TAX"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_UTI" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="A_EMAIL_ADDRESS">
+        <descriptions defaultDescription="A_EMAIL_ADDRESS"/>
+      </viewAttribute>
+      <viewAttribute id="FIELDINDEX" aggregationType="sum">
+        <descriptions defaultDescription="FIELDINDEX"/>
+      </viewAttribute>
+      <viewAttribute id="C_BSB">
+        <descriptions defaultDescription="C_BSB"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_ID_1">
+        <descriptions defaultDescription="C_LEG_ID_1"/>
+      </viewAttribute>
+      <viewAttribute id="C_PAY_RECEIVED" aggregationType="sum">
+        <descriptions defaultDescription="C_PAY_RECEIVED"/>
+      </viewAttribute>
+      <viewAttribute id="A_PT_REASON">
+        <descriptions defaultDescription="A_PT_REASON"/>
+      </viewAttribute>
+      <viewAttribute id="FBTYP">
+        <descriptions defaultDescription="FBTYP"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_DAYS_OVERDUE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_PENALTY" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_PENALTY"/>
+      </viewAttribute>
+      <viewAttribute id="A_MOBILE_NO">
+        <descriptions defaultDescription="A_MOBILE_NO"/>
+      </viewAttribute>
+      <viewAttribute id="TIMESTAMP_DELTA">
+        <descriptions defaultDescription="TIMESTAMP_DELTA"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_ACCOUNT_NO">
+        <descriptions defaultDescription="C_BANK_ACCOUNT_NO"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_DESC_1">
+        <descriptions defaultDescription="C_LEG_DESC_1"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_1" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="A_REFUND_OPTION">
+        <descriptions defaultDescription="A_REFUND_OPTION"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="C_PENALTY_TAX" aggregationType="sum">
+        <descriptions defaultDescription="C_PENALTY_TAX"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_DAILY_UTI" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_DAILY_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_FEES" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_FEES"/>
+      </viewAttribute>
+      <viewAttribute id="A_FIRST_INSTRUMENT" aggregationType="sum">
+        <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_UTI_AMOUNT" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_UTI_AMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_CLASS">
+        <descriptions defaultDescription="FORM_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_ACCOUNT_NAME">
+        <descriptions defaultDescription="C_BANK_ACCOUNT_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="A_CURRENCY">
+        <descriptions defaultDescription="A_CURRENCY"/>
+      </viewAttribute>
+      <viewAttribute id="A_BK_DET_CORRECT">
+        <descriptions defaultDescription="A_BK_DET_CORRECT"/>
+      </viewAttribute>
+      <viewAttribute id="VERSION">
+        <descriptions defaultDescription="VERSION"/>
+      </viewAttribute>
+      <viewAttribute id="C_PENALTY_TOTAL" aggregationType="sum">
+        <descriptions defaultDescription="C_PENALTY_TOTAL"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_YEARLY_RATE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_YEARLY_RATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_PT_INCREASE" aggregationType="sum">
+        <descriptions defaultDescription="A_PT_INCREASE"/>
+      </viewAttribute>
+      <viewAttribute id="A_SEC_INSTRUMENT" aggregationType="sum">
+        <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_PAYMENT" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_PAYMENT"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS">
+        <descriptions defaultDescription="FORM_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_NAME">
+        <descriptions defaultDescription="C_BANK_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="C_CURRENCY">
+        <descriptions defaultDescription="C_CURRENCY"/>
+      </viewAttribute>
+      <viewAttribute id="A_BSB_NEW">
+        <descriptions defaultDescription="A_BSB_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_LOW_AMT_PAY" aggregationType="sum">
+        <descriptions defaultDescription="A_LOW_AMT_PAY"/>
+      </viewAttribute>
+      <viewAttribute id="C_DUE_DATE">
+        <descriptions defaultDescription="C_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_POSTAGE_INC" aggregationType="sum">
+        <descriptions defaultDescription="A_POSTAGE_INC"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_ALLOC_FEE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_ALLOC_FEE"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS_TS">
+        <descriptions defaultDescription="FORM_STATUS_TS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_BRANCH">
+        <descriptions defaultDescription="C_BANK_BRANCH"/>
+      </viewAttribute>
+      <viewAttribute id="A_A_UTI" aggregationType="sum">
+        <descriptions defaultDescription="A_A_UTI"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.rms.forms.proxy::CV_FORM_9LIA">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAYABLE_TXN" source="C_PAYABLE_TXN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY" source="C_TOTAL_LIABILITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI" source="C_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE" source="C_CONFIRM_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NO_NEW" source="A_BANK_ACCOUNT_NO_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_NON_COMP_PER" source="C_NON_COMP_PER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_RED" source="A_POSTAGE_RED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_BASE" source="C_UTI_D_ALLOC_BASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_UTI_REASON" source="A_UTI_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDED_BY" source="SUPERSEDED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_UTI_REMITT" source="A_UTI_REMITT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_DATE_PAID" source="A_DATE_PAID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NAME_NEW" source="A_BANK_ACCOUNT_NAME_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NAME" source="A_CONT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_START_DATE" source="C_UTI_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_POSTAGE_FEES" source="C_POSTAGE_FEES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDE_TO" source="SUPERSEDE_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_DUE_DATE" source="A_ORIG_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_NAME_NEW" source="A_BANK_NAME_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NO" source="A_CONT_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_NO_OF_UTI_DAYS" source="C_NO_OF_UTI_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_POSTAGE_TOTAL" source="C_POSTAGE_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS" source="RECEIPT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_AFAD" source="A_ORIG_AFAD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_BRANCH_NEW" source="A_BANK_BRANCH_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONFIRM" source="A_CONFIRM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DAILY_UTI_AMT" source="C_DAILY_UTI_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_TITLE" source="A_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEMPLATE_VER" source="TEMPLATE_VER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_FROM" source="C_UTI_D_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SOURCE" source="A_SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_ORIG" source="C_TOTAL_ORIG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_NUMBER" source="FORM_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_ID" source="C_LEG_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_GROSS" source="A_ORIG_GROSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCH_ID" source="BATCH_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_TO" source="C_UTI_D_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_TOT_DUTY" source="A_ORIG_TOT_DUTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID" source="CASE_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_DESC" source="C_LEG_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_PAID_PAY" source="A_ORIG_PAID_PAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_TOTAL" source="C_UTI_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_REMITT" source="A_PT_REMITT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATOR_NUMBER" source="LOCATOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_BASE_TAX" source="C_UTI_D_BASE_TAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_UTI" source="A_ORIG_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_EMAIL_ADDRESS" source="A_EMAIL_ADDRESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BSB" source="C_BSB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_ID_1" source="C_LEG_ID_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_RECEIVED" source="C_PAY_RECEIVED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_REASON" source="A_PT_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAYS_OVERDUE" source="C_UTI_D_DAYS_OVERDUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_PENALTY" source="A_ORIG_PENALTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_MOBILE_NO" source="A_MOBILE_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA" source="TIMESTAMP_DELTA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_ACCOUNT_NO" source="C_BANK_ACCOUNT_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_DESC_1" source="C_LEG_DESC_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_1" source="C_UTI_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REFUND_OPTION" source="A_REFUND_OPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TAX" source="C_PENALTY_TAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAILY_UTI" source="C_UTI_D_DAILY_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_FEES" source="A_ORIG_FEES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_FIRST_INSTRUMENT" source="A_FIRST_INSTRUMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_UTI_AMOUNT" source="C_UTI_D_UTI_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_CLASS" source="FORM_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_ACCOUNT_NAME" source="C_BANK_ACCOUNT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CURRENCY" source="A_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BK_DET_CORRECT" source="A_BK_DET_CORRECT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TOTAL" source="C_PENALTY_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_YEARLY_RATE" source="C_UTI_D_YEARLY_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_INCREASE" source="A_PT_INCREASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SEC_INSTRUMENT" source="A_SEC_INSTRUMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_PAYMENT" source="C_UTI_D_PAYMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS" source="FORM_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_NAME" source="C_BANK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CURRENCY" source="C_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BSB_NEW" source="A_BSB_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_LOW_AMT_PAY" source="A_LOW_AMT_PAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE" source="C_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_INC" source="A_POSTAGE_INC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_FEE" source="C_UTI_D_ALLOC_FEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_TS" source="FORM_STATUS_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_BRANCH" source="C_BANK_BRANCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_A_UTI" source="A_A_UTI"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="RETURN_ID">
+        <descriptions defaultDescription="RETURN_ID"/>
+      </viewAttribute>
+      <viewAttribute id="C_PAYABLE_TXN" aggregationType="sum">
+        <descriptions defaultDescription="C_PAYABLE_TXN"/>
+      </viewAttribute>
+      <viewAttribute id="C_TOTAL_LIABILITY" aggregationType="sum">
+        <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="C_CONFIRM_DATE">
+        <descriptions defaultDescription="C_CONFIRM_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_ACCOUNT_NO_NEW">
+        <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="C_NON_COMP_PER" aggregationType="sum">
+        <descriptions defaultDescription="C_NON_COMP_PER"/>
+      </viewAttribute>
+      <viewAttribute id="A_POSTAGE_RED" aggregationType="sum">
+        <descriptions defaultDescription="A_POSTAGE_RED"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_ALLOC_BASE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_ALLOC_BASE"/>
+      </viewAttribute>
+      <viewAttribute id="A_UTI_REASON">
+        <descriptions defaultDescription="A_UTI_REASON"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDED_BY">
+        <descriptions defaultDescription="SUPERSEDED_BY"/>
+      </viewAttribute>
+      <viewAttribute id="A_UTI_REMITT" aggregationType="sum">
+        <descriptions defaultDescription="A_UTI_REMITT"/>
+      </viewAttribute>
+      <viewAttribute id="A_DATE_PAID">
+        <descriptions defaultDescription="A_DATE_PAID"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_ACCOUNT_NAME_NEW">
+        <descriptions defaultDescription="A_BANK_ACCOUNT_NAME_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONT_NAME">
+        <descriptions defaultDescription="A_CONT_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_START_DATE">
+        <descriptions defaultDescription="C_UTI_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="C_POSTAGE_FEES" aggregationType="sum">
+        <descriptions defaultDescription="C_POSTAGE_FEES"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDE_TO">
+        <descriptions defaultDescription="SUPERSEDE_TO"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_DUE_DATE">
+        <descriptions defaultDescription="A_ORIG_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_NAME_NEW">
+        <descriptions defaultDescription="A_BANK_NAME_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONT_NO">
+        <descriptions defaultDescription="A_CONT_NO"/>
+      </viewAttribute>
+      <viewAttribute id="C_NO_OF_UTI_DAYS" aggregationType="sum">
+        <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
+      </viewAttribute>
+      <viewAttribute id="C_POSTAGE_TOTAL" aggregationType="sum">
+        <descriptions defaultDescription="C_POSTAGE_TOTAL"/>
+      </viewAttribute>
+      <viewAttribute id="RECEIPT_TS">
+        <descriptions defaultDescription="RECEIPT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_AFAD" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_AFAD"/>
+      </viewAttribute>
+      <viewAttribute id="A_BANK_BRANCH_NEW">
+        <descriptions defaultDescription="A_BANK_BRANCH_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONFIRM">
+        <descriptions defaultDescription="A_CONFIRM"/>
+      </viewAttribute>
+      <viewAttribute id="FORM">
+        <descriptions defaultDescription="FORM"/>
+      </viewAttribute>
+      <viewAttribute id="C_DAILY_UTI_AMT" aggregationType="sum">
+        <descriptions defaultDescription="C_DAILY_UTI_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="A_TITLE">
+        <descriptions defaultDescription="A_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="TEMPLATE_VER">
+        <descriptions defaultDescription="TEMPLATE_VER"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_FROM">
+        <descriptions defaultDescription="C_UTI_D_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="A_SOURCE">
+        <descriptions defaultDescription="A_SOURCE"/>
+      </viewAttribute>
+      <viewAttribute id="C_TOTAL_ORIG" aggregationType="sum">
+        <descriptions defaultDescription="C_TOTAL_ORIG"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_NUMBER">
+        <descriptions defaultDescription="FORM_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_ID">
+        <descriptions defaultDescription="C_LEG_ID"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_GROSS" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_GROSS"/>
+      </viewAttribute>
+      <viewAttribute id="BATCH_ID">
+        <descriptions defaultDescription="BATCH_ID"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_TO">
+        <descriptions defaultDescription="C_UTI_D_TO"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_TOT_DUTY" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_TOT_DUTY"/>
+      </viewAttribute>
+      <viewAttribute id="CASE_GUID">
+        <descriptions defaultDescription="CASE_GUID"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_DESC">
+        <descriptions defaultDescription="C_LEG_DESC"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_PAID_PAY" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_PAID_PAY"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_TOTAL" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_TOTAL"/>
+      </viewAttribute>
+      <viewAttribute id="A_PT_REMITT" aggregationType="sum">
+        <descriptions defaultDescription="A_PT_REMITT"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATOR_NUMBER">
+        <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_BASE_TAX" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_BASE_TAX"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_UTI" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="A_EMAIL_ADDRESS">
+        <descriptions defaultDescription="A_EMAIL_ADDRESS"/>
+      </viewAttribute>
+      <viewAttribute id="FIELDINDEX" aggregationType="sum">
+        <descriptions defaultDescription="FIELDINDEX"/>
+      </viewAttribute>
+      <viewAttribute id="C_BSB">
+        <descriptions defaultDescription="C_BSB"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_ID_1">
+        <descriptions defaultDescription="C_LEG_ID_1"/>
+      </viewAttribute>
+      <viewAttribute id="C_PAY_RECEIVED" aggregationType="sum">
+        <descriptions defaultDescription="C_PAY_RECEIVED"/>
+      </viewAttribute>
+      <viewAttribute id="A_PT_REASON">
+        <descriptions defaultDescription="A_PT_REASON"/>
+      </viewAttribute>
+      <viewAttribute id="FBTYP">
+        <descriptions defaultDescription="FBTYP"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_DAYS_OVERDUE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_PENALTY" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_PENALTY"/>
+      </viewAttribute>
+      <viewAttribute id="A_MOBILE_NO">
+        <descriptions defaultDescription="A_MOBILE_NO"/>
+      </viewAttribute>
+      <viewAttribute id="TIMESTAMP_DELTA">
+        <descriptions defaultDescription="TIMESTAMP_DELTA"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_ACCOUNT_NO">
+        <descriptions defaultDescription="C_BANK_ACCOUNT_NO"/>
+      </viewAttribute>
+      <viewAttribute id="C_LEG_DESC_1">
+        <descriptions defaultDescription="C_LEG_DESC_1"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_1" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="A_REFUND_OPTION">
+        <descriptions defaultDescription="A_REFUND_OPTION"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="C_PENALTY_TAX" aggregationType="sum">
+        <descriptions defaultDescription="C_PENALTY_TAX"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_DAILY_UTI" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_DAILY_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="A_ORIG_FEES" aggregationType="sum">
+        <descriptions defaultDescription="A_ORIG_FEES"/>
+      </viewAttribute>
+      <viewAttribute id="A_FIRST_INSTRUMENT" aggregationType="sum">
+        <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_UTI_AMOUNT" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_UTI_AMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_CLASS">
+        <descriptions defaultDescription="FORM_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_ACCOUNT_NAME">
+        <descriptions defaultDescription="C_BANK_ACCOUNT_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="A_CURRENCY">
+        <descriptions defaultDescription="A_CURRENCY"/>
+      </viewAttribute>
+      <viewAttribute id="A_BK_DET_CORRECT">
+        <descriptions defaultDescription="A_BK_DET_CORRECT"/>
+      </viewAttribute>
+      <viewAttribute id="VERSION">
+        <descriptions defaultDescription="VERSION"/>
+      </viewAttribute>
+      <viewAttribute id="C_PENALTY_TOTAL" aggregationType="sum">
+        <descriptions defaultDescription="C_PENALTY_TOTAL"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_YEARLY_RATE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_YEARLY_RATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_PT_INCREASE" aggregationType="sum">
+        <descriptions defaultDescription="A_PT_INCREASE"/>
+      </viewAttribute>
+      <viewAttribute id="A_SEC_INSTRUMENT" aggregationType="sum">
+        <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_PAYMENT" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_PAYMENT"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS">
+        <descriptions defaultDescription="FORM_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_NAME">
+        <descriptions defaultDescription="C_BANK_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="C_CURRENCY">
+        <descriptions defaultDescription="C_CURRENCY"/>
+      </viewAttribute>
+      <viewAttribute id="A_BSB_NEW">
+        <descriptions defaultDescription="A_BSB_NEW"/>
+      </viewAttribute>
+      <viewAttribute id="A_LOW_AMT_PAY" aggregationType="sum">
+        <descriptions defaultDescription="A_LOW_AMT_PAY"/>
+      </viewAttribute>
+      <viewAttribute id="C_DUE_DATE">
+        <descriptions defaultDescription="C_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="A_POSTAGE_INC" aggregationType="sum">
+        <descriptions defaultDescription="A_POSTAGE_INC"/>
+      </viewAttribute>
+      <viewAttribute id="C_UTI_D_ALLOC_FEE" aggregationType="sum">
+        <descriptions defaultDescription="C_UTI_D_ALLOC_FEE"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS_TS">
+        <descriptions defaultDescription="FORM_STATUS_TS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BANK_BRANCH">
+        <descriptions defaultDescription="C_BANK_BRANCH"/>
+      </viewAttribute>
+      <viewAttribute id="A_A_UTI" aggregationType="sum">
+        <descriptions defaultDescription="A_A_UTI"/>
+      </viewAttribute>
+      <viewAttribute id="C_BP">
+        <descriptions defaultDescription="C_BP"/>
+      </viewAttribute>
+      <viewAttribute id="RETURN_ID_1">
+        <descriptions defaultDescription="RETURN_ID"/>
+      </viewAttribute>
+      <viewAttribute id="A_ILODGE_DATE">
+        <descriptions defaultDescription="A_ILODGE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="FBTYP_1">
+        <descriptions defaultDescription="FBTYP"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM_1">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="C_START_DATE">
+        <descriptions defaultDescription="C_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="C_GRP_STATUS">
+        <descriptions defaultDescription="C_GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDED_BY_1">
+        <descriptions defaultDescription="SUPERSEDED_BY"/>
+      </viewAttribute>
+      <viewAttribute id="C_FBN">
+        <descriptions defaultDescription="C_FBN"/>
+      </viewAttribute>
+      <viewAttribute id="MANDT_1">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="A_REASS_COMMENT">
+        <descriptions defaultDescription="A_REASS_COMMENT"/>
+      </viewAttribute>
+      <viewAttribute id="SUPERSEDE_TO_1">
+        <descriptions defaultDescription="SUPERSEDE_TO"/>
+      </viewAttribute>
+      <viewAttribute id="C_SENDER_ID">
+        <descriptions defaultDescription="C_SENDER_ID"/>
+      </viewAttribute>
+      <viewAttribute id="RECEIPT_TS_1">
+        <descriptions defaultDescription="RECEIPT_TS"/>
+      </viewAttribute>
+      <viewAttribute id="C_ABN">
+        <descriptions defaultDescription="C_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_1">
+        <descriptions defaultDescription="FORM"/>
+      </viewAttribute>
+      <viewAttribute id="TEMPLATE_VER_1">
+        <descriptions defaultDescription="TEMPLATE_VER"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_NUMBER_1">
+        <descriptions defaultDescription="FORM_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="BATCH_ID_1">
+        <descriptions defaultDescription="BATCH_ID"/>
+      </viewAttribute>
+      <viewAttribute id="C_END_DATE">
+        <descriptions defaultDescription="C_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="CASE_GUID_1">
+        <descriptions defaultDescription="CASE_GUID"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATOR_NUMBER_1">
+        <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="C_LODGE_DATE">
+        <descriptions defaultDescription="C_LODGE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="FIELDINDEX_1" aggregationType="sum">
+        <descriptions defaultDescription="FIELDINDEX"/>
+      </viewAttribute>
+      <viewAttribute id="C_DUE_DATE_1">
+        <descriptions defaultDescription="C_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="TIMESTAMP_DELTA_1">
+        <descriptions defaultDescription="TIMESTAMP_DELTA"/>
+      </viewAttribute>
+      <viewAttribute id="C_ASSESS_DATE">
+        <descriptions defaultDescription="C_ASSESS_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_CLASS_1">
+        <descriptions defaultDescription="FORM_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="VERSION_1">
+        <descriptions defaultDescription="VERSION"/>
+      </viewAttribute>
+      <viewAttribute id="A_YOUR_REF">
+        <descriptions defaultDescription="A_YOUR_REF"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS_1">
+        <descriptions defaultDescription="FORM_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="FORM_STATUS_TS_1">
+        <descriptions defaultDescription="FORM_STATUS_TS"/>
+      </viewAttribute>
+      <viewAttribute id="C_BPNAME">
+        <descriptions defaultDescription="C_BPNAME"/>
+      </viewAttribute>
+      <viewAttribute id="A_REASS_REASON">
+        <descriptions defaultDescription="A_REASS_REASON"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="9LIA">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAYABLE_TXN" source="C_PAYABLE_TXN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_LIABILITY" source="C_TOTAL_LIABILITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI" source="C_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CONFIRM_DATE" source="C_CONFIRM_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NO_NEW" source="A_BANK_ACCOUNT_NO_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_NON_COMP_PER" source="C_NON_COMP_PER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_RED" source="A_POSTAGE_RED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_BASE" source="C_UTI_D_ALLOC_BASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_UTI_REASON" source="A_UTI_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDED_BY" source="SUPERSEDED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_UTI_REMITT" source="A_UTI_REMITT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_DATE_PAID" source="A_DATE_PAID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_ACCOUNT_NAME_NEW" source="A_BANK_ACCOUNT_NAME_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NAME" source="A_CONT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_START_DATE" source="C_UTI_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_POSTAGE_FEES" source="C_POSTAGE_FEES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDE_TO" source="SUPERSEDE_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_DUE_DATE" source="A_ORIG_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_NAME_NEW" source="A_BANK_NAME_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NO" source="A_CONT_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_NO_OF_UTI_DAYS" source="C_NO_OF_UTI_DAYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_POSTAGE_TOTAL" source="C_POSTAGE_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS" source="RECEIPT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_AFAD" source="A_ORIG_AFAD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BANK_BRANCH_NEW" source="A_BANK_BRANCH_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONFIRM" source="A_CONFIRM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM" source="FORM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DAILY_UTI_AMT" source="C_DAILY_UTI_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_TITLE" source="A_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEMPLATE_VER" source="TEMPLATE_VER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_FROM" source="C_UTI_D_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SOURCE" source="A_SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOTAL_ORIG" source="C_TOTAL_ORIG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_NUMBER" source="FORM_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_ID" source="C_LEG_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_GROSS" source="A_ORIG_GROSS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCH_ID" source="BATCH_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_TO" source="C_UTI_D_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_TOT_DUTY" source="A_ORIG_TOT_DUTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID" source="CASE_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_DESC" source="C_LEG_DESC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_PAID_PAY" source="A_ORIG_PAID_PAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_TOTAL" source="C_UTI_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_REMITT" source="A_PT_REMITT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATOR_NUMBER" source="LOCATOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_BASE_TAX" source="C_UTI_D_BASE_TAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_UTI" source="A_ORIG_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_EMAIL_ADDRESS" source="A_EMAIL_ADDRESS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX" source="FIELDINDEX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BSB" source="C_BSB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_ID_1" source="C_LEG_ID_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_RECEIVED" source="C_PAY_RECEIVED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_REASON" source="A_PT_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAYS_OVERDUE" source="C_UTI_D_DAYS_OVERDUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_PENALTY" source="A_ORIG_PENALTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_MOBILE_NO" source="A_MOBILE_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA" source="TIMESTAMP_DELTA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_ACCOUNT_NO" source="C_BANK_ACCOUNT_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LEG_DESC_1" source="C_LEG_DESC_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_1" source="C_UTI_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REFUND_OPTION" source="A_REFUND_OPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TAX" source="C_PENALTY_TAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_DAILY_UTI" source="C_UTI_D_DAILY_UTI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ORIG_FEES" source="A_ORIG_FEES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_FIRST_INSTRUMENT" source="A_FIRST_INSTRUMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_UTI_AMOUNT" source="C_UTI_D_UTI_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_CLASS" source="FORM_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_ACCOUNT_NAME" source="C_BANK_ACCOUNT_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CURRENCY" source="A_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BK_DET_CORRECT" source="A_BK_DET_CORRECT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERSION" source="VERSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TOTAL" source="C_PENALTY_TOTAL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_YEARLY_RATE" source="C_UTI_D_YEARLY_RATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_PT_INCREASE" source="A_PT_INCREASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SEC_INSTRUMENT" source="A_SEC_INSTRUMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_PAYMENT" source="C_UTI_D_PAYMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS" source="FORM_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_NAME" source="C_BANK_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_CURRENCY" source="C_CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_BSB_NEW" source="A_BSB_NEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_LOW_AMT_PAY" source="A_LOW_AMT_PAY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE" source="C_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_POSTAGE_INC" source="A_POSTAGE_INC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_UTI_D_ALLOC_FEE" source="C_UTI_D_ALLOC_FEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_TS" source="FORM_STATUS_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BANK_BRANCH" source="C_BANK_BRANCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_A_UTI" source="A_A_UTI"/>
+    </input>
+    <input node="0IDP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BP" source="C_BP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID_1" source="RETURN_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_ILODGE_DATE" source="A_ILODGE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP_1" source="FBTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM_1" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_START_DATE" source="C_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_GRP_STATUS" source="C_GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDED_BY_1" source="SUPERSEDED_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_FBN" source="C_FBN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT_1" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REASS_COMMENT" source="A_REASS_COMMENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPERSEDE_TO_1" source="SUPERSEDE_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_SENDER_ID" source="C_SENDER_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RECEIPT_TS_1" source="RECEIPT_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_ABN" source="C_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_1" source="FORM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEMPLATE_VER_1" source="TEMPLATE_VER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_NUMBER_1" source="FORM_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCH_ID_1" source="BATCH_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_END_DATE" source="C_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CASE_GUID_1" source="CASE_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATOR_NUMBER_1" source="LOCATOR_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_LODGE_DATE" source="C_LODGE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIELDINDEX_1" source="FIELDINDEX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE_1" source="C_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMESTAMP_DELTA_1" source="TIMESTAMP_DELTA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_ASSESS_DATE" source="C_ASSESS_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_CLASS_1" source="FORM_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VERSION_1" source="VERSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_YOUR_REF" source="A_YOUR_REF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_1" source="FORM_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FORM_STATUS_TS_1" source="FORM_STATUS_TS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BPNAME" source="C_BPNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_REASS_REASON" source="A_REASS_REASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
+    </input>
+    <joinAttribute name="MANDT"/>
+    <joinAttribute name="RETURN_ID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="RETURN_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="C_CONFIRM_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CONFIRM_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_CONFIRM_DATE"/>
+    </attribute>
+    <attribute id="A_BANK_ACCOUNT_NO_NEW" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_BANK_ACCOUNT_NO_NEW"/>
+    </attribute>
+    <attribute id="A_UTI_REASON" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UTI_REASON"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_UTI_REASON"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="Join_1" columnName="SUPERSEDED_BY"/>
+    </attribute>
+    <attribute id="A_DATE_PAID" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DATE_PAID"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_DATE_PAID"/>
+    </attribute>
+    <attribute id="A_BANK_ACCOUNT_NAME_NEW" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_ACCOUNT_NAME_NEW"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_BANK_ACCOUNT_NAME_NEW"/>
+    </attribute>
+    <attribute id="A_CONT_NAME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONT_NAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_CONT_NAME"/>
+    </attribute>
+    <attribute id="MANDT" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+    </attribute>
+    <attribute id="C_UTI_START_DATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_START_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_UTI_START_DATE"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="Join_1" columnName="SUPERSEDE_TO"/>
+    </attribute>
+    <attribute id="A_ORIG_DUE_DATE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_DUE_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_ORIG_DUE_DATE"/>
+    </attribute>
+    <attribute id="A_BANK_NAME_NEW" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_NAME_NEW"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_BANK_NAME_NEW"/>
+    </attribute>
+    <attribute id="A_CONT_NO" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONT_NO"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_CONT_NO"/>
+    </attribute>
+    <attribute id="RECEIPT_TS" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="RECEIPT_TS"/>
+    </attribute>
+    <attribute id="A_BANK_BRANCH_NEW" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_BRANCH_NEW"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_BANK_BRANCH_NEW"/>
+    </attribute>
+    <attribute id="A_CONFIRM" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONFIRM"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_CONFIRM"/>
+    </attribute>
+    <attribute id="FORM" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM"/>
+    </attribute>
+    <attribute id="A_TITLE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TITLE"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_TITLE"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="Join_1" columnName="TEMPLATE_VER"/>
+    </attribute>
+    <attribute id="C_UTI_D_FROM" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_FROM"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_UTI_D_FROM"/>
+    </attribute>
+    <attribute id="A_SOURCE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SOURCE"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_SOURCE"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="C_LEG_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_LEG_ID"/>
+    </attribute>
+    <attribute id="BATCH_ID" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="BATCH_ID"/>
+    </attribute>
+    <attribute id="C_UTI_D_TO" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_TO"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_UTI_D_TO"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="C_LEG_DESC" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_DESC"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_LEG_DESC"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="Join_1" columnName="LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="A_EMAIL_ADDRESS" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_EMAIL_ADDRESS"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_EMAIL_ADDRESS"/>
+    </attribute>
+    <attribute id="C_BSB" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BSB"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BSB"/>
+    </attribute>
+    <attribute id="C_LEG_ID_1" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_ID_1"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_LEG_ID_1"/>
+    </attribute>
+    <attribute id="A_PT_REASON" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_PT_REASON"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_PT_REASON"/>
+    </attribute>
+    <attribute id="FBTYP" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="Join_1" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="A_MOBILE_NO" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_MOBILE_NO"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_MOBILE_NO"/>
+    </attribute>
+    <attribute id="TIMESTAMP_DELTA" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP_DELTA"/>
+      <keyMapping columnObjectName="Join_1" columnName="TIMESTAMP_DELTA"/>
+    </attribute>
+    <attribute id="C_BANK_ACCOUNT_NO" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_ACCOUNT_NO"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BANK_ACCOUNT_NO"/>
+    </attribute>
+    <attribute id="C_LEG_DESC_1" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_DESC_1"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_LEG_DESC_1"/>
+    </attribute>
+    <attribute id="A_REFUND_OPTION" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REFUND_OPTION"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_REFUND_OPTION"/>
+    </attribute>
+    <attribute id="FBNUM" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="FORM_CLASS" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_CLASS"/>
+    </attribute>
+    <attribute id="C_BANK_ACCOUNT_NAME" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_ACCOUNT_NAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BANK_ACCOUNT_NAME"/>
+    </attribute>
+    <attribute id="A_CURRENCY" order="73" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CURRENCY"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_CURRENCY"/>
+    </attribute>
+    <attribute id="A_BK_DET_CORRECT" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BK_DET_CORRECT"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_BK_DET_CORRECT"/>
+    </attribute>
+    <attribute id="VERSION" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="Join_1" columnName="VERSION"/>
+    </attribute>
+    <attribute id="FORM_STATUS" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_STATUS"/>
+    </attribute>
+    <attribute id="C_BANK_NAME" order="82" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_NAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BANK_NAME"/>
+    </attribute>
+    <attribute id="C_CURRENCY" order="83" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CURRENCY"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_CURRENCY"/>
+    </attribute>
+    <attribute id="A_BSB_NEW" order="84" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BSB_NEW"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_BSB_NEW"/>
+    </attribute>
+    <attribute id="C_DUE_DATE" order="86" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_DUE_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_DUE_DATE"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS" order="89" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_STATUS_TS"/>
+    </attribute>
+    <attribute id="C_BANK_BRANCH" order="90" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_BRANCH"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BANK_BRANCH"/>
+    </attribute>
+    <attribute id="C_BP" order="92" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BP"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BP"/>
+    </attribute>
+    <attribute id="RETURN_ID_1" order="93" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="RETURN_ID_1"/>
+    </attribute>
+    <attribute id="A_ILODGE_DATE" order="94" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ILODGE_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_ILODGE_DATE"/>
+    </attribute>
+    <attribute id="FBTYP_1" order="95" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="Join_1" columnName="FBTYP_1"/>
+    </attribute>
+    <attribute id="FBNUM_1" order="96" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="FBNUM_1"/>
+    </attribute>
+    <attribute id="C_START_DATE" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_START_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_START_DATE"/>
+    </attribute>
+    <attribute id="C_GRP_STATUS" order="98" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_GRP_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_GRP_STATUS"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY_1" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="Join_1" columnName="SUPERSEDED_BY_1"/>
+    </attribute>
+    <attribute id="C_FBN" order="100" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_FBN"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_FBN"/>
+    </attribute>
+    <attribute id="MANDT_1" order="101" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MANDT_1"/>
+    </attribute>
+    <attribute id="A_REASS_COMMENT" order="102" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_COMMENT"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_REASS_COMMENT"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO_1" order="103" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="Join_1" columnName="SUPERSEDE_TO_1"/>
+    </attribute>
+    <attribute id="C_SENDER_ID" order="104" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_SENDER_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_SENDER_ID"/>
+    </attribute>
+    <attribute id="RECEIPT_TS_1" order="105" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="RECEIPT_TS_1"/>
+    </attribute>
+    <attribute id="C_ABN" order="106" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ABN"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_ABN"/>
+    </attribute>
+    <attribute id="FORM_1" order="107" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_1"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER_1" order="108" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="Join_1" columnName="TEMPLATE_VER_1"/>
+    </attribute>
+    <attribute id="FORM_NUMBER_1" order="109" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_NUMBER_1"/>
+    </attribute>
+    <attribute id="BATCH_ID_1" order="110" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="BATCH_ID_1"/>
+    </attribute>
+    <attribute id="C_END_DATE" order="111" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_END_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_END_DATE"/>
+    </attribute>
+    <attribute id="CASE_GUID_1" order="112" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CASE_GUID_1"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER_1" order="113" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="Join_1" columnName="LOCATOR_NUMBER_1"/>
+    </attribute>
+    <attribute id="C_LODGE_DATE" order="114" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LODGE_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_LODGE_DATE"/>
+    </attribute>
+    <attribute id="C_DUE_DATE_1" order="116" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_DUE_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_DUE_DATE_1"/>
+    </attribute>
+    <attribute id="TIMESTAMP_DELTA_1" order="117" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP_DELTA"/>
+      <keyMapping columnObjectName="Join_1" columnName="TIMESTAMP_DELTA_1"/>
+    </attribute>
+    <attribute id="C_ASSESS_DATE" order="118" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ASSESS_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_ASSESS_DATE"/>
+    </attribute>
+    <attribute id="FORM_CLASS_1" order="119" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_CLASS_1"/>
+    </attribute>
+    <attribute id="VERSION_1" order="120" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="Join_1" columnName="VERSION_1"/>
+    </attribute>
+    <attribute id="A_YOUR_REF" order="121" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_YOUR_REF"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_YOUR_REF"/>
+    </attribute>
+    <attribute id="FORM_STATUS_1" order="122" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_STATUS_1"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS_1" order="123" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="Join_1" columnName="FORM_STATUS_TS_1"/>
+    </attribute>
+    <attribute id="C_BPNAME" order="124" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BPNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="C_BPNAME"/>
+    </attribute>
+    <attribute id="A_REASS_REASON" order="125" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_REASON"/>
+      <keyMapping columnObjectName="Join_1" columnName="A_REASS_REASON"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="C_PAYABLE_TXN" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAYABLE_TXN"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_PAYABLE_TXN"/>
+    </measure>
+    <measure id="C_TOTAL_LIABILITY" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_TOTAL_LIABILITY"/>
+    </measure>
+    <measure id="C_UTI" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI"/>
+    </measure>
+    <measure id="C_NON_COMP_PER" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_NON_COMP_PER"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_NON_COMP_PER"/>
+    </measure>
+    <measure id="A_POSTAGE_RED" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_POSTAGE_RED"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_POSTAGE_RED"/>
+    </measure>
+    <measure id="C_UTI_D_ALLOC_BASE" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_ALLOC_BASE"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_ALLOC_BASE"/>
+    </measure>
+    <measure id="A_UTI_REMITT" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_UTI_REMITT"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_UTI_REMITT"/>
+    </measure>
+    <measure id="C_POSTAGE_FEES" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_POSTAGE_FEES"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_POSTAGE_FEES"/>
+    </measure>
+    <measure id="C_NO_OF_UTI_DAYS" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_NO_OF_UTI_DAYS"/>
+    </measure>
+    <measure id="C_POSTAGE_TOTAL" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_POSTAGE_TOTAL"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_POSTAGE_TOTAL"/>
+    </measure>
+    <measure id="A_ORIG_AFAD" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_AFAD"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_AFAD"/>
+    </measure>
+    <measure id="C_DAILY_UTI_AMT" order="30" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_DAILY_UTI_AMT"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_DAILY_UTI_AMT"/>
+    </measure>
+    <measure id="C_TOTAL_ORIG" order="35" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOTAL_ORIG"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_TOTAL_ORIG"/>
+    </measure>
+    <measure id="A_ORIG_GROSS" order="38" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_GROSS"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_GROSS"/>
+    </measure>
+    <measure id="A_ORIG_TOT_DUTY" order="41" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_TOT_DUTY"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_TOT_DUTY"/>
+    </measure>
+    <measure id="A_ORIG_PAID_PAY" order="44" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_PAID_PAY"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_PAID_PAY"/>
+    </measure>
+    <measure id="C_UTI_TOTAL" order="45" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_TOTAL"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_TOTAL"/>
+    </measure>
+    <measure id="A_PT_REMITT" order="46" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_PT_REMITT"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_PT_REMITT"/>
+    </measure>
+    <measure id="C_UTI_D_BASE_TAX" order="48" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_BASE_TAX"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_BASE_TAX"/>
+    </measure>
+    <measure id="A_ORIG_UTI" order="49" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_UTI"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_UTI"/>
+    </measure>
+    <measure id="FIELDINDEX" order="51" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <measureMapping columnObjectName="Join_1" columnName="FIELDINDEX"/>
+    </measure>
+    <measure id="C_PAY_RECEIVED" order="54" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAY_RECEIVED"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_PAY_RECEIVED"/>
+    </measure>
+    <measure id="C_UTI_D_DAYS_OVERDUE" order="57" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_DAYS_OVERDUE"/>
+    </measure>
+    <measure id="A_ORIG_PENALTY" order="58" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_PENALTY"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_PENALTY"/>
+    </measure>
+    <measure id="C_UTI_1" order="63" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_1"/>
+    </measure>
+    <measure id="C_PENALTY_TAX" order="66" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PENALTY_TAX"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_PENALTY_TAX"/>
+    </measure>
+    <measure id="C_UTI_D_DAILY_UTI" order="67" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_DAILY_UTI"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_DAILY_UTI"/>
+    </measure>
+    <measure id="A_ORIG_FEES" order="68" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_FEES"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_ORIG_FEES"/>
+    </measure>
+    <measure id="A_FIRST_INSTRUMENT" order="69" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_FIRST_INSTRUMENT"/>
+    </measure>
+    <measure id="C_UTI_D_UTI_AMOUNT" order="70" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_UTI_AMOUNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_UTI_AMOUNT"/>
+    </measure>
+    <measure id="C_PENALTY_TOTAL" order="76" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PENALTY_TOTAL"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_PENALTY_TOTAL"/>
+    </measure>
+    <measure id="C_UTI_D_YEARLY_RATE" order="77" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_YEARLY_RATE"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_YEARLY_RATE"/>
+    </measure>
+    <measure id="A_PT_INCREASE" order="78" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_PT_INCREASE"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_PT_INCREASE"/>
+    </measure>
+    <measure id="A_SEC_INSTRUMENT" order="79" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_SEC_INSTRUMENT"/>
+    </measure>
+    <measure id="C_UTI_D_PAYMENT" order="80" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_PAYMENT"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_PAYMENT"/>
+    </measure>
+    <measure id="A_LOW_AMT_PAY" order="85" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_LOW_AMT_PAY"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_LOW_AMT_PAY"/>
+    </measure>
+    <measure id="A_POSTAGE_INC" order="87" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_POSTAGE_INC"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_POSTAGE_INC"/>
+    </measure>
+    <measure id="C_UTI_D_ALLOC_FEE" order="88" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_D_ALLOC_FEE"/>
+      <measureMapping columnObjectName="Join_1" columnName="C_UTI_D_ALLOC_FEE"/>
+    </measure>
+    <measure id="A_A_UTI" order="91" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_A_UTI"/>
+      <measureMapping columnObjectName="Join_1" columnName="A_A_UTI"/>
+    </measure>
+    <measure id="FIELDINDEX_1" order="115" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <measureMapping columnObjectName="Join_1" columnName="FIELDINDEX_1"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="0IDP" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-12" y="360"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="9LIA" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-343" y="343"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-145" y="237"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="9LIA" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="577" y="30"/>
+      <rectangleSize width="259.59375"/>
+    </shape>
+    <shape modelObjectName="0IDP" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="163" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
