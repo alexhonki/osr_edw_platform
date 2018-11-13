@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_BP_RELATIONS"( IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_RELATIONS"( IN IP_ALERT_ID NVARCHAR(20) )
 RETURNS TABLE
 (
 DB_KEY		NVARCHAR(32),
@@ -49,7 +49,7 @@ SELECT
 "BUT050"."RELTYP"
 FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" AS "BUT050"
 INNER JOIN 
-"osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 ON "BUT050"."PARTNER2" = "ALERT"."BPARTNER"
 WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID 
   AND "RELTYP" IN ('ZDGE','ZGRM','ZIGM')
@@ -58,7 +58,7 @@ WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
 	WHERE "RELTYP" IN ('ZDGE','ZGRM','ZIGM') 
 	  AND "PARTNER2" IN (SELECT "BPARTNER" 
-						FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() 
+						FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
 						WHERE "ALERT_ID" = :IP_ALERT_ID))
  ;
 

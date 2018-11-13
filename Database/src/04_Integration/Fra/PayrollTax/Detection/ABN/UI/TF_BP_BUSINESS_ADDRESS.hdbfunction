@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_BP_DEFAULT_ADDRESS"( IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_BUSINESS_ADDRESS"( IN IP_ALERT_ID NVARCHAR(20) )
 RETURNS TABLE
 (
 DB_KEY				NVARCHAR(32),
@@ -34,7 +34,7 @@ SELECT
 FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
 INNER JOIN 
-"osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 ON "BPID"."PARTNER" = "ALERT"."BPARTNER"
 WHERE "BPID"."TYPE" = 'ZABN'
   AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
@@ -47,10 +47,11 @@ SELECT
 	"MC_NAME1",
 	"MC_NAME2",
 	TRIM("MC_NAME1" || CHAR(32) || TRIM("MC_NAME2")) AS "BP_DESC"
-FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current"
-WHERE  "PARTNER" IN (SELECT 
+FROM  "osr.edw.staging.rms.synonym::CV_BUT000_Current" 
+WHERE  "PARTNER" IN (
+SELECT 
 "BPARTNER" 
-FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() 
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
 WHERE "ALERT_ID" = :IP_ALERT_ID)
 ;
 ADRC_BUT21FS =
@@ -83,7 +84,7 @@ SELECT
 INNER JOIN
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ADRC.active_data" AS "ADRC" 
 ON  "BUT21FS"."ADDRNUMBER" = "ADRC"."ADDRNUMBER"
-AND "BUT21FS"."ADR_KIND" = 'XXDEFAULT'
+AND "BUT21FS"."ADR_KIND" = 'PRT_BUS'
 INNER JOIN 
 :BPID_DATA AS "BPID" 
 ON "BUT21FS"."PARTNER" = "BPID"."PARTNER" 
@@ -94,20 +95,20 @@ ON "BUT21FS"."PARTNER" = "BP_NAME"."PARTNER" ;
 
 RETURN
 SELECT
-"DB_KEY",
-"ALERT_ID",
-"IDNUMBER",
-"PARTNER",
-"BP_DESC",
-"ADR_KIND",
-"VALID_FROM",
-"VALID_TO"  ,
-"HOUSE_NUM1",
-"STREET",
-"CITY1",
-"REGION",
-"POST_CODE1",
-"COUNTRY"
+		"DB_KEY",
+		"ALERT_ID",
+		"IDNUMBER",
+		"PARTNER",
+		"BP_DESC",
+		"ADR_KIND",
+		"VALID_FROM",
+		"VALID_TO"  ,
+		"HOUSE_NUM1",
+		"STREET",
+		"CITY1",
+		"REGION",
+		"POST_CODE1",
+		"COUNTRY"
 FROM :ADRC_BUT21FS
 ;
 
