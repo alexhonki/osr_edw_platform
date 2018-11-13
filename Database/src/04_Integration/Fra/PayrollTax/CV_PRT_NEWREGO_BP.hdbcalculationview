@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt::CV_PRT_NEWREGO_BP" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_PRT_NEWREGO_BP"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_FINYEAR" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Financial Year"/>
+    <variableProperties datatype="NVARCHAR" length="4" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt::CV_BP_REGISTRATION_FACTS">
@@ -39,7 +47,11 @@
         <descriptions defaultDescription="PRT_TAX_LIAB_DATE"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ZFINYEAR" datatype="NVARCHAR" length="4" expressionLanguage="COLUMN_ENGINE">
+        <formula>'$$IP_FINYEAR$$'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.platform.fra.prt::CV_BP_REGISTRATION_FACTS">
       <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
@@ -50,7 +62,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/>
     </input>
-    <filter>(&quot;DATE_TO&quot;!='00000000')</filter>
+    <filter>(&quot;DATE_TO&quot;!='00000000') AND (&quot;PARTNERACCTYP&quot;='PT')</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_FISCAL_CAL">
     <viewAttributes>
@@ -94,6 +106,10 @@
       <viewAttribute id="FISCAL_YEAR">
         <descriptions defaultDescription="FISCAL_YEAR"/>
       </viewAttribute>
+    
+      <viewAttribute id="ZFINYEAR">
+        <descriptions defaultDescription="ZFINYEAR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -105,6 +121,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DATE_TO" source="DATE_TO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZFINYEAR" source="ZFINYEAR"/>
     </input>
     <input node="P_FISCAL_CAL">
       <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
@@ -112,7 +130,7 @@
     </input>
     <joinAttribute name="PRT_TAX_LIAB_DATE"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="rightOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
     <viewAttributes>
       <viewAttribute id="CONTRACT_OBJECT">
         <descriptions defaultDescription="CONTRACT_OBJECT"/>
@@ -138,6 +156,9 @@
       <viewAttribute id="ZABN">
         <descriptions defaultDescription="IDNUMBER"/>
       </viewAttribute>
+      <viewAttribute id="ZFINYEAR">
+        <descriptions defaultDescription="ZFINYEAR"/>
+      </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$CLIENT$CLIENT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -150,6 +171,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZFINYEAR" source="ZFINYEAR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CLIENT$CLIENT" source="CLIENT"/>
     </input>
     <input node="P_BP_ID">
@@ -160,8 +182,9 @@
     <joinAttribute name="JOIN$CLIENT$CLIENT"/>
     <joinAttribute name="PARTNER"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="P_FINYEAR_BP">
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_FINYEAR_BP" filterExpressionLanguage="SQL">
     <viewAttributes>
+    
       <viewAttribute id="CLIENT">
         <descriptions defaultDescription="CLIENT"/>
       </viewAttribute>
@@ -186,6 +209,9 @@
       <viewAttribute id="FISCAL_YEAR">
         <descriptions defaultDescription="FISCAL_YEAR"/>
       </viewAttribute>
+      <viewAttribute id="ZFINYEAR">
+        <descriptions defaultDescription="ZFINYEAR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -198,7 +224,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
-    </input></calculationView>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZFINYEAR" source="ZFINYEAR"/>
+    </input>
+    <filter>&quot;ZFINYEAR&quot;&gt;=&quot;FISCAL_YEAR&quot;</filter>
+  </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_BP_ID" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="ZABN">
@@ -254,6 +284,11 @@
   
       <keyMapping columnObjectName="Join_1" columnName="ZABN"/>
   
+    </attribute>
+  
+    <attribute id="ZFINYEAR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZFINYEAR"/>
+      <keyMapping columnObjectName="Join_1" columnName="ZFINYEAR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
