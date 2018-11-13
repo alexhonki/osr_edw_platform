@@ -74,6 +74,12 @@ context Types {
  			THRESHOLD_YEARLY : Decimal(15,2);
  		};
  		
+ 		type param_qld_nexus {
+ 			QLD_EMP_PC :		Decimal(5,2);
+ 			QLD_EMP_CNT_LOW:	Integer;
+ 			QLD_EMP_CNT_HIGH:	Integer;
+ 		};
+ 		
  		//result
     	type result {
 			ABN				: String(11);
@@ -185,9 +191,6 @@ context Types {
         	WCQ_EMP_CNT		: Integer;
 		};
 		
-		type param_r1 {
- 			QLD_EMP_PC : Decimal(5,2);
- 		};
  		
  		type data_r2 {
 			ABN: 				String(11);

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.ltax::CV_Assessments" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Land Tax Assessments"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.proxy::CV_DFKKOP">
+    <resourceUri>osr.edw.staging.td.rms.proxy::CV_DFKKOP</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.rms.proxy::CV_LTAXASFB">
+    <resourceUri>osr.edw.staging.td.rms.proxy::CV_LTAXASFB</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="HVORG">
+        <descriptions defaultDescription="HVORG"/>
+      </viewAttribute>
+      <viewAttribute id="TVORG">
+        <descriptions defaultDescription="TVORG"/>
+      </viewAttribute>
+      <viewAttribute id="BUDAT">
+        <descriptions defaultDescription="BUDAT"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM_1">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.proxy::CV_DFKKOP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HVORG" source="HVORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TVORG" source="TVORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM_1" source="FBNUM"/>
+    </input>
+    <filter>&quot;HVORG&quot; = '4000' AND &quot;TVORG&quot; = '0150' AND &quot;BUDAT&quot; &gt;= '20181001' AND BUDAT &lt;= '20181031'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="ASSESS_FBNUM">
+        <descriptions defaultDescription="ASSESS_FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRSTARTDATE">
+        <descriptions defaultDescription="TAXYRSTARTDATE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.proxy::CV_LTAXASFB">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESS_FBNUM" source="ASSESS_FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRSTARTDATE" source="TAXYRSTARTDATE"/>
+    </input>
+  
+    <filter>&quot;TAXYRSTARTDATE&quot; &gt;= '20180701'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="HVORG">
+        <descriptions defaultDescription="HVORG"/>
+      </viewAttribute>
+      <viewAttribute id="TVORG">
+        <descriptions defaultDescription="TVORG"/>
+      </viewAttribute>
+      <viewAttribute id="BUDAT">
+        <descriptions defaultDescription="BUDAT"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM" aggregationType="count">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM_1">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HVORG" source="HVORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TVORG" source="TVORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM_1" source="FBNUM_1"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="HVORG">
+        <descriptions defaultDescription="HVORG"/>
+      </viewAttribute>
+      <viewAttribute id="TVORG">
+        <descriptions defaultDescription="TVORG"/>
+      </viewAttribute>
+      <viewAttribute id="BUDAT">
+        <descriptions defaultDescription="BUDAT"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM" aggregationType="count">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="FBNUM_1">
+        <descriptions defaultDescription="FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="ASSESS_FBNUM">
+        <descriptions defaultDescription="ASSESS_FBNUM"/>
+      </viewAttribute>
+      <viewAttribute id="TAXYRSTARTDATE">
+        <descriptions defaultDescription="TAXYRSTARTDATE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HVORG" source="HVORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TVORG" source="TVORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM_1" source="FBNUM_1"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESS_FBNUM" source="ASSESS_FBNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXYRSTARTDATE" source="TAXYRSTARTDATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM_1" source="ASSESS_FBNUM"/>
+    </input>
+    <joinAttribute name="FBNUM_1"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+    </attribute>
+    <attribute id="HVORG" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HVORG"/>
+      <keyMapping columnObjectName="Join_1" columnName="HVORG"/>
+    </attribute>
+    <attribute id="TVORG" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TVORG"/>
+      <keyMapping columnObjectName="Join_1" columnName="TVORG"/>
+    </attribute>
+    <attribute id="BUDAT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUDAT"/>
+    </attribute>
+    <attribute id="FBNUM_1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="FBNUM_1"/>
+    </attribute>
+    <attribute id="CLIENT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Join_1" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="ASSESS_FBNUM" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSESS_FBNUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="ASSESS_FBNUM"/>
+    </attribute>
+    <attribute id="TAXYRSTARTDATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXYRSTARTDATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="TAXYRSTARTDATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="FBNUM" order="5" aggregationType="count" measureType="simple">
+      <descriptions defaultDescription="FBNUM"/>
+      <measureMapping columnObjectName="Join_1" columnName="FBNUM"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="213" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="481"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="213" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

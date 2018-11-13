@@ -1,0 +1,14 @@
+PROCEDURE "osr.edw.platform::SP_UTIL_GET_CURRENT_FISCAL_PERIOD"(  
+	 
+	/*		
+		Get the current fiscal period. 			
+	*/
+	OUT ot_fiscal_period	NVARCHAR(3) 													
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY DEFINER -- Execute procedure as _SYS_REPO 
+	
+AS
+BEGIN	
+	--SELECT FISCAL_PERIOD into ot_fiscal_period from "_SYS_BI"."M_FISCAL_CALENDAR" WHERE DATE = CURRENT_DATE;
+END;	

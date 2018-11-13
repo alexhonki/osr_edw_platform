@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_BP_DATES"( IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_DATES"( IN IP_ALERT_ID NVARCHAR(20) )
 RETURNS TABLE
 (
 DB_KEY				NVARCHAR(32),
@@ -29,7 +29,7 @@ SELECT
 FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
 INNER JOIN 
-"osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 ON "BPID"."PARTNER" = "ALERT"."BPARTNER"
 WHERE "BPID"."TYPE" = 'ZABN'
   AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
@@ -52,7 +52,7 @@ WHERE "FACT_CAT_SEQ_10"
 IN (
 SELECT 
 "BPARTNER" 
-FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() 
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
 WHERE "ALERT_ID" = :IP_ALERT_ID )
 ;
 
@@ -68,7 +68,7 @@ AND "PARTNER"
 IN (
 SELECT 
 "BPARTNER" 
-FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() 
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
 WHERE "ALERT_ID" = :IP_ALERT_ID )
 ;
 

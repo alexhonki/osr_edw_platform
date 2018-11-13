@@ -1,0 +1,98 @@
+FUNCTION "osr.edw.platform.reporting.ltax::TF_ASSESSMENTS_BASE"( IN IP_KEY_DATE NVARCHAR(8), IN IP_TIME_ELEMENT NVARCHAR(8) )
+       RETURNS TABLE (FBNUM NVARCHAR(12), BETRH DECIMAL)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+    DECLARE l_current_month 		NVARCHAR (2);
+ 	DECLARE l_current_quarter 		NVARCHAR (1);
+ 	DECLARE l_day_of_week 			INTEGER;
+	DECLARE l_date_from 			DATE;
+	DECLARE l_date_to 				DATE = IP_KEY_DATE;
+	DECLARE l_fiscal_year_per_from 	NVARCHAR (7);
+	DECLARE l_fiscal_year_per_to 	NVARCHAR (7);
+
+	
+	/********* Fiscal Year to Date   ************/
+	IF :IP_TIME_ELEMENT = 'YTD_CY' THEN
+		l_current_month = MONTH(:IP_KEY_DATE);
+		--First half of the year
+		IF :l_current_month <= 6 THEN
+			l_date_from = TO_DATE(CONCAT (YEAR(:IP_KEY_DATE)-1,'-07-01'), 'YYYY-MM-DD');
+		--Second half of the year	
+		ELSE
+			l_date_from = TO_DATE(CONCAT (YEAR(:IP_KEY_DATE),'-07-01'), 'YYYY-MM-DD');
+		END IF;
+
+	/********* Fiscal Year to Date Last Year  ************/
+	ELSEIF :IP_TIME_ELEMENT = 'YTD_LY' THEN
+		l_current_month = MONTH (:IP_KEY_DATE);
+		--First half of the year
+		IF :l_current_month <= 6 THEN
+			l_date_from = TO_DATE(CONCAT (LEFT(:IP_KEY_DATE,4)-2,'-07-01'), 'YYYY-MM-DD');
+			l_date_to = ADD_YEARS(:IP_KEY_DATE,-1);
+		--Second half of the year	
+		ELSE
+			l_date_from = TO_DATE(CONCAT (LEFT(:IP_KEY_DATE,4)-1,'-07-01'), 'YYYY-MM-DD');
+			l_date_to = ADD_YEARS(:IP_KEY_DATE,-1);	
+		END IF;
+
+	/********* Fiscal Month to Date  ************/
+	ELSEIF :IP_TIME_ELEMENT = 'MTD_CY' THEN 
+		l_date_from = TO_DATE(CONCAT (LEFT(:IP_KEY_DATE,7),'-01'), 'YYYY-MM-DD');
+		
+	/********* Fiscal Month to Date Last Year  ************/
+	ELSEIF :IP_TIME_ELEMENT = 'MTD_LY' THEN 
+		l_date_from = TO_DATE(CONCAT (LEFT(ADD_YEARS(:IP_KEY_DATE,-1),7),'-01'), 'YYYY-MM-DD');
+ 		l_date_to = ADD_YEARS(:IP_KEY_DATE,-1);
+	
+	/********* Rolling 12 Month to Date  ************/
+	ELSEIF :IP_TIME_ELEMENT = 'R12M_CY' THEN 
+		l_date_from = ADD_MONTHS(:IP_KEY_DATE,-12);
+	
+	/********* Rolling 12 Month Last Year  ************/
+	ELSEIF :IP_TIME_ELEMENT = 'R12M_LY' THEN 
+		l_date_from = ADD_MONTHS(:IP_KEY_DATE,-24);
+		l_date_to 	= ADD_MONTHS(:IP_KEY_DATE,-12);		
+	
+	END IF;
+	
+	/********* Convert Date to Fiscal Year Period ************/
+	l_current_month = MONTH (l_date_from);
+	IF :l_current_month <= 6 THEN
+		l_fiscal_year_per_from = CONCAT(CONCAT(YEAR (l_date_from),'0'), :l_current_month + 6);	
+	ELSE
+		l_fiscal_year_per_from = CONCAT(CONCAT(YEAR (l_date_from)+1,'0'), :l_current_month -6);	
+	END IF;
+		
+	/********* Convert Date to Fiscal Year Period ************/	
+	l_current_month = MONTH (l_date_to);
+	IF :l_current_month <= 6 THEN
+		l_fiscal_year_per_to = CONCAT(CONCAT(YEAR (l_date_to),'0'), :l_current_month +6);	
+	ELSE
+		l_fiscal_year_per_to = CONCAT(CONCAT(YEAR (l_date_to)+1,'0'), :l_current_month -6);
+	END IF;
+
+	/********* Convert Fiscal Year Period to Correct Format ************/	
+	IF LENGTH (:l_fiscal_year_per_from) <= 6 THEN
+		l_fiscal_year_per_from = CONCAT(CONCAT(LEFT(:l_fiscal_year_per_from,5),'0'),RIGHT(:l_fiscal_year_per_from,1));
+	END IF;
+		
+	IF LENGTH (:l_fiscal_year_per_to) <= 6 THEN
+		l_fiscal_year_per_to = CONCAT(CONCAT(LEFT(:l_fiscal_year_per_to,5),'0'), RIGHT(:l_fiscal_year_per_to,1));			
+	END IF;
+    
+    lt_base_assessments = SELECT a.FBNUM, a.BETRH
+    					  FROM "osr.edw.staging.td.rms.proxy::CV_DFKKOP" a
+    					  LEFT OUTER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" b
+    					  ON a."BLDAT" = b."DATE"
+    					  WHERE "HVORG" = '4000' AND 
+    						    "TVORG" = '0150' AND 
+    						    "BUDAT" >= '20181001' AND BUDAT <= '20181031';
+    						    
+	RETURN SELECT * FROM :lt_base_assessments;    						    
+    
+END;
