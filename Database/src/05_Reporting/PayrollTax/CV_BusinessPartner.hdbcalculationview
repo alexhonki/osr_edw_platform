@@ -403,7 +403,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="BUT021FS">
+  <calculationView xsi:type="Calculation:ProjectionView" id="BUT021FS" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="CLIENT">
         <descriptions defaultDescription="CLIENT"/>
@@ -434,6 +434,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ADDRNUMBER" source="ADDRNUMBER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="XDFADU" source="XDFADU"/>
     </input>
+  
+    <filter>&quot;ADR_KIND&quot; = 'XXDEFAULT'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="inner">
     <viewAttributes>
@@ -3567,7 +3569,7 @@
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="BUT021FS" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="536"/>
+      <upperLeftCorner x="308" y="591"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
@@ -3600,4 +3602,4 @@
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario> 
+</Calculation:scenario>
