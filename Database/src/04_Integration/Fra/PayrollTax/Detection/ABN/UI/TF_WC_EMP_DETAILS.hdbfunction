@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_WC_EMP_DETAILS"( IN IP_ALERT_ID NVARCHAR(20)  )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_EMP_DETAILS"( IN IP_ALERT_ID NVARCHAR(20)  )
        RETURNS TABLE
 (
 DB_KEY				NVARCHAR(32),
@@ -63,7 +63,7 @@ SELECT
 "DATA"."START_EMPLOY_DATE",
 "DATA"."CEASED_DATE"
 FROM  :lt_emp_details AS "DATA"
-INNER JOIN  "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
+INNER JOIN  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
 AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."ASSESSMENT_YEAR")
 WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
   AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;

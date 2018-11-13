@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_WC_WAGES"( IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"( IN IP_ALERT_ID NVARCHAR(20) )
       RETURNS TABLE
 (
 DB_KEY				NVARCHAR(32),
@@ -59,7 +59,7 @@ SELECT
 "DATA"."ASSESSMENT_YEAR",
 "DATA"."ACT_WAGES" AS "ACT_WAGES",
 "DATA"."ACT_APPR_WAGES" AS "ACT_APPR_WAGES"
-FROM "osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 INNER JOIN :lt_wc_wages2 AS "DATA"
 ON  "ALERT"."ABN" = "DATA"."ABN"
 AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."ASSESSMENT_YEAR")
