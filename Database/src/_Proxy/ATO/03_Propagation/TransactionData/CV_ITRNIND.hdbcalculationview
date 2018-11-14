@@ -25,6 +25,14 @@
       <descriptions defaultDescription="ERROR"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="ERROR"/>
     </attribute>
+    <attribute id="PARTITION" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="REF_ID" order="5" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REF_ID"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="REF_ID"/>
+    </attribute>
     <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="ABN"/>
@@ -32,6 +40,10 @@
     <attribute id="CLNT_TYP" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLNT_TYP"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="CLNT_TYP"/>
+    </attribute>
+    <attribute id="INCM_YR" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCM_YR"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="INCM_YR"/>
     </attribute>
     <attribute id="ACN" order="9" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
@@ -177,25 +189,26 @@
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_CHANGE_TYPE"/>
     </attribute>
+    <attribute id="Z_CHANGE_TIME" order="60" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
     <attribute id="Z_SOURCE_SYS" order="61" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_SOURCE_SYS"/>
     </attribute>
+  
+    <attribute id="Z_RUN_ROW_NO" order="62" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="63" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="PARTITION" order="4" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="PARTITION"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="PARTITION"/>
-    </measure>
-    <measure id="REF_ID" order="5" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="REF_ID"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="REF_ID"/>
-    </measure>
-    <measure id="INCM_YR" order="8" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="INCM_YR"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="INCM_YR"/>
-    </measure>
     <measure id="TOTL_BUS_INCM_AMT" order="26" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
       <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="TOTL_BUS_INCM_AMT"/>
@@ -255,20 +268,7 @@
     <measure id="DISTRIBUTION" order="52" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="DISTRIBUTION"/>
       <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="DISTRIBUTION"/>
-    </measure>
-    <measure id="Z_CHANGE_TIME" order="60" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_CHANGE_TIME"/>
-    </measure>
-    <measure id="Z_RUN_ROW_NO" order="62" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_RUN_ROW_NO"/>
-    </measure>
-    <measure id="Z_RUN_SEQ_ID" order="63" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <measureMapping columnObjectName="CDS_ITR.DSO.ITRNIND.active_data" columnName="Z_RUN_SEQ_ID"/>
-    </measure>
-  </baseMeasures>
+    </measure></baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
   <localDimensions/>

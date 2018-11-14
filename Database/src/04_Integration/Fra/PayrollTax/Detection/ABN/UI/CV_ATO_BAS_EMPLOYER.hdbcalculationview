@@ -49,6 +49,40 @@
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="GJAHR"/>
       </viewAttribute>
+    
+      <viewAttribute id="BUS_ADDR_LN_2">
+        <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_LCLTY_NM">
+        <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_STATE">
+        <descriptions defaultDescription="BUS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_PC">
+        <descriptions defaultDescription="BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="POS_ADDR_LN_1">
+        <descriptions defaultDescription="POS_ADDR_LN_1"/>
+      </viewAttribute>
+      <viewAttribute id="POS_ADDR_LN_2">
+        <descriptions defaultDescription="POS_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="POS_LCLTY_NM">
+        <descriptions defaultDescription="POS_LCLTY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="POS_STATE">
+        <descriptions defaultDescription="POS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="POS_PC">
+        <descriptions defaultDescription="POS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_ADDR_LN_1">
+        <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -63,6 +97,18 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR_LN_2" source="BUS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_LCLTY_NM" source="BUS_LCLTY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_ADDR_LN_1" source="POS_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_ADDR_LN_2" source="POS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_LCLTY_NM" source="POS_LCLTY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_STATE" source="POS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_PC" source="POS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR_LN_1" source="BUS_ADDR_LN_1"/>
     </input>
     <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
   </calculationView>
@@ -109,6 +155,51 @@
       <descriptions defaultDescription="Financial Year"/>
       <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
     </attribute>
+  
+    <attribute id="BUS_ADDR_LN_2" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Address Line 2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="BUS_LCLTY_NM" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Locality Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business State"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_STATE"/>
+    </attribute>
+    <attribute id="BUS_PC" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Postcode"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_1" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Postal Address Line 1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_2" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Postal Address Line 2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="POS_LCLTY_NM" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Postal Locality Name  "/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="POS_STATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Postal State"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_STATE"/>
+    </attribute>
+    <attribute id="POS_PC" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Postal Postcode"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_PC"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Last Updated Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_1" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Address Line 1 "/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUS_ADDR_LN_1"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
@@ -127,4 +218,4 @@
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario> 
+</Calculation:scenario>

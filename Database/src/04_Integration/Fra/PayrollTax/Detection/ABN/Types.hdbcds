@@ -45,21 +45,11 @@ context Types {
            
         };    		
    		
-    context wages {
-		//workset
-		type ws {
-        ABN				: String(11);
-        PERIOD_CATEGORY	: String(10);
- 	    PERIOD_KEY		: String(4);
-        PERIOD_END_DATE	: String(8);
-        GJAHR			: String(4);
-   		};
-   		
    		//rule 1
-    	type data_r1 {
+    entity WS_PTNGEMPCNT_1 {
 			ABN							: String(11);
         	PERIOD_CATEGORY				: String(10);
- 	    	PERIOD_KEY					:  String(4);
+ 	    	PERIOD_KEY					: String(4);
         	PERIOD_END_DATE				: String(8);
         	GJAHR						: String(4);
         	ATO_BAS_TOTL_PMT_FOR_WRK_AMT: Decimal(15,2);
@@ -67,21 +57,19 @@ context Types {
         	WCQ_ACT_WAGES				: Decimal(15,2);
         	WCQ_ACT_APPR_WAGES			: Decimal(15,2);
         	WAERS						: String(5);
+        	QLD_EMP_PC					: Decimal(5,2);
+ 			QLD_EMP_CNT_LOW				: Integer;
+ 			QLD_EMP_CNT_HIGH			: Integer;
         };
-        
-        //parameters for rule 1
-        type param_r1 {
- 			THRESHOLD_YEARLY : Decimal(15,2);
- 		};
  		
- 		type param_qld_nexus {
+ 	entity WS_PTNGEMPCNT_PARAM {
  			QLD_EMP_PC :		Decimal(5,2);
  			QLD_EMP_CNT_LOW:	Integer;
  			QLD_EMP_CNT_HIGH:	Integer;
  		};
  		
  		//result
-    	type result {
+    entity WS_PTNGEMPCNT_RESULT {
 			ABN				: String(11);
 	    	PERIOD_CATEGORY	: String(10);
  	    	PERIOD_KEY		: String(4);
@@ -121,7 +109,7 @@ context Types {
         	MSGV3_FC		: String(100);
         	MSGV4_FC		: String(100);
    		};
-   };
+  
 	
 	
 	context ato {
