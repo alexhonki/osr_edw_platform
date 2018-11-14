@@ -344,26 +344,26 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="WCQ_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X','X',' ')</formula>
+      <calculatedViewAttribute id="WCQ_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X',1,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="WCQ_ADDR_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X' AND &quot;QLD_ADDR_CHECK&quot; = 'X','X',' ')</formula>
+      <calculatedViewAttribute id="WCQ_ADDR_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X' AND &quot;QLD_ADDR_CHECK&quot; = 'X',1,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="WCQ_ADDR_EMP_PC_CNT3_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X' and &quot;QLD_ADDR_CHECK&quot; = 'X' and &quot;QLD_EMP_PC_CHECK&quot; ='X' and &quot;QLD_EMP_CNT_CHECK_3&quot; ='X','X',' ')</formula>
+      <calculatedViewAttribute id="WCQ_ADDR_EMP_PC_CNT3_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X' and &quot;QLD_ADDR_CHECK&quot; = 'X' and &quot;QLD_EMP_PC_CHECK&quot; ='X' and &quot;QLD_EMP_CNT_CHECK_3&quot; ='X',1,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="WCQ_EMP_PC_CNT_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot;='X' and &quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X','X',' ')</formula>
+      <calculatedViewAttribute id="WCQ_EMP_PC_CNT_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;WCQ_POLICY_CHECK&quot;='X' and &quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X',1,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QLD_ADDR_EMP_CNT1_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;QLD_ADDR_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_1&quot;='X','X',' ')</formula>
+      <calculatedViewAttribute id="QLD_ADDR_EMP_CNT1_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;QLD_ADDR_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_1&quot;='X',1,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QLD_ADDR_EMP_PC_CNT3_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;QLD_ADDR_CHECK&quot;='X' and &quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X','X',' ')</formula>
+      <calculatedViewAttribute id="QLD_ADDR_EMP_PC_CNT3_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;QLD_ADDR_CHECK&quot;='X' and &quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X',1,0)</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="EMP_PC_CNT3_RULE" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X','X',' ')</formula>
+      <calculatedViewAttribute id="EMP_PC_CNT3_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X',1,0)</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -378,6 +378,60 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
     </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_POLICY_EMP_CNT_ADDR" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_ADDR_CHECK">
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_PC_CHECK">
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_POLICY_CHECK">
+        <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_QLD">
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_ALL">
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$ABN$ABN"/>
+      <viewAttribute hidden="true" id="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="J_EMP_CNT_ADDR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABN$ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR" source="FINANCIAL_YEAR_STRING"/>
+    </input>
+    <input node="P_WCQ_POLICY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABN$ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR" source="FIN_YEAR"/>
+    </input>
+    <joinAttribute name="JOIN$ABN$ABN"/>
+    <joinAttribute name="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
     <viewAttributes>
@@ -590,60 +644,6 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     </input>
     <joinAttribute name="ABN"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="J_POLICY_EMP_CNT_ADDR" joinType="leftOuter">
-    <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_PC_CHECK">
-        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="WCQ_POLICY_CHECK">
-        <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
-      </viewAttribute>
-      <viewAttribute id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"/>
-      </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$ABN$ABN"/>
-      <viewAttribute hidden="true" id="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="J_EMP_CNT_ADDR">
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABN$ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR" source="FINANCIAL_YEAR_STRING"/>
-    </input>
-    <input node="P_WCQ_POLICY">
-      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FIN_YEAR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABN$ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR" source="FIN_YEAR"/>
-    </input>
-    <joinAttribute name="JOIN$ABN$ABN"/>
-    <joinAttribute name="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
-  </calculationView>
 </calculationViews>
 <logicalModel id="Join_1">
   <attributes>
@@ -679,7 +679,9 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     <attribute id="WCQ_RULE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WCQ_RULE"/>
   
+  
       <keyMapping columnObjectName="Join_1" columnName="WCQ_RULE"/>
+  
   
     </attribute>
     <attribute id="WCQ_ADDR_RULE" order="8" displayAttribute="false" attributeHierarchyActive="false">
@@ -713,17 +715,17 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="448.81878369636877" y="112"/>
+      <upperLeftCorner x="448" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="P_WCQ_POLICY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="477.7114749437194" y="696.9999964237213"/>
+      <upperLeftCorner x="477" y="696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="694.952950993887" y="856.9999952316284"/>
+      <upperLeftCorner x="694" y="856"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="A_EMP_CNT_QLD" modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput">
@@ -735,19 +737,19 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="A_EMP_CNT_QLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="576.6505970561631" y="1016.9999940395355"/>
+      <upperLeftCorner x="576" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="A_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="786.6505970561631" y="1016.9999940395355"/>
+      <upperLeftCorner x="786" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_BAS_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="411.3256829739005" y="1161.9999928474426"/>
+      <upperLeftCorner x="411" y="1161"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_ABR_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666663" y="1161.9999928474426"/>
+      <upperLeftCorner x="118" y="1161"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput">
@@ -760,30 +762,43 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     </shape>
   
     <shape expanded="true" modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1321.9999916553497"/>
+      <upperLeftCorner x="92" y="1321"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_ABR_Agency_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="1321.9999916553497"/>
+      <upperLeftCorner x="302" y="1321"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="A_QLD_ADDR_CHECK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="356.8870506950524" y="874.4999952316284"/>
+      <upperLeftCorner x="356" y="874"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="U_BUS_CHECK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="356.8870506950524" y="1020.3333273728688"/>
+      <upperLeftCorner x="356" y="1020"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="533.3369215261322" y="394.4999988079071"/>
+      <upperLeftCorner x="533" y="394"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="J_POLICY_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="607" y="536"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="419" y="50"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_WCQ_POLICY" modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="51" y="50"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
   
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448.81878369636877" y="217"/>
+      <upperLeftCorner x="448" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -795,7 +810,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="214.0776972606916" y="376.9999988079071"/>
+      <upperLeftCorner x="214" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_RATE" modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput">
@@ -807,15 +822,15 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="P_RATE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="187.41103059402496" y="536.9999976158142"/>
+      <upperLeftCorner x="187" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="397.41103059402485" y="536.9999976158142"/>
+      <upperLeftCorner x="397" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="687.7114749437195" y="696.9999964237213"/>
+      <upperLeftCorner x="687" y="696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
@@ -825,19 +840,6 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     <shape modelObjectName="A_QLD_ADDR_CHECK" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
-    </shape>
-    <shape expanded="true" modelObjectName="J_POLICY_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="607.4110305940247" y="536.9999976158142"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="419" y="50"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="P_WCQ_POLICY" modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="51" y="50"/>
-      <rectangleSize width="250"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
