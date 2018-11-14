@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.ui::TF_ATO_BAS_WAGES" ( IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_WAGES" ( IN IP_ALERT_ID NVARCHAR(20) )
 RETURNS TABLE
 (
 DB_KEY					NVARCHAR(32),
@@ -25,7 +25,7 @@ SELECT
 "DATA"."FBT_INST_AMT",
 'AUD' AS "WAERS"
 FROM
-"osr.edw.platform.fra.prt.dt.ui::TF_Alert_PT_ABN_FY"() AS "ALERT"
+"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 INNER JOIN
 "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "DATA"
 ON  "ALERT"."ABN" = "DATA"."ABN"

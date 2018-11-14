@@ -1,0 +1,21 @@
+FUNCTION "osr.edw.staging.md.rms.bp.proxy::TF_BP_ROLES_T"( )
+RETURNS TABLE (
+	SPRAS	NVARCHAR(1),
+	ROLE	NVARCHAR(6),
+	RLTITL	NVARCHAR(25),
+	RLTXT	NVARCHAR(50)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN 
+SELECT 
+TOP 1 
+'E' AS "SPRAS",
+'ZPSA' AS "ROLE",
+'Self Assessor - Payroll' AS "RLTITL",
+'Self Assessor - Payroll Tax' AS "RLTXT"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+
+END;

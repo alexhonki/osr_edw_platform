@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.bp.proxy::CV_BP_ROLES_T" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="BP Roles(Text)"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.bp.proxy::TF_BP_ROLES_T" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.rms.bp.proxy::TF_BP_ROLES_T</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.md.rms.bp.proxy::TF_BP_ROLES_T">
+  <attributes>
+    <attribute id="SPRAS" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Language Key"/>
+      <keyMapping columnObjectName="TF_BP_ROLES_T" columnName="SPRAS"/>
+    </attribute>
+    <attribute id="ROLE" order="2" descriptionColumnName="RLTXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Role"/>
+      <keyMapping columnObjectName="TF_BP_ROLES_T" columnName="ROLE"/>
+    </attribute>
+    <attribute id="RLTITL" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Role Title"/>
+      <keyMapping columnObjectName="TF_BP_ROLES_T" columnName="RLTITL"/>
+    </attribute>
+    <attribute id="RLTXT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Role Description"/>
+      <keyMapping columnObjectName="TF_BP_ROLES_T" columnName="RLTXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

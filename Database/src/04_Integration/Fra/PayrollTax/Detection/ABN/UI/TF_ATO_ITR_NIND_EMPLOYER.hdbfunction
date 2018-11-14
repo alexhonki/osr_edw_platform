@@ -1,0 +1,82 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_EMPLOYER"(IN IP_ALERT_ID NVARCHAR(20) )
+RETURNS TABLE
+(
+DB_KEY				NVARCHAR(32),
+ALERT_ID			NVARCHAR(20),
+ABN					NVARCHAR(20),
+GJAHR				NVARCHAR(4),
+INCM_YR					NVARCHAR(4),
+--ABN						NVARCHAR(20),
+ACN						NVARCHAR(20),
+CLNT_TYP				NVARCHAR(3),
+NON_IDV_NM_LN_1			NVARCHAR(200),
+NON_IDV_NM_LN_2			NVARCHAR(200),
+TRDNG_NM_LN_1			NVARCHAR(200),
+TRDNG_NM_LN_2			NVARCHAR(200),
+PARENT_FULL_NM_TXT		NVARCHAR(200)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+ lt_nind_emp = 
+SELECT 
+"ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."ALERT_ID" AS "ALERT_ID",
+"ALERT"."ABN" AS "ABN",
+"ALERT"."GJAHR" AS "GJAHR",
+"DATA"."INCM_YR" AS "INCM_YR",
+--"DATA"."ABN" AS "ABN",
+to_nvarchar("DATA"."ACN") AS "ACN",
+"DATA"."CLNT_TYP" AS "CLNT_TYP",
+"DATA"."NON_IDV_NM_LN_1" AS "NON_IDV_NM_LN_1",
+"DATA"."NON_IDV_NM_LN_2" AS "NON_IDV_NM_LN_2",	
+"DATA"."TRDNG_NM_LN_1" AS "TRDNG_NM_LN_1",
+"DATA"."TRDNG_NM_LN_2" AS "TRDNG_NM_LN_2",
+"DATA"."PARENT_FULL_NM_TXT" AS "PARENT_FULL_NM_TXT"
+--FROM "osr.edw.staging.td.ato::VT_BASNIND" AS "A"
+--FROM "osr.edw.staging.md.ato.synonym::CDS_BAS.DSO.BASNIND.active_data";
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+INNER JOIN "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"
+ON  "ALERT"."ABN" = "DATA"."ABN"
+AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."INCM_YR")
+WHERE LEFT(RIGHT("DATA"."NAME",8),2) = 'FY'
+  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
+--where 	"DATA"."ABN" = '11159226116';
+
+RETURN
+SELECT
+"DB_KEY",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+"INCM_YR",
+--"ABN",
+"ACN",
+"CLNT_TYP",
+"NON_IDV_NM_LN_1",
+"NON_IDV_NM_LN_2",	
+"TRDNG_NM_LN_1",
+"TRDNG_NM_LN_2",
+"PARENT_FULL_NM_TXT"
+FROM  :lt_nind_emp;
+
+END;
+
+/*	RETURN
+	SELECT 
+	TOP 1
+	'2018'						AS "INCM_YR",
+	'98163427852'				AS "ABN",
+	'163427852'					AS "ACN",
+	'COY'						AS "CLNT_TYP",
+	'QUEST SECURITY PTY LTD'	AS "NON_IDV_NM_LN_1",
+	''							AS "NON_IDV_NM_LN_2",
+	''							AS "TRDNG_NM_LN_1",
+	''							AS "TRDNG_NM_LN_2",
+	''							AS "PARENT_FULL_NM_TXT"
+	FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+	--FROM "osr.edw.staging.md.ato.synonym::CDS_BAS.DSO.ITRNIND.active_data";
+	
+END;	
+*/

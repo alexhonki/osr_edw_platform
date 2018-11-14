@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" dataCategory="CUBE" cacheInvalidationPeriod="NONE" id="osr.edw.platform.fra.prt::CV_WCQ_ABN_WAGES" applyPrivilegeType="NONE" outputViewType="Aggregation" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_WCQ_ABN_WAGES"></descriptions>
-<localVariables></localVariables>
-<variableMappings></variableMappings>
+<descriptions defaultDescription="CV_WCQ_ABN_WAGES"/>
+<localVariables/>
+<variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
     <resourceUri>osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY</resourceUri>
@@ -12,119 +12,132 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:JoinView" joinType="rightOuter" id="Join_1">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
     <viewAttributes>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="ACN">
-        <descriptions defaultDescription="ACN"></descriptions>
+        <descriptions defaultDescription="ACN"/>
       </viewAttribute>
       <viewAttribute id="POLICY_NO">
-        <descriptions defaultDescription="POLICY_NO"></descriptions>
+        <descriptions defaultDescription="POLICY_NO"/>
       </viewAttribute>
       <viewAttribute id="ASSESSMENT_YEAR">
-        <descriptions defaultDescription="ASSESSMENT_YEAR"></descriptions>
+        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="ACT_WAGES">
-        <descriptions defaultDescription="ACT_WAGES"></descriptions>
+        <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="ACT_APPR_WAGES">
-        <descriptions defaultDescription="ACT_APPR_WAGES"></descriptions>
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
       </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$POLICY_NO$POLICY_NO"></viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$POLICY_NO$POLICY_NO"/>
     </viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ACN" target="ACN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="JOIN$POLICY_NO$POLICY_NO"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ACN" target="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
     </input>
     <input node="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
-      <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="POLICY_NO"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ASSESSMENT_YEAR" target="ASSESSMENT_YEAR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_WAGES" target="ACT_WAGES"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_APPR_WAGES" target="ACT_APPR_WAGES"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="JOIN$POLICY_NO$POLICY_NO"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="POLICY_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ASSESSMENT_YEAR" target="ASSESSMENT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_WAGES" target="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_APPR_WAGES" target="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
     </input>
-    <joinAttribute name="JOIN$POLICY_NO$POLICY_NO"></joinAttribute>
+    <joinAttribute name="JOIN$POLICY_NO$POLICY_NO"/>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="FIN_YEAR">
-        <descriptions defaultDescription="ASSESSMENT_YEAR"></descriptions>
+        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="ACT_WAGES">
-        <descriptions defaultDescription="ACT_WAGES"></descriptions>
+        <descriptions defaultDescription="ACT_WAGES"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="ACT_APPR_WAGES">
-        <descriptions defaultDescription="ACT_APPR_WAGES"></descriptions>
+        <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      </viewAttribute>
+    
+      <viewAttribute id="POLICY_NO">
+        <descriptions defaultDescription="POLICY_NO"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="Join_1">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ASSESSMENT_YEAR" target="FIN_YEAR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_WAGES" target="ACT_WAGES"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_APPR_WAGES" target="ACT_APPR_WAGES"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ASSESSMENT_YEAR" target="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_WAGES" target="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ACT_APPR_WAGES" target="ACT_APPR_WAGES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
     </input>
-    <filter>(not isnull("ABN")) and ("ABN"!=' ')</filter>
+    <filter>(not isnull(&quot;ABN&quot;)) and (&quot;ABN&quot;!=' ')</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="Aggregation_1">
   <attributes>
     <attribute id="ABN" displayAttribute="false" order="1" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"></descriptions>
-      <keyMapping columnObjectName="Aggregation_1" columnName="ABN"></keyMapping>
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="ABN"/>
     </attribute>
     <attribute id="FIN_YEAR" displayAttribute="false" order="2" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ASSESSMENT_YEAR"></descriptions>
-      <keyMapping columnObjectName="Aggregation_1" columnName="FIN_YEAR"></keyMapping>
+      <descriptions defaultDescription="ASSESSMENT_YEAR"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="FIN_YEAR"/>
+    </attribute>
+  
+    <attribute id="POLICY_NO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POLICY_NO"/>
+  
+      <keyMapping columnObjectName="Aggregation_1" columnName="POLICY_NO"/>
+  
     </attribute>
   </attributes>
-  <calculatedAttributes></calculatedAttributes>
+  <calculatedAttributes/>
   <baseMeasures>
     <measure aggregationType="sum" id="ACT_WAGES" order="3" measureType="simple">
-      <descriptions defaultDescription="ACT_WAGES"></descriptions>
-      <measureMapping columnObjectName="Aggregation_1" columnName="ACT_WAGES"></measureMapping>
+      <descriptions defaultDescription="ACT_WAGES"/>
+      <measureMapping columnObjectName="Aggregation_1" columnName="ACT_WAGES"/>
     </measure>
     <measure aggregationType="sum" id="ACT_APPR_WAGES" order="4" measureType="simple">
-      <descriptions defaultDescription="ACT_APPR_WAGES"></descriptions>
-      <measureMapping columnObjectName="Aggregation_1" columnName="ACT_APPR_WAGES"></measureMapping>
+      <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      <measureMapping columnObjectName="Aggregation_1" columnName="ACT_APPR_WAGES"/>
     </measure>
   </baseMeasures>
-  <calculatedMeasures></calculatedMeasures>
-  <restrictedMeasures></restrictedMeasures>
-  <localDimensions></localDimensions>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
 </logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
-      <upperLeftCorner x="92" y="112"></upperLeftCorner>
+      <upperLeftCorner x="92" y="112"/>
     
-      <rectangleSize width="160"></rectangleSize>
+      <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="Join_1">
-      <upperLeftCorner x="92" y="342"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="92" y="342"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
-    <shape modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" modelObjectName="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
-      <upperLeftCorner x="20" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+    <shape modelObjectName="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" modelObjectName="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
-      <upperLeftCorner x="320" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+    <shape modelObjectName="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="Aggregation_1">
-      <upperLeftCorner x="92" y="217"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
   </shapes>
 </layout>
