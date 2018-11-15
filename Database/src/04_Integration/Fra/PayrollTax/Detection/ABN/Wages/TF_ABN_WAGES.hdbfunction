@@ -19,7 +19,7 @@ BEGIN
 -- ATO BAS Data   
    SELECT
 		"ATO_BAS"."ABN"                                                                                           AS  "ABN",
-		CASE WHEN LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q') = 0 THEN 'PT-Y' ELSE 'PT-Q' END          AS  "PERIOD_CATEGORY",
+		CASE WHEN LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q') = 0 THEN 'PT-A' ELSE 'PT-Q' END          AS  "PERIOD_CATEGORY",
 		RIGHT(RTRIM ("ATO_BAS"."NAME",'.txt'),4)                                                               AS  "PERIOD_KEY",
 		
 		CASE WHEN  LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q1') <> 0 THEN CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'0930') ELSE
@@ -41,7 +41,7 @@ BEGIN
 -- ATO ITR Data
      SELECT
 		"ATO_ITR"."ABN"                                                                               AS  "ABN",
-		 'PT-Y' 																					  AS  "PERIOD_CATEGORY",
+		 'PT-A' 																					  AS  "PERIOD_CATEGORY",
 		TO_NVARCHAR("ATO_ITR"."INCM_YR",4)                                                  		  AS  "PERIOD_KEY",
 		CONCAT(TO_NVARCHAR("ATO_ITR"."INCM_YR",4),'0630')                                             AS  "PERIOD_END_DATE",
 		TO_NVARCHAR("ATO_ITR"."INCM_YR",4)                                                            AS  "GJAHR",
@@ -58,7 +58,7 @@ BEGIN
  
       SELECT
 		"WCQ_POLICY"."ABN"                                                                             	AS  "ABN", 
-		'PT-Y' 																		   			         AS  "PERIOD_CATEGORY",
+		'PT-A' 																		   			         AS  "PERIOD_CATEGORY",
 		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                           AS  "PERIOD_KEY",
 		CONCAT(LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4),'0630')                                           AS  "PERIOD_END_DATE",
 		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                          AS  "GJAHR",

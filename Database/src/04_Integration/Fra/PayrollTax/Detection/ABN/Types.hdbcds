@@ -45,8 +45,10 @@ context Types {
         };
  		
   		entity param_qld_nexus {
- 			QLD_EMP_PC_THLD :	Decimal(5,2);
- 			QLD_EMP_CNT_THLD:	Integer;
+ 			QLD_EMP_PC_THLD 	:Decimal(5,2);
+ 			QLD_EMP_CNT_THLD	:Integer;
+ 			FLAG_WCQ_POLICY		:String(1);
+ 			FLAG_QLD_ADDRESS	:String(1);
  		};
  		
  		//result
@@ -192,113 +194,6 @@ context Types {
         	MSGV3_FC		: String(100);
         	MSGV4_FC		: String(100);
    		};
-  
-	
-	
-	context ato {
-	
-		type ws {
-        	ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-   		};
-   		
-		type data_r1 {
-			ABN							: String(11);
-        	PERIOD_CATEGORY				: String(10);
- 	    	PERIOD_KEY					: String(4);
-        	PERIOD_END_DATE				: String(8);
-        	GJAHR						: String(4);
-        	ATO_BAS_TOTL_PMT_FOR_WRK_AMT: Decimal(15,2);
-        	ATO_ITR_SALARY_WAGES		: Decimal(15,2);
-        	WAERS						: String(5);
-		};
-		
-		type param_r1 {
- 			THRESHOLD_YEARLY : Decimal(15,2);
- 		};
- 		
-  		//result
-    	type result {
-			ABN				: String(11);
-	    	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	DETECTION_RESULT: Integer;
-   		};
-   		
-   		//result with amount
-    	type result_w_amnt {
-        	ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	DETECTION_RESULT: Integer;
-        	RISK_AMOUNT		: Decimal(23,2);
-        	CURRENCY		: String(5);
-   		};
-	}
-	
-	context wcq {
-	
-		type ws {
-        	ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-   		};
-   		
-		type data_r1 {
-			ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	WCQ_EMP_CNT		: Integer;
-		};
-		
- 		
- 		type data_r2 {
-			ABN: 				String(11);
-        	PERIOD_CATEGORY: 	String(10);
- 	    	PERIOD_KEY:  		String(4);
-        	PERIOD_END_DATE: 	String(8);
-        	GJAHR: 				String(4);
-			WCQ_ACT_WAGES: 		Decimal(15,2);
-			WCQ_ACT_APPR_WAGES: Decimal(15,2);
-			WAERS: 				String(5);
-		};
-		
-		type param_r2 {
- 			THRESHOLD_YEARLY : Decimal(15,2);
- 		};
- 		//result
-    	type result {
-			ABN				: String(11);
-	    	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	DETECTION_RESULT: Integer;
-   		};
-   		
-   		//result with amount
-    	type result_w_amnt {
-        	ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	DETECTION_RESULT: Integer;
-        	RISK_AMOUNT		: Decimal(23,2);
-        	CURRENCY		: String(5);
-   		};
-	}
 
     
 };

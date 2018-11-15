@@ -1,0 +1,43 @@
+FUNCTION "osr.edw.staging.md.rms.prt.proxy::TF_TFKPERIOD"( )
+RETURNS TABLE (
+	PERSL	NVARCHAR(4),
+	ABRZU	NVARCHAR(8),
+	ABRZO	NVARCHAR(8),
+	PREDC	NVARCHAR(4)
+)
+
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN
+SELECT TOP 1 
+'2018' AS "PERSL",
+'20170701' AS "ABRZU",
+'20180630' AS "ABRZO",
+'2017' AS "PREDC"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'2017' AS "PERSL",
+'20160701' AS "ABRZU",
+'20170630' AS "ABRZO",
+'2016' AS "PREDC"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'18Q1' AS "PERSL",
+'20170701' AS "ABRZU",
+'20170930' AS "ABRZO",
+'17Q4' AS "PREDC"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'18Q2' AS "PERSL",
+'20171001' AS "ABRZU",
+'20171231' AS "ABRZO",
+'18Q1' AS "PREDC"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+;
+
+END;

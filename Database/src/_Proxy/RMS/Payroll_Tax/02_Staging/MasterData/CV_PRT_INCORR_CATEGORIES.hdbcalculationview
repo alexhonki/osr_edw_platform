@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.prt.proxy::CV_PRT_INCORR_CATEGORIES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Payroll Tax: Inbound Correspondence Categories"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.prt.proxy::TF_TFK_INCORR" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.rms.prt.proxy::TF_TFK_INCORR</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.md.rms.prt.proxy::TF_TFK_INCORR">
+  <attributes>
+    <attribute id="INCOTYP" order="1" descriptionColumnName="INCOTEXT" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Inbound Correspondence Category"/>
+      <keyMapping columnObjectName="TF_TFK_INCORR" columnName="INCOTYP"/>
+    </attribute>
+    <attribute id="INCOTEXT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Inbound Correspondence Category Descr."/>
+      <keyMapping columnObjectName="TF_TFK_INCORR" columnName="INCOTEXT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

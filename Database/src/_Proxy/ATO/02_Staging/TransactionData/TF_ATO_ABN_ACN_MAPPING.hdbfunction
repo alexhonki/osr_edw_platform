@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ATO_ABN_ACN_MAPPING"( )
+FUNCTION "osr.edw.staging.td.ato.proxy::TF_ATO_ABN_ACN_MAPPING"( )
 RETURNS TABLE
 (
 GJAHR					NVARCHAR(4),
@@ -15,4 +15,5 @@ SELECT TOP 1
 '11000002568' "ABN",
 '000002568' AS "ACN"
 FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+
 END;

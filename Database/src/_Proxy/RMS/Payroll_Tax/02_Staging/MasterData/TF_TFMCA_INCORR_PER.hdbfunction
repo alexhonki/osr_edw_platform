@@ -1,0 +1,37 @@
+FUNCTION "osr.edw.staging.md.rms.prt.proxy::TF_TFMCA_INCORR_PER"( )
+RETURNS TABLE (
+	INCOTYP			NVARCHAR(10),
+	PERSL			NVARCHAR(4),
+	INCORR_FAEDN	NVARCHAR(8)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN
+SELECT TOP 1 
+'PT-A' AS "INCOTYP",
+'2018' AS "PERSL",
+'20180723' AS "INCORR_FAEDN"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'PT-A' AS "INCOTYP",
+'2017' AS "PERSL",
+'20170721' AS "INCORR_FAEDN"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'PT-Q' AS "INCOTYP",
+'18Q1' AS "PERSL",
+'20171009' AS "INCORR_FAEDN"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'PT-Q' AS "INCOTYP",
+'18Q2' AS "PERSL",
+'20180131' AS "INCORR_FAEDN"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+;
+
+END;
