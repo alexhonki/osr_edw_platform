@@ -433,6 +433,50 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     <joinAttribute name="JOIN$ABN$ABN"/>
     <joinAttribute name="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_EMP_CNT_ADDR" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="QLD_ADDR_CHECK">
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_PC_CHECK">
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_QLD">
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_ALL">
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      </viewAttribute>
+    
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="J_EMP_CNT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
+    </input>
+    <input node="A_QLD_ADDR_CHECK">
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+    <joinAttribute name="ABN"/>
+  </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="ABN">
@@ -600,50 +644,6 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="J_EMP_CNT_ADDR" joinType="leftOuter">
-    <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_PC_CHECK">
-        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
-      </viewAttribute>
-      <viewAttribute id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="J_EMP_CNT">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
-    </input>
-    <input node="A_QLD_ADDR_CHECK">
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-    </input>
-    <joinAttribute name="ABN"/>
-  </calculationView>
 </calculationViews>
 <logicalModel id="Join_1">
   <attributes>
@@ -651,7 +651,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Join_1" columnName="ABN"/>
     </attribute>
-    <attribute id="FINANCIAL_YEAR_STRING" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       <keyMapping columnObjectName="Join_1" columnName="FINANCIAL_YEAR_STRING"/>
     </attribute>
@@ -795,6 +795,18 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <upperLeftCorner x="51" y="50"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="687" y="696"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="A_QLD_ADDR_CHECK" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
   
   
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
@@ -828,18 +840,6 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     <shape expanded="true" modelObjectName="P_THRESHOLD" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="397" y="536"/>
       <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="687" y="696"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectName="A_QLD_ADDR_CHECK" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="250"/>
     </shape></shapes>
 </layout>
 </Calculation:scenario>
