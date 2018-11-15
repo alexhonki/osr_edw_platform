@@ -1,0 +1,32 @@
+FUNCTION "osr.edw.staging.md.rms.pscd.proxy::TF_TFK_INCORR"( )
+RETURNS TABLE
+(
+INCOTYP			NVARCHAR(10),
+INCOTEXT		NVARCHAR(40)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN
+SELECT TOP 1 
+'PT-A' AS "INCOTYP",
+'Payroll Tax - Annual' AS "INCOTEXT"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'PT-H' AS "INCOTYP",
+'Payroll Tax - Half Yearly (6 months)' AS "INCOTEXT"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'PT-Q' AS "INCOTYP",
+'Payroll Tax - Quarterly (3 months)' AS "INCOTEXT"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
+'PT-M' AS "INCOTYP",
+'Payroll Tax - Monthly' AS "INCOTEXT"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+;
+END;
