@@ -1,0 +1,421 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_PRT_EXCLUSION_FLAGS"( )
+       RETURNS TABLE
+(
+        ABN             		NVARCHAR(11),
+        PERIOD_CATEGORY 		NVARCHAR(10),
+ 	    PERIOD_KEY      		NVARCHAR(4),
+        PERIOD_END_DATE 		NVARCHAR(8),
+        GJAHR           		NVARCHAR(4),
+        PARTNER         		NVARCHAR(10),
+        PTX_ROLE        		NVARCHAR(1),
+        ID_ROLE         		NVARCHAR(1),
+        PTX_CASE        		NVARCHAR(1),
+        ASIC_ORG_STATUS 		NVARCHAR(10),
+        ASIC_REGD       		NVARCHAR(1),
+        FUND_TYPE       		NVARCHAR(10),
+        ABR_FUND_ACNC        	NVARCHAR(1),
+        SUP_GOV_EXMPT_ANZSIC	NVARCHAR(1)
+        
+
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+ BP_DATA =
+ SELECT 
+	"DET_OBJ"."ABN"                   AS "ABN",
+	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
+	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
+	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
+	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
+    "BPID"."PARTNER"                  AS "PARTNER"
+    
+ FROM 
+	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABNWages"            AS "DET_OBJ" 
+ LEFT OUTER JOIN
+ ( SELECT * FROM 
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" 
+ 	WHERE "TYPE" = 'ZABN'
+ 	AND "PARTNER"  NOT IN ( 
+ 		
+ 		SELECT 	DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
+		WHERE "BU_GROUP" IN ('OLGR') OR "AUGRP"  IN ('ZOFT') OR "XDELE" = 'X'
+	 
+ 		
+ 	)
+ ) AS "BPID"
+ ON "DET_OBJ"."ABN" = "BPID"."IDNUMBER"
+ 
+;
+-------------------Payroll Tax BP Data Selection ---------------------
+/*
+Entities with an Payroll tax role in RMS
+*/
+
+BP_ACC_DATA =
+SELECT DISTINCT
+	"CLIENT",
+	"CONTRACT_OBJECT",
+	"PARTNER",
+	"PARTNERACCTYP",
+	"DATE_TO",
+	"ONLINE_FILLING_COMM",
+	"PRT_TAX_LIAB_DATE"
+FROM "osr.edw.platform.fra.prt::CV_BP_REGISTRATION_FACTS"
+WHERE TO_DATS("DATE_TO") >= to_dats(now())
+AND "PARTNERACCTYP" IN ('PT')
+AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM  :BP_DATA);
+------------------------------------------------------------------------
+
+
+PTX_ROLE =
+SELECT 
+	"DET_OBJ"."ABN"                   AS "ABN",
+	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
+	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
+	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
+	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
+    "DET_OBJ"."PARTNER"               AS "PARTNER",
+    CASE WHEN "BP_FACTS"."PARTNERACCTYP" = 'PT' THEN 'Y' ELSE 'N' END AS "PTX_ROLE"
+FROM 
+	:BP_DATA AS "DET_OBJ"
+LEFT OUTER JOIN 
+	:BP_ACC_DATA AS "BP_FACTS"
+ON
+	"DET_OBJ"."PARTNER" = "BP_FACTS"."PARTNER"
+
+
+;
+--------------------------Insurance Duty Role Selection ---------------------
+
+/*
+Entities with an insurnace duty role in RMS
+*/
+INS_DATA =
+SELECT DISTINCT
+	"PARTNER",
+	"RLTYP",
+	TO_DATS(to_nvarchar("VALID_FROM")) AS "VALID_FROM",
+	TO_DATS(to_nvarchar("VALID_TO")) AS "VALID_TO"
+FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT100.active_data"
+WHERE "RLTYP" = 'ZDINS'
+AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM  :BP_DATA)
+;
+-------------------------------------------------------------------------
+
+ID_DATA =
+SELECT
+	"DET_OBJ"."ABN"                   AS "ABN",
+	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
+	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
+	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
+	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
+    "DET_OBJ"."PARTNER"               AS "PARTNER",
+    "DET_OBJ"."PTX_ROLE"              AS "PTX_ROLE",
+    CASE WHEN "ID_ROLE"."RLTYP" = 'ZDINS' THEN 'Y' ELSE 'N' END AS "ID_ROLE"
+FROM 
+	:PTX_ROLE AS "DET_OBJ"
+LEFT OUTER JOIN 
+	:INS_DATA AS "ID_ROLE"
+ON
+	"DET_OBJ"."PARTNER" = "ID_ROLE"."PARTNER"
+ 
+;
+    
+---------------ASIC Org Status ------------------------------   
+/*
+Entities whose most recent ASIC ORg status was recorded as any code other than registered 
+*/
+
+ASIC_ORG =
+SELECT DISTINCT "ABN", "ORG_STATUS" FROM
+(
+SELECT
+	"ABN",
+	"DEREGISTRATION_CODE",
+	"ERROR",
+	"NAME",
+	"ORG_CLASS",
+	"ORG_END_DATE",
+	"ORG_END_DT",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"ORG_END_DATE" DESC) AS "RANK_1",
+	"ORG_NAME",
+	"ORG_NAME_START_DATE",
+	"ORG_NAME_START_DT",
+	"ORG_NUMBER",
+	"ORG_START_DATE",
+	"ORG_START_DT",
+	"ORG_STATUS",
+	"ORG_SUB_CLASS",
+	"ORG_TYPE",
+	"PARTITION",
+	"PATH",
+	"PLACE_OF_INCORP",
+	"REGN_END_DATE",
+	"REGN_END_DT",
+	"REGN_START_DATE",
+	"REGN_START_DT",
+	"Z_CHANGE_TIME",
+	"Z_CHANGE_TYPE",
+	"Z_CURR_FLAG",
+	"Z_RUN_ROW_NO",
+	"Z_RUN_SEQ_ID",
+	"Z_SOURCE_SYS",
+	"Z_VALID_FROM",
+	"Z_VALID_TO",
+	"STD_FIRM",
+	"FIRM_EXTRA",
+	"FIRM_INFO_CODE",
+	"MATCH_FIRM",
+	"MATCH_FIRM_STD",
+	"Cleanse_TABLE_ID",
+	"Cleanse_ROW_ID"
+FROM "osr.edw.propagation.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data"
+WHERE  ABN IN ( SELECT "ABN" FROM  :BP_DATA )
+) WHERE "RANK_1" = '1'
+;
+
+
+ASIC_STATUS = 
+SELECT
+	"DET_OBJ"."ABN"                   AS "ABN",
+	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
+	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
+	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
+	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
+    "DET_OBJ"."PARTNER"               AS "PARTNER",
+    "DET_OBJ"."PTX_ROLE"              AS "PTX_ROLE",
+    "DET_OBJ"."ID_ROLE"               AS "ID_ROLE",
+    "ASIC_ST"."ORG_STATUS"            AS "ASIC_ORG_STATUS",
+    CASE WHEN "ASIC_ST"."ORG_STATUS" = 'REGD' THEN 'Y' ELSE 'N' END AS  "ASIC_REGD"
+FROM :ID_DATA AS "DET_OBJ" 
+LEFT OUTER JOIN
+:ASIC_ORG AS "ASIC_ST" ON
+"DET_OBJ"."ABN"  = "ASIC_ST"."ABN"
+;
+
+
+--------------------------------------------------------------------------------------------
+
+---------------ABR Fund-----------------------------------------------------
+/*
+Entities Recorded in ABR Funds or ACNC Data
+*/
+ABR_AGENCY =
+SELECT DISTINCT
+	"ABN",
+	"PID",
+	"ENT_TYP_CD",
+	"ACN",
+	"SPRSN_IND"
+FROM 
+	"osr.edw.propagation.md.abr.proxy::CV_AGENCY_DATA"
+WHERE 
+	SPRSN_IND <> 'Y'
+AND "ABN" IN (SELECT "ABN" FROM  :BP_DATA )	
+;
+
+ABR_FUND =
+SELECT  DISTINCT
+	"ABN",
+	"PID",
+	"FUND_NAME",
+	"FUND_TYPE",
+	"FUND_REG_DT",
+	"FUND_CAN_DT"
+FROM
+
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID",
+	 "FUND"."PRIMARY_ID"         AS  "FUND_PID",
+	 "FUND"."FUND_NAME"          AS  "FUND_NAME" ,
+	 "FUND"."FUND_TYPE"          AS  "FUND_TYPE",
+	 "FUND"."REGISTRATION_DATE"  AS  "FUND_REG_DT",
+	 "FUND"."CANCELLATION_DATE"  AS  "FUND_CAN_DT"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.proxy::CV_FUNDS" AS "FUND"
+ON 
+	"AGENCY"."PID" = "FUND"."PRIMARY_ID"
+)	
+;	
+
+ACNC =
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.proxy::CV_ACNC" AS "ACNC"
+ON 
+	"AGENCY"."PID" = "ACNC"."PID"
+
+;	
+
+
+ABR_DATA =
+SELECT
+	"DET_OBJ"."ABN"                   AS "ABN",
+	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
+	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
+	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
+	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
+    "DET_OBJ"."PARTNER"               AS "PARTNER",
+    "DET_OBJ"."PTX_ROLE"              AS "PTX_ROLE",
+    "DET_OBJ"."ID_ROLE"               AS "ID_ROLE",
+    "DET_OBJ"."ASIC_ORG_STATUS"       AS "ASIC_ORG_STATUS",
+    "DET_OBJ"."ASIC_REGD"             AS "ASIC_REGD",
+    "ABR_FUND"."FUND_TYPE"            AS "FUND_TYPE",
+    CASE WHEN ( "ABR_FUND"."FUND_TYPE" IS NOT NULL ) OR ( "ACNC_DATA"."ABN" IS NOT NULL ) THEN 'Y' ELSE 'N' END   AS "ABR_FUND_ACNC"
+FROM     
+	:ASIC_STATUS AS "DET_OBJ" 
+LEFT OUTER JOIN
+	:ABR_FUND AS "ABR_FUND"  
+ON
+	"DET_OBJ"."ABN" = "ABR_FUND"."ABN"
+LEFT OUTER JOIN
+	:ACNC  AS "ACNC_DATA"
+ON
+	"DET_OBJ"."ABN" = "ACNC_DATA"."ABN"
+
+;
+
+-----------------------------------------------------------------------------
+
+----------------------ATO BAS------------------
+
+/*
+Ambulance Services	85910
+Central Banking	62100
+Central Government Administration	75100
+Combined Primary and Secondary Education	80230
+Correctional and Detention Services	77140
+Defence	76000
+Domestic Government Representation	75510
+Fire Protection and Other Emergency Services	77130
+Foreign Government Representation	75520
+Higher Education	81020
+Hospitals (Except Psychiatric Hospitals)	84010
+Justice	75400
+Libraries and Archives	60100
+Local Government Administration	75300
+Museum Operation	89100
+Nature Reserves and Conservation Parks Operation	89220
+Police Services	77110
+Preschool Education	80100
+Primary Education	80210
+Psychiatric Hospitals	84020
+Rail Passenger Transport	47200
+Regulatory Services	77200
+Religious Services	95400
+Secondary Education	80220
+Special School Education	80240
+State Government Administration	75200
+Zoological and Botanical Gardens Operation	89210
+*/
+
+
+ATO_BAS =
+
+SELECT DISTINCT "ABN"
+FROM
+(
+SELECT DISTINCT 
+	"ATO"."ABN" AS "ABN"
+--	"ATO"."CLNT_TYP" AS "CLNT_TYP",
+--	"ATO"."ANZSIC_TITLE" AS "ANZSIC_TITLE",
+--	"ATO"."ANZSIC_CD" AS "ANZSIC_CD" ,
+--	"ATO"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
+--	"ATO"."BAS_QTR"        AS "BAS_QTR" ,
+--	"ATO"."ACN"            AS "ACN"
+FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+:BP_DATA AS "DET_OBJ"
+WHERE "ATO"."ABN" = "DET_OBJ"."ABN" 
+--AND "ATO"."FINANCIAL_YEAR" = "DET_OBJ"."FINANCIAL_YEAR_STRING" 
+AND   "ATO"."CLNT_TYP"  IN ('SUP','GOV')
+--OR    "ATO"."ANZSIC_CD" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
+
+UNION
+
+SELECT DISTINCT 
+	"ATO"."ABN" AS "ABN"
+--	"ATO"."CLNT_TYP" AS "CLNT_TYP",
+--	"ATO"."ANZSIC_TITLE" AS "ANZSIC_TITLE",
+--	"ATO"."ANZSIC_CD" AS "ANZSIC_CD" ,
+--	"ATO"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
+--	"ATO"."BAS_QTR"        AS "BAS_QTR" ,
+--	"ATO"."ACN"            AS "ACN"
+FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+:BP_DATA AS "DET_OBJ"
+WHERE "ATO"."ABN" = "DET_OBJ"."ABN" 
+--AND "ATO"."FINANCIAL_YEAR" = "DET_OBJ"."FINANCIAL_YEAR_STRING" 
+--AND   "ATO"."CLNT_TYP"  IN ('SUP','GOV')
+AND    "ATO"."ANZSIC_CD" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
+
+)					
+
+;
+
+ATO_CLT_TYPE =
+SELECT
+	"DET_OBJ"."ABN"                   AS "ABN",
+	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
+	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
+	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
+	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
+    "DET_OBJ"."PARTNER"               AS "PARTNER",
+    "DET_OBJ"."PTX_ROLE"              AS "PTX_ROLE",
+    "DET_OBJ"."ID_ROLE"               AS "ID_ROLE",
+    "DET_OBJ"."ASIC_ORG_STATUS"       AS "ASIC_ORG_STATUS",
+    "DET_OBJ"."ASIC_REGD"             AS "ASIC_REGD",
+    "DET_OBJ"."FUND_TYPE"             AS "FUND_TYPE",
+    "DET_OBJ"."ABR_FUND_ACNC"         AS "ABR_FUND_ACNC" ,
+    CASE WHEN "BAS_DATA"."ABN" IS NOT NULL THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC"
+FROM
+	:ABR_DATA AS "DET_OBJ"
+LEFT OUTER JOIN
+    :ATO_BAS  AS "BAS_DATA"
+ON 
+    "DET_OBJ"."ABN"  = "BAS_DATA"."ABN" 
+    
+    ;
+
+--------------------------------------------
+
+
+RETURN 
+SELECT
+        "ABN" ,           
+        "PERIOD_CATEGORY"  ,
+ 	    "PERIOD_KEY"     , 
+        "PERIOD_END_DATE"  ,
+        "FINANCIAL_YEAR" AS "GJAHR"        ,    
+        "PARTNER"        ,
+        "PTX_ROLE"       , 
+        "ID_ROLE"       ,
+        '' AS "PTX_CASE" ,
+         "ASIC_ORG_STATUS",
+         "ASIC_REGD",
+         "FUND_TYPE",
+         "ABR_FUND_ACNC",
+          "SUP_GOV_EXMPT_ANZSIC"
+ FROM :ATO_CLT_TYPE ;
+ --FROM :ABR_DATA ;
+
+
+
+END;
