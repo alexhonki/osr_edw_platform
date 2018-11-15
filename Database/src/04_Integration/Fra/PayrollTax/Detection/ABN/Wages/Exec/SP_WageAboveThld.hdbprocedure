@@ -1,21 +1,33 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageAboveThld"( 
-	
-    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_2",
-    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_PARAM",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_3"
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_wage",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
 	
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
-   --DEFAULT SCHEMA <default_schema_name>
    READS SQL DATA AS
 BEGIN
-   /*************************************
-       Write your procedure logic 
-   *************************************/
-DECLARE lv_threshold Decimal(15,2) ;
 
-SELECT "THRESHOLD_YEARLY" INTO lv_threshold FROM :PARAMETERS LIMIT 1;
+DECLARE lv_threshold Decimal(15,2) ;
+DECLARE lv_ato_bas_wage_low DECIMAL(15,2);
+DECLARE lv_ato_bas_wage_high DECIMAL(15,2);
+DECLARE lx_reinstatement NVARCHAR(1);
+DECLARE lx_new_registration NVARCHAR(1);
+
+SELECT 
+"THRESHOLD_YEARLY", 
+"ATO_BAS_WAGE_LOW", 
+"ATO_BAS_WAGE_HIGH", 
+"FLAG_REINSTATEMENT",
+"FLAG_NEW_REGISTRATION"
+INTO 
+lv_threshold,
+lv_ato_bas_wage_low,
+lv_ato_bas_wage_high,
+lx_reinstatement,
+lx_new_registration
+FROM :PARAMETERS LIMIT 1;
 
 
  et_result =
@@ -25,7 +37,9 @@ SELECT "THRESHOLD_YEARLY" INTO lv_threshold FROM :PARAMETERS LIMIT 1;
       "PERIOD_KEY",
       "PERIOD_END_DATE",
       "GJAHR",
-      100 AS "DETECTION_RESULT"
+      100 AS "DETECTION_RESULT",
+      100 AS "RISK_AMOUNT",
+      "WAERS" AS "CURRENCY"
    FROM :it_data_for_rule
    WHERE "ATO_BAS_TOTL_PMT_FOR_WRK_AMT" >= :lv_threshold
    ;

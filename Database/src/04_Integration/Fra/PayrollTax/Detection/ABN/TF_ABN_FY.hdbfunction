@@ -1,0 +1,34 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_FY"( )
+RETURNS TABLE (
+ABN								NVARCHAR(11),
+GJAHR							NVARCHAR(4),
+BPARTNER						NVARCHAR(11),
+GROUP_ID						NVARCHAR(32),
+ACCESS_GROUP					NVARCHAR(20)
+) 
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+lt_abn = 
+SELECT 
+LEFT("ABR"."ABN",11) AS "ABN",
+"CALENDAR"."FISCAL_YEAR" AS "GJAHR"
+FROM
+"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR",
+"osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
+;
+  
+  RETURN 
+  SELECT DISTINCT 
+  "ABN",
+  "GJAHR",
+  '' AS "BPARTNER",
+  '' AS "GROUP_ID",
+  'PRT' AS "ACCESS_GROUP"
+  FROM
+  :lt_abn
+  ;
+  
+
+END;

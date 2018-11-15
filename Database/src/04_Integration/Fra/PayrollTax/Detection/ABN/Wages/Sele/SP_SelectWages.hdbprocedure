@@ -1,16 +1,12 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
-	IN  it_workset    		"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_1",
-	OUT et_data_for_rule	"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGWAGE_2"
+	IN  it_workset    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT et_data_for_rule	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage"
 ) 
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
-   --DEFAULT SCHEMA <default_schema_name>
    READS SQL DATA AS
 BEGIN
-   /*************************************
-       Write your procedure logic 
-   *************************************/
-   
+
    STEP1 =
    SELECT
    "ABN",

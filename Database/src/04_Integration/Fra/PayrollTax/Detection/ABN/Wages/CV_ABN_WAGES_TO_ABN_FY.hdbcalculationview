@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_TO_ABN_FY" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Association: ABN_WAGES to ABN_FY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES_TO_ABN_FY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES_TO_ABN_FY</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES_TO_ABN_FY">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_TO_ABN_FY" columnName="ABN"/>
+    </attribute>
+    <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_TO_ABN_FY" columnName="PERIOD_CATEGORY"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_TO_ABN_FY" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="PERIOD_END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_TO_ABN_FY" columnName="PERIOD_END_DATE"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_TO_ABN_FY" columnName="GJAHR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
