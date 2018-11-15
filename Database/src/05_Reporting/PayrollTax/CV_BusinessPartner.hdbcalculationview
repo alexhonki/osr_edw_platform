@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.prt::CV_BusinessPartner" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.prt::CV_BusinessPartner" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" cacheEnabled="true" runWithInvokerPrivileges="true">
 <descriptions defaultDescription="Business Partners : ID Numbers (RMS)"/>
 <localVariables/>
 <variableMappings/>
@@ -45,6 +45,14 @@
       <viewAttribute id="AUGRP">
         <descriptions defaultDescription="AUGRP"/>
       </viewAttribute>
+    
+      <viewAttribute id="NAMCOUNTRY">
+        <descriptions defaultDescription="NAMCOUNTRY"/>
+      </viewAttribute>
+    
+      <viewAttribute id="BU_GROUP">
+        <descriptions defaultDescription="BU_GROUP"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -59,9 +67,15 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="NAMEMIDDLE" source="NAMEMIDDLE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="AUGRP" source="AUGRP"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAMCOUNTRY" source="NAMCOUNTRY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BU_GROUP" source="BU_GROUP"/>
     </input>
     <filter>&quot;TYPE&quot;='1' AND 
-&quot;AUGRP&quot;='ZOSR'</filter>
+&quot;AUGRP&quot;='ZOSR' AND
+&quot;NAMCOUNTRY&quot;='AU' AND
+&quot;BU_GROUP&quot;='OSR'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="BUT021FS" filterExpressionLanguage="SQL">
     <viewAttributes>
@@ -142,7 +156,7 @@
     <joinAttribute name="CLIENT"/>
     <joinAttribute name="PARTNER"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="C1_N" joinType="inner">
     <viewAttributes>
       <viewAttribute id="CLIENT">
         <descriptions defaultDescription="CLIENT"/>
@@ -220,14 +234,8 @@
     <joinAttribute name="CLIENT"/>
     <joinAttribute name="ADDRNUMBER"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="ADRC">
+  <calculationView xsi:type="Calculation:ProjectionView" id="ADRC" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="CLIENT">
-        <descriptions defaultDescription="CLIENT"/>
-      </viewAttribute>
-      <viewAttribute id="ADDRNUMBER">
-        <descriptions defaultDescription="ADDRNUMBER"/>
-      </viewAttribute>
       <viewAttribute id="ADDR_LATITUDE">
         <descriptions defaultDescription="ADDR_LATITUDE"/>
       </viewAttribute>
@@ -258,7 +266,13 @@
       <viewAttribute id="STD_ADDR_POSTCODE2">
         <descriptions defaultDescription="STD_ADDR_POSTCODE2"/>
       </viewAttribute>
-    </viewAttributes>
+    
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="ADDRNUMBER">
+        <descriptions defaultDescription="ADDRNUMBER"/>
+      </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="osr.edw.propagation.md.rms.synonym::CDS_BP.DSO.ADRC.active_data">
@@ -275,6 +289,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="STD_ADDR_POSTCODE1" source="STD_ADDR_POSTCODE1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STD_ADDR_POSTCODE2" source="STD_ADDR_POSTCODE2"/>
     </input>
+    <filter>&quot;STD_ADDR_COUNTRY_NAME&quot;='Australia'</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="Join_2">
@@ -302,6 +317,14 @@
     <attribute id="ADDRNUMBER" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDRNUMBER"/>
       <keyMapping columnObjectName="Join_2" columnName="ADDRNUMBER"/>
+    </attribute>
+    <attribute id="ADDR_LATITUDE" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_LATITUDE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ADDR_LATITUDE"/>
+    </attribute>
+    <attribute id="ADDR_LONGITUDE" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_LONGITUDE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ADDR_LONGITUDE"/>
     </attribute>
     <attribute id="STD_ADDR_COUNTRY_NAME" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_COUNTRY_NAME"/>
@@ -337,17 +360,13 @@
     </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="ADDR_LATITUDE" order="7" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="ADDR_LATITUDE"/>
-      <measureMapping columnObjectName="Join_2" columnName="ADDR_LATITUDE"/>
-    </measure>
-    <measure id="ADDR_LONGITUDE" order="8" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="ADDR_LONGITUDE"/>
-      <measureMapping columnObjectName="Join_2" columnName="ADDR_LONGITUDE"/>
-    </measure>
-  </baseMeasures>
-  <calculatedMeasures/>
+  <baseMeasures/>
+  <calculatedMeasures>
+    <measure id="Count" order="17" aggregationType="sum" measureType="simple" datatype="INTEGER" expressionLanguage="SQL">
+      <formula>1</formula>
+      
+      </measure>
+  </calculatedMeasures>
   <restrictedMeasures/>
   <localDimensions/>
 </logicalModel>
