@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_WAGES" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_ITR_NIND_WAGES"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="PMNTS_TO_ASSOCS">
+        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="SUPER_EXPNS">
+        <descriptions defaultDescription="SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="SALARY_WAGES">
+        <descriptions defaultDescription="SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="CONTRACTORS_PMNTS">
+        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
+    </input>
+    <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="DB_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="WAERS" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
+    </attribute>
+    <attribute id="GJAHR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Fiscal Year"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PMNTS_TO_ASSOCS" order="1" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="ITR Payments to Associates"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
+    </measure>
+    <measure id="SUPER_EXPNS" order="4" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="ITR Superannuation Expenses"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="SUPER_EXPNS"/>
+    </measure>
+    <measure id="SALARY_WAGES" order="5" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="ITR Salary and Wages"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="SALARY_WAGES"/>
+    </measure>
+    <measure id="CONTRACTORS_PMNTS" order="9" semanticType="amount" aggregationType="sum" measureType="amount">
+      <descriptions defaultDescription="ITR Contractor payments"/>
+      <unitCurrencyAttribute attributeName="WAERS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CONTRACTORS_PMNTS"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="65" y="224"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
