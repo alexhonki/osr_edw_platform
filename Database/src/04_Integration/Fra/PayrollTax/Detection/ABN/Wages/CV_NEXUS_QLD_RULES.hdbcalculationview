@@ -343,29 +343,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
         <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes>
-      <calculatedViewAttribute id="WCQ_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X',1,0)</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="WCQ_ADDR_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X' AND &quot;QLD_ADDR_CHECK&quot; = 'X',1,0)</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="WCQ_ADDR_EMP_PC_CNT3_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot; = 'X' and &quot;QLD_ADDR_CHECK&quot; = 'X' and &quot;QLD_EMP_PC_CHECK&quot; ='X' and &quot;QLD_EMP_CNT_CHECK_3&quot; ='X',1,0)</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="WCQ_EMP_PC_CNT_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;WCQ_POLICY_CHECK&quot;='X' and &quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X',1,0)</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="QLD_ADDR_EMP_CNT1_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;QLD_ADDR_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_1&quot;='X',1,0)</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="QLD_ADDR_EMP_PC_CNT3_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;QLD_ADDR_CHECK&quot;='X' and &quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X',1,0)</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="EMP_PC_CNT3_RULE" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;QLD_EMP_PC_CHECK&quot;='X' and &quot;QLD_EMP_CNT_CHECK_3&quot;='X',1,0)</formula>
-      </calculatedViewAttribute>
-    </calculatedViewAttributes>
+    <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="J_POLICY_EMP_CNT_ADDR">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
@@ -498,28 +476,6 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <viewAttribute id="WAERS">
         <descriptions defaultDescription="Currency Key"/>
       </viewAttribute>
-    
-      <viewAttribute id="WCQ_RULE">
-        <descriptions defaultDescription="WCQ_RULE"/>
-      </viewAttribute>
-      <viewAttribute id="WCQ_ADDR_RULE">
-        <descriptions defaultDescription="WCQ_ADDR_RULE"/>
-      </viewAttribute>
-      <viewAttribute id="WCQ_ADDR_EMP_PC_CNT3_RULE">
-        <descriptions defaultDescription="WCQ_ADDR_EMP_PC_CNT3_RULE"/>
-      </viewAttribute>
-      <viewAttribute id="WCQ_EMP_PC_CNT_RULE">
-        <descriptions defaultDescription="WCQ_EMP_PC_CNT_RULE"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_ADDR_EMP_CNT1_RULE">
-        <descriptions defaultDescription="QLD_ADDR_EMP_CNT1_RULE"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_ADDR_EMP_PC_CNT3_RULE">
-        <descriptions defaultDescription="QLD_ADDR_EMP_PC_CNT3_RULE"/>
-      </viewAttribute>
-      <viewAttribute id="EMP_PC_CNT3_RULE">
-        <descriptions defaultDescription="EMP_PC_CNT3_RULE"/>
-      </viewAttribute>
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
@@ -545,13 +501,6 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="A_QLD_NEXUS_RULES">
-      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_RULE" source="WCQ_RULE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ADDR_RULE" source="WCQ_ADDR_RULE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ADDR_EMP_PC_CNT3_RULE" source="WCQ_ADDR_EMP_PC_CNT3_RULE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_EMP_PC_CNT_RULE" source="WCQ_EMP_PC_CNT_RULE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_EMP_CNT1_RULE" source="QLD_ADDR_EMP_CNT1_RULE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_EMP_PC_CNT3_RULE" source="QLD_ADDR_EMP_PC_CNT3_RULE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_PC_CNT3_RULE" source="EMP_PC_CNT3_RULE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
@@ -674,40 +623,27 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
       <descriptions defaultDescription="Currency Key"/>
       <keyMapping columnObjectName="Join_1" columnName="WAERS"/>
     </attribute>
-  
-  
-    <attribute id="WCQ_RULE" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WCQ_RULE"/>
-  
-  
-      <keyMapping columnObjectName="Join_1" columnName="WCQ_RULE"/>
-  
-  
+    <attribute id="QLD_ADDR_CHECK" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QLD_ADDR_CHECK"/>
+      <keyMapping columnObjectName="Join_1" columnName="QLD_ADDR_CHECK"/>
     </attribute>
-    <attribute id="WCQ_ADDR_RULE" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WCQ_ADDR_RULE"/>
-      <keyMapping columnObjectName="Join_1" columnName="WCQ_ADDR_RULE"/>
+    <attribute id="QLD_EMP_CNT_CHECK_1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
+      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_CNT_CHECK_1"/>
     </attribute>
-    <attribute id="WCQ_ADDR_EMP_PC_CNT3_RULE" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WCQ_ADDR_EMP_PC_CNT3_RULE"/>
-      <keyMapping columnObjectName="Join_1" columnName="WCQ_ADDR_EMP_PC_CNT3_RULE"/>
+    <attribute id="QLD_EMP_CNT_CHECK_3" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
+      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_CNT_CHECK_3"/>
     </attribute>
-    <attribute id="WCQ_EMP_PC_CNT_RULE" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WCQ_EMP_PC_CNT_RULE"/>
-      <keyMapping columnObjectName="Join_1" columnName="WCQ_EMP_PC_CNT_RULE"/>
+    <attribute id="QLD_EMP_PC_CHECK" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
+      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_PC_CHECK"/>
     </attribute>
-    <attribute id="QLD_ADDR_EMP_CNT1_RULE" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="QLD_ADDR_EMP_CNT1_RULE"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_ADDR_EMP_CNT1_RULE"/>
+    <attribute id="WCQ_POLICY_CHECK" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
+      <keyMapping columnObjectName="Join_1" columnName="WCQ_POLICY_CHECK"/>
     </attribute>
-    <attribute id="QLD_ADDR_EMP_PC_CNT3_RULE" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="QLD_ADDR_EMP_PC_CNT3_RULE"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_ADDR_EMP_PC_CNT3_RULE"/>
-    </attribute>
-    <attribute id="EMP_PC_CNT3_RULE" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="EMP_PC_CNT3_RULE"/>
-      <keyMapping columnObjectName="Join_1" columnName="EMP_PC_CNT3_RULE"/>
-    </attribute></attributes>
+  </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
   <calculatedMeasures/>
@@ -815,7 +751,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;20,'X','
     </shape>
     <shape modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="271"/>
+      <rectangleSize width="271.82373046875"/>
     </shape>
     <shape modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
