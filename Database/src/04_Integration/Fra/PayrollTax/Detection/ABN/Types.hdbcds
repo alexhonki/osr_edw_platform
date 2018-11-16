@@ -142,9 +142,13 @@ context Types {
         };
  		
  	entity WS_PTNGEMPCNT_PARAM {
- 			QLD_EMP_PC :		Decimal(5,2);
- 			QLD_EMP_CNT_LOW:	Integer;
- 			QLD_EMP_CNT_HIGH:	Integer;
+ 			QLD_EMP_PC_THLD 	:Decimal(5,2);
+ 			QLD_EMP_CNT_THLD	:Integer;
+ 			FLAG_WCQ_POLICY		:String(1);
+ 			FLAG_QLD_ADDRESS	:String(1);
+ 			FLAG_QLD_EMP_CNT1	:String(1);
+ 			FLAG_QLD_EMP_CNT3	:String(1);
+ 			FLAG_QLD_EMP_PC		:String(1);
  		};
  		
  		//result
