@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.prt::CV_AnnualReturn" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" cacheEnabled="false" runWithInvokerPrivileges="false" analyticViewCompatibilityMode="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.prt::CV_AnnualReturn" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" cacheEnabled="false" runWithInvokerPrivileges="false" analyticViewCompatibilityMode="false">
 <descriptions defaultDescription="CV Annual Return"/>
 <localVariables/>
 <variableMappings/>
@@ -72,20 +72,12 @@
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="Period_Start_Date" datatype="DATE" expressionLanguage="SQL">
-        <formula>TO_DATE(&quot;C_START_DATE&quot;,'DD-MM-YYYY')</formula>
+      <calculatedViewAttribute id="Period_Start_Date" datatype="NVARCHAR" expressionLanguage="SQL" length="13">
+        <formula>TO_VARCHAR(TO_DATE(&quot;C_START_DATE&quot;,'YYYYMMDD'),'DD/MM/YYYY')</formula>
       </calculatedViewAttribute>
-    
-      <calculatedViewAttribute id="Assessment_Date" datatype="DATE" expressionLanguage="SQL">
-        <formula>TO_DATE(&quot;C_ASSESS_DATE&quot;,'DD-MM-YYYY')</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="Period_End_Date" datatype="DATE" expressionLanguage="SQL">
-        <formula>TO_DATE(&quot;C_END_DATE&quot;,'DD-MM-YYYY')</formula>
-      </calculatedViewAttribute>
-      <calculatedViewAttribute id="Due_Date" datatype="DATE" expressionLanguage="SQL">
-        <formula>TO_DATE(&quot;C_DUE_DATE&quot;,'DD-MM-YYYY')</formula>
-      </calculatedViewAttribute>
-    </calculatedViewAttributes>
+      <calculatedViewAttribute id="Period_End_Date" datatype="NVARCHAR" expressionLanguage="SQL" length="13">
+        <formula>TO_VARCHAR(TO_DATE(&quot;C_END_DATE&quot;,'YYYYMMDD'),'DD/MM/YYYY')</formula>
+      </calculatedViewAttribute></calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.rms.prt.proxy::CV_RMS_ANNUAL_RETURN">
       <mapping xsi:type="Calculation:AttributeMapping" target="C_BP" source="C_BP"/>
@@ -156,37 +148,35 @@
   
     <attribute id="Period_Start_Date" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Period Start Date"/>
+  
       <keyMapping columnObjectName="Projection" columnName="Period_Start_Date"/>
+  
     </attribute>
-    <attribute id="Assessment_Date" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Assessment Date"/>
-      <keyMapping columnObjectName="Projection" columnName="Assessment_Date"/>
-    </attribute>
-    <attribute id="Period_End_Date" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Period_End_Date" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Period End Date"/>
       <keyMapping columnObjectName="Projection" columnName="Period_End_Date"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="C_TOTAL_LIABILITY" order="12" aggregationType="sum" measureType="simple">
+    <measure id="C_TOTAL_LIABILITY" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Total Liability"/>
       <measureMapping columnObjectName="Projection" columnName="C_TOTAL_LIABILITY"/>
     </measure>
-    <measure id="C_PENALTY_TOTAL" order="13" aggregationType="sum" measureType="simple">
+    <measure id="C_PENALTY_TOTAL" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Penalty Tax Total"/>
       <measureMapping columnObjectName="Projection" columnName="C_PENALTY_TOTAL"/>
     </measure>
-    <measure id="C_UTI_TOTAL" order="14" aggregationType="sum" measureType="simple">
+    <measure id="C_UTI_TOTAL" order="13" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Total UTI"/>
       <measureMapping columnObjectName="Projection" columnName="C_UTI_TOTAL"/>
     </measure>
-    <measure id="C_PAYABLE_TXN" order="15" aggregationType="sum" measureType="simple">
+    <measure id="C_PAYABLE_TXN" order="14" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Payroll Tax Liability/Credit"/>
       <measureMapping columnObjectName="Projection" columnName="C_PAYABLE_TXN"/>
     </measure>
   
-    <measure id="C_TAX_AMOUNT" order="16" aggregationType="sum" measureType="simple">
+    <measure id="C_TAX_AMOUNT" order="15" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Taxable Amount"/>
       <measureMapping columnObjectName="Projection" columnName="C_TAX_AMOUNT"/>
     </measure>
