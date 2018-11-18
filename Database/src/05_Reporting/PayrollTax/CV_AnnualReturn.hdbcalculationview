@@ -20,9 +20,6 @@
       <viewAttribute id="C_START_DATE">
         <descriptions defaultDescription="C_START_DATE"/>
       </viewAttribute>
-      <viewAttribute id="C_LODGE_DATE">
-        <descriptions defaultDescription="C_LODGE_DATE"/>
-      </viewAttribute>
       <viewAttribute id="C_ASSESS_DATE">
         <descriptions defaultDescription="C_ASSESS_DATE"/>
       </viewAttribute>
@@ -69,14 +66,31 @@
       <viewAttribute id="A_CONT_NAME">
         <descriptions defaultDescription="A_CONT_NAME"/>
       </viewAttribute>
+    
+      <viewAttribute id="C_END_DATE">
+        <descriptions defaultDescription="C_END_DATE"/>
+      </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Period_Start_Date" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;C_START_DATE&quot;,'DD-MM-YYYY')</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="Assessment_Date" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;C_ASSESS_DATE&quot;,'DD-MM-YYYY')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="Period_End_Date" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;C_END_DATE&quot;,'DD-MM-YYYY')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="Due_Date" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;C_DUE_DATE&quot;,'DD-MM-YYYY')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.rms.prt.proxy::CV_RMS_ANNUAL_RETURN">
       <mapping xsi:type="Calculation:AttributeMapping" target="C_BP" source="C_BP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RETURN_ID" source="RETURN_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_START_DATE" source="C_END_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="C_LODGE_DATE" source="C_LODGE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_START_DATE" source="C_START_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_ASSESS_DATE" source="C_ASSESS_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBTYP" source="FBTYP"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBNUM" source="FBNUM"/>
@@ -93,6 +107,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE" source="C_DUE_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_TAX_AMOUNT" source="C_TAX_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NAME" source="A_CONT_NAME"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_END_DATE" source="C_END_DATE"/>
     </input>
     <filter>&quot;FBSTA&quot;='IP014' AND
 &quot;C_START_DATE&quot; like '2017%' AND
@@ -105,85 +121,73 @@
 </calculationViews>
 <logicalModel id="Projection">
   <attributes>
-    <attribute id="C_BP" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_BP"/>
-      <keyMapping columnObjectName="Projection" columnName="C_BP"/>
-    </attribute>
-    <attribute id="RETURN_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="RETURN_ID"/>
+    <attribute id="RETURN_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Object ID"/>
       <keyMapping columnObjectName="Projection" columnName="RETURN_ID"/>
     </attribute>
-    <attribute id="C_START_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_START_DATE"/>
-      <keyMapping columnObjectName="Projection" columnName="C_START_DATE"/>
-    </attribute>
-    <attribute id="C_DUE_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_DUE_DATE"/>
-      <keyMapping columnObjectName="Projection" columnName="C_DUE_DATE"/>
-    </attribute>
-    <attribute id="C_LODGE_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_LODGE_DATE"/>
-      <keyMapping columnObjectName="Projection" columnName="C_LODGE_DATE"/>
-    </attribute>
-    <attribute id="C_ASSESS_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_ASSESS_DATE"/>
-      <keyMapping columnObjectName="Projection" columnName="C_ASSESS_DATE"/>
-    </attribute>
-    <attribute id="FBSTA" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FBSTA"/>
-      <keyMapping columnObjectName="Projection" columnName="FBSTA"/>
-    </attribute>
-    <attribute id="C_BPNAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_BPNAME"/>
-      <keyMapping columnObjectName="Projection" columnName="C_BPNAME"/>
-    </attribute>
-    <attribute id="A_CONFIRM" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="A_CONFIRM"/>
-      <keyMapping columnObjectName="Projection" columnName="A_CONFIRM"/>
-    </attribute>
-    <attribute id="FBTYP" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FBTYP"/>
-      <keyMapping columnObjectName="Projection" columnName="FBTYP"/>
-    </attribute>
-    <attribute id="FBNUM" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FBNUM"/>
+    <attribute id="FBNUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Form Bundle Number"/>
       <keyMapping columnObjectName="Projection" columnName="FBNUM"/>
     </attribute>
-  
-    <attribute id="C_GRP_STATUS" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_GRP_STATUS"/>
+    <attribute id="C_GRP_STATUS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Group Status"/>
       <keyMapping columnObjectName="Projection" columnName="C_GRP_STATUS"/>
     </attribute>
-    <attribute id="C_ABN" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="C_ABN"/>
-      <keyMapping columnObjectName="Projection" columnName="C_ABN"/>
+    <attribute id="FBSTA" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Form Status"/>
+      <keyMapping columnObjectName="Projection" columnName="FBSTA"/>
     </attribute>
-    <attribute id="A_CONT_NAME" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="A_CONT_NAME"/>
+    <attribute id="FBTYP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Form Bundle Type"/>
+      <keyMapping columnObjectName="Projection" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="C_BP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner"/>
+      <keyMapping columnObjectName="Projection" columnName="C_BP"/>
+    </attribute>
+    <attribute id="C_BPNAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner Name"/>
+      <keyMapping columnObjectName="Projection" columnName="C_BPNAME"/>
+    </attribute>
+    <attribute id="A_CONT_NAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contact Person"/>
       <keyMapping columnObjectName="Projection" columnName="A_CONT_NAME"/>
+    </attribute>
+  
+    <attribute id="Period_Start_Date" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Period Start Date"/>
+      <keyMapping columnObjectName="Projection" columnName="Period_Start_Date"/>
+    </attribute>
+    <attribute id="Assessment_Date" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Assessment Date"/>
+      <keyMapping columnObjectName="Projection" columnName="Assessment_Date"/>
+    </attribute>
+    <attribute id="Period_End_Date" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Period End Date"/>
+      <keyMapping columnObjectName="Projection" columnName="Period_End_Date"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="C_TOTAL_LIABILITY" order="15" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
+    <measure id="C_TOTAL_LIABILITY" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Liability"/>
       <measureMapping columnObjectName="Projection" columnName="C_TOTAL_LIABILITY"/>
     </measure>
-    <measure id="C_PENALTY_TOTAL" order="16" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_PENALTY_TOTAL"/>
+    <measure id="C_PENALTY_TOTAL" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Penalty Tax Total"/>
       <measureMapping columnObjectName="Projection" columnName="C_PENALTY_TOTAL"/>
     </measure>
-    <measure id="C_UTI_TOTAL" order="17" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_UTI_TOTAL"/>
+    <measure id="C_UTI_TOTAL" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total UTI"/>
       <measureMapping columnObjectName="Projection" columnName="C_UTI_TOTAL"/>
     </measure>
-    <measure id="C_PAYABLE_TXN" order="18" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_PAYABLE_TXN"/>
+    <measure id="C_PAYABLE_TXN" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Payroll Tax Liability/Credit"/>
       <measureMapping columnObjectName="Projection" columnName="C_PAYABLE_TXN"/>
     </measure>
   
-    <measure id="C_TAX_AMOUNT" order="19" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="C_TAX_AMOUNT"/>
+    <measure id="C_TAX_AMOUNT" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Taxable Amount"/>
       <measureMapping columnObjectName="Projection" columnName="C_TAX_AMOUNT"/>
     </measure>
   </baseMeasures>
