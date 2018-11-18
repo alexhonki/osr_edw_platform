@@ -9,39 +9,85 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageAboveThld"(
    READS SQL DATA AS
 BEGIN
 
-DECLARE lv_threshold Decimal(15,2) ;
+DECLARE lv_thld_yearly Decimal(15,2) ;
 DECLARE lv_ato_bas_wage_low DECIMAL(15,2);
 DECLARE lv_ato_bas_wage_high DECIMAL(15,2);
+DECLARE lx_ato_bas NVARCHAR(1);
+DECLARE lx_ato_itr NVARCHAR(1);
+DECLARE lx_wcq NVARCHAR(1);
+DECLARE lx_risk_value NVARCHAR(1);
 DECLARE lx_reinstatement NVARCHAR(1);
 DECLARE lx_new_registration NVARCHAR(1);
+
+DECLARE lv_pt_a_cnt Integer;
+DECLARE lv_pt_q_cnt Integer;
+DECLARE lv_ato_bas_cnt Integer;
 
 SELECT 
 "THRESHOLD_YEARLY", 
 "ATO_BAS_WAGE_LOW", 
 "ATO_BAS_WAGE_HIGH", 
+"FLAG_ATO_BAS",
+"FLAG_ATO_ITR",
+"FLAG_WCQ",
+"FLAG_RISK_VALUE",
 "FLAG_REINSTATEMENT",
 "FLAG_NEW_REGISTRATION"
 INTO 
-lv_threshold,
+lv_thld_yearly,
 lv_ato_bas_wage_low,
 lv_ato_bas_wage_high,
+lx_ato_bas,
+lx_ato_itr,
+lx_wcq,
+lx_risk_value,
 lx_reinstatement,
 lx_new_registration
 FROM :PARAMETERS LIMIT 1;
 
+SELECT COUNT(*) INTO lv_pt_a_cnt FROM :it_data_for_rule WHERE "PERIOD_CATEGORY" = 'PT-A';
+IF lv_pt_a_cnt > 0 THEN
+	lt_data_for_rule = SELECT * FROM :it_data_for_rule  WHERE "PERIOD_CATEGORY" = 'PT-A';
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageAboveThld"( 
+    	it_data_for_rule	=> :lt_data_for_rule,
+    	parameters      	=> :parameters,
+    	et_result   		=> et_result
+	)
+	;
+END IF;
 
- et_result =
-   SELECT 
-	  "ABN",
-	  "PERIOD_CATEGORY",
-      "PERIOD_KEY",
-      "PERIOD_END_DATE",
-      "GJAHR",
-      100 AS "DETECTION_RESULT",
-      100 AS "RISK_AMOUNT",
-      "WAERS" AS "CURRENCY"
-   FROM :it_data_for_rule
-   WHERE "ATO_BAS_TOTL_PMT_FOR_WRK_AMT" >= :lv_threshold
-   ;
-   
+
+SELECT COUNT(*) INTO lv_pt_q_cnt FROM :it_data_for_rule WHERE "PERIOD_CATEGORY" = 'PT-Q';
+IF lv_pt_q_cnt > 0 THEN 
+	lt_data_for_rule = SELECT * FROM :it_data_for_rule  WHERE "PERIOD_CATEGORY" = 'PT-Q';
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QuarterWageAboveThld"( 
+    	it_data_for_rule	=> :lt_data_for_rule,
+    	parameters      	=> :parameters,
+    	et_result   		=> et_result
+	)
+	;
+END IF;
+
+/*et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RISK_AMOUNT",
+"CURRENCY"
+FROM :lt_result_a
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RISK_AMOUNT",
+"CURRENCY"
+FROM :lt_result_a
+;*/
+
 END

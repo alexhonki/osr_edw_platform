@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_BP_REGISTRATION_FACTS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZPRE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZPRE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_DFACTS_ZPRE">
+    <viewAttributes>
+      <viewAttribute id="OBJID">
+        <descriptions defaultDescription="FACT_CAT_SEQ_30"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_TAX_LIAB_DATE">
+        <descriptions defaultDescription="FACT_CAT_SEQ_21"/>
+      </viewAttribute>
+    
+      <viewAttribute id="QLD_LIAB_DATE">
+        <descriptions defaultDescription="FACT_CAT_SEQ_Q_20"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZPRE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="FACT_CAT_SEQ_21"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_LIAB_DATE" source="FACT_CAT_SEQ_Q_20"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="P_DPSOBBPACC" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="PSOBKEY">
+        <descriptions defaultDescription="PSOBKEY"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNERACCTYP">
+        <descriptions defaultDescription="PARTNERACCTYP"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="XOBSL">
+        <descriptions defaultDescription="XOBSL"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PSOBKEY" source="PSOBKEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNERACCTYP" source="PARTNERACCTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XOBSL" source="XOBSL"/>
+    </input>
+    <filter>&quot;XOBSL&quot;!='X' AND &quot;PARTNERACCTYP&quot;='PT'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_DFACTS" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="CONTRACT_OBJECT">
+        <descriptions defaultDescription="CONTRACT_OBJECT"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_TAX_LIAB_DATE">
+        <descriptions defaultDescription="PRT_TAX_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_FROM">
+        <descriptions defaultDescription="FACT_CAT_SEQ_81"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_TO">
+        <descriptions defaultDescription="FACT_CAT_SEQ_82"/>
+      </viewAttribute>
+      <viewAttribute id="ONLINE_FILLING_COMM">
+        <descriptions defaultDescription="FACT_CAT_SEQ_70"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="P_DFACTS_ZPRE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_OBJECT" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/></input>
+    <input node="P_DFACTS_RG01">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_TO" source="DATE_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_FROM" source="DATE_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACT_OBJECT" source="OBJID"/>
+    </input>
+    <joinAttribute name="CONTRACT_OBJECT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_DFACTS_RG01">
+    <viewAttributes>
+      <viewAttribute id="ONLINE_FILLING_COMM">
+        <descriptions defaultDescription="FACT_CAT_SEQ_70"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_TO">
+        <descriptions defaultDescription="FACT_CAT_SEQ_82"/>
+      </viewAttribute>
+      <viewAttribute id="OBJID">
+        <descriptions defaultDescription="OBJID"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_FROM">
+        <descriptions defaultDescription="FACT_CAT_SEQ_81"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="FACT_CAT_SEQ_70"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_TO" source="FACT_CAT_SEQ_82"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_FROM" source="FACT_CAT_SEQ_81"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_TO">
+        <descriptions defaultDescription="FACT_CAT_SEQ_82"/>
+      </viewAttribute>
+      <viewAttribute id="ONLINE_FILLING_COMM">
+        <descriptions defaultDescription="FACT_CAT_SEQ_70"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_TAX_LIAB_DATE">
+        <descriptions defaultDescription="PRT_TAX_LIAB_DATE"/>
+      </viewAttribute>
+    
+      <viewAttribute id="DATE_FROM">
+        <descriptions defaultDescription="FACT_CAT_SEQ_81"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$CONTRACT_OBJECT$PSOBKEY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="J_DFACTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_TAX_LIAB_DATE" source="PRT_TAX_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ONLINE_FILLING_COMM" source="ONLINE_FILLING_COMM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_TO" source="DATE_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_FROM" source="DATE_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTRACT_OBJECT$PSOBKEY" source="CONTRACT_OBJECT"/>
+    </input>
+    <input node="P_DPSOBBPACC">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CONTRACT_OBJECT$PSOBKEY" source="PSOBKEY"/>
+    </input>
+    <joinAttribute name="JOIN$CONTRACT_OBJECT$PSOBKEY"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_3">
+  <attributes>
+    <attribute id="BPARTNER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="Join_3" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="PRT_TAX_LIAB_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT_TAX_LIAB_DATE"/>
+      <keyMapping columnObjectName="Join_3" columnName="PRT_TAX_LIAB_DATE"/>
+    </attribute>
+  
+    <attribute id="DATE_FROM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_FROM"/>
+      <keyMapping columnObjectName="Join_3" columnName="DATE_FROM"/>
+    </attribute>
+    <attribute id="DATE_TO" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_TO"/>
+      <keyMapping columnObjectName="Join_3" columnName="DATE_TO"/>
+    </attribute>
+    <attribute id="ONLINE_FILLING_COMM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ONLINE_FILLING_COMM"/>
+      <keyMapping columnObjectName="Join_3" columnName="ONLINE_FILLING_COMM"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="328.6900820831794" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_DFACTS_ZPRE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_DPSOBBPACC" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="395.83468516943316" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="J_DFACTS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.66666666666666" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="P_DFACTS_ZPRE" modelObjectNameSpace="J_DFACTS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_DFACTS_RG01" modelObjectNameSpace="J_DFACTS" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_DFACTS_RG01" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="536.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="328.6900820831794" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_DFACTS" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="P_DPSOBBPACC" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

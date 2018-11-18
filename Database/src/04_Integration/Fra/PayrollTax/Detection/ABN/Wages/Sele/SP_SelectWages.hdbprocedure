@@ -6,7 +6,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
    SQL SECURITY INVOKER
    READS SQL DATA AS
 BEGIN
-
+/*
    STEP1 =
    SELECT
    "ABN",
@@ -98,21 +98,19 @@ BEGIN
    "GJAHR",
    "WAERS"
   ;
-  
+ 
+ */ 
    et_data_for_rule =
    SELECT
    "ABN",
    "PERIOD_CATEGORY",
    "PERIOD_KEY",
-   "PERIOD_END_DATE",
     "GJAHR",
-   "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-   "ATO_ITR_SALARY_WAGES",
-   "WCQ_ACT_WAGES",
-   "WCQ_ACT_APPR_WAGES",
-   "WAERS"
-   FROM :STEP1
-   ;
+   0 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+   0 AS "ATO_ITR_SALARY_WAGES",
+   0 AS "WCQ_ACT_WAGES",
+   'AUD' AS "WAERS"
+   FROM :it_workset AS "WAGES";
    
 
    

@@ -1,0 +1,68 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_WageAboveThldTest" (
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	IN lv_thld_yearly		Decimal(15,2),
+	IN lv_ato_bas_wage_low	DECIMAL(15,2),
+	IN lv_ato_bas_wage_high DECIMAL(15,2),
+	IN lx_ato_bas			NVARCHAR(1),
+	IN lx_ato_itr			NVARCHAR(1),
+	IN lx_wcq				NVARCHAR(1),
+	IN lx_risk_value		NVARCHAR(1),
+	IN ix_reinstatement     NVARCHAR(1),
+	IN ix_new_registration  NVARCHAR(1)
+)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+IF :iv_abn = '?' THEN 
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "GJAHR" = :iv_gjahr
+;
+ELSE 
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "ABN"   = :iv_abn
+  AND "GJAHR" = :iv_gjahr
+;
+END IF;
+
+
+lt_param =
+SELECT
+TOP 1
+:lv_thld_yearly AS "THRESHOLD_YEARLY",
+:lv_ato_bas_wage_low AS "ATO_BAS_WAGE_LOW",
+:lv_ato_bas_wage_high AS "ATO_BAS_WAGE_HIGH",
+:lx_ato_bas AS "FLAG_ATO_BAS",
+:lx_ato_itr AS "FLAG_ATO_ITR",
+:lx_wcq	   AS "FLAG_WCQ",
+:lx_risk_value AS "FLAG_RISK_VALUE",
+:ix_reinstatement AS "FLAG_REINSTATEMENT",
+:ix_new_registration AS "FLAG_NEW_REGISTRATION"
+FROM  :lt_workset;
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
+:lt_workset,
+lt_out_for_rule );
+
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageAboveThld"(
+:lt_out_for_rule,
+:lt_param,
+et_result );
+
+ END;

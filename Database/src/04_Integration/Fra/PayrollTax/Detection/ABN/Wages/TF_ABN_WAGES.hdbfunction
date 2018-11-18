@@ -1,77 +1,54 @@
 FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( )
 RETURNS TABLE (
-
 ABN								NVARCHAR(11),
 PERIOD_CATEGORY					NVARCHAR(10),
 PERIOD_KEY						NVARCHAR(4),
-PERIOD_END_DATE					NVARCHAR(8),
 GJAHR							NVARCHAR(4),
+WAERS							NVARCHAR(5),
 ATO_BAS_TOTL_PMT_FOR_WRK_AMT	DECIMAL(15,2),
 ATO_ITR_SALARY_WAGES			DECIMAL(15,2),
-WCQ_ACT_WAGES					DECIMAL(15,2),
-WCQ_ACT_APPR_WAGES				DECIMAL(15,2),
-WAERS							NVARCHAR(5)
-)
-LANGUAGE SQLSCRIPT 
-SQL SECURITY INVOKER AS 
+WCQ_ACT_WAGES					DECIMAL(15,2)
+) 
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
 BEGIN 
-	RETURN
--- ATO BAS Data   
-   SELECT
-		"ATO_BAS"."ABN"                                                                                           AS  "ABN",
-		CASE WHEN LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q') = 0 THEN 'PT-A' ELSE 'PT-Q' END          AS  "PERIOD_CATEGORY",
-		RIGHT(RTRIM ("ATO_BAS"."NAME",'.txt'),4)                                                               AS  "PERIOD_KEY",
-		
-		CASE WHEN  LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q1') <> 0 THEN CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'0930') ELSE
-		CASE WHEN  LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q2') <> 0 THEN CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'1231') ELSE
-		CASE WHEN  LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q3') <> 0 THEN CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'0331') ELSE
-		CASE WHEN  LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q4') <> 0 THEN CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'0630') ELSE
-		CASE WHEN  LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q')   = 0 THEN CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'0630') ELSE  CONCAT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4) ,'0630') 
-		END END END END END                                                                           AS "PERIOD_END_DATE",
-		TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4)                                                     AS  "GJAHR",
-		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                              AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-		 0                                                                                            AS  "ATO_ITR_SALARY_WAGES",
-		 0                                                                                            AS  "WCQ_ACT_WAGES",
-		 0                                                                                            AS  "WCQ_ACT_APPR_WAGES",
-		'AUD'                                                                                         AS  "WAERS"
-  FROM 
-		"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "ATO_BAS"
-  
-  UNION
--- ATO ITR Data
-     SELECT
-		"ATO_ITR"."ABN"                                                                               AS  "ABN",
-		 'PT-A' 																					  AS  "PERIOD_CATEGORY",
-		TO_NVARCHAR("ATO_ITR"."INCM_YR",4)                                                  		  AS  "PERIOD_KEY",
-		CONCAT(TO_NVARCHAR("ATO_ITR"."INCM_YR",4),'0630')                                             AS  "PERIOD_END_DATE",
-		TO_NVARCHAR("ATO_ITR"."INCM_YR",4)                                                            AS  "GJAHR",
-		 0                                                                                            AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-		 "ATO_ITR"."SALARY_WAGES" + "ATO_ITR"."SUPER_EXPNS"                                           AS  "ATO_ITR_SALARY_WAGES",
-		 0                                                                                            AS  "WCQ_ACT_WAGES",
-		 0                                                                                            AS  "WCQ_ACT_APPR_WAGES",
-		'AUD'                                                                                         AS  "WAERS"
-  FROM 
-		"osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "ATO_ITR"
-  
-  UNION 
- -- QLD Work Cover Data
- 
-      SELECT
-		"WCQ_POLICY"."ABN"                                                                             	AS  "ABN", 
-		'PT-A' 																		   			         AS  "PERIOD_CATEGORY",
-		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                           AS  "PERIOD_KEY",
-		CONCAT(LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4),'0630')                                           AS  "PERIOD_END_DATE",
-		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                          AS  "GJAHR",
-		 0                                                                                            AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-		 0                                                                                            AS  "ATO_ITR_SALARY_WAGES",
-		 "WCQ_WAGES"."ACT_WAGES"                                                                                  AS  "WCQ_ACT_WAGES",
-		 "WCQ_WAGES"."ACT_APPR_WAGES"                                                                             AS  "WCQ_ACT_APPR_WAGES",
-		'AUD'                                                                                         AS  "WAERS"
-  FROM 
-		"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.WAGES.active_data" AS "WCQ_WAGES"
-		INNER JOIN 
-		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY.active_data" AS "WCQ_POLICY"
-		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_WAGES"."POLICY_NO"
-  ;
-  
+
+RETURN
+SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	0 AS "ATO_ITR_SALARY_WAGES",
+	0 AS "WCQ_ACT_WAGES"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES"
+GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+UNION
+SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	0 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES",
+	0 AS "WCQ_ACT_WAGES"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES"
+GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+UNION
+SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	0 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	0 AS "ATO_ITR_SALARY_WAGES",
+	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES"
+GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+;
+
 END;
