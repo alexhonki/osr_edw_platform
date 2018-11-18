@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.prt::CV_AnnualReturn" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" cacheEnabled="false" runWithInvokerPrivileges="false" analyticViewCompatibilityMode="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.reporting.prt::CV_AnnualReturn" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" cacheEnabled="false" runWithInvokerPrivileges="false" analyticViewCompatibilityMode="false">
 <descriptions defaultDescription="CV Annual Return"/>
 <localVariables/>
 <variableMappings/>
@@ -47,6 +47,28 @@
       <viewAttribute id="FBSTA">
         <descriptions defaultDescription="FBSTA"/>
       </viewAttribute>
+    
+      <viewAttribute id="C_BPNAME">
+        <descriptions defaultDescription="C_BPNAME"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONFIRM">
+        <descriptions defaultDescription="A_CONFIRM"/>
+      </viewAttribute>
+      <viewAttribute id="C_GRP_STATUS">
+        <descriptions defaultDescription="C_GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="C_ABN">
+        <descriptions defaultDescription="C_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="C_DUE_DATE">
+        <descriptions defaultDescription="C_DUE_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="C_TAX_AMOUNT">
+        <descriptions defaultDescription="C_TAX_AMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONT_NAME">
+        <descriptions defaultDescription="A_CONT_NAME"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -63,8 +85,22 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="C_PAYABLE_TXN" source="C_PAYABLE_TXN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="C_PENALTY_TOTAL" source="C_PENALTY_TOTAL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FBSTA" source="FBSTA"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_BPNAME" source="C_BPNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONFIRM" source="A_CONFIRM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_GRP_STATUS" source="C_GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_ABN" source="C_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DUE_DATE" source="C_DUE_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TAX_AMOUNT" source="C_TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONT_NAME" source="A_CONT_NAME"/>
     </input>
-    <filter>&quot;FBSTA&quot;='IP014'</filter>
+    <filter>&quot;FBSTA&quot;='IP014' AND
+&quot;C_START_DATE&quot; like '2017%' AND
+&quot;A_CONFIRM&quot;='X'
+
+
+
+</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection">
@@ -81,44 +117,74 @@
       <descriptions defaultDescription="C_START_DATE"/>
       <keyMapping columnObjectName="Projection" columnName="C_START_DATE"/>
     </attribute>
-    <attribute id="C_LODGE_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_DUE_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_DUE_DATE"/>
+      <keyMapping columnObjectName="Projection" columnName="C_DUE_DATE"/>
+    </attribute>
+    <attribute id="C_LODGE_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_LODGE_DATE"/>
       <keyMapping columnObjectName="Projection" columnName="C_LODGE_DATE"/>
     </attribute>
-    <attribute id="C_ASSESS_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_ASSESS_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_ASSESS_DATE"/>
       <keyMapping columnObjectName="Projection" columnName="C_ASSESS_DATE"/>
     </attribute>
-    <attribute id="FBSTA" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FBSTA" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBSTA"/>
       <keyMapping columnObjectName="Projection" columnName="FBSTA"/>
     </attribute>
-    <attribute id="FBTYP" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_BPNAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BPNAME"/>
+      <keyMapping columnObjectName="Projection" columnName="C_BPNAME"/>
+    </attribute>
+    <attribute id="A_CONFIRM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONFIRM"/>
+      <keyMapping columnObjectName="Projection" columnName="A_CONFIRM"/>
+    </attribute>
+    <attribute id="FBTYP" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBTYP"/>
       <keyMapping columnObjectName="Projection" columnName="FBTYP"/>
     </attribute>
-    <attribute id="FBNUM" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FBNUM" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBNUM"/>
       <keyMapping columnObjectName="Projection" columnName="FBNUM"/>
+    </attribute>
+  
+    <attribute id="C_GRP_STATUS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_GRP_STATUS"/>
+      <keyMapping columnObjectName="Projection" columnName="C_GRP_STATUS"/>
+    </attribute>
+    <attribute id="C_ABN" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ABN"/>
+      <keyMapping columnObjectName="Projection" columnName="C_ABN"/>
+    </attribute>
+    <attribute id="A_CONT_NAME" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONT_NAME"/>
+      <keyMapping columnObjectName="Projection" columnName="A_CONT_NAME"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="C_TOTAL_LIABILITY" order="9" aggregationType="sum" measureType="simple">
+    <measure id="C_TOTAL_LIABILITY" order="15" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
       <measureMapping columnObjectName="Projection" columnName="C_TOTAL_LIABILITY"/>
     </measure>
-    <measure id="C_PENALTY_TOTAL" order="10" aggregationType="sum" measureType="simple">
+    <measure id="C_PENALTY_TOTAL" order="16" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_PENALTY_TOTAL"/>
       <measureMapping columnObjectName="Projection" columnName="C_PENALTY_TOTAL"/>
     </measure>
-    <measure id="C_UTI_TOTAL" order="11" aggregationType="sum" measureType="simple">
+    <measure id="C_UTI_TOTAL" order="17" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_UTI_TOTAL"/>
       <measureMapping columnObjectName="Projection" columnName="C_UTI_TOTAL"/>
     </measure>
-    <measure id="C_PAYABLE_TXN" order="12" aggregationType="sum" measureType="simple">
+    <measure id="C_PAYABLE_TXN" order="18" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_PAYABLE_TXN"/>
       <measureMapping columnObjectName="Projection" columnName="C_PAYABLE_TXN"/>
+    </measure>
+  
+    <measure id="C_TAX_AMOUNT" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="Projection" columnName="C_TAX_AMOUNT"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
