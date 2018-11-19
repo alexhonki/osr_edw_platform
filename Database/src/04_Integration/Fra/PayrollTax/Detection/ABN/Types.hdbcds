@@ -92,7 +92,18 @@ context Types {
             RISK_AMOUNT      : Decimal(23, 2);
             CURRENCY         : String(5);
         };
-
+        
+        // data exclusions 
+    	entity data_exclusions {
+        	ABN                          : String(11);
+        	PERIOD_CATEGORY              : String(10);
+        	PERIOD_KEY                   : String(4);
+        	GJAHR                        : String(4);
+        	ANZSIC_CD                    : String(5);
+			IND_CODE_GRP                 : String(3);
+			IND_DIVISION                 : String(1);
+			ABR_ACNC_FLAG                : String(1);
+    	};
         //text
         entity text {
             ABN             : String(11);
