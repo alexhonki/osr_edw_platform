@@ -22,6 +22,12 @@ SELECT TOP 1
 FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
 UNION
 SELECT TOP 1 
+'PT-A' AS "INCOTYP",
+'2016' AS "PERSL",
+'20160721' AS "INCORR_FAEDN"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+UNION
+SELECT TOP 1 
 'PT-Q' AS "INCOTYP",
 '18Q1' AS "PERSL",
 '20171009' AS "INCORR_FAEDN"

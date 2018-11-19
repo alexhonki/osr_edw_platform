@@ -1,7 +1,7 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_EX_QLD_NEXUS"
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus"
 (
-	IN IT_DATA_FOR_RULE "osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGEMPCNT_1",
-	IN PARAMETERS 		"osr.edw.platform.fra.prt.dt.abn::Types.WS_PTNGEMPCNT_PARAM",
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus",
 	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
 )
    LANGUAGE SQLSCRIPT
@@ -14,8 +14,7 @@ DECLARE lv_qld_emp_pc_thld Decimal(5,2) ;
 DECLARE lv_qld_emp_cnt_thld Integer;
 DECLARE lv_flag_wcq_policy NVARCHAR(1);
 DECLARE lv_flag_qld_address NVARCHAR(1);
-DECLARE lv_flag_qld_emp_cnt1 NVARCHAR(1);
-DECLARE lv_flag_qld_emp_cnt3 NVARCHAR(1);
+DECLARE lv_flag_qld_emp_cnt NVARCHAR(1);
 DECLARE lv_flag_qld_emp_pc NVARCHAR(1);
 
 SELECT 
@@ -23,16 +22,14 @@ SELECT
 "QLD_EMP_CNT_THLD", 
 "FLAG_WCQ_POLICY", 
 "FLAG_QLD_ADDRESS",
-"FLAG_QLD_EMP_CNT1",
-"FLAG_QLD_EMP_CNT3",
+"FLAG_QLD_EMP_CNT",
 "FLAG_QLD_EMP_PC"
 INTO 
 lv_qld_emp_pc_thld,
 lv_qld_emp_cnt_thld,
 lv_flag_wcq_policy,
 lv_flag_qld_address,
-lv_flag_qld_emp_cnt1,
-lv_flag_qld_emp_cnt3,
+lv_flag_qld_emp_cnt,
 lv_flag_qld_emp_pc
 FROM :PARAMETERS LIMIT 1;
 
@@ -42,9 +39,7 @@ step1 =
 	  "A"."ABN" 					AS  "ABN", 
 	  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
       "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
-      "A"."PERIOD_END_DATE"			AS  "PERIOD_END_DATE",
       "A"."GJAHR"					AS  "GJAHR",
-      "A"."WAERS" AS "CURRENCY",
 	  "B"."QLD_ADDR_CHECK",
 	  "B"."QLD_EMP_CNT_CHECK_1",
 	  "B"."QLD_EMP_CNT_CHECK_3",
@@ -54,7 +49,8 @@ step1 =
 	  "B"."CNT_EMPLOYEE_QLD"
 	  
    FROM :IT_DATA_FOR_RULE AS "A",
-   "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES" AS "B"
+   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"(placeholder."$$IP_QLD_EMP_CNT$$"=>:lv_qld_emp_cnt_thld, 
+	placeholder."$$IP_QLD_EMP_PC$$"=>:lv_qld_emp_pc_thld )) AS "B"
    
   WHERE 
 		"A"."ABN"   = "B"."ABN"
@@ -65,7 +61,6 @@ step1 =
 			
    ET_RESULT = 
 	SELECT
-	
    "ABN",
    "PERIOD_CATEGORY",
    "PERIOD_KEY",
@@ -74,8 +69,7 @@ step1 =
 
    FROM  :step1
    WHERE :step1."QLD_ADDR_CHECK" 		= :lv_flag_qld_address
-   AND :step1."QLD_EMP_CNT_CHECK_1" 	= :lv_flag_qld_emp_cnt1
-   AND :step1."QLD_EMP_CNT_CHECK_3" 	= :lv_flag_qld_emp_cnt3
+   AND :step1."QLD_EMP_CNT_CHECK_1" 	= :lv_flag_qld_emp_cnt
    AND :step1."WCQ_POLICY_CHECK" 		= :lv_flag_wcq_policy
    AND :step1."QLD_EMP_PC_CHECK" 		= :lv_flag_qld_emp_pc
    AND :step1."QLD_EMP_PC"				>= :lv_qld_emp_pc_thld
