@@ -29,6 +29,7 @@ context Types {
         };
 
         entity param_wage {
+            FLAG_CALC_SCORE       : String(1);
             THRESHOLD_YEARLY      : Decimal(15, 2);
             ATO_BAS_WAGE_LOW      : Decimal(15, 2);
             ATO_BAS_WAGE_HIGH     : Decimal(15, 2);
@@ -63,6 +64,7 @@ context Types {
         };
 
         entity param_qld_nexus {
+            FLAG_CALC_SCORE  : String(1);
             QLD_EMP_PC_THLD  : Decimal(5, 2);
             QLD_EMP_CNT_THLD : Integer;
             FLAG_WCQ_POLICY  : String(1);
