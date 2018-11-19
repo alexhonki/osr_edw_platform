@@ -17,15 +17,15 @@ step1=
 		"DATA"."GJAHR"                                                                                AS  "PERIOD_KEY",
 		CONCAT("DATA"."GJAHR",'0630')                                                                 AS  "PERIOD_END_DATE",
 		"DATA"."GJAHR"                                                                                AS  "GJAHR",
-		'AUD'                                                                               		  AS  "WAERS"
+		"VIEW"."WAERS"                                                                                AS  "WAERS"
 		
   FROM 
-		:it_workset AS "DATA"
-		--"osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES" AS "VIEW"
-/*  WHERE 
+		:it_workset AS "DATA",
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES" AS "VIEW"
+  WHERE 
 		"DATA"."ABN"   = "VIEW"."ABN"
   AND	"DATA"."GJAHR" = "VIEW"."GJAHR"
-*/
+
 
   ;			
  			
