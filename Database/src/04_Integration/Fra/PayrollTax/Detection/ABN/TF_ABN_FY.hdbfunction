@@ -18,17 +18,48 @@ FROM
 "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR",
 "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
 ;
-  
-  RETURN 
-  SELECT DISTINCT 
-  "ABN",
-  "GJAHR",
-  '' AS "BPARTNER",
-  '' AS "GROUP_ID",
-  'PRT' AS "ACCESS_GROUP"
-  FROM
-  :lt_abn
-  ;
-  
+
+lt_abn_bp = 
+SELECT
+"ABN"."ABN" AS "ABN",
+"ABN"."GJAHR" AS "GJAHR",
+TO_NVARCHAR((TO_INT("ABN"."GJAHR") + 1)) || '0630' AS "FY_START_DATE",
+"ABN"."GJAHR" || '0630' AS "FY_END_DATE",
+"BP_ABN"."BPARTNER" AS "BPARTNER",
+"BP_ABN"."VALID_DATE_FROM" AS "VALID_DATE_FROM",
+"BP_ABN"."VALID_DATE_TO" AS "VALID_DATE_TO"
+FROM
+:lt_abn AS "ABN"
+LEFT OUTER JOIN
+"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
+ON "ABN"."ABN" = LEFT("BP_ABN"."ABN",11)
+;
+
+lt_inv =
+SELECT
+"ABN",
+"GJAHR",
+CASE 
+WHEN 
+"FY_START_DATE" >= "VALID_DATE_TO" AND "FY_END_DATE" <= "VALID_DATE_FROM" AND "BPARTNER" IS NOT NULL
+THEN "BPARTNER"
+ELSE 
+''
+END
+AS "BPARTNER"
+FROM
+:lt_abn_bp
+;
+ 
+RETURN
+SELECT
+"ABN",
+"GJAHR",
+"BPARTNER",
+'' AS "GROUP_ID",
+'PRT' AS "ACCESS_GROUP"
+FROM
+:lt_inv
+;
 
 END;

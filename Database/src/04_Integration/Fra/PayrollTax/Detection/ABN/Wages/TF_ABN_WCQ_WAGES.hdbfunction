@@ -1,0 +1,29 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"(
+)
+RETURNS TABLE (
+ABN								NVARCHAR(11),
+PERIOD_CATEGORY					NVARCHAR(10),
+PERIOD_KEY						NVARCHAR(4),
+GJAHR							NVARCHAR(4),
+WCQ_ACT_WAGES					DECIMAL(15,2),
+WAERS							NVARCHAR(5)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+     SELECT
+		LEFT("WCQ_POLICY"."ABN",11)                                                                       AS  "ABN", 
+		'PT-A' 																		   			         AS  "PERIOD_CATEGORY",
+		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                           AS  "PERIOD_KEY",
+		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                          AS  "GJAHR",
+		 "WCQ_WAGES"."ACT_WAGES"                                                                             AS  "WCQ_ACT_WAGES",
+		'AUD'                                                                                         AS  "WAERS"
+	FROM 
+		"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.WAGES.active_data" AS "WCQ_WAGES"
+		INNER JOIN 
+		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY.active_data" AS "WCQ_POLICY"
+		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_WAGES"."POLICY_NO"
+	;
+
+END;

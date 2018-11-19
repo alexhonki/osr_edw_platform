@@ -23,40 +23,28 @@
       <descriptions defaultDescription="PERIOD_KEY"/>
       <keyMapping columnObjectName="TF_ABN_WAGES" columnName="PERIOD_KEY"/>
     </attribute>
-    <attribute id="PERIOD_END_DATE" order="4" semanticType="date.businessDateTo" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PERIOD_END_DATE"/>
-      <keyMapping columnObjectName="TF_ABN_WAGES" columnName="PERIOD_END_DATE"/>
-    </attribute>
-    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="TF_ABN_WAGES" columnName="GJAHR"/>
     </attribute>
-    <attribute id="WAERS" order="6" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
       <keyMapping columnObjectName="TF_ABN_WAGES" columnName="WAERS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ATO_BAS_TOTL_PMT_FOR_WRK_AMT" order="7" semanticType="amount" aggregationType="sum" measureType="amount">
+    <measure id="ATO_BAS_TOTL_PMT_FOR_WRK_AMT" order="6" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ATO_BAS_TOTL_PMT_FOR_WRK_AMT"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="TF_ABN_WAGES" columnName="ATO_BAS_TOTL_PMT_FOR_WRK_AMT"/>
     </measure>
-    <measure id="ATO_ITR_SALARY_WAGES" order="8" semanticType="amount" aggregationType="sum" measureType="amount">
+    <measure id="ATO_ITR_SALARY_WAGES" order="7" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ATO_ITR_SALARY_WAGES"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="TF_ABN_WAGES" columnName="ATO_ITR_SALARY_WAGES"/>
     </measure>
-    <measure id="WCQ_ACT_WAGES" order="9" semanticType="amount" aggregationType="sum" measureType="amount">
+    <measure id="WCQ_ACT_WAGES" order="8" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="WCQ_ACT_WAGES"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="TF_ABN_WAGES" columnName="WCQ_ACT_WAGES"/>
-    </measure>
-    <measure id="WCQ_ACT_APPR_WAGES" order="10" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="WCQ_ACT_APPR_WAGES"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="TF_ABN_WAGES" columnName="WCQ_ACT_APPR_WAGES"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>

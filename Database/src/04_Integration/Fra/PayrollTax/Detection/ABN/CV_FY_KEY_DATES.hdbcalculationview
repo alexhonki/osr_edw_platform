@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_FY_KEY_DATES" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Fiscal Year Key Dates"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_FY_KEY_DATES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_FY_KEY_DATES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_FY_KEY_DATES">
+  <attributes>
+    <attribute id="FISCAL_YEAR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FISCAL_YEAR"/>
+      <keyMapping columnObjectName="TF_FY_KEY_DATES" columnName="FISCAL_YEAR"/>
+    </attribute>
+    <attribute id="START_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="START_DATE"/>
+      <keyMapping columnObjectName="TF_FY_KEY_DATES" columnName="START_DATE"/>
+    </attribute>
+    <attribute id="END_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_DATE"/>
+      <keyMapping columnObjectName="TF_FY_KEY_DATES" columnName="END_DATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

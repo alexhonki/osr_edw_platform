@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_DT_RFR_INDUSTRY" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Decision Table: Risk Factor Rating for Industry"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_INDUSTRY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_INDUSTRY</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_INDUSTRY">
+  <attributes>
+    <attribute id="IND_DIVISION" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IND_DIVISION"/>
+      <keyMapping columnObjectName="TF_RFR_INDUSTRY" columnName="IND_DIVISION"/>
+    </attribute>
+    <attribute id="RISK_FACTOR_RATING" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      <keyMapping columnObjectName="TF_RFR_INDUSTRY" columnName="RISK_FACTOR_RATING"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

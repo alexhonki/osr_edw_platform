@@ -1,197 +1,145 @@
 namespace osr.edw.platform.fra.prt.dt.abn;
 
 context Types {
+    context dt {
+        entity rf_ind {
+            IND_DIVISION : String(1);
+            RISK_FACTOR  : Decimal(15, 2);
+        }
+    }
 
-	context wages {
-		//workset
-		entity ws {
-        ABN: String(11);
-        PERIOD_CATEGORY: String(10);
- 	    PERIOD_KEY:  String(4);
-        PERIOD_END_DATE: String(8);
-        GJAHR: String(4);
-   		};
-   		
-
-    	entity data_wage {
-			ABN: String(11);
-        	PERIOD_CATEGORY: String(10);
- 	    	PERIOD_KEY:  String(4);
-        	PERIOD_END_DATE: String(8);
-        	GJAHR: String(4);
-        	ATO_BAS_TOTL_PMT_FOR_WRK_AMT: Decimal(15,2);
-        	ATO_ITR_SALARY_WAGES: Decimal(15,2);
-        	WCQ_ACT_WAGES: Decimal(15,2);
-        	WCQ_ACT_APPR_WAGES: Decimal(15,2);
-        	WAERS: String(5);
+    context wages {
+        //workset
+        entity ws {
+            ABN             : String(11);
+            PERIOD_CATEGORY : String(10);
+            PERIOD_KEY      : String(4);
+            GJAHR           : String(4);
         };
- 		
+
+        entity data_wage {
+            ABN                          : String(11);
+            PERIOD_CATEGORY              : String(10);
+            PERIOD_KEY                   : String(4);
+            GJAHR                        : String(4);
+            ATO_BAS_TOTL_PMT_FOR_WRK_AMT : Decimal(15, 2);
+            ATO_ITR_SALARY_WAGES         : Decimal(15, 2);
+            WCQ_ACT_WAGES                : Decimal(15, 2);
+            WAERS                        : String(5);
+        };
+
         entity param_wage {
- 			THRESHOLD_YEARLY 			:Decimal(15,2);
- 			ATO_BAS_WAGE_LOW			:Decimal(15,2);
- 			ATO_BAS_WAGE_HIGH			:Decimal(15,2);
- 			FLAG_REINSTATEMENT			:String(1);
- 			FLAG_NEW_REGISTRATION		:String(1);
- 			
- 		};
- 		
-     	entity data_qld_nexus {
-			ABN: String(11);
-        	PERIOD_CATEGORY: String(10);
- 	    	PERIOD_KEY:  String(4);
-        	PERIOD_END_DATE: String(8);
-        	GJAHR: String(4);
-        	ATO_CNT_EMPLOYEE: Integer;
+            THRESHOLD_YEARLY      : Decimal(15, 2);
+            ATO_BAS_WAGE_LOW      : Decimal(15, 2);
+            ATO_BAS_WAGE_HIGH     : Decimal(15, 2);
+            FLAG_ATO_BAS          : String(1);
+            FLAG_ATO_ITR          : String(1);
+            FLAG_WCQ              : String(1);
+            FLAG_RISK_VALUE       : String(1);
+            FLAG_REINSTATEMENT    : String(1);
+            FLAG_NEW_REGISTRATION : String(1);
         };
- 		
-  		entity param_qld_nexus {
- 			QLD_EMP_PC_THLD 	:Decimal(5,2);
- 			QLD_EMP_CNT_THLD	:Integer;
- 			FLAG_WCQ_POLICY		:String(1);
- 			FLAG_QLD_ADDRESS	:String(1);
- 		};
- 		
- 		//result
-    	entity result {
-			ABN: String(11);
-	    	PERIOD_CATEGORY: String(10);
- 	    	PERIOD_KEY:  String(4);
-        	PERIOD_END_DATE: String(8);
-        	GJAHR: String(4);
-        	DETECTION_RESULT: Integer;
-   		};
-   		
-   		//result with amount
-    	entity result_w_amnt {
-        	ABN: String(11);
-        	PERIOD_CATEGORY: String(10);
- 	    	PERIOD_KEY:  String(4);
-        	PERIOD_END_DATE: String(8);
-        	GJAHR: String(4);
-        	DETECTION_RESULT: Integer;
-        	RISK_AMOUNT: Decimal(23,2);
-        	CURRENCY: String(5);
-   		};
-   		
-   		//text
-    	entity text {
-        	ABN: String(11);
-        	PERIOD_CATEGORY: String(10);
- 	    	PERIOD_KEY:  String(4);
-        	PERIOD_END_DATE: String(8);
-        	GJAHR: String(4);
-        	TEXT: String(255);
-        	MSGID: String(20);
-        	MSGNO: String(3);
-        	MSGV1: String(50);
-        	MSGV2: String(50);
-        	MSGV3: String(50);
-        	MSGV4: String(50);
-        	MSGV1_FC: String(100);
-        	MSGV2_FC: String(100);
-        	MSGV3_FC: String(100);
-        	MSGV4_FC: String(100);
-   		};
-   };
-	
-    
-    entity WS_PTNGWAGE_1 {
+
+        entity data_bp_reg {
+            ABN             : String(11);
+            PERIOD_CATEGORY : String(10);
+            PERIOD_KEY      : String(4);
+            GJAHR           : String(4);
+            BPARTNER        : String(10);
+            VALID_DATE_FROM : String(8);
+            VALID_DATE_TO   : String(8);
+        };
+
+        entity param_bp_reg {
+            FLAG_REINSTATEMENT    : String(1);
+            FLAG_NEW_REGISTRATION : String(1);
+        };
+
+        entity data_qld_nexus {
+            ABN             : String(11);
+            PERIOD_CATEGORY : String(10);
+            PERIOD_KEY      : String(4);
+            GJAHR           : String(4);
+        };
+
+        entity param_qld_nexus {
+            QLD_EMP_PC_THLD  : Decimal(5, 2);
+            QLD_EMP_CNT_THLD : Integer;
+            FLAG_WCQ_POLICY  : String(1);
+            FLAG_QLD_ADDRESS : String(1);
+            FLAG_QLD_EMP_CNT : String(1);
+            FLAG_QLD_EMP_PC  : String(1);
+        };
+
+        //result
+        entity result {
+            ABN              : String(11);
+            PERIOD_CATEGORY  : String(10);
+            PERIOD_KEY       : String(4);
+            GJAHR            : String(4);
+            DETECTION_RESULT : Integer;
+        };
+
+        //result with amount
+        entity result_w_amnt {
+            ABN              : String(11);
+            PERIOD_CATEGORY  : String(10);
+            PERIOD_KEY       : String(4);
+            GJAHR            : String(4);
+            DETECTION_RESULT : Integer;
+            RISK_AMOUNT      : Decimal(23, 2);
+            CURRENCY         : String(5);
+        };
+
+        //text
+        entity text {
+            ABN             : String(11);
+            PERIOD_CATEGORY : String(10);
+            PERIOD_KEY      : String(4);
+            GJAHR           : String(4);
+            TEXT            : String(255);
+            MSGID           : String(20);
+            MSGNO           : String(3);
+            MSGV1           : String(50);
+            MSGV2           : String(50);
+            MSGV3           : String(50);
+            MSGV4           : String(50);
+            MSGV1_FC        : String(100);
+            MSGV2_FC        : String(100);
+            MSGV3_FC        : String(100);
+            MSGV4_FC        : String(100);
+        };
+    };
+
+    //result with amount
+    type result_w_amnt {
+        ABN              : String(11);
+        PERIOD_CATEGORY  : String(10);
+        PERIOD_KEY       : String(4);
+        PERIOD_END_DATE  : String(8);
+        GJAHR            : String(4);
+        DETECTION_RESULT : Integer;
+        RISK_AMOUNT      : Decimal(23, 2);
+        CURRENCY         : String(5);
+    };
+
+    //text
+    type text {
         ABN             : String(11);
         PERIOD_CATEGORY : String(10);
- 	    PERIOD_KEY      : String(4);
+        PERIOD_KEY      : String(4);
         PERIOD_END_DATE : String(8);
         GJAHR           : String(4);
-   		};
-   		
-   	entity WS_PTNGWAGE_2 {
-        ABN             				: String(11);
-        PERIOD_CATEGORY 				: String(10);
- 	    PERIOD_KEY      				: String(4);
-        PERIOD_END_DATE 				: String(8);
-        GJAHR           				: String(4);
-        ATO_BAS_TOTL_PMT_FOR_WRK_AMT	: Decimal(15,2);
-        ATO_ITR_SALARY_WAGES			: Decimal(15,2);
-        WCQ_ACT_WAGES					: Decimal(15,2);
-        WCQ_ACT_APPR_WAGES				: Decimal(15,2);
-        WAERS							: String(5);
-   		};	
-   		
-   	 entity WS_PTNGWAGE_3 {
-        ABN             				: String(11);
-        PERIOD_CATEGORY 				: String(10);
- 	    PERIOD_KEY      				: String(4);
-        PERIOD_END_DATE 				: String(8);
-        GJAHR           				: String(4);
-        DETECTION_RESULT                : Integer ;
-   		};	
-   		
-    entity WS_PTNGWAGE_PARAM {
-        THRESHOLD_YEARLY                : Decimal(15,2);
-           
-        };    		
-   		
-   		//rule 1
-    entity WS_PTNGEMPCNT_1 {
-			ABN							: String(11);
-        	PERIOD_CATEGORY				: String(10);
- 	    	PERIOD_KEY					: String(4);
-        	PERIOD_END_DATE				: String(8);
-        	GJAHR						: String(4);
-        	WAERS						: String(5);
-		
-        };
- 		
- 	entity WS_PTNGEMPCNT_PARAM {
- 			QLD_EMP_PC_THLD 	:Decimal(5,2);
- 			QLD_EMP_CNT_THLD	:Integer;
- 			FLAG_WCQ_POLICY		:String(1);
- 			FLAG_QLD_ADDRESS	:String(1);
- 			FLAG_QLD_EMP_CNT1	:String(1);
- 			FLAG_QLD_EMP_CNT3	:String(1);
- 			FLAG_QLD_EMP_PC		:String(1);
- 		};
- 		
- 		//result
-    entity WS_PTNGEMPCNT_RESULT {
-			ABN				: String(11);
-	    	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	DETECTION_RESULT: Integer;
-   		};
-   		
-   		//result with amount
-    	type result_w_amnt {
-        	ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	DETECTION_RESULT: Integer;
-        	RISK_AMOUNT		: Decimal(23,2);
-        	CURRENCY		: String(5);
-   		};
-   		
-   		//text
-    	type text {
-        	ABN				: String(11);
-        	PERIOD_CATEGORY	: String(10);
- 	    	PERIOD_KEY		: String(4);
-        	PERIOD_END_DATE	: String(8);
-        	GJAHR			: String(4);
-        	TEXT			: String(255);
-        	MSGID			: String(20);
-        	MSGNO			: String(3);
-        	MSGV1			: String(50);
-        	MSGV2			: String(50);
-        	MSGV3			: String(50);
-        	MSGV4			: String(50);
-        	MSGV1_FC		: String(100);
-        	MSGV2_FC		: String(100);
-        	MSGV3_FC		: String(100);
-        	MSGV4_FC		: String(100);
-   		};
-
-    
+        TEXT            : String(255);
+        MSGID           : String(20);
+        MSGNO           : String(3);
+        MSGV1           : String(50);
+        MSGV2           : String(50);
+        MSGV3           : String(50);
+        MSGV4           : String(50);
+        MSGV1_FC        : String(100);
+        MSGV2_FC        : String(100);
+        MSGV3_FC        : String(100);
+        MSGV4_FC        : String(100);
+    };
 };

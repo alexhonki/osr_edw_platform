@@ -1,0 +1,88 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_NoBPRegistrationForLiability"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_bp_reg",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_bp_reg",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+
+DECLARE lx_reinstatement NVARCHAR(1);
+DECLARE lx_new_registration NVARCHAR(1);
+
+
+SELECT
+"FLAG_REINSTATEMENT",
+"FLAG_NEW_REGISTRATION"
+INTO 
+lx_reinstatement,
+lx_new_registration
+FROM :PARAMETERS LIMIT 1;
+
+IF lx_reinstatement = 'X' THEN 
+lt_reinstatment = 
+SELECT 
+"BP_ID"."ABN",
+"BP_ID"."PERIOD_CATEGORY",
+"BP_ID"."PERIOD_KEY",
+"BP_ID"."GJAHR",
+"BP_ID"."BPARTNER",
+"BP_REG"."PRT_TAX_LIAB_DATE",
+"BP_REG"."DATE_FROM",
+"BP_REG"."DATE_TO",
+"BP_REG"."ONLINE_FILLING_COMM"
+FROM 
+:it_data_for_rule AS "BP_ID",
+"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG",
+"osr.edw.platform.fra.prt.dt.abn::CV_FY_KEY_DATES" "FY"
+WHERE "BP_ID"."BPARTNER" IS NOT NULL
+  AND "BP_ID"."BPARTNER" = "BP_REG"."BPARTNER"
+  AND "BP_ID"."GJAHR" = "FY"."FISCAL_YEAR"
+  AND (
+  	  "BP_REG"."PRT_TAX_LIAB_DATE" > "FY"."END_DATE"
+  	  AND
+      "BP_REG"."DATE_TO" > "FY"."END_DATE"
+      )
+   OR (
+  	  "BP_REG"."PRT_TAX_LIAB_DATE" < "FY"."START_DATE"
+  	   AND
+      "BP_REG"."DATE_TO" < "FY"."START_DATE"
+      )
+;
+END IF;
+
+IF lx_new_registration = 'X' THEN 
+l_new_registration = 
+SELECT 
+"BP_ID"."ABN",
+"BP_ID"."PERIOD_CATEGORY",
+"BP_ID"."PERIOD_KEY",
+"BP_ID"."GJAHR",
+"BP_ID"."BPARTNER",
+"BP_REG"."PRT_TAX_LIAB_DATE",
+"BP_REG"."DATE_FROM",
+"BP_REG"."DATE_TO",
+"BP_REG"."ONLINE_FILLING_COMM"
+FROM 
+:it_data_for_rule AS "BP_ID",
+"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG"
+WHERE "BP_ID"."BPARTNER" IS NULL
+;
+END IF;
+
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :it_data_for_rule
+;
+
+
+END

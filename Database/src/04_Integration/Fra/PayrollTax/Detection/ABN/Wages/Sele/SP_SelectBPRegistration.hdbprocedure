@@ -1,0 +1,26 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectBPRegistration"(
+	IN  it_workset    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT et_data_for_rule	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_bp_reg"
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+et_data_for_rule =
+SELECT
+"WS"."ABN" AS "ABN",
+"WS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"WS"."PERIOD_KEY" AS "PERIOD_KEY",
+"WS"."GJAHR" AS "GJAHR",
+"BP_ABN"."BPARTNER" AS "BPARTNER",
+"BP_ABN"."VALID_DATE_FROM" AS "VALID_DATE_FROM",
+"BP_ABN"."VALID_DATE_TO" AS "VALID_DATE_TO"
+FROM 
+:it_workset AS "WS"
+LEFT OUTER JOIN
+"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
+ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+;
+   
+END

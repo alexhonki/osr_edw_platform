@@ -1,0 +1,26 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ATO_BAS_WAGES"(
+)
+RETURNS TABLE (
+ABN								NVARCHAR(11),
+PERIOD_CATEGORY					NVARCHAR(10),
+PERIOD_KEY						NVARCHAR(4),
+GJAHR							NVARCHAR(4),
+ATO_BAS_TOTL_PMT_FOR_WRK_AMT	DECIMAL(15,2),
+WAERS							NVARCHAR(5)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+-- ATO BAS Data   
+	SELECT
+		LEFT("ATO_BAS"."ABN",11)                                                                               AS  "ABN",
+		CASE WHEN LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q') = 0 THEN 'PT-A' ELSE 'PT-Q' END          AS  "PERIOD_CATEGORY",
+		RIGHT(RTRIM ("ATO_BAS"."NAME",'.txt'),4)                                                               AS  "PERIOD_KEY",
+		LEFT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR"),4)                                                     AS  "GJAHR",
+		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                              AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+		'AUD'                                                                                         AS  "WAERS"
+	FROM 
+		"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "ATO_BAS";
+
+END;

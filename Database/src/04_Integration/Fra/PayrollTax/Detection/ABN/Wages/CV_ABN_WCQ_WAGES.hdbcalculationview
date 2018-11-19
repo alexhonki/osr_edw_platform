@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_WCQ_WAGES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_WCQ_WAGES" columnName="ABN"/>
+    </attribute>
+    <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="TF_ABN_WCQ_WAGES" columnName="PERIOD_CATEGORY"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="TF_ABN_WCQ_WAGES" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABN_WCQ_WAGES" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="WAERS" order="5" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_ABN_WCQ_WAGES" columnName="WAERS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="WCQ_ACT_WAGES" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="WCQ_ACT_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_WCQ_WAGES" columnName="WCQ_ACT_WAGES"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

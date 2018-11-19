@@ -1,0 +1,80 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus"
+(
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus",
+	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+   
+DECLARE lv_qld_emp_pc_thld Decimal(5,2) ;
+DECLARE lv_qld_emp_cnt_thld Integer;
+DECLARE lv_flag_wcq_policy NVARCHAR(1);
+DECLARE lv_flag_qld_address NVARCHAR(1);
+DECLARE lv_flag_qld_emp_cnt NVARCHAR(1);
+DECLARE lv_flag_qld_emp_pc NVARCHAR(1);
+
+SELECT 
+"QLD_EMP_PC_THLD",
+"QLD_EMP_CNT_THLD", 
+"FLAG_WCQ_POLICY", 
+"FLAG_QLD_ADDRESS",
+"FLAG_QLD_EMP_CNT",
+"FLAG_QLD_EMP_PC"
+INTO 
+lv_qld_emp_pc_thld,
+lv_qld_emp_cnt_thld,
+lv_flag_wcq_policy,
+lv_flag_qld_address,
+lv_flag_qld_emp_cnt,
+lv_flag_qld_emp_pc
+FROM :PARAMETERS LIMIT 1;
+
+
+step1 =
+   SELECT 
+	  "A"."ABN" 					AS  "ABN", 
+	  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
+      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
+      "A"."GJAHR"					AS  "GJAHR",
+	  "B"."QLD_ADDR_CHECK",
+	  "B"."QLD_EMP_CNT_CHECK_1",
+	  "B"."QLD_EMP_CNT_CHECK_3",
+	  "B"."QLD_EMP_PC_CHECK",
+	  "B"."WCQ_POLICY_CHECK",
+	  "B"."QLD_EMP_PC",
+	  "B"."CNT_EMPLOYEE_QLD"
+	  
+   FROM :IT_DATA_FOR_RULE AS "A",
+   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"(placeholder."$$IP_QLD_EMP_CNT$$"=>:lv_qld_emp_cnt_thld, 
+	placeholder."$$IP_QLD_EMP_PC$$"=>:lv_qld_emp_pc_thld )) AS "B"
+   
+  WHERE 
+		"A"."ABN"   = "B"."ABN"
+  AND	"A"."GJAHR" = "B"."GJAHR"
+
+   ;
+
+			
+   ET_RESULT = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   100 AS "DETECTION_RESULT"
+
+   FROM  :step1
+   WHERE :step1."QLD_ADDR_CHECK" 		= :lv_flag_qld_address
+   AND :step1."QLD_EMP_CNT_CHECK_1" 	= :lv_flag_qld_emp_cnt
+   AND :step1."WCQ_POLICY_CHECK" 		= :lv_flag_wcq_policy
+   AND :step1."QLD_EMP_PC_CHECK" 		= :lv_flag_qld_emp_pc
+   AND :step1."QLD_EMP_PC"				>= :lv_qld_emp_pc_thld
+   AND :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld
+   ;
+   
+
+END
