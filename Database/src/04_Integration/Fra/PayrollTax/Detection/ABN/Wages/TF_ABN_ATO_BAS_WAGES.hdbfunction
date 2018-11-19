@@ -14,10 +14,10 @@ BEGIN
 	RETURN
 -- ATO BAS Data   
 	SELECT
-		"ATO_BAS"."ABN"                                                                                           AS  "ABN",
+		LEFT("ATO_BAS"."ABN",11)                                                                               AS  "ABN",
 		CASE WHEN LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q') = 0 THEN 'PT-A' ELSE 'PT-Q' END          AS  "PERIOD_CATEGORY",
 		RIGHT(RTRIM ("ATO_BAS"."NAME",'.txt'),4)                                                               AS  "PERIOD_KEY",
-		TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR",4)                                                     AS  "GJAHR",
+		LEFT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR"),4)                                                     AS  "GJAHR",
 		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                              AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 		'AUD'                                                                                         AS  "WAERS"
 	FROM 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.ato.proxy::CV_IND_CODE_GRP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Industry Code Group"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP">
+  <attributes>
+    <attribute id="IND_CODE_GRP" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IND_CODE_GRP"/>
+      <keyMapping columnObjectName="TF_IND_CODE_GRP" columnName="IND_CODE_GRP"/>
+    </attribute>
+    <attribute id="IND_DIVISION" order="2" descriptionColumnName="IND_DIVISION_DESCR" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IND_DIVISION"/>
+      <keyMapping columnObjectName="TF_IND_CODE_GRP" columnName="IND_DIVISION"/>
+    </attribute>
+    <attribute id="IND_DIVISION_DESCR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IND_DIVISION_DESCR"/>
+      <keyMapping columnObjectName="TF_IND_CODE_GRP" columnName="IND_DIVISION_DESCR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
