@@ -29,7 +29,7 @@ context Types {
         };
 
         entity param_wage {
-            FLAG_CALC_SCORE       : String(1);
+            RUN_MODE              : String(3);
             THRESHOLD_YEARLY      : Decimal(15, 2);
             ATO_BAS_WAGE_LOW      : Decimal(15, 2);
             ATO_BAS_WAGE_HIGH     : Decimal(15, 2);
@@ -64,7 +64,7 @@ context Types {
         };
 
         entity param_qld_nexus {
-            FLAG_CALC_SCORE  : String(1);
+            RUN_MODE         : String(3);
             QLD_EMP_PC_THLD  : Decimal(5, 2);
             QLD_EMP_CNT_THLD : Integer;
             FLAG_WCQ_POLICY  : String(1);
@@ -111,37 +111,5 @@ context Types {
             MSGV3_FC        : String(100);
             MSGV4_FC        : String(100);
         };
-    };
-
-    //result with amount
-    type result_w_amnt {
-        ABN              : String(11);
-        PERIOD_CATEGORY  : String(10);
-        PERIOD_KEY       : String(4);
-        PERIOD_END_DATE  : String(8);
-        GJAHR            : String(4);
-        DETECTION_RESULT : Integer;
-        RISK_AMOUNT      : Decimal(23, 2);
-        CURRENCY         : String(5);
-    };
-
-    //text
-    type text {
-        ABN             : String(11);
-        PERIOD_CATEGORY : String(10);
-        PERIOD_KEY      : String(4);
-        PERIOD_END_DATE : String(8);
-        GJAHR           : String(4);
-        TEXT            : String(255);
-        MSGID           : String(20);
-        MSGNO           : String(3);
-        MSGV1           : String(50);
-        MSGV2           : String(50);
-        MSGV3           : String(50);
-        MSGV4           : String(50);
-        MSGV1_FC        : String(100);
-        MSGV2_FC        : String(100);
-        MSGV3_FC        : String(100);
-        MSGV4_FC        : String(100);
     };
 };

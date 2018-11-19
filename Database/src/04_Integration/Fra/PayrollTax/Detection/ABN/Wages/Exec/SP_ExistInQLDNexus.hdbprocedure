@@ -9,28 +9,31 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus"
    READS SQL DATA AS
 BEGIN
 
-   
+DECLARE lv_mode NVARCHAR(1);   
+
 DECLARE lv_qld_emp_pc_thld Decimal(5,2) ;
 DECLARE lv_qld_emp_cnt_thld Integer;
-DECLARE lv_flag_wcq_policy NVARCHAR(1);
-DECLARE lv_flag_qld_address NVARCHAR(1);
-DECLARE lv_flag_qld_emp_cnt NVARCHAR(1);
-DECLARE lv_flag_qld_emp_pc NVARCHAR(1);
+DECLARE lX_flag_wcq_policy NVARCHAR(1);
+DECLARE lX_flag_qld_address NVARCHAR(1);
+DECLARE lX_flag_qld_emp_cnt NVARCHAR(1);
+DECLARE lX_flag_qld_emp_pc NVARCHAR(1);
 
-SELECT 
+SELECT
+"RUN_MODE",
 "QLD_EMP_PC_THLD",
 "QLD_EMP_CNT_THLD", 
 "FLAG_WCQ_POLICY", 
 "FLAG_QLD_ADDRESS",
 "FLAG_QLD_EMP_CNT",
 "FLAG_QLD_EMP_PC"
-INTO 
+INTO
+lv_mode,
 lv_qld_emp_pc_thld,
 lv_qld_emp_cnt_thld,
-lv_flag_wcq_policy,
-lv_flag_qld_address,
-lv_flag_qld_emp_cnt,
-lv_flag_qld_emp_pc
+lX_flag_wcq_policy,
+lX_flag_qld_address,
+lX_flag_qld_emp_cnt,
+lX_flag_qld_emp_pc
 FROM :PARAMETERS LIMIT 1;
 
 
@@ -68,10 +71,10 @@ step1 =
    100 AS "DETECTION_RESULT"
 
    FROM  :step1
-   WHERE :step1."QLD_ADDR_CHECK" 		= :lv_flag_qld_address
-   AND :step1."QLD_EMP_CNT_CHECK_1" 	= :lv_flag_qld_emp_cnt
-   AND :step1."WCQ_POLICY_CHECK" 		= :lv_flag_wcq_policy
-   AND :step1."QLD_EMP_PC_CHECK" 		= :lv_flag_qld_emp_pc
+   WHERE :step1."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
+   AND :step1."QLD_EMP_CNT_CHECK_1" 	= :lx_flag_qld_emp_cnt
+   AND :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
+   AND :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
    AND :step1."QLD_EMP_PC"				>= :lv_qld_emp_pc_thld
    AND :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld
    ;
