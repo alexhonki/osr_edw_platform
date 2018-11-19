@@ -1,0 +1,73 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QLDNexusRulesTest" (
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	IN lv_qld_emp_pc_thld	Decimal(5,2),
+	IN lv_qld_emp_cnt_thld	Integer,
+	IN lv_flag_wcq_policy	NVARCHAR(1),
+	IN lv_flag_qld_address	NVARCHAR(1),
+	IN lv_flag_qld_emp_cnt1	NVARCHAR(1),
+	IN lv_flag_qld_emp_cnt3	NVARCHAR(1),
+	IN lv_flag_qld_emp_pc	NVARCHAR(1)
+)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+IF :iv_abn = '?' THEN 
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"PERIOD_END_DATE",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
+WHERE "GJAHR" = :iv_gjahr
+;
+ELSE 
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"PERIOD_END_DATE",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
+WHERE "ABN"   = :iv_abn
+  AND "GJAHR" = :iv_gjahr
+;
+END IF;
+
+
+
+lt_param =
+SELECT
+TOP 1
+:lv_qld_emp_pc_thld 	AS "QLD_EMP_PC_THLD",
+:lv_qld_emp_cnt_thld	AS "QLD_EMP_CNT_THLD",
+:lv_flag_wcq_policy 	AS "FLAG_WCQ_POLICY",
+:lv_flag_qld_address	AS "FLAG_QLD_ADDRESS",
+:lv_flag_qld_emp_cnt1	AS "FLAG_QLD_EMP_CNT1",
+:lv_flag_qld_emp_cnt3	AS "FLAG_QLD_EMP_CNT3",
+:lv_flag_qld_emp_pc 	AS "FLAG_QLD_EMP_PC"
+FROM  :lt_workset;
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SE_QLD_NEXUS"
+(
+:lt_workset,
+lt_out_for_rule 
+
+);
+
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_EX_QLD_NEXUS" 
+(
+:lt_out_for_rule,
+:lt_param,
+et_result 
+
+);
+
+ END;
