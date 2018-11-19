@@ -9,6 +9,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QuarterWageAboveThld"(
    READS SQL DATA AS
 BEGIN
 
+DECLARE lv_mode NVARCHAR(1);  
+
 DECLARE lv_thld_yearly Decimal(15,2) ;
 DECLARE lv_ato_bas_wage_low DECIMAL(15,2);
 DECLARE lv_ato_bas_wage_high DECIMAL(15,2);
@@ -24,6 +26,7 @@ DECLARE lv_pt_q_cnt Integer;
 DECLARE lv_ato_bas_cnt Integer;
 
 SELECT 
+"RUN_MODE",
 "THRESHOLD_YEARLY", 
 "ATO_BAS_WAGE_LOW", 
 "ATO_BAS_WAGE_HIGH", 
@@ -34,6 +37,7 @@ SELECT
 "FLAG_REINSTATEMENT",
 "FLAG_NEW_REGISTRATION"
 INTO 
+lv_mode,
 lv_thld_yearly,
 lv_ato_bas_wage_low,
 lv_ato_bas_wage_high,
@@ -51,7 +55,7 @@ SELECT
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-'AUD' AS "WAERS",
+TO_NVARCHAR('AUD  ') AS "WAERS",
 0 AS "WAGE"
 FROM :it_data_for_rule
 ;

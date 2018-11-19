@@ -1,0 +1,163 @@
+
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectExclusions"(
+	IN  it_workset    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT et_data_for_rule    "osr.edw.platform.fra.prt.dt.abn::Types.wages.data_exclusions"
+	
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+
+
+ IND_CODE  =
+ 
+ SELECT DISTINCT 	
+    "ABN",
+--	"ACN",
+	"ANZSIC_CD"     AS "ANZSIC_CD",
+	"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+FROM
+ (
+ 
+	 SELECT 
+		"ABN",
+--		"ACN",
+		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
+		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND"
+	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :it_workset )
+ 
+	 UNION 
+ 
+	 SELECT 
+		"ABN",
+--		"ACN",
+		"ANZSIC_CD"     AS "ANZSIC_CD",
+		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND"
+	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :it_workset )
+
+	);
+
+IND_CODE_GRP =
+SELECT
+	"A"."ABN"            AS "ABN",
+--	"A"."ACN"            AS "ACN",
+	"A"."ANZSIC_CD"      AS "ANZSIC_CD",
+	"A"."ANZSIC_TITLE"   AS "ANZSIC_TITLE",
+	"B"."IND_CODE_GRP"   AS "IND_CODE_GRP",
+	"B"."IND_DIVISION"   AS "IND_DIVISION" 
+	FROM :IND_CODE AS "A" LEFT OUTER JOIN
+	"osr.edw.staging.md.ato.proxy::CV_IND_CODE_GRP" AS "B"
+	ON LEFT("A"."ANZSIC_CD", 3) = 	"B"."IND_CODE_GRP"
+;	
+
+-------------------------ABR Fund  and ACNC---------------------------
+ABR_AGENCY =
+SELECT DISTINCT
+	"ABN",
+	"PID",
+	"ENT_TYP_CD",
+	"ACN",
+	"SPRSN_IND"
+FROM 
+	"osr.edw.propagation.md.abr.proxy::CV_AGENCY_DATA"
+WHERE 
+	SPRSN_IND <> 'Y'
+AND "ABN" IN (SELECT DISTINCT "ABN" FROM  :it_workset )	
+;
+
+ABR_FUND_ACNC_ABN =
+
+SELECT DISTINCT 
+	"ABN" 
+FROM
+
+(
+SELECT  DISTINCT
+	"ABN"
+FROM
+
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID",
+	 "FUND"."PRIMARY_ID"         AS  "FUND_PID",
+	 "FUND"."FUND_NAME"          AS  "FUND_NAME" ,
+	 "FUND"."FUND_TYPE"          AS  "FUND_TYPE",
+	 "FUND"."REGISTRATION_DATE"  AS  "FUND_REG_DT",
+	 "FUND"."CANCELLATION_DATE"  AS  "FUND_CAN_DT"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.proxy::CV_FUNDS" AS "FUND"
+ON 
+	"AGENCY"."PID" = "FUND"."PRIMARY_ID"
+)	
+
+UNION	
+
+SELECT DISTINCT 
+	"ABN"
+FROM
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.proxy::CV_ACNC" AS "ACNC"
+ON 
+	"AGENCY"."PID" = "ACNC"."PID"
+)
+)
+;	
+
+
+
+--------------------------------
+
+et_data_for_rule =
+SELECT DISTINCT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"ANZSIC_CD",
+		"IND_CODE_GRP",
+		"IND_DIVISION",
+		"ABR_ACNC_FLAG"
+FROM
+(
+	SELECT
+		"WS"."ABN"                       AS  "ABN", 
+		"WS"."PERIOD_CATEGORY" 		     AS  "PERIOD_CATEGORY",
+	    "WS"."PERIOD_KEY"                AS  "PERIOD_KEY",
+		"WS"."GJAHR"                     AS  "GJAHR",
+		"IC"."ANZSIC_CD"                 AS "ANZSIC_CD",
+		"IC"."IND_CODE_GRP"              AS "IND_CODE_GRP",
+		"IC"."IND_DIVISION"              AS "IND_DIVISION",
+		CASE WHEN  "WS"."ABN" = "FUND"."ABN" THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG"
+	FROM 
+		:it_workset AS  "WS" 
+	LEFT OUTER JOIN
+		:IND_CODE_GRP AS "IC" 
+	ON 
+		"WS"."ABN" = "IC"."ABN"
+	LEFT OUTER JOIN 
+		:ABR_FUND_ACNC_ABN AS "FUND" 
+	ON
+		"WS"."ABN" = "FUND"."ABN"
+)	
+;
+
+
+   
+
+   
+END
