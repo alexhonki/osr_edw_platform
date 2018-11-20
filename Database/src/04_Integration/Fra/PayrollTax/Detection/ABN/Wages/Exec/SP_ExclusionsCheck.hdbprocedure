@@ -1,0 +1,132 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionsCheck"
+(
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_exclusions",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_data_exclusions",
+	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+ DECLARE lv_mode NVARCHAR(1);   
+
+DECLARE lv_ind_division NVARCHAR(1) ;
+DECLARE lv_flag_abr_acnc NVARCHAR(1);
+DECLARE lv_flag_asic_regd NVARCHAR(1);
+DECLARE lv_flag_sup_gov_exmpt_anzsic NVARCHAR(1);
+DECLARE lv_pt_id_role_date DATE;
+
+
+SELECT
+"RUN_MODE",
+"IND_DIVISION",
+"FLAG_ABR_ACNC", 
+"FLAG_ASIC_REGD", 
+"FLAG_SUP_GOV_EXMPT_ANZSIC",
+"PT_ID_ROLE_DATE"
+INTO
+lv_mode,
+lv_ind_division,
+lv_flag_abr_acnc,
+lv_flag_asic_regd,
+lv_flag_sup_gov_exmpt_anzsic,
+lv_pt_id_role_date  
+FROM :PARAMETERS LIMIT 1;
+
+step1 =
+
+SELECT DISTINCT 
+        "PARTNER" ,
+        "IDNUMBER" AS "ABN"
+    FROM 
+		"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" 
+ 	WHERE "TYPE" = 'ZABN'
+ 	AND "PARTNER"  NOT IN ( 
+ 		
+ 		SELECT 	DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
+		WHERE "BU_GROUP" IN ('OLGR') OR "AUGRP"  IN ('ZOFT') OR "XDELE" = 'X'
+ 	) 
+   AND "IDNUMBER" IN (SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE )
+   
+;
+ 
+PT_ID_ROLE = 
+
+SELECT  DISTINCT
+	"ABN"
+FROM
+
+(
+SELECT DISTINCT 
+   "S1"."ABN"     AS "ABN",
+   "S1"."PARTNER" AS "PARTNER",
+    'PT'          AS "PT_ROLE"
+FROM 
+	:STEP1 AS "S1" 
+INNER JOIN
+	"osr.edw.platform.fra.prt::CV_BP_REGISTRATION_FACTS" AS "PTR"
+ON  
+	"S1"."PARTNER" = "PTR"."PARTNER"
+AND  TO_DATS("PTR"."DATE_TO") >= to_dats(:lv_pt_id_role_date )
+AND "PTR"."PARTNERACCTYP" IN ('PT')
+
+UNION
+
+
+SELECT DISTINCT 
+   "S1"."ABN",
+   "S1"."PARTNER",
+   'ID'  AS "ID_ROLE"
+
+FROM 
+	:STEP1 AS "S1" 
+INNER JOIN
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT100.active_data" AS "IDR"
+ON  
+	"S1"."PARTNER" = "IDR"."PARTNER"
+AND "IDR"."RLTYP" = 'ZDINS'
+
+) 
+;
+
+
+step2 =
+SELECT DISTINCT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"ANZSIC_CD",
+		"IND_CODE_GRP",
+		"IND_DIVISION",
+		"ABR_ACNC_FLAG",
+		"ASIC_ORG_STATUS",
+		"ASIC_REGD" ,
+		"SUP_GOV_EXMPT_ANZSIC"  
+FROM :IT_DATA_FOR_RULE
+WHERE "ABN" NOT IN ( SELECT DISTINCT "ABN" FROM :PT_ID_ROLE);
+
+
+ET_RESULT = 
+SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   100 AS "DETECTION_RESULT"
+FROM 
+	:step2
+WHERE 
+--"IND_DIVISION"  =
+	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
+AND	"ASIC_REGD"             = :lv_flag_asic_regd
+AND	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
+
+;
+   
+END

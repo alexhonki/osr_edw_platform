@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Risk Factor Rating: Estimated Tax"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_ESTIMATED_TAX" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_ESTIMATED_TAX</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_ESTIMATED_TAX">
+  <attributes>
+    <attribute id="LOW" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOW"/>
+      <keyMapping columnObjectName="TF_RFR_ESTIMATED_TAX" columnName="LOW"/>
+    </attribute>
+    <attribute id="HIGH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HIGH"/>
+      <keyMapping columnObjectName="TF_RFR_ESTIMATED_TAX" columnName="HIGH"/>
+    </attribute>
+    <attribute id="WAERS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_RFR_ESTIMATED_TAX" columnName="WAERS"/>
+    </attribute>
+    <attribute id="TOP_BAND" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOP_BAND"/>
+      <keyMapping columnObjectName="TF_RFR_ESTIMATED_TAX" columnName="TOP_BAND"/>
+    </attribute>
+    <attribute id="RISK_FACTOR_RATING" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      <keyMapping columnObjectName="TF_RFR_ESTIMATED_TAX" columnName="RISK_FACTOR_RATING"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

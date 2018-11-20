@@ -2,7 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_NoRegForLiabilityTest"
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
 	IN ix_reinstatement     NVARCHAR(1),
-	IN ix_new_registration  NVARCHAR(1)
+	IN ix_new_registration  NVARCHAR(1),
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
 )
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -24,6 +25,7 @@ WHERE "ABN"   = :iv_abn
 
 lt_param =
 SELECT 
+'S' AS "RUN_MODE",
 :ix_reinstatement AS "FLAG_REINSTATEMENT",
 :ix_new_registration AS "FLAG_NEW_REGISTRATION"
 FROM  :lt_workset;

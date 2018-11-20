@@ -29,7 +29,7 @@ context Types {
         };
 
         entity param_wage {
-            RUN_MODE              : String(3);
+            RUN_MODE              : String(1);
             THRESHOLD_YEARLY      : Decimal(15, 2);
             ATO_BAS_WAGE_LOW      : Decimal(15, 2);
             ATO_BAS_WAGE_HIGH     : Decimal(15, 2);
@@ -52,6 +52,7 @@ context Types {
         };
 
         entity param_bp_reg {
+            RUN_MODE              : String(1);
             FLAG_REINSTATEMENT    : String(1);
             FLAG_NEW_REGISTRATION : String(1);
         };
@@ -64,7 +65,7 @@ context Types {
         };
 
         entity param_qld_nexus {
-            RUN_MODE         : String(3);
+            RUN_MODE         : String(1);
             QLD_EMP_PC_THLD  : Decimal(5, 2);
             QLD_EMP_CNT_THLD : Integer;
             FLAG_WCQ_POLICY  : String(1);
@@ -92,18 +93,32 @@ context Types {
             RISK_AMOUNT      : Decimal(23, 2);
             CURRENCY         : String(5);
         };
-        
-        // data exclusions 
-    	entity data_exclusions {
-        	ABN                          : String(11);
-        	PERIOD_CATEGORY              : String(10);
-        	PERIOD_KEY                   : String(4);
-        	GJAHR                        : String(4);
-        	ANZSIC_CD                    : String(5);
-			IND_CODE_GRP                 : String(3);
-			IND_DIVISION                 : String(1);
-			ABR_ACNC_FLAG                : String(1);
-    	};
+
+        // data exclusions
+        entity data_exclusions {
+            ABN                  : String(11);
+            PERIOD_CATEGORY      : String(10);
+            PERIOD_KEY           : String(4);
+            GJAHR                : String(4);
+            ANZSIC_CD            : String(5);
+            IND_CODE_GRP         : String(3);
+            IND_DIVISION         : String(1);
+            ABR_ACNC_FLAG        : String(1);
+            ASIC_ORG_STATUS      : String(10);
+            ASIC_REGD            : String(1);
+            SUP_GOV_EXMPT_ANZSIC : String(1);
+        };
+
+        entity param_data_exclusions {
+            RUN_MODE                  : String(3);
+            IND_DIVISION              : String(1);
+            FLAG_ABR_ACNC             : String(1);
+            FLAG_ASIC_REGD            : String(1);
+            FLAG_SUP_GOV_EXMPT_ANZSIC : String(1);
+            PT_ID_ROLE_DATE           : String(8);
+        };
+
+
         //text
         entity text {
             ABN             : String(11);
