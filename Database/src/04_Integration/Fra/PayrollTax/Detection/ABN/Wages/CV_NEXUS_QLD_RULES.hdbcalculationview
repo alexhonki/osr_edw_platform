@@ -89,11 +89,8 @@
       <viewAttribute id="RSDNL_STATE_CD">
         <descriptions defaultDescription="RSDNL_STATE_CD"/>
       </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+      <viewAttribute id="QLD_EMP_CNT_CHECK">
         <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
       </viewAttribute>
       <viewAttribute hidden="true" id="JOIN$INCM_YR$INCM_YR"/>
     </viewAttributes>
@@ -115,8 +112,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCM_YR$INCM_YR" source="INCM_YR"/>
     </input>
     <input node="A_EMP_CNT">
@@ -151,16 +147,9 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
         <formula>string(&quot;INCM_YR&quot;)</formula>
     
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="QLD_EMP_CNT_CHECK_1" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute id="QLD_EMP_CNT_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
         <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND &quot;CNT_EMPLOYEE_QLD&quot;&gt;='$$IP_QLD_EMP_CNT$$','X',' ')</formula>
-      </calculatedViewAttribute>
-    
-      <calculatedViewAttribute id="QLD_EMP_CNT_CHECK_3" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-    
-        <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND &quot;CNT_EMPLOYEE_QLD&quot;&gt;='$$IP_QLD_EMP_CNT$$','X',' ')</formula>
-    
-      </calculatedViewAttribute>
-    </calculatedViewAttributes>
+      </calculatedViewAttribute></calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
@@ -348,11 +337,8 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+      <viewAttribute id="QLD_EMP_CNT_CHECK">
         <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
         <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
@@ -377,8 +363,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
@@ -398,11 +383,8 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+      <viewAttribute id="QLD_EMP_CNT_CHECK">
         <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
         <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
@@ -426,8 +408,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     <restrictedViewAttributes/>
     <input node="J_EMP_CNT_ADDR">
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
@@ -450,11 +431,8 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+      <viewAttribute id="QLD_EMP_CNT_CHECK">
         <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
         <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
@@ -481,8 +459,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     <input node="J_EMP_CNT">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
@@ -519,11 +496,8 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_1">
+      <viewAttribute id="QLD_EMP_CNT_CHECK">
         <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      </viewAttribute>
-      <viewAttribute id="QLD_EMP_CNT_CHECK_3">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
         <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
@@ -548,8 +522,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_1" source="QLD_EMP_CNT_CHECK_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK_3" source="QLD_EMP_CNT_CHECK_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
@@ -673,30 +646,26 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       <keyMapping columnObjectName="Join_1" columnName="QLD_ADDR_CHECK"/>
     </attribute>
-    <attribute id="QLD_EMP_CNT_CHECK_1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="QLD_EMP_CNT_CHECK" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_CNT_CHECK_1"/>
+      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_CNT_CHECK"/>
     </attribute>
-    <attribute id="QLD_EMP_CNT_CHECK_3" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="QLD_EMP_CNT_CHECK_3"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_CNT_CHECK_3"/>
-    </attribute>
-    <attribute id="QLD_EMP_PC_CHECK" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="QLD_EMP_PC_CHECK" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
       <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_PC_CHECK"/>
     </attribute>
-    <attribute id="WCQ_POLICY_CHECK" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WCQ_POLICY_CHECK" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
       <keyMapping columnObjectName="Join_1" columnName="WCQ_POLICY_CHECK"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="CNT_EMPLOYEE_QLD" order="12" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_QLD" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE_QLD"/>
       <measureMapping columnObjectName="Join_1" columnName="CNT_EMPLOYEE_QLD"/>
     </measure>
-    <measure id="QLD_EMP_PC" order="13" aggregationType="sum" measureType="simple">
+    <measure id="QLD_EMP_PC" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="QLD_EMP_PC"/>
       <measureMapping columnObjectName="Join_1" columnName="QLD_EMP_PC"/>
     </measure>
