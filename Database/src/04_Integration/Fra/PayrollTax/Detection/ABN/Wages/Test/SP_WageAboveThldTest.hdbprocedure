@@ -52,9 +52,7 @@ TOP 1
 :lx_ato_bas AS "FLAG_ATO_BAS",
 :lx_ato_itr AS "FLAG_ATO_ITR",
 :lx_wcq	   AS "FLAG_WCQ",
-:lx_risk_value AS "FLAG_RISK_VALUE",
-:ix_reinstatement AS "FLAG_REINSTATEMENT",
-:ix_new_registration AS "FLAG_NEW_REGISTRATION"
+:lx_risk_value AS "FLAG_RISK_VALUE"
 FROM  :lt_workset;
 
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(

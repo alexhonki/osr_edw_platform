@@ -18,8 +18,6 @@ DECLARE lx_ato_bas NVARCHAR(1);
 DECLARE lx_ato_itr NVARCHAR(1);
 DECLARE lx_wcq NVARCHAR(1);
 DECLARE lx_risk_value NVARCHAR(1);
-DECLARE lx_reinstatement NVARCHAR(1);
-DECLARE lx_new_registration NVARCHAR(1);
 
 DECLARE lv_ato_bas_cnt Integer;
 
@@ -31,9 +29,7 @@ SELECT
 "FLAG_ATO_BAS",
 "FLAG_ATO_ITR",
 "FLAG_WCQ",
-"FLAG_RISK_VALUE",
-"FLAG_REINSTATEMENT",
-"FLAG_NEW_REGISTRATION"
+"FLAG_RISK_VALUE"
 INTO 
 lv_mode,
 lv_thld_yearly,
@@ -42,9 +38,7 @@ lv_ato_bas_wage_high,
 lx_ato_bas,
 lx_ato_itr,
 lx_wcq,
-lx_risk_value,
-lx_reinstatement,
-lx_new_registration
+lx_risk_value
 FROM :PARAMETERS LIMIT 1;
 
 lt_wages = 
@@ -192,16 +186,8 @@ FROM :it_data_for_rule
  END IF;
  
  IF lx_wcq = 'Y' THEN
- 	lt_wages = 
- 	SELECT 
- 	"ABN",
- 	"PERIOD_CATEGORY",
- 	"PERIOD_KEY",
- 	"GJAHR",
- 	"WAERS",
- 	"WAGE"
- 	FROM :lt_wages
- 	UNION
+ 
+	lt_wcq = 
 	SELECT 
  	"WAGES"."ABN" AS "ABN",
  	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
@@ -225,6 +211,27 @@ FROM :it_data_for_rule
  	"WAGES"."GJAHR",
  	"WAGES"."WAERS"
  	HAVING SUM("WAGES"."WCQ_ACT_WAGES")  >= :lv_thld_yearly
+ 	;
+ 	
+ 	lt_wages = 
+ 	SELECT 
+ 	"ABN",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM :lt_wages
+ 	UNION
+ 	SELECT 
+ 	"ABN",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM
+	:lt_wcq
  	;
  END IF;
  	
@@ -281,20 +288,129 @@ ELSE
 	HAVING MAX("WAGE") >= :lv_thld_yearly
 	;
 END IF;
- 	
- 	
-et_result =
+
+lt_wage_for_tax = 
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-100 AS "DETECTION_RESULT",
-100 AS "RISK_AMOUNT",
-"WAERS" AS "CURRENCY"
-FROM :lt_wages
+"WAERS",
+SUM("WAGE") AS "WAGE",
+SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+FROM 
+(
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	"WAGE", 
+	0 AS "WCQ_ACT_WAGES"
+	FROM :lt_wages
+	UNION
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	0 AS "WAGE", 
+	"WAGE" AS "WCQ_ACT_WAGES"
+	FROM :lt_wcq
+)
+GROUP BY 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS"
 ;
-   
+ 	
+lt_result = 
+SELECT 
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+100 AS "DETECTION_RESULT",
+CASE 
+WHEN "W"."WAGE" > "THLD"."DEDUCTION_TO" 
+THEN "W"."WCQ_ACT_WAGES" * ("RATE"."PRT_YRLY_RATE"/100)
+WHEN "W"."WAGE" >= "THLD"."THRESHOLD" 
+THEN (("W"."WCQ_ACT_WAGES" - ("W"."WCQ_ACT_WAGES"/"W"."WAGE") * ("THLD"."THRESHOLD" - (("W"."WAGE" - "THLD"."THRESHOLD")/4))) * ("RATE"."PRT_YRLY_RATE"/100))
+ELSE 0
+END 
+AS "RISK_AMOUNT",
+"W"."WAERS" AS "CURRENCY"
+FROM
+:lt_wage_for_tax AS "W"
+INNER JOIN 
+"osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD" AS "THLD"
+ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
+AND "W"."GJAHR" = "THLD"."GJAHR"
+INNER JOIN
+"osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
+ON  "W"."GJAHR" = "THLD"."GJAHR"
+AND "W"."GJAHR" = "RATE"."PERIOD_KEY"
+;
+
+IF :lv_mode = 'R' THEN
+et_result = 
+SELECT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+100 AS "DETECTION_RESULT",
+CASE 
+WHEN :lx_risk_value = 'Y' THEN "RISK_AMOUNT" 
+ELSE 0 
+END AS "RISK_AMOUNT",
+"CURRENCY" 
+FROM 
+:lt_result AS "W", 
+"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
+WHERE "W"."RISK_AMOUNT" > "R"."LOW"
+  AND "R"."TOP_BAND" = 'X'
+UNION
+SELECT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+100*"R"."RISK_FACTOR_RATING" AS "DETECTION_RESULT",
+CASE 
+WHEN :lx_risk_value = 'Y' THEN "RISK_AMOUNT" 
+ELSE 0 
+END AS "RISK_AMOUNT",
+"CURRENCY" 
+FROM 
+:lt_result AS "W", 
+"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
+WHERE "W"."RISK_AMOUNT" >= "R"."LOW" 
+  AND "W"."RISK_AMOUNT" < "R"."HIGH" 
+  AND "R"."TOP_BAND" <> 'X'
+;
+
+ELSE 
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT",
+CASE 
+WHEN :lx_risk_value = 'Y' THEN "RISK_AMOUNT" 
+ELSE 0 
+END AS "RISK_AMOUNT",
+"CURRENCY" 
+FROM 
+:lt_result
+;
+END IF;
 
 
 END
