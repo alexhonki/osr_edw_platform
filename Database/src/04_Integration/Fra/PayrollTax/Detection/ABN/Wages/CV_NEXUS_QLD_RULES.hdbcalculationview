@@ -62,7 +62,7 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="WCQ_POLICY_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>IF(not isNull(&quot;POLICY_NO&quot;) or &quot;POLICY_NO&quot;!=' ','X',' ')</formula>
+        <formula>IF(not isNull(&quot;POLICY_NO&quot;) or &quot;POLICY_NO&quot;!=' ','Y',' ')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -97,7 +97,7 @@
     <calculatedViewAttributes>
       <calculatedViewAttribute id="QLD_EMP_PC_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
         <formula>if(&quot;RSDNL_STATE_CD&quot;='QLD',
-if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QLD_EMP_PC$$','X',' '),' ')</formula>
+if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QLD_EMP_PC$$','Y',' '),' ')</formula>
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="QLD_EMP_PC" datatype="DECIMAL" length="5" scale="2" expressionLanguage="COLUMN_ENGINE">
@@ -148,7 +148,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     
       </calculatedViewAttribute>
       <calculatedViewAttribute id="QLD_EMP_CNT_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND &quot;CNT_EMPLOYEE_QLD&quot;&gt;='$$IP_QLD_EMP_CNT$$','X',' ')</formula>
+        <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND &quot;CNT_EMPLOYEE_QLD&quot;&gt;='$$IP_QLD_EMP_CNT$$','Y',' ')</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
@@ -200,7 +200,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="BAS_QLD_BUS_ADDR_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;BUS_STATE&quot;='QLD','X',' ')</formula>
+        <formula>if(&quot;BUS_STATE&quot;='QLD','Y',' ')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -225,7 +225,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ABR_QLD_Bus_Addr_Check" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;BUS_LOCN_STT&quot;='QLD','X',' ')</formula>
+        <formula>if(&quot;BUS_LOCN_STT&quot;='QLD','Y',' ')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -309,7 +309,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="QLD_ADDR_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;BAS_QLD_BUS_ADDR_CHECK&quot;='X' or &quot;ABR_QLD_BUS_ADDR_CHECK&quot; ='X','X',' ')</formula>
+        <formula>if(&quot;BAS_QLD_BUS_ADDR_CHECK&quot;='Y' or &quot;ABR_QLD_BUS_ADDR_CHECK&quot; ='Y','Y',' ')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
