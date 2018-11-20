@@ -73,10 +73,10 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="Period_Start_Date" datatype="NVARCHAR" expressionLanguage="SQL" length="13">
-        <formula>TO_VARCHAR(TO_DATE(&quot;C_START_DATE&quot;,'YYYYMMDD'),'DD/MM/YYYY')</formula>
+        <formula>TO_DATE(&quot;C_START_DATE&quot;,'YYYYMMDD')</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="Period_End_Date" datatype="NVARCHAR" expressionLanguage="SQL" length="13">
-        <formula>TO_VARCHAR(TO_DATE(&quot;C_END_DATE&quot;,'YYYYMMDD'),'DD/MM/YYYY')</formula>
+      <calculatedViewAttribute id="Period_End_Date" datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;C_END_DATE&quot;,'YYYYMMDD')</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.rms.prt.proxy::CV_RMS_ANNUAL_RETURN">
