@@ -9,18 +9,27 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_NoBPRegistrationForLiabi
    READS SQL DATA AS
 BEGIN
 
+DECLARE lv_mode NVARCHAR(1);  
 
 DECLARE lx_reinstatement NVARCHAR(1);
 DECLARE lx_new_registration NVARCHAR(1);
-
+DECLARE lv_reinstatement_cnt Integer;
+DECLARE lv_new_registration_cnt Integer;
 
 SELECT
+"RUN_MODE",
 "FLAG_REINSTATEMENT",
 "FLAG_NEW_REGISTRATION"
 INTO 
+lv_mode,
 lx_reinstatement,
 lx_new_registration
 FROM :PARAMETERS LIMIT 1;
+
+lt_data_with_bp = 
+SELECT * FROM 
+:it_data_for_rule
+;
 
 IF lx_reinstatement = 'X' THEN 
 lt_reinstatment = 
@@ -30,49 +39,68 @@ SELECT
 "BP_ID"."PERIOD_KEY",
 "BP_ID"."GJAHR",
 "BP_ID"."BPARTNER",
-"BP_REG"."PRT_TAX_LIAB_DATE",
+"BP_REG"."PRT_LIAB_DATE",
 "BP_REG"."DATE_FROM",
 "BP_REG"."DATE_TO",
-"BP_REG"."ONLINE_FILLING_COMM"
+"BP_REG"."ONLINE_FILLING_COMM",
+"FY"."START_DATE",
+"FY"."END_DATE"
 FROM 
-:it_data_for_rule AS "BP_ID",
-"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG",
+:it_data_for_rule AS "BP_ID"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG"
+ON "BP_ID"."BPARTNER" = "BP_REG"."BPARTNER"
+INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn::CV_FY_KEY_DATES" "FY"
+ON "BP_ID"."GJAHR" = "FY"."FISCAL_YEAR"
 WHERE "BP_ID"."BPARTNER" IS NOT NULL
-  AND "BP_ID"."BPARTNER" = "BP_REG"."BPARTNER"
-  AND "BP_ID"."GJAHR" = "FY"."FISCAL_YEAR"
-  AND (
-  	  "BP_REG"."PRT_TAX_LIAB_DATE" > "FY"."END_DATE"
-  	  AND
-      "BP_REG"."DATE_TO" > "FY"."END_DATE"
-      )
-   OR (
-  	  "BP_REG"."PRT_TAX_LIAB_DATE" < "FY"."START_DATE"
-  	   AND
-      "BP_REG"."DATE_TO" < "FY"."START_DATE"
-      )
+  AND "BP_ID"."BPARTNER" <> ''
 ;
+
+lt_reinstatment_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM :lt_reinstatment
+WHERE TO_DATE("PRT_LIAB_DATE") > TO_DATE("END_DATE")
+  AND TO_DATE("DATE_TO") > TO_DATE("END_DATE")
+UNION
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM :lt_reinstatment
+WHERE TO_DATE("PRT_LIAB_DATE") < TO_DATE("START_DATE")
+  AND TO_DATE("DATE_TO") < TO_DATE("START_DATE")
+;
+
+SELECT COUNT(*) INTO lv_reinstatement_cnt FROM :lt_reinstatment;
+
 END IF;
 
 IF lx_new_registration = 'X' THEN 
-l_new_registration = 
+lt_new_registration_result = 
 SELECT 
 "BP_ID"."ABN",
 "BP_ID"."PERIOD_CATEGORY",
 "BP_ID"."PERIOD_KEY",
-"BP_ID"."GJAHR",
-"BP_ID"."BPARTNER",
-"BP_REG"."PRT_TAX_LIAB_DATE",
-"BP_REG"."DATE_FROM",
-"BP_REG"."DATE_TO",
-"BP_REG"."ONLINE_FILLING_COMM"
+"BP_ID"."GJAHR"
 FROM 
 :it_data_for_rule AS "BP_ID",
 "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG"
 WHERE "BP_ID"."BPARTNER" IS NULL
+  AND "BP_ID"."BPARTNER" <> ''
 ;
+
+SELECT COUNT(*) INTO lv_new_registration_cnt FROM :lt_new_registration_result;
+
 END IF;
 
+IF  :lv_reinstatement_cnt > 0 
+AND :lv_new_registration_cnt > 0 THEN
 
 et_result =
 SELECT 
@@ -81,8 +109,48 @@ SELECT
 "PERIOD_KEY",
 "GJAHR",
 100 AS "DETECTION_RESULT"
-FROM :it_data_for_rule
+FROM :lt_reinstatment_result
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_new_registration_result
 ;
 
+END IF;
+
+
+IF  :lv_reinstatement_cnt > 0 
+AND :lv_new_registration_cnt = 0 THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_reinstatment_result
+;
+
+END IF;
+
+IF  :lv_reinstatement_cnt = 0 
+AND :lv_new_registration_cnt > 0 THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_new_registration_result
+;
+
+END IF;
 
 END

@@ -59,7 +59,7 @@ FROM :it_data_for_rule
 ;
 
 -- ATO BAS Data   	
- IF lx_ato_bas = 'X' THEN
+ IF lx_ato_bas = 'Y' THEN
  	lt_wages = 
  	SELECT 
  	"ABN",
@@ -154,7 +154,7 @@ FROM :it_data_for_rule
  	
  END IF;
  
- IF lx_ato_itr = 'X' THEN
+ IF lx_ato_itr = 'Y' THEN
  	lt_wages = 
  	SELECT 
  	"ABN",
@@ -191,7 +191,7 @@ FROM :it_data_for_rule
  	;
  END IF;
  
- IF lx_wcq = 'X' THEN
+ IF lx_wcq = 'Y' THEN
  	lt_wages = 
  	SELECT 
  	"ABN",
