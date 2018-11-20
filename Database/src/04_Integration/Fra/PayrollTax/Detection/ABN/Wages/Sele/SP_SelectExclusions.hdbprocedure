@@ -118,9 +118,60 @@ ON
 )
 ;	
 
+-------------------------------------------------------------
+
+-- ASIC Org Status 
+ASIC_STATUS = 
+
+SELECT DISTINCT "ABN", "ORG_STATUS" FROM
+(
+SELECT
+	"ABN",
+	"DEREGISTRATION_CODE",
+	"ORG_CLASS",
+	"ORG_END_DATE",
+	"ORG_END_DT",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"ORG_END_DATE" DESC) AS "RANK_1",
+	"ORG_NUMBER",
+	"ORG_START_DATE",
+	"ORG_START_DT",
+	"ORG_STATUS"
+FROM "osr.edw.propagation.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data"
+WHERE  ABN IN ( SELECT DISTINCT "ABN" FROM  :it_workset )
+) WHERE "RANK_1" = '1'
+
+;
+----------------------------------------------------
+ABN_EXMPT_GOV_SUP =
+
+SELECT DISTINCT "ABN"
+FROM
+(
+	
+SELECT DISTINCT 
+	"ATO"."ABN" AS "ABN"
+FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+	:it_workset AS "DET_OBJ"
+WHERE 
+	"ATO"."ABN" = "DET_OBJ"."ABN" 
+AND   
+	"ATO"."CLNT_TYP"  IN ('SUP','GOV')
 
 
---------------------------------
+UNION
+
+SELECT DISTINCT 
+	"ATO"."ABN" AS "ABN"
+FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+	:it_workset AS "DET_OBJ"
+WHERE 
+	"ATO"."ABN" = "DET_OBJ"."ABN" 
+AND    
+	"ATO"."ANZSIC_CD" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
+
+)	;
+
+-----------------------------------------------------------
 
 et_data_for_rule =
 SELECT DISTINCT 
@@ -131,7 +182,10 @@ SELECT DISTINCT
 		"ANZSIC_CD",
 		"IND_CODE_GRP",
 		"IND_DIVISION",
-		"ABR_ACNC_FLAG"
+		"ABR_ACNC_FLAG",
+		"ASIC_ORG_STATUS",
+		"ASIC_REGD" ,
+		"SUP_GOV_EXMPT_ANZSIC"
 FROM
 (
 	SELECT
@@ -142,7 +196,10 @@ FROM
 		"IC"."ANZSIC_CD"                 AS "ANZSIC_CD",
 		"IC"."IND_CODE_GRP"              AS "IND_CODE_GRP",
 		"IC"."IND_DIVISION"              AS "IND_DIVISION",
-		CASE WHEN  "WS"."ABN" = "FUND"."ABN" THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG"
+		CASE WHEN  "WS"."ABN" = "FUND"."ABN" THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG" ,
+		"ASIC"."ORG_STATUS"              AS "ASIC_ORG_STATUS" ,
+		CASE WHEN "ASIC"."ORG_STATUS" = 'REGD' OR "ASIC"."ORG_STATUS" = '' THEN 'Y' ELSE 'N' END AS "ASIC_REGD" ,
+		CASE WHEN "EXMP"."ABN"	IS NOT NULL THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC"
 	FROM 
 		:it_workset AS  "WS" 
 	LEFT OUTER JOIN
@@ -153,6 +210,14 @@ FROM
 		:ABR_FUND_ACNC_ABN AS "FUND" 
 	ON
 		"WS"."ABN" = "FUND"."ABN"
+	LEFT OUTER JOIN
+		:ASIC_STATUS AS "ASIC"
+	ON
+		"WS"."ABN" = "ASIC"."ABN"
+	LEFT OUTER JOIN
+		:ABN_EXMPT_GOV_SUP AS "EXMP"
+	ON
+		"WS"."ABN" = "EXMP"."ABN"	
 )	
 ;
 

@@ -44,8 +44,7 @@ step1 =
       "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
       "A"."GJAHR"					AS  "GJAHR",
 	  "B"."QLD_ADDR_CHECK",
-	  "B"."QLD_EMP_CNT_CHECK_1",
-	  "B"."QLD_EMP_CNT_CHECK_3",
+	  "B"."QLD_EMP_CNT_CHECK",
 	  "B"."QLD_EMP_PC_CHECK",
 	  "B"."WCQ_POLICY_CHECK",
 	  "B"."QLD_EMP_PC",
@@ -72,11 +71,11 @@ step1 =
 
    FROM  :step1
    WHERE :step1."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
-   AND :step1."QLD_EMP_CNT_CHECK_1" 	= :lx_flag_qld_emp_cnt
-   AND :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
-   AND :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
-   AND :step1."QLD_EMP_PC"				>= :lv_qld_emp_pc_thld
-   AND :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld
+   AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
+   AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
+   AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
+   AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld
+   AND	 :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld
    ;
    
 
