@@ -39,8 +39,8 @@ SELECT
 "A"."START_EMPLOY_DATE",
 "A"."CEASED_DATE",
 "C"."FISCAL_YEAR" AS "ASSESSMENT_YEAR"
-FROM "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY.active_data" AS "A"
-INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
+FROM "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "A"
+INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "C" ON TO_DATS("B"."ASSESSMENT_TO")=TO_DATS("C"."DATE_SQL");
 --where 	"A"."ABN" = '11000002568';
 

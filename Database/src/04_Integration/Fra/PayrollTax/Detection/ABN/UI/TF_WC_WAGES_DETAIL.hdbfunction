@@ -22,8 +22,8 @@ SELECT
 "B"."NAME" AS "NAME",
 sum("B"."ACT_WAGES") AS "ACT_WAGES",
 sum("B"."ACT_APPR_WAGES") AS "ACT_APPR_WAGES"
-FROM  "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY.active_data" AS "A"
-INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
+FROM  "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "A"
+INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
 GROUP BY "A"."ABN","B"."POLICY_NO", "B"."ASSESSMENT_YEAR","B"."NAME"
 ;
 

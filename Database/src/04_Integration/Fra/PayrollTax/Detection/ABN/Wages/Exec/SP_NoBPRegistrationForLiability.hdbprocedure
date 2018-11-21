@@ -31,7 +31,7 @@ SELECT * FROM
 :it_data_for_rule
 ;
 
-IF lx_reinstatement = 'X' THEN 
+IF lx_reinstatement = 'Y' THEN 
 lt_reinstatment = 
 SELECT 
 "BP_ID"."ABN",
@@ -81,7 +81,7 @@ SELECT COUNT(*) INTO lv_reinstatement_cnt FROM :lt_reinstatment;
 
 END IF;
 
-IF lx_new_registration = 'X' THEN 
+IF lx_new_registration = 'Y' THEN 
 lt_new_registration_result = 
 SELECT 
 "BP_ID"."ABN",
