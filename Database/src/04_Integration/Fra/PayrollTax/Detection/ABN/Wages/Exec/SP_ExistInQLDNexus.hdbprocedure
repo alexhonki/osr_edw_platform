@@ -9,27 +9,32 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus"
    READS SQL DATA AS
 BEGIN
 
-DECLARE lv_mode NVARCHAR(1);   
-
-DECLARE lv_qld_emp_pc_thld Decimal(5,2) ;
-DECLARE lv_qld_emp_cnt_thld Integer;
-DECLARE lX_flag_wcq_policy NVARCHAR(1);
-DECLARE lX_flag_qld_address NVARCHAR(1);
-DECLARE lX_flag_qld_emp_cnt NVARCHAR(1);
-DECLARE lX_flag_qld_emp_pc NVARCHAR(1);
+DECLARE lv_mode 				 NVARCHAR(1);   
+DECLARE lv_qld_emp_pc_thld_low	 DECIMAL(5,2) ;
+DECLARE lv_qld_emp_pc_thld_high  DECIMAL(5,2) ;
+DECLARE lv_qld_emp_cnt_thld_low  INTEGER;
+DECLARE lv_qld_emp_cnt_thld_high INTEGER;
+DECLARE lX_flag_wcq_policy		 NVARCHAR(1);
+DECLARE lX_flag_qld_address 	 NVARCHAR(1);
+DECLARE lX_flag_qld_emp_cnt 	 NVARCHAR(1);
+DECLARE lX_flag_qld_emp_pc		 NVARCHAR(1);
 
 SELECT
 "RUN_MODE",
-"QLD_EMP_PC_THLD",
-"QLD_EMP_CNT_THLD", 
+"QLD_EMP_PC_THLD_LOW",
+"QLD_EMP_PC_THLD_HIGH",
+"QLD_EMP_CNT_THLD_LOW",
+"QLD_EMP_CNT_THLD_HIGH",
 "FLAG_WCQ_POLICY", 
 "FLAG_QLD_ADDRESS",
 "FLAG_QLD_EMP_CNT",
 "FLAG_QLD_EMP_PC"
 INTO
 lv_mode,
-lv_qld_emp_pc_thld,
-lv_qld_emp_cnt_thld,
+lv_qld_emp_pc_thld_low,
+lv_qld_emp_pc_thld_high,
+lv_qld_emp_cnt_thld_low,
+lv_qld_emp_cnt_thld_high,
 lX_flag_wcq_policy,
 lX_flag_qld_address,
 lX_flag_qld_emp_cnt,
@@ -51,16 +56,40 @@ step1 =
 	  "B"."CNT_EMPLOYEE_QLD"
 	  
    FROM :IT_DATA_FOR_RULE AS "A",
-   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"(placeholder."$$IP_QLD_EMP_CNT$$"=>:lv_qld_emp_cnt_thld, 
-	placeholder."$$IP_QLD_EMP_PC$$"=>:lv_qld_emp_pc_thld )) AS "B"
-   
+   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"(placeholder."$$IP_QLD_EMP_CNT$$"=>:lv_qld_emp_cnt_thld_low, 
+   placeholder."$$IP_QLD_EMP_PC$$"=>:lv_qld_emp_pc_thld_low )) AS "B"
   WHERE 
 		"A"."ABN"   = "B"."ABN"
   AND	"A"."GJAHR" = "B"."GJAHR"
 
    ;
+   
+step2 =
+	SELECT 
+	"LOW"				 AS "EMP_CNT_LOW",
+	"HIGH"				 AS "EMP_CNT_HIGH",
+	"TOP_BAND"			 AS "EMP_CNT_TOP_BAND",
+	"RISK_FACTOR_RATING" AS "DETECTION_RESULT"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT"
+	GROUP BY "LOW", 
+			 "HIGH", 
+			 "TOP_BAND", 
+			 "RISK_FACTOR_RATING"
+	;
+	
+step3 =
+	SELECT 
+	"LOW"				 AS "EMP_PC_LOW",
+	"HIGH"				 AS "EMP_PC_HIGH",
+	"TOP_BAND"			 AS "EMP_PC_TOP_BAND",
+	"RISK_FACTOR_RATING" AS "DETECTION_RESULT"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC"
+	GROUP BY "LOW", 
+			 "HIGH", 
+			 "TOP_BAND", 
+			 "RISK_FACTOR_RATING"
+	;
 
-			
    ET_RESULT = 
 	SELECT
    "ABN",
@@ -74,9 +103,11 @@ step1 =
    AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
    AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
    AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
-   AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld
-   AND	 :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld
+   AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld_low
+   AND	 :step1."QLD_EMP_PC"			<= :lv_qld_emp_pc_thld_high
+   AND	 :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
+   AND	 :step1."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
    ;
-   
+
 
 END
