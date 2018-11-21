@@ -22,8 +22,8 @@
       <viewAttribute id="CONTACT_NAME">
         <descriptions defaultDescription="CONTACT_NAME"/>
       </viewAttribute>
-      <viewAttribute id="AIL_POSTCODE">
-        <descriptions defaultDescription="AIL_POSTCODE"/>
+      <viewAttribute id="MAIL_POSTCODE">
+        <descriptions defaultDescription="MAIL_POSTCODE"/>
       </viewAttribute>
       <viewAttribute id="LOC_SUBURB">
         <descriptions defaultDescription="LOC_SUBURB"/>
@@ -73,8 +73,8 @@
       <viewAttribute id="ACN">
         <descriptions defaultDescription="ACN"/>
       </viewAttribute>
-      <viewAttribute id="AIL_ADDR_1">
-        <descriptions defaultDescription="AIL_ADDR_1"/>
+      <viewAttribute id="MAIL_ADDR_1">
+        <descriptions defaultDescription="MAIL_ADDR_1"/>
       </viewAttribute>
       <viewAttribute id="ADD_TYPE">
         <descriptions defaultDescription="ADD_TYPE"/>
@@ -120,7 +120,7 @@
     <restrictedViewAttributes/>
     <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_ADDRESS">
       <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_NAME" source="CONTACT_NAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="AIL_POSTCODE" source="AIL_POSTCODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MAIL_POSTCODE" source="MAIL_POSTCODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LOC_SUBURB" source="LOC_SUBURB"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POSITION" source="POSITION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MAIL_STATE" source="MAIL_STATE"/>
@@ -137,7 +137,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RECORD_TYPE" source="RECORD_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="AIL_ADDR_1" source="AIL_ADDR_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MAIL_ADDR_1" source="MAIL_ADDR_1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ADD_TYPE" source="ADD_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
@@ -161,9 +161,9 @@
       <descriptions defaultDescription="Contact Name"/>
       <keyMapping columnObjectName="Projection_1" columnName="CONTACT_NAME"/>
     </attribute>
-    <attribute id="AIL_POSTCODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MAIL_POSTCODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Mail Postcode"/>
-      <keyMapping columnObjectName="Projection_1" columnName="AIL_POSTCODE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MAIL_POSTCODE"/>
     </attribute>
     <attribute id="LOC_SUBURB" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Location Suburb (Business)"/>
@@ -229,9 +229,9 @@
       <descriptions defaultDescription="ACN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ACN"/>
     </attribute>
-    <attribute id="AIL_ADDR_1" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MAIL_ADDR_1" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Mail Address 1 (Postal)"/>
-      <keyMapping columnObjectName="Projection_1" columnName="AIL_ADDR_1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MAIL_ADDR_1"/>
     </attribute>
     <attribute id="ADD_TYPE" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Address Type(Principal Location)"/>
