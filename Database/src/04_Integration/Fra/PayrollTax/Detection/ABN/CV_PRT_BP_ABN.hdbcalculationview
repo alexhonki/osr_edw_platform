@@ -4,21 +4,18 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data">
-    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="BPARTNER">
-        <descriptions defaultDescription="PARTNER"/>
+        <descriptions defaultDescription="BPARTNER"/>
       </viewAttribute>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="IDNUMBER"/>
-      </viewAttribute>
-      <viewAttribute id="TYPE">
-        <descriptions defaultDescription="TYPE"/>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="VALID_DATE_FROM">
         <descriptions defaultDescription="VALID_DATE_FROM"/>
@@ -26,31 +23,25 @@
       <viewAttribute id="VALID_DATE_TO">
         <descriptions defaultDescription="VALID_DATE_TO"/>
       </viewAttribute>
-      <viewAttribute id="ENTRY_DATE">
-        <descriptions defaultDescription="ENTRY_DATE"/>
-      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data">
-      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="PARTNER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="IDNUMBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_DATE_FROM" source="VALID_DATE_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_DATE_TO" source="VALID_DATE_TO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ENTRY_DATE" source="ENTRY_DATE"/>
     </input>
-    <filter>&quot;TYPE&quot; = 'ZABN'</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
   <attributes>
     <attribute id="BPARTNER" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PARTNER"/>
+      <descriptions defaultDescription="BPARTNER"/>
       <keyMapping columnObjectName="Projection_1" columnName="BPARTNER"/>
     </attribute>
     <attribute id="ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="IDNUMBER"/>
+      <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
     </attribute>
     <attribute id="VALID_DATE_FROM" order="3" displayAttribute="false" attributeHierarchyActive="false">
@@ -60,10 +51,6 @@
     <attribute id="VALID_DATE_TO" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_DATE_TO"/>
       <keyMapping columnObjectName="Projection_1" columnName="VALID_DATE_TO"/>
-    </attribute>
-    <attribute id="ENTRY_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ENTRY_DATE"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ENTRY_DATE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
