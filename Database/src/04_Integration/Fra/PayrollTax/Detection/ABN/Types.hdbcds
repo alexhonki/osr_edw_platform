@@ -78,13 +78,15 @@ context Types {
         };
 
         entity param_qld_nexus {
-            RUN_MODE         : String(1);
-            QLD_EMP_PC_THLD  : Decimal(5, 2);
-            QLD_EMP_CNT_THLD : Integer;
-            FLAG_WCQ_POLICY  : String(1);
-            FLAG_QLD_ADDRESS : String(1);
-            FLAG_QLD_EMP_CNT : String(1);
-            FLAG_QLD_EMP_PC  : String(1);
+            RUN_MODE        		 : String(1);
+            QLD_EMP_PC_THLD_LOW 	 : Decimal(5, 2);
+            QLD_EMP_PC_THLD_HIGH	 : Decimal(5, 2);
+            QLD_EMP_CNT_THLD_LOW	 : Integer;
+            QLD_EMP_CNT_THLD_HIGH    : Integer;
+            FLAG_WCQ_POLICY 		 : String(1);
+            FLAG_QLD_ADDRESS         : String(1);
+            FLAG_QLD_EMP_CNT         : String(1);
+            FLAG_QLD_EMP_PC          : String(1);
         };
 
         //result

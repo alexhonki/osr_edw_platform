@@ -1,8 +1,10 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QLDNexusRulesTest" (
 	IN iv_abn					NVARCHAR(11),
 	IN iv_gjahr					NVARCHAR(4),
-	IN lv_qld_emp_pc_thld		DECIMAL(5,2),
-	IN lv_qld_emp_cnt_thld		INTEGER,
+	IN lv_qld_emp_pc_thld_low	DECIMAL(5,2),
+	IN lv_qld_emp_pc_thld_high	DECIMAL(5,2),
+	IN lv_qld_emp_cnt_thld_low	INTEGER,
+	IN lv_qld_emp_cnt_thld_high	INTEGER,
 	IN lv_flag_wcq_policy		NVARCHAR(1),
 	IN lv_flag_qld_address		NVARCHAR(1),
 	IN lv_flag_qld_emp_cnt		NVARCHAR(1),
@@ -22,8 +24,11 @@ SELECT
 "PERIOD_END_DATE",
 "GJAHR"
 FROM
-(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"(placeholder."$$IP_QLD_EMP_CNT$$"=>:lv_qld_emp_cnt_thld, 
-	placeholder."$$IP_QLD_EMP_PC$$"=>:lv_qld_emp_pc_thld))
+(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
+   (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
+    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
+    placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
+    placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high ))
 WHERE "GJAHR" = :iv_gjahr
 ;
 ELSE 
@@ -35,8 +40,11 @@ SELECT
 "PERIOD_END_DATE",
 "GJAHR"
 FROM
-(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"(placeholder."$$IP_QLD_EMP_CNT$$"=>:lv_qld_emp_cnt_thld, 
-	placeholder."$$IP_QLD_EMP_PC$$"=>:lv_qld_emp_pc_thld ))
+(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
+   (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
+    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
+    placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
+    placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high  ))
 WHERE "ABN"   = :iv_abn
   AND "GJAHR" = :iv_gjahr
 ;
@@ -48,8 +56,10 @@ lt_param =
 SELECT
 TOP 1
 'S'							AS "RUN_MODE",
-:lv_qld_emp_pc_thld		 	AS "QLD_EMP_PC_THLD",
-:lv_qld_emp_cnt_thld		AS "QLD_EMP_CNT_THLD",
+:lv_qld_emp_pc_thld_low		AS "QLD_EMP_PC_THLD_LOW",
+:lv_qld_emp_pc_thld_high	AS "QLD_EMP_PC_THLD_HIGH",
+:lv_qld_emp_cnt_thld_low	AS "QLD_EMP_CNT_THLD_LOW",
+:lv_qld_emp_cnt_thld_high	AS "QLD_EMP_CNT_THLD_HIGH",
 :lv_flag_wcq_policy 		AS "FLAG_WCQ_POLICY",
 :lv_flag_qld_address		AS "FLAG_QLD_ADDRESS",
 :lv_flag_qld_emp_cnt		AS "FLAG_QLD_EMP_CNT",
