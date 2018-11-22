@@ -8,8 +8,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_WageAboveThldTest" (
 	IN lx_ato_itr			NVARCHAR(1),
 	IN lx_wcq				NVARCHAR(1),
 	IN lx_risk_value		NVARCHAR(1),
-	IN ix_reinstatement     NVARCHAR(1),
-	IN ix_new_registration  NVARCHAR(1)
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
 )
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER

@@ -18,7 +18,7 @@ BEGIN
 		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                           AS  "PERIOD_KEY",
 		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                          AS  "GJAHR",
 		 "WCQ_WAGES"."ACT_WAGES"                                                                             AS  "WCQ_ACT_WAGES",
-		'AUD'                                                                                         AS  "WAERS"
+		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
 		"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "WCQ_WAGES"
 		INNER JOIN 

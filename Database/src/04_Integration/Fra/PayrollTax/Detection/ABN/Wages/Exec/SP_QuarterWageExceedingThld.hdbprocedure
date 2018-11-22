@@ -1,0 +1,77 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QuarterWageExceedingThld"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE lv_mode NVARCHAR(1);  
+
+DECLARE lv_thld_yearly Decimal(15,2) ;
+DECLARE lx_ato_bas NVARCHAR(1);
+DECLARE lx_ato_itr NVARCHAR(1);
+DECLARE lx_wcq NVARCHAR(1);
+DECLARE lx_risk_value NVARCHAR(1);
+
+SELECT 
+"RUN_MODE",
+"THRESHOLD_YEARLY",
+"FLAG_ATO_BAS",
+"FLAG_ATO_ITR",
+"FLAG_WCQ",
+"FLAG_RISK_VALUE"
+INTO 
+lv_mode,
+lv_thld_yearly,
+lx_ato_bas,
+lx_ato_itr,
+lx_wcq,
+lx_risk_value
+FROM :PARAMETERS LIMIT 1;
+
+lt_wages = 
+SELECT 
+"WAGES"."ABN" AS "ABN",
+"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+"WAGES"."GJAHR" AS "GJAHR",
+"WAGES"."WAERS" AS "WAERS",
+SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
+WHERE "PERIOD_CATEGORY" = 'PT-Q'
+  AND EXISTS (
+	SELECT * FROM :it_data_for_rule AS "KEYS"
+	WHERE "KEYS"."ABN" = "WAGES"."ABN"
+	  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+	  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+	  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+  )
+GROUP BY 
+"WAGES"."ABN",
+"WAGES"."PERIOD_CATEGORY",
+"WAGES"."PERIOD_KEY",
+"WAGES"."GJAHR",
+"WAGES"."WAERS"
+HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly
+;
+
+IF :lv_mode = 'S' THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT",
+0 AS "RISK_AMOUNT",
+"WAERS" AS "CURRENCY" 
+FROM :lt_wages
+;
+
+END IF;
+
+END

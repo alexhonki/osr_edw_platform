@@ -1,6 +1,6 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageAboveThld"( 
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
-    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
 	
 )
@@ -12,20 +12,15 @@ BEGIN
 DECLARE lv_mode NVARCHAR(1);  
 
 DECLARE lv_thld_yearly Decimal(15,2) ;
-DECLARE lv_ato_bas_wage_low DECIMAL(15,2);
-DECLARE lv_ato_bas_wage_high DECIMAL(15,2);
 DECLARE lx_ato_bas NVARCHAR(1);
 DECLARE lx_ato_itr NVARCHAR(1);
 DECLARE lx_wcq NVARCHAR(1);
 DECLARE lx_risk_value NVARCHAR(1);
 
-DECLARE lv_ato_bas_cnt Integer;
 
 SELECT 
 "RUN_MODE",
-"THRESHOLD_YEARLY", 
-"ATO_BAS_WAGE_LOW", 
-"ATO_BAS_WAGE_HIGH", 
+"THRESHOLD_YEARLY",
 "FLAG_ATO_BAS",
 "FLAG_ATO_ITR",
 "FLAG_WCQ",
@@ -33,8 +28,6 @@ SELECT
 INTO 
 lv_mode,
 lv_thld_yearly,
-lv_ato_bas_wage_low,
-lv_ato_bas_wage_high,
 lx_ato_bas,
 lx_ato_itr,
 lx_wcq,
@@ -87,63 +80,6 @@ FROM :it_data_for_rule
  	"WAGES"."GJAHR",
  	"WAGES"."WAERS"
  	HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly
- 	;
- 
--- those below threshold yearly, check further for ATO BAS Wage range
- 	lt_ato_bas_wage_a = 
- 	SELECT 
- 	"WAGES"."ABN" AS "ABN",
- 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
- 	"WAGES"."GJAHR" AS "GJAHR",
- 	"WAGES"."WAERS" AS "WAERS",
- 	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
- 	WHERE "PERIOD_CATEGORY" = 'PT-A'
- 	  AND EXISTS (
- 		SELECT * FROM :it_data_for_rule AS "KEYS"
- 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
- 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
- 		  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
- 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
- 	  )
- 	GROUP BY 
- 	"WAGES"."ABN",
- 	"WAGES"."PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY",
- 	"WAGES"."GJAHR",
- 	"WAGES"."WAERS"
- 	HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_ato_bas_wage_low 
- 	   AND SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  < :lv_ato_bas_wage_high 
- 	;
- 	
- 	SELECT COUNT(*) INTO lv_ato_bas_cnt FROM 
- 	(
- 	SELECT 
- 	"WAGES"."ABN" AS "ABN",
- 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
- 	"WAGES"."GJAHR" AS "GJAHR",
- 	"WAGES"."WAERS" AS "WAERS",
- 	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
- 	WHERE "PERIOD_CATEGORY" = 'PT-A'
- 	  AND EXISTS (
- 		SELECT * FROM :it_data_for_rule AS "KEYS"
- 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
- 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
- 		  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
- 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
- 	  )
- 	GROUP BY 
- 	"WAGES"."ABN",
- 	"WAGES"."PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY",
- 	"WAGES"."GJAHR",
- 	"WAGES"."WAERS"
- 	HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_ato_bas_wage_low 
- 	   AND SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  < :lv_ato_bas_wage_high 
- 	)
  	;
  	
  END IF;
@@ -235,59 +171,25 @@ FROM :it_data_for_rule
  	;
  END IF;
  	
-IF lv_ato_bas_cnt > 0 THEN 
-	lt_wages =  
-	SELECT 
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"WAERS",
-	MAX("WAGE") AS "WAGE"
-	FROM :lt_wages
-	GROUP BY 
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"WAERS"
-	HAVING MAX("WAGE") >= :lv_thld_yearly
-	UNION
-	SELECT 
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"WAERS",
-	MAX("WAGE") AS "WAGE"
-	FROM :lt_ato_bas_wage_a
-	GROUP BY 
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"WAERS" 	
-	;
 
-ELSE 
-	lt_wages =  
-	SELECT 
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"WAERS",
-	MAX("WAGE") AS "WAGE"
-	FROM :lt_wages
-	GROUP BY 
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"WAERS"
-	HAVING MAX("WAGE") >= :lv_thld_yearly
-	;
-END IF;
+lt_wages =  
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS",
+MAX("WAGE") AS "WAGE"
+FROM :lt_wages
+GROUP BY 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS"
+HAVING MAX("WAGE") >= :lv_thld_yearly
+;
+
 
 lt_wage_for_tax = 
 SELECT 
@@ -357,6 +259,7 @@ AND "W"."GJAHR" = "RATE"."PERIOD_KEY"
 ;
 
 IF :lv_mode = 'R' THEN
+
 et_result = 
 SELECT
 "W"."ABN",
@@ -394,7 +297,10 @@ WHERE "W"."RISK_AMOUNT" >= "R"."LOW"
   AND "R"."TOP_BAND" <> 'X'
 ;
 
-ELSE 
+END IF;
+
+IF :lv_mode = 'S' THEN
+
 et_result = 
 SELECT
 "ABN",
@@ -410,6 +316,7 @@ END AS "RISK_AMOUNT",
 FROM 
 :lt_result
 ;
+
 END IF;
 
 

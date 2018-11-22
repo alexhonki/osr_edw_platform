@@ -1,0 +1,25 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageApproachingThld"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_approaching",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE lv_pt_q_cnt Integer;
+
+SELECT COUNT(*) INTO lv_pt_q_cnt FROM :it_data_for_rule WHERE "PERIOD_CATEGORY" = 'PT-Q';
+IF lv_pt_q_cnt > 0 THEN 
+	lt_data_for_rule = SELECT * FROM :it_data_for_rule  WHERE "PERIOD_CATEGORY" = 'PT-Q';
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QuarterWageApproachingThld"( 
+    	it_data_for_rule	=> :lt_data_for_rule,
+    	parameters      	=> :parameters,
+    	et_result   		=> et_result
+	)
+	;
+END IF;
+
+END

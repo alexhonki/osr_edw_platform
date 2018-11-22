@@ -39,6 +39,21 @@ context Types {
             FLAG_RISK_VALUE   : String(1);
         };
 
+        entity param_approaching {
+            RUN_MODE          : String(1);
+            ATO_BAS_WAGE_LOW  : Decimal(15, 2);
+            ATO_BAS_WAGE_HIGH : Decimal(15, 2);
+        };
+
+        entity param_exceeding {
+            RUN_MODE         : String(1);
+            THRESHOLD_YEARLY : Decimal(15, 2);
+            FLAG_ATO_BAS     : String(1);
+            FLAG_ATO_ITR     : String(1);
+            FLAG_WCQ         : String(1);
+            FLAG_RISK_VALUE  : String(1);
+        };
+
         entity data_bp_reg {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
@@ -63,13 +78,13 @@ context Types {
         };
 
         entity param_qld_nexus {
-            RUN_MODE        		: String(1);
-            QLD_EMP_PC_THLD			: Decimal(5, 2);
-            QLD_EMP_CNT_THLD		: Integer;
-            FLAG_WCQ_POLICY 		: String(1);
-            FLAG_QLD_ADDRESS		: String(1);
-            FLAG_QLD_EMP_CNT		: String(1);
-            FLAG_QLD_EMP_PC 		: String(1);
+            RUN_MODE         : String(1);
+            QLD_EMP_PC_THLD  : Decimal(5, 2);
+            QLD_EMP_CNT_THLD : Integer;
+            FLAG_WCQ_POLICY  : String(1);
+            FLAG_QLD_ADDRESS : String(1);
+            FLAG_QLD_EMP_CNT : String(1);
+            FLAG_QLD_EMP_PC  : String(1);
         };
 
         //result
