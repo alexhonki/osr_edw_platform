@@ -18,8 +18,7 @@
       <selection multiLine="false" type="Single"/>
       <defaultRange lowValue="0"/>
     </variableProperties>
-  </variable>
-</localVariables>
+  </variable></localVariables>
 <variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt::CV_WCQ_ABN_WAGES">
@@ -45,6 +44,12 @@
   </DataSource>
   <DataSource id="osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD">
     <resourceUri>osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -472,7 +477,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     </input>
     <joinAttribute name="ABN"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="J_NEXUS_THLD" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
@@ -612,62 +617,273 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
     </input>
   </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="A_RFR_EMP_CNT" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="LOW_EMP_CNT">
+        <descriptions defaultDescription="LOW"/>
+      </viewAttribute>
+      <viewAttribute id="HIGH_EMP_CNT">
+        <descriptions defaultDescription="HIGH"/>
+      </viewAttribute>
+      <viewAttribute id="TOP_BAND_EMP_CNT">
+        <descriptions defaultDescription="TOP_BAND"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_FACTOR_RATING_EMP_CNT">
+        <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="QLD_EMP_CNT" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>'$$IP_QLD_EMP_CNT$$'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOW_EMP_CNT" source="LOW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HIGH_EMP_CNT" source="HIGH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOP_BAND_EMP_CNT" source="TOP_BAND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_FACTOR_RATING_EMP_CNT" source="RISK_FACTOR_RATING"/>
+    </input>
+  
+    <filter>if(&quot;TOP_BAND_EMP_CNT&quot;=' ' or isNull(&quot;TOP_BAND_EMP_CNT&quot;), 
+(&quot;LOW_EMP_CNT&quot;&lt;=&quot;QLD_EMP_CNT&quot;) and (&quot;QLD_EMP_CNT&quot;&lt;&quot;HIGH_EMP_CNT&quot;), 
+(&quot;LOW_EMP_CNT&quot;&lt;=&quot;QLD_EMP_CNT&quot;))</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="A_RFR_EMP_PC" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="LOW_EMP_PC">
+        <descriptions defaultDescription="LOW"/>
+      </viewAttribute>
+      <viewAttribute id="HIGH_EMP_PC">
+        <descriptions defaultDescription="HIGH"/>
+      </viewAttribute>
+      <viewAttribute id="TOP_BAND_EMP_PC">
+        <descriptions defaultDescription="TOP_BAND"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_FACTOR_RATING_EMP_PC">
+        <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="QLD_EMP_PC" datatype="DECIMAL" length="5" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>'$$IP_QLD_EMP_PC$$'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOW_EMP_PC" source="LOW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HIGH_EMP_PC" source="HIGH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOP_BAND_EMP_PC" source="TOP_BAND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_FACTOR_RATING_EMP_PC" source="RISK_FACTOR_RATING"/>
+    </input>
+  
+    <filter>if(&quot;TOP_BAND_EMP_PC&quot;=' ' or isNull(&quot;TOP_BAND_EMP_PC&quot;), 
+(&quot;LOW_EMP_PC&quot;&lt;=&quot;QLD_EMP_PC&quot;) and (&quot;QLD_EMP_PC&quot;&lt;&quot;HIGH_EMP_PC&quot;), 
+(&quot;LOW_EMP_PC&quot;&lt;=&quot;QLD_EMP_PC&quot;))</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="U_RFR_SCORING" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="LOW_EMP_CNT" aggregationType="sum">
+        <descriptions defaultDescription="LOW"/>
+      </viewAttribute>
+      <viewAttribute id="HIGH_EMP_CNT" aggregationType="sum">
+        <descriptions defaultDescription="HIGH"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT" aggregationType="sum">
+        <descriptions defaultDescription="QLD_EMP_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="TOP_BAND_EMP_CNT">
+        <descriptions defaultDescription="TOP_BAND"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_FACTOR_RATING_EMP_CNT" aggregationType="sum">
+        <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      </viewAttribute>
+      <viewAttribute id="LOW_EMP_PC" aggregationType="sum">
+        <descriptions defaultDescription="LOW"/>
+      </viewAttribute>
+      <viewAttribute id="HIGH_EMP_PC" aggregationType="sum">
+        <descriptions defaultDescription="HIGH"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_PC" aggregationType="sum">
+        <descriptions defaultDescription="QLD_EMP_PC"/>
+      </viewAttribute>
+      <viewAttribute id="TOP_BAND_EMP_PC">
+        <descriptions defaultDescription="TOP_BAND"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_FACTOR_RATING_EMP_PC" aggregationType="sum">
+        <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="A_RFR_EMP_CNT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOW_EMP_CNT" source="LOW_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HIGH_EMP_CNT" source="HIGH_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOP_BAND_EMP_CNT" source="TOP_BAND_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_FACTOR_RATING_EMP_CNT" source="RISK_FACTOR_RATING_EMP_CNT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LOW_EMP_PC" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="HIGH_EMP_PC" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOP_BAND_EMP_PC" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RISK_FACTOR_RATING_EMP_PC" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT" source="QLD_EMP_CNT"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="QLD_EMP_PC" null="true" value=""/>
+    </input>
+    <input node="A_RFR_EMP_PC">
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="LOW_EMP_CNT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="HIGH_EMP_CNT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="TOP_BAND_EMP_CNT" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="RISK_FACTOR_RATING_EMP_CNT" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOW_EMP_PC" source="LOW_EMP_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HIGH_EMP_PC" source="HIGH_EMP_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOP_BAND_EMP_PC" source="TOP_BAND_EMP_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_FACTOR_RATING_EMP_PC" source="RISK_FACTOR_RATING_EMP_PC"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="QLD_EMP_CNT" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC" source="QLD_EMP_PC"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="J_NEXUS_RFR_SCORING" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_STRING">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_END_DATE">
+        <descriptions defaultDescription="PERIOD_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_ADDR_CHECK">
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT_CHECK">
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_PC_CHECK">
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_POLICY_CHECK">
+        <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_QLD" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE_QLD"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_ALL" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE_ALL"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_PC" aggregationType="sum">
+        <descriptions defaultDescription="QLD_EMP_PC"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_FACTOR_RATING_EMP_CNT" aggregationType="sum">
+        <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_FACTOR_RATING_EMP_PC" aggregationType="sum">
+        <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="J_NEXUS_THLD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC" source="QLD_EMP_PC"/>
+    </input>
+    <input node="U_RFR_SCORING">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_FACTOR_RATING_EMP_CNT" source="RISK_FACTOR_RATING_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_FACTOR_RATING_EMP_PC" source="RISK_FACTOR_RATING_EMP_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC" source="QLD_EMP_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="QLD_EMP_CNT"/>
+    </input>
+    <joinAttribute name="QLD_EMP_PC"/>
+    <joinAttribute name="CNT_EMPLOYEE_QLD"/>
+  </calculationView>
 </calculationViews>
-<logicalModel id="Join_1">
+<logicalModel id="J_NEXUS_RFR_SCORING">
   <attributes>
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Join_1" columnName="ABN"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="ABN"/>
     </attribute>
     <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      <keyMapping columnObjectName="Join_1" columnName="FINANCIAL_YEAR_STRING"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="FINANCIAL_YEAR_STRING"/>
     </attribute>
   
     <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Key for Period Assignment"/>
   
-      <keyMapping columnObjectName="Join_1" columnName="PERIOD_KEY"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="PERIOD_KEY"/>
   
     </attribute>
     <attribute id="PERIOD_CATEGORY" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Inbound Correspondence Category"/>
-      <keyMapping columnObjectName="Join_1" columnName="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="PERIOD_CATEGORY"/>
     </attribute>
     <attribute id="PERIOD_END_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Period To Date"/>
-      <keyMapping columnObjectName="Join_1" columnName="PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="PERIOD_END_DATE"/>
     </attribute>
     <attribute id="WAERS" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Currency Key"/>
-      <keyMapping columnObjectName="Join_1" columnName="WAERS"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="WAERS"/>
     </attribute>
     <attribute id="QLD_ADDR_CHECK" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_ADDR_CHECK"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_ADDR_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="QLD_ADDR_CHECK"/>
     </attribute>
     <attribute id="QLD_EMP_CNT_CHECK" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_CNT_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="QLD_EMP_CNT_CHECK"/>
     </attribute>
     <attribute id="QLD_EMP_PC_CHECK" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
-      <keyMapping columnObjectName="Join_1" columnName="QLD_EMP_PC_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="QLD_EMP_PC_CHECK"/>
     </attribute>
     <attribute id="WCQ_POLICY_CHECK" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
-      <keyMapping columnObjectName="Join_1" columnName="WCQ_POLICY_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="WCQ_POLICY_CHECK"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure id="CNT_EMPLOYEE_QLD" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE_QLD"/>
-      <measureMapping columnObjectName="Join_1" columnName="CNT_EMPLOYEE_QLD"/>
+      <measureMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="CNT_EMPLOYEE_QLD"/>
     </measure>
     <measure id="QLD_EMP_PC" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="QLD_EMP_PC"/>
-      <measureMapping columnObjectName="Join_1" columnName="QLD_EMP_PC"/>
+      <measureMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="QLD_EMP_PC"/>
+    </measure>
+  
+    <measure id="CNT_EMPLOYEE_ALL" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CNT_EMPLOYEE_ALL"/>
+      <measureMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="CNT_EMPLOYEE_ALL"/>
+    </measure>
+    <measure id="RISK_FACTOR_RATING_EMP_CNT" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      <measureMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="RISK_FACTOR_RATING_EMP_CNT"/>
+    </measure>
+    <measure id="RISK_FACTOR_RATING_EMP_PC" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      <measureMapping columnObjectName="J_NEXUS_RFR_SCORING" columnName="RISK_FACTOR_RATING_EMP_PC"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
@@ -677,17 +893,17 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="448" y="112"/>
+      <upperLeftCorner x="533.9743416303364" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="P_WCQ_POLICY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="477" y="696"/>
+      <upperLeftCorner x="92" y="851.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="694" y="856"/>
+      <upperLeftCorner x="200.25739464353308" y="1011.9999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="A_EMP_CNT_QLD" modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput">
@@ -699,19 +915,19 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="A_EMP_CNT_QLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="576" y="1016"/>
+      <upperLeftCorner x="383.5907279768662" y="1171.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="A_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="786" y="1016"/>
+      <upperLeftCorner x="173.59072797686633" y="1171.9999928474426"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_BAS_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="411" y="1161"/>
+      <upperLeftCorner x="529.2178456471815" y="1316.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_ABR_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="1161"/>
+      <upperLeftCorner x="739.2178456471815" y="1316.9999916553497"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput">
@@ -724,29 +940,29 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     </shape>
   
     <shape expanded="true" modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91" y="1321"/>
+      <upperLeftCorner x="632.4783080535116" y="1476.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_ABR_Agency_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="1321"/>
+      <upperLeftCorner x="842.4783080535115" y="1476.9999904632568"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="A_QLD_ADDR_CHECK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="356" y="874"/>
+      <upperLeftCorner x="593.5907279768662" y="1029.4999940395355"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="U_BUS_CHECK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="356" y="1020"/>
+      <upperLeftCorner x="593.5907279768662" y="1175.3333261807759"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="533" y="394"/>
+      <upperLeftCorner x="118.66666666666663" y="549.4999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_POLICY_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="607" y="536"/>
+      <upperLeftCorner x="118.66666666666663" y="691.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
@@ -758,7 +974,7 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="687" y="696"/>
+      <upperLeftCorner x="566.9240613101996" y="851.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
@@ -771,20 +987,20 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
     </shape>
   
   
-    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448" y="217"/>
+    <shape expanded="true" modelObjectName="J_NEXUS_THLD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="363.41171580787795" y="371.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="271"/>
     </shape>
-    <shape modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="214" y="376"/>
+      <upperLeftCorner x="390.0783824745447" y="531.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_RATE" modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput">
@@ -796,12 +1012,38 @@ if(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;'$$IP_QL
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="P_RATE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="187" y="536"/>
+      <upperLeftCorner x="328.66666666666663" y="691.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="397" y="536"/>
+      <upperLeftCorner x="538.6666666666667" y="691.9999964237213"/>
       <rectangleSize height="30" width="160"/>
-    </shape></shapes>
+    </shape>
+    <shape expanded="true" modelObjectName="A_RFR_EMP_CNT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="600.0783824745446" y="531.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="A_RFR_EMP_PC" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="810.0783824745446" y="531.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="U_RFR_SCORING" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="626.7450491412113" y="385.33333214124036"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="J_NEXUS_RFR_SCORING" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="533.9743416303364" y="232"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_NEXUS_THLD" modelObjectNameSpace="J_NEXUS_RFR_SCORING" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="U_RFR_SCORING" modelObjectNameSpace="J_NEXUS_RFR_SCORING" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="267.74169921875"/>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>
