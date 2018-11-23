@@ -14,7 +14,7 @@ BEGIN
    "ABN",
    "PERIOD_CATEGORY",
    "PERIOD_KEY",
-   "GJAHR"
+   TO_INT("GJAHR")-1	AS "GJAHR"
    FROM :it_workset;
    
 END
