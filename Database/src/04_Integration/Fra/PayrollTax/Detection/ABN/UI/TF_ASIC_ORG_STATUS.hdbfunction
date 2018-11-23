@@ -38,12 +38,17 @@ SELECT
 "DATA"."Z_CHANGE_TIME" AS "Z_CHANGE_TIME"
 FROM
 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+INNER JOIN 
+"osr.edw.staging.td.ato.proxy::TF_ATO_ABN_ACN_MAPPING"() AS "MAP"
+ON "ALERT"."ABN" = "MAP"."ABN"
+AND "ALERT"."GJAHR" = "MAP"."GJAHR"
 INNER JOIN
 "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data" AS "DATA"
-ON  "ALERT"."ABN" = "DATA"."ABN"
-INNER JOIN
-"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "MAP"
-ON "ALERT"."ABN" = "MAP"."ABN"
+--ON  "ALERT"."ABN" = "DATA"."ABN"
+ON "MAP"."ACN" = "DATA"."ORG_NUMBER"
+--INNER JOIN
+--"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "MAP"
+--ON "ALERT"."ABN" = "MAP"."ABN"
 --AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."FINANCIAL_YEAR")
 WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
 AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
