@@ -4,6 +4,8 @@ ABN								NVARCHAR(11),
 GJAHR							NVARCHAR(4),
 BPARTNER						NVARCHAR(11),
 GROUP_ID						NVARCHAR(32),
+BUS_PC							NVARCHAR(12),
+ANZSIC_CD						NVARCHAR(5),
 ACCESS_GROUP					NVARCHAR(20)
 ) 
 LANGUAGE SQLSCRIPT 
@@ -53,7 +55,7 @@ FROM
 :lt_abn_bp
 ;
 
-lt_inv_row =
+lt_inv_bp_row =
 SELECT
 "ABN",
 "GJAHR",
@@ -65,13 +67,18 @@ FROM
  
 RETURN
 SELECT
-"ABN",
-"GJAHR",
-"BPARTNER",
+"BP"."ABN",
+"BP"."GJAHR",
+"BP"."BPARTNER",
 '' AS "GROUP_ID",
+"ABR"."MN_BUS_PC" AS "BUS_PC",
+"ABR"."MN_INDY_CLSN" AS "ANZSIC_CD",
 'PRT' AS "ACCESS_GROUP"
 FROM
-:lt_inv_row
+:lt_inv_bp_row AS "BP"
+INNER JOIN
+"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
+ON "BP"."ABN" = LEFT("ABR"."ABN",11)
 WHERE "ROW_NUMBER" = 1
 ;
 
