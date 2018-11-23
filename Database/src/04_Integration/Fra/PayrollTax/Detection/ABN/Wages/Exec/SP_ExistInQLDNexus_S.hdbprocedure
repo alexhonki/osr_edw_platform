@@ -1,0 +1,112 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus_S"
+(
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus",
+	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+		DECLARE lv_mode 				 NVARCHAR(1);  
+		DECLARE lv_previous_year		 NVARCHAR(4);
+		DECLARE lv_qld_emp_pc_thld_low	 DECIMAL(5,2) ;
+		DECLARE lv_qld_emp_pc_thld_high	 DECIMAL(5,2) ;
+		DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
+		DECLARE lv_qld_emp_cnt_thld_high INTEGER;
+		DECLARE lx_flag_wcq_policy		 NVARCHAR(1);
+		DECLARE lx_flag_qld_address 	 NVARCHAR(1);
+		DECLARE lx_flag_qld_emp_cnt 	 NVARCHAR(1);
+		DECLARE lx_flag_qld_emp_pc		 NVARCHAR(1);
+
+		SELECT
+			"RUN_MODE",
+			"GJHAR_PREV_YEAR",
+			"QLD_EMP_PC_THLD_LOW",
+			"QLD_EMP_PC_THLD_HIGH",
+			"QLD_EMP_CNT_THLD_LOW",
+			"QLD_EMP_CNT_THLD_HIGH",
+			"FLAG_WCQ_POLICY", 
+			"FLAG_QLD_ADDRESS",
+			"FLAG_QLD_EMP_CNT",
+			"FLAG_QLD_EMP_PC"
+		INTO
+			lv_mode,
+			lv_previous_year,
+			lv_qld_emp_pc_thld_low,
+			lv_qld_emp_pc_thld_high,
+			lv_qld_emp_cnt_thld_low,
+			lv_qld_emp_cnt_thld_high,
+			lx_flag_wcq_policy,
+			lx_flag_qld_address,
+			lx_flag_qld_emp_cnt,
+			lx_flag_qld_emp_pc
+		FROM :PARAMETERS LIMIT 1;
+
+
+step1 =
+   SELECT 
+	  "A"."ABN" 					AS  "ABN", 
+	  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
+      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
+      "A"."GJAHR"					AS  "GJAHR",
+	  "B"."QLD_ADDR_CHECK",
+	  "B"."QLD_EMP_CNT_CHECK",
+	  "B"."QLD_EMP_PC_CHECK",
+	  "B"."WCQ_POLICY_CHECK",
+	  "B"."QLD_EMP_PC",
+	  "B"."CNT_EMPLOYEE_QLD"
+	  
+   FROM :IT_DATA_FOR_RULE AS "A",
+   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
+   (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
+    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
+    placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
+    placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high )) AS "B"
+  WHERE 
+		"A"."ABN"   = "B"."ABN"
+  AND	"A"."GJAHR" = "B"."GJAHR"
+
+   ;
+   
+   IF :lv_mode = 'S' THEN 
+	IF :lx_flag_qld_emp_cnt = 'Y' AND :lx_flag_qld_emp_pc = 'N' THEN 
+		ET_RESULT = 
+			SELECT
+				"ABN",
+				"PERIOD_CATEGORY",
+				"PERIOD_KEY",
+				"GJAHR",
+				100 AS "DETECTION_RESULT"
+			FROM  :step1
+			WHERE :step1."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
+			AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
+			AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
+			AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
+			AND	 :step1."GJAHR" 				= :lv_previous_year
+			AND	 :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
+			AND	 :step1."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
+			;
+	END IF;	
+	IF :lx_flag_qld_emp_pc = 'Y' AND :lx_flag_qld_emp_cnt = 'N' THEN 
+		ET_RESULT = 
+			SELECT
+				"ABN",
+				"PERIOD_CATEGORY",
+				"PERIOD_KEY",
+				"GJAHR",
+				100 AS "DETECTION_RESULT"
+			FROM  :step1
+			WHERE :step1."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
+			AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
+			AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
+			AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
+			AND	 :step1."GJAHR" 				= :lv_previous_year
+			AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld_low
+			AND	 :step1."QLD_EMP_PC"			<= :lv_qld_emp_pc_thld_high
+			;	
+	END IF;
+   END IF; 
+
+END
