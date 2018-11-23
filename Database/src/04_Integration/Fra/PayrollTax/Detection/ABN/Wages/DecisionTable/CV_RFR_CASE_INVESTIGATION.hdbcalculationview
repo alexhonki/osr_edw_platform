@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_CASE_INVESTIGATION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Decision Table: Risk Factor Rating for Case Investigation"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_CASE_INVESTIGATION" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_CASE_INVESTIGATION</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_CASE_INVESTIGATION">
+  <attributes>
+    <attribute id="CASE_OUTCOME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Case Outcome"/>
+      <keyMapping columnObjectName="TF_RFR_CASE_INVESTIGATION" columnName="CASE_OUTCOME"/>
+    </attribute>
+    <attribute id="CASE_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Case Category"/>
+      <keyMapping columnObjectName="TF_RFR_CASE_INVESTIGATION" columnName="CASE_CATEGORY"/>
+    </attribute>
+    <attribute id="RISK_FACTOR_RATING" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Risk Factor Rating"/>
+      <keyMapping columnObjectName="TF_RFR_CASE_INVESTIGATION" columnName="RISK_FACTOR_RATING"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="235"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

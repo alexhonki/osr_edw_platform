@@ -1,0 +1,78 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_ExclusionCheckTest"
+( 	IN iv_abn				         NVARCHAR(11) ,
+	IN iv_gjahr				         NVARCHAR(4)  ,
+	IN iv_ind_division               NVARCHAR(1)  ,
+	IN iv_flag_abr_acnc              NVARCHAR(1)  ,
+	IN iv_flag_asic_regd             NVARCHAR(1)  ,
+	IN iv_flag_sup_gov_exmpt_anzsic  NVARCHAR(1)  ,
+	IN iv_pt_id_role_date            DATE      
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+   IF :iv_abn = '?' THEN 
+   lt_workset =
+   SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"PERIOD_END_DATE",
+		"FINANCIAL_YEAR" AS "GJAHR"
+		FROM
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABNWages"
+		;
+   
+   ELSE 
+   lt_workset =
+    SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"PERIOD_END_DATE",
+		"FINANCIAL_YEAR" AS "GJAHR"
+		FROM
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABNWages"
+		WHERE "ABN"   = :iv_abn
+		AND "FINANCIAL_YEAR" = :iv_gjahr ;
+   
+   END IF;
+   
+   
+lt_param =   
+SELECT
+TOP 1
+	'S'					          AS   "RUN_MODE",
+	iv_ind_division               AS   "IND_DIVISION",
+	iv_flag_abr_acnc              AS   "FLAG_ABR_ACNC", 
+	iv_flag_asic_regd             AS   "FLAG_ASIC_REGD", 
+	iv_flag_sup_gov_exmpt_anzsic  AS   "FLAG_SUP_GOV_EXMPT_ANZSIC",
+	iv_pt_id_role_date            AS   "PT_ID_ROLE_DATE"
+FROM  :lt_workset
+;
+
+
+
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectExclusions"
+(
+:lt_workset,
+lt_out_for_rule 
+
+);
+
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionsCheck"
+(
+:lt_out_for_rule,
+:lt_param,
+et_result 
+
+);
+
+
+END ;
