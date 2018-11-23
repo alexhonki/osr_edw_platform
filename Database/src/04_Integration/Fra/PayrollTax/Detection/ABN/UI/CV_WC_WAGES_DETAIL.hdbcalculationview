@@ -43,6 +43,10 @@
       <viewAttribute id="WAERS">
         <descriptions defaultDescription="WAERS"/>
       </viewAttribute>
+    
+      <viewAttribute id="CNT_EMP">
+        <descriptions defaultDescription="CNT_EMP"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -55,6 +59,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMP" source="CNT_EMP"/>
     </input>
     <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
   </calculationView>
@@ -97,6 +103,11 @@
       <descriptions defaultDescription="Provisional Wages"/>
       <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="ACT_APPR_WAGES"/>
+    </measure>
+  
+    <measure id="CNT_EMP" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="No. of Employees"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CNT_EMP"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>

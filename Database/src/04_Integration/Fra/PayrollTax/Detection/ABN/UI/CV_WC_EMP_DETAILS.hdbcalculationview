@@ -67,6 +67,16 @@
       <viewAttribute id="ALERT_ID">
         <descriptions defaultDescription="ALERT_ID"/>
       </viewAttribute>
+    
+      <viewAttribute id="ASSOC_TYPE">
+        <descriptions defaultDescription="ASSOC_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="ASSOC_NAME">
+        <descriptions defaultDescription="ASSOC_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ACTIVE_FLAG">
+        <descriptions defaultDescription="ACTIVE_FLAG"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -87,6 +97,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSOC_TYPE" source="ASSOC_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSOC_NAME" source="ASSOC_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACTIVE_FLAG" source="ACTIVE_FLAG"/>
     </input>
     <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
   </calculationView>
@@ -157,6 +171,19 @@
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
     </attribute>
+  
+    <attribute id="ASSOC_TYPE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Association Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ASSOC_TYPE"/>
+    </attribute>
+    <attribute id="ASSOC_NAME" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Associated Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ASSOC_NAME"/>
+    </attribute>
+    <attribute id="ACTIVE_FLAG" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Active Flag"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACTIVE_FLAG"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
@@ -175,4 +202,4 @@
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario> 
+</Calculation:scenario>
