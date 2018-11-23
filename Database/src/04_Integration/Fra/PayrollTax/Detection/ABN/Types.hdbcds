@@ -54,6 +54,11 @@ context Types {
             FLAG_RISK_VALUE  : String(1);
         };
 
+        entity param_versus {
+            RUN_MODE         : String(1);
+            THRESHOLD_YEARLY : Decimal(15, 2);
+        };
+
         entity data_bp_reg {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);

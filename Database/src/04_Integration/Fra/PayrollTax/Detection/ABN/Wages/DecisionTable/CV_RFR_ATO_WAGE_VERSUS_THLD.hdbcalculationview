@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ATO_WAGE_VERSUS_THLD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Decision Table: ATO Wage versus Threshold"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_ATO_WAGE_VERSUS_THLD" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_ATO_WAGE_VERSUS_THLD</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_ATO_WAGE_VERSUS_THLD">
+  <attributes>
+    <attribute id="BAS" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BAS"/>
+      <keyMapping columnObjectName="TF_RFR_ATO_WAGE_VERSUS_THLD" columnName="BAS"/>
+    </attribute>
+    <attribute id="ITR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ITR"/>
+      <keyMapping columnObjectName="TF_RFR_ATO_WAGE_VERSUS_THLD" columnName="ITR"/>
+    </attribute>
+    <attribute id="TOP_BAND" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOP_BAND"/>
+      <keyMapping columnObjectName="TF_RFR_ATO_WAGE_VERSUS_THLD" columnName="TOP_BAND"/>
+    </attribute>
+  
+    <attribute id="RISK_FACTOR_RATING" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RISK_FACTOR_RATING"/>
+      <keyMapping columnObjectName="TF_RFR_ATO_WAGE_VERSUS_THLD" columnName="RISK_FACTOR_RATING"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
