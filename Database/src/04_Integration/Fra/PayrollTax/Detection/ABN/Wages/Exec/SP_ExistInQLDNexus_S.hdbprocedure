@@ -44,6 +44,14 @@ BEGIN
 			lx_flag_qld_emp_pc
 		FROM :PARAMETERS LIMIT 1;
 
+   LT_DATA_FOR_RULE = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))	AS "GJAHR"
+   FROM :IT_DATA_FOR_RULE;  
+   
 
 step1 =
    SELECT 
@@ -58,7 +66,7 @@ step1 =
 	  "B"."QLD_EMP_PC",
 	  "B"."CNT_EMPLOYEE_QLD"
 	  
-   FROM :IT_DATA_FOR_RULE AS "A",
+   FROM :LT_DATA_FOR_RULE AS "A",
    (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
    (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
     placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
