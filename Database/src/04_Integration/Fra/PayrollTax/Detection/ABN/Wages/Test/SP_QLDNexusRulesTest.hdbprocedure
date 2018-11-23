@@ -1,6 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QLDNexusRulesTest" (
 	IN iv_abn					NVARCHAR(11),
 	IN iv_gjahr					NVARCHAR(4),
+	IN lv_previous_year			NVARCHAR(4),
 	IN lv_qld_emp_pc_thld_low	DECIMAL(5,2),
 	IN lv_qld_emp_pc_thld_high	DECIMAL(5,2),
 	IN lv_qld_emp_cnt_thld_low	INTEGER,
@@ -29,7 +30,7 @@ FROM
     placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
     placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
     placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high ))
-WHERE "GJAHR" = :iv_gjahr
+WHERE "GJAHR" = :lv_previous_year
 ;
 ELSE 
 lt_workset =
@@ -46,7 +47,7 @@ FROM
     placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
     placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high  ))
 WHERE "ABN"   = :iv_abn
-  AND "GJAHR" = :iv_gjahr
+  AND "GJAHR" = :lv_previous_year
 ;
 END IF;
 
@@ -56,6 +57,7 @@ lt_param =
 SELECT
 TOP 1
 'S'							AS "RUN_MODE",
+:lv_previous_year			AS "GJHAR_PREV_YEAR",
 :lv_qld_emp_pc_thld_low		AS "QLD_EMP_PC_THLD_LOW",
 :lv_qld_emp_pc_thld_high	AS "QLD_EMP_PC_THLD_HIGH",
 :lv_qld_emp_cnt_thld_low	AS "QLD_EMP_CNT_THLD_LOW",

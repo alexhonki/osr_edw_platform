@@ -9,7 +9,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus"
    READS SQL DATA AS
 BEGIN
 
-DECLARE lv_mode 				 NVARCHAR(1);   
+DECLARE lv_mode 				 NVARCHAR(1);  
+DECLARE lv_previous_year		 NVARCHAR(4);
 DECLARE lv_qld_emp_pc_thld_low	 DECIMAL(5,2) ;
 DECLARE lv_qld_emp_pc_thld_high	 DECIMAL(5,2) ;
 DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
@@ -21,6 +22,7 @@ DECLARE lx_flag_qld_emp_pc		 NVARCHAR(1);
 
 SELECT
 "RUN_MODE",
+"GJHAR_PREV_YEAR",
 "QLD_EMP_PC_THLD_LOW",
 "QLD_EMP_PC_THLD_HIGH",
 "QLD_EMP_CNT_THLD_LOW",
@@ -31,6 +33,7 @@ SELECT
 "FLAG_QLD_EMP_PC"
 INTO
 lv_mode,
+lv_previous_year,
 lv_qld_emp_pc_thld_low,
 lv_qld_emp_pc_thld_high,
 lv_qld_emp_cnt_thld_low,
@@ -82,6 +85,7 @@ step1 =
    AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
    AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
    AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
+   AND	 :step1."GJAHR" 				= :lv_previous_year
    AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld_low
    AND	 :step1."QLD_EMP_PC"			<= :lv_qld_emp_pc_thld_high
    AND	 :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
