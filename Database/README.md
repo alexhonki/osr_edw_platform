@@ -7,4 +7,4 @@ Native datastore objects (NDSOs) are comprised of CDS artifacts and are
 important components for data warehousing projects.
 
 
-#test commit 
+#test commit  
