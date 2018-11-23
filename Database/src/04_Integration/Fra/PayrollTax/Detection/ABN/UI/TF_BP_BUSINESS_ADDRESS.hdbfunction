@@ -25,6 +25,7 @@ BPID_DATA =
 SELECT 
 "ALERT"."DB_KEY" AS "DB_KEY",
 "ALERT"."ALERT_ID" AS "ALERT_ID",
+"ALERT"."ABN" AS "ABN",
 "BPID"."PARTNER" AS "PARTNER",
 "BPID"."IDNUMBER" AS "IDNUMBER",
 "BPID"."INSTITUTE",
@@ -35,7 +36,8 @@ FROM
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
 INNER JOIN 
 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-ON "BPID"."PARTNER" = "ALERT"."BPARTNER"
+--ON "BPID"."PARNTER" = "ALERT"."BPARTNER"
+ON "BPID"."IDNUMBER" = "ALERT"."ABN"
 WHERE "BPID"."TYPE" = 'ZABN'
   AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
  ;
@@ -50,10 +52,14 @@ SELECT
 FROM  "osr.edw.staging.rms.synonym::CV_BUT000_Current" 
 WHERE  "PARTNER" IN (
 SELECT 
-"BPARTNER" 
-FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+--"BPARTNER" 
+--FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+--WHERE "ALERT_ID" = :IP_ALERT_ID)
+"PARTNER"
+FROM :BPID_DATA
 WHERE "ALERT_ID" = :IP_ALERT_ID)
 ;
+
 ADRC_BUT21FS =
 SELECT
 	"BPID"."DB_KEY" AS "DB_KEY",
