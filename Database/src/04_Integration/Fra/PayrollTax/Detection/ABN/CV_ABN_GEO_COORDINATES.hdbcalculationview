@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_GEO_COORDINATES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ABN Geo Coordinates"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_GEO_COORDINATES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ABN_GEO_COORDINATES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_GEO_COORDINATES">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_GEO_COORDINATES" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABN_GEO_COORDINATES" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GEOLON" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GEOLON"/>
+      <keyMapping columnObjectName="TF_ABN_GEO_COORDINATES" columnName="GEOLON"/>
+    </attribute>
+    <attribute id="GEOLAT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GEOLAT"/>
+      <keyMapping columnObjectName="TF_ABN_GEO_COORDINATES" columnName="GEOLAT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

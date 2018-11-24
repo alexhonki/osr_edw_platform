@@ -1,10 +1,8 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_WageAboveThldTest" (
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_AnnualWageExceedingThldTest" (
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
 	IN lv_run_mode			NVARCHAR(1),
 	IN lv_thld_yearly		Decimal(15,2),
-	IN lv_ato_bas_wage_low	DECIMAL(15,2),
-	IN lv_ato_bas_wage_high DECIMAL(15,2),
 	IN lx_ato_bas			NVARCHAR(1),
 	IN lx_ato_itr			NVARCHAR(1),
 	IN lx_wcq				NVARCHAR(1),
@@ -45,10 +43,8 @@ END IF;
 lt_param =
 SELECT
 TOP 1
-:lv_run_mode		    AS "RUN_MODE",
+:lv_run_mode    AS "RUN_MODE",
 :lv_thld_yearly AS "THRESHOLD_YEARLY",
-:lv_ato_bas_wage_low AS "ATO_BAS_WAGE_LOW",
-:lv_ato_bas_wage_high AS "ATO_BAS_WAGE_HIGH",
 :lx_ato_bas AS "FLAG_ATO_BAS",
 :lx_ato_itr AS "FLAG_ATO_ITR",
 :lx_wcq	   AS "FLAG_WCQ",
@@ -59,9 +55,8 @@ CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
 :lt_workset,
 lt_out_for_rule );
 
-CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageAboveThld"(
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"(
 :lt_out_for_rule,
 :lt_param,
 et_result );
-
  END;
