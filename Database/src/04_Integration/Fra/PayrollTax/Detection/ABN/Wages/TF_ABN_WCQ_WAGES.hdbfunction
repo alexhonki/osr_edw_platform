@@ -11,7 +11,8 @@ WAERS							NVARCHAR(5)
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
 BEGIN 
-	RETURN
+	
+	lt_wcq_wages = 
      SELECT
 		LEFT("WCQ_POLICY"."ABN",11)                                                                       AS  "ABN", 
 		'PT-A' 																		   			         AS  "PERIOD_CATEGORY",
@@ -24,6 +25,26 @@ BEGIN
 		INNER JOIN 
 		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "WCQ_POLICY"
 		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_WAGES"."POLICY_NO"
+		AND "WCQ_WAGES"."RECORD_TYPE" = "WCQ_WAGES"."RECORD_TYPE"
+		WHERE "WCQ_POLICY"."ABN" IS NOT NULL
+		  AND "WCQ_POLICY"."ABN" <> ''
+	;
+	
+	RETURN
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES",
+	"WAERS"
+	FROM :lt_wcq_wages
+	GROUP BY 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS"
 	;
 
 END;

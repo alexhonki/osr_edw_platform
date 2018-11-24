@@ -28,6 +28,13 @@ context Types {
             WAERS                        : String(5);
         };
 
+        entity data_wage_keys {
+            ABN             : String(11);
+            PERIOD_CATEGORY : String(10);
+            PERIOD_KEY      : String(4);
+            GJAHR           : String(4);
+        };
+
         entity param_wage {
             RUN_MODE          : String(1);
             THRESHOLD_YEARLY  : Decimal(15, 2);
