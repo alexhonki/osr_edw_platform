@@ -26,35 +26,29 @@ lx_reinstatement,
 lx_new_registration
 FROM :PARAMETERS LIMIT 1;
 
-lt_data_with_bp = 
-SELECT * FROM 
-:it_data_for_rule
-;
-
 IF lx_reinstatement = 'Y' THEN 
 lt_reinstatment = 
 SELECT 
-"BP_ID"."ABN",
-"BP_ID"."PERIOD_CATEGORY",
-"BP_ID"."PERIOD_KEY",
-"BP_ID"."GJAHR",
-"BP_ID"."BPARTNER",
-"BP_REG"."PRT_LIAB_DATE",
-"BP_REG"."VALID_FROM",
-"BP_REG"."VALID_TO",
+"WS"."ABN",
+"WS"."PERIOD_CATEGORY",
+"WS"."PERIOD_KEY",
+"WS"."GJAHR",
+"BP_ABN"."BPARTNER",
+"BP_ABN"."PRT_LIAB_DATE",
+"BP_ABN"."VALID_FROM",
+"BP_ABN"."VALID_TO",
 --"BP_REG"."ONLINE_FILLING_COMM",
 "FY"."START_DATE",
 "FY"."END_DATE"
 FROM 
-:it_data_for_rule AS "BP_ID"
-INNER JOIN
-"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG"
-ON "BP_ID"."BPARTNER" = "BP_REG"."BPARTNER"
+:it_data_for_rule AS "WS"
 INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn::CV_FY_KEY_DATES" "FY"
-ON "BP_ID"."GJAHR" = "FY"."FISCAL_YEAR"
-WHERE "BP_ID"."BPARTNER" IS NOT NULL
-  AND "BP_ID"."BPARTNER" <> ''
+ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
+ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+WHERE "FY"."END_DATE" > "BP_ABN"."VALID_DATE_FROM" 
 ;
 
 lt_reinstatment_result = 
@@ -64,8 +58,8 @@ SELECT
 "PERIOD_KEY",
 "GJAHR"
 FROM :lt_reinstatment
-WHERE TO_DATE("PRT_LIAB_DATE") > TO_DATE("END_DATE")
-  AND TO_DATE("VALID_TO") > TO_DATE("END_DATE")
+WHERE "PRT_LIAB_DATE" > "END_DATE"
+  AND "VALID_TO" > "END_DATE"
 UNION
 SELECT
 "ABN",
@@ -73,8 +67,8 @@ SELECT
 "PERIOD_KEY",
 "GJAHR"
 FROM :lt_reinstatment
-WHERE TO_DATE("PRT_LIAB_DATE") < TO_DATE("START_DATE")
-  AND TO_DATE("VALID_TO") < TO_DATE("START_DATE")
+WHERE "PRT_LIAB_DATE" < "START_DATE"
+  AND "VALID_TO" < "START_DATE"
 ;
 
 SELECT COUNT(*) INTO lv_reinstatement_cnt FROM :lt_reinstatment;
@@ -84,25 +78,27 @@ END IF;
 IF lx_new_registration = 'Y' THEN 
 lt_new_registration_result = 
 SELECT 
-"BP_ID"."ABN",
-"BP_ID"."PERIOD_CATEGORY",
-"BP_ID"."PERIOD_KEY",
-"BP_ID"."GJAHR"
+"WS"."ABN",
+"WS"."PERIOD_CATEGORY",
+"WS"."PERIOD_KEY",
+"WS"."GJAHR"
 FROM 
-:it_data_for_rule AS "BP_ID",
-"osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP_REG"
-WHERE "BP_ID"."BPARTNER" IS NULL
-  AND "BP_ID"."BPARTNER" <> ''
+:it_data_for_rule AS "WS"
+WHERE NOT EXISTS (
+	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
+		WHERE "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+)
 ;
 
 SELECT COUNT(*) INTO lv_new_registration_cnt FROM :lt_new_registration_result;
 
 END IF;
 
+
 IF  :lv_reinstatement_cnt > 0 
 AND :lv_new_registration_cnt > 0 THEN
 
-et_result =
+lt_result =
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
@@ -126,7 +122,7 @@ END IF;
 IF  :lv_reinstatement_cnt > 0 
 AND :lv_new_registration_cnt = 0 THEN
 
-et_result =
+lt_result =
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
@@ -141,7 +137,7 @@ END IF;
 IF  :lv_reinstatement_cnt = 0 
 AND :lv_new_registration_cnt > 0 THEN
 
-et_result =
+lt_result =
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
@@ -149,6 +145,20 @@ SELECT
 "GJAHR",
 100 AS "DETECTION_RESULT"
 FROM :lt_new_registration_result
+;
+
+END IF;
+
+IF :lv_mode = 'S' THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result
 ;
 
 END IF;

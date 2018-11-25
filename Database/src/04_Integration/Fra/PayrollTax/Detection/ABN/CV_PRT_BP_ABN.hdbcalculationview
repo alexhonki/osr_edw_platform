@@ -9,7 +9,7 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
       <viewAttribute id="BPARTNER">
         <descriptions defaultDescription="BPARTNER"/>
@@ -23,6 +23,16 @@
       <viewAttribute id="VALID_DATE_TO">
         <descriptions defaultDescription="VALID_DATE_TO"/>
       </viewAttribute>
+    
+      <viewAttribute id="VALID_TO">
+        <descriptions defaultDescription="VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_LIAB_DATE">
+        <descriptions defaultDescription="PRT_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_FROM">
+        <descriptions defaultDescription="VALID_FROM"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -31,6 +41,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_DATE_FROM" source="VALID_DATE_FROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_DATE_TO" source="VALID_DATE_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_LIAB_DATE" source="PRT_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -51,6 +65,19 @@
     <attribute id="VALID_DATE_TO" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_DATE_TO"/>
       <keyMapping columnObjectName="Projection_1" columnName="VALID_DATE_TO"/>
+    </attribute>
+  
+    <attribute id="PRT_LIAB_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT_LIAB_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRT_LIAB_DATE"/>
+    </attribute>
+    <attribute id="VALID_FROM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_FROM"/>
+    </attribute>
+    <attribute id="VALID_TO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_TO"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
