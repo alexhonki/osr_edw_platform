@@ -352,8 +352,8 @@ ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
 AND "W"."GJAHR" = "THLD"."GJAHR"
 INNER JOIN
 "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
-ON  "W"."GJAHR" = "THLD"."GJAHR"
-AND "W"."GJAHR" = "RATE"."PERIOD_KEY"
+ON  "W"."GJAHR" = "RATE"."GJAHR"
+AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 ;
 
 IF :lv_mode = 'R' THEN

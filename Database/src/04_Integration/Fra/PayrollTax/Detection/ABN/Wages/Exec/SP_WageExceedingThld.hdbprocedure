@@ -9,13 +9,14 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"(
    READS SQL DATA AS
 BEGIN
 
-DECLARE lv_pt_a_cnt Integer;
-DECLARE lv_pt_q_cnt Integer;
+DECLARE lv_pt_a_cnt Integer DEFAULT 0;
+DECLARE lv_pt_q_cnt Integer DEFAULT 0;
 
-DECLARE lv_result_a_cnt Integer;
-DECLARE lv_result_q_cnt Integer;
+DECLARE lv_result_a_cnt Integer DEFAULT 0;
+DECLARE lv_result_q_cnt Integer DEFAULT 0;
 
 SELECT COUNT(*) INTO lv_pt_a_cnt FROM :it_data_for_rule WHERE "PERIOD_CATEGORY" = 'PT-A';
+
 IF lv_pt_a_cnt > 0 THEN
 	lt_data_for_rule = SELECT * FROM :it_data_for_rule  WHERE "PERIOD_CATEGORY" = 'PT-A';
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"( 
@@ -37,5 +38,21 @@ IF lv_pt_q_cnt > 0 THEN
 	)
 	;
 END IF;
+
+
+/*
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT",
+0  AS "RISK_AMOUNT",
+'AUD  ' AS "CURRENCY" 
+FROM 
+:it_data_for_rule
+;
+*/
 
 END
