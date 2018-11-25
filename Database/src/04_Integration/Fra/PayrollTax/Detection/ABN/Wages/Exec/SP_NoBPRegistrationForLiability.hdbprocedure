@@ -11,10 +11,10 @@ BEGIN
 
 DECLARE lv_mode NVARCHAR(1);  
 
-DECLARE lx_reinstatement NVARCHAR(1);
-DECLARE lx_new_registration NVARCHAR(1);
-DECLARE lv_reinstatement_cnt Integer;
-DECLARE lv_new_registration_cnt Integer;
+DECLARE lx_reinstatement NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_new_registration NVARCHAR(1) DEFAULT 'N';
+DECLARE lv_reinstatement_cnt Integer DEFAULT 0;
+DECLARE lv_new_registration_cnt Integer DEFAULT 0;
 
 SELECT
 "RUN_MODE",
@@ -25,6 +25,25 @@ lv_mode,
 lx_reinstatement,
 lx_new_registration
 FROM :PARAMETERS LIMIT 1;
+
+IF lx_new_registration = 'Y' THEN 
+lt_new_registration_result = 
+SELECT 
+"WS"."ABN",
+"WS"."PERIOD_CATEGORY",
+"WS"."PERIOD_KEY",
+"WS"."GJAHR"
+FROM 
+:it_data_for_rule AS "WS"
+WHERE NOT EXISTS (
+	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
+		WHERE "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+)
+;
+
+SELECT COUNT(*) INTO lv_new_registration_cnt FROM :lt_new_registration_result;
+
+END IF;
 
 IF lx_reinstatement = 'Y' THEN 
 lt_reinstatment = 
@@ -75,24 +94,7 @@ SELECT COUNT(*) INTO lv_reinstatement_cnt FROM :lt_reinstatment;
 
 END IF;
 
-IF lx_new_registration = 'Y' THEN 
-lt_new_registration_result = 
-SELECT 
-"WS"."ABN",
-"WS"."PERIOD_CATEGORY",
-"WS"."PERIOD_KEY",
-"WS"."GJAHR"
-FROM 
-:it_data_for_rule AS "WS"
-WHERE NOT EXISTS (
-	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
-		WHERE "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
-)
-;
 
-SELECT COUNT(*) INTO lv_new_registration_cnt FROM :lt_new_registration_result;
-
-END IF;
 
 
 IF  :lv_reinstatement_cnt > 0 
@@ -162,5 +164,7 @@ FROM :lt_result
 ;
 
 END IF;
+
+
 
 END

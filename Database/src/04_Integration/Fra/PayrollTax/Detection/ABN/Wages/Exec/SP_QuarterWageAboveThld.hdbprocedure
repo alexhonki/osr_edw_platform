@@ -14,14 +14,14 @@ DECLARE lv_mode NVARCHAR(1);
 DECLARE lv_thld_yearly Decimal(15,2) ;
 DECLARE lv_ato_bas_wage_low DECIMAL(15,2);
 DECLARE lv_ato_bas_wage_high DECIMAL(15,2);
-DECLARE lx_ato_bas NVARCHAR(1);
-DECLARE lx_ato_itr NVARCHAR(1);
-DECLARE lx_wcq NVARCHAR(1);
-DECLARE lx_risk_value NVARCHAR(1);
+DECLARE lx_ato_bas NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_ato_itr NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_risk_value NVARCHAR(1) DEFAULT 'N';
 
-DECLARE lv_pt_a_cnt Integer;
-DECLARE lv_pt_q_cnt Integer;
-DECLARE lv_ato_bas_cnt Integer;
+DECLARE lv_pt_a_cnt Integer DEFAULT 0;
+DECLARE lv_pt_q_cnt Integer DEFAULT 0;
+DECLARE lv_ato_bas_cnt Integer DEFAULT 0;
 
 SELECT 
 "RUN_MODE",
