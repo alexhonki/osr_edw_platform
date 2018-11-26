@@ -18,7 +18,7 @@ DECLARE lv_ind_division               NVARCHAR(1) ;
 DECLARE lv_flag_abr_acnc              NVARCHAR(1) ;
 DECLARE lv_flag_asic_regd             NVARCHAR(1) ;
 DECLARE lv_flag_sup_gov_exmpt_anzsic  NVARCHAR(1) ;
-DECLARE lv_pt_id_role_date            DATE        ;
+DECLARE lv_pt_id_role_date            NVARCHAR(8) ;
 DECLARE lv_risk_max_count             INTEGER;
 
 
@@ -164,6 +164,8 @@ AND	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
 
 IF :lv_mode = 'S' THEN
 
+IF :lv_ind_division IS NOT NULL THEN
+
 ET_RESULT = 
 SELECT
    "ABN",
@@ -172,7 +174,7 @@ SELECT
    "GJAHR",
    100 AS "DETECTION_RESULT"
 FROM 
-(SELECT * FROM 	:step2 WHERE "IND_DIVISION" = :lv_ind_division)
+(SELECT * FROM 	:step2 WHERE "IND_DIVISION" IN (:lv_ind_division))
 WHERE 
 --"IND_DIVISION"  =
 	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
@@ -181,6 +183,26 @@ OR	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
 OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
 
 ; 
+
+ELSE 
+ET_RESULT = 
+SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   100 AS "DETECTION_RESULT"
+FROM 
+(SELECT * FROM 	:step2)
+WHERE 
+--"IND_DIVISION"  =
+	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
+OR	"ASIC_REGD"             = :lv_flag_asic_regd
+OR	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
+OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
+
+;
+END IF;
 
 ELSE 
 
