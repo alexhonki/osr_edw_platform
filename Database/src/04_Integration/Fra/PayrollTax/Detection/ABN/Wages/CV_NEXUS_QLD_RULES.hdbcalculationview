@@ -113,8 +113,8 @@
     <calculatedViewAttributes>
       <calculatedViewAttribute id="QLD_EMP_PC_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
         <formula>if(&quot;RSDNL_STATE_CD&quot;='QLD',
-if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_QLD_EMP_PC_LOW$$') OR 
-(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&lt;='$$IP_QLD_EMP_PC_HIGH$$')
+if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;=$$IP_QLD_EMP_PC_LOW$$) OR 
+(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&lt;=$$IP_QLD_EMP_PC_HIGH$$)
 ,'Y',' '),' ')</formula>
       </calculatedViewAttribute>
     
@@ -166,8 +166,8 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
     
       </calculatedViewAttribute>
       <calculatedViewAttribute id="QLD_EMP_CNT_CHECK" datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE">
-        <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND (&quot;CNT_EMPLOYEE_QLD&quot;&gt;='$$IP_QLD_EMP_CNT_LOW$$' OR 
-&quot;CNT_EMPLOYEE_QLD&quot;&lt;='$$IP_QLD_EMP_CNT_HIGH$$'),'Y',' ')</formula>
+        <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND (&quot;CNT_EMPLOYEE_QLD&quot;&gt;=$$IP_QLD_EMP_CNT_LOW$$ OR 
+&quot;CNT_EMPLOYEE_QLD&quot;&lt;=$$IP_QLD_EMP_CNT_HIGH$$),'Y',' ')</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
