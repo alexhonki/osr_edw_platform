@@ -366,4 +366,18 @@ AND "RESULT"."ITR" = "RFR"."ITR";
 
 END IF;
 
+IF :lv_mode = 'S' THEN
+
+et_result = 
+SELECT 
+"RESULT"."ABN",
+"RESULT"."PERIOD_CATEGORY",
+"RESULT"."PERIOD_KEY",
+"RESULT"."GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_result AS "RESULT"
+;
+
+END IF;
+
 END
