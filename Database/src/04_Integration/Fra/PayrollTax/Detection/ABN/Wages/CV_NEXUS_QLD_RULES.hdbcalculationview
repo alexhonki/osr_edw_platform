@@ -347,12 +347,6 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="A_QLD_NEXUS_RULES">
     <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
@@ -375,12 +369,17 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <viewAttribute id="QLD_EMP_PC" aggregationType="sum">
         <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
+    
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="J_POLICY_EMP_CNT_ADDR">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
@@ -389,16 +388,13 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC" source="QLD_EMP_PC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="J_POLICY_EMP_CNT_ADDR" joinType="leftOuter">
     <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
@@ -420,8 +416,12 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <viewAttribute id="QLD_EMP_PC" aggregationType="sum">
         <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$ABN$ABN"/>
-      <viewAttribute hidden="true" id="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -432,18 +432,16 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC" source="QLD_EMP_PC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABN$ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR" source="FINANCIAL_YEAR_STRING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FINANCIAL_YEAR_STRING"/>
     </input>
     <input node="P_WCQ_POLICY">
       <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FIN_YEAR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABN$ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR" source="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FIN_YEAR"/>
     </input>
-    <joinAttribute name="JOIN$ABN$ABN"/>
-    <joinAttribute name="JOIN$FINANCIAL_YEAR_STRING$FIN_YEAR"/>
+    <joinAttribute name="ABN"/>
+    <joinAttribute name="GJAHR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="J_EMP_CNT_ADDR" joinType="leftOuter">
     <viewAttributes>
@@ -493,12 +491,6 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="J_NEXUS_THLD" joinType="leftOuter">
     <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      </viewAttribute>
     
       <viewAttribute id="PERIOD_KEY">
         <descriptions defaultDescription="Key for Period Assignment"/>
@@ -534,30 +526,37 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <viewAttribute id="QLD_EMP_PC" aggregationType="sum">
         <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
+    
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="A_QLD_NEXUS_RULES">
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="FINANCIAL_YEAR_STRING"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_ADDR_CHECK" source="QLD_ADDR_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT_CHECK" source="QLD_EMP_CNT_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC_CHECK" source="QLD_EMP_PC_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_POLICY_CHECK" source="WCQ_POLICY_CHECK"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_QLD" source="CNT_EMPLOYEE_QLD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_ALL" source="CNT_EMPLOYEE_ALL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PC" source="QLD_EMP_PC"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
     <input node="J_PRT_THRESHOLD">
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_STRING" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
-    <joinAttribute name="FINANCIAL_YEAR_STRING"/>
+    <joinAttribute name="GJAHR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="J_PRT_THRESHOLD" joinType="inner">
     <viewAttributes>
@@ -634,62 +633,63 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
 </calculationViews>
 <logicalModel id="J_NEXUS_THLD">
   <attributes>
-    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"/>
-    </attribute>
-    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="FINANCIAL_YEAR_STRING"/>
-    </attribute>
   
-    <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PERIOD_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Key for Period Assignment"/>
   
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_KEY"/>
   
     </attribute>
-    <attribute id="PERIOD_CATEGORY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Inbound Correspondence Category"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_CATEGORY"/>
     </attribute>
-    <attribute id="PERIOD_END_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PERIOD_END_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Period To Date"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_END_DATE"/>
     </attribute>
-    <attribute id="WAERS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Currency Key"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WAERS"/>
     </attribute>
-    <attribute id="QLD_ADDR_CHECK" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="QLD_ADDR_CHECK" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_ADDR_CHECK"/>
     </attribute>
-    <attribute id="QLD_EMP_CNT_CHECK" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="QLD_EMP_CNT_CHECK" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_CNT_CHECK"/>
     </attribute>
-    <attribute id="QLD_EMP_PC_CHECK" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="QLD_EMP_PC_CHECK" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_PC_CHECK"/>
     </attribute>
-    <attribute id="WCQ_POLICY_CHECK" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WCQ_POLICY_CHECK" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WCQ_POLICY_CHECK"/>
+    </attribute>
+  
+    <attribute id="ABN" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="GJAHR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="CNT_EMPLOYEE_QLD" order="11" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_QLD" order="9" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE_QLD"/>
       <measureMapping columnObjectName="J_NEXUS_THLD" columnName="CNT_EMPLOYEE_QLD"/>
     </measure>
-    <measure id="QLD_EMP_PC" order="12" aggregationType="sum" measureType="simple">
+    <measure id="QLD_EMP_PC" order="10" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="QLD_EMP_PC"/>
       <measureMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_PC"/>
     </measure>
   
-    <measure id="CNT_EMPLOYEE_ALL" order="13" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_ALL" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE_ALL"/>
       <measureMapping columnObjectName="J_NEXUS_THLD" columnName="CNT_EMPLOYEE_ALL"/>
     </measure></baseMeasures>
@@ -700,17 +700,17 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="448.81878369636877" y="112"/>
+      <upperLeftCorner x="448" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="P_WCQ_POLICY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="477.7114749437194" y="696.9999964237213"/>
+      <upperLeftCorner x="477" y="696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="694.952950993887" y="856.9999952316284"/>
+      <upperLeftCorner x="694" y="856"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="A_EMP_CNT_QLD" modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput">
@@ -722,19 +722,19 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="A_EMP_CNT_QLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="576.6505970561631" y="1016.9999940395355"/>
+      <upperLeftCorner x="576" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="A_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="786.6505970561631" y="1016.9999940395355"/>
+      <upperLeftCorner x="786" y="1016"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_BAS_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="411.3256829739005" y="1161.9999928474426"/>
+      <upperLeftCorner x="411" y="1161"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_ABR_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666663" y="1161.9999928474426"/>
+      <upperLeftCorner x="118" y="1161"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput">
@@ -747,29 +747,29 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
     </shape>
   
     <shape expanded="true" modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="1321.9999916553497"/>
+      <upperLeftCorner x="92" y="1321"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_ABR_Agency_Data" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="1321.9999916553497"/>
+      <upperLeftCorner x="302" y="1321"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="A_QLD_ADDR_CHECK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="356.8870506950524" y="874.4999952316284"/>
+      <upperLeftCorner x="356" y="874"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="U_BUS_CHECK" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="356.8870506950524" y="1020.3333273728688"/>
+      <upperLeftCorner x="356" y="1020"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="533.3369215261322" y="394.4999988079071"/>
+      <upperLeftCorner x="533" y="394"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_POLICY_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="607.4110305940247" y="536.9999976158142"/>
+      <upperLeftCorner x="607" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
@@ -781,7 +781,7 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT_ADDR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="687.7114749437195" y="696.9999964237213"/>
+      <upperLeftCorner x="687" y="696"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput">
@@ -795,7 +795,7 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
   
   
     <shape expanded="true" modelObjectName="J_NEXUS_THLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="448.81878369636877" y="217"/>
+      <upperLeftCorner x="448" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput">
@@ -807,7 +807,7 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="J_PRT_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="214.07769726069156" y="376.9999988079071"/>
+      <upperLeftCorner x="214" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="P_RATE" modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput">
@@ -819,11 +819,11 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="P_RATE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="187.41103059402494" y="536.9999976158142"/>
+      <upperLeftCorner x="187" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="P_THRESHOLD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="397.41103059402485" y="536.9999976158142"/>
+      <upperLeftCorner x="397" y="536"/>
       <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
