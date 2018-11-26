@@ -160,7 +160,7 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes>
     
-      <calculatedViewAttribute id="FINANCIAL_YEAR_STRING" datatype="VARCHAR" length="13" expressionLanguage="COLUMN_ENGINE">
+      <calculatedViewAttribute id="FINANCIAL_YEAR_STRING" datatype="NVARCHAR" length="4" expressionLanguage="COLUMN_ENGINE">
     
         <formula>string(&quot;INCM_YR&quot;)</formula>
     
@@ -671,7 +671,9 @@ if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;='$$IP_
   
     <attribute id="ABN" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
+  
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"/>
+  
     </attribute>
     <attribute id="GJAHR" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
