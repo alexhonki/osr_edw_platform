@@ -28,15 +28,15 @@ BEGIN
  BP_DATA =
  SELECT 
 	"DET_OBJ"."ABN"                   AS "ABN",
-	"DET_OBJ"."FINANCIAL_YEAR"        AS "FINANCIAL_YEAR",
-	"DET_OBJ"."FINANCIAL_YEAR_STRING" AS "FINANCIAL_YEAR_STRING",
+	"DET_OBJ"."GJAHR"       		  AS "FINANCIAL_YEAR",
+	"DET_OBJ"."GJAHR"				 AS "FINANCIAL_YEAR_STRING",
 	"DET_OBJ"."PERIOD_KEY"            AS "PERIOD_KEY",
 	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
 	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
     "BPID"."PARTNER"                  AS "PARTNER"
     
  FROM 
-	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABNWages"            AS "DET_OBJ" 
+	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"            AS "DET_OBJ" 
  LEFT OUTER JOIN
  ( SELECT * FROM 
 	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" 
@@ -59,17 +59,12 @@ Entities with an Payroll tax role in RMS
 
 BP_ACC_DATA =
 SELECT DISTINCT
-	"CLIENT",
-	"CONTRACT_OBJECT",
-	"PARTNER",
-	"PARTNERACCTYP",
-	"DATE_TO",
-	"ONLINE_FILLING_COMM",
-	"PRT_TAX_LIAB_DATE"
-FROM "osr.edw.platform.fra.prt::CV_BP_REGISTRATION_FACTS"
-WHERE TO_DATS("DATE_TO") >= to_dats(now())
-AND "PARTNERACCTYP" IN ('PT')
-AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM  :BP_DATA);
+	"BPARTNER" AS "PARTNER",
+	"VALID_TO" AS "DATE_TO",
+	"PRT_LIAB_DATE" AS "PRT_TAX_LIAB_DATE"
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS"
+WHERE TO_DATS("VALID_TO") >= to_dats(now())
+AND "BPARTNER" IN (SELECT DISTINCT "PARTNER" FROM  :BP_DATA);
 ------------------------------------------------------------------------
 
 
@@ -82,7 +77,7 @@ SELECT
 	"DET_OBJ"."PERIOD_CATEGORY"       AS "PERIOD_CATEGORY",
 	"DET_OBJ"."PERIOD_END_DATE"       AS "PERIOD_END_DATE",
     "DET_OBJ"."PARTNER"               AS "PARTNER",
-    CASE WHEN "BP_FACTS"."PARTNERACCTYP" = 'PT' THEN 'Y' ELSE 'N' END AS "PTX_ROLE"
+    CASE WHEN "DET_OBJ"."PARTNER" IS NOT NULL THEN 'Y' ELSE 'N' END AS "PTX_ROLE"
 FROM 
 	:BP_DATA AS "DET_OBJ"
 LEFT OUTER JOIN 

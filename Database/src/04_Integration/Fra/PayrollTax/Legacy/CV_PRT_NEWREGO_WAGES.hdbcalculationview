@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" dataCategory="CUBE" cacheInvalidationPeriod="NONE" id="osr.edw.platform.fra.prt::CV_PRT_NEWREGO_WAGES" applyPrivilegeType="NONE" outputViewType="Aggregation" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="3.0" dataCategory="CUBE" cacheInvalidationPeriod="NONE" id="osr.edw.platform.fra.prt.legacy::CV_PRT_NEWREGO_WAGES" applyPrivilegeType="NONE" outputViewType="Aggregation" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_PRT_NEWREGO_WAGES"></descriptions>
 <localVariables></localVariables>
 <variableMappings></variableMappings>
@@ -10,8 +10,8 @@
   <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
     <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.platform.fra.prt::CV_WCQ_ABN_WAGES">
-    <resourceUri>osr.edw.platform.fra.prt::CV_WCQ_ABN_WAGES</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.legacy::CV_WCQ_ABN_WAGES">
+    <resourceUri>osr.edw.platform.fra.prt.legacy::CV_WCQ_ABN_WAGES</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE">
     <resourceUri>osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE</resourceUri>
@@ -163,7 +163,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes></restrictedViewAttributes>
-    <input node="osr.edw.platform.fra.prt::CV_WCQ_ABN_WAGES">
+    <input node="osr.edw.platform.fra.prt.legacy::CV_WCQ_ABN_WAGES">
       <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
       <mapping xsi:type="Calculation:AttributeMapping" source="FIN_YEAR" target="FIN_YEAR"></mapping>
       <mapping xsi:type="Calculation:AttributeMapping" source="ACT_WAGES" target="ACT_WAGES"></mapping>
@@ -593,15 +593,14 @@
       <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_CATEGORY" target="PERIOD_CATEGORY"></mapping>
       <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_END_DATE" target="PERIOD_END_DATE"></mapping>
       <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"></mapping>
+  
       <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="FINANCIAL_YEAR_STRING"></mapping>
+  
     </input>
     <joinAttribute name="FINANCIAL_YEAR_STRING"></joinAttribute>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" joinType="inner" id="J_PRT_THRESHOLD">
     <viewAttributes>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal Year"></descriptions>
-      </viewAttribute>
       <viewAttribute id="PERIOD_KEY">
         <descriptions defaultDescription="Key for Period Assignment"></descriptions>
       </viewAttribute>
@@ -614,7 +613,10 @@
       <viewAttribute id="WAERS">
         <descriptions defaultDescription="Currency Key"></descriptions>
       </viewAttribute>
-    </viewAttributes>
+    
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="Fiscal Year"></descriptions>
+      </viewAttribute></viewAttributes>
     <calculatedViewAttributes></calculatedViewAttributes>
     <restrictedViewAttributes></restrictedViewAttributes>
     <input node="P_RATE">
@@ -683,7 +685,9 @@
   
     <attribute id="FINANCIAL_YEAR_STRING" displayAttribute="false" order="3" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
+  
       <keyMapping columnObjectName="J_WAGES_PERIOD" columnName="FINANCIAL_YEAR_STRING"></keyMapping>
+  
     </attribute>
     <attribute id="PERIOD_KEY" displayAttribute="false" order="4" attributeHierarchyActive="false">
       <descriptions defaultDescription="Key for Period Assignment"></descriptions>
@@ -818,36 +822,36 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
-      <upperLeftCorner x="550.2893257409594" y="112"></upperLeftCorner>
+      <upperLeftCorner x="550" y="112"></upperLeftCorner>
     
       <rectangleSize width="160"></rectangleSize>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="ATO_ITR_NIND">
-      <upperLeftCorner x="91.99999999999997" y="711.9999964237213"></upperLeftCorner>
+      <upperLeftCorner x="91" y="711"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="ATO_BAS_NIND">
-      <upperLeftCorner x="511.9999999999999" y="711.9999964237213"></upperLeftCorner>
+      <upperLeftCorner x="511" y="711"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="WCQ_WAGES">
-      <upperLeftCorner x="301.99999999999994" y="711.9999964237213"></upperLeftCorner>
+      <upperLeftCorner x="301" y="711"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="U_WAGES">
-      <upperLeftCorner x="131.99999999999994" y="536.9999976158142"></upperLeftCorner>
+      <upperLeftCorner x="131" y="536"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_WAGES">
-      <upperLeftCorner x="299.6227446277829" y="394.4999988079071"></upperLeftCorner>
+      <upperLeftCorner x="299" y="394"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_WAGES_PERIOD">
-      <upperLeftCorner x="550.2893257409594" y="217"></upperLeftCorner>
+      <upperLeftCorner x="550" y="217"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
     <shape modelObjectNameSpace="J_WAGES_PERIOD" modelObjectType="JoinNodeInput" modelObjectName="P_WAGES">
@@ -859,7 +863,7 @@
       <rectangleSize width="250"></rectangleSize>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_PRT_THRESHOLD">
-      <upperLeftCorner x="601.2456698196344" y="376.9999988079071"></upperLeftCorner>
+      <upperLeftCorner x="601" y="376"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
     <shape modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput" modelObjectName="P_RATE">
@@ -871,11 +875,11 @@
       <rectangleSize width="250"></rectangleSize>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_RATE">
-      <upperLeftCorner x="509.6227446277828" y="536.9999976158142"></upperLeftCorner>
+      <upperLeftCorner x="509" y="536"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_THRESHOLD">
-      <upperLeftCorner x="719.6227446277829" y="536.9999976158142"></upperLeftCorner>
+      <upperLeftCorner x="719" y="536"></upperLeftCorner>
       <rectangleSize width="160" height="30"></rectangleSize>
     </shape>
   </shapes>
