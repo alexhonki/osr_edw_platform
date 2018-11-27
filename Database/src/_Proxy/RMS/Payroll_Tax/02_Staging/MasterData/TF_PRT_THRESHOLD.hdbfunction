@@ -14,6 +14,20 @@ SQL SECURITY INVOKER AS
 BEGIN 
 
 RETURN
+SELECT
+LEFT("FROMDATE",4) AS "GJAHR",
+"INCOTYP",
+"FROMDATE",
+"TODATE",
+"THRESHOLD",
+"DEDUCTION_TO",
+"WAERS"
+FROM "osr.edw.staging.md.rms.synonym::CDS_TRM.DSO.T_PRTRNG.active_data"
+;
+
+
+/*
+RETURN
 SELECT 
 TOP 1
 '2018' AS "GJAHR",
@@ -80,4 +94,5 @@ TOP 1
 'AUD  ' AS "WAERS"
 FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
 ;
+*/
 END;

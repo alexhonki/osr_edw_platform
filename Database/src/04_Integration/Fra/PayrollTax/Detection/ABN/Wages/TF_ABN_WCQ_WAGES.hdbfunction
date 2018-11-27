@@ -24,8 +24,7 @@ BEGIN
 		"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "WCQ_WAGES"
 		INNER JOIN 
 		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "WCQ_POLICY"
-		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_WAGES"."POLICY_NO"
-		AND "WCQ_WAGES"."RECORD_TYPE" = "WCQ_WAGES"."RECORD_TYPE"
+		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_POLICY"."POLICY_NO"
 		WHERE "WCQ_POLICY"."ABN" IS NOT NULL
 		  AND "WCQ_POLICY"."ABN" <> ''
 	;

@@ -9,53 +9,11 @@ SQL SECURITY INVOKER AS
 BEGIN 
 
 RETURN
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'2018' AS "PERSL",
-'20180723' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'2017' AS "PERSL",
-'20170721' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'2016' AS "PERSL",
-'20160721' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'2015' AS "PERSL",
-'20150721' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'2014' AS "PERSL",
-'20140721' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'2013' AS "PERSL",
-'20130721' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-Q' AS "INCOTYP",
-'18Q1' AS "PERSL",
-'20171009' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-Q' AS "INCOTYP",
-'18Q2' AS "PERSL",
-'20180131' AS "INCORR_FAEDN"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+SELECT
+"INCOTYP",
+"PERSL",
+"INCORR_FAEDN"
+FROM "osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_INCORR_PER"
 ;
 
 END;

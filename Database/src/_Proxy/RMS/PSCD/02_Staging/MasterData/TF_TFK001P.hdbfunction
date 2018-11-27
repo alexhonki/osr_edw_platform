@@ -8,45 +8,16 @@ SQL SECURITY INVOKER AS
 BEGIN 
 
 RETURN
-SELECT TOP 1 
-'2018' AS "PERSL",
-'Annual 2018' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'2017' AS "PERSL",
-'Annual 2017' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'2016' AS "PERSL",
-'Annual 2016' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'2015' AS "PERSL",
-'Annual 2015' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'2014' AS "PERSL",
-'Annual 2014' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'2013' AS "PERSL",
-'Annual 2013' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'18Q1' AS "PERSL",
-'July - Sept 2017' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'18Q2' AS "PERSL",
-'Oct - Dec 2017' AS "TXT50"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+SELECT 
+	"TFK001P"."PERSL",
+	"TFK001PT"."TXT50"
+FROM 
+"osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFK001P" AS "TFK001P"
+LEFT OUTER JOIN
+ "osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFK001PT" AS "TFK001PT"
+ ON "TFK001P"."PERSL" = "TFK001PT"."PERSL"
+ WHERE "TFK001PT"."SPRAS" ='E'
 ;
+
 
 END;

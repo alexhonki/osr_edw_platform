@@ -9,24 +9,16 @@ SQL SECURITY INVOKER AS
 BEGIN 
 
 RETURN
-SELECT TOP 1 
-'PT-A' AS "INCOTYP",
-'Payroll Tax - Annual' AS "INCOTEXT"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-H' AS "INCOTYP",
-'Payroll Tax - Half Yearly (6 months)' AS "INCOTEXT"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-Q' AS "INCOTYP",
-'Payroll Tax - Quarterly (3 months)' AS "INCOTEXT"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
-UNION
-SELECT TOP 1 
-'PT-M' AS "INCOTYP",
-'Payroll Tax - Monthly' AS "INCOTEXT"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
+SELECT
+"TFK_INCORR"."INCOTYP",
+"TFK_INCORRT"."INCOTEXT"
+FROM
+"osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFK_INCORR" AS "TFK_INCORR"
+LEFT OUTER JOIN
+"osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFK_INCORRT" AS "TFK_INCORRT"
+ON  "TFK_INCORR"."CLIENT" = "TFK_INCORRT"."CLIENT"
+AND "TFK_INCORR"."INCOTYP" = "TFK_INCORRT"."INCOTYP"
+WHERE "TFK_INCORRT"."SPRAS" = 'E'
 ;
+
 END;
