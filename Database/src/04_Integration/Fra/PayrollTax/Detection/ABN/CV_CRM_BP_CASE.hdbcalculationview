@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CRM Case Data"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_CRM_BP_CASE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_CRM_BP_CASE</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_CRM_BP_CASE">
+  <attributes>
+    <attribute id="CASE_GUID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="CASE_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_ID"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_ID"/>
+    </attribute>
+    <attribute id="CASE_TITLE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_TITLE"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_TITLE"/>
+    </attribute>
+    <attribute id="CASE_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_TYPE"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_TYPE"/>
+    </attribute>
+    <attribute id="CASE_CATEGORY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_CATEGORY"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_CATEGORY"/>
+    </attribute>
+    <attribute id="CASE_PRIORITY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_PRIORITY"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_PRIORITY"/>
+    </attribute>
+    <attribute id="CASE_OUTCOME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_OUTCOME"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CASE_OUTCOME"/>
+    </attribute>
+    <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="ABN"/>
+    </attribute>
+    <attribute id="PARTNER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="STAT_ORDERNO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAT_ORDERNO"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="STAT_ORDERNO"/>
+    </attribute>
+    <attribute id="PROCESSOR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESSOR"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="PROCESSOR"/>
+    </attribute>
+    <attribute id="CREATE_TIME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATE_TIME"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CREATE_TIME"/>
+    </attribute>
+    <attribute id="CHANGE_TIME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGE_TIME"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CHANGE_TIME"/>
+    </attribute>
+    <attribute id="CLOSING_TIME" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLOSING_TIME"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="CLOSING_TIME"/>
+    </attribute>
+  
+    <attribute id="ZZTOTASSMT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZTOTASSMT"/>
+      <keyMapping columnObjectName="TF_CRM_BP_CASE" columnName="ZZTOTASSMT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

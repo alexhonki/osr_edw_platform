@@ -1,0 +1,119 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_CRM_BP_CASE"( )
+    RETURNS TABLE (
+		PARTNER			NVARCHAR(10)  ,
+    	ABN				NVARCHAR(11)  ,
+		CASE_GUID		NVARCHAR(32)  ,
+		CASE_ID			NVARCHAR(12)  ,		
+		CASE_TYPE		NVARCHAR(4)   ,
+		CASE_CATEGORY	NVARCHAR(32)  ,	
+		CASE_PRIORITY	NVARCHAR(32)  ,    	
+    	CASE_OUTCOME	NVARCHAR(5)   ,		
+		CASE_TITLE		NVARCHAR(80)  ,
+		STAT_ORDERNO    NVARCHAR(2)   , 
+		PROCESSOR       NVARCHAR(12)  ,
+		ZZTOTASSMT      DECIMAL(21,2) ,
+		CREATE_TIME		DECIMAL(15,0) ,
+		CHANGE_TIME		DECIMAL(15,0) ,
+		CLOSING_TIME	DECIMAL(15,0) 
+
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+---Get ID Information---------    
+ BPID_DATA = 
+SELECT 
+"BPID"."PARTNER"  AS "PARTNER",
+LEFT("BPID"."IDNUMBER",11) AS "ABN"
+FROM 
+"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
+WHERE "BPID"."TYPE" = 'ZABN'
+
+;
+-----Get Case Information-----------
+CRM_CASE =
+ SELECT    
+		"CASE"."CASE_GUID",
+		"CASE"."CASE_TYPE",
+		"CASE"."EXT_KEY" AS "CASE_ID",
+		"CASE"."CREATE_TIME",
+		"CASE"."CHANGE_TIME",
+		"CASE"."CLOSING_TIME",
+		"CASE"."CASE_TITLE",
+		"CASE"."CATEGORY",
+		"CASE"."PRIORITY",
+		"CASE"."STAT_ORDERNO", 
+		"CASE"."PROCESSOR",
+		LEFT("CASE_INDX"."PARTNER_NO",10) AS "PARTNER",
+    	"CASE_OUTCOME"."ZZFLD00003I" AS "CASE_OUTCOME",
+    	"CASE_OUTCOME"."ZZTOTASSMT"
+	FROM
+    	"osr.edw.staging.md.crm.synonym::CDS_CRM.DSO.SCMGTCASEATTR.active_data" AS "CASE"
+    INNER JOIN 
+    	"osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMD_CASEINDEX.active_data" AS "CASE_INDX"
+    ON 
+    	"CASE"."CASE_GUID" = "CASE_INDX"."CASE_GUID"
+--    	AND "CASE"."CASE_TYPE" = 'ZINV'
+    	AND "CASE_INDX"."PARTNER_FCT" = 'Z0000002'
+--    	AND "CASE_INDX"."CRM_MAIN_PARTNER" = 'X'
+    INNER JOIN
+    	"osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMD_CMGCASE_AT.active_data" AS "CASE_OUTCOME"
+    ON
+    	"CASE"."CASE_GUID" =  "CASE_OUTCOME"."CASE_GUID"
+
+		
+    ;
+    
+-------Merge Case and ID Information----------    
+CASE_BP_ABN =
+
+ SELECT    
+		"CASE"."CASE_GUID"    AS "CASE_GUID",
+		"CASE"."CASE_TYPE"    AS "CASE_TYPE",
+		"CASE"."CASE_ID"      AS "CASE_ID",
+		"CASE"."CREATE_TIME"  AS "CREATE_TIME",
+		"CASE"."CHANGE_TIME"  AS "CHANGE_TIME",
+		"CASE"."CLOSING_TIME" AS "CLOSING_TIME",
+		"CASE"."CASE_TITLE"   AS "CASE_TITLE",
+		"CASE"."CATEGORY"     AS "CASE_CATEGORY",
+		"CASE"."PRIORITY"     AS "CASE_PRIORITY",
+		"CASE"."STAT_ORDERNO" AS "STAT_ORDERNO", 
+		"CASE"."PROCESSOR"    AS "PROCESSOR",
+		"CASE"."ZZTOTASSMT"   AS "ZZTOTASSMT", 
+    	"CASE"."PARTNER"      AS "PARTNER",
+    	"CASE"."CASE_OUTCOME" AS "CASE_OUTCOME",
+    	"BPID"."ABN"          AS "ABN"
+FROM
+	:CRM_CASE AS "CASE"
+	INNER JOIN 
+	:BPID_DATA AS "BPID"
+	ON
+	"CASE"."PARTNER" = "BPID"."PARTNER"
+;
+-----------------------------------------------
+RETURN
+SELECT 
+    	"PARTNER",
+    	"ABN"    ,	
+		"CASE_GUID",
+		"CASE_ID",		
+		"CASE_TYPE",
+		"CASE_CATEGORY",
+		"CASE_PRIORITY",
+    	"CASE_OUTCOME",	
+		"CASE_TITLE",   
+		"STAT_ORDERNO",
+		"PROCESSOR",
+		"ZZTOTASSMT",
+		"CREATE_TIME",
+		"CHANGE_TIME",
+		"CLOSING_TIME"
+FROM
+ :CASE_BP_ABN;
+
+
+END;

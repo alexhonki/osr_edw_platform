@@ -174,13 +174,13 @@ SELECT
    "GJAHR",
    100 AS "DETECTION_RESULT"
 FROM 
-(SELECT * FROM 	:step2 WHERE "IND_DIVISION" IN (:lv_ind_division))
+(SELECT * FROM 	:step2 WHERE "IND_DIVISION" IN (:lv_ind_division) and "PT_ID_ROLE" NOT IN  ('Y'))
 WHERE 
 --"IND_DIVISION"  =
 	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
 OR	"ASIC_REGD"             = :lv_flag_asic_regd
 OR	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
-OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
+--OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
 
 ; 
 
@@ -193,13 +193,13 @@ SELECT
    "GJAHR",
    100 AS "DETECTION_RESULT"
 FROM 
-(SELECT * FROM 	:step2)
+(SELECT * FROM 	:step2 WHERE "PT_ID_ROLE" NOT IN  ('Y'))
 WHERE 
 --"IND_DIVISION"  =
 	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
 OR	"ASIC_REGD"             = :lv_flag_asic_regd
 OR	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
-OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
+--OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
 
 ;
 END IF;
