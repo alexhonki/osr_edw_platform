@@ -44,6 +44,221 @@ BEGIN
 			lx_flag_qld_emp_pc
 		FROM :PARAMETERS LIMIT 1;
 
+
+  
+		lt_result = 
+			SELECT
+				"ABN",
+				"PERIOD_CATEGORY",
+				"PERIOD_KEY",
+				"GJAHR",
+				-1 AS "DETECTION_RESULT"
+			FROM  :IT_DATA_FOR_RULE
+			;	
+			
+IF :lx_flag_qld_address = 'Y' THEN 
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0 AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BASNIND"
+				WHERE "RESULT"."ABN" = LEFT("BASNIND"."ABN",11)
+				  AND "RESULT"."GJAHR" = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
+				  AND "BASNIND"."BUS_STATE" = 'QLD'
+			)
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0 AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM
+				(
+					SELECT LEFT("AGENCY_DATA"."ABN",11) AS "ABN" 
+						FROM
+						"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_LOCATION.active_data" AS "BUSINESS_LOCATION"
+						INNER JOIN
+						"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "AGENCY_DATA"
+						ON "BUSINESS_LOCATION"."PID" = "AGENCY_DATA"."PID"
+						WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
+				) AS "BUS_ADDR"
+				WHERE "RESULT"."ABN" = LEFT("BUS_ADDR"."ABN",11)
+			)
+			;	
+			
+END IF;
+
+
+			
+IF :lx_flag_wcq_policy = 'Y' THEN 
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0 AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WCQ"
+				WHERE "RESULT"."ABN" = "WCQ"."ABN"
+				  AND "RESULT"."GJAHR" = "WCQ"."GJAHR"
+			)
+		;
+			
+END IF;
+
+IF :lx_flag_qld_emp_cnt = 'Y' OR :lx_flag_qld_emp_pc = 'Y' THEN
+
+lt_cnt = 
+SELECT 
+"ABN",
+"GJAHR",
+SUM("QLD_CNT_EMPLOYEE") AS "QLD_CNT_EMPLOYEE",
+SUM("CNT_EMPLOYEE") AS "CNT_EMPLOYEE",
+100*SUM("QLD_CNT_EMPLOYEE")/SUM("CNT_EMPLOYEE") AS "QLD_PC_EMPLOYEE"
+FROM (
+	SELECT
+	LEFT("ABN",11) AS "ABN",
+	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
+	"CNT_EMPLOYEE" AS "QLD_CNT_EMPLOYEE",
+	0 AS "CNT_EMPLOYEE"
+	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+	WHERE "RSDNL_STATE_CD"='QLD'
+	UNION
+	SELECT
+	LEFT("ABN",11) AS "ABN",
+	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
+	0 AS "QLD_CNT_EMPLOYEE",
+	"CNT_EMPLOYEE" AS "CNT_EMPLOYEE"
+	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+)
+GROUP BY 
+"ABN",
+"GJAHR"
+;
+
+END IF;
+
+
+IF :lx_flag_qld_emp_cnt = 'Y' THEN
+
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0 AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM :lt_cnt AS "CNT"
+				WHERE "RESULT"."ABN" = "CNT"."ABN"
+				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
+				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+				  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
+			)
+		;
+
+END IF;
+
+IF :lx_flag_qld_emp_pc = 'Y' THEN
+
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0 AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM :lt_cnt AS "CNT"
+				WHERE "RESULT"."ABN" = "CNT"."ABN"
+				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
+				  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+				  AND "CNT"."QLD_PC_EMPLOYEE" < :lv_qld_emp_pc_thld_high
+			)
+		;
+
+END IF;
+
+lt_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+SUM("DETECTION_RESULT") AS "DETECTION_RESULT"
+FROM
+:lt_result
+GROUP BY
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+HAVING SUM("DETECTION_RESULT") = 0
+;
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+
+/*
+
    LT_DATA_FOR_RULE = 
 	SELECT
    "ABN",
@@ -73,13 +288,18 @@ step1 =
     placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
     placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high )) AS "A"
   WHERE 
-		"A"."ABN"   = "B"."ABN"
-  AND	"A"."GJAHR" = "B"."GJAHR"
+		LEFT("A"."ABN",11)   = LEFT("B"."ABN",11)
+  AND	LEFT("A"."GJAHR",4) = LEFT("B"."GJAHR",4)
 
    ;
    
+  
+   
    IF :lv_mode = 'S' THEN 
-	IF :lx_flag_qld_emp_cnt = 'Y' AND (:lx_flag_qld_emp_pc = 'N' OR :lx_flag_qld_emp_pc = ' ')  THEN 
+	IF :lx_flag_qld_emp_cnt = 'Y' OR (:lx_flag_qld_emp_pc = 'N' OR :lx_flag_qld_emp_pc = ' ')  THEN 
+
+
+
 		ET_RESULT = 
 			SELECT
 				"ABN",
@@ -96,7 +316,9 @@ step1 =
 			AND	 :step1."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
 			;
 	END IF;	
-	IF :lx_flag_qld_emp_pc = 'Y' AND (:lx_flag_qld_emp_cnt = 'N' OR :lx_flag_qld_emp_cnt = ' ') THEN 
+	IF :lx_flag_qld_emp_pc = 'Y' OR (:lx_flag_qld_emp_cnt = 'N' OR :lx_flag_qld_emp_cnt = ' ') THEN 
+	
+  
 		ET_RESULT = 
 			SELECT
 				"ABN",
@@ -105,14 +327,19 @@ step1 =
 				"GJAHR",
 				100 AS "DETECTION_RESULT"
 			FROM  :step1
+
 			WHERE :step1."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
 			AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
 			AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
 			AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
 			AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld_low
 			AND	 :step1."QLD_EMP_PC"			<= :lv_qld_emp_pc_thld_high
+			
 			;	
 	END IF;
    END IF; 
+
+*/
+
 
 END

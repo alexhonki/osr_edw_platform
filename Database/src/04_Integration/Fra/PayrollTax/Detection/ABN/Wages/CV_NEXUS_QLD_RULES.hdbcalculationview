@@ -56,11 +56,8 @@
   <DataSource id="osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data">
     <resourceUri>osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE">
-    <resourceUri>osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE</resourceUri>
-  </DataSource>
-  <DataSource id="osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD">
-    <resourceUri>osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD</resourceUri>
+  <DataSource id="osr.edw.staging.md.rms.pscd.proxy::TF_TFMCA_INCORR_PER" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.rms.pscd.proxy::TF_TFMCA_INCORR_PER</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -495,19 +492,6 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="J_NEXUS_THLD" joinType="leftOuter">
     <viewAttributes>
-    
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="Key for Period Assignment"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="Inbound Correspondence Category"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="Period To Date"/>
-      </viewAttribute>
-      <viewAttribute id="WAERS">
-        <descriptions defaultDescription="Currency Key"/>
-      </viewAttribute>
       <viewAttribute id="QLD_ADDR_CHECK">
         <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
@@ -537,6 +521,13 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
+    
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="INCOTYP"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERSL"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -553,108 +544,64 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
       <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
     </input>
-    <input node="J_PRT_THRESHOLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_CATEGORY" target="PERIOD_CATEGORY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_END_DATE" target="PERIOD_END_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
     <joinAttribute name="GJAHR"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="J_PRT_THRESHOLD" joinType="inner">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="Key for Period Assignment"/>
-      </viewAttribute>
       <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="Inbound Correspondence Category"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="Period To Date"/>
-      </viewAttribute>
-      <viewAttribute id="WAERS">
-        <descriptions defaultDescription="Currency Key"/>
-      </viewAttribute>
-    
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal Year"/>
-      </viewAttribute></viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="P_RATE">
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"/>
-    </input>
-    <input node="P_THRESHOLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCOTYP" target="PERIOD_CATEGORY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="TODATE" target="PERIOD_END_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-    </input>
-    <joinAttribute name="GJAHR"/>
-  </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="P_RATE">
-    <viewAttributes>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal Year"/>
+        <descriptions defaultDescription="INCOTYP"/>
       </viewAttribute>
       <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="Key for Period Assignment"/>
+        <descriptions defaultDescription="PERSL"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>CASE
+WHEN &quot;PERIOD_CATEGORY&quot; = 'PT-A' THEN &quot;PERIOD_KEY&quot;
+WHEN &quot;PERIOD_CATEGORY&quot; = 'PT-H' THEN '20' || LEFT(&quot;PERIOD_KEY&quot;,2)
+WHEN &quot;PERIOD_CATEGORY&quot; = 'PT-Q' THEN '20' || LEFT(&quot;PERIOD_KEY&quot;,2)
+WHEN &quot;PERIOD_CATEGORY&quot; = 'PT-M' THEN '20' || LEFT(&quot;PERIOD_KEY&quot;,2)
+ELSE &quot;PERIOD_KEY&quot;
+END</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE">
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"/>
+    <input node="osr.edw.staging.md.rms.pscd.proxy::TF_TFMCA_INCORR_PER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="INCOTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERSL"/>
     </input>
-  </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="P_THRESHOLD">
-    <viewAttributes>
-      <viewAttribute id="INCOTYP">
-        <descriptions defaultDescription="Inbound Correspondence Category"/>
-      </viewAttribute>
-      <viewAttribute id="TODATE">
-        <descriptions defaultDescription="Period To Date"/>
-      </viewAttribute>
-      <viewAttribute id="WAERS">
-        <descriptions defaultDescription="Currency Key"/>
-      </viewAttribute>
-    
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal year"/>
-      </viewAttribute></viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCOTYP" target="INCOTYP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="TODATE" target="TODATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"/>
-    </input>
+    <filter>LEFT(&quot;PERIOD_CATEGORY&quot;,2) = 'PT'</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="J_NEXUS_THLD">
   <attributes>
   
-    <attribute id="PERIOD_KEY" displayAttribute="false" order="1" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Key for Period Assignment"/>
+    <attribute id="ABN" displayAttribute="false" order="1" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
   
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_KEY"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"/>
   
     </attribute>
-    <attribute id="PERIOD_CATEGORY" displayAttribute="false" order="2" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Inbound Correspondence Category"/>
+    <attribute id="GJAHR" displayAttribute="false" order="2" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="GJAHR"/>
+    </attribute>
+  
+    <attribute id="PERIOD_CATEGORY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCOTYP"/>
+  
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_CATEGORY"/>
+  
     </attribute>
-    <attribute id="PERIOD_END_DATE" displayAttribute="false" order="3" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Period To Date"/>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_END_DATE"/>
-    </attribute>
-    <attribute id="WAERS" displayAttribute="false" order="4" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Currency Key"/>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WAERS"/>
+    <attribute id="PERIOD_KEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSL"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_KEY"/>
     </attribute>
     <attribute id="QLD_ADDR_CHECK" displayAttribute="false" order="5" attributeHierarchyActive="false">
       <descriptions defaultDescription="QLD_ADDR_CHECK"/>
@@ -671,19 +618,7 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
     <attribute id="WCQ_POLICY_CHECK" displayAttribute="false" order="8" attributeHierarchyActive="false">
       <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
       <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WCQ_POLICY_CHECK"/>
-    </attribute>
-  
-    <attribute id="ABN" displayAttribute="false" order="12" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-  
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"/>
-  
-    </attribute>
-    <attribute id="GJAHR" displayAttribute="false" order="13" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="GJAHR"/>
-    </attribute>
-  </attributes>
+    </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures>
     <measure aggregationType="sum" id="CNT_EMPLOYEE_QLD" order="9" measureType="simple">
@@ -706,17 +641,17 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
-      <upperLeftCorner x="448.81878369636877" y="112"/>
+      <upperLeftCorner x="618" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_WCQ_POLICY">
-      <upperLeftCorner x="477.7114749437194" y="696.9999964237213"/>
+      <upperLeftCorner x="635" y="641"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_EMP_CNT">
-      <upperLeftCorner x="694.952950993887" y="856.9999952316284"/>
+      <upperLeftCorner x="562" y="801"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput" modelObjectName="A_EMP_CNT_QLD">
@@ -728,19 +663,19 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_EMP_CNT_QLD">
-      <upperLeftCorner x="576.6505970561631" y="1016.9999940395355"/>
+      <upperLeftCorner x="702" y="961"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_EMP_CNT">
-      <upperLeftCorner x="786.6505970561631" y="1016.9999940395355"/>
+      <upperLeftCorner x="492" y="961"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_BAS_Bus_Addr">
-      <upperLeftCorner x="411.3256829739005" y="1161.9999928474426"/>
+      <upperLeftCorner x="100" y="1106"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_ABR_Bus_Addr">
-      <upperLeftCorner x="118.66666666666666" y="1161.9999928474426"/>
+      <upperLeftCorner x="538" y="1106"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput">
@@ -753,29 +688,29 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_ABR_Bus_Addr">
-      <upperLeftCorner x="91.99999999999997" y="1321.9999916553497"/>
+      <upperLeftCorner x="512" y="1266"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_ABR_Agency_Data">
-      <upperLeftCorner x="302" y="1321.9999916553497"/>
+      <upperLeftCorner x="722" y="1266"/>
       <rectangleSize width="160" height="30"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_QLD_ADDR_CHECK">
-      <upperLeftCorner x="356.8870506950524" y="874.4999952316284"/>
+      <upperLeftCorner x="282" y="819"/>
       <rectangleSize width="160" height="30"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="U_BUS_CHECK">
-      <upperLeftCorner x="356.8870506950524" y="1020.3333273728688"/>
+      <upperLeftCorner x="282" y="965"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_QLD_NEXUS_RULES">
-      <upperLeftCorner x="533.3369215261322" y="394.4999988079071"/>
+      <upperLeftCorner x="500" y="376"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_POLICY_EMP_CNT_ADDR">
-      <upperLeftCorner x="607.4110305940247" y="536.9999976158142"/>
+      <upperLeftCorner x="500" y="481"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput" modelObjectName="J_EMP_CNT_ADDR">
@@ -787,7 +722,7 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_EMP_CNT_ADDR">
-      <upperLeftCorner x="687.7114749437195" y="696.9999964237213"/>
+      <upperLeftCorner x="309" y="641"/>
       <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput" modelObjectName="J_EMP_CNT">
@@ -801,36 +736,21 @@ and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
   
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_NEXUS_THLD">
-      <upperLeftCorner x="448.81878369636877" y="217"/>
+      <upperLeftCorner x="618" y="217"/>
       <rectangleSize width="160" height="30"/>
     </shape>
-    <shape modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput" modelObjectName="A_QLD_NEXUS_RULES">
+    <shape modelObjectName="A_QLD_NEXUS_RULES" modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="271"/>
     </shape>
-    <shape modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput" modelObjectName="J_PRT_THRESHOLD">
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_PRT_THRESHOLD">
-      <upperLeftCorner x="214.07769726069156" y="376.9999988079071"/>
-      <rectangleSize width="160" height="30"/>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="710" y="376"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput" modelObjectName="P_RATE">
-      <upperLeftCorner x="20" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput" modelObjectName="P_THRESHOLD">
-      <upperLeftCorner x="320" y="30"/>
-      <rectangleSize width="250"/>
-    </shape>
-    <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_RATE">
-      <upperLeftCorner x="187.41103059402494" y="536.9999976158142"/>
-      <rectangleSize width="160" height="30"/>
-    </shape>
-    <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_THRESHOLD">
-      <upperLeftCorner x="397.41103059402485" y="536.9999976158142"/>
-      <rectangleSize width="160" height="30"/>
-    </shape></shapes>
+  </shapes>
 </layout>
 </Calculation:scenario>
