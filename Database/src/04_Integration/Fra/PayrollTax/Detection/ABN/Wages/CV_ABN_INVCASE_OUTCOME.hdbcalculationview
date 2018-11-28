@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_INVCASE_OUTCOME" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ABN CRM Investigation Case Outcome"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_INVCASE_OUTCOME" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_INVCASE_OUTCOME</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_INVCASE_OUTCOME">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="ABN"/>
+    </attribute>
+    <attribute id="INV_OUTCOME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INV_OUTCOME"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="INV_OUTCOME"/>
+    </attribute>
+    <attribute id="INV_PRIORITY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INV_PRIORITY"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="INV_PRIORITY"/>
+    </attribute>
+    <attribute id="CASE_INV_PROD_PRT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_PROD_PRT"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_PROD_PRT"/>
+    </attribute>
+    <attribute id="CASE_INV_UPROD_PRT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_UPROD_PRT"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_UPROD_PRT"/>
+    </attribute>
+    <attribute id="CASE_INV_PROD_OTHER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_PROD_OTHER"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_PROD_OTHER"/>
+    </attribute>
+    <attribute id="CASE_INV_UPROD_OTHER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_UPROD_OTHER"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_UPROD_OTHER"/>
+    </attribute>
+    <attribute id="CASE_INV_OPEN_PRT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_OPEN_PRT"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_OPEN_PRT"/>
+    </attribute>
+    <attribute id="CASE_INV_OPEN_OTHER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_OPEN_OTHER"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_OPEN_OTHER"/>
+    </attribute>
+    <attribute id="CASE_INV_BLANK_PRT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_BLANK_PRT"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_BLANK_PRT"/>
+    </attribute>
+    <attribute id="CASE_INV_BLANK_OTHER" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_INV_BLANK_OTHER"/>
+      <keyMapping columnObjectName="TF_ABN_INVCASE_OUTCOME" columnName="CASE_INV_BLANK_OTHER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

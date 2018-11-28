@@ -13,34 +13,47 @@ BEGIN
    /*************************************
        Write your procedure logic 
    *************************************/
-DECLARE lv_mode                       NVARCHAR(1) ;   
-DECLARE lv_ind_division               NVARCHAR(1) ;
+
+
+
+
+
+
+
+DECLARE lv_role_dt                    NVARCHAR(8) ;
+DECLARE lv_pt_role                    NVARCHAR(1) ;
+DECLARE lv_id_role                    NVARCHAR(1) ;
+DECLARE lv_pt_case_dt                 NVARCHAR(8) ;
+DECLARE lv_pt_case                    NVARCHAR(1) ;
 DECLARE lv_flag_abr_acnc              NVARCHAR(1) ;
 DECLARE lv_flag_asic_regd             NVARCHAR(1) ;
 DECLARE lv_flag_sup_gov_exmpt_anzsic  NVARCHAR(1) ;
-DECLARE lv_pt_id_role_date            NVARCHAR(8) ;
-DECLARE lv_risk_max_count             INTEGER;
+
+
 
 
 SELECT
-"RUN_MODE",
-"IND_DIVISION",
+"PT_ID_ROLE_DATE",
+"PT_ROLE",
+"ID_ROLE",
+"PT_CASE_DATE",
+"PT_CASE",
 "FLAG_ABR_ACNC", 
 "FLAG_ASIC_REGD", 
-"FLAG_SUP_GOV_EXMPT_ANZSIC",
-"PT_ID_ROLE_DATE"
+"FLAG_SUP_GOV_EXMPT_ANZSIC"
 INTO
-lv_mode,
-lv_ind_division,
+lv_role_dt,
+lv_pt_role,
+lv_id_role,
+lv_pt_case_dt,
+lv_pt_case,
 lv_flag_abr_acnc,
 lv_flag_asic_regd,
-lv_flag_sup_gov_exmpt_anzsic,
-lv_pt_id_role_date  
+lv_flag_sup_gov_exmpt_anzsic
 FROM :PARAMETERS LIMIT 1;
 
-select MAX("RISK_FACTOR_RATING") INTO lv_risk_max_count FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_INDUSTRY" ;
 
-
+----- Identify the BP of the ABN-----------------------
 step1 =
 
 SELECT DISTINCT 
@@ -58,8 +71,10 @@ SELECT DISTINCT
    
 ;
  
+
+
  
- PT_REG_FACTS =
+  PT_REG_FACTS =
  SELECT * FROM
 (
 SELECT 
@@ -74,31 +89,37 @@ FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS"
 )
 WHERE "RANK_1" = 1
 AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM :step1)
-AND "VALID_TO" >= to_dats(:lv_pt_id_role_date );
+AND "VALID_TO" >= to_dats(:lv_role_dt );
 
- 
-PT_ID_ROLE = 
-
-SELECT  DISTINCT
-	"ABN"
-FROM
-
-(
+PT_DATA =
 SELECT DISTINCT 
    "S1"."ABN"      AS "ABN",
    "S1"."PARTNER"  AS "PARTNER",
     'PT'           AS "PT_ROLE"
 FROM 
-	:STEP1 AS "S1" 
+	:step1 AS "S1" 
 INNER JOIN
 	:PT_REG_FACTS AS "PTR"
 ON  
-	"S1"."PARTNER" = "PTR"."PARTNER"
+	"S1"."PARTNER" = "PTR"."PARTNER";
+	
 
 
-UNION
+---------------------------------------------------------
+-------------------Identify the ID Role -----------------
 
 
+LT_ID_CO =
+SELECT  DISTINCT 
+	"PSOBKEY",
+	"PARTNER",
+	"PARTNERACCTYP"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data"
+WHERE "PSOBKEY" IN (SELECT "OBJID" FROM "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01"()
+WHERE FACT_SET = 'ZIND'
+AND to_dats(FACT_CAT_SEQ_82) >= to_dats(:lv_role_dt));
+
+ID_DATA =
 SELECT DISTINCT 
    "S1"."ABN"     AS "ABN",
    "S1"."PARTNER" AS "PARTNER",
@@ -107,119 +128,92 @@ SELECT DISTINCT
 FROM 
 	:STEP1 AS "S1" 
 INNER JOIN
-	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT100.active_data" AS "IDR"
+	:LT_ID_CO AS "IDR"
 ON  
 	"S1"."PARTNER" = "IDR"."PARTNER"
-AND "IDR"."RLTYP"  = 'ZDINS'
 
-) 
 ;
 
 
-step2 =
+
+
+
+---------------------------EXMPT CASE-------------------------
+
+PT_CASE =
+SELECT DISTINCT "ABN" FROM 
+(
+SELECT TOP 1000
+	"ABN",
+	"PARTNER",
+	"CASE_OUTCOME",
+	to_dats(LEFT("CREATE_TIME",8)) AS "CREATE_DATE"
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE "CASE_CATEGORY" = 'PRT'
+)
+WHERE to_dats(LEFT("CREATE_DATE",8)) >= to_dats(:lv_pt_case_dt) 
+;
+
+---------------------------------------------------------------
+Step2 =
+
+
 SELECT DISTINCT 
 		"A"."ABN",
 		"A"."PERIOD_CATEGORY",
 		"A"."PERIOD_KEY",
 		"A"."GJAHR",
 		"A"."ANZSIC_CD",
-		"A"."IND_CODE_GRP",
-		"A"."IND_DIVISION",
-		"A"."ABR_ACNC_FLAG",
-		"A"."ASIC_ORG_STATUS",
-		"A"."ASIC_REGD" ,
-		"A"."SUP_GOV_EXMPT_ANZSIC" ,
-		CASE WHEN "B"."ABN" IS NOT NULL THEN 'Y' ELSE 'N' END AS "PT_ID_ROLE",
-		"C"."RISK_FACTOR_RATING"
+--		"A"."IND_CODE_GRP",
+--		"A"."IND_DIVISION",
+		CASE WHEN :lv_flag_abr_acnc = 'Y' AND "A"."ABR_ACNC_FLAG" = 'Y' THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
+--		"A"."ASIC_ORG_STATUS",
+		CASE WHEN :lv_flag_asic_regd = 'Y' AND "A"."ASIC_REGD" = 'Y' THEN 'Y' ELSE 'N' END AS "ASIC_REGD",
+		CASE WHEN :lv_flag_sup_gov_exmpt_anzsic = 'Y' AND "A"."SUP_GOV_EXMPT_ANZSIC" = 'Y' THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC",
+		CASE WHEN :lv_pt_role = 'Y' AND "B"."PT_ROLE" = 'PT'  THEN 'Y' ELSE 'N' END AS "PT_ROLE",
+		CASE WHEN :lv_id_role = 'Y' AND "C"."ID_ROLE" = 'ID'  THEN 'Y' ELSE 'N' END AS "ID_ROLE",
+		CASE WHEN :lv_pt_case = 'Y' AND "D"."ABN" IS NOT NULL THEN 'Y' ELSE 'N' END AS "PT_CASE"
 FROM 
-	:IT_DATA_FOR_RULE AS "A" 
-LEFT OUTER JOIN 
-	:PT_ID_ROLE AS "B" 
-ON 
-	"A"."ABN" = "B"."ABN"
-LEFT OUTER JOIN
-	"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_INDUSTRY" AS "C"
-ON 
-    "A"."IND_DIVISION" = "C"."IND_DIVISION"
-    ;
-
-/*
-ET_RESULT = 
-SELECT
-   "ABN",
-   "PERIOD_CATEGORY",
-   "PERIOD_KEY",
-   "GJAHR",
-   100 AS "DETECTION_RESULT"
-FROM 
-	:step2
-WHERE 
---"IND_DIVISION"  =
-	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
-AND	"ASIC_REGD"             = :lv_flag_asic_regd
-AND	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
-
+		:IT_DATA_FOR_RULE AS "A" 
+	LEFT OUTER JOIN
+		:PT_DATA  AS "B" 
+	ON
+		"A"."ABN" = "B"."ABN"
+	LEFT OUTER JOIN
+		:ID_DATA  AS "C" 
+	ON
+		"A"."ABN" = "C"."ABN"
+    LEFT OUTER JOIN
+		:PT_CASE  AS "D" 
+	ON
+		"A"."ABN" = "D"."ABN"		
+	
 ;
-*/
 
-IF :lv_mode = 'S' THEN
 
-IF :lv_ind_division IS NOT NULL THEN
+------------------------
 
-ET_RESULT = 
+
+
+
+ET_RESULT =
+
+
 SELECT
    "ABN",
    "PERIOD_CATEGORY",
    "PERIOD_KEY",
    "GJAHR",
    100 AS "DETECTION_RESULT"
-FROM 
-(SELECT * FROM 	:step2 WHERE "IND_DIVISION" IN (:lv_ind_division) and "PT_ID_ROLE" NOT IN  ('Y'))
-WHERE 
---"IND_DIVISION"  =
-	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
-OR	"ASIC_REGD"             = :lv_flag_asic_regd
-OR	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
---OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
+   FROM :Step2
+WHERE
+	"PT_ROLE"					= :lv_pt_role
+OR	"ID_ROLE"					= :lv_id_role
+OR	"PT_CASE"					= :lv_pt_case
+OR	"ABR_ACNC_FLAG" 			= :lv_flag_abr_acnc
+OR	"ASIC_REGD"    			    = :lv_flag_asic_regd 
+OR	"SUP_GOV_EXMPT_ANZSIC"      = :lv_flag_sup_gov_exmpt_anzsic
+   ;
+   
 
-; 
-
-ELSE 
-ET_RESULT = 
-SELECT
-   "ABN",
-   "PERIOD_CATEGORY",
-   "PERIOD_KEY",
-   "GJAHR",
-   100 AS "DETECTION_RESULT"
-FROM 
-(SELECT * FROM 	:step2 WHERE "PT_ID_ROLE" NOT IN  ('Y'))
-WHERE 
---"IND_DIVISION"  =
-	"ABR_ACNC_FLAG"         = :lv_flag_abr_acnc
-OR	"ASIC_REGD"             = :lv_flag_asic_regd
-OR	"SUP_GOV_EXMPT_ANZSIC"  = :lv_flag_sup_gov_exmpt_anzsic
---OR  "PT_ID_ROLE"            = :lv_pt_id_role_date
-
-;
-END IF;
-
-ELSE 
-
-
-ET_RESULT = 
-
-SELECT
-   "ABN",
-   "PERIOD_CATEGORY",
-   "PERIOD_KEY",
-   "GJAHR",
-   ((to_int("RISK_FACTOR_RATING") * 100) / :lv_risk_max_count) AS "DETECTION_RESULT"
-FROM 
-	:step2
-
-
-; 
-END IF;
-
-END
+END;
