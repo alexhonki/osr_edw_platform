@@ -1,0 +1,102 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_FundCheck"
+(
+	IN "ABN" NVARCHAR(20),
+--	IN  IT_DATA_FOR_RULE    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT ET_RESULT					"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+   
+BEGIN
+
+IT_DATA_FOR_RULE =
+SELECT
+'98309267218' AS "ABN",
+'PT-A' AS "PERIOD_CATEGORY",
+'1701' AS "PERIOD_KEY",
+'2017' AS "GJAHR"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
+
+
+ABR_AGENCY =
+SELECT DISTINCT
+                "ABN",
+                "PID",
+                "ENT_TYP_CD",
+                "ACN",
+                "SPRSN_IND"
+FROM 
+               "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"
+WHERE 
+                SPRSN_IND <> 'Y'
+AND "ABN" IN (SELECT DISTINCT "ABN" FROM  :IT_DATA_FOR_RULE )         
+;
+
+ABR_FUND_ACNC_ABN =
+
+--ET_RESULT =
+SELECT DISTINCT 
+                "ABN" 
+FROM
+(
+SELECT  DISTINCT
+                "ABN"
+FROM
+(
+SELECT
+                "AGENCY"."ABN"              AS  "ABN",        
+    			"AGENCY"."PID"              AS  "PID",
+                "FUND"."PRIMARY_ID"         AS  "FUND_PID",
+                "FUND"."FUND_NAME"          AS  "FUND_NAME" ,
+                "FUND"."FUND_TYPE"          AS  "FUND_TYPE",
+                "FUND"."REGISTRATION_DATE"  AS  "FUND_REG_DT",
+                "FUND"."CANCELLATION_DATE"  AS  "FUND_CAN_DT"
+FROM
+                :ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+                "osr.edw.staging.md.abr.proxy::CV_FUNDS" AS "FUND"
+ON 
+                "AGENCY"."PID" = "FUND"."PRIMARY_ID"
+)              
+
+UNION 
+
+SELECT DISTINCT 
+                "ABN"
+FROM
+(
+SELECT
+                "AGENCY"."ABN"              AS  "ABN",        
+    			"AGENCY"."PID"              AS  "PID"
+FROM
+                :ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+                "osr.edw.staging.md.abr.proxy::CV_ACNC" AS "ACNC"
+ON 
+                "AGENCY"."PID" = "ACNC"."PID"
+)
+)
+;               
+
+	ET_RESULT1 = 
+			SELECT
+				"A"."ABN",
+				"B"."ABN" AS "ABN1",
+				"A"."PERIOD_CATEGORY",
+				"A"."PERIOD_KEY",
+				"A"."GJAHR"
+			    FROM :IT_DATA_FOR_RULE AS "A" 
+			    LEFT OUTER JOIN :ABR_FUND_ACNC_ABN AS "B" ON "A"."ABN" = "B"."ABN"
+	   ;
+
+	ET_RESULT = 
+			SELECT
+				"ABN",
+				"PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+				"PERIOD_KEY",
+				"GJAHR",
+				CASE WHEN "ABN1" IS NOT NULL THEN '0' ElSE
+		        '100' END AS "DETECTION_RESULT"
+			    FROM :ET_RESULT1 ;
+END
