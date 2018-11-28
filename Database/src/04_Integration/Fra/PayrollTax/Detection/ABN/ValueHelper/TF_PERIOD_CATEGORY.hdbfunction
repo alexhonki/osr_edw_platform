@@ -14,6 +14,7 @@ SELECT
 "INCOTEXT" AS "PERIOD_CATEGORY_DESCR"
 FROM 
 "osr.edw.staging.md.rms.pscd.proxy::TF_TFK_INCORR"( )
+WHERE LEFT("INCOTYP",2) = 'PT'
 ;
 
 END;
