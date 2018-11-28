@@ -11,6 +11,7 @@ BEGIN
 
 		DECLARE lv_mode 				 NVARCHAR(1);  
 		DECLARE lv_previous_year		 NVARCHAR(4);
+		DECLARE lv_gjahr_adjusted		 NVARCHAR(4);
 		DECLARE lv_qld_emp_pc_thld_low	 DECIMAL(5,2) ;
 		DECLARE lv_qld_emp_pc_thld_high	 DECIMAL(5,2) ;
 		DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
@@ -52,26 +53,32 @@ BEGIN
    TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))	AS "GJAHR"
    FROM :IT_DATA_FOR_RULE;  
    
+    SELECT 
+    "GJAHR" 
+    INTO
+    lv_gjahr_adjusted
+    FROM :LT_DATA_FOR_RULE;
+   
 
 step1 =
    SELECT 
-	  "A"."ABN" 					AS  "ABN", 
-	  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
-      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
-      "A"."GJAHR"					AS  "GJAHR",
-	  "B"."QLD_ADDR_CHECK",
-	  "B"."QLD_EMP_CNT_CHECK",
-	  "B"."QLD_EMP_PC_CHECK",
-	  "B"."WCQ_POLICY_CHECK",
-	  "B"."QLD_EMP_PC",
-	  "B"."CNT_EMPLOYEE_QLD"
+	  "B"."ABN" 					AS  "ABN", 
+	  "B"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
+      "B"."PERIOD_KEY"				AS  "PERIOD_KEY",
+      "B"."GJAHR"					AS  "GJAHR",
+	  "A"."QLD_ADDR_CHECK",
+	  "A"."QLD_EMP_CNT_CHECK",
+	  "A"."QLD_EMP_PC_CHECK",
+	  "A"."WCQ_POLICY_CHECK",
+	  "A"."QLD_EMP_PC",
+	  "A"."CNT_EMPLOYEE_QLD"
 	  
-   FROM :LT_DATA_FOR_RULE AS "A",
+   FROM :LT_DATA_FOR_RULE AS "B",
    (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
    (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
     placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
     placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
-    placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high )) AS "B"
+    placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high )) AS "A"
   WHERE 
 		"A"."ABN"   = "B"."ABN"
   AND	"A"."GJAHR" = "B"."GJAHR"
@@ -92,7 +99,7 @@ step1 =
 			AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
 			AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
 			AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
-			AND	 :step1."GJAHR" 				= :lv_previous_year
+			AND  :step1."GJAHR"					= :lv_gjahr_adjusted
 			AND	 :step1."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
 			AND	 :step1."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
 			;
@@ -110,7 +117,7 @@ step1 =
 			AND	 :step1."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
 			AND	 :step1."WCQ_POLICY_CHECK" 		= :lx_flag_wcq_policy
 			AND	 :step1."QLD_EMP_PC_CHECK" 		= :lx_flag_qld_emp_pc
-			AND	 :step1."GJAHR" 				= :lv_previous_year
+			AND  :step1."GJAHR"					= :lv_gjahr_adjusted
 			AND	 :step1."QLD_EMP_PC"			>= :lv_qld_emp_pc_thld_low
 			AND	 :step1."QLD_EMP_PC"			<= :lv_qld_emp_pc_thld_high
 			;	
