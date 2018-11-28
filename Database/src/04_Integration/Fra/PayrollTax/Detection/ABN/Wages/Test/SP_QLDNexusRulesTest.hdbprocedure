@@ -35,7 +35,8 @@ FROM
     placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
     placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high ))
 WHERE "ABN"   = :iv_abn
-  AND "GJAHR" = TO_NVARCHAR(TO_INT(:iv_gjahr) - TO_INT(:lv_gjahr_adjustment))
+  AND "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
 ;
 
 lt_param =
