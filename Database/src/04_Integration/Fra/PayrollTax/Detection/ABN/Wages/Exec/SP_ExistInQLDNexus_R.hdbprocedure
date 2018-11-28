@@ -94,7 +94,7 @@ BEGIN
 	AND "PC"."HIGH" > :lv_qld_emp_pc_thld_high
 	;
 
-	IF :lx_flag_qld_emp_cnt = 'Y' AND :lx_flag_qld_emp_pc = 'N' THEN 
+	IF :lx_flag_qld_emp_cnt = 'Y' AND (:lx_flag_qld_emp_pc = 'N' OR :lx_flag_qld_emp_pc = ' ') THEN 
 		IF "TOP_BAND_EMP_CNT" !='X' THEN
 			SELECT 
 			  "A"."ABN" 					AS  "ABN", 
@@ -168,7 +168,7 @@ BEGIN
    ;
 	END IF;
 	
-	IF :lx_flag_qld_emp_cnt = 'N' AND :lx_flag_qld_emp_pc = 'Y' THEN 
+	IF  (:lx_flag_qld_emp_cnt = 'N' OR :lx_flag_qld_emp_cnt = ' ')  AND :lx_flag_qld_emp_pc = 'Y' THEN 
 		IF "TOP_BAND_EMP_PC" !='X' THEN
 			SELECT 
 			  "A"."ABN" 					AS  "ABN", 

@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" dimensionType="STANDARD" schemaVersion="3.0" dataCategory="CUBE" cacheInvalidationPeriod="NONE" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES" applyPrivilegeType="NONE" outputViewType="Aggregation" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_NEXUS_QLD"></descriptions>
+<descriptions defaultDescription="CV_NEXUS_QLD"/>
 <localVariables>
   <variable parameter="true" id="IP_QLD_EMP_CNT_LOW">
-    <descriptions defaultDescription="Input Parameter: Queensland Employee Count From"></descriptions>
+    <descriptions defaultDescription="Input Parameter: Queensland Employee Count From"/>
     <variableProperties datatype="INTEGER" mandatory="false">
-      <valueDomain type="empty"></valueDomain>
-      <selection multiLine="false" type="Single"></selection>
-      <defaultRange lowValue="0"></defaultRange>
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange lowValue="0"/>
     </variableProperties>
   </variable>
 
   <variable parameter="true" id="IP_QLD_EMP_PC_LOW">
-    <descriptions defaultDescription="Input Parameter: Queensland Employee Percentage From"></descriptions>
+    <descriptions defaultDescription="Input Parameter: Queensland Employee Percentage From"/>
     <variableProperties datatype="DECIMAL" length="5" scale="2" mandatory="false">
-      <valueDomain type="empty"></valueDomain>
-      <selection multiLine="false" type="Single"></selection>
-      <defaultRange lowValue="0"></defaultRange>
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange lowValue="0"/>
     </variableProperties>
   </variable>
   <variable parameter="true" id="IP_QLD_EMP_CNT_HIGH">
-    <descriptions defaultDescription="Input Parameter: Queensland Employee Count To"></descriptions>
+    <descriptions defaultDescription="Input Parameter: Queensland Employee Count To"/>
     <variableProperties datatype="INTEGER" mandatory="false">
-      <valueDomain type="empty"></valueDomain>
-      <selection multiLine="false" type="Single"></selection>
-      <defaultRange lowValue="0"></defaultRange>
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange lowValue="0"/>
     </variableProperties>
   </variable>
   <variable parameter="true" id="IP_QLD_EMP_PC_HIGH">
-    <descriptions defaultDescription="Input Parameter: Queensland Employee Percentage To"></descriptions>
+    <descriptions defaultDescription="Input Parameter: Queensland Employee Percentage To"/>
     <variableProperties datatype="DECIMAL" length="5" scale="2" mandatory="false">
-      <valueDomain type="empty"></valueDomain>
-      <selection multiLine="false" type="Single"></selection>
-      <defaultRange lowValue="0"></defaultRange>
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange lowValue="0"/>
     </variableProperties>
   </variable>
 </localVariables>
-<variableMappings></variableMappings>
+<variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.legacy::CV_WCQ_ABN_WAGES">
     <resourceUri>osr.edw.platform.fra.prt.legacy::CV_WCQ_ABN_WAGES</resourceUri>
@@ -67,567 +67,571 @@
   <calculationView xsi:type="Calculation:ProjectionView" id="P_WCQ_POLICY">
     <viewAttributes>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="FIN_YEAR">
-        <descriptions defaultDescription="ASSESSMENT_YEAR"></descriptions>
+        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
       </viewAttribute>
       <viewAttribute id="POLICY_NO">
-        <descriptions defaultDescription="POLICY_NO"></descriptions>
+        <descriptions defaultDescription="POLICY_NO"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE" id="WCQ_POLICY_CHECK">
-        <formula>IF(not isNull("POLICY_NO") or "POLICY_NO"!=' ','Y',' ')</formula>
+        <formula>IF(not isNull(&quot;POLICY_NO&quot;) or &quot;POLICY_NO&quot;!=' ','Y','N')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <restrictedViewAttributes/>
     <input node="osr.edw.platform.fra.prt.legacy::CV_WCQ_ABN_WAGES">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="FIN_YEAR" target="FIN_YEAR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="POLICY_NO"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="FIN_YEAR" target="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="POLICY_NO"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" joinType="inner" id="J_EMP_CNT">
+  <calculationView xsi:type="Calculation:JoinView" id="J_EMP_CNT" joinType="inner">
     <viewAttributes>
       <viewAttribute id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
       <viewAttribute id="RSDNL_STATE_CD">
-        <descriptions defaultDescription="RSDNL_STATE_CD"></descriptions>
+        <descriptions defaultDescription="RSDNL_STATE_CD"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_CNT_CHECK">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
       </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$INCM_YR$INCM_YR"></viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$INCM_YR$INCM_YR"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE" id="QLD_EMP_PC_CHECK">
-        <formula>if("RSDNL_STATE_CD"='QLD',
-if(((("CNT_EMPLOYEE_QLD"/"CNT_EMPLOYEE_ALL")*100)&gt;=$$IP_QLD_EMP_PC_LOW$$) OR 
-((("CNT_EMPLOYEE_QLD"/"CNT_EMPLOYEE_ALL")*100)&lt;=$$IP_QLD_EMP_PC_HIGH$$)
-,'Y',' '),' ')</formula>
+        <formula>if(&quot;RSDNL_STATE_CD&quot;='QLD',
+if((((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&gt;=$$IP_QLD_EMP_PC_LOW$$) OR 
+(((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)&lt;=$$IP_QLD_EMP_PC_HIGH$$)
+,'Y','N'),'N')</formula>
       </calculatedViewAttribute>
     
       <calculatedViewAttribute datatype="DECIMAL" length="5" expressionLanguage="COLUMN_ENGINE" scale="2" id="QLD_EMP_PC">
     
-        <formula>(("CNT_EMPLOYEE_QLD"/"CNT_EMPLOYEE_ALL")*100)</formula>
+        <formula>((&quot;CNT_EMPLOYEE_QLD&quot;/&quot;CNT_EMPLOYEE_ALL&quot;)*100)</formula>
     
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <restrictedViewAttributes/>
     <input node="A_EMP_CNT_QLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="FINANCIAL_YEAR_STRING" target="FINANCIAL_YEAR_STRING"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="RSDNL_STATE_CD" target="RSDNL_STATE_CD"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCM_YR" target="JOIN$INCM_YR$INCM_YR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="FINANCIAL_YEAR_STRING" target="FINANCIAL_YEAR_STRING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="RSDNL_STATE_CD" target="RSDNL_STATE_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCM_YR$INCM_YR" source="INCM_YR"/>
     </input>
     <input node="A_EMP_CNT">
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCM_YR" target="JOIN$INCM_YR$INCM_YR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$INCM_YR$INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
     </input>
-    <joinAttribute name="JOIN$INCM_YR$INCM_YR"></joinAttribute>
-    <joinAttribute name="ABN"></joinAttribute>
+    <joinAttribute name="JOIN$INCM_YR$INCM_YR"/>
+    <joinAttribute name="ABN"/>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="A_EMP_CNT_QLD" filterExpressionLanguage="SQL">
     <viewAttributes>
     
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
     
       <viewAttribute id="RSDNL_STATE_CD">
-        <descriptions defaultDescription="RSDNL_STATE_CD"></descriptions>
+        <descriptions defaultDescription="RSDNL_STATE_CD"/>
       </viewAttribute>
     
       <viewAttribute aggregationType="sum" id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
       </viewAttribute>
       <viewAttribute id="INCM_YR">
-        <descriptions defaultDescription="INCM_YR"></descriptions>
+        <descriptions defaultDescription="INCM_YR"/>
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes>
     
       <calculatedViewAttribute datatype="NVARCHAR" length="4" expressionLanguage="COLUMN_ENGINE" id="FINANCIAL_YEAR_STRING">
     
-        <formula>string("INCM_YR")</formula>
+        <formula>string(&quot;INCM_YR&quot;)</formula>
     
       </calculatedViewAttribute>
       <calculatedViewAttribute datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE" id="QLD_EMP_CNT_CHECK">
-        <formula>if("RSDNL_STATE_CD" = 'QLD' AND ("CNT_EMPLOYEE_QLD"&gt;=$$IP_QLD_EMP_CNT_LOW$$ OR 
-"CNT_EMPLOYEE_QLD"&lt;=$$IP_QLD_EMP_CNT_HIGH$$),'Y',' ')</formula>
+        <formula>if(&quot;RSDNL_STATE_CD&quot; = 'QLD' AND (&quot;CNT_EMPLOYEE_QLD&quot;&gt;=$$IP_QLD_EMP_CNT_LOW$$ OR 
+&quot;CNT_EMPLOYEE_QLD&quot;&lt;=$$IP_QLD_EMP_CNT_HIGH$$),'Y','N')</formula>
       </calculatedViewAttribute></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCM_YR" target="INCM_YR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE" target="CNT_EMPLOYEE_QLD"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="INCM_YR" target="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE" target="CNT_EMPLOYEE_QLD"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" source="RSDNL_STATE_CD" target="RSDNL_STATE_CD"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="RSDNL_STATE_CD" target="RSDNL_STATE_CD"/>
     </input>
-    <filter>"RSDNL_STATE_CD"='QLD'</filter>
+    <filter>&quot;RSDNL_STATE_CD&quot;='QLD'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="A_EMP_CNT">
     <viewAttributes>
       <viewAttribute aggregationType="sum" id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
     
       <viewAttribute id="INCM_YR">
-        <descriptions defaultDescription="INCM_YR"></descriptions>
+        <descriptions defaultDescription="INCM_YR"/>
       </viewAttribute>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="A_EMP_CNT$$$$osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data$$">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCM_YR" target="INCM_YR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE" target="CNT_EMPLOYEE_ALL"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="INCM_YR" target="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE" target="CNT_EMPLOYEE_ALL"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_BAS_Bus_Addr" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="BUS_STATE">
-        <descriptions defaultDescription="BUS_STATE"></descriptions>
+        <descriptions defaultDescription="BUS_STATE"/>
       </viewAttribute>
     
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="BUS_ADDR_LN_1">
-        <descriptions defaultDescription="BUS_ADDR_LN_1"></descriptions>
+        <descriptions defaultDescription="BUS_ADDR_LN_1"/>
       </viewAttribute>
       <viewAttribute id="BUS_ADDR_LN_2">
-        <descriptions defaultDescription="BUS_ADDR_LN_2"></descriptions>
+        <descriptions defaultDescription="BUS_ADDR_LN_2"/>
       </viewAttribute>
       <viewAttribute id="BUS_LCLTY_NM">
-        <descriptions defaultDescription="BUS_LCLTY_NM"></descriptions>
+        <descriptions defaultDescription="BUS_LCLTY_NM"/>
       </viewAttribute></viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE" id="BAS_QLD_BUS_ADDR_CHECK">
-        <formula>if("BUS_STATE"='QLD','Y',' ')</formula>
+        <formula>if(&quot;BUS_STATE&quot;='QLD','Y','N')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_ADDR_LN_1" target="BUS_ADDR_LN_1"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_ADDR_LN_2" target="BUS_ADDR_LN_2"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LCLTY_NM" target="BUS_LCLTY_NM"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_STATE" target="BUS_STATE"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_ADDR_LN_1" target="BUS_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_ADDR_LN_2" target="BUS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LCLTY_NM" target="BUS_LCLTY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_STATE" target="BUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
     </input>
-    <filter>not isNull("BAS_QLD_BUS_ADDR_CHECK") and "BAS_QLD_BUS_ADDR_CHECK"!=' '</filter>
+    <filter>not isNull(&quot;BAS_QLD_BUS_ADDR_CHECK&quot;) 
+and &quot;BAS_QLD_BUS_ADDR_CHECK&quot;!=' ' 
+and &quot;BAS_QLD_BUS_ADDR_CHECK&quot; !='N'</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" joinType="inner" id="J_ABR_Bus_Addr" cardinality="C1_1" filterExpressionLanguage="COLUMN_ENGINE">
+  <calculationView xsi:type="Calculation:JoinView" id="J_ABR_Bus_Addr" cardinality="C1_1" joinType="inner" filterExpressionLanguage="COLUMN_ENGINE">
     <viewAttributes>
       <viewAttribute id="BUS_LOCN_STT">
-        <descriptions defaultDescription="BUS_LOCN_STT"></descriptions>
+        <descriptions defaultDescription="BUS_LOCN_STT"/>
       </viewAttribute>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
-      <viewAttribute hidden="true" id="JOIN$PID$PID"></viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$PID$PID"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE" id="ABR_QLD_Bus_Addr_Check">
-        <formula>if("BUS_LOCN_STT"='QLD','Y',' ')</formula>
+        <formula>if(&quot;BUS_LOCN_STT&quot;='QLD','Y','N')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <restrictedViewAttributes/>
     <input node="P_ABR_Bus_Addr">
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LOCN_STT" target="BUS_LOCN_STT"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PID" target="JOIN$PID$PID"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LOCN_STT" target="BUS_LOCN_STT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PID$PID" source="PID"/>
     </input>
     <input node="P_ABR_Agency_Data">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PID" target="JOIN$PID$PID"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PID$PID" source="PID"/>
     </input>
-    <filter>not isNull("ABR_QLD_Bus_Addr_Check") and "ABR_QLD_Bus_Addr_Check"!=' '</filter>
-    <joinAttribute name="JOIN$PID$PID"></joinAttribute>
+    <filter>not isNull(&quot;ABR_QLD_Bus_Addr_Check&quot;) 
+and &quot;ABR_QLD_Bus_Addr_Check&quot;!=' '
+and &quot;ABR_QLD_Bus_Addr_Check&quot;!='N'</filter>
+    <joinAttribute name="JOIN$PID$PID"/>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="P_ABR_Bus_Addr">
     <viewAttributes>
       <viewAttribute id="BUS_LOCN_STT">
-        <descriptions defaultDescription="BUS_LOCN_STT"></descriptions>
+        <descriptions defaultDescription="BUS_LOCN_STT"/>
       </viewAttribute>
     
       <viewAttribute id="PID">
-        <descriptions defaultDescription="PID"></descriptions>
+        <descriptions defaultDescription="PID"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_LOCATION.active_data">
-      <mapping xsi:type="Calculation:AttributeMapping" source="PID" target="PID"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LOCN_STT" target="BUS_LOCN_STT"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PID" target="PID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LOCN_STT" target="BUS_LOCN_STT"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_ABR_Agency_Data">
     <viewAttributes>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
     
       <viewAttribute id="PID">
-        <descriptions defaultDescription="PID"></descriptions>
+        <descriptions defaultDescription="PID"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data">
-      <mapping xsi:type="Calculation:AttributeMapping" source="PID" target="PID"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PID" target="PID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="A_QLD_ADDR_CHECK">
     <viewAttributes>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
     
       <viewAttribute id="BUS_STATE">
-        <descriptions defaultDescription="BUS_STATE"></descriptions>
+        <descriptions defaultDescription="BUS_STATE"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="U_BUS_CHECK">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_STATE" target="BUS_STATE"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_STATE" target="BUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:UnionView" id="U_BUS_CHECK">
     <viewAttributes>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="BUS_STATE">
-        <descriptions defaultDescription="BUS_STATE"></descriptions>
+        <descriptions defaultDescription="BUS_STATE"/>
       </viewAttribute>
       <viewAttribute id="ABR_QLD_BUS_ADDR_CHECK">
-        <descriptions defaultDescription="ABR_QLD_Bus_Addr_Check"></descriptions>
+        <descriptions defaultDescription="ABR_QLD_Bus_Addr_Check"/>
       </viewAttribute>
       <viewAttribute id="BAS_QLD_BUS_ADDR_CHECK">
-        <descriptions defaultDescription="BAS_QLD_BUS_ADDR_CHECK"></descriptions>
+        <descriptions defaultDescription="BAS_QLD_BUS_ADDR_CHECK"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute datatype="NVARCHAR" length="1" expressionLanguage="COLUMN_ENGINE" id="QLD_ADDR_CHECK">
-        <formula>if("BAS_QLD_BUS_ADDR_CHECK"='Y' or "ABR_QLD_BUS_ADDR_CHECK" ='Y','Y',' ')</formula>
+        <formula>if(&quot;BAS_QLD_BUS_ADDR_CHECK&quot;='Y' or &quot;ABR_QLD_BUS_ADDR_CHECK&quot; ='Y','Y','N')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <restrictedViewAttributes/>
     <input node="J_ABR_Bus_Addr" emptyUnionBehavior="NO_ROW">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LOCN_STT" target="BUS_STATE"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABR_QLD_Bus_Addr_Check" target="ABR_QLD_BUS_ADDR_CHECK"></mapping>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" null="true" value="" target="BAS_QLD_BUS_ADDR_CHECK"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_LOCN_STT" target="BUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABR_QLD_Bus_Addr_Check" target="ABR_QLD_BUS_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" null="true" value="" target="BAS_QLD_BUS_ADDR_CHECK"/>
     </input>
     <input node="P_BAS_Bus_Addr" emptyUnionBehavior="NO_ROW">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_STATE" target="BUS_STATE"></mapping>
-      <mapping xsi:type="Calculation:ConstantAttributeMapping" null="true" value="" target="ABR_QLD_BUS_ADDR_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="BAS_QLD_BUS_ADDR_CHECK" target="BAS_QLD_BUS_ADDR_CHECK"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BUS_STATE" target="BUS_STATE"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" null="true" value="" target="ABR_QLD_BUS_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="BAS_QLD_BUS_ADDR_CHECK" target="BAS_QLD_BUS_ADDR_CHECK"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="A_QLD_NEXUS_RULES">
     <viewAttributes>
       <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_CNT_CHECK">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
-        <descriptions defaultDescription="QLD_EMP_PC_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
       </viewAttribute>
       <viewAttribute id="WCQ_POLICY_CHECK">
-        <descriptions defaultDescription="WCQ_POLICY_CHECK"></descriptions>
+        <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
     
       <viewAttribute aggregationType="sum" id="QLD_EMP_PC">
-        <descriptions defaultDescription="QLD_EMP_PC"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
     
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="J_POLICY_EMP_CNT_ADDR">
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WCQ_POLICY_CHECK" target="WCQ_POLICY_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="WCQ_POLICY_CHECK" target="WCQ_POLICY_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" joinType="leftOuter" id="J_POLICY_EMP_CNT_ADDR">
+  <calculationView xsi:type="Calculation:JoinView" id="J_POLICY_EMP_CNT_ADDR" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_CNT_CHECK">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
-        <descriptions defaultDescription="QLD_EMP_PC_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
       </viewAttribute>
       <viewAttribute id="WCQ_POLICY_CHECK">
-        <descriptions defaultDescription="WCQ_POLICY_CHECK"></descriptions>
+        <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="QLD_EMP_PC">
-        <descriptions defaultDescription="QLD_EMP_PC"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="J_EMP_CNT_ADDR">
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="FINANCIAL_YEAR_STRING" target="GJAHR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="FINANCIAL_YEAR_STRING" target="GJAHR"/>
     </input>
     <input node="P_WCQ_POLICY">
-      <mapping xsi:type="Calculation:AttributeMapping" source="WCQ_POLICY_CHECK" target="WCQ_POLICY_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="FIN_YEAR" target="GJAHR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="WCQ_POLICY_CHECK" target="WCQ_POLICY_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FIN_YEAR"/>
     </input>
-    <joinAttribute name="ABN"></joinAttribute>
-    <joinAttribute name="GJAHR"></joinAttribute>
+    <joinAttribute name="ABN"/>
+    <joinAttribute name="GJAHR"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" joinType="leftOuter" id="J_EMP_CNT_ADDR">
+  <calculationView xsi:type="Calculation:JoinView" id="J_EMP_CNT_ADDR" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_CNT_CHECK">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
-        <descriptions defaultDescription="QLD_EMP_PC_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
       <viewAttribute aggregationType="sum" id="QLD_EMP_PC">
-        <descriptions defaultDescription="QLD_EMP_PC"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
     
     
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="FINANCIAL_YEAR_STRING">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="J_EMP_CNT">
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="FINANCIAL_YEAR_STRING" target="FINANCIAL_YEAR_STRING"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="FINANCIAL_YEAR_STRING" target="FINANCIAL_YEAR_STRING"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"/>
     </input>
     <input node="A_QLD_ADDR_CHECK">
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
     </input>
-    <joinAttribute name="ABN"></joinAttribute>
+    <joinAttribute name="ABN"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" joinType="leftOuter" id="J_NEXUS_THLD">
+  <calculationView xsi:type="Calculation:JoinView" id="J_NEXUS_THLD" joinType="leftOuter">
     <viewAttributes>
     
       <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="Key for Period Assignment"></descriptions>
+        <descriptions defaultDescription="Key for Period Assignment"/>
       </viewAttribute>
       <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="Inbound Correspondence Category"></descriptions>
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
       </viewAttribute>
       <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="Period To Date"></descriptions>
+        <descriptions defaultDescription="Period To Date"/>
       </viewAttribute>
       <viewAttribute id="WAERS">
-        <descriptions defaultDescription="Currency Key"></descriptions>
+        <descriptions defaultDescription="Currency Key"/>
       </viewAttribute>
       <viewAttribute id="QLD_ADDR_CHECK">
-        <descriptions defaultDescription="QLD_ADDR_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_ADDR_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_CNT_CHECK">
-        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
       </viewAttribute>
       <viewAttribute id="QLD_EMP_PC_CHECK">
-        <descriptions defaultDescription="QLD_EMP_PC_CHECK"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
       </viewAttribute>
       <viewAttribute id="WCQ_POLICY_CHECK">
-        <descriptions defaultDescription="WCQ_POLICY_CHECK"></descriptions>
+        <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_QLD">
-        <descriptions defaultDescription="CNT_EMPLOYEE_1"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE_1"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_ALL">
-        <descriptions defaultDescription="CNT_EMPLOYEE"></descriptions>
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
       </viewAttribute>
     
       <viewAttribute aggregationType="sum" id="QLD_EMP_PC">
-        <descriptions defaultDescription="QLD_EMP_PC"></descriptions>
+        <descriptions defaultDescription="QLD_EMP_PC"/>
       </viewAttribute>
     
       <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"></descriptions>
+        <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
+        <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="A_QLD_NEXUS_RULES">
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WCQ_POLICY_CHECK" target="WCQ_POLICY_CHECK"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_ADDR_CHECK" target="QLD_ADDR_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_CNT_CHECK" target="QLD_EMP_CNT_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC_CHECK" target="QLD_EMP_PC_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="WCQ_POLICY_CHECK" target="WCQ_POLICY_CHECK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_QLD" target="CNT_EMPLOYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="CNT_EMPLOYEE_ALL" target="CNT_EMPLOYEE_ALL"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="QLD_EMP_PC" target="QLD_EMP_PC"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="ABN" target="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
     </input>
     <input node="J_PRT_THRESHOLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_CATEGORY" target="PERIOD_CATEGORY"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_END_DATE" target="PERIOD_END_DATE"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_CATEGORY" target="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_END_DATE" target="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
-    <joinAttribute name="GJAHR"></joinAttribute>
+    <joinAttribute name="GJAHR"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" joinType="inner" id="J_PRT_THRESHOLD">
+  <calculationView xsi:type="Calculation:JoinView" id="J_PRT_THRESHOLD" joinType="inner">
     <viewAttributes>
       <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="Key for Period Assignment"></descriptions>
+        <descriptions defaultDescription="Key for Period Assignment"/>
       </viewAttribute>
       <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="Inbound Correspondence Category"></descriptions>
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
       </viewAttribute>
       <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="Period To Date"></descriptions>
+        <descriptions defaultDescription="Period To Date"/>
       </viewAttribute>
       <viewAttribute id="WAERS">
-        <descriptions defaultDescription="Currency Key"></descriptions>
+        <descriptions defaultDescription="Currency Key"/>
       </viewAttribute>
     
       <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal Year"></descriptions>
+        <descriptions defaultDescription="Fiscal Year"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="P_RATE">
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"/>
     </input>
     <input node="P_THRESHOLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCOTYP" target="PERIOD_CATEGORY"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="TODATE" target="PERIOD_END_DATE"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="INCOTYP" target="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="TODATE" target="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
-    <joinAttribute name="GJAHR"></joinAttribute>
+    <joinAttribute name="GJAHR"/>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_RATE">
     <viewAttributes>
       <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal Year"></descriptions>
+        <descriptions defaultDescription="Fiscal Year"/>
       </viewAttribute>
       <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="Key for Period Assignment"></descriptions>
+        <descriptions defaultDescription="Key for Period Assignment"/>
       </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE">
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="PERIOD_KEY" target="PERIOD_KEY"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="P_THRESHOLD">
     <viewAttributes>
       <viewAttribute id="INCOTYP">
-        <descriptions defaultDescription="Inbound Correspondence Category"></descriptions>
+        <descriptions defaultDescription="Inbound Correspondence Category"/>
       </viewAttribute>
       <viewAttribute id="TODATE">
-        <descriptions defaultDescription="Period To Date"></descriptions>
+        <descriptions defaultDescription="Period To Date"/>
       </viewAttribute>
       <viewAttribute id="WAERS">
-        <descriptions defaultDescription="Currency Key"></descriptions>
+        <descriptions defaultDescription="Currency Key"/>
       </viewAttribute>
     
       <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="Fiscal year"></descriptions>
+        <descriptions defaultDescription="Fiscal year"/>
       </viewAttribute></viewAttributes>
-    <calculatedViewAttributes></calculatedViewAttributes>
-    <restrictedViewAttributes></restrictedViewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD">
-      <mapping xsi:type="Calculation:AttributeMapping" source="INCOTYP" target="INCOTYP"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="TODATE" target="TODATE"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"></mapping>
-      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"></mapping>
+      <mapping xsi:type="Calculation:AttributeMapping" source="INCOTYP" target="INCOTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="TODATE" target="TODATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="GJAHR" target="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" source="WAERS" target="WAERS"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -635,198 +639,198 @@ if(((("CNT_EMPLOYEE_QLD"/"CNT_EMPLOYEE_ALL")*100)&gt;=$$IP_QLD_EMP_PC_LOW$$) OR
   <attributes>
   
     <attribute id="PERIOD_KEY" displayAttribute="false" order="1" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Key for Period Assignment"></descriptions>
+      <descriptions defaultDescription="Key for Period Assignment"/>
   
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_KEY"></keyMapping>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_KEY"/>
   
     </attribute>
     <attribute id="PERIOD_CATEGORY" displayAttribute="false" order="2" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Inbound Correspondence Category"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_CATEGORY"></keyMapping>
+      <descriptions defaultDescription="Inbound Correspondence Category"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_CATEGORY"/>
     </attribute>
     <attribute id="PERIOD_END_DATE" displayAttribute="false" order="3" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Period To Date"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_END_DATE"></keyMapping>
+      <descriptions defaultDescription="Period To Date"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="PERIOD_END_DATE"/>
     </attribute>
     <attribute id="WAERS" displayAttribute="false" order="4" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Currency Key"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WAERS"></keyMapping>
+      <descriptions defaultDescription="Currency Key"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WAERS"/>
     </attribute>
     <attribute id="QLD_ADDR_CHECK" displayAttribute="false" order="5" attributeHierarchyActive="false">
-      <descriptions defaultDescription="QLD_ADDR_CHECK"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_ADDR_CHECK"></keyMapping>
+      <descriptions defaultDescription="QLD_ADDR_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_ADDR_CHECK"/>
     </attribute>
     <attribute id="QLD_EMP_CNT_CHECK" displayAttribute="false" order="6" attributeHierarchyActive="false">
-      <descriptions defaultDescription="QLD_EMP_CNT_CHECK"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_CNT_CHECK"></keyMapping>
+      <descriptions defaultDescription="QLD_EMP_CNT_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_CNT_CHECK"/>
     </attribute>
     <attribute id="QLD_EMP_PC_CHECK" displayAttribute="false" order="7" attributeHierarchyActive="false">
-      <descriptions defaultDescription="QLD_EMP_PC_CHECK"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_PC_CHECK"></keyMapping>
+      <descriptions defaultDescription="QLD_EMP_PC_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_PC_CHECK"/>
     </attribute>
     <attribute id="WCQ_POLICY_CHECK" displayAttribute="false" order="8" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WCQ_POLICY_CHECK"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WCQ_POLICY_CHECK"></keyMapping>
+      <descriptions defaultDescription="WCQ_POLICY_CHECK"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="WCQ_POLICY_CHECK"/>
     </attribute>
   
     <attribute id="ABN" displayAttribute="false" order="12" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"></descriptions>
+      <descriptions defaultDescription="ABN"/>
   
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"></keyMapping>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="ABN"/>
   
     </attribute>
     <attribute id="GJAHR" displayAttribute="false" order="13" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"></descriptions>
-      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="GJAHR"></keyMapping>
+      <descriptions defaultDescription="FINANCIAL_YEAR_STRING"/>
+      <keyMapping columnObjectName="J_NEXUS_THLD" columnName="GJAHR"/>
     </attribute>
   </attributes>
-  <calculatedAttributes></calculatedAttributes>
+  <calculatedAttributes/>
   <baseMeasures>
     <measure aggregationType="sum" id="CNT_EMPLOYEE_QLD" order="9" measureType="simple">
-      <descriptions defaultDescription="CNT_EMPLOYEE_QLD"></descriptions>
-      <measureMapping columnObjectName="J_NEXUS_THLD" columnName="CNT_EMPLOYEE_QLD"></measureMapping>
+      <descriptions defaultDescription="CNT_EMPLOYEE_QLD"/>
+      <measureMapping columnObjectName="J_NEXUS_THLD" columnName="CNT_EMPLOYEE_QLD"/>
     </measure>
     <measure aggregationType="sum" id="QLD_EMP_PC" order="10" measureType="simple">
-      <descriptions defaultDescription="QLD_EMP_PC"></descriptions>
-      <measureMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_PC"></measureMapping>
+      <descriptions defaultDescription="QLD_EMP_PC"/>
+      <measureMapping columnObjectName="J_NEXUS_THLD" columnName="QLD_EMP_PC"/>
     </measure>
   
     <measure aggregationType="sum" id="CNT_EMPLOYEE_ALL" order="11" measureType="simple">
-      <descriptions defaultDescription="CNT_EMPLOYEE_ALL"></descriptions>
-      <measureMapping columnObjectName="J_NEXUS_THLD" columnName="CNT_EMPLOYEE_ALL"></measureMapping>
+      <descriptions defaultDescription="CNT_EMPLOYEE_ALL"/>
+      <measureMapping columnObjectName="J_NEXUS_THLD" columnName="CNT_EMPLOYEE_ALL"/>
     </measure></baseMeasures>
-  <calculatedMeasures></calculatedMeasures>
-  <restrictedMeasures></restrictedMeasures>
-  <localDimensions></localDimensions>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
 </logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectNameSpace="MeasureGroup" modelObjectName="Output">
-      <upperLeftCorner x="448" y="112"></upperLeftCorner>
+      <upperLeftCorner x="448.81878369636877" y="112"/>
     
-      <rectangleSize width="160"></rectangleSize>
+      <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_WCQ_POLICY">
-      <upperLeftCorner x="477" y="696"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="477.7114749437194" y="696.9999964237213"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_EMP_CNT">
-      <upperLeftCorner x="694" y="856"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="694.952950993887" y="856.9999952316284"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput" modelObjectName="A_EMP_CNT_QLD">
-      <upperLeftCorner x="20" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput" modelObjectName="A_EMP_CNT">
-      <upperLeftCorner x="320" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_EMP_CNT_QLD">
-      <upperLeftCorner x="576" y="1016"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="576.6505970561631" y="1016.9999940395355"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_EMP_CNT">
-      <upperLeftCorner x="786" y="1016"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="786.6505970561631" y="1016.9999940395355"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_BAS_Bus_Addr">
-      <upperLeftCorner x="411" y="1161"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="411.3256829739005" y="1161.9999928474426"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_ABR_Bus_Addr">
-      <upperLeftCorner x="118" y="1161"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="118.66666666666666" y="1161.9999928474426"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
-    <shape modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput" modelObjectName="P_ABR_Bus_Addr">
-      <upperLeftCorner x="20" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+    <shape modelObjectName="P_ABR_Bus_Addr" modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput" modelObjectName="P_ABR_Agency_Data">
-      <upperLeftCorner x="320" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+    <shape modelObjectName="P_ABR_Agency_Data" modelObjectNameSpace="J_ABR_Bus_Addr" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_ABR_Bus_Addr">
-      <upperLeftCorner x="92" y="1321"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="91.99999999999997" y="1321.9999916553497"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_ABR_Agency_Data">
-      <upperLeftCorner x="302" y="1321"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="302" y="1321.9999916553497"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_QLD_ADDR_CHECK">
-      <upperLeftCorner x="356" y="874"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="356.8870506950524" y="874.4999952316284"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="U_BUS_CHECK">
-      <upperLeftCorner x="356" y="1020"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="356.8870506950524" y="1020.3333273728688"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="A_QLD_NEXUS_RULES">
-      <upperLeftCorner x="533" y="394"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="533.3369215261322" y="394.4999988079071"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_POLICY_EMP_CNT_ADDR">
-      <upperLeftCorner x="607" y="536"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="607.4110305940247" y="536.9999976158142"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput" modelObjectName="J_EMP_CNT_ADDR">
-      <upperLeftCorner x="419" y="50"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="419" y="50"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape modelObjectNameSpace="J_POLICY_EMP_CNT_ADDR" modelObjectType="JoinNodeInput" modelObjectName="P_WCQ_POLICY">
-      <upperLeftCorner x="51" y="50"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="51" y="50"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_EMP_CNT_ADDR">
-      <upperLeftCorner x="687" y="696"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="687.7114749437195" y="696.9999964237213"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput" modelObjectName="J_EMP_CNT">
-      <upperLeftCorner x="20" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape modelObjectNameSpace="J_EMP_CNT_ADDR" modelObjectType="JoinNodeInput" modelObjectName="A_QLD_ADDR_CHECK">
-      <upperLeftCorner x="320" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
   
   
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_NEXUS_THLD">
-      <upperLeftCorner x="448" y="217"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="448.81878369636877" y="217"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput" modelObjectName="A_QLD_NEXUS_RULES">
-      <upperLeftCorner x="20" y="30"></upperLeftCorner>
-      <rectangleSize width="271"></rectangleSize>
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="271"/>
     </shape>
     <shape modelObjectNameSpace="J_NEXUS_THLD" modelObjectType="JoinNodeInput" modelObjectName="J_PRT_THRESHOLD">
-      <upperLeftCorner x="320" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="J_PRT_THRESHOLD">
-      <upperLeftCorner x="214" y="376"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="214.07769726069156" y="376.9999988079071"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput" modelObjectName="P_RATE">
-      <upperLeftCorner x="20" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape modelObjectNameSpace="J_PRT_THRESHOLD" modelObjectType="JoinNodeInput" modelObjectName="P_THRESHOLD">
-      <upperLeftCorner x="320" y="30"></upperLeftCorner>
-      <rectangleSize width="250"></rectangleSize>
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_RATE">
-      <upperLeftCorner x="187" y="536"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="187.41103059402494" y="536.9999976158142"/>
+      <rectangleSize width="160" height="30"/>
     </shape>
     <shape expanded="true" modelObjectNameSpace="CalculationView" modelObjectName="P_THRESHOLD">
-      <upperLeftCorner x="397" y="536"></upperLeftCorner>
-      <rectangleSize width="160" height="30"></rectangleSize>
+      <upperLeftCorner x="397.41103059402485" y="536.9999976158142"/>
+      <rectangleSize width="160" height="30"/>
     </shape></shapes>
 </layout>
 </Calculation:scenario>
