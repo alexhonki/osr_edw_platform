@@ -46,15 +46,15 @@ BEGIN
 
 
   
-		lt_result = 
-			SELECT
-				"ABN",
-				"PERIOD_CATEGORY",
-				"PERIOD_KEY",
-				"GJAHR",
-				-1 AS "DETECTION_RESULT"
-			FROM  :IT_DATA_FOR_RULE
-			;	
+lt_result = 
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		0 AS "DETECTION_RESULT"
+		FROM  :IT_DATA_FOR_RULE
+		;	
 			
 IF :lx_flag_qld_address = 'Y' THEN 
 	lt_result = 
@@ -71,7 +71,7 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			0 AS "DETECTION_RESULT"	
+			100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -86,7 +86,7 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			0 AS "DETECTION_RESULT"	
+			100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -123,7 +123,7 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			0 AS "DETECTION_RESULT"	
+			100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -184,7 +184,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			0 AS "DETECTION_RESULT"	
+			100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -214,7 +214,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			0 AS "DETECTION_RESULT"	
+			100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -242,7 +242,7 @@ GROUP BY
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR"
-HAVING SUM("DETECTION_RESULT") = 0
+HAVING SUM("DETECTION_RESULT") > 0
 ;
 
 et_result = 

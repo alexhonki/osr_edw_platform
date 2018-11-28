@@ -20,6 +20,8 @@ BEGIN
 		DECLARE lx_flag_qld_emp_cnt 	 NVARCHAR(1);
 		DECLARE lx_flag_qld_emp_pc		 NVARCHAR(1);
 
+		DECLARE lv_data_cnt INTEGER DEFAULT 0;
+		
 		SELECT
 			"RUN_MODE",
 			"GJAHR_ADJUSTMENT",
@@ -44,11 +46,14 @@ BEGIN
 			lx_flag_qld_emp_pc
 		FROM :PARAMETERS LIMIT 1;
 
+ SELECT COUNT(*)  INTO lv_data_cnt FROM :IT_DATA_FOR_RULE;
+
+IF :lv_data_cnt > 0 THEN 
 IF :lv_mode = 'R' THEN
-	lt_data_for_rule = SELECT * FROM :IT_DATA_FOR_RULE  WHERE :lv_mode = 'R';
+	
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus_R"
 	( 
-    	IT_DATA_FOR_RULE	=> :lt_data_for_rule,
+    	IT_DATA_FOR_RULE	=> :it_data_for_rule,
     	PARAMETERS      	=> :PARAMETERS,
     	ET_RESULT   		=> ET_RESULT
 	)
@@ -56,14 +61,16 @@ IF :lv_mode = 'R' THEN
 END IF;
 
 IF :lv_mode = 'S' THEN
-	lt_data_for_rule = SELECT * FROM :IT_DATA_FOR_RULE  WHERE :lv_mode = 'S';
+
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus_S"
 	( 
-    	IT_DATA_FOR_RULE	=> :lt_data_for_rule,
+    	IT_DATA_FOR_RULE	=> :it_data_for_rule,
     	PARAMETERS      	=> :PARAMETERS,
     	ET_RESULT   		=> ET_RESULT
 	)
 	;
+END IF;
+
 END IF;
 
 END
