@@ -165,6 +165,20 @@ FROM :lt_result
 
 END IF;
 
+IF :lv_mode = 'R' THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result
+;
+
+END IF;
+
 
 
 END

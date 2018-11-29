@@ -105,6 +105,8 @@ GROUP BY
 HAVING SUM("DETECTION_RESULT") > 0
 ;
 
+IF :lv_mode = 'S' THEN
+
 et_result = 
 SELECT
 "ABN",
@@ -115,5 +117,22 @@ SELECT
 FROM
 :lt_result
 ;
+
+END IF;
+
+IF :lv_mode = 'R' THEN
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+END IF;
 
 END

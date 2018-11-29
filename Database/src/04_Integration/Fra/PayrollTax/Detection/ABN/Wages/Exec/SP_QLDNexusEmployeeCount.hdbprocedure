@@ -13,6 +13,7 @@ BEGIN
 		DECLARE lv_previous_year		 NVARCHAR(4);
 		DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
 		DECLARE lv_qld_emp_cnt_thld_high INTEGER;
+		DECLARE lv_rfr_max				DECIMAL(3,2);
 
 		SELECT
 			"RUN_MODE",
@@ -25,7 +26,6 @@ BEGIN
 			lv_qld_emp_cnt_thld_low,
 			lv_qld_emp_cnt_thld_high
 		FROM :PARAMETERS LIMIT 1;
-
 
   
    LT_DATA_FOR_RULE = 
@@ -120,6 +120,8 @@ GROUP BY
 HAVING SUM("DETECTION_RESULT") > 0
 ;
 
+IF :lv_mode = 'S' THEN
+
 et_result = 
 SELECT
 "ABN",
@@ -130,5 +132,46 @@ SELECT
 FROM
 :lt_result
 ;
+
+END IF;
+
+IF :lv_mode = 'R' THEN
+
+SELECT MAX("RISK_FACTOR_RATING") INTO lv_rfr_max FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT";
+
+et_result = 
+SELECT
+"RESULT"."ABN",
+"RESULT"."PERIOD_CATEGORY",
+"RESULT"."PERIOD_KEY",
+"RESULT"."GJAHR",
+100*"RFR"."RISK_FACTOR_RATING"/:lv_rfr_max AS "DETECTION_RESULT"
+FROM
+:lt_result AS "RESULT",
+:lt_cnt AS "CNT",
+"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "RFR"
+WHERE "RESULT"."ABN" = "CNT"."ABN"
+  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
+  AND  "RFR"."TOP_BAND" = 'X'
+  AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
+UNION
+SELECT
+"RESULT"."ABN",
+"RESULT"."PERIOD_CATEGORY",
+"RESULT"."PERIOD_KEY",
+"RESULT"."GJAHR",
+100*"RFR"."RISK_FACTOR_RATING"/:lv_rfr_max AS "DETECTION_RESULT"
+FROM
+:lt_result AS "RESULT",
+:lt_cnt AS "CNT",
+"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "RFR"
+WHERE "RESULT"."ABN" = "CNT"."ABN"
+  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
+  AND  "RFR"."TOP_BAND" <> 'X'
+  AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
+  AND "CNT"."QLD_CNT_EMPLOYEE" < "RFR"."HIGH"
+;
+
+END IF;
 
 END
