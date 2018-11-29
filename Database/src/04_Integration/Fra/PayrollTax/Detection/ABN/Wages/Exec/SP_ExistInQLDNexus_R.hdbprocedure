@@ -64,8 +64,8 @@ BEGIN
 		"RISK_FACTOR_RATING_EMP_CNT"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "CNT"
 	WHERE
-		"CNT"."LOW" <= :lv_qld_emp_cnt_thld_low
-	AND "CNT"."HIGH" > :lv_qld_emp_cnt_thld_high
+		"CNT"."LOW" >= :lv_qld_emp_cnt_thld_low
+	AND "CNT"."HIGH" <= :lv_qld_emp_cnt_thld_high
 	;
 
 	SELECT
@@ -80,8 +80,8 @@ BEGIN
 		"RISK_FACTOR_RATING_EMP_PC"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC" AS "PC"
 	WHERE
-		"PC"."LOW" <= :lv_qld_emp_pc_thld_low
-	AND "PC"."HIGH" > :lv_qld_emp_pc_thld_high
+		"PC"."LOW" >= :lv_qld_emp_pc_thld_low
+	AND "PC"."HIGH" <= :lv_qld_emp_pc_thld_high
 	;
 
 
@@ -239,7 +239,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 				WHERE "RESULT"."ABN" = "CNT"."ABN"
 				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
 				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
-				  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
+				  AND "CNT"."QLD_CNT_EMPLOYEE" <= :lv_qld_emp_cnt_thld_high
 			)
 		;
 	ELSE
@@ -294,7 +294,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 				WHERE "RESULT"."ABN" = "CNT"."ABN"
 				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
 				  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
-				  AND "CNT"."QLD_PC_EMPLOYEE" < :lv_qld_emp_pc_thld_high
+				  AND "CNT"."QLD_PC_EMPLOYEE" <= :lv_qld_emp_pc_thld_high
 			)
 		;
 	ELSE
