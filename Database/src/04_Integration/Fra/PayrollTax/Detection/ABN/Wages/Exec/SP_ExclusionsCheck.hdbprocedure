@@ -166,9 +166,9 @@ SELECT DISTINCT
 		"A"."ANZSIC_CD",
 --		"A"."IND_CODE_GRP",
 --		"A"."IND_DIVISION",
-		CASE WHEN :lv_flag_abr_acnc = 'Y' AND "A"."ABR_ACNC_FLAG" = 'Y' THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
+		CASE WHEN :lv_flag_abr_acnc = 'Y'  AND "A"."ABR_ACNC_FLAG" = 'Y' THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
 --		"A"."ASIC_ORG_STATUS",
-		CASE WHEN :lv_flag_asic_regd = 'Y' AND "A"."ASIC_REGD" = 'Y' THEN 'Y' ELSE 'N' END AS "ASIC_REGD",
+		CASE WHEN :lv_flag_asic_regd = 'Y' AND "A"."ASIC_REGD" = 'N'    THEN 'N' ELSE 'Y' END AS "ASIC_REGD",
 		CASE WHEN :lv_flag_sup_gov_exmpt_anzsic = 'Y' AND "A"."SUP_GOV_EXMPT_ANZSIC" = 'Y' THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC",
 		CASE WHEN :lv_pt_role = 'Y' AND "B"."PT_ROLE" = 'PT'  THEN 'Y' ELSE 'N' END AS "PT_ROLE",
 		CASE WHEN :lv_id_role = 'Y' AND "C"."ID_ROLE" = 'ID'  THEN 'Y' ELSE 'N' END AS "ID_ROLE",
@@ -198,7 +198,7 @@ FROM
 
 ET_RESULT =
 
-
+/*
 SELECT
    "ABN",
    "PERIOD_CATEGORY",
@@ -208,11 +208,26 @@ SELECT
    FROM :Step2
 WHERE
 	"PT_ROLE"					= :lv_pt_role
-OR	"ID_ROLE"					= :lv_id_role
-OR	"PT_CASE"					= :lv_pt_case
-OR	"ABR_ACNC_FLAG" 			= :lv_flag_abr_acnc
-OR	"ASIC_REGD"    			    = :lv_flag_asic_regd 
-OR	"SUP_GOV_EXMPT_ANZSIC"      = :lv_flag_sup_gov_exmpt_anzsic
+AND	"ID_ROLE"					= :lv_id_role
+AND	"PT_CASE"					= :lv_pt_case
+AND	"ABR_ACNC_FLAG" 			= :lv_flag_abr_acnc
+AND	"ASIC_REGD"    			    = :lv_flag_asic_regd 
+AND	"SUP_GOV_EXMPT_ANZSIC"      = :lv_flag_sup_gov_exmpt_anzsic
+*/
+SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   100 AS "DETECTION_RESULT"
+   FROM :Step2
+WHERE
+	"PT_ROLE"					= 'Y'
+OR	"ID_ROLE"					= 'Y'
+OR	"PT_CASE"					= 'Y'
+OR	"ABR_ACNC_FLAG" 			= 'Y'
+OR	"ASIC_REGD"    			    = 'N'
+OR	"SUP_GOV_EXMPT_ANZSIC"      = 'Y'
    ;
    
 
