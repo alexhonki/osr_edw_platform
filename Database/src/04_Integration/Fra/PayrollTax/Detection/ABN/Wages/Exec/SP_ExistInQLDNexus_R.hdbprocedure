@@ -9,24 +9,26 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus_R"
    READS SQL DATA AS
 BEGIN
 
-	DECLARE lv_mode 					 NVARCHAR(1);  
-	DECLARE lv_previous_year			 NVARCHAR(4);
-	DECLARE lv_qld_emp_pc_thld_low		 DECIMAL(5,2) ;
-	DECLARE lv_qld_emp_pc_thld_high		 DECIMAL(5,2) ;
-	DECLARE lv_qld_emp_cnt_thld_low		 INTEGER;
-	DECLARE lv_qld_emp_cnt_thld_high	 INTEGER;
-	DECLARE lx_flag_wcq_policy			 NVARCHAR(1);
-	DECLARE lx_flag_qld_address 		 NVARCHAR(1);
-	DECLARE lx_flag_qld_emp_cnt 		 NVARCHAR(1);
-	DECLARE lx_flag_qld_emp_pc			 NVARCHAR(1);
-	DECLARE "LOW_EMP_CNT"				 INTEGER;
-	DECLARE "HIGH_EMP_CNT"				 INTEGER;
-	DECLARE "TOP_BAND_EMP_CNT"			 NVARCHAR(1);
-	DECLARE "RISK_FACTOR_RATING_EMP_CNT" DECIMAL(3,2);
-	DECLARE "LOW_EMP_PC"				 DECIMAL(5,2) ;
-	DECLARE "HIGH_EMP_PC"				 DECIMAL(5,2) ;
-	DECLARE "TOP_BAND_EMP_PC"			 NVARCHAR(1);
-	DECLARE "RISK_FACTOR_RATING_EMP_PC"  DECIMAL(3,2);
+	DECLARE lv_mode 						 NVARCHAR(1);  
+	DECLARE lv_previous_year				 NVARCHAR(4);
+	DECLARE lv_qld_emp_pc_thld_low			 DECIMAL(5,2) ;
+	DECLARE lv_qld_emp_pc_thld_high			 DECIMAL(5,2) ;
+	DECLARE lv_qld_emp_cnt_thld_low			 INTEGER;
+	DECLARE lv_qld_emp_cnt_thld_high		 INTEGER;
+	DECLARE lx_flag_wcq_policy				 NVARCHAR(1);
+	DECLARE lx_flag_qld_address 			 NVARCHAR(1);
+	DECLARE lx_flag_qld_emp_cnt 			 NVARCHAR(1);
+	DECLARE lx_flag_qld_emp_pc				 NVARCHAR(1);
+	DECLARE "LOW_EMP_CNT"					 INTEGER;
+	DECLARE "HIGH_EMP_CNT"					 INTEGER;
+	DECLARE "TOP_BAND_EMP_CNT"				 NVARCHAR(1);
+	DECLARE "RISK_FACTOR_RATING_EMP_CNT"	 DECIMAL(3,2);
+	DECLARE "LOW_EMP_PC"					 DECIMAL(5,2) ;
+	DECLARE "HIGH_EMP_PC"					 DECIMAL(5,2) ;
+	DECLARE "TOP_BAND_EMP_PC"				 NVARCHAR(1);
+	DECLARE "RISK_FACTOR_RATING_EMP_PC" 	 DECIMAL(3,2);
+	DECLARE "RISK_FACTOR_RATING_EMP_CNT_MAX" DECIMAL(3,2);
+	DECLARE "RISK_FACTOR_RATING_EMP_PC_MAX"	 DECIMAL(3,2);
 
 	SELECT
 		"RUN_MODE",
@@ -56,32 +58,46 @@ BEGIN
 		"CNT"."LOW",
 		"CNT"."HIGH",
 		"CNT"."TOP_BAND",
-		"CNT"."RISK_FACTOR_RATING"
+		"CNT"."RISK_FACTOR_RATING",
+		MAX("CNT"."RISK_FACTOR_RATING")
 	INTO
 		"LOW_EMP_CNT",
 		"HIGH_EMP_CNT",
 		"TOP_BAND_EMP_CNT",
-		"RISK_FACTOR_RATING_EMP_CNT"
+		"RISK_FACTOR_RATING_EMP_CNT",
+		"RISK_FACTOR_RATING_EMP_CNT_MAX"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "CNT"
 	WHERE
 		"CNT"."LOW" >= :lv_qld_emp_cnt_thld_low
 	AND "CNT"."HIGH" <= :lv_qld_emp_cnt_thld_high
+	GROUP BY
+	"CNT"."LOW",
+	"CNT"."HIGH",
+	"CNT"."TOP_BAND",
+	"CNT"."RISK_FACTOR_RATING"
 	;
 
 	SELECT
 		"PC"."LOW",
 		"PC"."HIGH",
 		"PC"."TOP_BAND",
-		"PC"."RISK_FACTOR_RATING"
+		"PC"."RISK_FACTOR_RATING",
+		MAX("PC"."RISK_FACTOR_RATING")
 	INTO
 		"LOW_EMP_PC",
 		"HIGH_EMP_PC",
 		"TOP_BAND_EMP_PC",
-		"RISK_FACTOR_RATING_EMP_PC"
+		"RISK_FACTOR_RATING_EMP_PC",
+		"RISK_FACTOR_RATING_EMP_PC_MAX"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC" AS "PC"
 	WHERE
 		"PC"."LOW" >= :lv_qld_emp_pc_thld_low
 	AND "PC"."HIGH" <= :lv_qld_emp_pc_thld_high
+	GROUP BY
+		"PC"."LOW",
+		"PC"."HIGH",
+		"PC"."TOP_BAND",
+		"PC"."RISK_FACTOR_RATING"
 	;
 
 
@@ -231,7 +247,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			(("RISK_FACTOR_RATING_EMP_CNT") / (MAX("RISK_FACTOR_RATING_EMP_CNT")))*100 AS "DETECTION_RESULT"	
+			(("RISK_FACTOR_RATING_EMP_CNT") / ("RISK_FACTOR_RATING_EMP_CNT_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -248,7 +264,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			(("RISK_FACTOR_RATING_EMP_CNT") / (MAX("RISK_FACTOR_RATING_EMP_CNT")))*100 AS "DETECTION_RESULT"	
+			(("RISK_FACTOR_RATING_EMP_CNT") / ("RISK_FACTOR_RATING_EMP_CNT_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -277,7 +293,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			(("RISK_FACTOR_RATING_EMP_PC") / (MAX("RISK_FACTOR_RATING_EMP_PC")))*100 AS "DETECTION_RESULT"	
+			(("RISK_FACTOR_RATING_EMP_PC") / ("RISK_FACTOR_RATING_EMP_PC_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -294,7 +310,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			(("RISK_FACTOR_RATING_EMP_PC") / (MAX("RISK_FACTOR_RATING_EMP_PC")))*100 AS "DETECTION_RESULT"	
+			(("RISK_FACTOR_RATING_EMP_PC") / ("RISK_FACTOR_RATING_EMP_PC_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
