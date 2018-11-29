@@ -99,6 +99,25 @@ context Types {
             FLAG_QLD_EMP_PC       : String(1);
         };
 
+        entity param_qld_nexus_emp_cnt {
+            RUN_MODE              : String(1);
+            GJAHR_ADJUSTMENT      : String(4);
+            QLD_EMP_CNT_THLD_LOW  : Integer;
+            QLD_EMP_CNT_THLD_HIGH : Integer;
+        };
+
+        entity param_qld_nexus_emp_pc {
+            RUN_MODE             : String(1);
+            GJAHR_ADJUSTMENT     : String(4);
+            QLD_EMP_PC_THLD_LOW  : Decimal(5, 2);
+            QLD_EMP_PC_THLD_HIGH : Decimal(5, 2);
+        };
+
+        entity param_qld_nexus_default {
+            RUN_MODE         : String(1);
+            GJAHR_ADJUSTMENT : String(4);
+        };
+
         //result
         entity result {
             ABN              : String(11);

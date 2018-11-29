@@ -1,0 +1,95 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::QLDNexus_WCQPolicy"
+(
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus_default",
+	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+		DECLARE lv_mode 				 NVARCHAR(1);  
+		DECLARE lv_previous_year		 NVARCHAR(4);
+
+		SELECT
+			"RUN_MODE",
+			"GJAHR_ADJUSTMENT"
+		INTO
+			lv_mode,
+			lv_previous_year
+		FROM :PARAMETERS LIMIT 1;
+
+   LT_DATA_FOR_RULE = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
+   FROM :IT_DATA_FOR_RULE;  
+  
+lt_result = 
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		0 AS "DETECTION_RESULT"
+		FROM  :LT_DATA_FOR_RULE
+		;	
+			
+			
+
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			100 AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WCQ"
+				WHERE "RESULT"."ABN" = "WCQ"."ABN"
+				  AND "RESULT"."GJAHR" = "WCQ"."GJAHR"
+			)
+		;
+
+lt_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+SUM("DETECTION_RESULT") AS "DETECTION_RESULT"
+FROM
+:lt_result
+GROUP BY
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+HAVING SUM("DETECTION_RESULT") > 0
+;
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+END

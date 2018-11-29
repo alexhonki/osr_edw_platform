@@ -1,0 +1,134 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QLDNexusEmployeeCount"
+(
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus_emp_cnt",
+	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+		DECLARE lv_mode 				 NVARCHAR(1);  
+		DECLARE lv_previous_year		 NVARCHAR(4);
+		DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
+		DECLARE lv_qld_emp_cnt_thld_high INTEGER;
+
+		SELECT
+			"RUN_MODE",
+			"GJAHR_ADJUSTMENT",
+			"QLD_EMP_CNT_THLD_LOW",
+			"QLD_EMP_CNT_THLD_HIGH"
+		INTO
+			lv_mode,
+			lv_previous_year,
+			lv_qld_emp_cnt_thld_low,
+			lv_qld_emp_cnt_thld_high
+		FROM :PARAMETERS LIMIT 1;
+
+
+  
+   LT_DATA_FOR_RULE = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
+   FROM :IT_DATA_FOR_RULE;  
+   
+  
+lt_result = 
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		0 AS "DETECTION_RESULT"
+		FROM  :LT_DATA_FOR_RULE
+		;	
+			
+
+
+lt_cnt = 
+SELECT 
+"ABN",
+"GJAHR",
+SUM("QLD_CNT_EMPLOYEE") AS "QLD_CNT_EMPLOYEE",
+SUM("CNT_EMPLOYEE") AS "CNT_EMPLOYEE"
+FROM (
+	SELECT
+	LEFT("ABN",11) AS "ABN",
+	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
+	"CNT_EMPLOYEE" AS "QLD_CNT_EMPLOYEE",
+	0 AS "CNT_EMPLOYEE"
+	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+	WHERE "RSDNL_STATE_CD"='QLD'
+	UNION
+	SELECT
+	LEFT("ABN",11) AS "ABN",
+	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
+	0 AS "QLD_CNT_EMPLOYEE",
+	"CNT_EMPLOYEE" AS "CNT_EMPLOYEE"
+	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+)
+GROUP BY 
+"ABN",
+"GJAHR"
+;
+
+
+lt_result = 
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"DETECTION_RESULT"
+		FROM :lt_result
+	UNION
+	SELECT
+		"RESULT"."ABN",
+		"RESULT"."PERIOD_CATEGORY",
+		"RESULT"."PERIOD_KEY",
+		"RESULT"."GJAHR",
+		100 AS "DETECTION_RESULT"	
+		FROM 
+		:lt_result AS "RESULT"
+		WHERE EXISTS (
+			SELECT * FROM :lt_cnt AS "CNT"
+			WHERE "RESULT"."ABN" = "CNT"."ABN"
+			  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
+			  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+			  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
+		)
+	;
+
+lt_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+SUM("DETECTION_RESULT") AS "DETECTION_RESULT"
+FROM
+:lt_result
+GROUP BY
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+HAVING SUM("DETECTION_RESULT") > 0
+;
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+END
