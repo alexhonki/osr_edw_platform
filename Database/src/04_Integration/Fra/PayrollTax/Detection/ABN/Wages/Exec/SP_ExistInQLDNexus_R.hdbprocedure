@@ -83,7 +83,16 @@ BEGIN
 		"PC"."LOW" <= :lv_qld_emp_pc_thld_low
 	AND "PC"."HIGH" > :lv_qld_emp_pc_thld_high
 	;
-	
+
+
+   LT_DATA_FOR_RULE = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))	AS "GJAHR"
+   FROM :IT_DATA_FOR_RULE;  
+
 lt_result = 
 	SELECT
 		"ABN",
@@ -91,11 +100,10 @@ lt_result =
 		"PERIOD_KEY",
 		"GJAHR",
 		0 AS "DETECTION_RESULT"
-	FROM  :IT_DATA_FOR_RULE
+		FROM  :LT_DATA_FOR_RULE
 		;	
 			
 IF :lx_flag_qld_address = 'Y' THEN 
-
 	lt_result = 
 		SELECT
 			"ABN",
@@ -144,6 +152,8 @@ IF :lx_flag_qld_address = 'Y' THEN
 			;	
 			
 END IF;
+
+
 			
 IF :lx_flag_wcq_policy = 'Y' THEN 
 	lt_result = 
@@ -173,6 +183,7 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 END IF;
 
 IF :lx_flag_qld_emp_cnt = 'Y' OR :lx_flag_qld_emp_pc = 'Y' THEN
+
 lt_cnt = 
 SELECT 
 "ABN",
@@ -231,7 +242,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 				  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
 			)
 		;
-	ELSE 
+	ELSE
 	lt_result = 
 		SELECT
 			"ABN",
@@ -275,7 +286,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			(("RISK_FACTOR_RATING_EMP_PC") / (MAX("RISK_FACTOR_RATING_EMP_PC")))*100  AS "DETECTION_RESULT"	
+			(("RISK_FACTOR_RATING_EMP_PC") / (MAX("RISK_FACTOR_RATING_EMP_PC")))*100 AS "DETECTION_RESULT"	
 			FROM 
 			:lt_result AS "RESULT"
 			WHERE EXISTS (
@@ -287,7 +298,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			)
 		;
 	ELSE
-		lt_result = 
+	lt_result = 
 		SELECT
 			"ABN",
 			"PERIOD_CATEGORY",
@@ -310,7 +321,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
 				  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
 			)
-		;
+		;	
 	END IF;
 END IF;
 
@@ -341,220 +352,5 @@ SELECT
 FROM
 :lt_result
 ;
-
-
-   /*
-   LT_DATA_FOR_RULE = 
-	SELECT
-   "ABN",
-   "PERIOD_CATEGORY",
-   "PERIOD_KEY",
-   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))	AS "GJAHR"
-   FROM :IT_DATA_FOR_RULE;  
-   
-
-	SELECT
-		"CNT"."LOW",
-		"CNT"."HIGH",
-		"CNT"."TOP_BAND",
-		"CNT"."RISK_FACTOR_RATING"
-	INTO
-		"LOW_EMP_CNT",
-		"HIGH_EMP_CNT",
-		"TOP_BAND_EMP_CNT",
-		"RISK_FACTOR_RATING_EMP_CNT"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "CNT"
-	WHERE
-		"CNT"."LOW" <= :lv_qld_emp_cnt_thld_low
-	AND "CNT"."HIGH" > :lv_qld_emp_cnt_thld_high
-	;
-
-	SELECT
-		"PC"."LOW",
-		"PC"."HIGH",
-		"PC"."TOP_BAND",
-		"PC"."RISK_FACTOR_RATING"
-	INTO
-		"LOW_EMP_PC",
-		"HIGH_EMP_PC",
-		"TOP_BAND_EMP_PC",
-		"RISK_FACTOR_RATING_EMP_PC"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC" AS "PC"
-	WHERE
-		"PC"."LOW" <= :lv_qld_emp_pc_thld_low
-	AND "PC"."HIGH" > :lv_qld_emp_pc_thld_high
-	;
-
-	IF :lx_flag_qld_emp_cnt = 'Y' AND (:lx_flag_qld_emp_pc = 'N' OR :lx_flag_qld_emp_pc = ' ') THEN 
-		IF "TOP_BAND_EMP_CNT" !='X' THEN
-		step1=
-			SELECT 
-			  "A"."ABN" 					AS  "ABN", 
-			  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
-		      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
-		      "A"."GJAHR"					AS  "GJAHR",
-			  "B"."QLD_ADDR_CHECK",
-			  "B"."QLD_EMP_CNT_CHECK",
-			  "B"."QLD_EMP_PC_CHECK",
-			  "B"."WCQ_POLICY_CHECK",
-			  "B"."QLD_EMP_PC",
-			  "B"."CNT_EMPLOYEE_QLD"
-	  
-		   FROM :LT_DATA_FOR_RULE AS "A",
-		   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
-		   (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
-		    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
-		    placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
-    		placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high )) AS "B"
-		   WHERE 
-				"A"."ABN"   = "B"."ABN"
-		   AND	"B"."GJAHR" = "A"."GJAHR"
-		   AND  "B"."CNT_EMPLOYEE_QLD"  >= :lv_qld_emp_cnt_thld_low
-		   AND  "B"."CNT_EMPLOYEE_QLD"  <  :lv_qld_emp_cnt_thld_high
-			;
-		ET_RESULT = 
-			SELECT
-				"A"."ABN",
-				"A"."PERIOD_CATEGORY",
-				"A"."PERIOD_KEY",
-				"A"."GJAHR",
-				(("RISK_FACTOR_RATING_EMP_CNT") / (MAX("RISK_FACTOR_RATING_EMP_CNT")))*100 AS "DETECTION_RESULT"
-				FROM :step1 AS "A"
-			WHERE "A"."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
-			AND	 "A"."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
-			AND	 "A"."WCQ_POLICY_CHECK" 	= :lx_flag_wcq_policy
-			AND	 "A"."QLD_EMP_PC_CHECK" 	= :lx_flag_qld_emp_pc
-			AND	 "A"."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
-			AND	 "A"."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
-   ;
-		ELSE
-		step2=
-			SELECT 
-			  "A"."ABN" 					AS  "ABN", 
-			  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
-		      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
-		      "A"."GJAHR"					AS  "GJAHR",
-			  "B"."QLD_ADDR_CHECK",
-			  "B"."QLD_EMP_CNT_CHECK",
-			  "B"."QLD_EMP_PC_CHECK",
-			  "B"."WCQ_POLICY_CHECK",
-			  "B"."QLD_EMP_PC",
-			  "B"."CNT_EMPLOYEE_QLD"
-	  
-		   FROM :LT_DATA_FOR_RULE AS "A",
-		   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
-		   (placeholder."$$IP_QLD_EMP_CNT_LOW$$" =>:lv_qld_emp_cnt_thld_low, 
-		    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
-		    placeholder."$$IP_QLD_EMP_PC_LOW$$"  =>:lv_qld_emp_pc_thld_low,
-    		placeholder."$$IP_QLD_EMP_PC_HIGH$$" =>:lv_qld_emp_pc_thld_high )) AS "B"
-		   WHERE 
-				"A"."ABN"   = "B"."ABN"
-		   AND	"B"."GJAHR" = "A"."GJAHR"
-		   AND  "B"."CNT_EMPLOYEE_QLD"  >= :lv_qld_emp_cnt_thld_low
-		   ;
-		  ET_RESULT = 
-			SELECT
-				"A"."ABN",
-				"A"."PERIOD_CATEGORY",
-				"A"."PERIOD_KEY",
-				"A"."GJAHR",
-				(("RISK_FACTOR_RATING_EMP_CNT") / (MAX("RISK_FACTOR_RATING_EMP_CNT")))*100 AS "DETECTION_RESULT"
-				FROM :step2 AS "A"
-			WHERE "A"."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
-			AND	 "A"."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
-			AND	 "A"."WCQ_POLICY_CHECK" 	= :lx_flag_wcq_policy
-			AND	 "A"."QLD_EMP_PC_CHECK" 	= :lx_flag_qld_emp_pc
-			AND	 "A"."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
-			AND	 "A"."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
-   ;
-		END IF;
-	
-	END IF;
-	
-	IF  (:lx_flag_qld_emp_cnt = 'N' OR :lx_flag_qld_emp_cnt = ' ')  AND :lx_flag_qld_emp_pc = 'Y' THEN 
-		IF "TOP_BAND_EMP_PC" !='X' THEN
-		step3=
-			SELECT 
-			  "A"."ABN" 					AS  "ABN", 
-			  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
-		      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
-		      "A"."GJAHR"					AS  "GJAHR",
-			  "B"."QLD_ADDR_CHECK",
-			  "B"."QLD_EMP_CNT_CHECK",
-			  "B"."QLD_EMP_PC_CHECK",
-			  "B"."WCQ_POLICY_CHECK",
-			  "B"."QLD_EMP_PC",
-			  "B"."CNT_EMPLOYEE_QLD"
-	  
-		   FROM :LT_DATA_FOR_RULE AS "A",
-		   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
-		   (placeholder."$$IP_QLD_EMP_CNT_LOW$$" =>:lv_qld_emp_cnt_thld_low, 
-		    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
-		    placeholder."$$IP_QLD_EMP_PC_LOW$$"  =>:lv_qld_emp_pc_thld_low,
-    		placeholder."$$IP_QLD_EMP_PC_HIGH$$" =>:lv_qld_emp_pc_thld_high )) AS "B"
-		   WHERE 
-				"A"."ABN"   = "B"."ABN"
-		   AND	"B"."GJAHR" = "A"."GJAHR"
-		   AND  "B"."CNT_EMPLOYEE_QLD"  >= :lv_qld_emp_cnt_thld_low
-		   AND  "B"."CNT_EMPLOYEE_QLD"  <  :lv_qld_emp_cnt_thld_high
-			;
-		ET_RESULT = 
-			SELECT
-				"A"."ABN",
-				"A"."PERIOD_CATEGORY",
-				"A"."PERIOD_KEY",
-				"A"."GJAHR",
-				(("RISK_FACTOR_RATING_EMP_CNT") / (MAX("RISK_FACTOR_RATING_EMP_CNT")))*100 AS "DETECTION_RESULT"
-				FROM :step3 AS "A"
-			WHERE "A"."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
-			AND	 "A"."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
-			AND	 "A"."WCQ_POLICY_CHECK" 	= :lx_flag_wcq_policy
-			AND	 "A"."QLD_EMP_PC_CHECK" 	= :lx_flag_qld_emp_pc
-			AND	 "A"."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
-			AND	 "A"."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
-   ;
-		ELSE
-		step4=
-			SELECT 
-			  "A"."ABN" 					AS  "ABN", 
-			  "A"."PERIOD_CATEGORY"			AS  "PERIOD_CATEGORY",
-		      "A"."PERIOD_KEY"				AS  "PERIOD_KEY",
-		      "A"."GJAHR"					AS  "GJAHR",
-			  "B"."QLD_ADDR_CHECK",
-			  "B"."QLD_EMP_CNT_CHECK",
-			  "B"."QLD_EMP_PC_CHECK",
-			  "B"."WCQ_POLICY_CHECK",
-			  "B"."QLD_EMP_PC",
-			  "B"."CNT_EMPLOYEE_QLD"
-	  
-		   FROM :LT_DATA_FOR_RULE AS "A",
-		   (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_NEXUS_QLD_RULES"
-		   (placeholder."$$IP_QLD_EMP_CNT_LOW$$"=>:lv_qld_emp_cnt_thld_low, 
-		    placeholder."$$IP_QLD_EMP_CNT_HIGH$$"=>:lv_qld_emp_cnt_thld_high,
-		    placeholder."$$IP_QLD_EMP_PC_LOW$$"=>:lv_qld_emp_pc_thld_low,
-    		placeholder."$$IP_QLD_EMP_PC_HIGH$$"=>:lv_qld_emp_pc_thld_high )) AS "B"
-		   WHERE 
-				"A"."ABN"   = "B"."ABN"
-		   AND	"B"."GJAHR" = "A"."GJAHR"
-		   AND  "B"."CNT_EMPLOYEE_QLD"  >= :lv_qld_emp_cnt_thld_low
-		   ;
-		ET_RESULT = 
-			SELECT
-				"A"."ABN",
-				"A"."PERIOD_CATEGORY",
-				"A"."PERIOD_KEY",
-				"A"."GJAHR",
-				(("RISK_FACTOR_RATING_EMP_CNT") / (MAX("RISK_FACTOR_RATING_EMP_CNT")))*100 AS "DETECTION_RESULT"
-				FROM :step4 AS "A"
-			WHERE "A"."QLD_ADDR_CHECK" 		= :lx_flag_qld_address
-			AND	 "A"."QLD_EMP_CNT_CHECK" 	= :lx_flag_qld_emp_cnt
-			AND	 "A"."WCQ_POLICY_CHECK" 	= :lx_flag_wcq_policy
-			AND	 "A"."QLD_EMP_PC_CHECK" 	= :lx_flag_qld_emp_pc
-			AND	 "A"."CNT_EMPLOYEE_QLD"		>= :lv_qld_emp_cnt_thld_low
-			AND	 "A"."CNT_EMPLOYEE_QLD"		<= :lv_qld_emp_cnt_thld_high
-   ;
-		END IF;
-	END IF;
-*/
 
 END

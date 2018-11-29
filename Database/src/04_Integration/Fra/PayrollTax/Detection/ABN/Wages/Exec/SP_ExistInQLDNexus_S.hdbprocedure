@@ -44,7 +44,13 @@ BEGIN
 			lx_flag_qld_emp_pc
 		FROM :PARAMETERS LIMIT 1;
 
-
+   LT_DATA_FOR_RULE = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))	AS "GJAHR"
+   FROM :IT_DATA_FOR_RULE;  
   
 lt_result = 
 	SELECT
@@ -53,7 +59,7 @@ lt_result =
 		"PERIOD_KEY",
 		"GJAHR",
 		0 AS "DETECTION_RESULT"
-		FROM  :IT_DATA_FOR_RULE
+		FROM  :LT_DATA_FOR_RULE
 		;	
 			
 IF :lx_flag_qld_address = 'Y' THEN 
