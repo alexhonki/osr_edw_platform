@@ -48,8 +48,8 @@ BEGIN
 	SELECT
    "ABN",
    "PERIOD_CATEGORY",
-   "PERIOD_KEY",
-   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))	AS "GJAHR"
+   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
    FROM :IT_DATA_FOR_RULE;  
   
 lt_result = 
