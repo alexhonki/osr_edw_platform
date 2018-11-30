@@ -1,0 +1,20 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectIRV"(
+  	IN  it_workset_in    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+  	OUT  it_workset_out    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws"
+) 
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+it_workset_out =
+SELECT
+"WS"."ABN" AS "ABN",
+"WS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"WS"."PERIOD_KEY" AS "PERIOD_KEY",
+"WS"."GJAHR" AS "GJAHR"
+FROM 
+:it_workset_in AS "WS"
+;
+   
+END
