@@ -1,0 +1,81 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExemptionDisallowed"( 
+	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+)
+   
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER
+READS SQL DATA AS
+
+BEGIN
+
+lt_ws_data =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM :it_data_for_rule
+;
+
+lt_exm_case_data = 
+SELECT *
+FROM
+"osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE "CASE_TYPE" = 'ZEXM'
+;
+
+lt_exm_priority =
+SELECT
+"CASE_ID", 
+"CASE_TYPE", 
+"CASE_CATEGORY", 
+"REASON_CODE",
+"ABN",
+"CREATE_TIME"
+FROM
+(
+	SELECT
+	"CASE_ID",
+	"CASE_TYPE",
+	"CASE_CATEGORY",
+	"REASON_CODE",
+	"ABN",
+	"CREATE_TIME",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","CASE_ID" DESC) AS "RANK_1"
+	FROM
+	:lt_exm_case_data
+)
+	WHERE "RANK_1" = '1'
+;
+
+lt_result =
+SELECT 
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"C"."REASON_CODE"
+FROM
+:lt_ws_data AS "W"
+INNER JOIN
+:lt_exm_priority AS "C"
+ON "W"."ABN" = "C"."ABN"
+;
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+CASE
+WHEN ("REASON_CODE") = 'DISA'
+THEN 100
+ELSE 0
+END AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+END
