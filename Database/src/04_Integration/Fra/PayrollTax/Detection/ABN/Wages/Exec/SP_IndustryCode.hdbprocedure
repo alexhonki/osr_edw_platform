@@ -1,0 +1,123 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_IndustryCode"(
+	
+		IN  IT_DATA_FOR_RULE	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	    OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+-----------------------Selecting Ind Code----------------------------   
+DECLARE lv_max_riskscore  DECIMAL(3,2) ;
+
+select MAX("RISK_FACTOR_RATING") INTO lv_max_riskscore FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_INDUSTRY" ;
+
+ IND_CODE  =
+ 
+ SELECT DISTINCT 	
+    "ABN",
+--	"ACN",
+	"ANZSIC_CD"     AS "ANZSIC_CD",
+	"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+FROM
+ (
+ 
+	 SELECT 
+		"ABN",
+--		"ACN",
+		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
+		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND"
+	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE )
+	AND TO_NVARCHAR("INCM_YR") IN ( SELECT DISTINCT "GJAHR" FROM :IT_DATA_FOR_RULE)
+ 
+	 UNION 
+ 
+	 SELECT 
+		"ABN",
+--		"ACN",
+		"ANZSIC_CD"     AS "ANZSIC_CD",
+		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND"
+	WHERE   "ABN" IN ( SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE )
+	AND "FINANCIAL_YEAR" IN ( SELECT DISTINCT "GJAHR" FROM :IT_DATA_FOR_RULE)
+
+	);
+   
+   
+   
+IND_CODE_GRP =
+
+SELECT 	DISTINCT 
+		"ABN",
+		"ANZSIC_CD",
+		"IND_CODE_GRP",
+		"IND_DIVISION",
+		"RISK_FACTOR_RATING" 
+FROM
+(
+SELECT  
+	"ABN",
+	"ANZSIC_CD",
+	"IND_CODE_GRP",
+	"IND_DIVISION",
+	"RISK_FACTOR_RATING",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"RISK_FACTOR_RATING" DESC) AS "RANK_1"
+FROM
+(
+SELECT
+		"A"."ABN"            AS "ABN",
+	--	"A"."ACN"            AS "ACN",
+		"A"."ANZSIC_CD"      AS "ANZSIC_CD",
+		"A"."ANZSIC_TITLE"   AS "ANZSIC_TITLE",
+		"B"."IND_CODE_GRP"   AS "IND_CODE_GRP",
+		"B"."IND_DIVISION"   AS "IND_DIVISION" ,
+		"C"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING"
+	FROM 
+		:IND_CODE AS "A" 
+	LEFT OUTER JOIN
+		"osr.edw.staging.md.ato.proxy::CV_IND_CODE_GRP" AS "B"
+	ON 
+		LEFT("A"."ANZSIC_CD", 3) = 	"B"."IND_CODE_GRP"
+    LEFT OUTER JOIN
+    	"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_INDUSTRY" AS "C"
+	ON
+		"B"."IND_DIVISION" = "C"."IND_DIVISION"
+)) WHERE "RANK_1" = 1		
+;	
+
+---------------------------------------------------------------------------------------
+
+-------------------------Cal Risk value-----------------------------------------------
+
+ET_RESULT =
+SELECT   
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   "DETECTION_RESULT"
+FROM
+(
+SELECT
+   "A"."ABN",
+   "A"."PERIOD_CATEGORY",
+   "A"."PERIOD_KEY",
+   "A"."GJAHR",
+    ("B"."RISK_FACTOR_RATING" * 100)/:lv_max_riskscore AS "DETECTION_RESULT"
+FROM
+	 :IT_DATA_FOR_RULE AS "A"
+LEFT OUTER JOIN
+	:IND_CODE_GRP  AS "B"
+ON 
+	"A"."ABN" = "B"."ABN"
+);
+   
+
+
+END
