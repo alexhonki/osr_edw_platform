@@ -30,25 +30,36 @@ BEGIN
 
 
   
-   LT_DATA_FOR_RULE = 
-	SELECT
+   lt_data_for_rule = 
+/*	SELECT
    "ABN",
    "PERIOD_CATEGORY",
-   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT(LEFT("PERIOD_KEY",2)) - TO_INT(:lv_previous_year)) || RIGHT("PERIOD_KEY",8)	AS "PERIOD_KEY",
    TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
-   FROM :IT_DATA_FOR_RULE;  
+   FROM :IT_DATA_FOR_RULE
+   WHERE "PERIOD_CATEGORY" <> 'PT-A'
+   UNION*/
+   SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year)) 	AS "PERIOD_KEY",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
+   FROM :IT_DATA_FOR_RULE
+   WHERE "PERIOD_CATEGORY" = 'PT-A';  
    
-  
-lt_result = 
-	SELECT
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
-		0 AS "DETECTION_RESULT"
-		FROM  :LT_DATA_FOR_RULE
-		;	
-			
+lt_emp_cnt = 
+SELECT 
+LEFT("EMP_CNT"."ABN",11) AS "ABN",
+LEFT(TO_NVARCHAR("EMP_CNT"."INCM_YR"),4) AS "GJAHR",
+"EMP_CNT"."CNT_EMPLOYEE" AS "CNT_EMPLOYEE",
+"EMP_CNT"."RSDNL_STATE_CD" AS "RSDNL_STATE_CD"
+FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data" AS "EMP_CNT"
+WHERE EXISTS (
+	SELECT * FROM :lt_data_for_rule AS "WS"
+	WHERE "WS"."ABN" = LEFT("EMP_CNT"."ABN",11) 
+      AND "WS"."GJAHR" = LEFT(TO_NVARCHAR("EMP_CNT"."INCM_YR"),4)
+)
+;
 
 lt_cnt = 
 SELECT 
@@ -59,35 +70,26 @@ SUM("CNT_EMPLOYEE") AS "CNT_EMPLOYEE",
 100*SUM("QLD_CNT_EMPLOYEE")/SUM("CNT_EMPLOYEE") AS "QLD_PC_EMPLOYEE"
 FROM (
 	SELECT
-	LEFT("ABN",11) AS "ABN",
-	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
+	"ABN",
+	"GJAHR",
 	"CNT_EMPLOYEE" AS "QLD_CNT_EMPLOYEE",
 	0 AS "CNT_EMPLOYEE"
-	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
-	WHERE "RSDNL_STATE_CD"='QLD'
+	FROM :lt_emp_cnt
+	WHERE "RSDNL_STATE_CD"='QLD' 
 	UNION
 	SELECT
-	LEFT("ABN",11) AS "ABN",
-	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
+	"ABN",
+	"GJAHR",
 	0 AS "QLD_CNT_EMPLOYEE",
 	"CNT_EMPLOYEE" AS "CNT_EMPLOYEE"
-	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+	FROM :lt_emp_cnt
 )
 GROUP BY 
 "ABN",
 "GJAHR"
 ;
 
-
 lt_result = 
-	SELECT
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
-		"DETECTION_RESULT"
-		FROM :lt_result
-	UNION
 	SELECT
 		"RESULT"."ABN",
 		"RESULT"."PERIOD_CATEGORY",
@@ -95,7 +97,7 @@ lt_result =
 		"RESULT"."GJAHR",
 		100 AS "DETECTION_RESULT"	
 		FROM 
-		:lt_result AS "RESULT"
+		:lt_data_for_rule AS "RESULT"
 		WHERE EXISTS (
 			SELECT * FROM :lt_cnt AS "CNT"
 			WHERE "RESULT"."ABN" = "CNT"."ABN"

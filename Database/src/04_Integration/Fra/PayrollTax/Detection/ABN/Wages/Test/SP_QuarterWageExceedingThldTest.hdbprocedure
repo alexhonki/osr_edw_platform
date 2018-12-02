@@ -24,6 +24,7 @@ SELECT
 FROM
 "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
 WHERE "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-Q'
 ;
 ELSE 
 lt_workset =
@@ -36,6 +37,7 @@ FROM
 "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
 WHERE "ABN"   = :iv_abn
   AND "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-Q'
 ;
 END IF;
 
