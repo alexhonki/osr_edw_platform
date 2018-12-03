@@ -54,14 +54,14 @@ BEGIN
 lt_param =   
 SELECT
 TOP 1
-	:iv_role_dt                    AS   "PT_ID_ROLE_DATE",
-	:iv_pt_role                    AS   "PT_ROLE",
-	:iv_id_role                    AS   "ID_ROLE",
-	:iv_pt_case_dt                 AS   "PT_CASE_DATE" ,
-	:iv_pt_case                    AS   "PT_CASE",
-	:iv_flag_abr_acnc              AS   "FLAG_ABR_ACNC", 
-	:iv_flag_asic_regd             AS   "FLAG_ASIC_REGD", 
-	:iv_flag_sup_gov_exmpt_anzsic  AS   "FLAG_SUP_GOV_EXMPT_ANZSIC"
+	:iv_role_dt                    AS   "PARAM.PT_ID_ROLE_DATE",
+	:iv_pt_role                    AS   "PARAM.PT_ROLE",
+	:iv_id_role                    AS   "PARAM.ID_ROLE",
+	:iv_pt_case_dt                 AS   "PARAM.PT_CASE_DATE" ,
+	:iv_pt_case                    AS   "PARAM.PT_CASE",
+	:iv_flag_abr_acnc              AS   "PARAM.FLAG_ABR_ACNC", 
+	:iv_flag_asic_regd             AS   "PARAM.FLAG_ASIC_REGD", 
+	:iv_flag_sup_gov_exmpt_anzsic  AS   "PARAM.FLAG_SUP_GOV_EXMPT_ANZSIC"
 --	:iv_pt_id_role_date            AS   "PT_ID_ROLE_DATE"
 FROM  :lt_workset
 ;
