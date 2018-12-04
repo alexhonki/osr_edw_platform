@@ -1,7 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_FundCheck"
 (
-	IN "ABN" NVARCHAR(20),
---	IN  IT_DATA_FOR_RULE    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	IN  IT_DATA_FOR_RULE    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT ET_RESULT					"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
 ) 
    LANGUAGE SQLSCRIPT
@@ -9,15 +8,6 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_FundCheck"
    READS SQL DATA AS
    
 BEGIN
-
-IT_DATA_FOR_RULE =
-SELECT
-'98309267218' AS "ABN",
-'PT-A' AS "PERIOD_CATEGORY",
-'1701' AS "PERIOD_KEY",
-'2017' AS "GJAHR"
-FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
-
 
 ABR_AGENCY =
 SELECT DISTINCT
