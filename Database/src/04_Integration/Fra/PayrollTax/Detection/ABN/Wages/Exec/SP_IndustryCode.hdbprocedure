@@ -1,6 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_IndustryCode"(
 	
-		IN  ET_DATA_FOR_RULLE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+		IN  IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	    OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
 	
 )
@@ -13,6 +13,7 @@ BEGIN
        Write your procedure logic 
    *************************************/
 -----------------------Selecting Ind Code----------------------------   
+
 DECLARE lv_max_riskscore  DECIMAL(3,2) ;
 
 select MAX("RISK_FACTOR_RATING") INTO lv_max_riskscore FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_INDUSTRY" ;
@@ -33,8 +34,8 @@ FROM
 		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
 		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
 	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND"
-	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :ET_DATA_FOR_RULLE )
-	AND TO_NVARCHAR("INCM_YR") IN ( SELECT DISTINCT "GJAHR" FROM :ET_DATA_FOR_RULLE)
+	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE )
+	AND TO_NVARCHAR("INCM_YR") IN ( SELECT DISTINCT "GJAHR" FROM :IT_DATA_FOR_RULE)
  
 	 UNION 
  
@@ -44,8 +45,8 @@ FROM
 		"ANZSIC_CD"     AS "ANZSIC_CD",
 		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
 	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND"
-	WHERE   "ABN" IN ( SELECT DISTINCT "ABN" FROM :ET_DATA_FOR_RULLE )
-	AND "FINANCIAL_YEAR" IN ( SELECT DISTINCT "GJAHR" FROM :ET_DATA_FOR_RULLE)
+	WHERE   "ABN" IN ( SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE )
+	AND "FINANCIAL_YEAR" IN ( SELECT DISTINCT "GJAHR" FROM :IT_DATA_FOR_RULE)
 
 	);
    
@@ -111,7 +112,7 @@ SELECT
    "A"."GJAHR",
     ("B"."RISK_FACTOR_RATING" * 100)/:lv_max_riskscore AS "DETECTION_RESULT"
 FROM
-	 :ET_DATA_FOR_RULLE AS "A"
+	 :IT_DATA_FOR_RULE AS "A"
 LEFT OUTER JOIN
 	:IND_CODE_GRP  AS "B"
 ON 
