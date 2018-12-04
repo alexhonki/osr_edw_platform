@@ -23,6 +23,7 @@ SELECT *
 FROM
 "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
 WHERE "CASE_TYPE" = 'ZEXM'
+AND  "REASON_CODE" <> 'INVD'
 ;
 
 lt_exm_priority =
