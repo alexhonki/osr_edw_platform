@@ -6,12 +6,7 @@ context Types {
             IND_DIVISION : String(1);
             RISK_FACTOR  : Decimal(15, 2);
         }
-
-        entity RFIndustryDivisionTT {
-            DATA : RFIndustryDivisionT;
-        }
-
-        entity rf_ind {
+        table type rf_ind {
             IND_DIVISION : String(1);
             RISK_FACTOR  : Decimal(15, 2);
         }
@@ -182,14 +177,13 @@ context Types {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //workset
-        entity ws {
+        table type ws {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
         };
-
-        entity data_wage {
+        table type data_wage {
             ABN                          : String(11);
             PERIOD_CATEGORY              : String(10);
             PERIOD_KEY                   : String(4);
@@ -199,15 +193,13 @@ context Types {
             WCQ_ACT_WAGES                : Decimal(15, 2);
             WAERS                        : String(5);
         };
-
-        entity data_wage_keys {
+        table type data_wage_keys {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
         };
-
-        entity param_wage {
+        table type param_wage {
             RUN_MODE          : String(1);
             THRESHOLD_YEARLY  : Decimal(15, 2);
             ATO_BAS_WAGE_LOW  : Decimal(15, 2);
@@ -217,14 +209,12 @@ context Types {
             FLAG_WCQ          : String(1);
             FLAG_RISK_VALUE   : String(1);
         };
-
-        entity param_approaching {
+        table type param_approaching {
             RUN_MODE          : String(1);
             ATO_BAS_WAGE_LOW  : Decimal(15, 2);
             ATO_BAS_WAGE_HIGH : Decimal(15, 2);
         };
-
-        entity param_exceeding {
+        table type param_exceeding {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);
             FLAG_ATO_BAS     : String(1);
@@ -232,13 +222,11 @@ context Types {
             FLAG_WCQ         : String(1);
             FLAG_RISK_VALUE  : String(1);
         };
-
-        entity param_versus {
+        table type param_versus {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);
         };
-
-        entity data_bp_reg {
+        table type data_bp_reg {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
@@ -251,14 +239,13 @@ context Types {
             FLAG_NEW_REGISTRATION : String(1);
         };
 
-        entity data_qld_nexus {
+        table type data_qld_nexus {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
         };
-
-        entity param_qld_nexus {
+        table type param_qld_nexus {
             RUN_MODE              : String(1);
             GJAHR_ADJUSTMENT      : String(4);
             QLD_EMP_PC_THLD_LOW   : Decimal(5, 2);
@@ -270,28 +257,25 @@ context Types {
             FLAG_QLD_EMP_CNT      : String(1);
             FLAG_QLD_EMP_PC       : String(1);
         };
-
-        entity param_qld_nexus_emp_cnt {
+        table type param_qld_nexus_emp_cnt {
             RUN_MODE              : String(1);
             GJAHR_ADJUSTMENT      : String(4);
             QLD_EMP_CNT_THLD_LOW  : Integer;
             QLD_EMP_CNT_THLD_HIGH : Integer;
         };
-
-        entity param_qld_nexus_emp_pc {
+        table type param_qld_nexus_emp_pc {
             RUN_MODE             : String(1);
             GJAHR_ADJUSTMENT     : String(4);
             QLD_EMP_PC_THLD_LOW  : Decimal(5, 2);
             QLD_EMP_PC_THLD_HIGH : Decimal(5, 2);
         };
-
-        entity param_qld_nexus_default {
+        table type param_qld_nexus_default {
             RUN_MODE         : String(1);
             GJAHR_ADJUSTMENT : String(4);
         };
 
         //result
-        entity result {
+        table type result {
             ABN              : String(11);
             PERIOD_CATEGORY  : String(10);
             PERIOD_KEY       : String(4);
@@ -300,7 +284,7 @@ context Types {
         };
 
         //result with amount
-        entity result_w_amnt {
+        table type result_w_amnt {
             ABN              : String(11);
             PERIOD_CATEGORY  : String(10);
             PERIOD_KEY       : String(4);
@@ -311,7 +295,7 @@ context Types {
         };
 
         // data exclusions
-        entity data_exclusions {
+        table type data_exclusions {
             ABN                  : String(11);
             PERIOD_CATEGORY      : String(10);
             PERIOD_KEY           : String(4);
@@ -324,8 +308,17 @@ context Types {
             ASIC_REGD            : String(1);
             SUP_GOV_EXMPT_ANZSIC : String(1);
         };
-
-        entity param_data_exclusions {
+        table type param_data_exclusions {
+            PT_ID_ROLE_DATE           : String(8);
+            PT_ROLE                   : String(1);
+            ID_ROLE                   : String(1);
+            PT_CASE_DATE              : String(8);
+            PT_CASE                   : String(1);
+            FLAG_ABR_ACNC             : String(1);
+            FLAG_ASIC_REGD            : String(1);
+            FLAG_SUP_GOV_EXMPT_ANZSIC : String(1);
+        };
+        table type param_exclusions {
             PT_ID_ROLE_DATE           : String(8);
             PT_ROLE                   : String(1);
             ID_ROLE                   : String(1);
@@ -336,13 +329,9 @@ context Types {
             FLAG_SUP_GOV_EXMPT_ANZSIC : String(1);
         };
 
-        entity param_exclusions {
-            PARAM : ParamExclusionsT;
-        };
-
 
         //text
-        entity text {
+        table type text {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
@@ -358,88 +347,6 @@ context Types {
             MSGV2_FC        : String(100);
             MSGV3_FC        : String(100);
             MSGV4_FC        : String(100);
-        };
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //workset
-        entity WorksetTT {
-            WS : WorksetT;
-        };
-
-        // parameters
-        entity ParamExclusionsTT {
-            PARAM : ParamExclusionsT;
-        };
-
-        entity ParamWageTT {
-            PARAM : ParamWageT;
-        };
-
-        entity ParamApproachingTT {
-            PARAM : String(1);
-        };
-
-        entity ParamExceedingTT {
-            PARAM : ParamExceedingT;
-        };
-
-        entity ParamVersusTT {
-            PARAM : ParamVersusT;
-        };
-
-        entity ParamQLDNexusTT {
-            PARAM : ParamQLDNexusT;
-        };
-
-        entity ParamQLDNexusEmpCntTT {
-            PARAM : ParamQLDNexusEmpCntT;
-        };
-
-        entity ParamQLDNexusEmpPcTT {
-            PARAM : ParamQLDNexusEmpPcT;
-        };
-
-        entity ParamQLDNexusDefaultTT {
-            PARAM : ParamQLDNexusDefaultT;
-        };
-
-        entity ParamBPRegTT {
-            PARAM : ParamBPRegT;
-        };
-
-        //data for rule table types
-        entity DataWageTT {
-            DATA : DataWageT;
-        };
-
-        entity DataWageKeysTT {
-            DATA : DataWageKeysT;
-        };
-
-        entity DataBPRegTT {
-            DATA : DataBPRegT;
-        };
-
-        entity DataQLDNexusTT {
-            DATA : DataQLDNexusT;
-        };
-
-        entity DataExclusionsTT {
-            DATA : DataExclusionsT;
-        };
-
-        //result table types
-        entity ResultTT {
-            DATA : ResultT;
-        };
-
-        entity ResultWithAmntTT {
-            DATA : ResultWithAmntT;
-        };
-
-        //text table types
-        entity TextTT {
-            DATA : TextT;
         };
     };
 };
