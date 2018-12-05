@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_BP_ABN_IDENTIFICATION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_BP_ABN_IDENTIFICATION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_BP_ABN_IDENTIFICATION" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_BP_ABN_IDENTIFICATION</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_BP_ABN_IDENTIFICATION">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_BP_ABN_IDENTIFICATION" columnName="ABN"/>
+    </attribute>
+    <attribute id="VALID_DATE_FROM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_DATE_FROM"/>
+      <keyMapping columnObjectName="TF_BP_ABN_IDENTIFICATION" columnName="VALID_DATE_FROM"/>
+    </attribute>
+    <attribute id="VALID_DATE_TO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_DATE_TO"/>
+      <keyMapping columnObjectName="TF_BP_ABN_IDENTIFICATION" columnName="VALID_DATE_TO"/>
+    </attribute>
+    <attribute id="BPARTNER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_BP_ABN_IDENTIFICATION" columnName="BPARTNER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
