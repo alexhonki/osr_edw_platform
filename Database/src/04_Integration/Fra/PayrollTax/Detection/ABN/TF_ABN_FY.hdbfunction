@@ -12,6 +12,21 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 
+RETURN
+SELECT
+LEFT("ABR"."ABN",11) AS "ABN",
+"CALENDAR"."FISCAL_YEAR" AS "GJAHR",
+'' AS "BPARTNER",
+'' AS "GROUP_ID",
+"ABR"."MN_BUS_PC" AS "BUS_PC",
+"ABR"."MN_INDY_CLSN" AS "ANZSIC_CD",
+'PRT' AS "ACCESS_GROUP"
+FROM
+"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR",
+"osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
+;
+
+/*
 lt_abn = 
 SELECT 
 LEFT("ABR"."ABN",11) AS "ABN",
@@ -20,6 +35,8 @@ FROM
 "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR",
 "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
 ;
+
+
 
 lt_abn_bp = 
 SELECT
@@ -64,22 +81,25 @@ ROW_NUMBER() OVER (PARTITION BY "ABN", "GJAHR" ORDER BY "BPARTNER" ASC) AS "ROW_
 FROM
 :lt_abn_bp
 ;
- 
+
+
 RETURN
 SELECT
 "BP"."ABN",
 "BP"."GJAHR",
-"BP"."BPARTNER",
+--"BP"."BPARTNER",
+'' AS "BPARTNER",
 '' AS "GROUP_ID",
 "ABR"."MN_BUS_PC" AS "BUS_PC",
 "ABR"."MN_INDY_CLSN" AS "ANZSIC_CD",
 'PRT' AS "ACCESS_GROUP"
 FROM
-:lt_inv_bp_row AS "BP"
+:lt_abn AS "BP"
 INNER JOIN
 "osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
 ON "BP"."ABN" = LEFT("ABR"."ABN",11)
-WHERE "ROW_NUMBER" = 1
+--WHERE "ROW_NUMBER" = 1
 ;
+*/
 
 END;
