@@ -24,10 +24,10 @@ context Types {
 
         // parameter types
         type ParamExclusionsT {
-            PT_ID_ROLE_DATE           : String(8);
+            PT_ID_ROLE_DATE           : hana.VARCHAR(8);
             PT_ROLE                   : String(1);
             ID_ROLE                   : String(1);
-            PT_CASE_DATE              : String(8);
+            PT_CASE_DATE              : hana.VARCHAR(8);
             PT_CASE                   : String(1);
             FLAG_ABR_ACNC             : String(1);
             FLAG_ASIC_REGD            : String(1);
@@ -309,10 +309,10 @@ context Types {
             SUP_GOV_EXMPT_ANZSIC : String(1);
         };
         table type param_data_exclusions {
-            PT_ID_ROLE_DATE           : String(8);
+            PT_ID_ROLE_DATE           : hana.VARCHAR(8);
             PT_ROLE                   : String(1);
             ID_ROLE                   : String(1);
-            PT_CASE_DATE              : String(8);
+            PT_CASE_DATE              : hana.VARCHAR(8);
             PT_CASE                   : String(1);
             FLAG_ABR_ACNC             : String(1);
             FLAG_ASIC_REGD            : String(1);
