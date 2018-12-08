@@ -4,7 +4,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QuarterWageApproaching
 	IN lv_run_mode			NVARCHAR(1),
 	IN lv_ato_bas_wage_low	DECIMAL(15,2),
 	IN lv_ato_bas_wage_high DECIMAL(15,2),
-	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -54,6 +55,7 @@ lt_out_for_rule );
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageApproachingThld"(
 :lt_out_for_rule,
 :lt_param,
-et_result );
+et_result,
+et_text );
 
  END;
