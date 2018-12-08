@@ -1,7 +1,8 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_IndustryCode"(
 	
 		IN  IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
-	    OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	    OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 )
    LANGUAGE SQLSCRIPT
@@ -118,6 +119,27 @@ LEFT OUTER JOIN
 ON 
 	"A"."ABN" = "B"."ABN"
 );
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:ET_RESULT
+;
    
 
 
