@@ -2,7 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_ATOWageVersusThldTest"
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
 	IN lv_thld_yearly		Decimal(15,2),
-	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text		       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -49,6 +50,7 @@ lt_out_for_rule );
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ATOWageVersusThld"(
 :lt_out_for_rule,
 :lt_param,
-et_result );
+et_result,
+et_text );
 
  END;
