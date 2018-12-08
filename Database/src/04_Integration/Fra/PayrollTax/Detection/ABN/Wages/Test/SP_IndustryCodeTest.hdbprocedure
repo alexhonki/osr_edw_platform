@@ -5,7 +5,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_IndustryCodeTest"
 	OUT et_data_for_rule	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 --	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_data_exclusions",
 --	OUT IT_DATA_FOR_RULE	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
-	OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 
 	)
    LANGUAGE SQLSCRIPT
@@ -55,7 +56,8 @@ et_data_for_rule
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_IndustryCode"
 (
 :et_data_for_rule,
-et_result 
+et_result, 
+et_text
 
 );
 

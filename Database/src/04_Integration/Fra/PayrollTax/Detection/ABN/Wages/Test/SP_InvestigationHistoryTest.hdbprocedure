@@ -3,7 +3,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_InvestigationHistoryTe
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
-	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 )
    LANGUAGE SQLSCRIPT
@@ -44,7 +45,8 @@ IF :iv_abn = '?' THEN
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_InvestigationHistory"
 	(
 	:lt_workset, 
-	et_result
+	et_result, 
+	et_text
 	)
 	;   
 END
