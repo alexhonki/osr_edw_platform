@@ -1,8 +1,9 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ATOWageVersusThld"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_versus",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
-	
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -113,7 +114,7 @@ HAVING MAX("WAGE") >= :lv_thld_yearly
 ;
 
 
-lt_ato = 
+lt_bas = 
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
@@ -296,7 +297,7 @@ SUM("BAS_LT") AS "BAS_LT",
 0 AS "ITR_GE",
 0 AS "ITR_LT",
 0 AS "ITR_NIL"
-FROM :lt_ato
+FROM :lt_bas
 GROUP BY 
 "ABN",
 "PERIOD_CATEGORY",
@@ -342,7 +343,7 @@ CASE
 WHEN "ITR_GE" = 1 AND "ITR_LT" = 0 AND "ITR_NIL" = 0 THEN 'GE'
 WHEN "ITR_GE" = 0 AND "ITR_LT" = 1 AND "ITR_NIL" = 0 THEN 'LT'
 WHEN "ITR_GE" = 0 AND "ITR_LT" = 0 AND "ITR_NIL" = 1 THEN 'NIL'
-ELSE ''
+ELSE 'NIL'
 END "ITR"
 FROM :lt_result_position
 ;
@@ -351,18 +352,61 @@ IF :lv_mode = 'R' THEN
 
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ATO_WAGE_VERSUS_THLD";
 
-et_result = 
+lt_pre_result = 
 SELECT 
 "RESULT"."ABN",
 "RESULT"."PERIOD_CATEGORY",
 "RESULT"."PERIOD_KEY",
 "RESULT"."GJAHR",
-100*"RFR"."RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+100*"RFR"."RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT", 
+"RFR"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING", 
+"RESULT"."BAS",
+"RESULT"."ITR"
 FROM :lt_result AS "RESULT"
 INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ATO_WAGE_VERSUS_THLD" AS "RFR"
 ON  "RESULT"."BAS" = "RFR"."BAS"
 AND "RESULT"."ITR" = "RFR"."ITR";
+
+et_result = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_pre_result AS "RESULT"
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT'       AS "MSGID",
+'001'                   AS "MSGNO",
+CASE 
+WHEN "BAS" = 'GE' THEN '>= threshold'
+WHEN "BAS" = 'LT' THEN '< threshold'
+ELSE ''
+END AS "MSGV1",
+CASE 
+WHEN "ITR" = 'GE' THEN '>= threshold'
+WHEN "ITR" = 'LT' THEN '< threshold'
+WHEN 'ITR' = 'NIL' THEN 'not available'
+ELSE 'not available'
+END "MSGV2",
+TO_VARCHAR(TO_INT("RISK_FACTOR_RATING")) AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:lt_pre_result
+;
 
 END IF;
 
@@ -376,6 +420,27 @@ SELECT
 "RESULT"."GJAHR",
 100 AS "DETECTION_RESULT"
 FROM :lt_result AS "RESULT"
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:lt_result
 ;
 
 END IF;
