@@ -10,7 +10,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_AnnualWageExceedingThl
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
 	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
-	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -50,6 +51,7 @@ lt_out_for_rule );
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"(
 :lt_out_for_rule,
 :lt_param,
-et_result );
+et_result,
+et_text );
  
 END;

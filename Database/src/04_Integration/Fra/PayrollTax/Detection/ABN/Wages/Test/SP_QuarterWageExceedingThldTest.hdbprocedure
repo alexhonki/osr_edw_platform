@@ -7,7 +7,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QuarterWageExceedingTh
 	IN lx_ato_itr			NVARCHAR(1),
 	IN lx_wcq				NVARCHAR(1),
 	IN lx_risk_value		NVARCHAR(1),
-	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
 	LANGUAGE SQLSCRIPT
 	SQL SECURITY INVOKER
@@ -60,6 +61,7 @@ lt_out_for_rule );
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"(
 :lt_out_for_rule,
 :lt_param,
-et_result );
+et_result,
+et_text );
 
  END;

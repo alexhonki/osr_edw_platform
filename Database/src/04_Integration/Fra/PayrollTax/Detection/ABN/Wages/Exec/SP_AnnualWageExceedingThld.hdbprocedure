@@ -1,7 +1,8 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 )
    LANGUAGE SQLSCRIPT
@@ -319,6 +320,27 @@ WHEN :lx_risk_value = 'Y' THEN "RISK_AMOUNT"
 ELSE 0 
 END AS "RISK_AMOUNT",
 "CURRENCY" 
+FROM 
+:lt_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
 FROM 
 :lt_result
 ;

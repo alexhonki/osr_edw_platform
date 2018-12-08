@@ -1,7 +1,8 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt"
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 )
    LANGUAGE SQLSCRIPT
@@ -22,7 +23,8 @@ IF lv_pt_a_cnt > 0 THEN
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"( 
     	it_data_for_rule	=> :lt_data_for_rule,
     	parameters      	=> :parameters,
-    	et_result   		=> et_result
+    	et_result   		=> et_result,
+    	et_text				=> et_text
 	)
 	;
 END IF;
@@ -34,25 +36,10 @@ IF lv_pt_q_cnt > 0 THEN
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QuarterWageExceedingThld"( 
     	it_data_for_rule	=> :lt_data_for_rule,
     	parameters      	=> :parameters,
-    	et_result   		=> et_result
+    	et_result   		=> et_result,
+    	et_text				=> et_text
 	)
 	;
 END IF;
-
-
-/*
-et_result = 
-SELECT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-100 AS "DETECTION_RESULT",
-0  AS "RISK_AMOUNT",
-'AUD  ' AS "CURRENCY" 
-FROM 
-:it_data_for_rule
-;
-*/
 
 END
