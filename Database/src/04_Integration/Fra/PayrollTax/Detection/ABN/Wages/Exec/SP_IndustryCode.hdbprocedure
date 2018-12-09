@@ -97,13 +97,17 @@ SELECT
 
 -------------------------Cal Risk value-----------------------------------------------
 
-ET_RESULT =
+lt_pre_result =
 SELECT   
    "ABN",
    "PERIOD_CATEGORY",
    "PERIOD_KEY",
    "GJAHR",
-   "DETECTION_RESULT"
+   "DETECTION_RESULT", 
+   "RISK_FACTOR_RATING",
+   "ANZSIC_CD",
+   "IND_CODE_GRP",
+   "IND_DIVISION"
 FROM
 (
 SELECT
@@ -111,7 +115,11 @@ SELECT
    "A"."PERIOD_CATEGORY",
    "A"."PERIOD_KEY",
    "A"."GJAHR",
-    ("B"."RISK_FACTOR_RATING" * 100)/:lv_max_riskscore AS "DETECTION_RESULT"
+    ("B"."RISK_FACTOR_RATING" * 100)/:lv_max_riskscore AS "DETECTION_RESULT",
+      "B"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
+   "B"."ANZSIC_CD" AS "ANZSIC_CD",
+   "B"."IND_CODE_GRP" AS "IND_CODE_GRP",
+   "B"."IND_DIVISION" AS "IND_DIVISION"
 FROM
 	 :IT_DATA_FOR_RULE AS "A"
 LEFT OUTER JOIN
@@ -120,6 +128,17 @@ ON
 	"A"."ABN" = "B"."ABN"
 );
 
+et_result =
+SELECT   
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM
+:lt_pre_result
+;  
+
 et_text = 
 SELECT 
 "ABN",
@@ -127,20 +146,25 @@ SELECT
 "PERIOD_KEY",
 "GJAHR",
 '' AS "TEXT",
-'' AS "MSGID",
-'' AS "MSGNO",
-'' AS "MSGV1",
-'' AS "MSGV2",
-'' AS "MSGV3",
-'' AS "MSGV4",
+'/OSRQLD/FRA_PRT' AS "MSGID",
+'008' AS "MSGNO",
+"PRE_RESULT"."ANZSIC_CD" || CHAR(32) ||  "CODE"."ANZSIC_CD_DESCR" AS "MSGV1",
+"PRE_RESULT"."IND_CODE_GRP" AS "MSGV2",
+"PRE_RESULT"."IND_DIVISION" || CHAR(32) ||  "CODE_GRP"."IND_DIVISION_DESCR"AS "MSGV3",
+"RISK_FACTOR_RATING" AS "MSGV4",
 '' AS "MSGV1_FC",
 '' AS "MSGV2_FC",
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:ET_RESULT
-;
+:lt_pre_result AS "PRE_RESULT"
+LEFT OUTER JOIN
+"osr.edw.platform.fra.prt.dt.abn.vh::CV_ANZSIC_CODE" AS "CODE"
+ON "PRE_RESULT"."ANZSIC_CD" = "CODE"."ANZSIC_CD"
+LEFT OUTER JOIN
+"osr.edw.staging.md.ato.proxy::CV_IND_CODE_GRP" AS "CODE_GRP"
+ON  "PRE_RESULT"."IND_CODE_GRP" = "CODE_GRP"."IND_CODE_GRP"
+AND "PRE_RESULT"."IND_DIVISION" = "CODE_GRP"."IND_DIVISION";
    
-
 
 END

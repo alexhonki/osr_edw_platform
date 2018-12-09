@@ -399,7 +399,7 @@ WHEN 'ITR' = 'NIL' THEN 'not available'
 ELSE 'not available'
 END "MSGV2",
 TO_VARCHAR(TO_INT("RISK_FACTOR_RATING")) AS "MSGV3",
-'' AS "MSGV4",
+'AUD' AS "MSGV4",
 '' AS "MSGV1_FC",
 '' AS "MSGV2_FC",
 '' AS "MSGV3_FC",
@@ -429,18 +429,27 @@ SELECT
 "PERIOD_KEY",
 "GJAHR",
 '' AS "TEXT",
-'' AS "MSGID",
-'' AS "MSGNO",
-'' AS "MSGV1",
-'' AS "MSGV2",
-'' AS "MSGV3",
-'' AS "MSGV4",
+'/OSRQLD/FRA_PRT'       AS "MSGID",
+'001'                   AS "MSGNO",
+CASE 
+WHEN "BAS" = 'GE' THEN '>= threshold'
+WHEN "BAS" = 'LT' THEN '< threshold'
+ELSE ''
+END AS "MSGV1",
+CASE 
+WHEN "ITR" = 'GE' THEN '>= threshold'
+WHEN "ITR" = 'LT' THEN '< threshold'
+WHEN 'ITR' = 'NIL' THEN 'not available'
+ELSE 'not available'
+END "MSGV2",
+TO_VARCHAR(TO_INT("RISK_FACTOR_RATING")) AS "MSGV3",
+'AUD' AS "MSGV4",
 '' AS "MSGV1_FC",
 '' AS "MSGV2_FC",
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_result
+:lt_pre_result
 ;
 
 END IF;
