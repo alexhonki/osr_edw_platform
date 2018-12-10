@@ -2,7 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus_S"
 (
 	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
 	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus",
-	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT ET_RESULT 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -19,6 +20,11 @@ BEGIN
 		DECLARE lx_flag_qld_address 	 NVARCHAR(1);
 		DECLARE lx_flag_qld_emp_cnt 	 NVARCHAR(1);
 		DECLARE lx_flag_qld_emp_pc		 NVARCHAR(1);
+		DECLARE lx_text_qld_address		 NVARCHAR(255);
+		DECLARE lx_text_wcq_policy 	 	 NVARCHAR(255);
+		DECLARE lx_text_emp_cnt 		 NVARCHAR(255);
+		DECLARE lx_text_emp_pc			 NVARCHAR(255);
+		DECLARE lx_text					 NVARCHAR(255);
 
 		SELECT
 			"RUN_MODE",
@@ -44,12 +50,12 @@ BEGIN
 			lx_flag_qld_emp_pc
 		FROM :PARAMETERS LIMIT 1;
 
-   LT_DATA_FOR_RULE = 
+LT_DATA_FOR_RULE = 
 	SELECT
-   "ABN",
-   "PERIOD_CATEGORY",
-   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
-   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
+		"ABN",
+		"PERIOD_CATEGORY",
+		TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
+		TO_NVARCHAR(TO_INT("GJAHR")		 - TO_INT(:lv_previous_year))	AS "GJAHR"
    FROM :IT_DATA_FOR_RULE;  
   
 lt_result = 
@@ -59,8 +65,35 @@ lt_result =
 		"PERIOD_KEY",
 		"GJAHR",
 		0 AS "DETECTION_RESULT"
-		FROM  :LT_DATA_FOR_RULE
-		;	
+	FROM  :LT_DATA_FOR_RULE;	
+			
+IF  :lx_flag_qld_address  = 'Y' THEN
+	 lx_text_qld_address  = 'QLD Address is found';
+END IF;
+IF  :lx_flag_qld_address  = 'N' THEN 
+	 lx_text_qld_address  = 'QLD Address is not found';
+END IF;
+
+IF  :lx_flag_wcq_policy   = 'Y' THEN
+	 lx_text_wcq_policy   = 'WCQ Policy is found';
+END IF;
+IF  :lx_flag_wcq_policy   = 'N' THEN 
+	 lx_text_wcq_policy   = 'WCQ Policy is not found';
+END IF;
+
+IF  :lx_flag_qld_emp_cnt  = 'Y' THEN
+	 lx_text_emp_cnt	  = 'QLD Employee Count check is selected';
+END IF;
+IF  :lx_flag_qld_emp_cnt  = 'N' THEN 
+	 lx_text_emp_cnt	  = 'QLD Employee Count check is not selected';
+END IF;
+
+IF  :lx_flag_qld_emp_pc   = 'Y' THEN
+	 lx_text_emp_pc		  = 'QLD Employee Percentage check is selected';
+END IF;
+IF  :lx_flag_qld_emp_pc   = 'N' THEN 
+	 lx_text_emp_pc  	  = 'QLD Employee Percentage check is not selected';
+END IF;
 			
 IF :lx_flag_qld_address = 'Y' THEN 
 	lt_result = 
@@ -70,21 +103,21 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"PERIOD_KEY",
 			"GJAHR",
 			"DETECTION_RESULT"
-			FROM :lt_result
+		FROM :lt_result
 		UNION
 		SELECT
 			"RESULT"."ABN",
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			100 AS "DETECTION_RESULT"	
-			FROM 
-			:lt_result AS "RESULT"
-			WHERE EXISTS (
-				SELECT * FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BASNIND"
-				WHERE "RESULT"."ABN" = LEFT("BASNIND"."ABN",11)
-				  AND "RESULT"."GJAHR" = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
-				  AND "BASNIND"."BUS_STATE" = 'QLD'
+			100 		AS "DETECTION_RESULT"	
+		FROM 
+			:lt_result	AS "RESULT"
+		WHERE EXISTS (
+			SELECT * FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BASNIND"
+			WHERE "RESULT"."ABN"		= LEFT("BASNIND"."ABN",11)
+			AND   "RESULT"."GJAHR"		= LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
+			AND   "BASNIND"."BUS_STATE" = 'QLD'
 			)
 		UNION
 		SELECT
@@ -92,24 +125,43 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			100 AS "DETECTION_RESULT"	
-			FROM 
-			:lt_result AS "RESULT"
-			WHERE EXISTS (
-				SELECT * FROM
-				(
-					SELECT LEFT("AGENCY_DATA"."ABN",11) AS "ABN" 
-						FROM
-						"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_LOCATION.active_data" AS "BUSINESS_LOCATION"
-						INNER JOIN
-						"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "AGENCY_DATA"
-						ON "BUSINESS_LOCATION"."PID" = "AGENCY_DATA"."PID"
-						WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
-				) AS "BUS_ADDR"
-				WHERE "RESULT"."ABN" = LEFT("BUS_ADDR"."ABN",11)
+			100 		AS "DETECTION_RESULT"	
+		FROM 
+			:lt_result	AS "RESULT"
+		WHERE EXISTS (
+			SELECT * FROM
+			(
+				SELECT LEFT("AGENCY_DATA"."ABN",11) 											AS "ABN" 
+				FROM
+					"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_LOCATION.active_data" AS "BUSINESS_LOCATION"
+				INNER JOIN
+					"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"		AS "AGENCY_DATA"
+				ON "BUSINESS_LOCATION"."PID" = "AGENCY_DATA"."PID"
+				WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
+			)	AS "BUS_ADDR"
+			WHERE "RESULT"."ABN" = LEFT("BUS_ADDR"."ABN",11)
 			)
 			;	
-			
+		et_text = 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			:lx_text_qld_address AS "TEXT",
+			''					 AS "MSGID",
+			''					 AS "MSGNO",
+			''					 AS "MSGV1",
+			''					 AS "MSGV2",
+			''					 AS "MSGV3",
+			''					 AS "MSGV4",
+			''					 AS "MSGV1_FC",
+			''					 AS "MSGV2_FC",
+			''					 AS "MSGV3_FC",
+			''					 AS "MSGV4_FC"
+			FROM 
+			:lt_result
+			;	
 END IF;
 
 
@@ -129,15 +181,35 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			100 AS "DETECTION_RESULT"	
+			100 		AS "DETECTION_RESULT"	
 			FROM 
-			:lt_result AS "RESULT"
+			:lt_result	AS "RESULT"
 			WHERE EXISTS (
 				SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WCQ"
-				WHERE "RESULT"."ABN" = "WCQ"."ABN"
-				  AND "RESULT"."GJAHR" = "WCQ"."GJAHR"
+				WHERE "RESULT"."ABN"	= "WCQ"."ABN"
+				  AND "RESULT"."GJAHR"  = "WCQ"."GJAHR"
 			)
 		;
+		et_text = 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			:lx_text_wcq_policy AS "TEXT",
+			''					AS "MSGID",
+			''					AS "MSGNO",
+			''					AS "MSGV1",
+			''					AS "MSGV2",
+			''					AS "MSGV3",
+			''					AS "MSGV4",
+			''					AS "MSGV1_FC",
+			''					AS "MSGV2_FC",
+			''					AS "MSGV3_FC",
+			''					AS "MSGV4_FC"
+			FROM 
+			:lt_result
+			;
 			
 END IF;
 
@@ -147,29 +219,29 @@ lt_cnt =
 SELECT 
 "ABN",
 "GJAHR",
-SUM("QLD_CNT_EMPLOYEE") AS "QLD_CNT_EMPLOYEE",
-SUM("CNT_EMPLOYEE") AS "CNT_EMPLOYEE",
+SUM("QLD_CNT_EMPLOYEE") 						AS "QLD_CNT_EMPLOYEE",
+SUM("CNT_EMPLOYEE") 							AS "CNT_EMPLOYEE",
 100*SUM("QLD_CNT_EMPLOYEE")/SUM("CNT_EMPLOYEE") AS "QLD_PC_EMPLOYEE"
 FROM (
 	SELECT
-	LEFT("ABN",11) AS "ABN",
-	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
-	"CNT_EMPLOYEE" AS "QLD_CNT_EMPLOYEE",
-	0 AS "CNT_EMPLOYEE"
+	LEFT("ABN",11)					AS "ABN",
+	LEFT(TO_NVARCHAR("INCM_YR"),4)  AS "GJAHR",
+	"CNT_EMPLOYEE"					AS "QLD_CNT_EMPLOYEE",
+	0								AS "CNT_EMPLOYEE"
 	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
 	WHERE "RSDNL_STATE_CD"='QLD'
 	UNION
 	SELECT
-	LEFT("ABN",11) AS "ABN",
-	LEFT(TO_NVARCHAR("INCM_YR"),4) AS "GJAHR",
-	0 AS "QLD_CNT_EMPLOYEE",
-	"CNT_EMPLOYEE" AS "CNT_EMPLOYEE"
+	LEFT("ABN",11)					AS "ABN",
+	LEFT(TO_NVARCHAR("INCM_YR"),4)  AS "GJAHR",
+	0								AS "QLD_CNT_EMPLOYEE",
+	"CNT_EMPLOYEE"					AS "CNT_EMPLOYEE"
 	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
-)
-GROUP BY 
-"ABN",
-"GJAHR"
-;
+	)
+	GROUP BY 
+		"ABN",
+		"GJAHR"
+	;
 
 END IF;
 
@@ -190,16 +262,36 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			100 AS "DETECTION_RESULT"	
+			100 		AS "DETECTION_RESULT"	
 			FROM 
-			:lt_result AS "RESULT"
+			:lt_result	AS "RESULT"
 			WHERE EXISTS (
 				SELECT * FROM :lt_cnt AS "CNT"
-				WHERE "RESULT"."ABN" = "CNT"."ABN"
-				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
+				WHERE "RESULT"."ABN"			= "CNT"."ABN"
+				  AND "RESULT"."GJAHR"  		= "CNT"."GJAHR"
 				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
 				  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
 			)
+		;
+		et_text = 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			:lx_text_emp_cnt AS "TEXT",
+			''				 AS "MSGID",
+			''				 AS "MSGNO",
+			''				 AS "MSGV1",
+			''				 AS "MSGV2",
+			''				 AS "MSGV3",
+			''				 AS "MSGV4",
+			''				 AS "MSGV1_FC",
+			''				 AS "MSGV2_FC",
+			''				 AS "MSGV3_FC",
+			''				 AS "MSGV4_FC"
+		FROM 
+		:lt_result
 		;
 
 END IF;
@@ -213,53 +305,95 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"PERIOD_KEY",
 			"GJAHR",
 			"DETECTION_RESULT"
-			FROM :lt_result
+		FROM :lt_result
 		UNION
 		SELECT
 			"RESULT"."ABN",
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
-			100 AS "DETECTION_RESULT"	
-			FROM 
-			:lt_result AS "RESULT"
-			WHERE EXISTS (
-				SELECT * FROM :lt_cnt AS "CNT"
-				WHERE "RESULT"."ABN" = "CNT"."ABN"
-				  AND "RESULT"."GJAHR" = "CNT"."GJAHR"
-				  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
-				  AND "CNT"."QLD_PC_EMPLOYEE" < :lv_qld_emp_pc_thld_high
+			100 		AS "DETECTION_RESULT"	
+		FROM 
+			:lt_result  AS "RESULT"
+		WHERE EXISTS (
+			SELECT * FROM :lt_cnt AS "CNT"
+			WHERE	"RESULT"."ABN"			 = "CNT"."ABN"
+			AND 	"RESULT"."GJAHR"		 = "CNT"."GJAHR"
+			AND 	"CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+			AND 	"CNT"."QLD_PC_EMPLOYEE" < :lv_qld_emp_pc_thld_high
 			)
+		;
+		et_text = 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			:lx_text_emp_pc AS "TEXT",
+			''				AS "MSGID",
+			''				AS "MSGNO",
+			''				AS "MSGV1",
+			''				AS "MSGV2",
+			''				AS "MSGV3",
+			''				AS "MSGV4",
+			''				AS "MSGV1_FC",
+			''				AS "MSGV2_FC",
+			''				AS "MSGV3_FC",
+			''				AS "MSGV4_FC"
+		FROM 
+		:lt_result
 		;
 
 END IF;
 
 lt_result = 
-SELECT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-SUM("DETECTION_RESULT") AS "DETECTION_RESULT"
-FROM
-:lt_result
-GROUP BY
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
-HAVING SUM("DETECTION_RESULT") > 0
-;
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			SUM("DETECTION_RESULT") AS "DETECTION_RESULT"
+		FROM
+		:lt_result
+		GROUP BY
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+			HAVING SUM("DETECTION_RESULT") > 0
+			;
 
 et_result = 
-SELECT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-100 AS "DETECTION_RESULT"
-FROM
-:lt_result
-;
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			100 AS "DETECTION_RESULT"
+		FROM
+			:lt_result
+			;
+lx_text = :lx_text_qld_address + ',' + :lx_text_wcq_policy + ',' + :lx_text_emp_cnt + ',' + :lx_text_emp_pc;
+
+et_text = 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			:lx_text AS "TEXT",
+			''		 AS "MSGID",
+			''		 AS "MSGNO",
+			''		 AS "MSGV1",
+			''		 AS "MSGV2",
+			''		 AS "MSGV3",
+			''		 AS "MSGV4",
+			''		 AS "MSGV1_FC",
+			''		 AS "MSGV2_FC",
+			''		 AS "MSGV3_FC",
+			''		 AS "MSGV4_FC"
+		FROM 
+		:lt_result
+		;
 
 END
