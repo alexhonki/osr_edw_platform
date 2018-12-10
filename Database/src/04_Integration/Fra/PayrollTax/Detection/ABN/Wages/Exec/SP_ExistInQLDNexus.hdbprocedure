@@ -2,7 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus"
 (
 	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
 	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus",
-	OUT ET_RESULT 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT ET_RESULT 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -55,7 +56,8 @@ IF :lv_mode = 'R' THEN
 	( 
     	IT_DATA_FOR_RULE	=> :it_data_for_rule,
     	PARAMETERS      	=> :PARAMETERS,
-    	ET_RESULT   		=> ET_RESULT
+    	ET_RESULT   		=> ET_RESULT,
+    	et_text         	=> et_text
 	)
 	;
 END IF;
@@ -66,7 +68,8 @@ IF :lv_mode = 'S' THEN
 	( 
     	IT_DATA_FOR_RULE	=> :it_data_for_rule,
     	PARAMETERS      	=> :PARAMETERS,
-    	ET_RESULT   		=> ET_RESULT
+    	ET_RESULT   		=> ET_RESULT,
+    	et_text         	=> et_text
 	)
 	;
 END IF;
