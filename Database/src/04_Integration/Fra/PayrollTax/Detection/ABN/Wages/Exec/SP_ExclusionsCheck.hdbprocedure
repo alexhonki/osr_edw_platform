@@ -2,7 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionsCheck"
 (
 	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_exclusions",
 	IN PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exclusions",
-	OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+	OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT ET_TEXT             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 )
    LANGUAGE SQLSCRIPT
@@ -145,15 +146,15 @@ WHERE to_dats(LEFT("CREATE_DATE",8)) >= to_dats(:lv_pt_case_dt)
 ;
 
 ---------------------------------------------------------------
+
+
 Step2 =
-
-
 SELECT DISTINCT 
 		"A"."ABN",
 		"A"."PERIOD_CATEGORY",
 		"A"."PERIOD_KEY",
 		"A"."GJAHR",
-		"A"."ANZSIC_CD",
+--		"A"."ANZSIC_CD",
 --		"A"."IND_CODE_GRP",
 --		"A"."IND_DIVISION",
 		CASE WHEN :lv_flag_abr_acnc = 'Y'  AND "A"."ABR_ACNC_FLAG" = 'Y' THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
@@ -180,30 +181,12 @@ FROM
 	
 ;
 
-
 ------------------------
 
 
 
 
 ET_RESULT =
-
-/*
-SELECT
-   "ABN",
-   "PERIOD_CATEGORY",
-   "PERIOD_KEY",
-   "GJAHR",
-   100 AS "DETECTION_RESULT"
-   FROM :Step2
-WHERE
-	"PT_ROLE"					= :lv_pt_role
-AND	"ID_ROLE"					= :lv_id_role
-AND	"PT_CASE"					= :lv_pt_case
-AND	"ABR_ACNC_FLAG" 			= :lv_flag_abr_acnc
-AND	"ASIC_REGD"    			    = :lv_flag_asic_regd 
-AND	"SUP_GOV_EXMPT_ANZSIC"      = :lv_flag_sup_gov_exmpt_anzsic
-*/
 SELECT
    "ABN",
    "PERIOD_CATEGORY",
@@ -219,6 +202,71 @@ OR	"ABR_ACNC_FLAG" 			= 'Y'
 OR	"ASIC_REGD"    			    = 'N'
 OR	"SUP_GOV_EXMPT_ANZSIC"      = 'Y'
    ;
-   
+
+------------------------------------------------
+
+Step2_txt =
+
+SELECT DISTINCT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"ABR_ACNC_FLAG",
+		"ASIC_REGD",
+		"SUP_GOV_EXMPT_ANZSIC" ,
+		"PT_ID_CASE"
+FROM
+(
+SELECT DISTINCT 
+		"A"."ABN",
+		"A"."PERIOD_CATEGORY",
+		"A"."PERIOD_KEY",
+		"A"."GJAHR",
+		"A"."ABR_ACNC_FLAG",
+		"A"."ASIC_REGD",
+		"A"."SUP_GOV_EXMPT_ANZSIC" ,
+		CASE WHEN ("B"."PT_ROLE" = 'PT' OR 	"C"."ID_ROLE" = 'ID' OR  "D"."ABN" IS NOT NULL) THEN 'Y' ELSE 'N' END AS "PT_ID_CASE"
+FROM 
+		:IT_DATA_FOR_RULE AS "A" 
+	LEFT OUTER JOIN
+		:PT_DATA  AS "B" 
+	ON
+		"A"."ABN" = "B"."ABN"
+	LEFT OUTER JOIN
+		:ID_DATA  AS "C" 
+	ON
+		"A"."ABN" = "C"."ABN"
+    LEFT OUTER JOIN
+		:PT_CASE  AS "D" 
+	ON
+		"A"."ABN" = "D"."ABN"	
+WHERE "A"."ABN" IN ( SELECT DISTINCT "ABN" FROM :ET_RESULT)		
+)	
+;
+
+----------------------------------------------
+  
+ET_TEXT = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT' AS "MSGID",
+'015' AS "MSGNO",
+CASE WHEN "PT_ID_CASE" = 'Y'           THEN 'Yes'       ELSE 'No'       END AS  "MSGV1",
+CASE WHEN "ASIC_REGD"  = 'Y'           THEN 'Yes REGD'  ELSE 'Not REGD' END AS  "MSGV2",
+CASE WHEN "SUP_GOV_EXMPT_ANZSIC" = 'Y' THEN 'Yes'       ELSE 'No'       END AS  "MSGV3",
+CASE WHEN "ABR_ACNC_FLAG" = 'Y'        THEN 'Yes'       ELSE 'No'       END AS  "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:Step2_txt
+;
+
 
 END;
