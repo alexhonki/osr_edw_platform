@@ -34,6 +34,7 @@ SELECT
 "CASE_CATEGORY", 
 "REASON_CODE",
 "ABN",
+"PARTNER" AS "BPARTNER",
 "CREATE_TIME"
 FROM
 (
@@ -43,21 +44,24 @@ FROM
 	"CASE_CATEGORY",
 	"REASON_CODE",
 	"ABN",
+	"PARTNER",
 	"CREATE_TIME",
-	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","CASE_ID" DESC) AS "RANK_1"
+	RANK() OVER (PARTITION BY "ABN", "PARTNER" ORDER BY "ABN", "PARTNER", "CASE_ID" DESC) AS "RANK_1"
 	FROM
 	:lt_exm_case_data
 )
 	WHERE "RANK_1" = '1'
 ;
 
-lt_result =
+lt_pre_result =
 SELECT 
 "W"."ABN",
 "W"."PERIOD_CATEGORY",
 "W"."PERIOD_KEY",
 "W"."GJAHR",
-"C"."REASON_CODE"
+"C"."REASON_CODE" AS "REASON_CODE",
+"C"."CASE_ID" AS "CASE_ID",
+"C"."BPARTNER" AS "BPARTNER"
 FROM
 :lt_ws_data AS "W"
 INNER JOIN
@@ -77,7 +81,7 @@ THEN 100
 ELSE 0
 END AS "DETECTION_RESULT"
 FROM
-:lt_result
+:lt_pre_result
 ;
 
 et_text = 
@@ -87,10 +91,13 @@ SELECT
 "PERIOD_KEY",
 "GJAHR",
 '' AS "TEXT",
-'' AS "MSGID",
-'' AS "MSGNO",
-'' AS "MSGV1",
-'' AS "MSGV2",
+'/OSRQLD/FRA_PRT' AS "MSGID",
+CASE WHEN "REASON_CODE" = 'DISA'
+THEN '009'
+ELSE '010'
+END AS "MSGNO",
+LTRIM("CASE_ID") AS "MSGV1",
+LTRIM("BPARTNER") AS "MSGV2",
 '' AS "MSGV3",
 '' AS "MSGV4",
 '' AS "MSGV1_FC",
@@ -98,7 +105,7 @@ SELECT
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_result
+:lt_pre_result
 ;
 
 END
