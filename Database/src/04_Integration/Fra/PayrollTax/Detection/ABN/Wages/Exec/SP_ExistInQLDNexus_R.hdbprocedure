@@ -20,10 +20,10 @@ BEGIN
 	DECLARE lx_flag_qld_address 			 NVARCHAR(1);
 	DECLARE lx_flag_qld_emp_cnt 			 NVARCHAR(1);
 	DECLARE lx_flag_qld_emp_pc				 NVARCHAR(1);
-	DECLARE lx_text_qld_address				 NVARCHAR(255);
-	DECLARE lx_text_wcq_policy 	 			 NVARCHAR(255);
-	DECLARE lx_text_emp_cnt 				 NVARCHAR(255);
-	DECLARE lx_text_emp_pc					 NVARCHAR(255);
+	DECLARE lx_text_qld_address				 NVARCHAR(60);
+	DECLARE lx_text_wcq_policy 	 			 NVARCHAR(60);
+	DECLARE lx_text_emp_cnt 				 NVARCHAR(60);
+	DECLARE lx_text_emp_pc					 NVARCHAR(60);
 	DECLARE lx_text							 NVARCHAR(255);	
 	DECLARE "LOW_EMP_CNT"					 INTEGER;
 	DECLARE "HIGH_EMP_CNT"					 INTEGER;
@@ -35,6 +35,7 @@ BEGIN
 	DECLARE "RISK_FACTOR_RATING_EMP_PC" 	 DECIMAL(3,2);
 	DECLARE "RISK_FACTOR_RATING_EMP_CNT_MAX" DECIMAL(3,2);
 	DECLARE "RISK_FACTOR_RATING_EMP_PC_MAX"	 DECIMAL(3,2);
+
 
 	SELECT
 		"RUN_MODE",
@@ -200,26 +201,6 @@ IF :lx_flag_qld_address = 'Y' THEN
 			WHERE "RESULT"."ABN" = LEFT("BUS_ADDR"."ABN",11)
 			)
 			;
-		et_text = 
-		SELECT 
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			:lx_text_qld_address AS "TEXT",
-			''					 AS "MSGID",
-			''					 AS "MSGNO",
-			''					 AS "MSGV1",
-			''					 AS "MSGV2",
-			''					 AS "MSGV3",
-			''					 AS "MSGV4",
-			''					 AS "MSGV1_FC",
-			''					 AS "MSGV2_FC",
-			''					 AS "MSGV3_FC",
-			''					 AS "MSGV4_FC"
-		FROM 
-		:lt_result
-		;
 			
 END IF;
 
@@ -247,26 +228,7 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 			  AND "RESULT"."GJAHR"	= "WCQ"."GJAHR"
 			)
 		;
-		et_text = 
-		SELECT 
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			:lx_text_wcq_policy AS "TEXT",
-			''					AS "MSGID",
-			''					AS "MSGNO",
-			''					AS "MSGV1",
-			''					AS "MSGV2",
-			''					AS "MSGV3",
-			''					AS "MSGV4",
-			''					AS "MSGV1_FC",
-			''					AS "MSGV2_FC",
-			''					AS "MSGV3_FC",
-			''					AS "MSGV4_FC"
-		FROM 
-		:lt_result
-		;
+
 			
 END IF;
 
@@ -347,26 +309,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 				  AND "TOP_BAND_EMP_CNT"		='X'
 			)
 		;
-		et_text = 
-		SELECT 
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			:lx_text_emp_cnt AS "TEXT",
-			''				 AS "MSGID",
-			''				 AS "MSGNO",
-			''				 AS "MSGV1",
-			''				 AS "MSGV2",
-			''				 AS "MSGV3",
-			''				 AS "MSGV4",
-			''				 AS "MSGV1_FC",
-			''				 AS "MSGV2_FC",
-			''				 AS "MSGV3_FC",
-			''				 AS "MSGV4_FC"
-		FROM 
-		:lt_result
-		;
+
 
 END IF;
 
@@ -413,26 +356,6 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			  AND "TOP_BAND_EMP_PC"        = 'X'
 			)
 		;
-		et_text = 
-		SELECT 
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			:lx_text_emp_pc AS "TEXT",
-			''				AS "MSGID",
-			''				AS "MSGNO",
-			''				AS "MSGV1",
-			''				AS "MSGV2",
-			''				AS "MSGV3",
-			''				AS "MSGV4",
-			''				AS "MSGV1_FC",
-			''				AS "MSGV2_FC",
-			''				AS "MSGV3_FC",
-			''				AS "MSGV4_FC"
-		FROM 
-		:lt_result
-		;
 
 END IF;
 
@@ -464,7 +387,7 @@ et_result =
 			:lt_result
 		;
 
-lx_text = :lx_text_qld_address + ',' + :lx_text_wcq_policy + ',' + :lx_text_emp_cnt + ',' + :lx_text_emp_pc;
+lx_text = :lx_text_qld_address || ',' || :lx_text_wcq_policy || ',' || :lx_text_emp_cnt || ',' || :lx_text_emp_pc;
 
 et_text = 
 		SELECT 
@@ -483,9 +406,9 @@ et_text =
 			''		 AS "MSGV2_FC",
 			''		 AS "MSGV3_FC",
 			''		 AS "MSGV4_FC"
-			FROM 
-			:lt_result
-			;
+		FROM 
+		:lt_result
+		;
 
 
 END
