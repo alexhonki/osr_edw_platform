@@ -20,11 +20,13 @@ BEGIN
 		DECLARE lx_flag_qld_address 	 NVARCHAR(1);
 		DECLARE lx_flag_qld_emp_cnt 	 NVARCHAR(1);
 		DECLARE lx_flag_qld_emp_pc		 NVARCHAR(1);
-		DECLARE lx_text_qld_address		 NVARCHAR(255);
-		DECLARE lx_text_wcq_policy 	 	 NVARCHAR(255);
-		DECLARE lx_text_emp_cnt 		 NVARCHAR(255);
-		DECLARE lx_text_emp_pc			 NVARCHAR(255);
+/**
+		DECLARE lx_text_qld_address		 NVARCHAR(60);
+		DECLARE lx_text_wcq_policy 	 	 NVARCHAR(60);
+		DECLARE lx_text_emp_cnt 		 NVARCHAR(60);
+		DECLARE lx_text_emp_pc			 NVARCHAR(60);
 		DECLARE lx_text					 NVARCHAR(255);
+**/
 
 		SELECT
 			"RUN_MODE",
@@ -65,8 +67,9 @@ lt_result =
 		"PERIOD_KEY",
 		"GJAHR",
 		0 AS "DETECTION_RESULT"
-	FROM  :LT_DATA_FOR_RULE;	
-			
+	FROM  :LT_DATA_FOR_RULE;
+	
+/**			
 IF  :lx_flag_qld_address  = 'Y' THEN
 	 lx_text_qld_address  = 'QLD Address is found';
 END IF;
@@ -94,7 +97,8 @@ END IF;
 IF  :lx_flag_qld_emp_pc   = 'N' THEN 
 	 lx_text_emp_pc  	  = 'QLD Employee Percentage check is not selected';
 END IF;
-			
+**/
+
 IF :lx_flag_qld_address = 'Y' THEN 
 	lt_result = 
 		SELECT
@@ -148,17 +152,17 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			:lx_text_qld_address AS "TEXT",
-			''					 AS "MSGID",
-			''					 AS "MSGNO",
-			''					 AS "MSGV1",
-			''					 AS "MSGV2",
-			''					 AS "MSGV3",
-			''					 AS "MSGV4",
-			''					 AS "MSGV1_FC",
-			''					 AS "MSGV2_FC",
-			''					 AS "MSGV3_FC",
-			''					 AS "MSGV4_FC"
+			'' AS "TEXT",
+			'' AS "MSGID",
+			'' AS "MSGNO",
+			'' AS "MSGV1",
+			'' AS "MSGV2",
+			'' AS "MSGV3",
+			'' AS "MSGV4",
+			'' AS "MSGV1_FC",
+			'' AS "MSGV2_FC",
+			'' AS "MSGV3_FC",
+			'' AS "MSGV4_FC"
 			FROM 
 			:lt_result
 			;	
@@ -196,17 +200,17 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			:lx_text_wcq_policy AS "TEXT",
-			''					AS "MSGID",
-			''					AS "MSGNO",
-			''					AS "MSGV1",
-			''					AS "MSGV2",
-			''					AS "MSGV3",
-			''					AS "MSGV4",
-			''					AS "MSGV1_FC",
-			''					AS "MSGV2_FC",
-			''					AS "MSGV3_FC",
-			''					AS "MSGV4_FC"
+			'' AS "TEXT",
+			'' AS "MSGID",
+			'' AS "MSGNO",
+			'' AS "MSGV1",
+			'' AS "MSGV2",
+			'' AS "MSGV3",
+			'' AS "MSGV4",
+			'' AS "MSGV1_FC",
+			'' AS "MSGV2_FC",
+			'' AS "MSGV3_FC",
+			'' AS "MSGV4_FC"
 			FROM 
 			:lt_result
 			;
@@ -279,17 +283,17 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			:lx_text_emp_cnt AS "TEXT",
-			''				 AS "MSGID",
-			''				 AS "MSGNO",
-			''				 AS "MSGV1",
-			''				 AS "MSGV2",
-			''				 AS "MSGV3",
-			''				 AS "MSGV4",
-			''				 AS "MSGV1_FC",
-			''				 AS "MSGV2_FC",
-			''				 AS "MSGV3_FC",
-			''				 AS "MSGV4_FC"
+			'' AS "TEXT",
+			'' AS "MSGID",
+			'' AS "MSGNO",
+			'' AS "MSGV1",
+			'' AS "MSGV2",
+			'' AS "MSGV3",
+			'' AS "MSGV4",
+			'' AS "MSGV1_FC",
+			'' AS "MSGV2_FC",
+			'' AS "MSGV3_FC",
+			'' AS "MSGV4_FC"
 		FROM 
 		:lt_result
 		;
@@ -329,17 +333,17 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			:lx_text_emp_pc AS "TEXT",
-			''				AS "MSGID",
-			''				AS "MSGNO",
-			''				AS "MSGV1",
-			''				AS "MSGV2",
-			''				AS "MSGV3",
-			''				AS "MSGV4",
-			''				AS "MSGV1_FC",
-			''				AS "MSGV2_FC",
-			''				AS "MSGV3_FC",
-			''				AS "MSGV4_FC"
+			'' AS "TEXT",
+			'' AS "MSGID",
+			'' AS "MSGNO",
+			'' AS "MSGV1",
+			'' AS "MSGV2",
+			'' AS "MSGV3",
+			'' AS "MSGV4",
+			'' AS "MSGV1_FC",
+			'' AS "MSGV2_FC",
+			'' AS "MSGV3_FC",
+			'' AS "MSGV4_FC"
 		FROM 
 		:lt_result
 		;
@@ -373,7 +377,7 @@ et_result =
 		FROM
 			:lt_result
 			;
-lx_text = :lx_text_qld_address + ',' + :lx_text_wcq_policy + ',' + :lx_text_emp_cnt + ',' + :lx_text_emp_pc;
+--lx_text = :lx_text_qld_address || ',' || :lx_text_wcq_policy || ',' || :lx_text_emp_cnt || ',' || :lx_text_emp_pc;
 
 et_text = 
 		SELECT 
@@ -381,17 +385,17 @@ et_text =
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			:lx_text AS "TEXT",
-			''		 AS "MSGID",
-			''		 AS "MSGNO",
-			''		 AS "MSGV1",
-			''		 AS "MSGV2",
-			''		 AS "MSGV3",
-			''		 AS "MSGV4",
-			''		 AS "MSGV1_FC",
-			''		 AS "MSGV2_FC",
-			''		 AS "MSGV3_FC",
-			''		 AS "MSGV4_FC"
+			'' AS "TEXT",
+			'' AS "MSGID",
+			'' AS "MSGNO",
+			'' AS "MSGV1",
+			'' AS "MSGV2",
+			'' AS "MSGV3",
+			'' AS "MSGV4",
+			'' AS "MSGV1_FC",
+			'' AS "MSGV2_FC",
+			'' AS "MSGV3_FC",
+			'' AS "MSGV4_FC"
 		FROM 
 		:lt_result
 		;
