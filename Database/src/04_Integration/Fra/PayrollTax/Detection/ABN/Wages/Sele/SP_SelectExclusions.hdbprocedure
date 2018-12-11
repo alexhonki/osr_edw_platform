@@ -109,9 +109,9 @@ SELECT DISTINCT
 	"SPRSN_IND"
 FROM 
 	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"
-WHERE 
-	SPRSN_IND <> 'Y'
-AND "ABN" IN (SELECT DISTINCT "ABN" FROM  :it_workset )	
+ WHERE 
+"ABN" IN (SELECT DISTINCT "ABN" FROM  :it_workset )	
+--AND SPRSN_IND <> 'Y'
 ;
 
 ABR_FUND_ACNC_ABN =
