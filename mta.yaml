@@ -76,6 +76,11 @@ modules:
       properties:
         key: logical-OSR-EDW-SOURCE-CRM-grantor
         service: '~{OSR-EDW-SOURCE-CRM-grantor-service}'
+    - name: OSR-EDW-SOURCE-FRA-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+        key: logical-OSR-EDW-SOURCE-FRA-grantor
+        service: '~{OSR-EDW-SOURCE-FRA-grantor-service}'        
     - name: acs-ext-access-grantor
     - name: edw-ext-access-grantor
 resources:
@@ -148,6 +153,12 @@ resources:
    parameters:
      service-name: OSR_EDW_SOURCE_CRM-deploy
    type: org.cloudfoundry.existing-service
+ - name: OSR-EDW-SOURCE-FRA-grantor
+   properties:
+     OSR-EDW-SOURCE-FRA-grantor-service: '${service-name}'
+   parameters:
+     service-name: OSR_EDW_SOURCE_FRA-deploy
+   type: org.cloudfoundry.existing-service   
  - name: OSR_EDW_PLATFORM-dws
    properties:
       dwf-edw-client-name: ${service-name}
