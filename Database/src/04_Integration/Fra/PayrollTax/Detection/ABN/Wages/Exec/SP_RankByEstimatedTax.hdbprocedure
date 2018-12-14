@@ -1,7 +1,7 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"( 
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_RankByEstimatedTax"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
-    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_rank_estimated_tax",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 )
@@ -11,21 +11,16 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageExceedingThld"
 BEGIN
 
 DECLARE lv_mode NVARCHAR(1);  
-
 DECLARE lv_thld_yearly Decimal(15,2) ;
-DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
-DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
+DECLARE lv_max_rating Decimal(3,2);
+
 
 SELECT 
 "RUN_MODE",
-"THRESHOLD_YEARLY",
-"FLAG_ATO",
-"FLAG_WCQ"
+"THRESHOLD_YEARLY"
 INTO 
 lv_mode,
-lv_thld_yearly,
-lx_ato,
-lx_wcq
+lv_thld_yearly
 FROM :PARAMETERS LIMIT 1;
 
 lt_wages = 
@@ -40,7 +35,7 @@ FROM :it_data_for_rule
 ;
 
 -- ATO BAS Data   	
- IF lx_ato = 'Y' THEN
+
  	lt_wages = 
  	SELECT 
  	"ABN",
@@ -76,9 +71,7 @@ FROM :it_data_for_rule
  	HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly
  	;
  	
- END IF;
- 
- IF lx_ato = 'Y' THEN
+
  	lt_wages = 
  	SELECT 
  	"ABN",
@@ -113,9 +106,6 @@ FROM :it_data_for_rule
  	"WAGES"."WAERS"
  	HAVING SUM("WAGES"."ATO_ITR_SALARY_WAGES")  >= :lv_thld_yearly
  	;
- END IF;
- 
- IF lx_wcq = 'Y' THEN
  
 	lt_wcq = 
 	SELECT 
@@ -163,8 +153,6 @@ FROM :it_data_for_rule
  	FROM
 	:lt_wcq
  	;
- END IF;
- 	
 
 lt_wages =  
 SELECT 
@@ -224,7 +212,7 @@ GROUP BY
 "WAERS"
 ;
  	
-lt_result = 
+lt_estimated_tax = 
 SELECT 
 "W"."ABN",
 "W"."PERIOD_CATEGORY",
@@ -254,6 +242,39 @@ ON  "W"."GJAHR" = "RATE"."GJAHR"
 AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 ;
 
+SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ATO_WAGE_VERSUS_THLD";
+
+lt_pre_result = 
+SELECT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"R"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
+"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
+"W"."CURRENCY" AS "CURRENCY"
+FROM 
+:lt_estimated_tax AS "W", 
+"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
+WHERE "W"."RISK_AMOUNT" > "R"."LOW"
+  AND "R"."TOP_BAND" = 'X'
+UNION
+SELECT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"R"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
+"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
+"W"."CURRENCY" AS "CURRENCY"
+FROM 
+:lt_estimated_tax AS "W", 
+"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
+WHERE "W"."RISK_AMOUNT" >= "R"."LOW" 
+  AND "W"."RISK_AMOUNT" < "R"."HIGH" 
+  AND "R"."TOP_BAND" <> 'X'
+;
+
 IF :lv_mode = 'R' THEN
 
 et_result = 
@@ -262,11 +283,9 @@ SELECT
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-100 AS "DETECTION_RESULT",
-"RISK_AMOUNT",
-"CURRENCY" 
-FROM 
-:lt_result
+100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+FROM
+:lt_pre_result
 ;
 
 et_text = 
@@ -277,17 +296,17 @@ SELECT
 "GJAHR",
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
-'006' AS "MSGNO",
-"WAGE" AS "MSGV1",
-:lv_thld_yearly AS "MSGV2",
-"PERIOD_KEY" AS "MSGV3",
-"WAERS" AS "MSGV4",
-'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV1_FC",
-'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV2_FC",
-'PERIOD_KEY' AS "MSGV3_FC",
+'017' AS "MSGNO",
+"RISK_AMOUNT" AS "MSGV1",
+"CURRENCY" AS "MSGV2",
+"RISK_FACTOR_RATING" AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'WAERS' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_wages
+:lt_pre_result
 ;
 
 END IF;
@@ -300,11 +319,9 @@ SELECT
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-100 AS "DETECTION_RESULT",
-"RISK_AMOUNT",
-"CURRENCY" 
-FROM 
-:lt_result
+100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+FROM
+:lt_pre_result
 ;
 
 et_text = 
@@ -315,19 +332,18 @@ SELECT
 "GJAHR",
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
-'006' AS "MSGNO",
-"WAGE" AS "MSGV1",
-:lv_thld_yearly AS "MSGV2",
-"PERIOD_KEY" AS "MSGV3",
-"WAERS" AS "MSGV4",
-'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV1_FC",
-'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV2_FC",
-'PERIOD_KEY' AS "MSGV3_FC",
+'017' AS "MSGNO",
+"RISK_AMOUNT" AS "MSGV1",
+"CURRENCY" AS "MSGV2",
+"RISK_FACTOR_RATING" AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'WAERS' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_wages
+:lt_pre_result
 ;
-
 END IF;
 
 

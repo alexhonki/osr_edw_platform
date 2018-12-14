@@ -3,10 +3,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QuarterWageExceedingTh
 	IN iv_gjahr				NVARCHAR(4),
 	IN lv_run_mode			NVARCHAR(1),
 	IN lv_thld_yearly		Decimal(15,2),
-	IN lx_ato_bas			NVARCHAR(1),
-	IN lx_ato_itr			NVARCHAR(1),
+	IN lx_ato			NVARCHAR(1),
 	IN lx_wcq				NVARCHAR(1),
-	IN lx_risk_value		NVARCHAR(1),
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -48,10 +46,8 @@ SELECT
 TOP 1
 :lv_run_mode    AS "RUN_MODE",
 :lv_thld_yearly AS "THRESHOLD_YEARLY",
-:lx_ato_bas AS "FLAG_ATO_BAS",
-:lx_ato_itr AS "FLAG_ATO_ITR",
-:lx_wcq	   AS "FLAG_WCQ",
-:lx_risk_value AS "FLAG_RISK_VALUE"
+:lx_ato AS "FLAG_ATO",
+:lx_wcq	   AS "FLAG_WCQ"
 FROM  :lt_workset;
 
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
