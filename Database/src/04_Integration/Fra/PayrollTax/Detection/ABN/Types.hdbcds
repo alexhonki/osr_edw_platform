@@ -2,10 +2,6 @@ namespace osr.edw.platform.fra.prt.dt.abn;
 
 context Types {
     context dt {
-        type RFIndustryDivisionT {
-            IND_DIVISION : String(1);
-            RISK_FACTOR  : Decimal(15, 2);
-        }
         table type rf_ind {
             IND_DIVISION : String(1);
             RISK_FACTOR  : Decimal(15, 2);
@@ -13,169 +9,6 @@ context Types {
     }
 
     context wages {
-
-        //workset
-        type WorksetT {
-            ABN             : String(11);
-            PERIOD_CATEGORY : String(10);
-            PERIOD_KEY      : String(4);
-            GJAHR           : String(4);
-        };
-
-        // parameter types
-        type ParamExclusionsT {
-            PT_ID_ROLE_DATE           : hana.VARCHAR(8);
-            PT_ROLE                   : String(1);
-            ID_ROLE                   : String(1);
-            PT_CASE_DATE              : hana.VARCHAR(8);
-            PT_CASE                   : String(1);
-            FLAG_ABR_ACNC             : String(1);
-            FLAG_ASIC_REGD            : String(1);
-            FLAG_SUP_GOV_EXMPT_ANZSIC : String(1);
-        };
-        type ParamWageT {
-            RUN_MODE          : String(1);
-            THRESHOLD_YEARLY  : Decimal(15, 2);
-            ATO_BAS_WAGE_LOW  : Decimal(15, 2);
-            ATO_BAS_WAGE_HIGH : Decimal(15, 2);
-            FLAG_ATO_BAS      : String(1);
-            FLAG_ATO_ITR      : String(1);
-            FLAG_WCQ          : String(1);
-            FLAG_RISK_VALUE   : String(1);
-        };
-        type ParamApproachingT {
-            RUN_MODE          : String(1);
-            ATO_BAS_WAGE_LOW  : Decimal(15, 2);
-            ATO_BAS_WAGE_HIGH : Decimal(15, 2);
-        };
-        type ParamExceedingT {
-            RUN_MODE         : String(1);
-            THRESHOLD_YEARLY : Decimal(15, 2);
-            FLAG_ATO_BAS     : String(1);
-            FLAG_ATO_ITR     : String(1);
-            FLAG_WCQ         : String(1);
-            FLAG_RISK_VALUE  : String(1);
-        };
-        type ParamVersusT {
-            RUN_MODE         : String(1);
-            THRESHOLD_YEARLY : Decimal(15, 2);
-        };
-        type ParamQLDNexusT {
-            RUN_MODE              : String(1);
-            GJAHR_ADJUSTMENT      : String(4);
-            QLD_EMP_PC_THLD_LOW   : Decimal(5, 2);
-            QLD_EMP_PC_THLD_HIGH  : Decimal(5, 2);
-            QLD_EMP_CNT_THLD_LOW  : Integer;
-            QLD_EMP_CNT_THLD_HIGH : Integer;
-            FLAG_WCQ_POLICY       : String(1);
-            FLAG_QLD_ADDRESS      : String(1);
-            FLAG_QLD_EMP_CNT      : String(1);
-            FLAG_QLD_EMP_PC       : String(1);
-        };
-        type ParamQLDNexusEmpCntT {
-            RUN_MODE              : String(1);
-            GJAHR_ADJUSTMENT      : String(4);
-            QLD_EMP_CNT_THLD_LOW  : Integer;
-            QLD_EMP_CNT_THLD_HIGH : Integer;
-        };
-        type ParamQLDNexusEmpPcT {
-            RUN_MODE             : String(1);
-            GJAHR_ADJUSTMENT     : String(4);
-            QLD_EMP_PC_THLD_LOW  : Decimal(5, 2);
-            QLD_EMP_PC_THLD_HIGH : Decimal(5, 2);
-        };
-        type ParamQLDNexusDefaultT {
-            RUN_MODE         : String(1);
-            GJAHR_ADJUSTMENT : String(4);
-        };
-        type ParamBPRegT {
-            RUN_MODE              : String(1);
-            FLAG_REINSTATEMENT    : String(1);
-            FLAG_NEW_REGISTRATION : String(1);
-        };
-
-        //data for rule types
-        type DataWageT {
-            ABN                          : String(11);
-            PERIOD_CATEGORY              : String(10);
-            PERIOD_KEY                   : String(4);
-            GJAHR                        : String(4);
-            ATO_BAS_TOTL_PMT_FOR_WRK_AMT : Decimal(15, 2);
-            ATO_ITR_SALARY_WAGES         : Decimal(15, 2);
-            WCQ_ACT_WAGES                : Decimal(15, 2);
-            WAERS                        : String(5);
-        };
-        type DataWageKeysT {
-            ABN             : String(11);
-            PERIOD_CATEGORY : String(10);
-            PERIOD_KEY      : String(4);
-            GJAHR           : String(4);
-        };
-        type DataBPRegT {
-            ABN             : String(11);
-            PERIOD_CATEGORY : String(10);
-            PERIOD_KEY      : String(4);
-            GJAHR           : String(4);
-        };
-        type DataQLDNexusT {
-            ABN             : String(11);
-            PERIOD_CATEGORY : String(10);
-            PERIOD_KEY      : String(4);
-            GJAHR           : String(4);
-        };
-        type DataExclusionsT {
-            ABN                  : String(11);
-            PERIOD_CATEGORY      : String(10);
-            PERIOD_KEY           : String(4);
-            GJAHR                : String(4);
-            ANZSIC_CD            : String(5);
-            IND_CODE_GRP         : String(3);
-            IND_DIVISION         : String(1);
-            ABR_ACNC_FLAG        : String(1);
-            ASIC_ORG_STATUS      : String(10);
-            ASIC_REGD            : String(1);
-            SUP_GOV_EXMPT_ANZSIC : String(1);
-        };
-
-        //result types
-        type ResultT {
-            ABN              : String(11);
-            PERIOD_CATEGORY  : String(10);
-            PERIOD_KEY       : String(4);
-            GJAHR            : String(4);
-            DETECTION_RESULT : Integer;
-        };
-        type ResultWithAmntT {
-            ABN              : String(11);
-            PERIOD_CATEGORY  : String(10);
-            PERIOD_KEY       : String(4);
-            GJAHR            : String(4);
-            DETECTION_RESULT : Integer;
-            RISK_AMOUNT      : Decimal(23, 2);
-            CURRENCY         : String(5);
-        };
-
-        //text type
-        type TextT {
-            ABN             : String(11);
-            PERIOD_CATEGORY : String(10);
-            PERIOD_KEY      : String(4);
-            GJAHR           : String(4);
-            TEXT            : String(255);
-            MSGID           : String(20);
-            MSGNO           : String(3);
-            MSGV1           : String(50);
-            MSGV2           : String(50);
-            MSGV3           : String(50);
-            MSGV4           : String(50);
-            MSGV1_FC        : String(100);
-            MSGV2_FC        : String(100);
-            MSGV3_FC        : String(100);
-            MSGV4_FC        : String(100);
-        };
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         //workset
         table type ws {
             ABN             : String(11);
@@ -199,16 +32,6 @@ context Types {
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
         };
-        table type param_wage {
-            RUN_MODE          : String(1);
-            THRESHOLD_YEARLY  : Decimal(15, 2);
-            ATO_BAS_WAGE_LOW  : Decimal(15, 2);
-            ATO_BAS_WAGE_HIGH : Decimal(15, 2);
-            FLAG_ATO_BAS      : String(1);
-            FLAG_ATO_ITR      : String(1);
-            FLAG_WCQ          : String(1);
-            FLAG_RISK_VALUE   : String(1);
-        };
         table type param_approaching {
             RUN_MODE          : String(1);
             ATO_BAS_WAGE_LOW  : Decimal(15, 2);
@@ -217,10 +40,12 @@ context Types {
         table type param_exceeding {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);
-            FLAG_ATO_BAS     : String(1);
-            FLAG_ATO_ITR     : String(1);
+            FLAG_ATO         : String(1);
             FLAG_WCQ         : String(1);
-            FLAG_RISK_VALUE  : String(1);
+        };
+        table type param_rank_estimated_tax {
+            RUN_MODE         : String(1);
+            THRESHOLD_YEARLY : Decimal(15, 2);
         };
         table type param_versus {
             RUN_MODE         : String(1);

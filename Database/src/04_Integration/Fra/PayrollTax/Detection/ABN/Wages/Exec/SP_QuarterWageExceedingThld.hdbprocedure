@@ -12,25 +12,22 @@ BEGIN
 DECLARE lv_mode NVARCHAR(1);  
 
 DECLARE lv_thld_yearly Decimal(15,2) ;
-DECLARE lx_ato_bas NVARCHAR(1) DEFAULT 'N';
-DECLARE lx_ato_itr NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
-DECLARE lx_risk_value NVARCHAR(1) DEFAULT 'N';
+
+DECLARE lv_max_rating Decimal(3,2);
+
 
 SELECT 
 "RUN_MODE",
 "THRESHOLD_YEARLY",
-"FLAG_ATO_BAS",
-"FLAG_ATO_ITR",
-"FLAG_WCQ",
-"FLAG_RISK_VALUE"
+"FLAG_ATO",
+"FLAG_WCQ"
 INTO 
 lv_mode,
 lv_thld_yearly,
-lx_ato_bas,
-lx_ato_itr,
-lx_wcq,
-lx_risk_value
+lx_ato,
+lx_wcq
 FROM :PARAMETERS LIMIT 1;
 
 lt_wages = 
