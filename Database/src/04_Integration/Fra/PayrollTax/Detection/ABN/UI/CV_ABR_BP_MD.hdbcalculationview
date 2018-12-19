@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ABR_BP_MD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABR_BP_MD"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD">
+  <attributes>
+    <attribute id="BUS_PC" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="ACN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="ACN"/>
+    </attribute>
+    <attribute id="BUS_NAME_2" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NAME_2"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_NAME_2"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="ABN"/>
+    </attribute>
+    <attribute id="BUS_NM_TITLE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NM_TITLE"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_NM_TITLE"/>
+    </attribute>
+    <attribute id="BUS_NAME_1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NAME_1"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_NAME_1"/>
+    </attribute>
+    <attribute id="PARTNER_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_TYPE"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="PARTNER_TYPE"/>
+    </attribute>
+    <attribute id="BUS_EMAIL" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_EMAIL"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_EMAIL"/>
+    </attribute>
+    <attribute id="BUS_INDUSTRY" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_INDUSTRY"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_INDUSTRY"/>
+    </attribute>
+    <attribute id="BUS_PH_NUM" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PH_NUM"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_PH_NUM"/>
+    </attribute>
+    <attribute id="BUS_ADDR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_ADDR"/>
+    </attribute>
+    <attribute id="BUS_CITY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_CITY"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_CITY"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_STATE"/>
+      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_STATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
