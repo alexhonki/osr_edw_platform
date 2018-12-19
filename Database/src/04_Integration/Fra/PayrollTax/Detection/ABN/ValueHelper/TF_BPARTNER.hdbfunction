@@ -1,0 +1,19 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.vh::TF_BPARTNER" ( )
+       RETURNS TABLE (
+    	BPARTNER		NVARCHAR(10),
+    	BPARTNER_DESCR	NVARCHAR(80)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	
+	RETURN
+	SELECT 
+	"PARTNER" AS "BPARTNER",
+    CASE WHEN "BP"."TYPE" = '1'
+    THEN "BP"."NAME_FIRST" || char(32) || "BP"."NAMEMIDDLE" || char(32) || "BP"."NAME_LAST"
+    ELSE "BP"."NAME_ORG1" || char(32) || "BP"."NAME_ORG2" || char(32) || "BP"."NAME_ORG3" || char(32) || "BP"."NAME_ORG4"
+	END AS "BPARTNER_DESCR"
+	FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BP";
+	
+END;
