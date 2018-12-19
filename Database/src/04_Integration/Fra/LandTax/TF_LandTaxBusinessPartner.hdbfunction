@@ -14,6 +14,7 @@ BEGIN
     THEN "BP"."NAME_FIRST" || char(32) || "BP"."NAMEMIDDLE" || char(32) || "BP"."NAME_LAST"
     ELSE "BP"."NAME_ORG1" || char(32) || "BP"."NAME_ORG2" || char(32) || "BP"."NAME_ORG3" || char(32) || "BP"."NAME_ORG4"
 	END AS "BPARTNER_DESCR"
-	FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BP";
+	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" AS "BP"
+	WHERE "Z_CURR_FLAG" = '1';
 	
 END;
