@@ -1,0 +1,64 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD"( )
+       RETURNS TABLE 
+       (
+       	ACN					NVARCHAR(20),
+       	ABN					NVARCHAR(20),
+       	PARTNER_TYPE		INTEGER,
+       	BUS_INDUSTRY		NVARCHAR(5),
+		BUS_NM_TITLE		NVARCHAR(12),
+		BUS_NAME_2			NVARCHAR(100),
+		BUS_NAME_1			NVARCHAR(100),
+		BUS_ADDR			NVARCHAR(38),
+		BUS_CITY			NVARCHAR(46),
+		BUS_STATE			NVARCHAR(3),
+		BUS_PC				NVARCHAR(12),
+		BUS_EMAIL			NVARCHAR(200),
+		BUS_PH_NUM			NVARCHAR(15)
+       )
+     
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Author		: Tugce Guler
+        Created On  : 19/12/2018
+        Created For : Get BP Master Data for UI BP Creation
+    ****************************/
+    lt_bp =
+    	SELECT
+    		"AGENCY"."PID"																			AS	"PID",	
+    		"AGENCY"."ACN"																			AS	"ACN",
+    		"AGENCY"."ABN"																			AS	"ABN",
+    		'2' 																					AS	"PARTNER_TYPE",
+    		"AGENCY"."MN_INDY_CLSN"																	AS  "BUS_INDUSTRY",
+    		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
+    		LEFT	 ("BP_NAMES"."STD_FIRM",40)														AS  "BUS_NAME_2",
+    		SUBSTRING("BP_NAMES"."STD_FIRM",41,100)													AS  "BUS_NAME_1",
+    		"AGENCY"."MN_BUS_ADDR_LN_1"																AS  "BUS_ADDR",
+    		"AGENCY"."MN_BUS_SBRB"																	AS  "BUS_CITY",
+    		"AGENCY"."MN_BUS_STT"																	AS  "BUS_STATE",
+    		"AGENCY"."MN_BUS_PC"																	AS  "BUS_PC"
+    	FROM		"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"		AS	"AGENCY"
+    	INNER JOIN	"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.BUSINESS_NAMES.active_data"	AS	"BP_NAMES"
+    	ON			"AGENCY"."PID" = "BP_NAMES"."PID";
+    
+    RETURN
+    	SELECT 
+    		"ACN",
+    		"ABN",
+    		"PARTNER_TYPE",
+    		"BUS_INDUSTRY",
+    		"BUS_NM_TITLE",
+    		"BUS_NAME_2",
+    		"BUS_NAME_1",
+    		"BUS_ADDR",
+    		"BUS_CITY",
+    		"BUS_STATE",
+    		"BUS_PC",
+    		''																						AS  "BUS_EMAIL",
+    		''																						AS	"BUS_PH_NUM"
+    	FROM		:lt_bp;
+--    	INNER JOIN	"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.CONTACTS.active_data"			AS	"BUS_CONTACTS"
+--    	ON			:lt_bp."PID" = "BUS_CONTACTS"."PID";
+    
+END;
