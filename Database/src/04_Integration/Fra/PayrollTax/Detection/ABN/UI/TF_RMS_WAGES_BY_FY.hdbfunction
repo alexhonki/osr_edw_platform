@@ -12,8 +12,12 @@ WAERS					NVARCHAR(5)
 )
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
-
 BEGIN 
+
+lt_rms_wages = 
+SELECT * FROM 
+"osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
+
 RETURN
 SELECT 
 "DB_KEY",
@@ -24,7 +28,7 @@ SELECT
 'A_GROSS_SAL_WAGE' AS "MEASURE_NAME",
 "A_GROSS_SAL_WAGE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -35,7 +39,7 @@ SELECT
 'A_ALLOWANCE' AS "MEASURE_NAME",
 "A_ALLOWANCE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -46,7 +50,7 @@ SELECT
 'A_BONUS' AS "MEASURE_NAME",
 "A_BONUS" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -57,7 +61,7 @@ SELECT
 'A_COMMISSION' AS "MEASURE_NAME",
 "A_COMMISSION" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -68,7 +72,7 @@ SELECT
 'A_DIRECTOR_FEE' AS "MEASURE_NAME",
 "A_DIRECTOR_FEE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -79,7 +83,7 @@ SELECT
 'A_EMPL_SUP_CONTRIB' AS "MEASURE_NAME",
 "A_EMPL_SUP_CONTRIB" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -90,7 +94,7 @@ SELECT
 'A_FRINGE_BENEFIT' AS "MEASURE_NAME",
 "A_FRINGE_BENEFIT" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -101,7 +105,7 @@ SELECT
 'A_ELIG_TERM_PMT' AS "MEASURE_NAME",
 "A_ELIG_TERM_PMT" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -112,7 +116,7 @@ SELECT
 'A_CONTRACTORS' AS "MEASURE_NAME",
 "A_CONTRACTORS" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -123,7 +127,7 @@ SELECT
 'A_SHARE_SCHEMES' AS "MEASURE_NAME",
 "A_SHARE_SCHEMES" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -134,7 +138,7 @@ SELECT
 'C_TOT_QLD_TXBLE_WAGES' AS "MEASURE_NAME",
 "C_TOT_QLD_TXBLE_WAGES" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -145,7 +149,7 @@ SELECT
 'A_TOT_INT_WAGE' AS "MEASURE_NAME",
 "A_TOT_INT_WAGE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -156,7 +160,7 @@ SELECT
 'A_APPRENT_PMT' AS "MEASURE_NAME",
 "A_APPRENT_PMT" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -167,7 +171,7 @@ SELECT
 'A_TRAINEES_PMT' AS "MEASURE_NAME",
 "A_TRAINEES_PMT" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -178,7 +182,7 @@ SELECT
 'A_OTH_NON_TAX_WAGE' AS "MEASURE_NAME",
 "A_OTH_NON_TAX_WAGE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -189,7 +193,7 @@ SELECT
 'C_TOT_QLD_NON_TAX_WAGE' AS "MEASURE_NAME",
 "C_TOT_QLD_NON_TAX_WAGE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 ;
 
 END;

@@ -14,6 +14,10 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 
+lt_rms_wages = 
+SELECT * FROM 
+"osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
+
 RETURN
 SELECT 
 "DB_KEY",
@@ -24,7 +28,7 @@ SELECT
 'A_APPRENT_PMT' AS "MEASURE_NAME",
 "A_APPRENT_PMT" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -35,7 +39,7 @@ SELECT
 'A_TRAINEES_PMT' AS "MEASURE_NAME",
 "A_TRAINEES_PMT" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -46,7 +50,7 @@ SELECT
 'A_OTH_NON_TAX_WAGE' AS "MEASURE_NAME",
 "A_OTH_NON_TAX_WAGE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 UNION
 SELECT 
 "DB_KEY",
@@ -57,7 +61,8 @@ SELECT
 'C_TOT_QLD_NON_TAX_WAGE' AS "MEASURE_NAME",
 "C_TOT_QLD_NON_TAX_WAGE" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_rms_wages
 ;
+
 
 END;
