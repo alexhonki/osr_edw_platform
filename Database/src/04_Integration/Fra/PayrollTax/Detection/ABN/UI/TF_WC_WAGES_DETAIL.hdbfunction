@@ -1,77 +1,178 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL"(IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL"(IN IP_ALERT_ID NVARCHAR(20), IN IP_FY_ADJUSTMENT INTEGER)
+/**********
+	CREATED BY		: TUGCE GULER
+	CREATED ON		: 07/01/2019
+	CREATION REASON	: Length of Name Column in WC WAGES table has been changed, therefore this TF needed to be adjusted accordingly. 
+					  Also, if condition has been added in case the input parameter has been as NULL or ?
+**********/
     RETURNS TABLE
-(
-DB_KEY				VARBINARY(16),
-ALERT_ID			NVARCHAR(20),
-ABN					NVARCHAR(20),
-ASSESSMENT_YEAR 	NVARCHAR(4),
-POLICY_NO			NVARCHAR(12),
-ACT_WAGES			DECIMAL(15,2),
-ACT_APPR_WAGES  	DECIMAL(15,2),
-CNT_EMP				INTEGER,
-WAERS				NVARCHAR(5)
-)
-       LANGUAGE SQLSCRIPT 
-       SQL SECURITY INVOKER AS 
+		(
+		DB_KEY				VARBINARY(16),
+		ALERT_ID			NVARCHAR(20),
+		ABN					NVARCHAR(20),
+		ASSESSMENT_YEAR 	NVARCHAR(4),
+		POLICY_NO			NVARCHAR(12),
+		ACT_WAGES			DECIMAL(15,2),
+		ACT_APPR_WAGES  	DECIMAL(15,2),
+		CNT_EMP				INTEGER,
+		WAERS				NVARCHAR(5)
+		)
+
+	LANGUAGE SQLSCRIPT 
+	SQL SECURITY INVOKER AS 
+
 BEGIN 
 
+	IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
 lt_wc_wages1 =
-SELECT 
-"A"."ABN" AS "ABN",
-"B"."POLICY_NO" AS "POLICY_NO",
-"B"."ASSESSMENT_YEAR" AS "ASSESSMENT_YEAR",
-"B"."NAME" AS "NAME",
-sum("B"."ACT_WAGES") AS "ACT_WAGES",
-sum("B"."ACT_APPR_WAGES") AS "ACT_APPR_WAGES"
-FROM  "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "A"
-INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
-GROUP BY "A"."ABN","B"."POLICY_NO", "B"."ASSESSMENT_YEAR","B"."NAME"
-;
+	SELECT 
+		"POLICY"."ABN"																			AS "ABN",
+		"POLICY"."POLICY_NO"																	AS "POLICY_NO",
+		"POLICY"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
+		"POLICY"."NAME"																			AS "NAME",
+		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
+		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
+	FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" 				AS "WAGES" 
+	INNER JOIN 
+		(SELECT DISTINCT
+			"A"."ABN"																			AS "ABN",
+			"B"."POLICY_NO" 																	AS "POLICY_NO",
+			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
+			LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
+		FROM		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data"	AS "A"
+		INNER JOIN	"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"		AS "B" 
+		ON			"A"."POLICY_NO"	=	"B"."POLICY_NO")										AS "POLICY" 
+	ON	"WAGES"."POLICY_NO" 		= "POLICY"."POLICY_NO"
+	AND "WAGES"."ASSESSMENT_YEAR"	= "POLICY"."ASSESSMENT_YEAR"
+	GROUP BY	"POLICY"."ABN",
+				"POLICY"."POLICY_NO", 
+				"POLICY"."ASSESSMENT_YEAR",
+				"POLICY"."NAME"
+	;
 
 lt_emp_cnt = 
-SELECT
-"B"."ABN" AS "ABN",
-/*CASE  WHEN "A"."RSDNL_STATE_CD" = 'QLD' THEN ("A"."CNT_EMPLOYEE")
-ELSE '0' 
-END AS "CNT_EMP", */
-"A"."CNT_EMPLOYEE" AS "CNT_EMP",
-TO_NVARCHAR("A"."INCM_YR")  AS "INCM_YR"
-FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data" as "A"
-INNER JOIN :lt_wc_wages1 AS "B" ON "A"."ABN"="B"."ABN" AND TO_NVARCHAR("A"."INCM_YR") = TO_NVARCHAR("B"."ASSESSMENT_YEAR")
-AND "A"."RSDNL_STATE_CD" = 'QLD'
-;
+	SELECT
+		"B"."ABN"																				AS "ABN",
+		"A"."CNT_EMPLOYEE"																		AS "CNT_EMP",
+		TO_NVARCHAR("A"."INCM_YR")  															AS "INCM_YR"
+	FROM		"osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"				AS "A"
+	INNER JOIN	:lt_wc_wages1																	AS "B" 
+		ON	"A"."ABN"					= "B"."ABN" 
+		AND TO_NVARCHAR("A"."INCM_YR")	= TO_NVARCHAR("B"."ASSESSMENT_YEAR")
+	WHERE	"A"."RSDNL_STATE_CD"		= 'QLD'
+	;
 
 lt_wc_wages2 =
-SELECT 
-"ALERT"."DB_KEY" AS "DB_KEY",
-"ALERT"."ALERT_ID" AS "ALERT_ID",
-"ALERT"."ABN" AS "ABN",
---"ALERT"."GJAHR" AS "GJAHR",
-"DATA"."POLICY_NO",
-"DATA"."ASSESSMENT_YEAR",
-"DATA"."ACT_WAGES" AS "ACT_WAGES",
-"DATA"."ACT_APPR_WAGES" AS "ACT_APPR_WAGES"
-FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-INNER JOIN :lt_wc_wages1 AS "DATA"
-ON  "ALERT"."ABN" = "DATA"."ABN"
-AND TO_NVARCHAR("DATA"."ASSESSMENT_YEAR") BETWEEN TO_NVARCHAR((to_int("ALERT"."GJAHR") - 4)) and "ALERT"."GJAHR"
-WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
-  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
+	SELECT 
+		"ALERT"."DB_KEY"																		AS "DB_KEY",
+		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
+		"ALERT"."ABN"																			AS "ABN",
+		"DATA"."POLICY_NO",
+		"DATA"."ASSESSMENT_YEAR",
+		"DATA"."ACT_WAGES"																		AS "ACT_WAGES",
+		"DATA"."ACT_APPR_WAGES" 																AS "ACT_APPR_WAGES"
+	FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 						AS "ALERT"
+	INNER JOIN	:lt_wc_wages1																	AS "DATA"
+		ON  "ALERT"."ABN"		= "DATA"."ABN"
+		AND TO_NVARCHAR("DATA"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+	WHERE	"DATA"."NAME"		= 'FY'
+	;
 
 RETURN
-SELECT
-"A"."DB_KEY",
-"A"."ALERT_ID",
-"A"."ABN",
-"A"."ASSESSMENT_YEAR",
-"A"."POLICY_NO",
-"A"."ACT_WAGES",
-"A"."ACT_APPR_WAGES",
-"B"."CNT_EMP",
-'AUD' AS "WAERS"
-FROM  :lt_wc_wages2 AS "A"
-LEFT OUTER JOIN :lt_emp_cnt AS "B" ON "A"."ABN"="B"."ABN" AND "A"."ASSESSMENT_YEAR" = "B"."INCM_YR"
-ORDER BY "A"."ASSESSMENT_YEAR" DESC
-;
+	SELECT
+		"A"."DB_KEY",
+		"A"."ALERT_ID",
+		"A"."ABN",
+		"A"."ASSESSMENT_YEAR",
+		"A"."POLICY_NO",
+		"A"."ACT_WAGES",
+		"A"."ACT_APPR_WAGES",
+		"B"."CNT_EMP",
+		'AUD'																					AS "WAERS"
+	FROM  :lt_wc_wages2 																		AS "A"
+	LEFT OUTER JOIN :lt_emp_cnt 																AS "B" 
+		ON	 "A"."ABN"				= "B"."ABN" 
+		AND  "A"."ASSESSMENT_YEAR"	= "B"."INCM_YR"
+	ORDER BY "A"."ASSESSMENT_YEAR"	 DESC
+	;
+	
+ELSE
+
+lt_wc_wages1 =
+	SELECT 
+		"POLICY"."ABN"																			AS "ABN",
+		"POLICY"."POLICY_NO"																	AS "POLICY_NO",
+		"POLICY"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
+		"POLICY"."NAME"																			AS "NAME",
+		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
+		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
+	FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" 				AS "WAGES" 
+	INNER JOIN 
+		(SELECT DISTINCT
+			"A"."ABN"																			AS "ABN",
+			"B"."POLICY_NO" 																	AS "POLICY_NO",
+			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
+			LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
+		FROM		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data"	AS "A"
+		INNER JOIN	"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"		AS "B" 
+		ON			"A"."POLICY_NO"	=	"B"."POLICY_NO")										AS "POLICY" 
+	ON	"WAGES"."POLICY_NO" 		= "POLICY"."POLICY_NO"
+	AND "WAGES"."ASSESSMENT_YEAR"	= "POLICY"."ASSESSMENT_YEAR"
+	GROUP BY	"POLICY"."ABN",
+				"POLICY"."POLICY_NO", 
+				"POLICY"."ASSESSMENT_YEAR",
+				"POLICY"."NAME"
+	;
+
+lt_emp_cnt = 
+	SELECT
+		"B"."ABN"																				AS "ABN",
+		"A"."CNT_EMPLOYEE"																		AS "CNT_EMP",
+		TO_NVARCHAR("A"."INCM_YR")  															AS "INCM_YR"
+	FROM		"osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"				AS "A"
+	INNER JOIN	:lt_wc_wages1																	AS "B" 
+		ON	"A"."ABN"					= "B"."ABN" 
+		AND TO_NVARCHAR("A"."INCM_YR")	= TO_NVARCHAR("B"."ASSESSMENT_YEAR")
+	WHERE	"A"."RSDNL_STATE_CD"		= 'QLD'
+	;
+
+lt_wc_wages2 =
+	SELECT 
+		"ALERT"."DB_KEY"																		AS "DB_KEY",
+		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
+		"ALERT"."ABN"																			AS "ABN",
+		"DATA"."POLICY_NO",
+		"DATA"."ASSESSMENT_YEAR",
+		"DATA"."ACT_WAGES"																		AS "ACT_WAGES",
+		"DATA"."ACT_APPR_WAGES" 																AS "ACT_APPR_WAGES"
+	FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 						AS "ALERT"
+	INNER JOIN	:lt_wc_wages1																	AS "DATA"
+		ON  "ALERT"."ABN"		= "DATA"."ABN"
+		AND TO_NVARCHAR("DATA"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+	WHERE	"DATA"."NAME"		= 'FY'
+	AND 	"ALERT"."ALERT_ID"	= :IP_ALERT_ID
+	;
+
+RETURN
+	SELECT
+		"A"."DB_KEY",
+		"A"."ALERT_ID",
+		"A"."ABN",
+		"A"."ASSESSMENT_YEAR",
+		"A"."POLICY_NO",
+		"A"."ACT_WAGES",
+		"A"."ACT_APPR_WAGES",
+		"B"."CNT_EMP",
+		'AUD'																					AS "WAERS"
+	FROM  :lt_wc_wages2 																		AS "A"
+	LEFT OUTER JOIN :lt_emp_cnt 																AS "B" 
+		ON	 "A"."ABN"				= "B"."ABN" 
+		AND  "A"."ASSESSMENT_YEAR"	= "B"."INCM_YR"
+	ORDER BY "A"."ASSESSMENT_YEAR"	 DESC
+	;
+	
+
+END IF;
 
 END;
