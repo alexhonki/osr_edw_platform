@@ -15,6 +15,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(IN IP_ALERT
 		PMNTS_TO_ASSOCS 		DECIMAL(15,2),
 		SALARY_WAGES			DECIMAL(15,2),
 		SUPER_EXPNS				DECIMAL(15,2),
+		TOTAL_WAGES             DECIMAL(15,2),
 		WAERS					NVARCHAR(5)
 		)
 
@@ -36,6 +37,7 @@ BEGIN
 			"DATA"."PMNTS_TO_ASSOCS"													AS "PMNTS_TO_ASSOCS",
 			"DATA"."SALARY_WAGES"														AS "SALARY_WAGES",
 			"DATA"."SUPER_EXPNS"														AS "SUPER_EXPNS",
+			"DATA"."SALARY_WAGES" + "DATA"."SUPER_EXPNS"								AS "TOTAL_WAGES",
 			'AUD' AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()				AS "ALERT"
 		INNER JOIN	"osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"	AS "DATA"
@@ -57,6 +59,7 @@ BEGIN
 			"DATA"."PMNTS_TO_ASSOCS"													AS "PMNTS_TO_ASSOCS",
 			"DATA"."SALARY_WAGES"														AS "SALARY_WAGES",
 			"DATA"."SUPER_EXPNS"														AS "SUPER_EXPNS",
+			"DATA"."SALARY_WAGES" + "DATA"."SUPER_EXPNS"								AS "TOTAL_WAGES",
 			'AUD' AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 			AS "ALERT"
 		INNER JOIN	"osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"	AS "DATA"
