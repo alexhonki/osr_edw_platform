@@ -1,0 +1,87 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_TAXABLE_WAGES_MEASURE_T"( )
+RETURNS TABLE (
+MEASURE_NAME	NVARCHAR(30),
+LANGU			NVARCHAR(1),
+MEASURE_TEXT	NVARCHAR(100)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+lt_dummy = SELECT TOP 1 * FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data" AS "T009";
+
+RETURN 
+SELECT 
+'A_GROSS_SAL_WAGE' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Gross salary and wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_ALLOWANCE' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Allowances' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_BONUS' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Bonuses' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_COMMISSION' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Commissions' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_DIRECTOR_FEE' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Directors'' fees' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_EMPL_SUP_CONTRIB' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Employer superannuation contributions' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_FRINGE_BENEFIT' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Fringe benefits' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_ELIG_TERM_PMT' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Termination payments' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_CONTRACTORS' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Contractors' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_SHARE_SCHEMES' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Shares & options' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'C_TOT_QLD_TXBLE_WAGES' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Total Queensland taxable wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_TOT_INT_WAGE' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Total Interstate taxable wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+;
+
+END;
