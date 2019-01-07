@@ -28,9 +28,6 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
-      <viewAttribute id="ASSESSMENT_YEAR">
-        <descriptions defaultDescription="ASSESSMENT_YEAR"/>
-      </viewAttribute>
       <viewAttribute id="POLICY_NO">
         <descriptions defaultDescription="POLICY_NO"/>
       </viewAttribute>
@@ -46,22 +43,19 @@
     
       <viewAttribute id="CNT_EMP">
         <descriptions defaultDescription="CNT_EMP"/>
-      </viewAttribute>
-    </viewAttributes>
+      </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL">
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
     
-      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMP" source="CNT_EMP"/>
-    </input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMP" source="CNT_EMP"/></input>
     <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
   </calculationView>
 </calculationViews>
@@ -79,33 +73,28 @@
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
     </attribute>
-    <attribute id="ASSESSMENT_YEAR" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Assessment Year"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ASSESSMENT_YEAR"/>
-    </attribute>
-    <attribute id="POLICY_NO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POLICY_NO" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Policy Number"/>
       <keyMapping columnObjectName="Projection_1" columnName="POLICY_NO"/>
     </attribute>
-    <attribute id="WAERS" order="8" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
       <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
-    </attribute>
-  </attributes>
+    </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ACT_WAGES" order="6" semanticType="amount" aggregationType="sum" measureType="amount">
+    <measure id="ACT_WAGES" order="5" semanticType="amount" aggregationType="sum" measureType="amount">
       <descriptions defaultDescription="Actual Wages"/>
       <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="ACT_WAGES"/>
     </measure>
-    <measure id="ACT_APPR_WAGES" order="7" semanticType="amount" aggregationType="sum" measureType="amount">
+    <measure id="ACT_APPR_WAGES" order="6" semanticType="amount" aggregationType="sum" measureType="amount">
       <descriptions defaultDescription="Provisional Wages"/>
       <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="ACT_APPR_WAGES"/>
     </measure>
   
-    <measure id="CNT_EMP" order="9" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMP" order="8" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="No. of Employees"/>
       <measureMapping columnObjectName="Projection_1" columnName="CNT_EMP"/>
     </measure>

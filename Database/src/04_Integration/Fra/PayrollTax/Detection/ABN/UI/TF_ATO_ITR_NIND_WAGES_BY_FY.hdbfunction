@@ -24,7 +24,7 @@ BEGIN
 			"ALERT_ID",
 			"ABN",
 			"GJAHR"					AS "FINANCIAL_YEAR",
-			'Contractors'			AS "MEASURE_NAME",
+			'CONTRACTORS_PMNTS'		AS "MEASURE_NAME",
 			"CONTRACTORS_PMNTS" 	AS "WAGES",
 			"WAERS"
 		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
@@ -34,7 +34,7 @@ BEGIN
 			"ALERT_ID",
 			"ABN",
 			"GJAHR"					AS "FINANCIAL_YEAR",
-			'Associated Persons'	AS "MEASURE_NAME",
+			'PMNTS_TO_ASSOCS'		AS "MEASURE_NAME",
 			"PMNTS_TO_ASSOCS"		AS "WAGES",
 			"WAERS"
 		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
@@ -44,7 +44,7 @@ BEGIN
 			"ALERT_ID",
 			"ABN",
 			"GJAHR"					AS "FINANCIAL_YEAR",
-			'Salaries & Wages'		AS "MEASURE_NAME",
+			'SALARY_WAGES'			AS "MEASURE_NAME",
 			"SALARY_WAGES"			AS "WAGES",
 			"WAERS"
 		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
@@ -54,8 +54,18 @@ BEGIN
 			"ALERT_ID",
 			"ABN",
 			"GJAHR"					AS "FINANCIAL_YEAR",
-			'Super Expenses'		AS "MEASURE_NAME",
+			'SUPER_EXPNS'			AS "MEASURE_NAME",
 			"SUPER_EXPNS"			AS "WAGES",
+			"WAERS"
+		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		UNION
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"					AS "FINANCIAL_YEAR",
+			'TOTAL_WAGES'			AS "MEASURE_NAME",
+			"TOTAL_WAGES"			AS "WAGES",
 			"WAERS"
 		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
 		;

@@ -1,0 +1,39 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_NON_TAXABLE_WAGES_MEASURE_T"( )
+RETURNS TABLE (
+MEASURE_NAME	NVARCHAR(30),
+LANGU			NVARCHAR(1),
+MEASURE_TEXT	NVARCHAR(100)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+lt_dummy = SELECT TOP 1 * FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data" AS "T009";
+
+RETURN 
+SELECT 
+'A_APPRENT_PMT' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Wages for apprentices' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_TRAINEES_PMT' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Wages for trainees' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'A_OTH_NON_TAX_WAGE' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Other non taxable wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'C_TOT_QLD_NON_TAX_WAGE' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Total Queensland non taxable wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+;
+
+END;
