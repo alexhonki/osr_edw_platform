@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_RMS_TAXABLE_WAGES_BY_FYS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_RMS_WAGES_BY_FYS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_TAXABLE_WAGES_BY_FYS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_TAXABLE_WAGES_BY_FYS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_TAXABLE_WAGES_BY_FYS">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BPARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="MEASURE_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEASURE_NAME"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="MEASURE_NAME"/>
+    </attribute>
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="WAERS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="FY0_AMOUNT" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FY0_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="FY0_AMOUNT"/>
+    </measure>
+    <measure id="FY1_AMOUNT" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FY1_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="FY1_AMOUNT"/>
+    </measure>
+    <measure id="FY2_AMOUNT" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FY2_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="FY2_AMOUNT"/>
+    </measure>
+    <measure id="FY3_AMOUNT" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FY3_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="FY3_AMOUNT"/>
+    </measure>
+    <measure id="FY4_AMOUNT" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FY4_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_TAXABLE_WAGES_BY_FYS" columnName="FY4_AMOUNT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
