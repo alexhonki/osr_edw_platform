@@ -76,7 +76,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY4_AMOUNT" source="FY4_AMOUNT"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="textTable" languageColumn="LANGU">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
     <viewAttributes>
       <viewAttribute id="DB_KEY">
         <descriptions defaultDescription="DB_KEY"/>
@@ -142,22 +142,24 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <viewAttributes>
+      <viewAttribute id="MEASURE_TEXT">
+        <descriptions defaultDescription="MEASURE_TEXT"/>
+      </viewAttribute>
+    
       <viewAttribute id="MEASURE_NAME">
         <descriptions defaultDescription="MEASURE_NAME"/>
       </viewAttribute>
       <viewAttribute id="LANGU">
         <descriptions defaultDescription="LANGU"/>
       </viewAttribute>
-      <viewAttribute id="MEASURE_TEXT">
-        <descriptions defaultDescription="MEASURE_TEXT"/>
-      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_WAGES_MEASURE_T">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_NAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
     </input>
     <filter>&quot;LANGU&quot; = 'E'</filter>
   </calculationView>
@@ -180,7 +182,7 @@
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
     </attribute>
-    <attribute id="MEASURE_NAME" order="5" descriptionColumnName="MEASURE_TEXT" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_NAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_NAME"/>
       <keyMapping columnObjectName="Join_1" columnName="MEASURE_NAME"/>
     </attribute>
@@ -227,17 +229,17 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221.11302679000914" y="112"/>
+      <upperLeftCorner x="221" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="376.9999988079071"/>
+      <upperLeftCorner x="92" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <upperLeftCorner x="221" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -249,7 +251,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <upperLeftCorner x="302" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
