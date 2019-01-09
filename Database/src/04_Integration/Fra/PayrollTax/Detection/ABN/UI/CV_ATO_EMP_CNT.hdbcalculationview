@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_EMP_CNT" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_EMP_CNT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
+    <resourceUri>osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data</resourceUri>
+  </DataSource>
+  <DataSource id="EMP_CNT_BY_STATE$$$$osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data$$">
+    <resourceUri>osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="EMP_CNT_ALL">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_AU" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_AU" source="CNT_EMPLOYEE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="EMP_CNT_BY_STATE">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+      <viewAttribute id="RSDNL_STATE_CD">
+        <descriptions defaultDescription="RSDNL_STATE_CD"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_BY_STATE" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="EMP_CNT_BY_STATE$$$$osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_BY_STATE" source="CNT_EMPLOYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR" aggregationType="sum">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+      <viewAttribute id="RSDNL_STATE_CD">
+        <descriptions defaultDescription="RSDNL_STATE_CD"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_BY_STATE" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      </viewAttribute>
+    
+      <viewAttribute id="CNT_EMPLOYEE_AU" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="EMP_PRCNT_BY_STATE" datatype="DECIMAL" length="15" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>(&quot;CNT_EMPLOYEE_BY_STATE&quot;/&quot;CNT_EMPLOYEE_AU&quot;)*100</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="INTERSTATE_EMP_CNT" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>case(&quot;RSDNL_STATE_CD&quot;='QLD',(&quot;CNT_EMPLOYEE_AU&quot;)-(&quot;CNT_EMPLOYEE_BY_STATE&quot;))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="EMP_CNT_ALL">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_AU" source="CNT_EMPLOYEE_AU"/>
+    </input>
+    <input node="EMP_CNT_BY_STATE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_BY_STATE" source="CNT_EMPLOYEE_BY_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+    </input>
+    <joinAttribute name="ABN"/>
+    <joinAttribute name="INCM_YR"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="INCM_YR" order="2">
+      <descriptions defaultDescription="INCM_YR"/>
+      <keyMapping columnObjectName="Join_1" columnName="INCM_YR"/>
+    </attribute>
+    <attribute id="RSDNL_STATE_CD" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RSDNL_STATE_CD"/>
+      <keyMapping columnObjectName="Join_1" columnName="RSDNL_STATE_CD"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="CNT_EMPLOYEE_BY_STATE" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      <measureMapping columnObjectName="Join_1" columnName="CNT_EMPLOYEE_BY_STATE"/>
+    </measure>
+    <measure id="CNT_EMPLOYEE_AU" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CNT_EMPLOYEE"/>
+      <measureMapping columnObjectName="Join_1" columnName="CNT_EMPLOYEE_AU"/>
+    </measure>
+    <measure id="EMP_PRCNT_BY_STATE" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="EMP_PRCNT_BY_STATE"/>
+      <measureMapping columnObjectName="Join_1" columnName="EMP_PRCNT_BY_STATE"/>
+    </measure>
+    <measure id="INTERSTATE_EMP_CNT" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="INTERSTATE_EMP_CNT"/>
+      <measureMapping columnObjectName="Join_1" columnName="INTERSTATE_EMP_CNT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="EMP_CNT_BY_STATE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="EMP_CNT_BY_STATE" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
