@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_KEY_INFO" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_KEY_INFO"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="REGN_END_DT">
+        <descriptions defaultDescription="REGN_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_CD">
+        <descriptions defaultDescription="ANZSIC_CD"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_REG_DT">
+        <descriptions defaultDescription="PRT_REG_DT"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_START_DT">
+        <descriptions defaultDescription="PRT_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_END_DT">
+        <descriptions defaultDescription="PRT_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="ACNT_PERD_END_DT">
+        <descriptions defaultDescription="ACNT_PERD_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ENT_TYP_CD">
+        <descriptions defaultDescription="ENT_TYP_CD"/>
+      </viewAttribute>
+      <viewAttribute id="ECI_STATUS">
+        <descriptions defaultDescription="ECI_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="GST_REGN_DT">
+        <descriptions defaultDescription="GST_REGN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ACNT_PERD_BG_DT">
+        <descriptions defaultDescription="ACNT_PERD_BG_DT"/>
+      </viewAttribute>
+      <viewAttribute id="TRDNG_NM">
+        <descriptions defaultDescription="TRDNG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="GST_CANCN_DT">
+        <descriptions defaultDescription="GST_CANCN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="CNSLDTD_HD_CMPNY">
+        <descriptions defaultDescription="CNSLDTD_HD_CMPNY"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_TITLE">
+        <descriptions defaultDescription="ANZSIC_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_START_DT">
+        <descriptions defaultDescription="REGN_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO">
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_REG_DT" source="PRT_REG_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_START_DT" source="PRT_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_END_DT" source="PRT_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACNT_PERD_END_DT" source="ACNT_PERD_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENT_TYP_CD" source="ENT_TYP_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ECI_STATUS" source="ECI_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_REGN_DT" source="GST_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACNT_PERD_BG_DT" source="ACNT_PERD_BG_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM" source="TRDNG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_CANCN_DT" source="GST_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNSLDTD_HD_CMPNY" source="CNSLDTD_HD_CMPNY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_TITLE" source="ANZSIC_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+    </input>
+    <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="REGN_END_DT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASIC End Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REGN_END_DT"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="PRT_REG_DT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT Registration"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRT_REG_DT"/>
+    </attribute>
+    <attribute id="PRT_START_DT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT Start Date    "/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRT_START_DT"/>
+    </attribute>
+    <attribute id="PRT_END_DT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT End Date    "/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRT_END_DT"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Risk Year"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="ACNT_PERD_END_DT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Reporting Period End Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACNT_PERD_END_DT"/>
+    </attribute>
+    <attribute id="ENT_TYP_CD" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Entity Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ENT_TYP_CD"/>
+    </attribute>
+    <attribute id="ECI_STATUS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ECI Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ECI_STATUS"/>
+    </attribute>
+    <attribute id="GST_REGN_DT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GST Registration Start Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GST_REGN_DT"/>
+    </attribute>
+    <attribute id="ACNT_PERD_BG_DT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Reporting Period Start Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ACNT_PERD_BG_DT"/>
+    </attribute>
+    <attribute id="TRDNG_NM" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Trading Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TRDNG_NM"/>
+    </attribute>
+    <attribute id="GST_CANCN_DT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GST Registration Cease Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GST_CANCN_DT"/>
+    </attribute>
+    <attribute id="CNSLDTD_HD_CMPNY" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Consolidated Lodger Y or N"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CNSLDTD_HD_CMPNY"/>
+    </attribute>
+    <attribute id="ANZSIC_TITLE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Industry Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_TITLE"/>
+    </attribute>
+    <attribute id="REGN_START_DT" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASIC Start Date"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REGN_START_DT"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="218"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
