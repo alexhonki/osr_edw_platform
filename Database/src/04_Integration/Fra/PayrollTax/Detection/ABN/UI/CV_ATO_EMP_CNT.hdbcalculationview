@@ -17,7 +17,7 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
-      <viewAttribute id="INCM_YR">
+      <viewAttribute id="INCM_YR_INT">
         <descriptions defaultDescription="INCM_YR"/>
       </viewAttribute>
       <viewAttribute id="CNT_EMPLOYEE_AU" aggregationType="sum">
@@ -28,7 +28,7 @@
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR_INT" source="INCM_YR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_AU" source="CNT_EMPLOYEE"/>
     </input>
   </calculationView>
@@ -37,7 +37,7 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
-      <viewAttribute id="INCM_YR">
+      <viewAttribute id="INCM_YR_INT">
         <descriptions defaultDescription="INCM_YR"/>
       </viewAttribute>
       <viewAttribute id="RSDNL_STATE_CD">
@@ -51,7 +51,7 @@
     <restrictedViewAttributes/>
     <input emptyUnionBehavior="undefined" node="EMP_CNT_BY_STATE$$$$osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data$$">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR_INT" source="INCM_YR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_BY_STATE" source="CNT_EMPLOYEE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
     </input>
@@ -61,7 +61,7 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
-      <viewAttribute id="INCM_YR" aggregationType="sum">
+      <viewAttribute id="INCM_YR_INT" aggregationType="sum">
         <descriptions defaultDescription="INCM_YR"/>
       </viewAttribute>
       <viewAttribute id="RSDNL_STATE_CD">
@@ -81,21 +81,24 @@
       <calculatedViewAttribute id="INTERSTATE_EMP_CNT" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
         <formula>case(&quot;RSDNL_STATE_CD&quot;='QLD',(&quot;CNT_EMPLOYEE_AU&quot;)-(&quot;CNT_EMPLOYEE_BY_STATE&quot;))</formula>
       </calculatedViewAttribute>
+      <calculatedViewAttribute id="INCM_YR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>to_nvarchar(&quot;INCM_YR_INT&quot;)</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="EMP_CNT_ALL">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR_INT" source="INCM_YR_INT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_AU" source="CNT_EMPLOYEE_AU"/>
     </input>
     <input node="EMP_CNT_BY_STATE">
       <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_BY_STATE" source="CNT_EMPLOYEE_BY_STATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR_INT" source="INCM_YR_INT"/>
     </input>
     <joinAttribute name="ABN"/>
-    <joinAttribute name="INCM_YR"/>
+    <joinAttribute name="INCM_YR_INT"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Join_1">
@@ -104,7 +107,7 @@
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Join_1" columnName="ABN"/>
     </attribute>
-    <attribute id="INCM_YR" order="2">
+    <attribute id="INCM_YR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INCM_YR"/>
       <keyMapping columnObjectName="Join_1" columnName="INCM_YR"/>
     </attribute>
