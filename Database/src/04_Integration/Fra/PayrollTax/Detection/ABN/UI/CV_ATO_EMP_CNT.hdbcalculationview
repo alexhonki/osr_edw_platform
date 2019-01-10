@@ -10,6 +10,9 @@
   <DataSource id="EMP_CNT_BY_STATE$$$$osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data$$">
     <resourceUri>osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:AggregationView" id="EMP_CNT_ALL">
@@ -56,7 +59,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="J_EMP_CNT" joinType="inner">
     <viewAttributes>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
@@ -100,39 +103,133 @@
     <joinAttribute name="ABN"/>
     <joinAttribute name="INCM_YR_INT"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR_INT" aggregationType="sum">
+        <descriptions defaultDescription="INCM_YR_INT"/>
+      </viewAttribute>
+      <viewAttribute id="RSDNL_STATE_CD">
+        <descriptions defaultDescription="RSDNL_STATE_CD"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_BY_STATE" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE_BY_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="CNT_EMPLOYEE_AU" aggregationType="sum">
+        <descriptions defaultDescription="CNT_EMPLOYEE_AU"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_PRCNT_BY_STATE" aggregationType="sum">
+        <descriptions defaultDescription="EMP_PRCNT_BY_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="INTERSTATE_EMP_CNT" aggregationType="sum">
+        <descriptions defaultDescription="INTERSTATE_EMP_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="J_EMP_CNT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR_INT" source="INCM_YR_INT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RSDNL_STATE_CD" source="RSDNL_STATE_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_BY_STATE" source="CNT_EMPLOYEE_BY_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMPLOYEE_AU" source="CNT_EMPLOYEE_AU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_PRCNT_BY_STATE" source="EMP_PRCNT_BY_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INTERSTATE_EMP_CNT" source="INTERSTATE_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+    </input>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="GJAHR"/>
+    </input>
+    <joinAttribute name="ABN"/>
+    <joinAttribute name="INCM_YR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+    </input>
+  </calculationView>
 </calculationViews>
-<logicalModel id="Join_1">
+<logicalModel id="Join_2">
   <attributes>
-    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Join_2" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Join_2" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Join_1" columnName="ABN"/>
+      <keyMapping columnObjectName="Join_2" columnName="ABN"/>
     </attribute>
-    <attribute id="INCM_YR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INCM_YR" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INCM_YR"/>
-      <keyMapping columnObjectName="Join_1" columnName="INCM_YR"/>
+      <keyMapping columnObjectName="Join_2" columnName="INCM_YR"/>
     </attribute>
-    <attribute id="RSDNL_STATE_CD" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RSDNL_STATE_CD" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RSDNL_STATE_CD"/>
-      <keyMapping columnObjectName="Join_1" columnName="RSDNL_STATE_CD"/>
+      <keyMapping columnObjectName="Join_2" columnName="RSDNL_STATE_CD"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="CNT_EMPLOYEE_BY_STATE" order="4" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_BY_STATE" order="6" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE"/>
-      <measureMapping columnObjectName="Join_1" columnName="CNT_EMPLOYEE_BY_STATE"/>
+      <measureMapping columnObjectName="Join_2" columnName="CNT_EMPLOYEE_BY_STATE"/>
     </measure>
-    <measure id="CNT_EMPLOYEE_AU" order="5" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_AU" order="7" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE"/>
-      <measureMapping columnObjectName="Join_1" columnName="CNT_EMPLOYEE_AU"/>
+      <measureMapping columnObjectName="Join_2" columnName="CNT_EMPLOYEE_AU"/>
     </measure>
-    <measure id="EMP_PRCNT_BY_STATE" order="6" aggregationType="sum" measureType="simple">
+    <measure id="EMP_PRCNT_BY_STATE" order="8" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="EMP_PRCNT_BY_STATE"/>
-      <measureMapping columnObjectName="Join_1" columnName="EMP_PRCNT_BY_STATE"/>
+      <measureMapping columnObjectName="Join_2" columnName="EMP_PRCNT_BY_STATE"/>
     </measure>
-    <measure id="INTERSTATE_EMP_CNT" order="7" aggregationType="sum" measureType="simple">
+    <measure id="INTERSTATE_EMP_CNT" order="9" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="INTERSTATE_EMP_CNT"/>
-      <measureMapping columnObjectName="Join_1" columnName="INTERSTATE_EMP_CNT"/>
+      <measureMapping columnObjectName="Join_2" columnName="INTERSTATE_EMP_CNT"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
@@ -142,30 +239,46 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221.11302679000914" y="112"/>
+      <upperLeftCorner x="328.6900820831794" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <upperLeftCorner x="92" y="551.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EMP_CNT_BY_STATE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <upperLeftCorner x="302" y="551.9999976158142"/>
       <rectangleSize width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221.11302679000914" y="217"/>
+    <shape expanded="true" modelObjectName="J_EMP_CNT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.66666666666666" y="391.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="EMP_CNT_BY_STATE" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="EMP_CNT_BY_STATE" modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="328.6900820831794" y="232"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="395.83468516943316" y="391.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
