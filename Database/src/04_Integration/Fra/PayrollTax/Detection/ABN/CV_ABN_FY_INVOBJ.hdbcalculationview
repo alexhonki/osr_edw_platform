@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_FY_INVOBJ" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_FY_INVOBJ"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR">
+    <resourceUri>osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
+    <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="FISCAL_YEAR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_PC">
+        <descriptions defaultDescription="MN_BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="MN_INDY_CLSN">
+        <descriptions defaultDescription="MN_INDY_CLSN"/>
+      </viewAttribute>
+      <viewAttribute id="MN_INDY_CLSN_DESCN">
+        <descriptions defaultDescription="MN_INDY_CLSN_DESCN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_PC" source="MN_BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN" source="MN_INDY_CLSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN_DESCN" source="MN_INDY_CLSN_DESCN"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_PC">
+        <descriptions defaultDescription="MN_BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_CD">
+        <descriptions defaultDescription="MN_INDY_CLSN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="BPARTNER" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>('')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="GROUP_ID" datatype="NVARCHAR" length="32" expressionLanguage="SQL">
+        <formula>('')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ACCESS_GROUP" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
+        <formula>('PRT')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="LOCATION" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+        <formula>('PT_ABN_FY') || '/' || LEFT(&quot;ABN&quot;,11) || '/' || LEFT(&quot;GJAHR&quot;,4)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="MN_BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="MN_INDY_CLSN"/>
+    </input>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FISCAL_YEAR"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FISCAL_YEAR"/>
+      <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BPARTNER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="Join_1" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="BUS_PC" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_BUS_PC"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_INDY_CLSN"/>
+      <keyMapping columnObjectName="Join_1" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="ACCESS_GROUP" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACCESS_GROUP"/>
+      <keyMapping columnObjectName="Join_1" columnName="ACCESS_GROUP"/>
+    </attribute>
+    <attribute id="LOCATION" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATION"/>
+      <keyMapping columnObjectName="Join_1" columnName="LOCATION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
