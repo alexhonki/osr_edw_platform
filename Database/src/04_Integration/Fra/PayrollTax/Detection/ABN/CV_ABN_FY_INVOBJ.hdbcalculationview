@@ -26,7 +26,7 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
-      <viewAttribute id="ABN">
+      <viewAttribute id="ABR_ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
       <viewAttribute id="MN_BUS_PC">
@@ -42,7 +42,7 @@
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_PC" source="MN_BUS_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN" source="MN_INDY_CLSN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN_DESCN" source="MN_INDY_CLSN_DESCN"/>
@@ -50,10 +50,10 @@
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1">
     <viewAttributes>
-      <viewAttribute id="ABN">
+      <viewAttribute id="ABR_ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
-      <viewAttribute id="GJAHR">
+      <viewAttribute id="FISCAL_YEAR">
         <descriptions defaultDescription="FISCAL_YEAR"/>
       </viewAttribute>
       <viewAttribute id="BUS_PC">
@@ -74,17 +74,23 @@
         <formula>('PRT')</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="LOCATION" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
-        <formula>('PT_ABN_FY') || '/' || LEFT(&quot;ABN&quot;,11) || '/' || LEFT(&quot;GJAHR&quot;,4)</formula>
+        <formula>('PT_ABN_FY') || '/' || LEFT(&quot;ABR_ABN&quot;,11) || '/' || LEFT(&quot;FISCAL_YEAR&quot;,4)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>LEFT(&quot;ABR_ABN&quot;,11)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>&quot;FISCAL_YEAR&quot;</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="Projection_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABR_ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="MN_BUS_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="MN_INDY_CLSN"/>
     </input>
     <input node="Aggregation_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FISCAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -137,7 +143,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000001" y="356.9999988079071"/>
+      <upperLeftCorner x="92.00000000000003" y="356.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
