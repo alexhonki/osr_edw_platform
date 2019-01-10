@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_DFACTS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DFACTS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="OBART" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBART"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="OBART"/>
+    </attribute>
+    <attribute id="OBJID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJID"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="OBJID"/>
+    </attribute>
+    <attribute id="FACT_TYPE_SEQ" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_TYPE_SEQ"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_TYPE_SEQ"/>
+    </attribute>
+    <attribute id="FACT_TYPE_REP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_TYPE_REP"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_TYPE_REP"/>
+    </attribute>
+    <attribute id="FACT_CAT_SEQ" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_CAT_SEQ"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_CAT_SEQ"/>
+    </attribute>
+    <attribute id="FACT_CAT_REP" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_CAT_REP"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_CAT_REP"/>
+    </attribute>
+    <attribute id="VALID_TO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_TO"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="VALID_TO"/>
+    </attribute>
+    <attribute id="VALID_FROM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="VALID_FROM"/>
+    </attribute>
+    <attribute id="FACT_SET" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_SET"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_SET"/>
+    </attribute>
+    <attribute id="FACT_TYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_TYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_TYPE"/>
+    </attribute>
+    <attribute id="FACT_CATEGORY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_CATEGORY"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_CATEGORY"/>
+    </attribute>
+    <attribute id="VALUE_GENERIC" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALUE_GENERIC"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="VALUE_GENERIC"/>
+    </attribute>
+    <attribute id="QUAL_GENERIC" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUAL_GENERIC"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="QUAL_GENERIC"/>
+    </attribute>
+    <attribute id="OBJNR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNR"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="OBJNR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
