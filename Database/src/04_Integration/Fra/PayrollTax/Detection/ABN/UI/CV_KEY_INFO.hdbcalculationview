@@ -70,6 +70,10 @@
       <viewAttribute id="ALERT_ID">
         <descriptions defaultDescription="ALERT_ID"/>
       </viewAttribute>
+    
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -91,9 +95,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_TITLE" source="ANZSIC_TITLE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-    </input>
-    <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
-  </calculationView>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input></calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
   <attributes>
@@ -164,6 +168,13 @@
     <attribute id="ALERT_ID" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+  
+    <attribute id="ABN" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+  
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
