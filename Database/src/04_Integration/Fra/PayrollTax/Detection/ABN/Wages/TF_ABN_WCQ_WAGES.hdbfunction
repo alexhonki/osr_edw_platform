@@ -14,6 +14,8 @@ BEGIN
 	
 	lt_wcq_wages = 
      SELECT
+    	"WCQ_WAGES"."NAME"									AS "NAME", 
+    	"WCQ_WAGES"."POLICY_NO"								AS "POLICY_NO",
 		LEFT("WCQ_POLICY"."ABN",11)                                                                       AS  "ABN", 
 		'PT-A' 																		   			         AS  "PERIOD_CATEGORY",
 		LEFT("WCQ_WAGES"."ASSESSMENT_YEAR",4)                                                           AS  "PERIOD_KEY",
@@ -21,13 +23,23 @@ BEGIN
 		 "WCQ_WAGES"."ACT_WAGES"                                                                             AS  "WCQ_ACT_WAGES",
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
-		"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "WCQ_WAGES"
+		"osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES" AS "WCQ_WAGES"
 		INNER JOIN 
 		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "WCQ_POLICY"
 		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_POLICY"."POLICY_NO"
 		WHERE "WCQ_POLICY"."ABN" IS NOT NULL
 		  AND "WCQ_POLICY"."ABN" <> ''
 	;
+	
+	lt_wcq_wages_latest = 
+	SELECT 
+	"NAME", 
+	"ABN", 
+	"POLICY_NO", 
+	"GJAHR",
+	ROW_NUMBER() OVER ( PARTITION BY "ABN", "POLICY_NO", "GJAHR" ORDER BY "NAME" DESC ) AS "ROW_NUMBER"
+	FROM :lt_wcq_wages;
+
 	
 	RETURN
 	SELECT 
@@ -37,7 +49,13 @@ BEGIN
 	"GJAHR",
 	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES",
 	"WAERS"
-	FROM :lt_wcq_wages
+	FROM :lt_wcq_wages AS "WAGES" WHERE EXISTS (
+		SELECT * FROM :lt_wcq_wages_latest AS "WAGES_LATEST"
+		WHERE "WAGES"."NAME" = "WAGES_LATEST"."NAME"
+		  AND "WAGES"."ABN" = "WAGES_LATEST"."ABN"
+		  AND "WAGES"."POLICY_NO" = "WAGES_LATEST"."POLICY_NO"
+		  AND "WAGES"."GJAHR" = "WAGES_LATEST"."GJAHR"
+	)
 	GROUP BY 
 	"ABN",
 	"PERIOD_CATEGORY",
