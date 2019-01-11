@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ABR_BP_MD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ABR_BP_MD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ABR_BP_MD"/>
 <localVariables/>
 <variableMappings/>
@@ -7,61 +7,261 @@
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY</resourceUri>
+  </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="BUS_PC">
+        <descriptions defaultDescription="BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_NAME_2">
+        <descriptions defaultDescription="BUS_NAME_2"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_NM_TITLE">
+        <descriptions defaultDescription="BUS_NM_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_NAME_1">
+        <descriptions defaultDescription="BUS_NAME_1"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_TYPE">
+        <descriptions defaultDescription="PARTNER_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_EMAIL">
+        <descriptions defaultDescription="BUS_EMAIL"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_INDUSTRY">
+        <descriptions defaultDescription="BUS_INDUSTRY"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_PH_NUM">
+        <descriptions defaultDescription="BUS_PH_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_ADDR">
+        <descriptions defaultDescription="BUS_ADDR"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_CITY">
+        <descriptions defaultDescription="BUS_CITY"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_STATE">
+        <descriptions defaultDescription="BUS_STATE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NAME_2" source="BUS_NAME_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NM_TITLE" source="BUS_NM_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NAME_1" source="BUS_NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_TYPE" source="PARTNER_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_EMAIL" source="BUS_EMAIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_INDUSTRY" source="BUS_INDUSTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PH_NUM" source="BUS_PH_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR" source="BUS_ADDR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_CITY" source="BUS_CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="BUS_PC">
+        <descriptions defaultDescription="BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_NAME_2">
+        <descriptions defaultDescription="BUS_NAME_2"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_NM_TITLE">
+        <descriptions defaultDescription="BUS_NM_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_NAME_1">
+        <descriptions defaultDescription="BUS_NAME_1"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_TYPE">
+        <descriptions defaultDescription="PARTNER_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_EMAIL">
+        <descriptions defaultDescription="BUS_EMAIL"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_INDUSTRY">
+        <descriptions defaultDescription="BUS_INDUSTRY"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_PH_NUM">
+        <descriptions defaultDescription="BUS_PH_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_ADDR">
+        <descriptions defaultDescription="BUS_ADDR"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_CITY">
+        <descriptions defaultDescription="BUS_CITY"/>
+      </viewAttribute>
+      <viewAttribute id="BUS_STATE">
+        <descriptions defaultDescription="BUS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NAME_2" source="BUS_NAME_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NM_TITLE" source="BUS_NM_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NAME_1" source="BUS_NAME_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_TYPE" source="PARTNER_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_EMAIL" source="BUS_EMAIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_INDUSTRY" source="BUS_INDUSTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PH_NUM" source="BUS_PH_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR" source="BUS_ADDR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_CITY" source="BUS_CITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+    <joinAttribute name="ABN"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
   <attributes>
-    <attribute id="BUS_PC" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BUS_PC"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_PC"/>
+    <attribute id="ALERT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ACN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Join_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="GJAHR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="ACN" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="ACN"/>
+      <keyMapping columnObjectName="Join_1" columnName="ACN"/>
     </attribute>
-    <attribute id="BUS_NAME_2" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BUS_NAME_2"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_NAME_2"/>
-    </attribute>
-    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="ABN"/>
+      <keyMapping columnObjectName="Join_1" columnName="ABN"/>
     </attribute>
-    <attribute id="BUS_NM_TITLE" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BUS_NM_TITLE"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_NM_TITLE"/>
+    <attribute id="BPARTNER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="Join_1" columnName="BPARTNER"/>
     </attribute>
-    <attribute id="BUS_NAME_1" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BUS_NAME_1"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_NAME_1"/>
-    </attribute>
-    <attribute id="PARTNER_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PARTNER_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTNER_TYPE"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="PARTNER_TYPE"/>
-    </attribute>
-    <attribute id="BUS_EMAIL" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BUS_EMAIL"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_EMAIL"/>
+      <keyMapping columnObjectName="Join_1" columnName="PARTNER_TYPE"/>
     </attribute>
     <attribute id="BUS_INDUSTRY" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_INDUSTRY"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_INDUSTRY"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_INDUSTRY"/>
     </attribute>
-    <attribute id="BUS_PH_NUM" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUS_NM_TITLE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NM_TITLE"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_NM_TITLE"/>
+    </attribute>
+    <attribute id="BUS_NAME_1" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NAME_1"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_NAME_1"/>
+    </attribute>
+    <attribute id="BUS_NAME_2" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NAME_2"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_NAME_2"/>
+    </attribute>
+    <attribute id="BUS_EMAIL" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_EMAIL"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_EMAIL"/>
+    </attribute>
+    <attribute id="BUS_PH_NUM" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_PH_NUM"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_PH_NUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_PH_NUM"/>
     </attribute>
-    <attribute id="BUS_ADDR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUS_ADDR" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_ADDR"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_ADDR"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_ADDR"/>
     </attribute>
-    <attribute id="BUS_CITY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUS_CITY" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_CITY"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_CITY"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_CITY"/>
     </attribute>
-    <attribute id="BUS_STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUS_PC" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_STATE"/>
-      <keyMapping columnObjectName="TF_ABR_BP_MD" columnName="BUS_STATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="BUS_STATE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -72,7 +272,30 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Agency Data"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data">
+    <resourceUri>osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PATH">
+        <descriptions defaultDescription="PATH"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ROWNUMBER">
+        <descriptions defaultDescription="ROWNUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="ERROR">
+        <descriptions defaultDescription="ERROR"/>
+      </viewAttribute>
+      <viewAttribute id="PARTITION">
+        <descriptions defaultDescription="PARTITION"/>
+      </viewAttribute>
+      <viewAttribute id="PID">
+        <descriptions defaultDescription="PID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ENT_TYP_CD">
+        <descriptions defaultDescription="ENT_TYP_CD"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NM">
+        <descriptions defaultDescription="ORG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="NM_TITL_CD">
+        <descriptions defaultDescription="NM_TITL_CD"/>
+      </viewAttribute>
+      <viewAttribute id="PRSN_GVN_NM">
+        <descriptions defaultDescription="PRSN_GVN_NM"/>
+      </viewAttribute>
+      <viewAttribute id="PRSN_OTHR_GVN_NM">
+        <descriptions defaultDescription="PRSN_OTHR_GVN_NM"/>
+      </viewAttribute>
+      <viewAttribute id="PRSN_FMLY_NM">
+        <descriptions defaultDescription="PRSN_FMLY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="NM_SUFX_CD">
+        <descriptions defaultDescription="NM_SUFX_CD"/>
+      </viewAttribute>
+      <viewAttribute id="ABN_REGN_DT">
+        <descriptions defaultDescription="ABN_REGN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABN_CANCN_DT">
+        <descriptions defaultDescription="ABN_CANCN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="MN_TRDG_NM">
+        <descriptions defaultDescription="MN_TRDG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="SON_ADDR_LN_1">
+        <descriptions defaultDescription="SON_ADDR_LN_1"/>
+      </viewAttribute>
+      <viewAttribute id="SON_ADDR_LN_2">
+        <descriptions defaultDescription="SON_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="SON_SBRB">
+        <descriptions defaultDescription="SON_SBRB"/>
+      </viewAttribute>
+      <viewAttribute id="SON_STT">
+        <descriptions defaultDescription="SON_STT"/>
+      </viewAttribute>
+      <viewAttribute id="SON_PC">
+        <descriptions defaultDescription="SON_PC"/>
+      </viewAttribute>
+      <viewAttribute id="SON_CNTRY_CD">
+        <descriptions defaultDescription="SON_CNTRY_CD"/>
+      </viewAttribute>
+      <viewAttribute id="SON_DPID">
+        <descriptions defaultDescription="SON_DPID"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_ADDR_LN_1">
+        <descriptions defaultDescription="MN_BUS_ADDR_LN_1"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_ADDR_LN_2">
+        <descriptions defaultDescription="MN_BUS_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_SBRB">
+        <descriptions defaultDescription="MN_BUS_SBRB"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_STT">
+        <descriptions defaultDescription="MN_BUS_STT"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_PC">
+        <descriptions defaultDescription="MN_BUS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_CNTRY_CD">
+        <descriptions defaultDescription="MN_BUS_CNTRY_CD"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_DPID">
+        <descriptions defaultDescription="MN_BUS_DPID"/>
+      </viewAttribute>
+      <viewAttribute id="ENT_EML">
+        <descriptions defaultDescription="ENT_EML"/>
+      </viewAttribute>
+      <viewAttribute id="PRTY_ID_BLNK">
+        <descriptions defaultDescription="PRTY_ID_BLNK"/>
+      </viewAttribute>
+      <viewAttribute id="GST_REGN_DT">
+        <descriptions defaultDescription="GST_REGN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="GST_CANCN_DT">
+        <descriptions defaultDescription="GST_CANCN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="MN_INDY_CLSN">
+        <descriptions defaultDescription="MN_INDY_CLSN"/>
+      </viewAttribute>
+      <viewAttribute id="MN_INDY_CLSN_DESCN">
+        <descriptions defaultDescription="MN_INDY_CLSN_DESCN"/>
+      </viewAttribute>
+      <viewAttribute id="ACN">
+        <descriptions defaultDescription="ACN"/>
+      </viewAttribute>
+      <viewAttribute id="SPRSN_IND">
+        <descriptions defaultDescription="SPRSN_IND"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="SOURCE_FIELD_VALUE">
+        <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PATH" source="PATH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROWNUMBER" source="ROWNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERROR" source="ERROR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTITION" source="PARTITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PID" source="PID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENT_TYP_CD" source="ENT_TYP_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NM" source="ORG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NM_TITL_CD" source="NM_TITL_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRSN_GVN_NM" source="PRSN_GVN_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRSN_OTHR_GVN_NM" source="PRSN_OTHR_GVN_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRSN_FMLY_NM" source="PRSN_FMLY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NM_SUFX_CD" source="NM_SUFX_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_REGN_DT" source="ABN_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_CANCN_DT" source="ABN_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_TRDG_NM" source="MN_TRDG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_ADDR_LN_1" source="SON_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_ADDR_LN_2" source="SON_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_SBRB" source="SON_SBRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_STT" source="SON_STT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_PC" source="SON_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_CNTRY_CD" source="SON_CNTRY_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SON_DPID" source="SON_DPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_ADDR_LN_1" source="MN_BUS_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_ADDR_LN_2" source="MN_BUS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_SBRB" source="MN_BUS_SBRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_STT" source="MN_BUS_STT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_PC" source="MN_BUS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_CNTRY_CD" source="MN_BUS_CNTRY_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_DPID" source="MN_BUS_DPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENT_EML" source="ENT_EML"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRTY_ID_BLNK" source="PRTY_ID_BLNK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_REGN_DT" source="GST_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_CANCN_DT" source="GST_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN" source="MN_INDY_CLSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN_DESCN" source="MN_INDY_CLSN_DESCN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPRSN_IND" source="SPRSN_IND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_FIELD_VALUE" source="SOURCE_FIELD_VALUE"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="MN_BUS_PC" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_BUS_PC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MN_BUS_PC"/>
+    </attribute>
+    <attribute id="MN_INDY_CLSN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_INDY_CLSN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MN_INDY_CLSN"/>
+    </attribute>
+    <attribute id="MN_INDY_CLSN_DESCN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_INDY_CLSN_DESCN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MN_INDY_CLSN_DESCN"/>
+    </attribute>
+  
+    <attribute id="ENT_TYP_CD" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENT_TYP_CD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ENT_TYP_CD"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

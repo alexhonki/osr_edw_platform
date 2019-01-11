@@ -10,7 +10,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL"(IN IP_ALERT_ID
 		DB_KEY				VARBINARY(16),
 		ALERT_ID			NVARCHAR(20),
 		ABN					NVARCHAR(20),
-		ASSESSMENT_YEAR 	NVARCHAR(4),
+		GJAHR			 	NVARCHAR(4),
 		POLICY_NO			NVARCHAR(12),
 		ACT_WAGES			DECIMAL(15,2),
 		ACT_APPR_WAGES  	DECIMAL(15,2),
@@ -68,6 +68,7 @@ lt_wc_wages2 =
 		"ALERT"."DB_KEY"																		AS "DB_KEY",
 		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
 		"ALERT"."ABN"																			AS "ABN",
+		"ALERT"."GJAHR",												
 		"DATA"."POLICY_NO",
 		"DATA"."ASSESSMENT_YEAR",
 		"DATA"."ACT_WAGES"																		AS "ACT_WAGES",
@@ -84,7 +85,7 @@ RETURN
 		"A"."DB_KEY",
 		"A"."ALERT_ID",
 		"A"."ABN",
-		"A"."ASSESSMENT_YEAR",
+		"A"."GJAHR",
 		"A"."POLICY_NO",
 		"A"."ACT_WAGES",
 		"A"."ACT_APPR_WAGES",
@@ -94,7 +95,7 @@ RETURN
 	LEFT OUTER JOIN :lt_emp_cnt 																AS "B" 
 		ON	 "A"."ABN"				= "B"."ABN" 
 		AND  "A"."ASSESSMENT_YEAR"	= "B"."INCM_YR"
-	ORDER BY "A"."ASSESSMENT_YEAR"	 DESC
+	ORDER BY "A"."GJAHR"	 DESC
 	;
 	
 ELSE
@@ -142,6 +143,7 @@ lt_wc_wages2 =
 		"ALERT"."DB_KEY"																		AS "DB_KEY",
 		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
 		"ALERT"."ABN"																			AS "ABN",
+		"ALERT"."GJAHR",												
 		"DATA"."POLICY_NO",
 		"DATA"."ASSESSMENT_YEAR",
 		"DATA"."ACT_WAGES"																		AS "ACT_WAGES",
@@ -159,7 +161,7 @@ RETURN
 		"A"."DB_KEY",
 		"A"."ALERT_ID",
 		"A"."ABN",
-		"A"."ASSESSMENT_YEAR",
+		"A"."GJAHR",
 		"A"."POLICY_NO",
 		"A"."ACT_WAGES",
 		"A"."ACT_APPR_WAGES",
@@ -169,7 +171,7 @@ RETURN
 	LEFT OUTER JOIN :lt_emp_cnt 																AS "B" 
 		ON	 "A"."ABN"				= "B"."ABN" 
 		AND  "A"."ASSESSMENT_YEAR"	= "B"."INCM_YR"
-	ORDER BY "A"."ASSESSMENT_YEAR"	 DESC
+	ORDER BY "A"."GJAHR"	 DESC
 	;
 	
 
