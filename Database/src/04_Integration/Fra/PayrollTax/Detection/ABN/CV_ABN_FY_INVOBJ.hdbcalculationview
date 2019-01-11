@@ -4,11 +4,11 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
-    <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA</resourceUri>
-  </DataSource>
   <DataSource id="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR">
     <resourceUri>osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
+    <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -23,6 +23,28 @@
     <input node="Projection_2">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="CALENDAR_VARIANT">
+        <descriptions defaultDescription="CALENDAR_VARIANT"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_SQL">
+        <descriptions defaultDescription="DATE_SQL"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FISCAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CALENDAR_VARIANT" source="CALENDAR_VARIANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_SQL" source="DATE_SQL"/>
+    </input>
+    <filter>&quot;CALENDAR_VARIANT&quot; = 'Z6'
+AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
     <viewAttributes>
@@ -73,7 +95,7 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="GROUP_ID" datatype="NVARCHAR" length="32" expressionLanguage="SQL">
-        <formula>('')</formula>
+        <formula>NULL</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="ACCESS_GROUP" datatype="NVARCHAR" length="20" expressionLanguage="SQL">
         <formula>('PRT')</formula>
@@ -83,7 +105,11 @@
       </calculatedViewAttribute>
       <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
         <formula>LEFT(&quot;ABR_ABN&quot;,11)</formula>
-      </calculatedViewAttribute></calculatedViewAttributes>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="BPARTNER" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>NULL</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="Projection_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABR_ABN"/>
@@ -93,28 +119,6 @@
     <input node="Aggregation_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
-  </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
-    <viewAttributes>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="FISCAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="CALENDAR_VARIANT">
-        <descriptions defaultDescription="CALENDAR_VARIANT"/>
-      </viewAttribute>
-      <viewAttribute id="DATE_SQL">
-        <descriptions defaultDescription="DATE_SQL"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="FISCAL_YEAR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CALENDAR_VARIANT" source="CALENDAR_VARIANT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_SQL" source="DATE_SQL"/>
-    </input>
-    <filter>&quot;CALENDAR_VARIANT&quot; = 'Z6'
-AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
   </calculationView>
 </calculationViews>
 <logicalModel id="Join_1">
@@ -127,23 +131,27 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <descriptions defaultDescription="FISCAL_YEAR"/>
       <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
     </attribute>
-    <attribute id="GROUP_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BPARTNER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="Join_1" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GROUP_ID"/>
       <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
     </attribute>
-    <attribute id="BUS_PC" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUS_PC" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_BUS_PC"/>
       <keyMapping columnObjectName="Join_1" columnName="BUS_PC"/>
     </attribute>
-    <attribute id="ANZSIC_CD" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ANZSIC_CD" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_INDY_CLSN"/>
       <keyMapping columnObjectName="Join_1" columnName="ANZSIC_CD"/>
     </attribute>
-    <attribute id="ACCESS_GROUP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ACCESS_GROUP" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACCESS_GROUP"/>
       <keyMapping columnObjectName="Join_1" columnName="ACCESS_GROUP"/>
     </attribute>
-    <attribute id="LOCATION" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="LOCATION" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCATION"/>
       <keyMapping columnObjectName="Join_1" columnName="LOCATION"/>
     </attribute>
@@ -165,6 +173,11 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <upperLeftCorner x="92" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="31" y="455"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="302" y="356"/>
@@ -181,10 +194,6 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="31" y="455"/>
-      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
