@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.pscd.proxy::CV_TFKPERIOD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TFKPERIOD"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFKPERIOD">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFKPERIOD</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PERSL">
+        <descriptions defaultDescription="PERSL"/>
+      </viewAttribute>
+      <viewAttribute id="ABRZU">
+        <descriptions defaultDescription="ABRZU"/>
+      </viewAttribute>
+      <viewAttribute id="ABRZO">
+        <descriptions defaultDescription="ABRZO"/>
+      </viewAttribute>
+      <viewAttribute id="PREDC">
+        <descriptions defaultDescription="PREDC"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFKPERIOD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSL" source="PERSL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABRZU" source="ABRZU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABRZO" source="ABRZO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREDC" source="PREDC"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="PERSL" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PERSL"/>
+    </attribute>
+    <attribute id="ABRZU" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABRZU"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABRZU"/>
+    </attribute>
+    <attribute id="ABRZO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABRZO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABRZO"/>
+    </attribute>
+    <attribute id="PREDC" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PREDC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PREDC"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

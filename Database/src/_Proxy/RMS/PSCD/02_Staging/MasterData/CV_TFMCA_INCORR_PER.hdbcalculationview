@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.pscd.proxy::CV_TFMCA_INCORR_PER" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TFMCA_INCORR_PER"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_INCORR_PER">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_INCORR_PER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="INCOTYP">
+        <descriptions defaultDescription="INCOTYP"/>
+      </viewAttribute>
+      <viewAttribute id="PERSL">
+        <descriptions defaultDescription="PERSL"/>
+      </viewAttribute>
+      <viewAttribute id="INCORR_FAEDN">
+        <descriptions defaultDescription="INCORR_FAEDN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_INCORR_PER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCOTYP" source="INCOTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSL" source="PERSL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCORR_FAEDN" source="INCORR_FAEDN"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="INCOTYP" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCOTYP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INCOTYP"/>
+    </attribute>
+    <attribute id="PERSL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PERSL"/>
+    </attribute>
+    <attribute id="INCORR_FAEDN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCORR_FAEDN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INCORR_FAEDN"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
