@@ -57,7 +57,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN_REGN_DT" source="ABN_REGN_DT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN_CANCN_DT" source="ABN_CANCN_DT"/>
     </input>
-  
     <filter>&quot;ENTITY_TYPE&quot; &lt;&gt; 'IND'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_CALENDAR" filterExpressionLanguage="SQL">
@@ -216,11 +215,10 @@
       <viewAttribute id="ANZSIC_CD">
         <descriptions defaultDescription="MN_INDY_CLSN"/>
       </viewAttribute>
-    
-      <viewAttribute id="ABR_ABN_REGN_DT">
+      <viewAttribute id="ABN_REGN_DT">
         <descriptions defaultDescription="ABN_REGN_DT"/>
       </viewAttribute>
-      <viewAttribute id="ABR_ABN_CANCN_DT">
+      <viewAttribute id="ABN_CANCN_DT">
         <descriptions defaultDescription="ABN_CANCN_DT"/>
       </viewAttribute>
     </viewAttributes>
@@ -230,9 +228,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ENTITY_TYPE" source="ENTITY_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN_REGN_DT" source="ABR_ABN_REGN_DT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN_CANCN_DT" source="ABR_ABN_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_REGN_DT" source="ABN_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_CANCN_DT" source="ABN_CANCN_DT"/>
     </input>
     <input node="Join_2">
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
@@ -271,19 +268,7 @@
     <attribute id="ANZSIC_CD" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_INDY_CLSN"/>
       <keyMapping columnObjectName="Join_3" columnName="ANZSIC_CD"/>
-    </attribute>
-  
-    <attribute id="ABR_ABN_REGN_DT" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN_REGN_DT"/>
-  
-      <keyMapping columnObjectName="Join_3" columnName="ABR_ABN_REGN_DT"/>
-  
-    </attribute>
-    <attribute id="ABR_ABN_CANCN_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN_CANCN_DT"/>
-      <keyMapping columnObjectName="Join_3" columnName="ABR_ABN_CANCN_DT"/>
-    </attribute>
-  </attributes>
+    </attribute></attributes>
   <calculatedAttributes/>
   <baseMeasures/>
   <calculatedMeasures/>
