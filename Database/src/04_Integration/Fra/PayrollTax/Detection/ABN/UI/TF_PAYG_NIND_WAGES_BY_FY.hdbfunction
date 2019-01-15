@@ -1,0 +1,43 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FY"(IN IP_ALERT_ID NVARCHAR(20), IN IP_FY_ADJUSTMENT INTEGER )
+/**********
+	CREATED BY		: TUGCE GULER
+	CREATED ON		: 15/01/2019
+	CREATION REASON	: To transpose the structure of the PAYG IND WAGES Table Function and make it consumable as external view via UI
+**********/
+       RETURNS TABLE
+    	(
+		DB_KEY					VARBINARY(16),
+		ALERT_ID				NVARCHAR(20),
+		ABN					    NVARCHAR(20),
+		FINANCIAL_YEAR			NVARCHAR(4),	
+		MEASURE_NAME			NVARCHAR(30),
+		WAGES					DECIMAL(15,2),
+		WAERS					NVARCHAR(5)
+		)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+	RETURN
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"					AS "FINANCIAL_YEAR",
+			'TOTL_WAGES'			AS "MEASURE_NAME",
+			"TOTL_WAGES" 			AS "WAGES",
+			"WAERS"
+		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		UNION
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"					AS "FINANCIAL_YEAR",
+			'PMT_SMRY_CNT'			AS "MEASURE_NAME",
+			"PMT_SMRY_CNT"			AS "WAGES",
+			"WAERS"
+		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		;
+
+END;
