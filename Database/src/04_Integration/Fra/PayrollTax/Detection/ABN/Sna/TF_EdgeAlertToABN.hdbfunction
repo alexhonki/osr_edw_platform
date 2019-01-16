@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn.sna::TF_EdgeABNToPRTBP" ( )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.sna::TF_EdgeAlertToABN" ( )
        RETURNS TABLE 
        (
         SOURCE_NODE_ID1	NVARCHAR(40),
@@ -19,17 +19,19 @@ BEGIN
 
 	RETURN
  	 SELECT 
-	 "BP_ABN_ID"."ABN" AS "SOURCE_NODE_ID1",
-	 '' AS "SOURCE_NODE_ID2",
+	 "INVEST_OBJ_ID" AS "SOURCE_NODE_ID1",
+	 "INVEST_OBJ_ID2" AS "SOURCE_NODE_ID2",
 	 '' AS "SOURCE_NODE_ID3",
 	 '' AS "SOURCE_NODE_ID4",
 	 '' AS "SOURCE_NODE_ID5",
-	 "BP_ABN_ID"."BPARTNER" AS "TARGET_NODE_ID1",
+	 "INVEST_OBJ_ID" AS "TARGET_NODE_ID1",
 	 '' AS "TARGET_NODE_ID2",
 	 '' AS "TARGET_NODE_ID3",
 	 '' AS "TARGET_NODE_ID4",
 	 '' AS "TARGET_NODE_ID5",
-	 "VALID_DATE_FROM" || '-' || "VALID_DATE_TO" AS "LABEL"
-	 FROM "osr.edw.platform.fra.prt.dt.abn::CV_BP_ABN_IDENTIFICATION" AS "BP_ABN_ID"
+	 '' AS "LABEL"
+	 FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
+	 WHERE "INVEST_OBJ_TYPE" = 'PT_ABN_FY'
+	 ;
 
 END;

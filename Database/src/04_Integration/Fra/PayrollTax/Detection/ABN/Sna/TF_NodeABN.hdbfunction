@@ -13,23 +13,10 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.sna::TF_NodeABN" ()
        SQL SECURITY INVOKER AS 
 BEGIN 
 
-	lt_data =
- 	 SELECT
-         LEFT("AGENCY_DATA"."ABN",11) AS "ABN",
-         "CALENDAR"."FISCAL_YEAR" AS "FISCAL_YEAR",
-         "AGENCY_DATA"."PID" AS "PID"
-       FROM 
-    	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA" AS "AGENCY_DATA" ,
-       (SELECT DISTINCT "FISCAL_YEAR" 
-		FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" 
-		WHERE "CALENDAR_VARIANT" = 'Z6' AND "DATE_SQL" <= CURRENT_DATE
-	   ) AS "CALENDAR"
-       ;
-       
     RETURN 
      	 SELECT
-         "DATA"."ABN" AS "ID1",
-         "DATA"."FISCAL_YEAR" AS "ID2",
+         LEFT("DATA"."ABN",11) AS "ID1",
+         '' AS "ID2",
          '' AS "ID3",
          '' AS "ID4",
          '' AS "ID5",
@@ -39,7 +26,7 @@ BEGIN
          END
          AS "LABEL",
 	     '' AS "STYLE"
-	     FROM :lt_data AS "DATA"
+	     FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA" AS "DATA"
            LEFT OUTER JOIN
        "osr.edw.staging.md.abr.proxy::CV_BUSINESS_NAMES" AS "BUSINESS_NAMES"
        ON "DATA"."PID" = "BUSINESS_NAMES"."PID"
