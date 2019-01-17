@@ -17,7 +17,7 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
       <viewAttribute id="REGN_END_DT">
         <descriptions defaultDescription="REGN_END_DT"/>
@@ -74,6 +74,13 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -97,6 +104,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input></calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
@@ -175,6 +185,15 @@
   
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
   
+    </attribute>
+  
+    <attribute id="DB_KEY" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="GJAHR" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

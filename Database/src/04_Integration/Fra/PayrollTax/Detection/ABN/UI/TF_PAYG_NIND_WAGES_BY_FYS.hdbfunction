@@ -1,0 +1,118 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FYS"(IN IP_ALERT_ID NVARCHAR(20))
+/**********
+	CREATED BY		: TUGCE GULER
+	CREATED ON		: 15/01/2019
+	CREATION REASON	: To transpose the structure of the PAYG IND WAGES Table Function and make it consumable as external view via UI
+**********/
+       RETURNS  TABLE
+		(
+		DB_KEY					VARBINARY(16),
+		ALERT_ID				NVARCHAR(20),
+		ABN						NVARCHAR(20),
+		FINANCIAL_YEAR			NVARCHAR(4),
+		MEASURE_NAME			NVARCHAR(30),
+		WAERS					NVARCHAR(5),
+		FY0_WAGE				DECIMAL(15,2),
+		FY1_WAGE				DECIMAL(15,2),
+		FY2_WAGE				DECIMAL(15,2),
+		FY3_WAGE				DECIMAL(15,2),
+		FY4_WAGE				DECIMAL(15,2)
+		)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+	RETURN
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"FINANCIAL_YEAR",
+			"MEASURE_NAME",
+			"WAERS",
+			SUM("FY0_WAGE") AS "FY0_WAGE",
+			SUM("FY1_WAGE") AS "FY1_WAGE",
+			SUM("FY2_WAGE") AS "FY2_WAGE",
+			SUM("FY3_WAGE") AS "FY3_WAGE",
+			SUM("FY4_WAGE") AS "FY4_WAGE"
+		FROM
+			(
+			SELECT 
+				"DB_KEY",
+				"ALERT_ID",
+				"ABN",
+				"FINANCIAL_YEAR",
+				"MEASURE_NAME",
+				"WAGES" 	AS "FY0_WAGE",
+				0			AS "FY1_WAGE",
+				0			AS "FY2_WAGE",
+				0			AS "FY3_WAGE",
+				0			AS "FY4_WAGE",
+				"WAERS"
+			FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FY"(:IP_ALERT_ID,0)
+			UNION
+			SELECT 
+				"DB_KEY",
+				"ALERT_ID",
+				"ABN",
+				"FINANCIAL_YEAR",
+				"MEASURE_NAME",
+				0			AS "FY0_WAGE",
+				"WAGES" 	AS "FY1_WAGE",
+				0			AS "FY2_WAGE",
+				0			AS "FY3_WAGE",
+				0			AS "FY4_WAGE",
+				"WAERS"
+			FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FY"(:IP_ALERT_ID,1)
+			UNION
+			SELECT 
+				"DB_KEY",
+				"ALERT_ID",
+				"ABN",
+				"FINANCIAL_YEAR",
+				"MEASURE_NAME",
+				0			AS "FY0_WAGE",
+				0			AS "FY1_WAGE",
+				"WAGES" 	AS "FY2_WAGE",
+				0			AS "FY3_WAGE",
+				0			AS "FY4_WAGE",
+				"WAERS"
+			FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FY"(:IP_ALERT_ID,2)
+			UNION
+			SELECT 
+				"DB_KEY",
+				"ALERT_ID",
+				"ABN",
+				"FINANCIAL_YEAR",
+				"MEASURE_NAME",
+				0			AS "FY0_WAGE",
+				0			AS "FY1_WAGE",
+				0			AS "FY2_WAGE",
+				"WAGES" 	AS "FY3_WAGE",
+				0			AS "FY4_WAGE",
+				"WAERS"
+			FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FY"(:IP_ALERT_ID,3)
+			UNION
+			SELECT 
+				"DB_KEY",
+				"ALERT_ID",
+				"ABN",
+				"FINANCIAL_YEAR",
+				"MEASURE_NAME",
+				0			AS "FY0_WAGE",
+				0			AS "FY1_WAGE",
+				0			AS "FY2_WAGE",
+				0			AS "FY3_WAGE",
+				"WAGES" 	AS "FY4_WAGE",
+				"WAERS"
+			FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES_BY_FY"(:IP_ALERT_ID,4)
+		)
+		GROUP BY 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"FINANCIAL_YEAR",
+			"MEASURE_NAME",
+			"WAERS"
+		;
+
+END;

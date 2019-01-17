@@ -1,0 +1,43 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.sna::TF_NodeAlert" ()
+       RETURNS TABLE 
+       (
+        ID1		NVARCHAR(40),
+        ID2		NVARCHAR(40),
+        ID3		NVARCHAR(40),
+        ID4		NVARCHAR(40),
+        ID5		NVARCHAR(40),
+        LABEL	NVARCHAR(60), 
+        STYLE	NVARCHAR(15)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+/*
+    RETURN 
+     	 SELECT
+         "INVEST_OBJ_ID" AS "ID1",
+         "INVEST_OBJ_ID2" AS "ID2",
+         '' AS "ID3",
+         '' AS "ID4",
+         '' AS "ID5",
+         LTRIM("ALERT_ID",'0') || '/' || "INVEST_REASON" AS "LABEL",
+	     '' AS "STYLE"
+	     FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
+		 WHERE "INVEST_OBJ_TYPE" = 'PT_ABN_FY'
+		 ;
+*/
+    RETURN 
+     	 SELECT
+         "DB_KEY" AS "ID1",
+         '' AS "ID2",
+         '' AS "ID3",
+         '' AS "ID4",
+         '' AS "ID5",
+         LTRIM("ALERT_ID",'0') || '/' || "INVEST_REASON" AS "LABEL",
+	     '' AS "STYLE"
+	     FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
+		 WHERE "INVEST_OBJ_TYPE" = 'PT_ABN_FY'
+		 ;
+
+END;

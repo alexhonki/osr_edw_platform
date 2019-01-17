@@ -1,0 +1,73 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_WAGES"(IN IP_ALERT_ID NVARCHAR(20), IN IP_FY_ADJUSTMENT INTEGER)
+/**********
+	CREATED BY		: TUGCE GULER
+	CREATED ON		: 15/01/2018
+	CREATION REASON	: Length of Name Column in PAYG NIND table has been created recently, therefore this TF needed to be created to be consumed in UI views. 
+**********/
+
+       RETURNS TABLE 
+    	(
+		DB_KEY							VARBINARY(16),
+		ALERT_ID						NVARCHAR(20),
+		ABN								NVARCHAR(20),
+		GJAHR							NVARCHAR(4),
+		TOTL_WAGES						DECIMAL(15,2),
+		PMT_SMRY_CNT					INTEGER,
+		WAERS							NVARCHAR(5)
+		)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+	IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+		RETURN
+		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			--TO_NVARCHAR("DATA"."INCM_YR") AS "INCM_YR",
+			SUM("DATA"."TOTL_GRS_AMT"+"DATA"."TOTL_LUMP_AMT"+"DATA"."TOTL_ALWNC_AMT")		AS "TOTL_WAGES",
+			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
+			'AUD'																			AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_NIND.active_data"	AS "DATA"
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+		GROUP BY 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR"
+		;
+
+	ELSE
+
+		RETURN
+		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			--TO_NVARCHAR("DATA"."INCM_YR") AS "INCM_YR",
+			SUM("DATA"."TOTL_GRS_AMT"+"DATA"."TOTL_LUMP_AMT"+"DATA"."TOTL_ALWNC_AMT")		AS "TOTL_WAGES",
+			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
+			'AUD'																			AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 				AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_NIND.active_data"	AS "DATA"
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
+		GROUP BY 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR"
+		;
+
+	END IF;
+
+END;
