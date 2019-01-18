@@ -10,21 +10,12 @@
   <DataSource id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
     <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
-    <viewAttributes>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="FISCAL_YEAR"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="Projection_2">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-    </input>
-  </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FY" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="FISCAL_YEAR"/>
@@ -46,7 +37,7 @@
     <filter>&quot;CALENDAR_VARIANT&quot; = 'Z6'
 AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ABR" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="ABR_ABN">
         <descriptions defaultDescription="ABN"/>
@@ -111,12 +102,63 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="Projection_1">
+    <input node="Projection_ABR">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABR_ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="MN_BUS_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="MN_INDY_CLSN"/>
     </input>
-    <input node="Aggregation_1">
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+    
+      <viewAttribute id="GJAHR_MIN">
+        <descriptions defaultDescription="GJAHR_MIN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR_MAX">
+        <descriptions defaultDescription="GJAHR_MAX"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_FY_RANGE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MIN" source="GJAHR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MAX" source="GJAHR_MAX"/>
+    </input>
+    <input node="Aggregation_FY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+    <filter>&quot;GJAHR&quot; &gt;= &quot;GJAHR_MIN&quot; AND &quot;GJAHR&quot; &lt;= &quot;GJAHR_MAX&quot;</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FY_RANGE">
+    <viewAttributes>
+      <viewAttribute id="GJAHR_MIN">
+        <descriptions defaultDescription="GJAHR_MIN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR_MAX">
+        <descriptions defaultDescription="GJAHR_MAX"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MIN" source="GJAHR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MAX" source="GJAHR_MAX"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_FY">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_FY">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
   </calculationView>
@@ -127,25 +169,25 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Join_1" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FISCAL_YEAR"/>
-      <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
-    </attribute>
-    <attribute id="BPARTNER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BPARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
       <keyMapping columnObjectName="Join_1" columnName="BPARTNER"/>
     </attribute>
-    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GROUP_ID"/>
-      <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
-    </attribute>
-    <attribute id="BUS_PC" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BUS_PC" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_BUS_PC"/>
       <keyMapping columnObjectName="Join_1" columnName="BUS_PC"/>
     </attribute>
-    <attribute id="ANZSIC_CD" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ANZSIC_CD" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_INDY_CLSN"/>
       <keyMapping columnObjectName="Join_1" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FISCAL_YEAR"/>
+      <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
     </attribute>
     <attribute id="ACCESS_GROUP" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACCESS_GROUP"/>
@@ -164,37 +206,54 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221" y="112"/>
+      <upperLeftCorner x="337.8268736718046" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
-  
-    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="356"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="31" y="455"/>
+    <shape expanded="true" modelObjectName="Projection_FY" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999991" y="621.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="356"/>
+    <shape expanded="true" modelObjectName="Projection_ABR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="405.8649461248091" y="356.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221" y="217"/>
+      <upperLeftCorner x="337.8268736718046" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Projection_ABR" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.66666666666663" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_FY" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="250"/>
+    </shape><shape><upperLeftCorner/><rectangleSize/></shape>
+  
+    <shape expanded="true" modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301.9999999999999" y="516.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_FY" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999989" y="516.9999976158142"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
   </shapes>
 </layout>
-</Calculation:scenario>  
+</Calculation:scenario>
