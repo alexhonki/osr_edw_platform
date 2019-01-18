@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_NIND"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
+    <resourceUri>osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS">
+    <viewAttributes>
+      <viewAttribute id="ABN_BAS">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>LEFT(&quot;ABN_BAS&quot;,11)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_BAS" source="ABN"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR">
+    <viewAttributes>
+      <viewAttribute id="ABN_ITR">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>LEFT(&quot;ABN_ITR&quot;,11)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_ITR" source="ABN"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ">
+    <viewAttributes>
+      <viewAttribute id="ABN_WCQ">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>LEFT(&quot;ABN_WCQ&quot;,11)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_WCQ" source="ABN"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_ABN">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_BAS" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+    <input node="Projection_ITR" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+    <input node="Projection_WCQ" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_ABN">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_ABN">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Aggregation_ABN">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Aggregation_ABN" columnName="ABN"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="379" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_BAS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_ITR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="496"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_ABN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="341"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_ABN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="379" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
