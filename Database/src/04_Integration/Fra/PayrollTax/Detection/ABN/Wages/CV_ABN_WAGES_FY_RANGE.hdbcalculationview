@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ABN Wages Fiscal Year Range"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
+    <resourceUri>osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MIN_BAS">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="min">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_BAS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MIN_ITR">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="min">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_ITR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="INCM_YR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MIN_WCQ">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="min">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_WCQ">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ">
+    <viewAttributes>
+      <viewAttribute id="ASSESSMENT_YEAR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FINANCIAL_YEAR" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>TO_INT(&quot;ASSESSMENT_YEAR&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_FY_MIN">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="FY_MIN_BAS" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+    <input node="FY_MIN_ITR" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+    <input node="FY_MIN_WCQ" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MIN">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="min">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_FY_MIN">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MAX_BAS">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="max">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_BAS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MAX_WCQ">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="max">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_WCQ">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MAX_ITR">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="max">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input emptyUnionBehavior="undefined" node="Projection_ITR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_FY_MAX">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="FY_MAX_BAS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+    <input node="FY_MAX_WCQ">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+    <input node="FY_MAX_ITR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="FY_MAX">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR" aggregationType="max">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_FY_MAX">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_MIN_MAX">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR_MIN">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MAX">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="FY_MIN">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FINANCIAL_YEAR_MAX" null="true" value=""/>
+    </input>
+    <input node="FY_MAX">
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="FINANCIAL_YEAR_MIN" null="true" value=""/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_MIN_MAX">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR_MIN" aggregationType="min">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MAX" aggregationType="max">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Union_MIN_MAX">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR_MAX"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Aggregation_MIN_MAX">
+  <attributes>
+    <attribute id="FINANCIAL_YEAR_MIN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="Aggregation_MIN_MAX" columnName="FINANCIAL_YEAR_MIN"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR_MAX" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="Aggregation_MIN_MAX" columnName="FINANCIAL_YEAR_MAX"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="GJAHR_MIN" order="1" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="4">
+        <formula>TO_NVARCHAR(&quot;FINANCIAL_YEAR_MIN&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  
+    <calculatedAttribute id="GJAHR_MAX" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="13">
+        <formula>TO_NVARCHAR(&quot;FINANCIAL_YEAR_MAX&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="856.8888780447777" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="FY_MIN_BAS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999989" y="801.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_BAS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118.66666666666652" y="926.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FY_MIN_ITR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="801.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_ITR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="538.6666666666667" y="926.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FY_MIN_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="932" y="801.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="958.6666666666667" y="926.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Union_FY_MIN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="586.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FY_MIN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="481.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="FY_MAX_BAS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301.9999999999999" y="801.9999964237213"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FY_MAX_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1142" y="801.9999964237213"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FY_MAX_ITR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722" y="801.9999964237213"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Union_FY_MAX" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="804.5452226793052" y="586.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="FY_MAX" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="804.5452226793052" y="481.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_MIN_MAX" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="777.8785560126386" y="341.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_MIN_MAX" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="777.8785560126386" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
