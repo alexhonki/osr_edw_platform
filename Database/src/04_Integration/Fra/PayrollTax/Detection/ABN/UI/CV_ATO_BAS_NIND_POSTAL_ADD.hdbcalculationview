@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_BAS_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_BAS_NIND_POSTAL_ADD"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="VARCHAR" length="20" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="FULL_NM_TXT">
+        <descriptions defaultDescription="FULL_NM_TXT"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="POS_ADDR_LN_1">
+        <descriptions defaultDescription="POS_ADDR_LN_1"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="POS_ADDR_LN_2">
+        <descriptions defaultDescription="POS_ADDR_LN_2"/>
+      </viewAttribute>
+      <viewAttribute id="POS_LCLTY_NM">
+        <descriptions defaultDescription="POS_LCLTY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="POS_STATE">
+        <descriptions defaultDescription="POS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="POS_PC">
+        <descriptions defaultDescription="POS_PC"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FULL_NM_TXT" source="FULL_NM_TXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_ADDR_LN_1" source="POS_ADDR_LN_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_ADDR_LN_2" source="POS_ADDR_LN_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_LCLTY_NM" source="POS_LCLTY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_STATE" source="POS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POS_PC" source="POS_PC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="FULL_NM_TXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_NM_TXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_1" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POS_ADDR_LN_2" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="POS_LCLTY_NM" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_LCLTY_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="POS_STATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_STATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_STATE"/>
+    </attribute>
+    <attribute id="POS_PC" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POS_PC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POS_PC"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="40" y="200"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
