@@ -11,48 +11,49 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_RiskPropensity"
    
 BEGIN
 
-lt_rating_1 = 
-	SELECT
-		"DATA"."ABN"										   AS "ABN",
-		"DATA"."PERIOD_CATEGORY"							   AS "PERIOD_CATEGORY",
-		"DATA"."PERIOD_KEY" 								   AS "PERIOD_KEY",
-		"DATA"."GJAHR"										   AS "GJAHR",
-		100*1/5 											   AS "DETECTION_RESULT"
-	FROM :it_data_for_rule									   AS "DATA"
---	INNER JOIN "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ITEM" AS "ALERT_ITEM"
---		ON  "DATA"."ABN"					= "ALERT_ITEM"."DETECT_OBJ_ID"
---		AND "DATA"."PERIOD_CATEGORY"		= "ALERT_ITEM"."DETECT_OBJ_ID2"
---		AND "DATA"."PERIOD_KEY" 			= "ALERT_ITEM"."DETECT_OBJ_ID3"
---		AND "DATA"."GJAHR"					= "ALERT_ITEM"."DETECT_OBJ_ID4"
-	INNER JOIN "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT_ROOT"
-		ON  "DATA"."ABN"					= "ALERT_ROOT"."INVEST_OBJ_ID"
-		AND "DATA"."GJAHR"					= "ALERT_ROOT"."INVEST_OBJ_ID2"
+lt_alert_root = 
+	SELECT  
+		"ALERT_ROOT"."INVEST_OBJ_ID"							AS "ABN",
+		"ALERT_ROOT"."INVEST_OBJ_ID2"							AS "GJAHR",
+		COUNT("ALERT_ROOT"."INVEST_OBJ_ID") 					AS "CNT_ABN"
+	FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"		AS "ALERT_ROOT"
 	WHERE "ALERT_ROOT"."LIFECYCLE_STATUS"	= '01'
 	AND   "ALERT_ROOT"."INVEST_OBJ_TYPE"	= 'PT_ABN_FY'
 	AND   "ALERT_ROOT"."REOPENED_IND" 		<> 'X'
-	;
-
-lt_rating_2 = 
-	SELECT
-		"DATA"."ABN"										AS "ABN",
-		"DATA"."PERIOD_CATEGORY"							AS "PERIOD_CATEGORY",
-		"DATA"."PERIOD_KEY" 								AS "PERIOD_KEY",
-		"DATA"."GJAHR"										AS "GJAHR",
-		100*1/5 											AS "DETECTION_RESULT"
-	FROM	:it_data_for_rule								AS "DATA",
-			"osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT_ROOT"
---			"osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ITEM" AS "ALERT_ITEM"
-	WHERE "DATA"."ABN"					 = "ALERT_ROOT"."INVEST_OBJ_ID"
-	AND "DATA"."GJAHR"					 = "ALERT_ROOT"."INVEST_OBJ_ID2"
---	AND "DATA"."ABN"					 = "ALERT_ITEM"."DETECT_OBJ_ID"
---	AND "DATA"."GJAHR"					 = "ALERT_ITEM"."DETECT_OBJ_ID4"
-	AND "ALERT_ROOT"."LIFECYCLE_STATUS"	 = '01'
-	AND "ALERT_ROOT"."INVEST_OBJ_TYPE"	 = 'PT_ABN_FY'
-	AND "ALERT_ROOT"."REOPENED_IND" 	 <> 'X'
---	AND "DATA"."PERIOD_KEY" 			 <> "ALERT_ITEM"."DETECT_OBJ_ID3"
---	AND "DATA"."GJAHR"      		     <> "ALERT_ITEM"."DETECT_OBJ_ID4"
+	AND   "ALERT_ROOT"."INVEST_OBJ_ID" IN ( SELECT DISTINCT "DATA"."ABN" FROM :it_data_for_rule AS "DATA")
+	GROUP BY 
+		"ALERT_ROOT"."INVEST_OBJ_ID",
+		"ALERT_ROOT"."INVEST_OBJ_ID2"
 	;
 	
+lt_rating = 
+	SELECT * FROM
+	(SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"DETECTION_RESULT",
+		RANK() OVER(PARTITION BY "ABN" ORDER BY "ABN", "DETECTION_RESULT" DESC) AS "DETECTION_RESULT_RANK"
+	FROM
+	(
+		SELECT
+			"DATA"."ABN"										   AS "ABN",
+			"DATA"."PERIOD_CATEGORY"							   AS "PERIOD_CATEGORY",
+			"DATA"."PERIOD_KEY" 								   AS "PERIOD_KEY",
+			"DATA"."GJAHR"										   AS "GJAHR",
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   <> 1 )  AND ("DATA"."GJAHR" = "ALERT_ROOT"."GJAHR")	 THEN	100*3/5 ELSE 
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 1 )   AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*4/5 ELSE
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   <> 1 )  AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*5/5 ELSE  0
+			END END END AS "DETECTION_RESULT"
+		FROM :it_data_for_rule									   AS "DATA"
+		INNER JOIN :lt_alert_root                                  AS "ALERT_ROOT"
+			ON  "DATA"."ABN"					= "ALERT_ROOT"."ABN"
+	)
+	)
+	WHERE "DETECTION_RESULT_RANK" = 1
+	;
+
 et_result = 
 	SELECT
 		"ABN",
@@ -60,7 +61,7 @@ et_result =
 		"PERIOD_KEY",
 		"GJAHR",
 		"DETECTION_RESULT"
-	FROM :lt_rating_1
+	FROM :lt_rating
 	;
 
 et_text = 
@@ -69,66 +70,18 @@ et_text =
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		'' AS "TEXT",
-		'/OSRQLD/FRA_PRT' AS "MSGID",
-		'018' AS "MSGNO",
-		"GJAHR" AS "MSGV1",
-		'1' AS "MSGV2",
-		'' AS "MSGV3",
-		'' AS "MSGV4",
-		'' AS "MSGV1_FC",
-		'' AS "MSGV2_FC",
-		'' AS "MSGV3_FC",
-		'' AS "MSGV4_FC"
-	FROM  :lt_rating_1
+		''					AS "TEXT",
+		'/OSRQLD/FRA_PRT'	AS "MSGID",
+		'018'				AS "MSGNO",
+		"GJAHR" 			AS "MSGV1",
+		'1' 				AS "MSGV2",
+		''					AS "MSGV3",
+		''					AS "MSGV4",
+		''					AS "MSGV1_FC",
+		''					AS "MSGV2_FC",
+		''					AS "MSGV3_FC",
+		''					AS "MSGV4_FC"
+	FROM  :lt_rating
 	;
 	
-/*
-lt_rating_3 = 
-	SELECT
-		"DATA"."ABN" AS "ABN",
-		"DATA"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
-		"DATA"."PERIOD_KEY" AS "PERIOD_KEY",
-		"DATA"."GJAHR" AS "GJAHR",
-		100*3/5 AS "DETECTION_RESULT"
-	FROM :it_data_for_rule AS "DATA"
-	INNER JOIN "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT"
-		ON  "DATA"."ABN" = "ALERT"."INVEST_OBJ_ID"
-		AND "DATA"."GJAHR" = "ALERT"."INVEST_OBJ_ID2"
-	WHERE "ALERT"."LIFECYCLE_STATUS" = '01'
-	AND "ALERT"."INVEST_OBJ_TYPE" = 'PT_ABN_FY'
-	AND "ALERT"."REOPENED_IND" <> 'X'
-	;
-
-lt_rating_4_5 = 
-	SELECT
-		"ALERT"."DB_KEY",
-		"ALERT"."INVEST_OBJ_ID" AS "ABN",
-		"ALERT"."INVEST_OBJ_ID2" AS "GJAHR"
-	FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT"
-	WHERE EXISTS 
-	(
-		SELECT * FROM :it_data_for_rule AS "DATA"
-			WHERE "DATA"."ABN" = "ALERT"."INVEST_OBJ_ID"
-			AND "DATA"."GJAHR" > "ALERT"."INVEST_OBJ_ID2"
-	)
-	AND "ALERT"."LIFECYCLE_STATUS" = '01'
-	AND "ALERT"."INVEST_OBJ_TYPE" = 'PT_ABN_FY'
-	AND "ALERT"."REOPENED_IND" <> 'X'
-	;
-
-lt_rating_4 = 
-	SELECT
-		"DATA"."ABN" AS "ABN",
-		"DATA"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
-		"DATA"."PERIOD_KEY" AS "PERIOD_KEY",
-		"DATA"."GJAHR" AS "GJAHR",
-		100*4/5 AS "DETECTION_RESULT"
-	FROM :it_data_for_rule AS "DATA"
-	INNER JOIN
-	(SELECT "ABN", COUNT(*) FROM :lt_rating_4_5 GROUP BY "ABN" HAVING COUNT(*) = 1) AS "RATE4"
-		ON "DATA"."ABN" = "RATE4"."ABN"
-	;
-*/
-
-END
+END	
