@@ -29,7 +29,9 @@ BEGIN
 	 '' AS "TARGET_NODE_ID3",
 	 '' AS "TARGET_NODE_ID4",
 	 '' AS "TARGET_NODE_ID5",
-	 "VALID_DATE_FROM" || '-' || "VALID_DATE_TO" AS "LABEL"
+	 right("VALID_DATE_FROM",2) || '.' || right(left("VALID_DATE_FROM",6),2) || '.' || left("VALID_DATE_FROM",4) || '-' || 
+	 right("VALID_DATE_TO",2) || '.' || right(left("VALID_DATE_TO",6),2) || '.' || left("VALID_DATE_TO",4) 
+	 AS "LABEL"
 	 FROM "osr.edw.platform.fra.prt.dt.abn::CV_BP_ABN_IDENTIFICATION" AS "BP_ABN_ID";
 
 END;
