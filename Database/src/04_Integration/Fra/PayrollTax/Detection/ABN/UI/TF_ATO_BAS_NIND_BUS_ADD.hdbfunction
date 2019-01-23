@@ -1,0 +1,74 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_BUS_ADD"( IN IP_ALERT_ID NVARCHAR(20) )
+          RETURNS TABLE
+(
+DB_KEY				VARBINARY(16),
+ALERT_ID			NVARCHAR(20),
+ABN					NVARCHAR(20),
+GJAHR				NVARCHAR(4),
+BUS_ADDR_LN_1		NVARCHAR(38),
+BUS_ADDR_LN_2		NVARCHAR(38),
+BUS_LCLTY_NM		NVARCHAR(27),
+BUS_STATE			NVARCHAR(3),
+BUS_PC				NVARCHAR(4),
+Z_CHANGE_TIME       NVARCHAR(8)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+/**********
+	CREATED BY		: LAKSHMI
+	CREATED ON		: 21/01/2019
+	CREATION REASON	: Alert Details New Reg - ATO NON-Individual BAS Business Address Details 
+				      If condition has been added in case the input parameter has been as NULL or ?
+**********/
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+RETURN
+ SELECT 
+	"ALERT"."DB_KEY" AS "DB_KEY",
+	"ALERT"."ALERT_ID" AS "ALERT_ID",
+	"ALERT"."ABN" AS "ABN",
+	"ALERT"."GJAHR" AS "GJAHR",
+	"DATA"."BUS_ADDR_LN_1" AS "BUS_ADDR_LN_1",
+	"DATA"."BUS_ADDR_LN_2" AS "BUS_ADDR_LN_2",
+	"DATA"."BUS_LCLTY_NM" AS "BUS_LCLTY_NM",
+	"DATA"."BUS_STATE" AS "BUS_STATE",
+	"DATA"."BUS_PC" AS "BUS_PC",
+	to_dats("DATA"."Z_CHANGE_TIME") AS "Z_CHANGE_TIME"
+FROM
+	"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+	INNER JOIN
+	"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "DATA"
+	ON  "ALERT"."ABN" = "DATA"."ABN"
+	AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."FINANCIAL_YEAR")
+	WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+;
+
+ELSE
+
+RETURN
+ SELECT 
+	"ALERT"."DB_KEY" AS "DB_KEY",
+	"ALERT"."ALERT_ID" AS "ALERT_ID",
+	"ALERT"."ABN" AS "ABN",
+	"ALERT"."GJAHR" AS "GJAHR",
+	"DATA"."BUS_ADDR_LN_1" AS "BUS_ADDR_LN_1",
+	"DATA"."BUS_ADDR_LN_2" AS "BUS_ADDR_LN_2",
+	"DATA"."BUS_LCLTY_NM" AS "BUS_LCLTY_NM",
+	"DATA"."BUS_STATE" AS "BUS_STATE",
+	"DATA"."BUS_PC" AS "BUS_PC",
+	to_dats("DATA"."Z_CHANGE_TIME") AS "Z_CHANGE_TIME"
+FROM
+	"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+	INNER JOIN
+	"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "DATA"
+	ON  "ALERT"."ABN" = "DATA"."ABN"
+	AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."FINANCIAL_YEAR")
+	WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+	AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;    
+    
+END;

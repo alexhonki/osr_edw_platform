@@ -22,7 +22,7 @@ BEGIN
          '' AS "ID5",
          CASE 
          WHEN "BUSINESS_NAMES"."BUS_NM" IS NULL THEN "DATA"."ABN"
-         ELSE "BUSINESS_NAMES"."BUS_NM"
+         ELSE "DATA"."ABN" || char(32) || "BUSINESS_NAMES"."BUS_NM"
          END
          AS "LABEL",
 	     '' AS "STYLE"
