@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_SRC_DATA_FRESHNESS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Source Data Freshness"/>
+<localVariables/>
+<variableMappings/>
+<dataSources/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TPAR">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_BAS_BENE">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_ASIC">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_APP_TRAINEES">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_WCQ">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+  </calculationView>
+</calculationViews>
+<logicalModel>
+  <attributes/>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_TPAR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-60" y="248"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_BAS_BENE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="159" y="248"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_ASIC" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="403" y="248"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_APP_TRAINEES" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="634" y="234"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="P_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="496" y="50"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

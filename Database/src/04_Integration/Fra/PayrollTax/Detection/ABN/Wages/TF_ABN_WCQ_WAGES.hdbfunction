@@ -32,13 +32,16 @@ BEGIN
 	;
 	
 	lt_wcq_wages_latest = 
+	SELECT * FROM (
 	SELECT 
 	"NAME", 
 	"ABN", 
 	"POLICY_NO", 
 	"GJAHR",
 	ROW_NUMBER() OVER ( PARTITION BY "ABN", "POLICY_NO", "GJAHR" ORDER BY "NAME" DESC ) AS "ROW_NUMBER"
-	FROM :lt_wcq_wages;
+	FROM :lt_wcq_wages
+	)
+	WHERE "ROW_NUMBER" = 1;
 
 	
 	RETURN
