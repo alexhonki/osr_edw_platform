@@ -24,7 +24,7 @@ IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_AL
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 			AS "ALERT"
 		INNER JOIN	"osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE"						AS "DATA"
 		ON  		"ALERT"."ABN" = LEFT("DATA"."PAYER_ABN",11)
-		AND 		TO_INT("ALERT"."GJAHR") = "DATA"."RTN_YR"
+		AND 		TO_INT("ALERT"."GJAHR") = "DATA"."FINANCIAL_YEAR"
 		;
 ELSE
 	
