@@ -13,31 +13,24 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.sna::TF_NodeAlert" ()
        SQL SECURITY INVOKER AS 
 BEGIN 
 
-/*
     RETURN 
      	 SELECT
-         "INVEST_OBJ_ID" AS "ID1",
-         "INVEST_OBJ_ID2" AS "ID2",
-         '' AS "ID3",
-         '' AS "ID4",
-         '' AS "ID5",
-         LTRIM("ALERT_ID",'0') || '/' || "INVEST_REASON" AS "LABEL",
-	     '' AS "STYLE"
-	     FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
-		 WHERE "INVEST_OBJ_TYPE" = 'PT_ABN_FY'
-		 ;
-*/
-    RETURN 
-     	 SELECT
-         "DB_KEY" AS "ID1",
+         "ALERT"."DB_KEY" AS "ID1",
          '' AS "ID2",
          '' AS "ID3",
          '' AS "ID4",
          '' AS "ID5",
-         LTRIM("ALERT_ID",'0') || '/' || "INVEST_REASON" AS "LABEL",
+         LTRIM("ALERT"."ALERT_ID",'0') || char(32) || "ALERT"."INVEST_REASON" AS "LABEL",
 	     '' AS "STYLE"
-	     FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
-		 WHERE "INVEST_OBJ_TYPE" = 'PT_ABN_FY'
+	     FROM 
+	     "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT"
+	     --INNER JOIN 
+		 --"osr.apps.acs.synonym::SAPACS.FRA_C_INV_RSN" AS "RSN"
+		 --ON "ALERT"."INVEST_REASON" = "RSN"."INVESTIGATION_REASON"
+		 --LEFT OUTER JOIN
+		 --"osr.apps.acs.synonym::SAPACS.FRA_C_INV_RSN_T" AS "RSN_T"
+		 --ON "RSN"."INVESTIGATION_REASON" = "RSN_T"."INVESTIGATION_REASON"
+		 WHERE "ALERT"."INVEST_OBJ_TYPE" = 'PT_ABN_FY'
 		 ;
 
 END;
