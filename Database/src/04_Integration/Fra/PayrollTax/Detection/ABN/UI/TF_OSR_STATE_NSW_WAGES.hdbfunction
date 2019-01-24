@@ -1,0 +1,68 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_NSW_WAGES"(IN IP_ALERT_ID NVARCHAR(20), IN IP_FY_ADJUSTMENT INTEGER)
+
+/**********
+	CREATED BY		: TUGCE GULER
+	CREATED ON		: 24/01/2019
+	CREATION REASON	: The sate data has been loaded, therefore the table function needed to be created to be consumed in UI views.
+**********/
+
+	RETURNS TABLE
+		(
+		DB_KEY					VARBINARY(16),
+		ALERT_ID				NVARCHAR(20),
+		ABN					    NVARCHAR(20),
+		GJAHR					NVARCHAR(4),	
+		CLIENT_STATE_WAGES		DECIMAL(15,2),
+		GROUP_STATE_WAGES 		DECIMAL(15,2),
+		WAERS					NVARCHAR(5)
+		)
+
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+
+BEGIN 
+
+	IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+		RETURN
+		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																				AS "ABN",
+			"ALERT"."GJAHR" 																			AS "GJAHR", 
+			--TO_NVARCHAR("DATA"."FIN_YEAR")															AS "FIN_YEAR",
+			"DATA"."CLIENT_STATE_WAGES"																	AS "CLIENT_STATE_WAGES",
+			"DATA"."GROUP_STATE_WAGES"																	AS "GROUP_STATE_WAGES",
+			'AUD' AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()								AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.osrstate.synonym::CDS_OSRSTATE.DSO.IJR_PRT_ANNL.active_data"	AS "DATA"
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		AND 		TO_NVARCHAR("DATA"."FIN_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+		AND "DATA"."STATE_CODE" = 'NSW'
+		;
+
+	ELSE
+
+		RETURN
+		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																				AS "ABN",
+			"ALERT"."GJAHR" 																			AS "GJAHR", 
+			--TO_NVARCHAR("DATA"."FIN_YEAR")															AS "FIN_YEAR",
+			"DATA"."CLIENT_STATE_WAGES"																	AS "CLIENT_STATE_WAGES",
+			"DATA"."GROUP_STATE_WAGES"																	AS "GROUP_STATE_WAGES",
+			'AUD' AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()								AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.osrstate.synonym::CDS_OSRSTATE.DSO.IJR_PRT_ANNL.active_data"	AS "DATA"
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		AND 		TO_NVARCHAR("DATA"."FIN_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+		AND "DATA"."STATE_CODE" = 'NSW'
+		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
+		--where 	"A"."ABN" = '28603932225';
+
+	END IF;
+
+END;
