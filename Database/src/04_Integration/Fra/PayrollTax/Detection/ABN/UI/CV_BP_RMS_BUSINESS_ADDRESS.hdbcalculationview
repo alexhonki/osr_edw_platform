@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_BP_RMS_BUSINESS_ADDRESS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_BP_RMS_BUSINESS_ADDRESS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_BP_RMS_BUSINESS_ADDRESS"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
@@ -10,7 +10,12 @@
     </variableProperties>
   </variable>
 </localVariables>
-<variableMappings/>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_BUSINESS_ADDRESS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_BUSINESS_ADDRESS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_BUSINESS_ADDRESS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_BUSINESS_ADDRESS</resourceUri>
@@ -40,7 +45,7 @@
       <viewAttribute id="CITY1">
         <descriptions defaultDescription="CITY1"/>
       </viewAttribute>
-      <viewAttribute id="DB_KEY">
+      <viewAttribute id="DB_KEY_OLD">
         <descriptions defaultDescription="DB_KEY"/>
       </viewAttribute>
       <viewAttribute id="REGION">
@@ -78,7 +83,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="HOUSE_NUM1" source="HOUSE_NUM1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="STREET" source="STREET"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CITY1" source="CITY1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_OLD" source="DB_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="REGION" source="REGION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POST_CODE1" source="POST_CODE1"/>
@@ -92,67 +97,67 @@
 </calculationViews>
 <logicalModel id="Projection_1">
   <attributes>
-    <attribute id="BP_DESC" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BP_DESC" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BP_DESC"/>
       <keyMapping columnObjectName="Projection_1" columnName="BP_DESC"/>
     </attribute>
-    <attribute id="ADR_KIND" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ADR_KIND" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADR_KIND"/>
       <keyMapping columnObjectName="Projection_1" columnName="ADR_KIND"/>
     </attribute>
-    <attribute id="VALID_FROM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VALID_FROM" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_FROM"/>
       <keyMapping columnObjectName="Projection_1" columnName="VALID_FROM"/>
     </attribute>
-    <attribute id="VALID_TO" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="VALID_TO" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_TO"/>
       <keyMapping columnObjectName="Projection_1" columnName="VALID_TO"/>
     </attribute>
-    <attribute id="HOUSE_NUM1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="HOUSE_NUM1" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HOUSE_NUM1"/>
       <keyMapping columnObjectName="Projection_1" columnName="HOUSE_NUM1"/>
     </attribute>
-    <attribute id="STREET" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STREET" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STREET"/>
       <keyMapping columnObjectName="Projection_1" columnName="STREET"/>
     </attribute>
-    <attribute id="CITY1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CITY1" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CITY1"/>
       <keyMapping columnObjectName="Projection_1" columnName="CITY1"/>
     </attribute>
-    <attribute id="DB_KEY" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_OLD" hidden="true" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_OLD"/>
     </attribute>
-    <attribute id="REGION" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="REGION" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="REGION"/>
       <keyMapping columnObjectName="Projection_1" columnName="REGION"/>
     </attribute>
-    <attribute id="ALERT_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ALERT_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="POST_CODE1" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POST_CODE1" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POST_CODE1"/>
       <keyMapping columnObjectName="Projection_1" columnName="POST_CODE1"/>
     </attribute>
-    <attribute id="IDNUMBER" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IDNUMBER" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IDNUMBER"/>
       <keyMapping columnObjectName="Projection_1" columnName="IDNUMBER"/>
     </attribute>
-    <attribute id="COUNTRY" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="COUNTRY" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="COUNTRY"/>
       <keyMapping columnObjectName="Projection_1" columnName="COUNTRY"/>
     </attribute>
-    <attribute id="PARTNER" order="15" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PARTNER" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTNER"/>
       <keyMapping columnObjectName="Projection_1" columnName="PARTNER"/>
     </attribute>
-    <attribute id="ABN" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
     </attribute>
@@ -163,6 +168,16 @@
       <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="200">
         <formula>trim(trim(&quot;HOUSE_NUM1&quot;)+' '+trim(&quot;STREET&quot;)+' '+trim(&quot;CITY1&quot;)+' '+trim(&quot;REGION&quot;)+' '+trim(&quot;POST_CODE1&quot;))</formula>
       </keyCalculation>
+      </calculatedAttribute>
+  
+    <calculatedAttribute id="DB_KEY" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+  
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="SQL" length="36">
+  
+        <formula>TO_NVARCHAR(&quot;DB_KEY_OLD&quot;)</formula>
+  
+      </keyCalculation>
+  
       </calculatedAttribute>
   </calculatedAttributes>
   <baseMeasures/>
