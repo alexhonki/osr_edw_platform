@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_CONTRACTOR_HEADER" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Contractor Header"/>
+<localVariables>
+  <variable id="IP_FY" parameter="true">
+    <descriptions defaultDescription="Fiscal Year"/>
+    <variableProperties datatype="NVARCHAR" length="4" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER">
+    <targetVariable name="IP_FY" resourceUri="osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER"/>
+    <localVariable>IP_FY</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="PAYEE_ABN">
+        <descriptions defaultDescription="PAYEE_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_ABN">
+        <descriptions defaultDescription="PAYER_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_PAYEE">
+        <descriptions defaultDescription="WCQ_PAYEE"/>
+      </viewAttribute>
+      <viewAttribute id="TPAR_PAYEE_QLD">
+        <descriptions defaultDescription="TPAR_PAYEE_QLD"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_PAYEE">
+        <descriptions defaultDescription="EMP_CNT_PAYEE"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_BP">
+        <descriptions defaultDescription="PAYEE_BP"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_PRT_LIAB_DATE">
+        <descriptions defaultDescription="PAYEE_PRT_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_PAYER">
+        <descriptions defaultDescription="WCQ_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="TPAR_PAYER_QLD">
+        <descriptions defaultDescription="TPAR_PAYER_QLD"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_PAYER">
+        <descriptions defaultDescription="EMP_CNT_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_BP">
+        <descriptions defaultDescription="PAYER_BP"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_PRT_LIAB_DATE">
+        <descriptions defaultDescription="PAYER_PRT_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="STEP2_FLAG">
+        <descriptions defaultDescription="STEP2_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_ACT_WG_PAYEE">
+        <descriptions defaultDescription="WCQ_ACT_WG_PAYEE"/>
+      </viewAttribute>
+      <viewAttribute id="EX_GST_GROSS_PD_AMT">
+        <descriptions defaultDescription="EX_GST_GROSS_PD_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PROP_EX_GST_GROSS_PD_AMT">
+        <descriptions defaultDescription="PROP_EX_GST_GROSS_PD_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_PER_PAYEE">
+        <descriptions defaultDescription="EMP_CNT_PER_PAYEE"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_AUS_PAYEE">
+        <descriptions defaultDescription="EMP_CNT_AUS_PAYEE"/>
+      </viewAttribute>
+      <viewAttribute id="TOT_EX_GST_GROSS_PD_AMT">
+        <descriptions defaultDescription="TOT_EX_GST_GROSS_PD_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_BUS_INCM_AMT">
+        <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PROP_TOTL_BUS_INCM_AMT">
+        <descriptions defaultDescription="PROP_TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_ACT_WG_PAYER">
+        <descriptions defaultDescription="WCQ_ACT_WG_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_AUS_PAYER">
+        <descriptions defaultDescription="EMP_CNT_AUS_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_PER_PAYER">
+        <descriptions defaultDescription="EMP_CNT_PER_PAYER"/>
+      </viewAttribute>
+    
+      <viewAttribute id="BASIC_FILTER_PAYEE">
+        <descriptions defaultDescription="BASIC_FILTER_PAYEE"/>
+      </viewAttribute>
+      <viewAttribute id="BASIC_FILTER_PAYER">
+        <descriptions defaultDescription="BASIC_FILTER_PAYER"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PAYEE_SALARY_WAGES">
+        <descriptions defaultDescription="PAYEE_SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_SUPER_EXPNS">
+        <descriptions defaultDescription="PAYEE_SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_CONTRACTORS_PMNTS">
+        <descriptions defaultDescription="PAYEE_CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_TOTL_BUS_INCM_AMT">
+        <descriptions defaultDescription="PAYER_TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_CONTRACTORS_PMNTS">
+        <descriptions defaultDescription="PAYER_CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_SALARY_WAGES">
+        <descriptions defaultDescription="PAYER_SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_SUPER_EXPNS">
+        <descriptions defaultDescription="PAYER_SUPER_EXPNS"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PAYER_RISK_CATEGORY">
+        <descriptions defaultDescription="PAYER_RISK_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_SUB_RISK">
+        <descriptions defaultDescription="PAYER_SUB_RISK"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ABN" source="PAYEE_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN" source="PAYER_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_PAYEE" source="WCQ_PAYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TPAR_PAYEE_QLD" source="TPAR_PAYEE_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_PAYEE" source="EMP_CNT_PAYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_BP" source="PAYEE_BP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_PRT_LIAB_DATE" source="PAYEE_PRT_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_PAYER" source="WCQ_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TPAR_PAYER_QLD" source="TPAR_PAYER_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_PAYER" source="EMP_CNT_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_BP" source="PAYER_BP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_PRT_LIAB_DATE" source="PAYER_PRT_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STEP2_FLAG" source="STEP2_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ACT_WG_PAYEE" source="WCQ_ACT_WG_PAYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EX_GST_GROSS_PD_AMT" source="EX_GST_GROSS_PD_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROP_EX_GST_GROSS_PD_AMT" source="PROP_EX_GST_GROSS_PD_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_PER_PAYEE" source="EMP_CNT_PER_PAYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_AUS_PAYEE" source="EMP_CNT_AUS_PAYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOT_EX_GST_GROSS_PD_AMT" source="TOT_EX_GST_GROSS_PD_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_BUS_INCM_AMT" source="TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROP_TOTL_BUS_INCM_AMT" source="PROP_TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ACT_WG_PAYER" source="WCQ_ACT_WG_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_AUS_PAYER" source="EMP_CNT_AUS_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_PER_PAYER" source="EMP_CNT_PER_PAYER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BASIC_FILTER_PAYEE" source="BASIC_FILTER_PAYEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BASIC_FILTER_PAYER" source="BASIC_FILTER_PAYER"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_SALARY_WAGES" source="PAYEE_SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_SUPER_EXPNS" source="PAYEE_SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_CONTRACTORS_PMNTS" source="PAYEE_CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_TOTL_BUS_INCM_AMT" source="PAYER_TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_CONTRACTORS_PMNTS" source="PAYER_CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_SALARY_WAGES" source="PAYER_SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_SUPER_EXPNS" source="PAYER_SUPER_EXPNS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_RISK_CATEGORY" source="PAYER_RISK_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_SUB_RISK" source="PAYER_SUB_RISK"/>
+    </input>
+    <filter>&quot;FINANCIAL_YEAR&quot;='$$IP_FY$$'
+
+</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="PAYEE_ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_ABN"/>
+    </attribute>
+    <attribute id="PAYER_ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_ABN"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="WCQ_PAYEE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WCQ_PAYEE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WCQ_PAYEE"/>
+    </attribute>
+    <attribute id="TPAR_PAYEE_QLD" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TPAR_PAYEE_QLD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TPAR_PAYEE_QLD"/>
+    </attribute>
+    <attribute id="EMP_CNT_PAYEE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_CNT_PAYEE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMP_CNT_PAYEE"/>
+    </attribute>
+    <attribute id="PAYEE_BP" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_BP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_BP"/>
+    </attribute>
+    <attribute id="PAYEE_PRT_LIAB_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_PRT_LIAB_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_PRT_LIAB_DATE"/>
+    </attribute>
+    <attribute id="WCQ_PAYER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WCQ_PAYER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WCQ_PAYER"/>
+    </attribute>
+    <attribute id="TPAR_PAYER_QLD" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TPAR_PAYER_QLD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TPAR_PAYER_QLD"/>
+    </attribute>
+    <attribute id="EMP_CNT_PAYER" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMP_CNT_PAYER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMP_CNT_PAYER"/>
+    </attribute>
+    <attribute id="PAYER_BP" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_BP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_BP"/>
+    </attribute>
+    <attribute id="PAYER_PRT_LIAB_DATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_PRT_LIAB_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_PRT_LIAB_DATE"/>
+    </attribute>
+    <attribute id="STEP2_FLAG" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STEP2_FLAG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STEP2_FLAG"/>
+    </attribute>
+  
+    <attribute id="BASIC_FILTER_PAYEE" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BASIC_FILTER_PAYEE"/>
+  
+      <keyMapping columnObjectName="Projection_1" columnName="BASIC_FILTER_PAYEE"/>
+  
+    </attribute>
+    <attribute id="BASIC_FILTER_PAYER" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BASIC_FILTER_PAYER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BASIC_FILTER_PAYER"/>
+    </attribute>
+  
+    <attribute id="PAYER_RISK_CATEGORY" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_RISK_CATEGORY"/>
+  
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_RISK_CATEGORY"/>
+  
+    </attribute>
+    <attribute id="PAYER_SUB_RISK" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_SUB_RISK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_SUB_RISK"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="WCQ_ACT_WG_PAYEE" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="WCQ_ACT_WG_PAYEE"/>
+      <measureMapping columnObjectName="Projection_1" columnName="WCQ_ACT_WG_PAYEE"/>
+    </measure>
+    <measure id="EX_GST_GROSS_PD_AMT" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="EX_GST_GROSS_PD_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="EX_GST_GROSS_PD_AMT"/>
+    </measure>
+    <measure id="PROP_EX_GST_GROSS_PD_AMT" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PROP_EX_GST_GROSS_PD_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PROP_EX_GST_GROSS_PD_AMT"/>
+    </measure>
+    <measure id="EMP_CNT_PER_PAYEE" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="EMP_CNT_PER_PAYEE"/>
+      <measureMapping columnObjectName="Projection_1" columnName="EMP_CNT_PER_PAYEE"/>
+    </measure>
+    <measure id="EMP_CNT_AUS_PAYEE" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="EMP_CNT_AUS_PAYEE"/>
+      <measureMapping columnObjectName="Projection_1" columnName="EMP_CNT_AUS_PAYEE"/>
+    </measure>
+    <measure id="TOT_EX_GST_GROSS_PD_AMT" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOT_EX_GST_GROSS_PD_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOT_EX_GST_GROSS_PD_AMT"/>
+    </measure>
+    <measure id="TOTL_BUS_INCM_AMT" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_BUS_INCM_AMT"/>
+    </measure>
+    <measure id="PROP_TOTL_BUS_INCM_AMT" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PROP_TOTL_BUS_INCM_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PROP_TOTL_BUS_INCM_AMT"/>
+    </measure>
+    <measure id="WCQ_ACT_WG_PAYER" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="WCQ_ACT_WG_PAYER"/>
+      <measureMapping columnObjectName="Projection_1" columnName="WCQ_ACT_WG_PAYER"/>
+    </measure>
+    <measure id="EMP_CNT_AUS_PAYER" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="EMP_CNT_AUS_PAYER"/>
+      <measureMapping columnObjectName="Projection_1" columnName="EMP_CNT_AUS_PAYER"/>
+    </measure>
+    <measure id="EMP_CNT_PER_PAYER" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="EMP_CNT_PER_PAYER"/>
+      <measureMapping columnObjectName="Projection_1" columnName="EMP_CNT_PER_PAYER"/>
+    </measure>
+  
+    <measure id="PAYEE_SALARY_WAGES" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYEE_SALARY_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYEE_SALARY_WAGES"/>
+    </measure>
+    <measure id="PAYEE_SUPER_EXPNS" order="29" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYEE_SUPER_EXPNS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYEE_SUPER_EXPNS"/>
+    </measure>
+    <measure id="PAYEE_CONTRACTORS_PMNTS" order="30" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYEE_CONTRACTORS_PMNTS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYEE_CONTRACTORS_PMNTS"/>
+    </measure>
+    <measure id="PAYER_TOTL_BUS_INCM_AMT" order="31" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYER_TOTL_BUS_INCM_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_TOTL_BUS_INCM_AMT"/>
+    </measure>
+    <measure id="PAYER_CONTRACTORS_PMNTS" order="32" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYER_CONTRACTORS_PMNTS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_CONTRACTORS_PMNTS"/>
+    </measure>
+    <measure id="PAYER_SALARY_WAGES" order="33" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYER_SALARY_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_SALARY_WAGES"/>
+    </measure>
+    <measure id="PAYER_SUPER_EXPNS" order="34" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYER_SUPER_EXPNS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_SUPER_EXPNS"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="9" y="255"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

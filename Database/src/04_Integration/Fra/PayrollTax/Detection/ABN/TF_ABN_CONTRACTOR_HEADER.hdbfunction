@@ -1,0 +1,859 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER"(IN IP_FY NVARCHAR(4))
+       RETURNS TABLE
+       (
+	    "PAYEE_ABN"                   NVARCHAR(11),
+	    "PAYER_ABN"                   NVARCHAR(11),
+	    "FINANCIAL_YEAR"              NVARCHAR(4),
+	    "WCQ_PAYEE"                   NVARCHAR(1),
+       	"WCQ_PAYER"                   NVARCHAR(1),
+       	"WCQ_ACT_WG_PAYEE"            DECIMAL(15,2),
+       	"WCQ_ACT_WG_PAYER"            DECIMAL(15,2),	
+       	"TPAR_PAYEE_QLD"              NVARCHAR(1),
+       	"TPAR_PAYER_QLD"              NVARCHAR(1),
+       	"EMP_CNT_AUS_PAYEE"           INTEGER,
+       	"EMP_CNT_AUS_PAYER"           INTEGER,
+       	"EMP_CNT_PAYEE"				  NVARCHAR(1),
+       	"EMP_CNT_PAYER"				  NVARCHAR(1),
+       	"EMP_CNT_PER_PAYEE"           DECIMAL(12,2),
+       	"EMP_CNT_PER_PAYER"           DECIMAL(12,2),
+       	"EX_GST_GROSS_PD_AMT"         DECIMAL(15,2),
+       	"TOT_EX_GST_GROSS_PD_AMT"     DECIMAL(15,2),
+	    "PROP_EX_GST_GROSS_PD_AMT"    DECIMAL(12,2),
+	    "TOTL_BUS_INCM_AMT"           DECIMAL(15,2),
+	    "PROP_TOTL_BUS_INCM_AMT"      DECIMAL(12,2) ,
+	    "PAYEE_SALARY_WAGES"          DECIMAL(15,2),
+		"PAYEE_SUPER_EXPNS"           DECIMAL(15,2),
+		"PAYEE_CONTRACTORS_PMNTS"     DECIMAL(15,2), 
+		"PAYER_TOTL_BUS_INCM_AMT"     DECIMAL(15,2),
+		"PAYER_SALARY_WAGES"          DECIMAL(15,2),
+		"PAYER_SUPER_EXPNS"           DECIMAL(15,2),
+		"PAYER_CONTRACTORS_PMNTS"     DECIMAL(15,2)  ,
+	    "PAYEE_BP"                    NVARCHAR(10),
+	    "PAYEE_PRT_LIAB_DATE"         NVARCHAR(8),
+	    "PAYER_BP"                    NVARCHAR(10),
+	    "PAYER_PRT_LIAB_DATE"         NVARCHAR(8) ,
+	    "BASIC_FILTER_PAYEE"          NVARCHAR(1),
+	    "BASIC_FILTER_PAYER"          NVARCHAR(1),
+	    "STEP2_FLAG"                  NVARCHAR(1),
+	    "PAYER_RISK_CATEGORY"         NVARCHAR(2),
+	    "PAYER_SUB_RISK"              NVARCHAR(2)
+ 
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+---------------Start of Data Set Selection--------------------------
+
+PAYEE_DATASET =
+SELECT * FROM
+(
+SELECT * FROM
+(
+SELECT 
+
+	"REF_ID_PAYEE",
+	"PAYEE_ABN",
+	"PAYEE_ABN_STS",
+	"REF_ID_PAYER",
+	"PAYER_ABN",
+	"PAYER_ABN_STS",
+	"FINANCIAL_YEAR",
+	"PAYEE_FAMILY_NM",
+	"PAYEE_FIRST_GIVEN_NM",
+	"PAYEE_MIDDLE_NM",
+	"PAYEE_NON_IDV_BUS_NM",
+	"PAYEE_TRDG_NM",
+	"PAYEE_ADDR_LN_1",
+	"PAYEE_ADDR_LN_2",
+	"PAYEE_LCLTY_NM",
+	"PAYEE_STATE",
+	"PAYEE_PCODE",
+	"PAYEE_PH_NUM",
+	"GROSS_PD_AMT",
+	"TW_TOTL_AMT",
+	"GST_TOTL_AMT",
+	"CHECK_CD"
+FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data"
+WHERE "FINANCIAL_YEAR" = :IP_FY 
+AND   "PAYEE_ABN"      <> ''
+)
+WHERE    "PAYER_ABN"      <> ''
+)
+;
+
+	
+
+
+
+IT_SUB_SET =
+SELECT DISTINCT
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR"
+--FROM :PAYEE_DATASET
+FROM 
+(
+SELECT 
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	SUM("GROSS_PD_AMT") AS "GROSS_PD_AMT"
+	FROM :PAYEE_DATASET
+	GROUP BY 
+		"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR"
+	HAVING SUM("GROSS_PD_AMT") >= 25000 AND SUM("GROSS_PD_AMT") <= 250000
+)	
+;
+
+
+
+PAYER_DATASET =
+SELECT 
+	"REF_ID",
+	"PAYER_ABN",
+	"PAYER_ABN_STS",
+	"FINANCIAL_YEAR",
+	"PAYER_NAME",
+	"PAYER_TRDG_NM",
+	"PAYER_ADDR_LN_1",
+	"PAYER_ADDR_LN_2N",
+	"PAYER_LOCALITY",
+	"PAYER_STATE",
+	"PAYER_PCODE",
+	"PAYER_CNTCT_NM",
+	"PAYER_CNTCT_PH_NUM",
+	"PAYER_FAX_NUM",
+	"PAYER_EMAIL_ADDR"
+FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYER.active_data"
+WHERE "FINANCIAL_YEAR" = :IP_FY 
+AND "PAYER_ABN" <> ''
+;
+
+-------------------------END of Data Set Selection---------------------------
+
+TPAR_QLD_ADD = 
+SELECT DISTINCT 
+"PAYEE_ABN",
+"PAYER_ABN",
+"FINANCIAL_YEAR",
+"TPAR_PAYEE_QLD",
+"TPAR_PAYER_QLD"
+FROM
+(
+SELECT 
+	"A"."PAYEE_ABN" AS "PAYEE_ABN",
+	"A"."PAYER_ABN" AS "PAYER_ABN" ,
+	"A"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
+	CASE WHEN "A"."PAYEE_ABN" = "B"."PAYEE_ABN" THEN 'Y' ELSE 'N' END AS "TPAR_PAYEE_QLD",
+	CASE WHEN "A"."PAYER_ABN" = "C"."PAYER_ABN" THEN 'Y' ELSE 'N' END AS "TPAR_PAYER_QLD"
+
+FROM :IT_SUB_SET AS "A"
+LEFT OUTER JOIN
+(SELECT DISTINCT "PAYEE_ABN", "FINANCIAL_YEAR" FROM :PAYEE_DATASET WHERE "PAYEE_STATE" = 'QLD') AS "B"
+ON
+    "A"."PAYEE_ABN"      = "B"."PAYEE_ABN"
+AND "A"."FINANCIAL_YEAR" = "B"."FINANCIAL_YEAR"
+LEFT OUTER JOIN
+(SELECT DISTINCT "PAYER_ABN", "FINANCIAL_YEAR" FROM :PAYER_DATASET WHERE "PAYER_STATE" = 'QLD') AS "C"
+ON
+    "A"."PAYER_ABN"      = "C"."PAYER_ABN"
+AND "A"."FINANCIAL_YEAR" = "C"."FINANCIAL_YEAR"
+)
+;
+
+
+
+
+
+
+----------------------------EMP COUNT----------------------------------
+
+ATO_EMP_DATA =
+SELECT
+	"ABN",
+	"INCM_YR",
+	"RSDNL_STATE_CD",
+	"CNT_EMPLOYEE",
+	"TOTAL_EMP_CNT",
+	CASE WHEN "CNT_EMPLOYEE" <> '0' AND  "TOTAL_EMP_CNT" <> '0' THEN TO_DECIMAL(( "CNT_EMPLOYEE" /  "TOTAL_EMP_CNT" ) * 100,12,2) ELSE 0 END AS "QLD_EMP_PER"
+FROM
+(
+	
+SELECT 
+	"ABN",
+	"INCM_YR",
+	"RSDNL_STATE_CD",
+	"CNT_EMPLOYEE",
+    SUM("CNT_EMPLOYEE")  OVER (PARTITION BY "ABN","INCM_YR" ORDER BY "ABN","INCM_YR") AS "TOTAL_EMP_CNT"
+FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+WHERE   "INCM_YR" = :IP_FY 
+AND 	"ABN" IN ( 
+	               SELECT DISTINCT "ABN" FROM
+	               (
+	                  SELECT DISTINCT  "PAYEE_ABN" AS "ABN" FROM :IT_SUB_SET
+                         UNION
+                      SELECT DISTINCT  "PAYER_ABN" AS "ABN" FROM :IT_SUB_SET
+	               )
+	
+                 )
+
+) WHERE "RSDNL_STATE_CD" = 'QLD'
+
+;
+
+LT_EMP_OUT =
+SELECT 
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	"TPAR_PAYEE_QLD",
+	"TPAR_PAYER_QLD",
+	CASE WHEN "EMP_CNT_AUS_PAYEE" IS NULL THEN 0 ELSE  "EMP_CNT_AUS_PAYEE" END AS  "EMP_CNT_AUS_PAYEE" ,
+    CASE WHEN "EMP_CNT_AUS_PAYER" IS NULL THEN 0 ELSE  "EMP_CNT_AUS_PAYER" END AS  "EMP_CNT_AUS_PAYER"  ,
+    "EMP_CNT_PAYEE"   ,
+    "EMP_CNT_PAYER" ,
+    "EMP_CNT_PER_PAYEE",
+    "EMP_CNT_PER_PAYER"
+FROM    
+(
+SELECT 
+	"A"."PAYEE_ABN",
+	"A"."PAYER_ABN",
+	"A"."FINANCIAL_YEAR",
+	"A"."TPAR_PAYEE_QLD",
+	"A"."TPAR_PAYER_QLD",
+	"B"."TOTAL_EMP_CNT" AS "EMP_CNT_AUS_PAYEE"  ,
+	"C"."TOTAL_EMP_CNT" AS "EMP_CNT_AUS_PAYER"  ,
+    CASE WHEN "B"."QLD_EMP_PER" >= 80 THEN 'Y' ELSE 'N' END AS "EMP_CNT_PAYEE",
+    CASE WHEN "C"."QLD_EMP_PER" >= 80 THEN 'Y' ELSE 'N' END AS "EMP_CNT_PAYER",
+   "B"."QLD_EMP_PER" AS "EMP_CNT_PER_PAYEE",
+   "C"."QLD_EMP_PER" AS "EMP_CNT_PER_PAYER"
+FROM
+	:TPAR_QLD_ADD AS "A"
+LEFT OUTER JOIN 
+	:ATO_EMP_DATA AS "B"
+ON 	
+	    "A"."PAYEE_ABN"      = "B"."ABN"
+	AND "A"."FINANCIAL_YEAR" = "B"."INCM_YR"
+LEFT OUTER JOIN 
+	:ATO_EMP_DATA AS "C"
+ON 	
+	    "A"."PAYER_ABN"      = "C"."ABN"
+	AND "A"."FINANCIAL_YEAR" = "C"."INCM_YR"
+)
+;
+
+------------------------END OF EMP COUNT--------------------------------
+
+------------------------WCQ Data-------------------------------
+
+
+WCQ_POLICY_NO =
+SELECT DISTINCT 
+	"POLICY_NO",
+	"ABN",
+    UPPER("POLICY_STATUS") AS "POLICY_STATUS"
+FROM "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data"
+WHERE 	 "ABN" IN ( SELECT DISTINCT "ABN" FROM
+	            			(
+	                		  SELECT DISTINCT  "PAYEE_ABN" AS "ABN" FROM :IT_SUB_SET  WHERE "PAYEE_ABN" <> ''
+                    		     UNION
+                    		  SELECT DISTINCT  "PAYER_ABN" AS "ABN" FROM :IT_SUB_SET  WHERE "PAYER_ABN" <>  ''
+	            		     )
+	               )
+--AND UPPER("POLICY_STATUS")  = 'CURRENT'	       
+AND TO_DATS("CEASED_DATE")       >= TO_DATS(CONCAT(TO_NVARCHAR(TO_INT(:IP_FY) - 1),'0630'))
+AND TO_DATS("START_EMPLOY_DATE") <= TO_DATS(CONCAT((:IP_FY),'0630'))
+;
+
+WCQ_POLICY_WAGE =
+SELECT DISTINCT 
+	"ABN", 	"ACT_WAGES","PROV_WAGES"
+FROM
+(
+SELECT 
+	"ABN", 
+	SUM("ACT_WAGES") AS "ACT_WAGES",
+	SUM("PROV_WAGES") AS "PROV_WAGES"
+FROM
+(
+SELECT 
+	"POLICY_NO",
+	"EMP_NAME",
+	"ASSESSMENT_YEAR",
+	"ASSESSMENT_FROM",
+	"ASSESSMENT_TO",
+	"WIC",
+	"WIC_DSCR",
+	"ACT_WAGES",
+	"ACT_APPR_WAGES",
+	"EST_ASSESS_METHOD",
+	"PROV_WAGES",
+	"PROV_APPR_WAGES",
+	"ABN",
+	"POLICY_STATUS"
+FROM
+(
+SELECT 
+	"A"."POLICY_NO",
+	"A"."EMP_NAME",
+	"A"."ASSESSMENT_YEAR",
+	"A"."ASSESSMENT_FROM",
+	"A"."ASSESSMENT_TO",
+	"A"."WIC",
+	"A"."WIC_DSCR",
+	"A"."ACT_WAGES",
+	"A"."ACT_APPR_WAGES",
+	"A"."EST_ASSESS_METHOD",
+	"A"."PROV_WAGES",
+	"A"."PROV_APPR_WAGES",
+	"B"."ABN",
+	"B"."POLICY_STATUS"
+FROM 
+	"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" AS "A"
+INNER JOIN
+	:WCQ_POLICY_NO AS "B"
+ON
+	    "A"."POLICY_NO"       = "B"."POLICY_NO"
+	AND "A"."ASSESSMENT_YEAR" = :IP_FY
+	AND "A"."NAME" = 'WCQ_POLICY_WAGES_FY1710.txt'
+	AND UPPER("A"."EST_ASSESS_METHOD") = 'STANDARD ASSESSED'
+)
+) GROUP BY "ABN"
+)
+;
+
+WCQ_DATA_OUT =
+SELECT 
+DISTINCT 
+	"PAYEE_ABN"          ,
+	"PAYER_ABN"          ,
+	"FINANCIAL_YEAR"     ,
+	"WCQ_PAYEE"          ,
+	"WCQ_PAYER"          ,
+	CASE WHEN "WCQ_ACT_WG_PAYEE" IS NULL THEN 0 ELSE  "WCQ_ACT_WG_PAYEE" END AS "WCQ_ACT_WG_PAYEE",
+	CASE WHEN "WCQ_ACT_WG_PAYER" IS NULL THEN 0 ELSE  "WCQ_ACT_WG_PAYER" END AS "WCQ_ACT_WG_PAYER",
+	"TPAR_PAYEE_QLD"     ,
+	"TPAR_PAYER_QLD"     ,
+	"EMP_CNT_AUS_PAYEE"  ,
+	"EMP_CNT_AUS_PAYER"  ,
+    "EMP_CNT_PAYEE"      ,
+    "EMP_CNT_PAYER"      ,
+    "EMP_CNT_PER_PAYEE"  ,
+    "EMP_CNT_PER_PAYER" 
+FROM
+(
+SELECT 
+	"A"."PAYEE_ABN"          ,
+	"A"."PAYER_ABN"          ,
+	"A"."FINANCIAL_YEAR"     ,
+	"A"."TPAR_PAYEE_QLD"     ,
+	"A"."TPAR_PAYER_QLD"     ,
+	"A"."EMP_CNT_AUS_PAYEE"  ,
+	"A"."EMP_CNT_AUS_PAYER"  ,
+    "A"."EMP_CNT_PAYEE"      ,
+    "A"."EMP_CNT_PAYER"      ,
+    "A"."EMP_CNT_PER_PAYEE"  ,
+    "A"."EMP_CNT_PER_PAYER"  ,
+    CASE WHEN "A"."PAYEE_ABN" = "B"."ABN" THEN 'Y' ELSE 'N' END AS "WCQ_PAYEE" ,              
+    CASE WHEN "A"."PAYER_ABN" = "C"."ABN" THEN 'Y' ELSE 'N' END AS "WCQ_PAYER" ,
+    CASE WHEN "A"."PAYEE_ABN" = "D"."ABN" THEN "D"."ACT_WAGES" ELSE 0 END AS 	"WCQ_ACT_WG_PAYEE",
+    CASE WHEN "A"."PAYER_ABN" = "E"."ABN" THEN "E"."ACT_WAGES" ELSE 0 END AS 	"WCQ_ACT_WG_PAYER"
+FROM     
+	:LT_EMP_OUT AS "A"
+LEFT OUTER JOIN 
+	:WCQ_POLICY_NO AS "B"
+ON 
+	"A"."PAYEE_ABN"      = "B"."ABN"
+LEFT OUTER JOIN
+	:WCQ_POLICY_NO AS "C"
+ON 
+	"A"."PAYER_ABN"      = "C"."ABN"
+LEFT OUTER JOIN
+	:WCQ_POLICY_WAGE AS "D"
+ON 
+   "A"."PAYEE_ABN"      = "D"."ABN"
+LEFT OUTER JOIN
+	:WCQ_POLICY_WAGE AS "E"
+ON 
+   "A"."PAYER_ABN"      = "E"."ABN"   
+)	
+;
+
+-----------------------END of WCQ Data-------------------------
+
+---------------------PAYEE WAGE DATA--------------------------
+
+
+PAYEE_WAGES =
+SELECT 
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	"GROSS_PD_AMT",
+	"GST_TOTL_AMT",
+	"EX_GST_GROSS_PD_AMT",
+	"TOT_EX_GST_GROSS_PD_AMT",
+	CASE WHEN "EX_GST_GROSS_PD_AMT" > '0' AND "TOT_EX_GST_GROSS_PD_AMT" > '0' THEN TO_DECIMAL(("EX_GST_GROSS_PD_AMT" / "TOT_EX_GST_GROSS_PD_AMT")*100, 12,2) ELSE 0 END AS "PROP_EX_GST_GROSS_PD_AMT"
+FROM
+(
+SELECT
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	"GROSS_PD_AMT",
+	"GST_TOTL_AMT",
+	"EX_GST_GROSS_PD_AMT",
+	SUM("EX_GST_GROSS_PD_AMT")  OVER (PARTITION BY "PAYEE_ABN","FINANCIAL_YEAR" ORDER BY "PAYEE_ABN","FINANCIAL_YEAR") AS "TOT_EX_GST_GROSS_PD_AMT"
+FROM
+(
+SELECT 
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	SUM("GROSS_PD_AMT") AS "GROSS_PD_AMT",
+	SUM("GST_TOTL_AMT") AS "GST_TOTL_AMT",
+	SUM("GROSS_PD_AMT" - "GST_TOTL_AMT") AS "EX_GST_GROSS_PD_AMT"
+FROM :PAYEE_DATASET
+GROUP BY 
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR"
+)	
+)
+;
+
+PAYEE_WAGES_PROP =
+SELECT * FROM
+(
+SELECT DISTINCT 
+	"A"."PAYEE_ABN"                ,
+	"A"."PAYER_ABN"                ,
+	"A"."FINANCIAL_YEAR"           ,
+	"A"."WCQ_PAYEE"                ,
+	"A"."WCQ_PAYER"                ,
+	"A"."WCQ_ACT_WG_PAYEE"         ,
+	"A"."WCQ_ACT_WG_PAYER"         ,
+	"A"."TPAR_PAYEE_QLD"           ,
+	"A"."TPAR_PAYER_QLD"           ,
+	"A"."EMP_CNT_AUS_PAYEE"        ,
+	"A"."EMP_CNT_AUS_PAYER"        ,
+    "A"."EMP_CNT_PAYEE"            ,
+    "A"."EMP_CNT_PAYER"            ,
+    "A"."EMP_CNT_PER_PAYEE"        ,
+    "A"."EMP_CNT_PER_PAYER"        ,
+    "B"."EX_GST_GROSS_PD_AMT"      ,
+	"B"."TOT_EX_GST_GROSS_PD_AMT"  ,
+	"B"."PROP_EX_GST_GROSS_PD_AMT"
+FROM 
+	:WCQ_DATA_OUT AS "A" 
+LEFT OUTER JOIN
+	:PAYEE_WAGES  AS "B"
+ON 
+	"A"."PAYEE_ABN"      = "B"."PAYEE_ABN"
+AND "A"."PAYER_ABN"      = "B"."PAYER_ABN"
+AND "A"."FINANCIAL_YEAR" = "B"."FINANCIAL_YEAR"
+);	
+--------------------------END OF PAYEE WAGE DATA-----------------------------------
+
+	
+	
+	
+-------------------------ITR DATA---------------------------
+ITR_DATA = 
+SELECT 
+	"ABN",
+	"INCM_YR",
+	"TOTL_BUS_INCM_AMT",
+	"SALARY_WAGES",
+	"SUPER_EXPNS",
+	"CONTRACTORS_PMNTS"
+FROM
+(
+SELECT 
+	"ABN",
+	"INCM_YR",
+	SUM("TOTL_BUS_INCM_AMT") AS "TOTL_BUS_INCM_AMT",
+	SUM("PURCHS_OTH_COSTS")  AS "PURCHS_OTH_COSTS",
+	SUM("CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+	SUM("PMNTS_TO_ASSOCS")   AS "PMNTS_TO_ASSOCS",
+	SUM("SALARY_WAGES")      AS "SALARY_WAGES",
+	SUM("SUPER_EXPNS")       AS "SUPER_EXPNS"
+	
+FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"
+WHERE 	"INCM_YR" = :IP_FY
+AND 	"ABN"     IN ( SELECT DISTINCT "ABN" FROM
+	            			(
+	                		  SELECT DISTINCT  "PAYEE_ABN" AS "ABN" FROM :IT_SUB_SET  WHERE "PAYEE_ABN" <> ''
+                    		     UNION
+                    		  SELECT DISTINCT  "PAYER_ABN" AS "ABN" FROM :IT_SUB_SET  WHERE "PAYER_ABN" <>  ''
+	            		     )
+	                  )
+GROUP BY 
+	"ABN",
+	"INCM_YR"
+)	;
+	
+PAYEE_ITR_DATA_OUT = 
+SELECT 	
+	"PAYEE_ABN"                ,
+	"PAYER_ABN"                ,
+	"FINANCIAL_YEAR"           ,
+	"WCQ_PAYEE"                ,
+	"WCQ_PAYER"                ,
+    "WCQ_ACT_WG_PAYEE"         ,
+	"WCQ_ACT_WG_PAYER"         ,
+	"TPAR_PAYEE_QLD"           ,
+	"TPAR_PAYER_QLD"           ,
+	"EMP_CNT_AUS_PAYEE"        ,
+	"EMP_CNT_AUS_PAYER"        ,
+    "EMP_CNT_PAYEE"            ,
+    "EMP_CNT_PAYER"            ,
+    "EMP_CNT_PER_PAYEE"        ,
+    "EMP_CNT_PER_PAYER"        ,
+    "EX_GST_GROSS_PD_AMT"      ,
+	"TOT_EX_GST_GROSS_PD_AMT"  ,
+	"PROP_EX_GST_GROSS_PD_AMT" ,
+	"TOTL_BUS_INCM_AMT"        ,
+	CASE WHEN "EX_GST_GROSS_PD_AMT" > '0' AND "TOTL_BUS_INCM_AMT" > '0' THEN TO_DECIMAL(("EX_GST_GROSS_PD_AMT" / "TOTL_BUS_INCM_AMT") * 100, 12,2) ELSE '0' END AS "PROP_TOTL_BUS_INCM_AMT",
+	"PAYEE_SALARY_WAGES"       ,
+	"PAYEE_SUPER_EXPNS"        ,
+	"PAYEE_CONTRACTORS_PMNTS"  , 
+	"PAYER_TOTL_BUS_INCM_AMT"  ,
+	"PAYER_SALARY_WAGES"       ,
+	"PAYER_SUPER_EXPNS"        ,
+	"PAYER_CONTRACTORS_PMNTS"    
+FROM
+(
+SELECT DISTINCT 
+	"A"."PAYEE_ABN"                ,
+	"A"."PAYER_ABN"                ,
+	"A"."FINANCIAL_YEAR"           ,
+	"A"."WCQ_PAYEE"                ,
+	"A"."WCQ_PAYER"                ,
+	"A"."WCQ_ACT_WG_PAYEE"         ,
+	"A"."WCQ_ACT_WG_PAYER"         ,
+	"A"."TPAR_PAYEE_QLD"           ,
+	"A"."TPAR_PAYER_QLD"           ,
+	"A"."EMP_CNT_AUS_PAYEE"        ,
+	"A"."EMP_CNT_AUS_PAYER"        ,
+    "A"."EMP_CNT_PAYEE"            ,
+    "A"."EMP_CNT_PAYER"            ,
+    "A"."EMP_CNT_PER_PAYEE"        ,
+    "A"."EMP_CNT_PER_PAYER"        ,
+    "A"."EX_GST_GROSS_PD_AMT"      ,
+	"A"."TOT_EX_GST_GROSS_PD_AMT"  ,
+	"A"."PROP_EX_GST_GROSS_PD_AMT" ,
+	"B"."TOTL_BUS_INCM_AMT"        ,
+	"B"."SALARY_WAGES"       AS    "PAYEE_SALARY_WAGES"          ,
+	"B"."SUPER_EXPNS"        AS    "PAYEE_SUPER_EXPNS"           ,
+	"B"."CONTRACTORS_PMNTS"  AS    "PAYEE_CONTRACTORS_PMNTS"     ,
+	"C"."TOTL_BUS_INCM_AMT"  AS    "PAYER_TOTL_BUS_INCM_AMT"     ,
+	"C"."SALARY_WAGES"       AS    "PAYER_SALARY_WAGES"          ,
+	"C"."SUPER_EXPNS"        AS    "PAYER_SUPER_EXPNS"           ,
+	"C"."CONTRACTORS_PMNTS"  AS    "PAYER_CONTRACTORS_PMNTS"
+FROM 
+	:PAYEE_WAGES_PROP AS "A"
+LEFT OUTER JOIN
+	:ITR_DATA AS "B"
+ON
+	"A"."PAYEE_ABN" = "B"."ABN"
+LEFT OUTER JOIN
+	:ITR_DATA AS "C"
+ON
+	"A"."PAYER_ABN" = "C"."ABN"	
+)
+;
+------------------------END OF PAYEE ITR DATA------------------------------
+
+
+-------------------- REG for PTX in RMS----------
+
+	               
+PRT_REG =
+
+SELECT * FROM
+(
+SELECT 	
+	"BPARTNER",
+	"ABN",
+	"PRT_LIAB_DATE",
+	"VALID_FROM",
+	"VALID_TO",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN", "VALID_TO" ASC) AS "RANK_1"
+	FROM
+(
+SELECT 
+	"BPARTNER",
+	"ABN",
+	"PRT_LIAB_DATE",
+	"VALID_FROM",
+	"VALID_TO",
+	CASE WHEN LENGTH(LEFT("VALID_TO", 8)) < 8 THEN '10001010' ELSE LEFT("VALID_TO", 8) END AS "REG_VALID_TO_DATE"
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN"
+WHERE "ABN" IN ( SELECT DISTINCT "ABN" FROM
+	            			(
+	                		  SELECT DISTINCT  "PAYEE_ABN" AS "ABN" FROM :IT_SUB_SET  
+                    		     UNION
+                    		  SELECT DISTINCT  "PAYER_ABN" AS "ABN" FROM :IT_SUB_SET  
+	            		     )
+	               )
+)	               
+
+WHERE 	"REG_VALID_TO_DATE"  >=   CONCAT(TO_NVARCHAR(TO_INT(:IP_FY) - 1),'0630')
+)
+WHERE "RANK_1" = 1
+  ;
+
+PTX_REG_BP =
+SELECT * FROM
+(
+SELECT DISTINCT
+	"A"."PAYEE_ABN"                ,
+	"A"."PAYER_ABN"                ,
+	"A"."FINANCIAL_YEAR"           ,
+	"A"."WCQ_PAYEE"                ,
+	"A"."WCQ_PAYER"                ,
+	"A"."WCQ_ACT_WG_PAYEE"         ,
+	"A"."WCQ_ACT_WG_PAYER"         ,
+	"A"."TPAR_PAYEE_QLD"           ,
+	"A"."TPAR_PAYER_QLD"           ,
+	"A"."EMP_CNT_AUS_PAYEE"        ,
+	"A"."EMP_CNT_AUS_PAYER"        ,
+    "A"."EMP_CNT_PAYEE"            ,
+    "A"."EMP_CNT_PAYER"            ,
+    "A"."EMP_CNT_PER_PAYEE"        ,
+    "A"."EMP_CNT_PER_PAYER"        ,
+    "A"."EX_GST_GROSS_PD_AMT"      ,
+	"A"."TOT_EX_GST_GROSS_PD_AMT"  ,
+	"A"."PROP_EX_GST_GROSS_PD_AMT" ,
+	"A"."TOTL_BUS_INCM_AMT"        ,
+	"A"."PROP_TOTL_BUS_INCM_AMT"   ,
+	"A"."PAYEE_SALARY_WAGES"       ,
+	"A"."PAYEE_SUPER_EXPNS"        ,
+	"A"."PAYEE_CONTRACTORS_PMNTS"  , 
+	"A"."PAYER_TOTL_BUS_INCM_AMT"  ,
+	"A"."PAYER_SALARY_WAGES"       ,
+	"A"."PAYER_SUPER_EXPNS"        ,
+	"A"."PAYER_CONTRACTORS_PMNTS"  ,  
+	CASE WHEN "A"."PAYEE_ABN" = "B"."ABN" THEN "B"."BPARTNER"      ELSE '0'        END  AS "PAYEE_BP"   ,
+	CASE WHEN "A"."PAYEE_ABN" = "B"."ABN" THEN "B"."PRT_LIAB_DATE" ELSE '10000101' END  AS "PAYEE_PRT_LIAB_DATE",
+	CASE WHEN "A"."PAYER_ABN" = "C"."ABN" THEN "C"."BPARTNER"      ELSE '0'        END  AS "PAYER_BP"   ,
+	CASE WHEN "A"."PAYER_ABN" = "C"."ABN" THEN "C"."PRT_LIAB_DATE" ELSE '10000101' END  AS "PAYER_PRT_LIAB_DATE"
+FROM 
+	:PAYEE_ITR_DATA_OUT  AS "A"
+LEFT OUTER JOIN
+	:PRT_REG AS "B"
+ON 
+	"A"."PAYEE_ABN" = "B"."ABN"
+LEFT OUTER JOIN	
+	:PRT_REG AS "C"
+ON 
+	"A"."PAYER_ABN" = "C"."ABN"
+)	
+;
+--------------------END OF REG for PTX in RMS------------------------
+
+-----------------ABR Fund------------
+ABR_AGENCY =
+SELECT DISTINCT
+	"ABN",
+	"PID"
+FROM 
+	"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"
+ WHERE 
+	"ABN"     IN ( SELECT DISTINCT "ABN" FROM
+	            			(
+	                		  SELECT DISTINCT  "PAYEE_ABN" AS "ABN" FROM :IT_SUB_SET  
+                    		     UNION
+                    		  SELECT DISTINCT  "PAYER_ABN" AS "ABN" FROM :IT_SUB_SET  
+	            		     )
+	                  )
+
+;
+
+ABR_FUND_ACNC_ABN =
+
+SELECT DISTINCT 
+	"ABN" 
+FROM
+
+(
+SELECT  DISTINCT
+	"ABN"
+FROM
+
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID",
+	 "FUND"."PRIMARY_ID"         AS  "FUND_PID",
+	 "FUND"."FUND_NAME"          AS  "FUND_NAME" ,
+	 "FUND"."FUND_TYPE"          AS  "FUND_TYPE",
+	 "FUND"."REGISTRATION_DATE"  AS  "FUND_REG_DT",
+	 "FUND"."CANCELLATION_DATE"  AS  "FUND_CAN_DT"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.FUNDS.active_data" AS "FUND"
+ON 
+	"AGENCY"."PID" = "FUND"."PRIMARY_ID"
+)	
+
+UNION	
+
+SELECT DISTINCT 
+	"ABN"
+FROM
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.ACNC.active_data" AS "ACNC"
+ON 
+	"AGENCY"."PID" = "ACNC"."PID"
+)
+)
+;	
+
+
+---------END of ABR fund-----------------
+
+--------------------OUT PUT--------------------------------
+
+
+RETURN
+
+SELECT * FROM
+(
+SELECT 
+	"PAYEE_ABN"                ,
+	"PAYER_ABN"                ,
+	"FINANCIAL_YEAR"           ,
+	"WCQ_PAYEE"                ,
+	"WCQ_PAYER"                ,
+    "WCQ_ACT_WG_PAYEE"         ,
+	"WCQ_ACT_WG_PAYER"         ,
+	"TPAR_PAYEE_QLD"           ,
+	"TPAR_PAYER_QLD"           ,
+	"EMP_CNT_AUS_PAYEE"        ,
+	"EMP_CNT_AUS_PAYER"        ,
+    "EMP_CNT_PAYEE"            ,
+    "EMP_CNT_PAYER"            ,
+    "EMP_CNT_PER_PAYEE"        ,
+    "EMP_CNT_PER_PAYER"        ,
+    "EX_GST_GROSS_PD_AMT"      ,
+	"TOT_EX_GST_GROSS_PD_AMT"  ,
+	"PROP_EX_GST_GROSS_PD_AMT" ,
+	"TOTL_BUS_INCM_AMT"        ,
+	"PROP_TOTL_BUS_INCM_AMT"   ,
+	"PAYEE_SALARY_WAGES"       ,
+	"PAYEE_SUPER_EXPNS"        ,
+	"PAYEE_CONTRACTORS_PMNTS"  , 
+	"PAYER_TOTL_BUS_INCM_AMT"  ,
+	"PAYER_SALARY_WAGES"       ,
+	"PAYER_SUPER_EXPNS"        ,
+	"PAYER_CONTRACTORS_PMNTS"  ,  
+	"PAYEE_BP"                 ,
+	"PAYEE_PRT_LIAB_DATE"      ,
+	"PAYER_BP"                 ,
+	"PAYER_PRT_LIAB_DATE"      ,
+	CASE WHEN  "WCQ_PAYEE" ='Y' THEN 'Y' ELSE 
+				CASE WHEN  "TPAR_PAYEE_QLD" = 'Y' THEN 'Y' ELSE
+							CASE WHEN  "EMP_CNT_PAYEE"  = 'Y' THEN 'Y' ELSE
+										'N' 
+							END 
+				END 
+	END AS "BASIC_FILTER_PAYEE",
+	
+		CASE WHEN  "WCQ_PAYER" ='Y' THEN 'Y' ELSE 
+				CASE WHEN  "TPAR_PAYER_QLD" = 'Y' THEN 'Y' ELSE
+							CASE WHEN  "EMP_CNT_PAYER"  = 'Y' THEN 'Y' ELSE
+										'N' 
+							END 
+				END 
+	END AS "BASIC_FILTER_PAYER",
+	
+	CASE WHEN    "EX_GST_GROSS_PD_AMT" BETWEEN 25000 AND 250000
+	         AND "WCQ_ACT_WG_PAYEE" <= 199999 
+	         AND "EMP_CNT_AUS_PAYEE" < 2 
+	         AND "PAYEE_BP" = '0'
+			 AND ("PROP_EX_GST_GROSS_PD_AMT" > 80 OR  "PROP_TOTL_BUS_INCM_AMT" > 80) 
+			 THEN 'Y' ELSE 'N' 
+	END AS "STEP2_FLAG",
+   '' AS "PAYER_RISK_CATEGORY" ,
+   '' AS "PAYER_SUB_RISK" 
+	
+	
+FROM    
+:PTX_REG_BP 
+
+)
+WHERE 
+    "BASIC_FILTER_PAYEE" = 'Y' 
+AND "BASIC_FILTER_PAYER" = 'Y'
+AND "EX_GST_GROSS_PD_AMT"   BETWEEN 25000 AND 250000
+AND "WCQ_ACT_WG_PAYEE" <= 199999
+AND "EMP_CNT_AUS_PAYEE" < 2
+AND "PAYEE_BP" = '0'
+AND ( "PROP_EX_GST_GROSS_PD_AMT" > 80 OR  "PROP_TOTL_BUS_INCM_AMT" > 80 )
+
+AND  "PAYER_ABN" NOT IN (SELECT DISTINCT "ABN" FROM
+								(
+									SELECT DISTINCT  "ABN" FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"
+										WHERE "CLNT_TYP"  IN ('SUP','GOV')
+										AND   "INCM_YR"    = :IP_FY
+
+										UNION
+
+									SELECT DISTINCT "ABN" FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" 
+										WHERE "ATO_ANZSIC_CD" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
+										AND   "INCM_YR"    = :IP_FY
+										
+										UNION
+									
+									SELECT DISTINCT "ABN" FROM
+											(
+													SELECT 	"ABN" ,
+															"ORG_STATUS",
+															RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"ORG_END_DATE" DESC, "ORG_START_DT" DESC) AS "RANK_1"
+												    FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data"
+													WHERE  ABN IN ( SELECT DISTINCT "PAYER_ABN" FROM  "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data" )
+											) 
+									WHERE "RANK_1" = '1'
+									AND "ORG_STATUS" <> 'REGD'	
+									
+										UNION
+									
+									SELECT DISTINCT "ABN" FROM :ABR_FUND_ACNC_ABN
+
+								) 
+	
+							)
+;
+/*
+RETURN
+SELECT 
+    '' AS  	    "ABN"                        ,
+    '' AS   	"WCQ_PAYER"                   ,
+    '' AS   	"WCQ_PAYEE"                   ,
+    '' AS   	"TPAR_PAYER_QLD"              ,
+    '' AS   	"TPAR_PAYEE_QLD"             ,
+    '' AS    	"EMP_CNT_QLD_PAYER"           ,
+    '' AS    	"EMP_CNT_QLD_PAYEE"           ,
+    '' AS   	"EMP_CNT_PAYER"				  ,
+    '' AS   	"EMP_CNT_PAYEE"				 
+FROM
+"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"
+;
+*/
+END;
