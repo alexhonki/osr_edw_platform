@@ -2,6 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_BUSINESS_ADDRESS"( IN IP_ALE
 RETURNS TABLE
 (
 DB_KEY				VARBINARY(16),
+DB_KEY_CHAR			NVARCHAR(32),
 ALERT_ID			NVARCHAR(20),
 ABN					NVARCHAR(20),
 GJAHR				NVARCHAR(4),
@@ -18,7 +19,8 @@ STREET              NVARCHAR(60),
 CITY1               NVARCHAR(40),
 REGION              NVARCHAR(3),
 POST_CODE1          NVARCHAR(10),
-COUNTRY             NVARCHAR(3)
+COUNTRY             NVARCHAR(3),
+PT_BUSINESS_ADDR    NVARCHAR(200)
 )
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
@@ -115,6 +117,7 @@ ON "BUT21FS"."PARTNER" = "BP_NAME"."PARTNER"
 RETURN
 SELECT
 		"DB_KEY",
+		CAST( "DB_KEY" AS NVARCHAR(32))  AS "DB_KEY_CHAR",
 		"ALERT_ID",
 		"ABN",
 		"GJAHR",
@@ -129,7 +132,8 @@ SELECT
 		"CITY1",
 		"REGION",
 		"POST_CODE1",
-		"COUNTRY"
+		"COUNTRY",
+		trim(trim("HOUSE_NUM1") || char(32) || trim("STREET") || char(32) || trim("CITY1") || char(32) || trim("REGION") || char(32) || trim("POST_CODE1")) AS "PT_BUSINESS_ADDR"
 FROM :ADRC_BUT21FS
 ;
 
@@ -220,6 +224,7 @@ ON "BUT21FS"."PARTNER" = "BP_NAME"."PARTNER"
 RETURN
 SELECT
 		"DB_KEY",
+		CAST( "DB_KEY" AS NVARCHAR(32))  AS "DB_KEY_CHAR",
 		"ALERT_ID",
 		"ABN",
 		"GJAHR",
@@ -234,7 +239,8 @@ SELECT
 		"CITY1",
 		"REGION",
 		"POST_CODE1",
-		"COUNTRY"
+		"COUNTRY",
+		trim(trim("HOUSE_NUM1") || char(32) || trim("STREET") || char(32) || trim("CITY1") || char(32) || trim("REGION") || char(32) || trim("POST_CODE1")) AS "PT_BUSINESS_ADDR"
 FROM :ADRC_BUT21FS
 ;
 
