@@ -74,6 +74,11 @@ modules:
         properties:
           key: logical-OSR-EDW-SOURCE-OSRSTATE-grantor
           service: '~{OSR-EDW-SOURCE-OSRSTATE-grantor-service}'
+      - name: OSR-EDW-SOURCE-DESBT-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-DESBT-grantor
+          service: '~{OSR-EDW-SOURCE-DESBT-grantor-service}'
       - name: acs-ext-access-grantor
       - name: edw-ext-access-grantor
 resources:
@@ -131,6 +136,13 @@ resources:
     parameters:
       service-name: OSR_EDW_SOURCE_OSR_STATE-deploy
     type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-DESBT-grantor
+    properties:
+      OSR-EDW-SOURCE-DESBT-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_DESBT-deploy
+    type: org.cloudfoundry.existing-service
+    
   - name: OSR_EDW_PLATFORM-dws
     properties:
       dwf-edw-client-name: '${service-name}'

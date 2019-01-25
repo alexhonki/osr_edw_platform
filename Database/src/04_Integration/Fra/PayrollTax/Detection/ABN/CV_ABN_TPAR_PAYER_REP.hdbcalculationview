@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_TPAR_PAYER_REP" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="TPAR Payer Report"/>
+<localVariables>
+  <variable id="IP_FY" parameter="true">
+    <descriptions defaultDescription="Fiscal Year"/>
+    <variableProperties datatype="NVARCHAR" length="4" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_REP">
+    <targetVariable name="IP_FY" resourceUri="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_REP"/>
+    <localVariable>IP_FY</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_REP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_REP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="AUS_EMP_CNT">
+        <descriptions defaultDescription="AUS_EMP_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="PMT_FOR_WRK_IT_WHDG_AMT">
+        <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_PER">
+        <descriptions defaultDescription="QLD_EMP_PER"/>
+      </viewAttribute>
+      <viewAttribute id="FBT_INST_AMT">
+        <descriptions defaultDescription="FBT_INST_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TYP1_AGRGT_AMT">
+        <descriptions defaultDescription="TYP1_AGRGT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_BUS_INCM_AMT">
+        <descriptions defaultDescription="TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TYP2_AGRGT_AMT">
+        <descriptions defaultDescription="TYP2_AGRGT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PURCHS_OTH_COSTS">
+        <descriptions defaultDescription="PURCHS_OTH_COSTS"/>
+      </viewAttribute>
+      <viewAttribute id="AGRGT_NON_EXMT_AMT">
+        <descriptions defaultDescription="AGRGT_NON_EXMT_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="CONTRACTORS_PMNTS">
+        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="TAX_PYBL_AMT">
+        <descriptions defaultDescription="TAX_PYBL_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PMNTS_TO_ASSOCS">
+        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_ABN">
+        <descriptions defaultDescription="PAYER_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="SALARY_WAGES">
+        <descriptions defaultDescription="SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_LUMP_AMT">
+        <descriptions defaultDescription="TOTL_LUMP_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="FBTABLE_AMT">
+        <descriptions defaultDescription="FBTABLE_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="EMPLES_RCVG_FB_CNT">
+        <descriptions defaultDescription="EMPLES_RCVG_FB_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="INCM_YR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
+      <viewAttribute id="SUPER_EXPNS">
+        <descriptions defaultDescription="SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_ALWNC_AMT">
+        <descriptions defaultDescription="TOTL_ALWNC_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="ENTRMNT_TXBL_AMT">
+        <descriptions defaultDescription="ENTRMNT_TXBL_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="GOODS_SRVC_SUPLY_AMT">
+        <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PMT_SMRY_CNT">
+        <descriptions defaultDescription="PMT_SMRY_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT">
+        <descriptions defaultDescription="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="CAR_PARKG_VAL_OF_BNFTS_AMT">
+        <descriptions defaultDescription="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_ACQUISITIONS">
+        <descriptions defaultDescription="TOTAL_ACQUISITIONS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_GRS_AMT">
+        <descriptions defaultDescription="TOTL_GRS_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_EMP_CNT">
+        <descriptions defaultDescription="QLD_EMP_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT">
+        <descriptions defaultDescription="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT">
+        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_REP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUS_EMP_CNT" source="AUS_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMT_FOR_WRK_IT_WHDG_AMT" source="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_PER" source="QLD_EMP_PER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT" source="FBT_INST_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TYP1_AGRGT_AMT" source="TYP1_AGRGT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_BUS_INCM_AMT" source="TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TYP2_AGRGT_AMT" source="TYP2_AGRGT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PURCHS_OTH_COSTS" source="PURCHS_OTH_COSTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGRGT_NON_EXMT_AMT" source="AGRGT_NON_EXMT_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAX_PYBL_AMT" source="TAX_PYBL_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN" source="PAYER_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_LUMP_AMT" source="TOTL_LUMP_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FBTABLE_AMT" source="FBTABLE_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLES_RCVG_FB_CNT" source="EMPLES_RCVG_FB_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_ALWNC_AMT" source="TOTL_ALWNC_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENTRMNT_TXBL_AMT" source="ENTRMNT_TXBL_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GOODS_SRVC_SUPLY_AMT" source="GOODS_SRVC_SUPLY_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PMT_SMRY_CNT" source="PMT_SMRY_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" source="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CAR_PARKG_VAL_OF_BNFTS_AMT" source="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_ACQUISITIONS" source="TOTAL_ACQUISITIONS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_GRS_AMT" source="TOTL_GRS_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_EMP_CNT" source="QLD_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" source="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT" source="TOTL_PMT_FOR_WRK_AMT"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="INCM_YR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Income Year"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INCM_YR"/>
+    </attribute>
+  
+    <attribute id="PAYER_ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_ABN"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="GOODS_SRVC_SUPLY_AMT" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Goods &amp; Services Supply Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GOODS_SRVC_SUPLY_AMT"/>
+    </measure>
+    <measure id="TOTAL_ACQUISITIONS" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Acquisitions"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_ACQUISITIONS"/>
+    </measure>
+    <measure id="TOTL_PMT_FOR_WRK_AMT" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Payment for Work"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_PMT_FOR_WRK_AMT"/>
+    </measure>
+    <measure id="PMT_FOR_WRK_IT_WHDG_AMT" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYG"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMT_FOR_WRK_IT_WHDG_AMT"/>
+    </measure>
+    <measure id="FBT_INST_AMT" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FBT Instalment Amount (Tax Amount)"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FBT_INST_AMT"/>
+    </measure>
+    <measure id="TOTL_BUS_INCM_AMT" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Business Income Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_BUS_INCM_AMT"/>
+    </measure>
+    <measure id="PURCHS_OTH_COSTS" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Purchased Other Costs"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PURCHS_OTH_COSTS"/>
+    </measure>
+    <measure id="CONTRACTORS_PMNTS" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Contractors Payments"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CONTRACTORS_PMNTS"/>
+    </measure>
+    <measure id="PMNTS_TO_ASSOCS" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Payments to Associates"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
+    </measure>
+    <measure id="SALARY_WAGES" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Salaries &amp; Wages"/>
+      <measureMapping columnObjectName="Projection_1" columnName="SALARY_WAGES"/>
+    </measure>
+    <measure id="SUPER_EXPNS" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Super Expenditure"/>
+      <measureMapping columnObjectName="Projection_1" columnName="SUPER_EXPNS"/>
+    </measure>
+    <measure id="PMT_SMRY_CNT" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Payment Summary Count"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMT_SMRY_CNT"/>
+    </measure>
+    <measure id="TOTL_GRS_AMT" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Gross Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_GRS_AMT"/>
+    </measure>
+    <measure id="TOTL_LUMP_AMT" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Lump Sum Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_LUMP_AMT"/>
+    </measure>
+    <measure id="TOTL_ALWNC_AMT" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Allowances"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTL_ALWNC_AMT"/>
+    </measure>
+    <measure id="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+    </measure>
+    <measure id="QLD_EMP_CNT" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="QLD Employee Count"/>
+      <measureMapping columnObjectName="Projection_1" columnName="QLD_EMP_CNT"/>
+    </measure>
+    <measure id="AUS_EMP_CNT" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="AUS Employee Count"/>
+      <measureMapping columnObjectName="Projection_1" columnName="AUS_EMP_CNT"/>
+    </measure>
+    <measure id="QLD_EMP_PER" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="QLD Employee Count Percentage"/>
+      <measureMapping columnObjectName="Projection_1" columnName="QLD_EMP_PER"/>
+    </measure>
+  
+    <measure id="TYP1_AGRGT_AMT" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Type 1 Aggregate Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TYP1_AGRGT_AMT"/>
+    </measure>
+    <measure id="TYP2_AGRGT_AMT" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Type 2 Aggregate Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TYP2_AGRGT_AMT"/>
+    </measure>
+    <measure id="AGRGT_NON_EXMT_AMT" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Aggregate Non-Exempt Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="AGRGT_NON_EXMT_AMT"/>
+    </measure>
+    <measure id="FBTABLE_AMT" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Fringe Benefit Taxable Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FBTABLE_AMT"/>
+    </measure>
+    <measure id="TAX_PYBL_AMT" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Amountof Tax Payable "/>
+      <measureMapping columnObjectName="Projection_1" columnName="TAX_PYBL_AMT"/>
+    </measure>
+    <measure id="EMPLES_RCVG_FB_CNT" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Number of Employee Receiving Fringe Benefits "/>
+      <measureMapping columnObjectName="Projection_1" columnName="EMPLES_RCVG_FB_CNT"/>
+    </measure>
+    <measure id="ENTRMNT_TXBL_AMT" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Incometax Exempt Body - Entertainment"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ENTRMNT_TXBL_AMT"/>
+    </measure>
+    <measure id="CAR_PARKG_VAL_OF_BNFTS_AMT" order="29" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Carparking"/>
+      <measureMapping columnObjectName="Projection_1" columnName="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
+    </measure>
+    <measure id="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" order="30" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Meal Entertainment"/>
+      <measureMapping columnObjectName="Projection_1" columnName="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
+    </measure></baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="194"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

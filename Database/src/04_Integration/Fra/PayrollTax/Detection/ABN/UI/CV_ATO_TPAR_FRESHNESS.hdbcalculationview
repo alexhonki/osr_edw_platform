@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_BAS_BNFCRY_FRESHNESS" applyPrivilegeType="NONE" dataCategory="DEFAULT" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_ATO_BAS_BNFCRY_FRESHNESS"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_TPAR_FRESHNESS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_TPAR_FRESHNESS"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
     <descriptions defaultDescription="Input Parameter: Alert ID"/>
@@ -11,38 +11,38 @@
   </variable>
 </localVariables>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_BNECRY_FRESHNESS">
-    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_BNECRY_FRESHNESS"/>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_FRESHNESS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_FRESHNESS"/>
     <localVariable>IP_ALERT_ID</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_BNECRY_FRESHNESS" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_BNECRY_FRESHNESS</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_FRESHNESS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_FRESHNESS</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_BNECRY_FRESHNESS">
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_FRESHNESS">
   <attributes>
     <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="TF_ATO_BAS_BNECRY_FRESHNESS" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_FRESHNESS" columnName="DB_KEY"/>
     </attribute>
     <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="TF_ATO_BAS_BNECRY_FRESHNESS" columnName="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_FRESHNESS" columnName="ALERT_ID"/>
     </attribute>
     <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="TF_ATO_BAS_BNECRY_FRESHNESS" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_FRESHNESS" columnName="ABN"/>
     </attribute>
     <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="TF_ATO_BAS_BNECRY_FRESHNESS" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_FRESHNESS" columnName="GJAHR"/>
     </attribute>
     <attribute id="LAST_UPDATE_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAST_UPDATE_DATE"/>
-      <keyMapping columnObjectName="TF_ATO_BAS_BNECRY_FRESHNESS" columnName="LAST_UPDATE_DATE"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_FRESHNESS" columnName="LAST_UPDATE_DATE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -54,6 +54,7 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
-    </shape></shapes>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>
