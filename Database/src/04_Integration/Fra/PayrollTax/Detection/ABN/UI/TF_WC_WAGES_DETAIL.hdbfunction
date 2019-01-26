@@ -33,15 +33,15 @@ lt_wc_wages1 =
 		"POLICY"."NAME"																			AS "NAME",
 		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
 		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
-	FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" 				AS "WAGES" 
+	FROM "osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"										AS "WAGES" 
 	INNER JOIN 
 		(SELECT DISTINCT
 			"A"."ABN"																			AS "ABN",
 			"B"."POLICY_NO" 																	AS "POLICY_NO",
 			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
 			LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
-		FROM		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data"	AS "A"
-		INNER JOIN	"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"		AS "B" 
+		FROM		"osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C"							AS "A"
+		INNER JOIN	"osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"							AS "B" 
 		ON			"A"."POLICY_NO"	=	"B"."POLICY_NO")										AS "POLICY" 
 	ON	"WAGES"."POLICY_NO" 		= "POLICY"."POLICY_NO"
 	AND "WAGES"."ASSESSMENT_YEAR"	= "POLICY"."ASSESSMENT_YEAR"
@@ -56,7 +56,7 @@ lt_emp_cnt =
 		"B"."ABN"																				AS "ABN",
 		"A"."CNT_EMPLOYEE"																		AS "CNT_EMP",
 		TO_NVARCHAR("A"."INCM_YR")  															AS "INCM_YR"
-	FROM		"osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"				AS "A"
+	FROM		"osr.edw.staging.td.wcq.proxy::CV_EMP_CNT_C"									AS "A"
 	INNER JOIN	:lt_wc_wages1																	AS "B" 
 		ON	"A"."ABN"					= "B"."ABN" 
 		AND TO_NVARCHAR("A"."INCM_YR")	= TO_NVARCHAR("B"."ASSESSMENT_YEAR")
@@ -108,15 +108,15 @@ lt_wc_wages1 =
 		"POLICY"."NAME"																			AS "NAME",
 		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
 		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
-	FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" 				AS "WAGES" 
+	FROM "osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"						 				AS "WAGES" 
 	INNER JOIN 
 		(SELECT DISTINCT
 			"A"."ABN"																			AS "ABN",
 			"B"."POLICY_NO" 																	AS "POLICY_NO",
 			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
 			LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
-		FROM		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data"	AS "A"
-		INNER JOIN	"osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"		AS "B" 
+		FROM		"osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C"							AS "A"
+		INNER JOIN	"osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"							AS "B" 
 		ON			"A"."POLICY_NO"	=	"B"."POLICY_NO")										AS "POLICY" 
 	ON	"WAGES"."POLICY_NO" 		= "POLICY"."POLICY_NO"
 	AND "WAGES"."ASSESSMENT_YEAR"	= "POLICY"."ASSESSMENT_YEAR"
@@ -131,7 +131,7 @@ lt_emp_cnt =
 		"B"."ABN"																				AS "ABN",
 		"A"."CNT_EMPLOYEE"																		AS "CNT_EMP",
 		TO_NVARCHAR("A"."INCM_YR")  															AS "INCM_YR"
-	FROM		"osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"				AS "A"
+		FROM	"osr.edw.staging.td.wcq.proxy::CV_EMP_CNT_C" 									AS "A"
 	INNER JOIN	:lt_wc_wages1																	AS "B" 
 		ON	"A"."ABN"					= "B"."ABN" 
 		AND TO_NVARCHAR("A"."INCM_YR")	= TO_NVARCHAR("B"."ASSESSMENT_YEAR")
