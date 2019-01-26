@@ -21,7 +21,7 @@ BEGIN
 		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                              AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
-		"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "ATO_BAS"
+		"osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO_BAS"
 	WHERE "ABN" <> 'no ABN';
 
 END;

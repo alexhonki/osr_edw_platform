@@ -23,7 +23,7 @@ BEGIN
 		 "WCQ_WAGES"."ACT_WAGES"                                                                             AS  "WCQ_ACT_WAGES",
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
-		"osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES" AS "WCQ_WAGES"
+		"osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES" AS "WCQ_WAGES"
 		INNER JOIN 
 		"osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "WCQ_POLICY"
 		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_POLICY"."POLICY_NO"
