@@ -212,6 +212,10 @@
       <descriptions defaultDescription="PARTITION"/>
       <keyMapping columnObjectName="Projection_1" columnName="PARTITION"/>
     </attribute>
+    <attribute id="REF_ID" order="5" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REF_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REF_ID"/>
+    </attribute>
     <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
@@ -343,10 +347,6 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="REF_ID" order="5" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="REF_ID"/>
-      <measureMapping columnObjectName="Projection_1" columnName="REF_ID"/>
-    </measure>
     <measure id="GOODS_SRVC_SUPLY_AMT" order="24" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
       <measureMapping columnObjectName="Projection_1" columnName="GOODS_SRVC_SUPLY_AMT"/>
@@ -392,4 +392,4 @@
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario> 
+</Calculation:scenario>

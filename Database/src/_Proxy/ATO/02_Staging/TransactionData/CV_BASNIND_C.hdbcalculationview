@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.ato.proxy::CV_BASNIND_C" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.ato.proxy::CV_BASNIND_C" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_BASNIND_C"/>
 <localVariables/>
 <variableMappings/>
@@ -143,6 +143,9 @@
       <viewAttribute id="Z_RUN_SEQ_ID">
         <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
       </viewAttribute>
+      <viewAttribute id="SOURCE_FIELD_VALUE">
+        <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -191,6 +194,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_FIELD_VALUE" source="SOURCE_FIELD_VALUE"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -208,15 +212,19 @@
       <descriptions defaultDescription="ERROR"/>
       <keyMapping columnObjectName="Projection_1" columnName="ERROR"/>
     </attribute>
-    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PARTITION" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTITION"/>
       <keyMapping columnObjectName="Projection_1" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="REF_ID" order="5" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REF_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REF_ID"/>
     </attribute>
     <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
     </attribute>
-    <attribute id="CAC_NUM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CAC_NUM" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CAC_NUM"/>
       <keyMapping columnObjectName="Projection_1" columnName="CAC_NUM"/>
     </attribute>
@@ -224,7 +232,7 @@
       <descriptions defaultDescription="CLNT_TYP"/>
       <keyMapping columnObjectName="Projection_1" columnName="CLNT_TYP"/>
     </attribute>
-    <attribute id="FINANCIAL_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FINANCIAL_YEAR" order="9" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR"/>
       <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
     </attribute>
@@ -324,7 +332,7 @@
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="41" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
     </attribute>
@@ -332,21 +340,21 @@
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="43" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="43" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="44" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_SEQ_ID" order="44" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SOURCE_FIELD_VALUE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="REF_ID" order="5" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="REF_ID"/>
-      <measureMapping columnObjectName="Projection_1" columnName="REF_ID"/>
-    </measure>
     <measure id="GOODS_SRVC_SUPLY_AMT" order="24" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="GOODS_SRVC_SUPLY_AMT"/>
       <measureMapping columnObjectName="Projection_1" columnName="GOODS_SRVC_SUPLY_AMT"/>
@@ -377,19 +385,18 @@
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
     </shape>
-  
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="100" y="200"/>
+      <upperLeftCorner x="92" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario> 
+</Calculation:scenario>
