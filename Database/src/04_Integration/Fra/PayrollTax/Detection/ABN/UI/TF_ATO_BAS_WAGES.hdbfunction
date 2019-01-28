@@ -31,10 +31,10 @@ SELECT
 FROM
 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 INNER JOIN
-"osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "DATA"
+"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "DATA"
 ON  "ALERT"."ABN" = "DATA"."ABN"
 AND TO_NVARCHAR("DATA"."FINANCIAL_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+WHERE "DATA"."BAS_QTR" = 'FY'
 ;
 
 ELSE 
@@ -54,10 +54,10 @@ SELECT
 FROM
 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 INNER JOIN
-"osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "DATA"
+"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "DATA"
 ON  "ALERT"."ABN" = "DATA"."ABN"
 AND TO_NVARCHAR("DATA"."FINANCIAL_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+WHERE "DATA"."BAS_QTR" = 'FY'
   AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
 
 END IF;
