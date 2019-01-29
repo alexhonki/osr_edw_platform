@@ -35,11 +35,10 @@ BEGIN
 			"DATA"."GROUP_STATE_WAGES"																	AS "GROUP_STATE_WAGES",
 			'AUD' AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()								AS "ALERT"
-		INNER JOIN	"osr.edw.staging.td.osrstate.synonym::CDS_OSRSTATE.DSO.IJR_PRT_ANNL.active_data"	AS "DATA"
+		INNER JOIN	"osr.edw.staging.td.osrstate.proxy::TF_IJR_PRT_ANNL_C"( )	AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"
 		AND 		TO_NVARCHAR("DATA"."FIN_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
-		AND "DATA"."STATE_CODE" = 'VIC'
+		WHERE  "DATA"."STATE_CODE" = 'VIC'
 		;
 
 	ELSE
@@ -55,11 +54,10 @@ BEGIN
 			"DATA"."GROUP_STATE_WAGES"																	AS "GROUP_STATE_WAGES",
 			'AUD' AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()								AS "ALERT"
-		INNER JOIN	"osr.edw.staging.td.osrstate.proxy::CV_IJR_PRT_ANNL_C"								AS "DATA"
+		INNER JOIN	"osr.edw.staging.td.osrstate.proxy::TF_IJR_PRT_ANNL_C"( )							AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"
 		AND 		TO_NVARCHAR("DATA"."FIN_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
-		AND "DATA"."STATE_CODE" = 'VIC'
+		WHERE  "DATA"."STATE_CODE" = 'VIC'
 		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
 		--where 	"A"."ABN" = '18445521079';
 
