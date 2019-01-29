@@ -140,7 +140,7 @@ SELECT
 	"TW_TOTL_AMT",
 	"GST_TOTL_AMT",
 	"CHECK_CD"
-FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE_C"
 WHERE "FINANCIAL_YEAR" = :IP_FY	
 AND   "PAYEE_ABN" IN (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_HEADER) ;
 
@@ -160,7 +160,7 @@ SELECT
 	"SALARY_WAGES",
 	"SUPER_EXPNS",
 	"OTHR_SLS_GOODS_SRVC_AMT"
-FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
 WHERE 	"INCM_YR" = :IP_FY
 AND 	"ABN"     IN (SELECT DISTINCT "PAYEE_ABN" AS "ABN" FROM :TPAR_HEADER);
 
@@ -301,7 +301,7 @@ SELECT
 	SUM("TOTL_LUMP_AMT") AS "TOTL_LUMP_AMT",
 	SUM("TOTL_ALWNC_AMT") AS "TOTL_ALWNC_AMT",
 	SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT") AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"
-FROM "osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_NIND.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_PAYG_NIND_C"
 WHERE "INCM_YR" = :IP_FY
 AND "ABN" IN  (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_HEADER)
 GROUP BY 
@@ -318,7 +318,7 @@ SELECT
 	SUM("TOTL_LUMP_AMT") AS "TOTL_LUMP_AMT",
 	SUM("TOTL_ALWNC_AMT") AS "TOTL_ALWNC_AMT",
 	SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT") AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"
-FROM "osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_PAYG_IND_C"
 WHERE "INCM_YR" = :IP_FY
 AND "ABN" IN  (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_HEADER)
 GROUP BY 
@@ -338,7 +338,7 @@ BAS_DATA =
 SELECT 
 	"ABN" AS "PAYEE_ABN",
 	SUM("TOTL_PMT_FOR_WRK_AMT") AS "PAYEE_TOTL_PMT_FOR_WRK_AMT"
-FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C"
 WHERE "FINANCIAL_YEAR" = :IP_FY
 AND "ABN" IN (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_HEADER )
 GROUP BY
@@ -488,7 +488,7 @@ ON
 
 LEFT OUTER JOIN
 --ABR
-	"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "E"
+	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "E"
 ON 	"A"."PAYEE_ABN" = 	"E"."ABN"
 
 --BAS

@@ -53,7 +53,7 @@ BEGIN
 	"GROSS_PD_AMT",
 	"TW_TOTL_AMT",
 	"GST_TOTL_AMT"
-FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE_C"
 WHERE
 		"PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP"(:IP_FY/*IP_FY <NVARCHAR(4)>*/))
 AND

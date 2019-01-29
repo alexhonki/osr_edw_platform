@@ -120,7 +120,7 @@ SELECT
 	"GROSS_PD_AMT",
 	"TW_TOTL_AMT",
 	"GST_TOTL_AMT"
-FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE_C"
 WHERE "PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :CONTRACTOR_HEADER)
 AND  "FINANCIAL_YEAR" = :IP_FY
 
@@ -140,7 +140,7 @@ SELECT
 	"PAYER_NAME",
 	"PAYER_TRDG_NM",
     ROW_NUMBER( )  OVER (PARTITION BY "PAYER_ABN", "FINANCIAL_YEAR" ORDER BY "PAYER_ABN", "FINANCIAL_YEAR", "PAYER_ABN_STS" ASC ) AS "ROW_NUM"
-FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYER.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYER_C"
 WHERE"PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :CONTRACTOR_HEADER)
 AND "FINANCIAL_YEAR" = :IP_FY
 ) 
@@ -157,7 +157,7 @@ SELECT
 	SUM("PMNTS_TO_ASSOCS")   AS "PAYER_PMNTS_TO_ASSOCS",
 	SUM("SALARY_WAGES")      AS "PAYER_SALARY_WAGES",
 	SUM("SUPER_EXPNS")       AS "PAYER_SUPER_EXPNS"
-FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"
+FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
 WHERE  "ABN" IN ( SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE   )
 AND    "INCM_YR" = :IP_FY
 GROUP BY
@@ -172,7 +172,7 @@ GROUP BY
 		"CLNT_TYP",
 		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
 		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
-	FROM "osr.edw.propagation.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
 	WHERE  "ABN" IN ( SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE   )
 	AND "INCM_YR" = :IP_FY;
 
@@ -325,7 +325,7 @@ SELECT
 	"ABN",
 	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"ORG_END_DATE" DESC, "ORG_START_DATE" DESC) AS "RANK_1",
 	"ORG_STATUS"
-FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data"
+FROM "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C"
 WHERE "ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :FLAGGED_TOTAL_PAYMENTS)
 ) WHERE "RANK_1" = '1') AS "C"
 ON 	"A"."PAYER_ABN" = 	"C"."PAYER_ABN"
@@ -333,7 +333,7 @@ ON 	"A"."PAYER_ABN" = 	"C"."PAYER_ABN"
 
 LEFT OUTER JOIN
 --ABR
-"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "D"
+"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "D"
 ON 	"A"."PAYER_ABN" = 	"D"."ABN"
 
 --ITR Data
@@ -720,7 +720,7 @@ SELECT
 	"CLOSING_TIME",
 	"ZZTOTASSMT"
 FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
-WHERE "ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data")
+WHERE "ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE)
 AND   "CASE_CATEGORY" = 'PRT';
 
 SUB_CAT =
