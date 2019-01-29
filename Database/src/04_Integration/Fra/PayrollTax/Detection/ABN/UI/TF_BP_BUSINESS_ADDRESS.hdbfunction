@@ -3,6 +3,7 @@ RETURNS TABLE
 (
 DB_KEY				VARBINARY(16),
 DB_KEY_CHAR			NVARCHAR(32),
+DBKEY				NVARCHAR(32),
 ALERT_ID			NVARCHAR(20),
 ABN					NVARCHAR(20),
 GJAHR				NVARCHAR(4),
@@ -118,6 +119,7 @@ RETURN
 SELECT
 		"DB_KEY",
 		CAST( "DB_KEY" AS NVARCHAR(32))  AS "DB_KEY_CHAR",
+		REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DBKEY",
 		"ALERT_ID",
 		"ABN",
 		"GJAHR",
@@ -225,6 +227,7 @@ RETURN
 SELECT
 		"DB_KEY",
 		CAST( "DB_KEY" AS NVARCHAR(32))  AS "DB_KEY_CHAR",
+		REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DBKEY",
 		"ALERT_ID",
 		"ABN",
 		"GJAHR",
