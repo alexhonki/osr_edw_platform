@@ -30,25 +30,24 @@ lt_wc_wages1 =
 		"POLICY"."ABN"																			AS "ABN",
 		"POLICY"."POLICY_NO"																	AS "POLICY_NO",
 		"POLICY"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
-		"POLICY"."NAME"																			AS "NAME",
+		--"POLICY"."NAME"																			AS "NAME",
 		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
 		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
-	FROM "osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"										AS "WAGES" 
+	FROM "osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()										AS "WAGES" 
 	INNER JOIN 
 		(SELECT DISTINCT
 			"A"."ABN"																			AS "ABN",
 			"B"."POLICY_NO" 																	AS "POLICY_NO",
-			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
-			LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
-		FROM		"osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C"							AS "A"
-		INNER JOIN	"osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"							AS "B" 
+			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR"
+			--LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
+		FROM		"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"()							AS "A"
+		INNER JOIN	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()							AS "B" 
 		ON			"A"."POLICY_NO"	=	"B"."POLICY_NO")										AS "POLICY" 
 	ON	"WAGES"."POLICY_NO" 		= "POLICY"."POLICY_NO"
 	AND "WAGES"."ASSESSMENT_YEAR"	= "POLICY"."ASSESSMENT_YEAR"
 	GROUP BY	"POLICY"."ABN",
 				"POLICY"."POLICY_NO", 
-				"POLICY"."ASSESSMENT_YEAR",
-				"POLICY"."NAME"
+				"POLICY"."ASSESSMENT_YEAR"
 	;
 
 lt_emp_cnt = 
@@ -56,7 +55,7 @@ lt_emp_cnt =
 		"B"."ABN"																				AS "ABN",
 		"A"."CNT_EMPLOYEE"																		AS "CNT_EMP",
 		TO_NVARCHAR("A"."INCM_YR")  															AS "INCM_YR"
-	FROM		"osr.edw.staging.td.wcq.proxy::CV_EMP_CNT_C"									AS "A"
+	FROM		 "osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"( )								AS "A"
 	INNER JOIN	:lt_wc_wages1																	AS "B" 
 		ON	"A"."ABN"					= "B"."ABN" 
 		AND TO_NVARCHAR("A"."INCM_YR")	= TO_NVARCHAR("B"."ASSESSMENT_YEAR")
@@ -77,7 +76,6 @@ lt_wc_wages2 =
 	INNER JOIN	:lt_wc_wages1																	AS "DATA"
 		ON  "ALERT"."ABN"		= "DATA"."ABN"
 		AND TO_NVARCHAR("DATA"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-	WHERE	"DATA"."NAME"		= 'FY'
 	;
 
 RETURN
@@ -105,25 +103,23 @@ lt_wc_wages1 =
 		"POLICY"."ABN"																			AS "ABN",
 		"POLICY"."POLICY_NO"																	AS "POLICY_NO",
 		"POLICY"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
-		"POLICY"."NAME"																			AS "NAME",
+		--"POLICY"."NAME"																			AS "NAME",
 		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
 		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
-	FROM "osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"						 				AS "WAGES" 
+	FROM "osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()						 				AS "WAGES" 
 	INNER JOIN 
 		(SELECT DISTINCT
 			"A"."ABN"																			AS "ABN",
 			"B"."POLICY_NO" 																	AS "POLICY_NO",
-			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR",
-			LEFT(RIGHT("B"."NAME",10),2)														AS "NAME"
-		FROM		"osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C"							AS "A"
-		INNER JOIN	"osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"							AS "B" 
+			"B"."ASSESSMENT_YEAR"																AS "ASSESSMENT_YEAR"
+		FROM		"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"()							AS "A"
+		INNER JOIN	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()							AS "B" 
 		ON			"A"."POLICY_NO"	=	"B"."POLICY_NO")										AS "POLICY" 
 	ON	"WAGES"."POLICY_NO" 		= "POLICY"."POLICY_NO"
 	AND "WAGES"."ASSESSMENT_YEAR"	= "POLICY"."ASSESSMENT_YEAR"
 	GROUP BY	"POLICY"."ABN",
 				"POLICY"."POLICY_NO", 
-				"POLICY"."ASSESSMENT_YEAR",
-				"POLICY"."NAME"
+				"POLICY"."ASSESSMENT_YEAR"
 	;
 
 lt_emp_cnt = 
@@ -131,7 +127,7 @@ lt_emp_cnt =
 		"B"."ABN"																				AS "ABN",
 		"A"."CNT_EMPLOYEE"																		AS "CNT_EMP",
 		TO_NVARCHAR("A"."INCM_YR")  															AS "INCM_YR"
-		FROM	"osr.edw.staging.td.wcq.proxy::CV_EMP_CNT_C" 									AS "A"
+		FROM	 "osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"( )								AS "A"
 	INNER JOIN	:lt_wc_wages1																	AS "B" 
 		ON	"A"."ABN"					= "B"."ABN" 
 		AND TO_NVARCHAR("A"."INCM_YR")	= TO_NVARCHAR("B"."ASSESSMENT_YEAR")
@@ -152,8 +148,7 @@ lt_wc_wages2 =
 	INNER JOIN	:lt_wc_wages1																	AS "DATA"
 		ON  "ALERT"."ABN"		= "DATA"."ABN"
 		AND TO_NVARCHAR("DATA"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-	WHERE	"DATA"."NAME"		= 'FY'
-	AND 	"ALERT"."ALERT_ID"	= :IP_ALERT_ID
+	WHERE	"ALERT"."ALERT_ID"	= :IP_ALERT_ID
 	;
 
 RETURN
