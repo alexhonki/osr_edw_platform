@@ -63,7 +63,7 @@ ASIC_DATA_1 =
 		TO_DATS("REGN_START_DT") AS "REGN_START_DT",
 		TO_DATS("REGN_END_DT") AS "REGN_END_DT",
 		RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","ORG_END_DT" DESC,"ORG_START_DT" DESC) AS "RANK_1"
-		from "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data" 
+		from "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" 
 		where "ABN" IN (SELECT DISTINCT "ABN" FROM :BAS_DATA)
 ;
 
@@ -225,7 +225,7 @@ ASIC_DATA_1 =
 		TO_DATS("REGN_START_DT") AS "REGN_START_DT",
 		TO_DATS("REGN_END_DT") AS "REGN_END_DT",
 		RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","ORG_END_DT" DESC,"ORG_START_DT" DESC) AS "RANK_1"
-	from "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data" 
+	from "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" 
 		where "ABN" IN (SELECT DISTINCT "ABN" FROM :BAS_DATA)
 ;
 
