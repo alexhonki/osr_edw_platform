@@ -118,7 +118,7 @@ ABR_DATA =
 			TO_DATS("ABR"."GST_CANCN_DT") AS "GST_CANCN_DT",
 			"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD"
 			FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-			INNER JOIN "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
+			INNER JOIN "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "ABR"
 			ON "ALERT"."ABN" = "ABR"."ABN"
 			--WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 ;
@@ -280,7 +280,7 @@ ABR_DATA =
 		TO_DATS("ABR"."GST_CANCN_DT") AS "GST_CANCN_DT",
 		"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD"
 	FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
+		INNER JOIN "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "ABR"
 		ON "ALERT"."ABN" = "ABR"."ABN"
 		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 ;
