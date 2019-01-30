@@ -114,7 +114,7 @@ IF :lx_flag_qld_address = 'Y' THEN
 		FROM 
 			:lt_result	AS "RESULT"
 		WHERE EXISTS (
-			SELECT * FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BASNIND"
+			SELECT * FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BASNIND"
 			WHERE "RESULT"."ABN"		= LEFT("BASNIND"."ABN",11)
 			AND   "RESULT"."GJAHR"		= LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
 			AND   "BASNIND"."BUS_STATE" = 'QLD'

@@ -45,7 +45,7 @@ INNER JOIN
 --ON  "ALERT"."ABN" = "DATA"."ABN"
 ON "MAP"."ACN" = "DATA"."ORG_NUMBER"
 --INNER JOIN
---"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "MAP"
+--"osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "MAP"
 --ON "ALERT"."ABN" = "MAP"."ABN"
 --AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."FINANCIAL_YEAR")
 WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'

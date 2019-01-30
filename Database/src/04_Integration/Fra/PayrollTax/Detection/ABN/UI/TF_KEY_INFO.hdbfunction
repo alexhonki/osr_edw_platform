@@ -48,7 +48,7 @@ BAS_DATA =
 		TO_NVARCHAR("BAS"."FINANCIAL_YEAR") AS "FINANCIAL_YEAR",
 		"BAS"."ANZSIC_CD",
 		"BAS"."ANZSIC_TITLE"
-		FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BAS"
+		FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BAS"
 		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "BAS"."ABN"
 		AND "ALERT"."GJAHR" = TO_NVARCHAR("BAS"."FINANCIAL_YEAR")
 		WHERE LEFT(RIGHT("BAS"."NAME",10),2) = 'FY'
@@ -210,7 +210,7 @@ BAS_DATA =
 		TO_NVARCHAR("BAS"."FINANCIAL_YEAR") AS "FINANCIAL_YEAR",
 		"BAS"."ANZSIC_CD",
 		"BAS"."ANZSIC_TITLE"
-	FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BAS"
+	FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BAS"
 		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "BAS"."ABN"
 		AND "ALERT"."GJAHR" = TO_NVARCHAR("BAS"."FINANCIAL_YEAR")
 		WHERE LEFT(RIGHT("BAS"."NAME",10),2) = 'FY'
