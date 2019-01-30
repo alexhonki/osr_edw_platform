@@ -190,7 +190,7 @@ FROM (
 	LEFT(TO_NVARCHAR("INCM_YR"),4)  AS "GJAHR",
 	"CNT_EMPLOYEE"					AS "QLD_CNT_EMPLOYEE",
 	0								AS "CNT_EMPLOYEE"
-	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+	FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C"
 	WHERE "RSDNL_STATE_CD"='QLD'
 	UNION
 	SELECT
@@ -198,7 +198,7 @@ FROM (
 	LEFT(TO_NVARCHAR("INCM_YR"),4)  AS "GJAHR",
 	0								AS "QLD_CNT_EMPLOYEE",
 	"CNT_EMPLOYEE"					AS "CNT_EMPLOYEE"
-	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+	FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C"
 	)
 	GROUP BY 
 		"ABN",
