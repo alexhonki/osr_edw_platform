@@ -2,6 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY" ()
 	RETURNS TABLE 
        (
     	DB_KEY			VARBINARY(16),
+    	KEY1			NVARCHAR(32),
     	ALERT_ID		NVARCHAR(20),
 		ABN			    NVARCHAR(11),
 		GJAHR			NVARCHAR(4),
@@ -14,6 +15,7 @@ BEGIN
 	RETURN 
 	SELECT
 	"DB_KEY",
+	REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "KEY1",
 	"ALERT_ID",
 	"INVEST_OBJ_ID" AS "ABN",
 	"INVEST_OBJ_ID2" AS "GJAHR",
