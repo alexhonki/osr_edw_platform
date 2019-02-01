@@ -1,5 +1,5 @@
 FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_EMP_DETAILS"( IN IP_ALERT_ID NVARCHAR(20)  )
-       RETURNS TABLE
+RETURNS TABLE
 (
 DB_KEY				VARBINARY(16),
 ALERT_ID			NVARCHAR(20),
@@ -29,7 +29,6 @@ lt_emp_details =
 SELECT 
 "A"."ABN", 
 "A"."ACN",
-"A"."NAME",
 "A"."POLICY_NO",
 "A"."EMP_NAME",
 "D"."ASSOC_TYPE",
@@ -45,10 +44,10 @@ SELECT
 "A"."START_EMPLOY_DATE",
 "A"."CEASED_DATE",
 "C"."FISCAL_YEAR" AS "ASSESSMENT_YEAR"
-FROM "osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C" AS "A"
-INNER JOIN "osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C"  AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
+FROM "osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"() AS "A"
+INNER JOIN "osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()  AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "C" ON TO_DATS("B"."ASSESSMENT_TO")=TO_DATS("C"."DATE_SQL")
-LEFT OUTER JOIN "osr.edw.staging.md.wcq.proxy::CV_ASSOCIATED_NAMES_C" AS "D" ON "A"."POLICY_NO"="D"."POLICY_NO";
+LEFT OUTER JOIN "osr.edw.staging.md.wcq.proxy::TF_ASSOCIATED_NAMES_C"() AS "D" ON "A"."POLICY_NO"="D"."POLICY_NO";
 --where 	"A"."ABN" = '11000002568';
 
 RETURN
@@ -75,7 +74,6 @@ SELECT
 FROM  :lt_emp_details AS "DATA"
 INNER JOIN  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
 AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."ASSESSMENT_YEAR")
-WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
   AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
 
 END;

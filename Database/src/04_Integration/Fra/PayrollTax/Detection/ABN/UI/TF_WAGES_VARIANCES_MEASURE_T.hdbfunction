@@ -1,0 +1,39 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES_MEASURE_T"( )
+RETURNS TABLE (
+MEASURE_NAME	NVARCHAR(30),
+LANGU			NVARCHAR(1),
+MEASURE_TEXT	NVARCHAR(100)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+lt_dummy = SELECT TOP 1 * FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data" AS "T009";
+
+RETURN 
+SELECT 
+'VAR1' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Variance between WC QLD and OSR QLD Wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'VAR2' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Variance between ATO ITR and OSR Aus. Wide Wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'VAR3' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Variance between ATO BAS and OSR Aus. Wide Wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+UNION
+SELECT 
+'VAR4' AS "MEASURE_NAME",
+'E' AS "LANGU",
+'Variance between ATO PAYG and OSR Aus. Wide Wages' AS "MEASURE_TEXT"
+FROM :lt_dummy
+;
+
+END;
