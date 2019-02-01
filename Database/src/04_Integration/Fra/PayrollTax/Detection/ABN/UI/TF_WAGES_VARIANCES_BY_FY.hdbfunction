@@ -13,6 +13,20 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 
+lt_data_fy = 
+SELECT 
+"DB_KEY",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+"VAR1",
+"VAR2",
+"VAR3",
+"VAR4",
+"WAERS"
+FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+;
+
 RETURN
 SELECT 
 "DB_KEY",
@@ -22,7 +36,7 @@ SELECT
 'VAR1' AS "MEASURE_NAME",
 "VAR1" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_data_fy
 UNION
 SELECT 
 "DB_KEY",
@@ -32,7 +46,7 @@ SELECT
 'VAR2' AS "MEASURE_NAME",
 "VAR2" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_data_fy
 UNION
 SELECT 
 "DB_KEY",
@@ -42,7 +56,7 @@ SELECT
 'VAR3' AS "MEASURE_NAME",
 "VAR3" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_data_fy
 UNION
 SELECT 
 "DB_KEY",
@@ -52,6 +66,6 @@ SELECT
 'VAR4' AS "MEASURE_NAME",
 "VAR4" AS "AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+FROM :lt_data_fy
 ;
 END;
