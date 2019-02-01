@@ -1,0 +1,103 @@
+FUNCTION "osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_EXTRACT01"( )
+       
+       RETURNS TABLE (
+       				"NAME" NVARCHAR(256),
+					"ASSESSMENT_YEAR" NVARCHAR(256),
+					"SOURCE_FIELD_VALUE" NVARCHAR(256),
+					"COUNT_Z_RUN_SEQ_ID" NVARCHAR(256)
+    			)
+    			
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+       
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    DECLARE COUNTER INTEGER;
+	DECLARE GROUP_COUNT INTEGER;
+	DECLARE TEMP_FILE_NAME NVARCHAR(256);
+	DECLARE TEMP_PREVIOUS_FILE_NAME NVARCHAR(256);
+	DECLARE TEMP_LEAST_YEAR NVARCHAR(256);
+	DECLARE RESULT_TABLE TABLE ( NAME NVARCHAR(1024),
+					ASSESSMENT_YEAR NVARCHAR(256),
+					SOURCE_FIELD_VALUE NVARCHAR(256),
+					COUNT_Z_RUN_SEQ_ID BIGINT);
+	DECLARE NEWEST_FILE_NAME NVARCHAR(256);
+-- count the number of groups within the table     
+SELECT COUNT (DISTINCT("NAME")) INTO GROUP_COUNT FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data";
+
+-- take the very first group because of corner cases
+-- below return the latest file name in the table e.g 
+-- WCQ_POLICY_WAGES_FY1710.txt and WCQ_POLICY_WAGES_FY1610.txt, will take WCQ_POLICY_WAGES_FY1710.txt
+SELECT TOP 1 DISTINCT  
+	"NAME" INTO NEWEST_FILE_NAME
+FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"
+GROUP BY "NAME"
+ORDER BY "NAME" DESC;
+
+-- grab the very first group of the SQL without the very first row 
+FIRST_GROUP=SELECT DISTINCT  
+	"NAME",
+	"ASSESSMENT_YEAR",
+	"SOURCE_FIELD_VALUE",
+	COUNT(*) AS "COUNT_Z_RUN_SEQ_ID"
+FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"
+WHERE "ASSESSMENT_YEAR" NOT IN (SELECT MAX("ASSESSMENT_YEAR") --lexicographic sorting of the max year
+FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data" WHERE "NAME"=NEWEST_FILE_NAME)
+AND "NAME"=NEWEST_FILE_NAME
+GROUP BY "NAME", "ASSESSMENT_YEAR", "SOURCE_FIELD_VALUE"
+ORDER BY "NAME" DESC, "ASSESSMENT_YEAR" DESC, "SOURCE_FIELD_VALUE" DESC ;
+:RESULT_TABLE.INSERT(:FIRST_GROUP);	
+
+-- run through each of the SQL group base on the table 
+-- base on the second group onward 
+COUNTER := 1;
+WHILE COUNTER < GROUP_COUNT DO 
+
+	
+-- grab each of the file name to be check.
+-- use CTE to grab the name of the file that exist so we can loop through the row 
+-- grab the second file name onward 
+WITH myTableWithRows AS (
+    SELECT (ROW_NUMBER() OVER (ORDER BY "NAMES" DESC)) as ROW,*
+    FROM (SELECT DISTINCT("NAME") as "NAMES" FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"))
+SELECT NAMES INTO TEMP_FILE_NAME FROM myTableWithRows WHERE ROW = COUNTER + 1;
+
+
+-- grab the previous year file name because we need the min from it 
+-- in our next sql run 
+WITH myTableWithRows AS (
+    SELECT (ROW_NUMBER() OVER (ORDER BY "NAMES" DESC)) as ROW,*
+    FROM (SELECT DISTINCT("NAME") as "NAMES" FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"))
+SELECT NAMES INTO TEMP_PREVIOUS_FILE_NAME FROM myTableWithRows WHERE ROW = COUNTER;
+
+-- take the min of the previous year from the later group 
+-- from the above variable 
+SELECT DISTINCT
+MIN("ASSESSMENT_YEAR") INTO TEMP_LEAST_YEAR
+	FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"
+	WHERE "NAME" = TEMP_PREVIOUS_FILE_NAME;
+	
+
+-- use the TEMP_FILE_NAME for grabbing the min 
+TEMP_RESULT=SELECT DISTINCT
+	"NAME",
+	"ASSESSMENT_YEAR",
+	"SOURCE_FIELD_VALUE",
+	COUNT(*) AS "COUNT_Z_RUN_SEQ_ID"
+	FROM "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.POLICY_WAGES.active_data"
+	WHERE "NAME" = TEMP_FILE_NAME AND "ASSESSMENT_YEAR" < TEMP_LEAST_YEAR
+	GROUP BY "NAME", "ASSESSMENT_YEAR", "SOURCE_FIELD_VALUE";
+:RESULT_TABLE.INSERT(:TEMP_RESULT);	
+COUNTER := COUNTER + 1;
+
+END WHILE;
+ 
+RETURN 
+
+
+-- return the table that contains all the result
+SELECT * FROM :RESULT_TABLE;
+
+END;
