@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_DFACTS_BP_REGS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABR_BP_MD"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PRT_LIAB_DATE">
+        <descriptions defaultDescription="PRT_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_LIAB_DATE">
+        <descriptions defaultDescription="QLD_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="GRP_STATUS">
+        <descriptions defaultDescription="GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_FROM">
+        <descriptions defaultDescription="VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_TO">
+        <descriptions defaultDescription="VALID_TO"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_LIAB_DATE" source="PRT_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_LIAB_DATE" source="QLD_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_STATUS" source="GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GRP_STATUS">
+        <descriptions defaultDescription="GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PRT_LIAB_DATE">
+        <descriptions defaultDescription="PRT_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="QLD_LIAB_DATE">
+        <descriptions defaultDescription="QLD_LIAB_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_FROM">
+        <descriptions defaultDescription="VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_TO">
+        <descriptions defaultDescription="VALID_TO"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_LIAB_DATE" source="PRT_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QLD_LIAB_DATE" source="QLD_LIAB_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_STATUS" source="GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+    </input>
+    <joinAttribute name="BPARTNER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+    
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="ALERT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Join_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="GJAHR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="GRP_STATUS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_STATUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="GRP_STATUS"/>
+    </attribute>
+    <attribute id="PRT_LIAB_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT_LIAB_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="PRT_LIAB_DATE"/>
+    </attribute>
+    <attribute id="BPARTNER" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="Join_1" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="QLD_LIAB_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QLD_LIAB_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="QLD_LIAB_DATE"/>
+    </attribute>
+    <attribute id="VALID_FROM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_FROM"/>
+      <keyMapping columnObjectName="Join_1" columnName="VALID_FROM"/>
+    </attribute>
+    <attribute id="VALID_TO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_TO"/>
+      <keyMapping columnObjectName="Join_1" columnName="VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
