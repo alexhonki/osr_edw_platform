@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_BUS_ADD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_ITR_NIND_BUS_ADD"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
+<localVariables/>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_BUS_ADD">
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_BUS_ADD" value="NULL">
     <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_BUS_ADD"/>
-    <localVariable>IP_ALERT_ID</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>
@@ -21,108 +12,48 @@
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_BUS_ADD</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
-    <viewAttributes>
-      <viewAttribute id="BUS_ADDR_LN_2">
-        <descriptions defaultDescription="BUS_ADDR_LN_2"/>
-      </viewAttribute>
-      <viewAttribute id="Z_CHANGE_TIME">
-        <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      </viewAttribute>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="BUS_LCLTY_NM">
-        <descriptions defaultDescription="BUS_LCLTY_NM"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="BUS_STATE">
-        <descriptions defaultDescription="BUS_STATE"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="BUS_ADDR_LN_1">
-        <descriptions defaultDescription="BUS_ADDR_LN_1"/>
-      </viewAttribute>
-      <viewAttribute id="BUS_PC">
-        <descriptions defaultDescription="BUS_PC"/>
-      </viewAttribute>
-    
-      <viewAttribute id="KEY1">
-        <descriptions defaultDescription="KEY1"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_BUS_ADD">
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR_LN_2" source="BUS_ADDR_LN_2"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_LCLTY_NM" source="BUS_LCLTY_NM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR_LN_1" source="BUS_ADDR_LN_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="BUS_PC"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="KEY1" source="KEY1"/>
-    </input>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_BUS_ADD">
   <attributes>
-    <attribute id="BUS_ADDR_LN_2" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Business Address Line 2"/>
-      <keyMapping columnObjectName="Projection_1" columnName="BUS_ADDR_LN_2"/>
+    <attribute id="BUS_STATE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_STATE"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="BUS_STATE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
+    <attribute id="BUS_PC" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="BUS_PC"/>
     </attribute>
     <attribute id="DB_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KEY1" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEY1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="KEY1"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
-    </attribute>
-    <attribute id="BUS_LCLTY_NM" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Business Locality Name"/>
-      <keyMapping columnObjectName="Projection_1" columnName="BUS_LCLTY_NM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="ALERT_ID"/>
     </attribute>
     <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="ABN"/>
     </attribute>
-    <attribute id="BUS_STATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Business State"/>
-      <keyMapping columnObjectName="Projection_1" columnName="BUS_STATE"/>
-    </attribute>
-    <attribute id="GJAHR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="GJAHR"/>
     </attribute>
-    <attribute id="BUS_ADDR_LN_1" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Business Address Line 1  "/>
-      <keyMapping columnObjectName="Projection_1" columnName="BUS_ADDR_LN_1"/>
+    <attribute id="BUS_ADDR_LN_1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="BUS_ADDR_LN_1"/>
     </attribute>
-    <attribute id="BUS_PC" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Business Postcode"/>
-      <keyMapping columnObjectName="Projection_1" columnName="BUS_PC"/>
+    <attribute id="BUS_ADDR_LN_2" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="BUS_ADDR_LN_2"/>
     </attribute>
-  
-    <attribute id="KEY1" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="KEY1"/>
-      <keyMapping columnObjectName="Projection_1" columnName="KEY1"/>
+    <attribute id="BUS_LCLTY_NM" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_BUS_ADD" columnName="BUS_LCLTY_NM"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -134,12 +65,6 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="100" y="241"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
