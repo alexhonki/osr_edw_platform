@@ -2,10 +2,10 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP" (IN IP_FY NV
 
 RETURNS TABLE( 
 
-	    "PAYER_ABN"                   NVARCHAR(11)  ,
-	    "FINANCIAL_YEAR"              NVARCHAR(4)   ,	
+	    "PAYER_ABN"                 			NVARCHAR(11)  ,
+	    "FINANCIAL_YEAR"            			NVARCHAR(4)   ,	
 --Payer Details
-	    "PAYER_NAME"                  NVARCHAR(200) ,
+	    "PAYER_NAME"                			NVARCHAR(200) ,
 --	    "PAYER_TRDG_NM"               NVARCHAR(200) ,
 
 		"RISK_CATEGORY"                         NVARCHAR(1)   ,
@@ -282,6 +282,19 @@ GROUP BY
 	"PAYER_ABN",
 	"FINANCIAL_YEAR"
 	;
+	
+-------ABR-------------
+ABR_DATA =
+
+SELECT "ABN",	
+		MIN("GST_REGN_DT")  AS 	"GST_REGN_DT",
+		MIN("GST_CANCN_DT") AS  "GST_CANCN_DT" 
+	FROM
+"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" 
+WHERE "ABN" IN (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_PAYEE )
+GROUP BY "ABN"
+;
+----------------------
 -----------------------------
 --Agg Data Set
 EXT_DATA_SET =
@@ -333,7 +346,7 @@ ON 	"A"."PAYER_ABN" = 	"C"."PAYER_ABN"
 
 LEFT OUTER JOIN
 --ABR
-"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "D"
+:ABR_DATA AS "D"
 ON 	"A"."PAYER_ABN" = 	"D"."ABN"
 
 --ITR Data

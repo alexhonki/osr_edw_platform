@@ -345,6 +345,21 @@ GROUP BY
 	"ABN"
 
 ;
+
+
+--------------------ABR Data------
+ABR_DATA =
+
+SELECT "ABN",	
+		MIN("GST_REGN_DT")  AS 	"GST_REGN_DT",
+		MIN("GST_CANCN_DT") AS  "GST_CANCN_DT" 
+	FROM
+"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" 
+WHERE "ABN" IN (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_HEADER )
+GROUP BY "ABN"
+;
+--------------------END of ABR Data
+
 ------------------End of BAS & PAYG---------------------------
 STEP2_PAYEE_DATA =
 
@@ -488,7 +503,7 @@ ON
 
 LEFT OUTER JOIN
 --ABR
-	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "E"
+	:ABR_DATA  AS "E"
 ON 	"A"."PAYEE_ABN" = 	"E"."ABN"
 
 --BAS
