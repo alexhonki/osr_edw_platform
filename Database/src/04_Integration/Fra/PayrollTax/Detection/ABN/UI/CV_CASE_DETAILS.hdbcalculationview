@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_CASE_DETAILS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_CASE_DETAILS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_CASE_DETAILS"/>
 <localVariables/>
-<variableMappings/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_CASE_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_CASE_DETAILS"/>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_CASE_DETAILS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_CASE_DETAILS</resourceUri>
@@ -11,99 +15,101 @@
 <calculationViews/>
 <logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_CASE_DETAILS">
   <attributes>
-    <attribute id="CLOSING_TIME" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CLOSING_TIME"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CLOSING_TIME"/>
-    </attribute>
-    <attribute id="ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="ABN"/>
-    </attribute>
-    <attribute id="GJAHR" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="GJAHR"/>
-    </attribute>
-    <attribute id="PROCESSOR" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PROCESSOR"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="PROCESSOR"/>
-    </attribute>
-    <attribute id="PARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PARTNER"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="PARTNER"/>
-    </attribute>
-    <attribute id="CHANGE_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CHANGE_TIME"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CHANGE_TIME"/>
-    </attribute>
-    <attribute id="CASE_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CASE_TYPE"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_TYPE"/>
-    </attribute>
-    <attribute id="CASE_GUID" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CASE_GUID"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_GUID"/>
-    </attribute>
-    <attribute id="CASE_CATEGORY" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CASE_CATEGORY"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_CATEGORY"/>
-    </attribute>
-    <attribute id="ZZCURRENT_ACTION" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ZZCURRENT_ACTION" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ZZCURRENT_ACTION"/>
       <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="ZZCURRENT_ACTION"/>
     </attribute>
-    <attribute id="CASE_PRIORITY" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CASE_PRIORITY"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_PRIORITY"/>
-    </attribute>
-    <attribute id="DBKEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DBKEY"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="DBKEY"/>
-    </attribute>
-    <attribute id="OUTCOME_REASON" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="OUTCOME_REASON"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="OUTCOME_REASON"/>
-    </attribute>
-    <attribute id="CASE_OUTCOME" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CASE_OUTCOME"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_OUTCOME"/>
-    </attribute>
-    <attribute id="ALERT_ID" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="ALERT_ID"/>
-    </attribute>
-    <attribute id="CREATE_TIME" order="17" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CREATE_TIME"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CREATE_TIME"/>
-    </attribute>
-    <attribute id="REASON_CODE" order="18" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REASON_CODE"/>
-      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="REASON_CODE"/>
-    </attribute>
-    <attribute id="CASE_ID" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CASE_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CASE_ID"/>
       <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_ID"/>
     </attribute>
-    <attribute id="CASE_TITLE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="OUTCOME_REASON" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OUTCOME_REASON"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="OUTCOME_REASON"/>
+    </attribute>
+    <attribute id="CASE_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_TYPE"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_TYPE"/>
+    </attribute>
+    <attribute id="REC_CNT" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REC_CNT"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="REC_CNT"/>
+    </attribute>
+    <attribute id="CASE_CATEGORY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_CATEGORY"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_CATEGORY"/>
+    </attribute>
+    <attribute id="CREATE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATE_TIME"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CREATE_TIME"/>
+    </attribute>
+    <attribute id="CASE_PRIORITY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_PRIORITY"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_PRIORITY"/>
+    </attribute>
+    <attribute id="CHANGE_TIME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGE_TIME"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CHANGE_TIME"/>
+    </attribute>
+    <attribute id="DB_KEY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="CASE_OUTCOME" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_OUTCOME"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_OUTCOME"/>
+    </attribute>
+    <attribute id="CLOSING_TIME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLOSING_TIME"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CLOSING_TIME"/>
+    </attribute>
+    <attribute id="KEY1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEY1"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="KEY1"/>
+    </attribute>
+    <attribute id="REASON_CODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REASON_CODE"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="REASON_CODE"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="CASE_TITLE" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CASE_TITLE"/>
       <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_TITLE"/>
     </attribute>
-    <attribute id="STAT_ORDERNO" order="21" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="STAT_ORDERNO" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STAT_ORDERNO"/>
       <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="STAT_ORDERNO"/>
     </attribute>
+    <attribute id="GJAHR" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="PROCESSOR" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESSOR"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="PROCESSOR"/>
+    </attribute>
+    <attribute id="PARTNER" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="ZZTOTASSMT" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZTOTASSMT"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="ZZTOTASSMT"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="TF_CASE_DETAILS" columnName="CASE_GUID"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="ZZTOTASSMT" order="8" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="ZZTOTASSMT"/>
-      <measureMapping columnObjectName="TF_CASE_DETAILS" columnName="ZZTOTASSMT"/>
-    </measure>
-  
-    <measure id="REC_CNT" order="22" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="REC_CNT"/>
-      <measureMapping columnObjectName="TF_CASE_DETAILS" columnName="REC_CNT"/>
-    </measure>
-  </baseMeasures>
+  <baseMeasures/>
   <calculatedMeasures/>
   <restrictedMeasures/>
 </logicalModel>

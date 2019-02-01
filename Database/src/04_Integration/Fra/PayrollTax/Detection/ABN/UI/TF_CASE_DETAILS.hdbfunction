@@ -1,11 +1,12 @@
 FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_CASE_DETAILS"(IN IP_ALERT_ID NVARCHAR(20) )
    RETURNS TABLE (
-   		DBKEY				NVARCHAR(32),
-		ALERT_ID			NVARCHAR(20),
-		ABN					NVARCHAR(20),
-		GJAHR				NVARCHAR(4),
+ 
+   		DB_KEY			  VARBINARY(16),
+   		KEY1			  NVARCHAR(32),
+		ALERT_ID		  NVARCHAR(20),
+		ABN				  NVARCHAR(20),
+		GJAHR			  NVARCHAR(4),
 		PARTNER			  NVARCHAR(10)  ,
-    	--ABN				  NVARCHAR(11)  ,
 		CASE_GUID		  NVARCHAR(32)  ,
 		CASE_ID			  NVARCHAR(12)  ,		
 		CASE_TYPE		  NVARCHAR(4)   ,
@@ -38,6 +39,7 @@ BEGIN
 CASE_DETAILS = 
  SELECT 
 	"ALERT"."DB_KEY" AS "DB_KEY",
+	"ALERT"."KEY1" AS "KEY1",
 	"ALERT"."ALERT_ID" AS "ALERT_ID",
 	"ALERT"."ABN" AS "ABN",
 	"ALERT"."GJAHR" AS "GJAHR",
@@ -75,7 +77,8 @@ FROM
 
 RETURN
 SELECT 
-	REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DBKEY",
+	"DB_KEY",
+	"KEY1",
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
@@ -110,7 +113,8 @@ ELSE
 
 RETURN
 SELECT 
-	REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DBKEY",
+	"DB_KEY",
+	"KEY1",
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
