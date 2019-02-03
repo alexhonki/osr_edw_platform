@@ -20,7 +20,7 @@ BEGIN
 		"ATO_ITR"."SALARY_WAGES" + "ATO_ITR"."SUPER_EXPNS"                                          	AS  "ATO_ITR_SALARY_WAGES",
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
-		"osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "ATO_ITR"
+		"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ATO_ITR"
 	WHERE "ABN" <> 'no ABN'
 	;
 

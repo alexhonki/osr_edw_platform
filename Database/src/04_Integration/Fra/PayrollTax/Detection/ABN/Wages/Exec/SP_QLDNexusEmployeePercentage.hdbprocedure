@@ -54,7 +54,7 @@ LEFT("EMP_CNT"."ABN",11) AS "ABN",
 LEFT(TO_NVARCHAR("EMP_CNT"."INCM_YR"),4) AS "GJAHR",
 "EMP_CNT"."CNT_EMPLOYEE" AS "CNT_EMPLOYEE",
 "EMP_CNT"."RSDNL_STATE_CD" AS "RSDNL_STATE_CD"
-FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data" AS "EMP_CNT"
+FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C" AS "EMP_CNT"
 WHERE EXISTS (
 	SELECT * FROM :lt_data_for_rule AS "WS"
 	WHERE "WS"."ABN" = LEFT("EMP_CNT"."ABN",11) 

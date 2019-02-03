@@ -1,102 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_WC_WAGES_TOT"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_WC_WAGES_DETAIL"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
     <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
+    <variableProperties datatype="VARCHAR" length="13" mandatory="false">
       <valueDomain type="empty"/>
       <selection multiLine="false" type="Single"/>
     </variableProperties>
   </variable>
 </localVariables>
-<variableMappings/>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
-    <viewAttributes>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="POLICY_NO">
-        <descriptions defaultDescription="POLICY_NO"/>
-      </viewAttribute>
-      <viewAttribute id="ACT_WAGES">
-        <descriptions defaultDescription="ACT_WAGES"/>
-      </viewAttribute>
-      <viewAttribute id="ACT_APPR_WAGES">
-        <descriptions defaultDescription="ACT_APPR_WAGES"/>
-      </viewAttribute>
-      <viewAttribute id="WAERS">
-        <descriptions defaultDescription="WAERS"/>
-      </viewAttribute>
-    
-      <viewAttribute id="CNT_EMP">
-        <descriptions defaultDescription="CNT_EMP"/>
-      </viewAttribute></viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMP" source="CNT_EMP"/></input>
-    <filter>&quot;ALERT_ID&quot;='$$IP_ALERT_ID$$'</filter>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL">
   <attributes>
-    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
-    </attribute>
-    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
-    </attribute>
-    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
-    </attribute>
-    <attribute id="POLICY_NO" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Policy Number"/>
-      <keyMapping columnObjectName="Projection_1" columnName="POLICY_NO"/>
-    </attribute>
-    <attribute id="WAERS" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
-    </attribute></attributes>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="WAERS"/>
+    </attribute>
+    <attribute id="DB_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="POLICY_NO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POLICY_NO"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="POLICY_NO"/>
+    </attribute>
+    <attribute id="ASSESSMENT_YEAR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSESSMENT_YEAR"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ASSESSMENT_YEAR"/>
+    </attribute>
+  </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="ACT_WAGES" order="5" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Actual Wages"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ACT_WAGES"/>
+    <measure id="TOTAL_WAGES" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTAL_WAGES"/>
+      <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="TOTAL_WAGES"/>
     </measure>
-    <measure id="ACT_APPR_WAGES" order="6" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Provisional Wages"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="ACT_APPR_WAGES"/>
+    <measure id="ACT_WAGES" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_WAGES"/>
+      <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_WAGES"/>
     </measure>
-  
-    <measure id="CNT_EMP" order="8" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="No. of Employees"/>
-      <measureMapping columnObjectName="Projection_1" columnName="CNT_EMP"/>
+    <measure id="ACT_APPR_WAGES" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_APPR_WAGES"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
@@ -107,11 +76,6 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="0" y="212"/>
-      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>

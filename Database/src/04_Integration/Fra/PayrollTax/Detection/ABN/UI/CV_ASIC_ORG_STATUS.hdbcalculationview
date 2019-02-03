@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ASIC_ORG_STATUS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ASIC_ORG_STATUS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ASIC_ORG_STATUS"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
@@ -10,137 +10,76 @@
     </variableProperties>
   </variable>
 </localVariables>
-<variableMappings/>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_STATUS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_STATUS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_STATUS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_STATUS</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
-    <viewAttributes>
-      <viewAttribute id="ACN">
-        <descriptions defaultDescription="ACN"/>
-      </viewAttribute>
-      <viewAttribute id="REGN_END_DT">
-        <descriptions defaultDescription="REGN_END_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ORG_NAME">
-        <descriptions defaultDescription="ORG_NAME"/>
-      </viewAttribute>
-      <viewAttribute id="DEREGISTRATION_CODE">
-        <descriptions defaultDescription="DEREGISTRATION_CODE"/>
-      </viewAttribute>
-      <viewAttribute id="ORG_TYPE">
-        <descriptions defaultDescription="ORG_TYPE"/>
-      </viewAttribute>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="ORG_STATUS">
-        <descriptions defaultDescription="ORG_STATUS"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="PLACE_OF_INCORP">
-        <descriptions defaultDescription="PLACE_OF_INCORP"/>
-      </viewAttribute>
-      <viewAttribute id="ORG_CLASS">
-        <descriptions defaultDescription="ORG_CLASS"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="Z_CHANGE_TIME">
-        <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="REGN_START_DT">
-        <descriptions defaultDescription="REGN_START_DT"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_STATUS">
-      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME" source="ORG_NAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DEREGISTRATION_CODE" source="DEREGISTRATION_CODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE" source="ORG_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="ORG_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PLACE_OF_INCORP" source="PLACE_OF_INCORP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_CLASS" source="ORG_CLASS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
-    </input>
-    <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_STATUS">
   <attributes>
-    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
-    </attribute>
-    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
-    </attribute>
-    <attribute id="DB_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
-    </attribute>
-    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
-    </attribute>
-    <attribute id="ACN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ACN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ACN"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ACN"/>
     </attribute>
-    <attribute id="ORG_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Organisation Name"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ORG_NAME"/>
+    <attribute id="REGN_END_DT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_END_DT"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="REGN_END_DT"/>
     </attribute>
-    <attribute id="ORG_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Organisation Type"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ORG_TYPE"/>
+    <attribute id="ORG_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NAME"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ORG_NAME"/>
     </attribute>
-    <attribute id="ORG_STATUS" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Organisation Status"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ORG_STATUS"/>
+    <attribute id="DEREGISTRATION_CODE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="DEREGISTRATION_CODE"/>
     </attribute>
-    <attribute id="ORG_CLASS" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Organisation Class"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ORG_CLASS"/>
+    <attribute id="ORG_TYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_TYPE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ORG_TYPE"/>
     </attribute>
-    <attribute id="REGN_START_DT" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Registration Start Date"/>
-      <keyMapping columnObjectName="Projection_1" columnName="REGN_START_DT"/>
+    <attribute id="DB_KEY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="REGN_END_DT" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Registration End Date"/>
-      <keyMapping columnObjectName="Projection_1" columnName="REGN_END_DT"/>
+    <attribute id="ORG_STATUS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_STATUS"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ORG_STATUS"/>
     </attribute>
-    <attribute id="DEREGISTRATION_CODE" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Deregistration Code"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DEREGISTRATION_CODE"/>
+    <attribute id="ALERT_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="PLACE_OF_INCORP" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Place of Incorporation"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PLACE_OF_INCORP"/>
+    <attribute id="PLACE_OF_INCORP" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="PLACE_OF_INCORP"/>
+    </attribute>
+    <attribute id="ORG_CLASS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_CLASS"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ORG_CLASS"/>
+    </attribute>
+    <attribute id="ABN" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="REGN_START_DT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_START_DT"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="REGN_START_DT"/>
     </attribute>
   
-    <attribute id="Z_CHANGE_TIME" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
+    <attribute id="KEY1" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEY1"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_STATUS" columnName="KEY1"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -153,12 +92,6 @@
       <upperLeftCorner x="92" y="112"/>
     
       <rectangleSize width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="217"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

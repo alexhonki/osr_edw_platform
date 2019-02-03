@@ -173,7 +173,7 @@ IF :lx_flag_qld_address = 'Y' THEN
 		FROM 
 		:lt_result AS "RESULT"
 		WHERE EXISTS (
-			SELECT * FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BASNIND"
+			SELECT * FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BASNIND"
 			WHERE	"RESULT"."ABN"		  = LEFT("BASNIND"."ABN",11)
 			AND 	"RESULT"."GJAHR"	  = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
 			AND 	"BASNIND"."BUS_STATE" = 'QLD'
@@ -192,9 +192,9 @@ IF :lx_flag_qld_address = 'Y' THEN
 			(
 				SELECT LEFT("AGENCY_DATA"."ABN",11) AS "ABN" 
 					FROM
-					"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_LOCATION.active_data" AS "BUSINESS_LOCATION"
+					"osr.edw.staging.md.abr.proxy::CV_BUSINESS_LOCATION_C" AS "BUSINESS_LOCATION"
 					INNER JOIN
-					"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"		AS "AGENCY_DATA"
+					"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"		AS "AGENCY_DATA"
 					ON	  "BUSINESS_LOCATION"."PID"			 = "AGENCY_DATA"."PID"
 					WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
 			) AS  "BUS_ADDR"
@@ -247,7 +247,7 @@ lt_cnt =
 			LEFT(TO_NVARCHAR("INCM_YR"),4)	AS "GJAHR",
 			"CNT_EMPLOYEE"					AS "QLD_CNT_EMPLOYEE",
 			0								AS "CNT_EMPLOYEE"
-		FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+		FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C"
 		WHERE "RSDNL_STATE_CD"='QLD'
 		UNION
 		SELECT
@@ -255,7 +255,7 @@ lt_cnt =
 			LEFT(TO_NVARCHAR("INCM_YR"),4)	AS "GJAHR",
 			0								AS "QLD_CNT_EMPLOYEE",
 			"CNT_EMPLOYEE"					AS "CNT_EMPLOYEE"
-		FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+		FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C"
 		)
 	GROUP BY 
 		"ABN",

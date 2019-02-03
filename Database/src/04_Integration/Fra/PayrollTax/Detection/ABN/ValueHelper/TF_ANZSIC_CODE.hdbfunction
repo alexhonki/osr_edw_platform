@@ -12,6 +12,6 @@ SELECT
 DISTINCT
 	"MN_INDY_CLSN" AS "ANZSIC_CD",
 	"MN_INDY_CLSN_DESCN" AS "ANZSIC_CD_DESCR"
-FROM "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"
+FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"
 ;
 END;

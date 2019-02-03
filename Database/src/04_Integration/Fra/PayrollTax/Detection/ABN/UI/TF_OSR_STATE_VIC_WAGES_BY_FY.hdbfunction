@@ -18,6 +18,8 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_VIC_WAGES_BY_FY"(IN I
        SQL SECURITY INVOKER AS 
 BEGIN 
 
+lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_VIC_WAGES" (:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
+
 	RETURN
 		SELECT 
 			"DB_KEY",
@@ -27,7 +29,7 @@ BEGIN
 			'CLIENT_STATE_WAGES'			AS "MEASURE_NAME",
 			"CLIENT_STATE_WAGES" 			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_VIC_WAGES" (:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
@@ -37,7 +39,7 @@ BEGIN
 			'GROUP_STATE_WAGES'			AS "MEASURE_NAME",
 			"GROUP_STATE_WAGES"			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_VIC_WAGES" (:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		;
 
 END;

@@ -18,6 +18,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_IND_WAGES_BY_FY"(IN IP_ALE
        SQL SECURITY INVOKER AS 
 BEGIN 
 
+lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_IND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
 	RETURN
 		SELECT 
 			"DB_KEY",
@@ -27,7 +28,7 @@ BEGIN
 			'TOTL_WAGES'			AS "MEASURE_NAME",
 			"TOTL_WAGES" 			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_IND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
@@ -37,7 +38,7 @@ BEGIN
 			'PMT_SMRY_CNT'			AS "MEASURE_NAME",
 			"PMT_SMRY_CNT"			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_IND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		;
 
 END;

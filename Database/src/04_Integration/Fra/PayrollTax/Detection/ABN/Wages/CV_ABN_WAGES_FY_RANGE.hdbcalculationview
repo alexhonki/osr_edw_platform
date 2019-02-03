@@ -5,13 +5,13 @@
 <variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
-    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND</resourceUri>
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_BASNIND</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
-    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND</resourceUri>
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ITRNIND</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
-    <resourceUri>osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES</resourceUri>
+  <DataSource id="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES">
+    <resourceUri>osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -87,7 +87,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
+    <input node="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES">
       <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
     </input>
   </calculationView>
