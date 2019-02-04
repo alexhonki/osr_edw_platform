@@ -31,7 +31,7 @@ lx_wcq
 FROM :PARAMETERS LIMIT 1;
 
 --estimated annual wages when the quarter wage is above the threshold hold
-lt_wages = 
+lt_wages_predict = 
 SELECT 
 "WAGES"."ABN" AS "ABN",
 "WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
@@ -62,7 +62,24 @@ GROUP BY
 "WAGES"."PERIOD_KEY",
 "WAGES"."GJAHR",
 "WAGES"."WAERS"
-HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly
+;
+
+lt_wages = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS",
+SUM("WAGE") AS "WAGE"
+FROM :lt_wages_predict
+GROUP BY 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS"
+HAVING SUM("WAGE")  >= :lv_thld_yearly
 ;
 
 -- use the WCQ wages from previous year as the predicted wage for the current year
