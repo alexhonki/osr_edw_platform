@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_ABN_NIND"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND_BY_FY" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_NIND_BY_FY"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -13,6 +13,9 @@
   <DataSource id="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS">
     <resourceUri>osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES">
+    <resourceUri>osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS">
@@ -20,15 +23,27 @@
       <viewAttribute id="ABN_BAS">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+    
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
         <formula>LEFT(&quot;ABN_BAS&quot;,11)</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+    
+        <formula>TO_NVARCHAR(&quot;FINANCIAL_YEAR&quot;)</formula>
+    
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.td.ato.proxy::CV_BASNIND">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_BAS" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR">
@@ -47,7 +62,9 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+    
         <formula>TO_NVARCHAR(&quot;INCM_YR&quot;)</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -62,33 +79,75 @@
       <viewAttribute id="ABN_WCQ">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+      <viewAttribute id="ASSESSMENT_YEAR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
         <formula>LEFT(&quot;ABN_WCQ&quot;,11)</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+    
+        <formula>TO_NVARCHAR(&quot;ASSESSMENT_YEAR&quot;)</formula>
+    
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS">
+    <input node="Join_WCQ">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_WCQ" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
     </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_WCQ" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ASSESSMENT_YEAR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$POLICY_NO$POLICY_NO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
+    </input>
+    <input node="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
+    </input>
+    <joinAttribute name="JOIN$POLICY_NO$POLICY_NO"/>
   </calculationView>
   <calculationView xsi:type="Calculation:UnionView" id="Union_ABN">
     <viewAttributes>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+    
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="Projection_BAS" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
     <input node="Projection_ITR" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
     <input node="Projection_WCQ" emptyUnionBehavior="NO_ROW">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_ABN">
@@ -96,11 +155,17 @@
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+    
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="Union_ABN">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -109,6 +174,13 @@
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Aggregation_ABN" columnName="ABN"/>
+    </attribute>
+  
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+  
+      <keyMapping columnObjectName="Aggregation_ABN" columnName="GJAHR"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -125,7 +197,7 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_BAS" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="496"/>
+      <upperLeftCorner x="15" y="506"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_ITR" modelObjectNameSpace="CalculationView">
@@ -136,6 +208,19 @@
       <upperLeftCorner x="302" y="496"/>
       <rectangleSize height="30" width="160"/>
     </shape>
+  
+    <shape expanded="true" modelObjectName="Join_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="312" y="606"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS" modelObjectNameSpace="Join_WCQ" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES" modelObjectNameSpace="Join_WCQ" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
     <shape expanded="true" modelObjectName="Union_ABN" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="302" y="341"/>
       <rectangleSize height="30" width="160"/>
@@ -143,7 +228,6 @@
     <shape expanded="true" modelObjectName="Aggregation_ABN" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="379" y="217"/>
       <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
