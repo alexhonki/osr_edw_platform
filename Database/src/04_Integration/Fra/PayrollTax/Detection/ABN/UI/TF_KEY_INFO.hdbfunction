@@ -54,334 +54,7 @@ ATO_PAYG_WAGES     DECIMAL(15,2)
        SQL SECURITY INVOKER AS 
 BEGIN 
 
-/*
-IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
 
-BAS_DATA = 
-	SELECT
-		"ALERT"."DB_KEY",
-		"ALERT"."ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		"ALERT"."GJAHR",
-		--"BAS"."ABN",
-		"BAS"."TRDNG_NM",
-		TO_NVARCHAR("BAS"."FINANCIAL_YEAR") AS "FINANCIAL_YEAR",
-		"BAS"."ANZSIC_CD",
-		"BAS"."ANZSIC_TITLE"
-		FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BAS"
-		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "BAS"."ABN"
-		AND "ALERT"."GJAHR" = TO_NVARCHAR("BAS"."FINANCIAL_YEAR")
-		WHERE LEFT(RIGHT("BAS"."NAME",10),2) = 'FY'
-	
-;
-
-ASIC_DATA_1 =
-	SELECT 
-		"ABN",
-		"ORG_START_DT",
-		"ORG_END_DT",
-		TO_DATS("REGN_START_DT") AS "REGN_START_DT",
-		TO_DATS("REGN_END_DT") AS "REGN_END_DT",
-		RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","ORG_END_DT" DESC,"ORG_START_DT" DESC) AS "RANK_1"
-		from "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" 
-		where "ABN" IN (SELECT DISTINCT "ABN" FROM :BAS_DATA)
-;
-
-ASIC_DATA_2 =
-	SELECT 
-		"ABN",
-		"REGN_START_DT",
-		"REGN_END_DT",
-		"RANK_1"
-		from :ASIC_DATA_1
-		where "RANK_1" = 1
-;
-
-RMS_DATA = 
-	SELECT 
-		"ALERT"."DB_KEY" AS "DB_KEY",
-		"ALERT"."ALERT_ID" AS "ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		"BPID"."PARTNER" AS "PARTNER",
-		"BPID"."IDNUMBER" AS "IDNUMBER",
-		TO_DATS("BP"."VALID_FROM") AS "PRT_REG_DT",
-		TO_DATS("BP"."PRT_LIAB_DATE") AS "PRT_START_DT",
-		TO_DATS("BP"."VALID_TO") AS "PRT_END_DT"
-		FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
-		ON "ALERT"."ABN" = "BPID"."IDNUMBER"
-		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP" ON "BP"."BPARTNER" = "BPID"."PARTNER"
-		WHERE "BPID"."TYPE" = 'ZABN'
-	
- ;
-
-CASE_DATA =
-	SELECT 
-		"ALERT"."DB_KEY" AS "DB_KEY",
-		"ALERT"."ALERT_ID" AS "ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		"CASE1"."CASE_ID" AS "CASE_ID",
-		CASE WHEN "CASE1"."CASE_ID" like '001500%' THEN 'Exempt' ELSE 'NotExempt' END AS  "ECI_STATUS"
-		FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE" AS "CASE1"
-		ON "ALERT"."ABN" = "CASE1"."ABN"
-		--WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
-		WHERE "CASE1"."CASE_TYPE" = 'ZEXM'
- ;
-
-ABR_DATA =
-		SELECT 
-			"ALERT"."DB_KEY" AS "DB_KEY",
-			"ALERT"."ALERT_ID" AS "ALERT_ID",
-			"ALERT"."ABN" AS "ABN",
-			TO_DATS("ABR"."GST_REGN_DT") AS "GST_REGN_DT",
-			TO_DATS("ABR"."GST_CANCN_DT") AS "GST_CANCN_DT",
-			"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD"
-			FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-			INNER JOIN "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "ABR"
-			ON "ALERT"."ABN" = "ABR"."ABN"
-			--WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
-;
-
-ITR_DATA =
-		SELECT 
-			"ALERT"."DB_KEY" AS "DB_KEY",
-			"ALERT"."ALERT_ID" AS "ALERT_ID",
-			"ALERT"."ABN" AS "ABN",
-			TO_DATS("ITR"."ACNT_PERD_BG_DT") AS "ACNT_PERD_BG_DT",
-			TO_DATS("ITR"."ACNT_PERD_END_DT") AS "ACNT_PERD_END_DT",
-			"ITR"."CNSLDTD_HD_CMPNY" AS "CNSLDTD_HD_CMPNY"
-			FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-			INNER JOIN "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "ITR"
-			ON "ALERT"."ABN" = "ITR"."ABN"
-			AND "ALERT"."GJAHR" = TO_NVARCHAR("ITR"."INCM_YR")
-			WHERE LEFT(RIGHT("ITR"."NAME",10),2) = 'FY'
-			--  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
-;
-
-RETURN
-	SELECT  DISTINCT
-		"DB_KEY",
-		"ALERT_ID",
-		"ABN",
-		"GJAHR",
-		"TRDNG_NM",
-		"ANZSIC_TITLE",
-		"REGN_START_DT",		
-		"REGN_END_DT",
-		"PRT_START_DT",
-		"PRT_END_DT",
-		"PRT_REG_DT",
-		"FINANCIAL_YEAR",
-		"ANZSIC_CD",
-		"GST_REGN_DT",
-		"GST_CANCN_DT",
-		"ENT_TYP_CD",
-		"ACNT_PERD_BG_DT",
-		"ACNT_PERD_END_DT",
-		"ECI_STATUS",
-		"CNSLDTD_HD_CMPNY"
-	FROM
-	(
-		SELECT
-			"A"."DB_KEY",
-			"A"."ALERT_ID",
-			"A"."ABN",
-			"A"."GJAHR",
-			"A"."TRDNG_NM",
-			"A"."ANZSIC_TITLE",
-			TO_NVARCHAR("B"."REGN_START_DT") AS "REGN_START_DT",		
-			TO_NVARCHAR("B"."REGN_END_DT") AS "REGN_END_DT",
-			TO_NVARCHAR("C"."PRT_START_DT") AS "PRT_START_DT",
-			TO_NVARCHAR("C"."PRT_END_DT") AS "PRT_END_DT",
-			TO_NVARCHAR("C"."PRT_REG_DT") AS "PRT_REG_DT",
-			"A"."FINANCIAL_YEAR",
-			"A"."ANZSIC_CD",
-			TO_NVARCHAR("D"."GST_REGN_DT") AS "GST_REGN_DT",
-			TO_NVARCHAR("D"."GST_CANCN_DT") AS "GST_CANCN_DT",
-			"D"."ENT_TYP_CD" AS "ENT_TYP_CD",
-			TO_NVARCHAR("E"."ACNT_PERD_BG_DT") AS "ACNT_PERD_BG_DT",
-			TO_NVARCHAR("E"."ACNT_PERD_END_DT") AS "ACNT_PERD_END_DT",
-			"F"."ECI_STATUS" AS "ECI_STATUS",
-			"E"."CNSLDTD_HD_CMPNY"
-			--"B"."RANK_1"
-			FROM :BAS_DATA AS "A" 
-				INNER JOIN :ASIC_DATA_2 AS "B" 
-				ON "A"."ABN" = "B"."ABN"
-				INNER JOIN :RMS_DATA AS "C" 
-				ON "A"."ABN" = "C"."ABN"
-				INNER JOIN :ABR_DATA AS "D" 
-				ON "A"."ABN" = "D"."ABN"
-				INNER JOIN :ITR_DATA AS "E" 
-				ON "A"."ABN" = "E"."ABN"
-				INNER JOIN :CASE_DATA AS "F" 
-				ON "A"."ABN" = "F"."ABN"
-	)
-;
-ELSE
-BAS_DATA = 
-	SELECT
-		"ALERT"."DB_KEY",
-		"ALERT"."ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		"ALERT"."GJAHR",
-		--"BAS"."ABN",
-		"BAS"."TRDNG_NM",
-		TO_NVARCHAR("BAS"."FINANCIAL_YEAR") AS "FINANCIAL_YEAR",
-		"BAS"."ANZSIC_CD",
-		"BAS"."ANZSIC_TITLE"
-	FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BAS"
-		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "BAS"."ABN"
-		AND "ALERT"."GJAHR" = TO_NVARCHAR("BAS"."FINANCIAL_YEAR")
-		WHERE LEFT(RIGHT("BAS"."NAME",10),2) = 'FY'
-		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
-;
-
-ASIC_DATA_1 =
-	SELECT 
-		"ABN",
-		"ORG_START_DT",
-		"ORG_END_DT",
-		TO_DATS("REGN_START_DT") AS "REGN_START_DT",
-		TO_DATS("REGN_END_DT") AS "REGN_END_DT",
-		RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","ORG_END_DT" DESC,"ORG_START_DT" DESC) AS "RANK_1"
-	from "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" 
-		where "ABN" IN (SELECT DISTINCT "ABN" FROM :BAS_DATA)
-;
-
-ASIC_DATA_2 =
-	SELECT 
-		"ABN",
-		"REGN_START_DT",
-		"REGN_END_DT",
-		"RANK_1"
-	from :ASIC_DATA_1
-		where "RANK_1" = 1
-;
-
-RMS_DATA = 
-	SELECT 
-		"ALERT"."DB_KEY" AS "DB_KEY",
-		"ALERT"."ALERT_ID" AS "ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		"BPID"."PARTNER" AS "PARTNER",
-		"BPID"."IDNUMBER" AS "IDNUMBER",
-		TO_DATS("BP"."VALID_FROM") AS "PRT_REG_DT",
-		TO_DATS("BP"."PRT_LIAB_DATE") AS "PRT_START_DT",
-		TO_DATS("BP"."VALID_TO") AS "PRT_END_DT"
-	FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
-		ON "ALERT"."ABN" = "BPID"."IDNUMBER"
-		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS" AS "BP" ON "BP"."BPARTNER" = "BPID"."PARTNER"
-		WHERE "BPID"."TYPE" = 'ZABN'
-		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
- ;
-
-CASE_DATA =
-SELECT 
-		"ALERT"."DB_KEY" AS "DB_KEY",
-		"ALERT"."ALERT_ID" AS "ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		"CASE1"."CASE_ID" AS "CASE_ID",
-		CASE WHEN "CASE1"."CASE_ID" like '001500%' THEN 'Exempt' ELSE 'NotExempt' END AS  "ECI_STATUS"
-	FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE" AS "CASE1"
-		ON "ALERT"."ABN" = "CASE1"."ABN"
-		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
-		AND "CASE1"."CASE_TYPE" = 'ZEXM'
- ;
-
-ABR_DATA =
-	SELECT 
-		"ALERT"."DB_KEY" AS "DB_KEY",
-		"ALERT"."ALERT_ID" AS "ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		TO_DATS("ABR"."GST_REGN_DT") AS "GST_REGN_DT",
-		TO_DATS("ABR"."GST_CANCN_DT") AS "GST_CANCN_DT",
-		"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD"
-	FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "ABR"
-		ON "ALERT"."ABN" = "ABR"."ABN"
-		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
-;
-
-ITR_DATA =
-	SELECT 
-		"ALERT"."DB_KEY" AS "DB_KEY",
-		"ALERT"."ALERT_ID" AS "ALERT_ID",
-		"ALERT"."ABN" AS "ABN",
-		TO_DATS("ITR"."ACNT_PERD_BG_DT") AS "ACNT_PERD_BG_DT",
-		TO_DATS("ITR"."ACNT_PERD_END_DT") AS "ACNT_PERD_END_DT",
-		"ITR"."CNSLDTD_HD_CMPNY" AS "CNSLDTD_HD_CMPNY"
-	FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-		INNER JOIN "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "ITR"
-		ON "ALERT"."ABN" = "ITR"."ABN"
-		AND "ALERT"."GJAHR" = TO_NVARCHAR("ITR"."INCM_YR")
-		WHERE LEFT(RIGHT("ITR"."NAME",10),2) = 'FY'
-		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
-;
-
-RETURN
-	SELECT  DISTINCT
-		"DB_KEY",
-		"ALERT_ID",
-		"ABN",
-		"GJAHR",
-		"TRDNG_NM",
-		"ANZSIC_TITLE",
-		"REGN_START_DT",		
-		"REGN_END_DT",
-		"PRT_START_DT",
-		"PRT_END_DT",
-		"PRT_REG_DT",
-		"FINANCIAL_YEAR",
-		"ANZSIC_CD",
-		"GST_REGN_DT",
-		"GST_CANCN_DT",
-		"ENT_TYP_CD",
-		"ACNT_PERD_BG_DT",
-		"ACNT_PERD_END_DT",
-		"ECI_STATUS",
-		"CNSLDTD_HD_CMPNY"
-	FROM
-		(
-			SELECT
-			"A"."DB_KEY",
-			"A"."ALERT_ID",
-			"A"."ABN",
-			"A"."GJAHR",
-			"A"."TRDNG_NM",
-			"A"."ANZSIC_TITLE",
-			TO_NVARCHAR("B"."REGN_START_DT") AS "REGN_START_DT",		
-			TO_NVARCHAR("B"."REGN_END_DT") AS "REGN_END_DT",
-			TO_NVARCHAR("C"."PRT_START_DT") AS "PRT_START_DT",
-			TO_NVARCHAR("C"."PRT_END_DT") AS "PRT_END_DT",
-			TO_NVARCHAR("C"."PRT_REG_DT") AS "PRT_REG_DT",
-			"A"."FINANCIAL_YEAR",
-			"A"."ANZSIC_CD",
-			TO_NVARCHAR("D"."GST_REGN_DT") AS "GST_REGN_DT",
-			TO_NVARCHAR("D"."GST_CANCN_DT") AS "GST_CANCN_DT",
-			"D"."ENT_TYP_CD" AS "ENT_TYP_CD",
-			TO_NVARCHAR("E"."ACNT_PERD_BG_DT") AS "ACNT_PERD_BG_DT",
-			TO_NVARCHAR("E"."ACNT_PERD_END_DT") AS "ACNT_PERD_END_DT",
-			"F"."ECI_STATUS" AS "ECI_STATUS",
-			"E"."CNSLDTD_HD_CMPNY"
-			FROM :BAS_DATA AS "A" 
-				INNER JOIN :ASIC_DATA_2 AS "B" 
-				ON "A"."ABN" = "B"."ABN"
-				INNER JOIN :RMS_DATA AS "C" 
-				ON "A"."ABN" = "C"."ABN"
-				INNER JOIN :ABR_DATA AS "D" 
-				ON "A"."ABN" = "D"."ABN"
-				INNER JOIN :ITR_DATA AS "E" 
-				ON "A"."ABN" = "E"."ABN"
-				INNER JOIN :CASE_DATA AS "F" 
-				ON "A"."ABN" = "F"."ABN"
-		)
-;
-END IF;
-
-*/
 -----------------------------ALERT INFO--------------------
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
 
@@ -412,38 +85,6 @@ ALERT_INFO =
 END IF;
 --------------------------END OF ALERT-----------------------
 
-
-----------------------BAS Data--------------------------
-BAS_AMT_DATA =
-SELECT	
-		"ABN",
-		SUM("TOTL_PMT_FOR_WRK_AMT") AS 	"TOTL_PMT_FOR_WRK_AMT"
-FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()		
-WHERE 
-	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
-AND  TO_NVARCHAR("FINANCIAL_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
-GROUP BY
-		"ABN"
-;
-----------------------ITR Data-----------------------------
-ITR_AMT_DATA =
-SELECT	
-		"ABN",
-		"ACNT_PERD_BG_DT",
-		"ACNT_PERD_END_DT",
-		"CNSLDTD_HD_CMPNY",
-		SUM("SALARY_WAGES") AS 	"SALARY_WAGES"
-FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()		
-WHERE 
-	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
-AND  TO_NVARCHAR("INCM_YR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
-GROUP BY
-		"ABN",
-		"ACNT_PERD_BG_DT",
-		"ACNT_PERD_END_DT",
-		"CNSLDTD_HD_CMPNY"
-;	
-
 ------------------WCQ DATA-------------------------
 WCQ_POLICY_NO =
 SELECT DISTINCT 
@@ -457,11 +98,13 @@ WHERE 	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
 WCQ_AMT_DATA =
 SELECT DISTINCT 
 	"ABN", 	
+	"ASSESSMENT_YEAR" AS "FINANCIAL_YEAR",
 	"ACT_WAGES"
 FROM
 (
 SELECT 
 	"ABN", 
+	"ASSESSMENT_YEAR",
 	SUM("ACT_WAGES") AS "ACT_WAGES"
 FROM
 (
@@ -484,27 +127,116 @@ SELECT
 	"A"."EST_ASSESS_METHOD",
 	"B"."ABN"
 FROM 
-	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"() AS "A"
+	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()  AS "A"
 INNER JOIN
-	:WCQ_POLICY_NO AS "B"
+:WCQ_POLICY_NO  AS "B"
 ON
-	    	"A"."POLICY_NO"       = "B"."POLICY_NO"
-	AND 	TO_NVARCHAR("A"."ASSESSMENT_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO) 
-	AND 	UPPER("A"."EST_ASSESS_METHOD") = 'STANDARD ASSESSED'
+	    	"A"."POLICY_NO" = "B"."POLICY_NO"
+
+WHERE 	
+	TO_NVARCHAR("A"."ASSESSMENT_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO) 	
+	AND   UPPER("A"."EST_ASSESS_METHOD")  =  'STANDARD ASSESSED'
 )
-) GROUP BY "ABN"
+) GROUP BY "ABN","ASSESSMENT_YEAR"
 )
 ;
 
 -----------------------END OF WCQ-----------------
+----------------------BAS Data--------------------------
+BAS_AMT_DATA =
+SELECT	
+		"ABN",
+		TO_NVARCHAR("FINANCIAL_YEAR") AS  "FINANCIAL_YEAR",
+		SUM("TOTL_PMT_FOR_WRK_AMT") AS 	"TOTL_PMT_FOR_WRK_AMT"
+FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()		
+WHERE 
+	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+AND  TO_NVARCHAR("FINANCIAL_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+GROUP BY
+		"ABN","FINANCIAL_YEAR"
+		
+;
 
+
+
+TRD_NM =
+SELECT DISTINCT
+	"ABN",
+	"FINANCIAL_YEAR",
+	"TRDNG_NM"
+FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()		
+WHERE 
+	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+AND  TO_NVARCHAR("FINANCIAL_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+AND "TRDNG_NM" <> ''
+;
+
+FULL_NAME =
+SELECT DISTINCT
+	"ABN",
+	"FINANCIAL_YEAR",
+	"FULL_NM_TXT" AS "TRDNG_NM"
+FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()		
+WHERE 
+	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO WHERE "ABN" NOT IN (SELECT DISTINCT "ABN" FROM :TRD_NM))
+AND  TO_NVARCHAR("FINANCIAL_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+
+;
+
+BAS_TRDNG_NAME =
+SELECT	
+	"ABN",
+	"FINANCIAL_YEAR",
+	"TRDNG_NM"
+FROM
+(
+SELECT DISTINCT
+	"ABN",
+	"FINANCIAL_YEAR",
+	"TRDNG_NM"
+FROM :TRD_NM
+
+UNION
+
+SELECT DISTINCT
+	"ABN",
+	"FINANCIAL_YEAR",
+	"TRDNG_NM"
+FROM :FULL_NAME
+)
+;
+-----------------------END OF BAS -------------------
+----------------------ITR Data-----------------------------
+ITR_AMT_DATA =
+
+SELECT	
+		"ABN",
+		"INCM_YR" AS "FINANCIAL_YEAR",
+		"ACNT_PERD_BG_DT",
+		"ACNT_PERD_END_DT",
+		"CNSLDTD_HD_CMPNY",
+		SUM("SALARY_WAGES") AS 	"SALARY_WAGES"
+FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()		
+WHERE 
+	 "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+AND  TO_NVARCHAR("INCM_YR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+GROUP BY
+		"ABN",
+		"INCM_YR",
+		"ACNT_PERD_BG_DT",
+		"ACNT_PERD_END_DT",
+		"CNSLDTD_HD_CMPNY"
+;	
+
+
+-----------------END OF ITR------------------------------
 
 ----------------------------
 --Get Unique ASZSIC info as an ABN can have multiple ANZSIC Codes ( High Priority )
-
+--------------------------------
 IND_CODE = 
 
-	 SELECT DISTINCT 	
+	 SELECT DISTINCT
     "ABN",
 --	"ACN",
 	"CLNT_TYP",
@@ -518,7 +250,7 @@ FROM
 --		"ACN",
 		"CLNT_TYP",
 		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
-		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+		UPPER("ANZSIC_TITLE")   AS "ANZSIC_TITLE"
 	FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
 	WHERE "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
 	AND TO_NVARCHAR("INCM_YR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
@@ -530,7 +262,7 @@ FROM
 --		"ACN",
 		"CLNT_TYP",
 		"ANZSIC_CD"     AS "ANZSIC_CD",
-		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+		UPPER("ANZSIC_TITLE")  AS "ANZSIC_TITLE"
 	FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()	
 	WHERE "ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
 	AND TO_NVARCHAR("FINANCIAL_YEAR")  IN  (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
@@ -600,12 +332,13 @@ GROUP BY
 	"ENT_TYP_CD"
 ;
 
-
+--------------END OF ABR-----------
 
 ----------------------ASIC Data----------
 ASIC_DATA =
-	SELECT 
+	SELECT DISTINCT
 		"ABN",
+		"ASIC_STATUS",
 		"REGN_START_DT",
 		"REGN_END_DT"
 FROM
@@ -614,8 +347,9 @@ FROM
 		"ABN",
 		"ORG_START_DT",
 		"ORG_END_DT",
+		"ORG_STATUS" AS "ASIC_STATUS",
 		TO_DATS("REGN_START_DT") AS "REGN_START_DT",
-		TO_DATS("REGN_END_DT") AS "REGN_END_DT",
+		TO_DATS("REGN_END_DT")	 AS "REGN_END_DT",
 		RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","ORG_END_DT" DESC,"ORG_START_DT" DESC) AS "RANK_1"
 	FROM 
 		"osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" 
@@ -624,8 +358,63 @@ FROM
 )
 WHERE "RANK_1" = 1
 ;
+-------------END OF ASIC----------------
 
-----------------PRT Reg Status-------------------------
+---------TPAR---------------------------
+
+TPAR_DATA =
+SELECT 
+	"PAYER_ABN" AS "ABN",
+	TO_NVARCHAR("FINANCIAL_YEAR") AS "FINANCIAL_YEAR",
+	SUM("GROSS_PD_AMT") AS "GROSS_PD_AMT",
+	SUM("TW_TOTL_AMT")  AS "TW_TOTL_AMT",
+	SUM("GST_TOTL_AMT") AS "GST_TOTL_AMT",
+	CASE WHEN SUM("GROSS_PD_AMT") > 100000 THEN 'YES' ELSE 'NO' END AS "TPAR_WAGE_GT"
+
+FROM  "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"( )
+WHERE 	"PAYER_ABN" 		IN (SELECT DISTINCT "ABN"	FROM :ALERT_INFO)
+AND 	TO_NVARCHAR("FINANCIAL_YEAR")	IN (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+GROUP BY 	"PAYER_ABN",
+			"FINANCIAL_YEAR"
+;
+-------------END OF TPAR--------------
+----------------PAYG-----------
+PAYG_DATA =
+SELECT 
+	"ABN",
+	"INCM_YR" AS "FINANCIAL_YEAR",
+	SUM("TOTL_GRS_AMT") AS "TOTL_GRS_AMT",
+	SUM("TOTL_LUMP_AMT") AS "TOTL_LUMP_AMT",
+	SUM("TOTL_ALWNC_AMT") AS "TOTL_ALWNC_AMT",
+	SUM("LSPA_AMT") AS "LSPA_AMT",
+	SUM("LSPB_AMT") AS "LSPB_AMT",
+	SUM("LSPD_AMT") AS "LSPD_AMT",
+	SUM("LSPE_AMT") AS "LSPE_AMT",
+	SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT") AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"
+FROM "osr.edw.staging.td.ato.proxy::CV_PAYG_IND_C"
+WHERE 	"ABN" 		IN (SELECT DISTINCT "ABN"	FROM :ALERT_INFO)
+AND 	"INCM_YR"	IN (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+GROUP BY 	"ABN",
+			"INCM_YR"
+;
+-------------------DESBT-------------------------
+
+DESBT_DATA =
+SELECT
+	"ABN",
+    TO_DATS("COMMENCEMENT_DATE") AS "COMMENCEMENT_DT",
+	TO_DATS("TERMINATION_DATE") AS "TERMINATION_DATE",
+	TO_DATS("NOMINAL_COMPLETION_DATE") AS "NOMINAL_COMPLETION_DATE",
+	COUNT(*) AS "COUNT_APP_TRA"
+FROM "osr.edw.staging.md.desbt.synonym::CDS_ORG.DSO.TRAINING.active_data"
+WHERE "TRAINING_AGREEMENT_TYPE" IN ('A','T')
+AND 	TO_DATS("COMMENCEMENT_DATE")	<=  CONCAT((SELECT DISTINCT "GJAHR" FROM :ALERT_INFO), '0630')
+AND 	TO_DATS("TERMINATION_DATE") 	>=  CONCAT(TO_NVARCHAR(TO_INT((SELECT DISTINCT "GJAHR" FROM :ALERT_INFO) - 1)), '0701')
+GROUP BY "ABN", "COMMENCEMENT_DATE","TERMINATION_DATE", "NOMINAL_COMPLETION_DATE"
+----Case Stat is needed in the output
+;
+
+----------------RMS and CRM Data-------------------------
 
 
 
@@ -638,6 +427,30 @@ SELECT DISTINCT
 WHERE "TYPE" = 'ZABN'
 AND   "IDNUMBER" IN (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
 ;
+
+
+BUT050_DATA =
+SELECT DISTINCT
+	"ABN"
+FROM
+(
+SELECT 
+	"A"."IDNUMBER" AS "ABN",
+	"A"."PARTNER",
+	"B"."PARTNER2",
+	"B"."DATE_TO",
+	"B"."DATE_FROM",
+	"B"."RELTYP"
+FROM
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "A"
+INNER JOIN 
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" AS "B"
+ON
+	"A"."PARTNER" = "B"."PARTNER1"
+WHERE	"B"."RELTYP" = 'ZTRU'
+)
+;
+
 
 RMS_PTX_DATA =
 SELECT DISTINCT
@@ -665,81 +478,345 @@ ON
 
 
 PRT_DATA =
-SELECT * FROM
+SELECT DISTINCT 
+	"ABN",
+    "OBJID",
+     "BPARTNER" 	AS  "PARTNER",
+	"VALID_TO"		AS  "PRT_END_DT",
+	"VALID_FROM"	AS  "PRT_REG_DT",
+	"PRT_START_DT",
+	"PRT_GRP_STATUS"
+FROM
 (
 SELECT
 	"ABN",
     "OBJID",
+     "BPARTNER",
 	"VALID_TO",
 	"VALID_FROM",
 	"PRT_START_DT",
-	"GRP_STATUS",
+	"PRT_GRP_STATUS",
 	RANK() OVER (PARTITION BY "OBJID" ORDER BY "OBJID","VALID_TO" DESC) AS "RANK_1"
 FROM
 (
 SELECT
 	"A"."ABN",
     "A"."OBJID",
-	LEFT("B"."VALID_TO",8)   AS "VALID_TO",
-	LEFT("B"."VALID_FROM",8) AS "VALID_FROM",
-	"B"."FACT_CAT_SEQ_21"	 AS "PRT_START_DT",
-	"B"."FACT_CAT_SEQ_11"	 AS "GRP_STATUS"
+    "B"."BPARTNER",
+	"B".GRP_STATUS	AS "PRT_GRP_STATUS",
+	"B".PRT_LIAB_DATE	AS "PRT_START_DT",
+	"B".QLD_LIAB_DATE	AS  "QLD_START_DT",
+	"B".VALID_FROM	,
+	"B".VALID_TO		
 FROM 
 	:RMS_PTX_DATA  AS "A"
 INNER JOIN
-	"osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZPRE"() AS "B"
+	"osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS"() AS "B"
 ON
-	"A"."OBJID" = "B"."OBJID"
+	"A"."PARTNER" = "B"."BPARTNER"
 )
 ) WHERE "RANK_1" = 1
 ;
 
-
-
----------------------------------------------------
-
-RETURN
+CASE_DATA =
 SELECT
- "DB_KEY"	,
- "ALERT_ID"	,
- "ABN"		,
- "GJAHR"		,
- TO_NVARCHAR("GJAHR") AS "FINANCIAL_YEAR",
---ITR/BAS
-'John Smith Enterprises' AS "TRDNG_NM"		,
-'12552' AS "ANZSIC_CD"		,
-'AGRICULTURE,FORESTRY AND FISHING' AS "ANZSIC_TITLE"	,
---ABR
-'20150225' AS "GST_REGN_DT"	,
-'99991231' AS "GST_CANCN_DT"	,
-'CORP' AS "ENT_TYP_CD"	,
---ASIC
-'20051212' AS "REGN_START_DT"	,
-'99991231' AS "REGN_END_DT"	,
-'REGD' AS "ASIC_STATUS"   ,
---PRT
-'20171212' AS "PRT_START_DT"	,
-'20181212' AS "PRT_END_DT"	,
-'20150101' AS "PRT_REG_DT"	,
-'GM' AS "PRT_GRP_STATUS",
-'12345' AS "PRT_BP_NO",
---ITR
-'20160701' AS "ACNT_PERD_BG_DT",
-'20170630' AS "ACNT_PERD_END_DT",
-'Y' AS "CNSLDTD_HD_CMPNY",
---CRM
-'No' AS "ECI_STATUS"	,
---Questions
-3 AS "NO_OPEN_CASE"  ,
-'No' AS "APP_WITH_RANGE",
-'No' AS "IS_A_TRUST"    ,
-'No' AS "TPAR_WAGE_GT"  ,
---Wages
-1800000 AS "WCQ_ACT_WAGES" ,
-2500000 AS "ATO_ITR_WAGES" ,
-2495000 AS "ATO_BAS_WAGES" ,
-225000  AS "ATO_PAYG_WAGES"
-FROM 
-:ALERT_INFO
+	"ABN",
+	COUNT(*) AS "NO_OPEN_CASE"
+FROM
+(
+SELECT  DISTINCT
+	"CASE_ID",
+	"CASE_TYPE",
+	"CASE_CATEGORY",
+	"CASE_PRIORITY",
+	"CASE_OUTCOME",
+	"ABN",
+	"PARTNER",
+	"STAT_ORDERNO"
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE	"CASE_OUTCOME" IN ('OPEN', '')
+AND 	"CASE_TYPE" 	= 'ZINV'
+AND 	"CASE_CATEGORY" = 'PRT'  
+AND 	"ABN" IN (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+--AND 	"STAT_ORDERNO" IN ()
+)
+GROUP BY 
+	"ABN"
 ;
+
+
+ECI_STATUS_DATA =
+SELECT
+	"ABN",
+	 'Exempt' AS  "ECI_STATUS"
+FROM"osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE "CASE_TYPE" = 'ZEXM' 
+AND   "ABN" IN (SELECT DISTINCT "ABN" FROM :ALERT_INFO);
+----Case Stat is needed in the output
+
+---------------JOIN RMS Data---------------------
+RMS_DATA_OUT =
+
+	SELECT
+		"A"."DB_KEY",
+		"A"."ALERT_ID",
+		"A"."ABN" ,
+		"A"."GJAHR",
+
+		"B"."PARTNER" AS "PRT_BP_NO",
+		"B"."PRT_REG_DT",
+		"B"."PRT_END_DT",
+		"B"."PRT_START_DT",
+		"B"."PRT_GRP_STATUS" ,
+		
+		CASE WHEN 	"A"."ABN" = "C"."ABN" THEN 'Yes' ELSE 'No' END AS "IS_A_TRUST",
+		
+		"D"."NO_OPEN_CASE",
+		
+		CASE WHEN 	"A"."ABN" = "E"."ABN" THEN 'Exempt' ELSE 'Not Exempt' END AS "ECI_STATUS"
+
+FROM 
+
+		:ALERT_INFO AS "A"
+LEFT OUTER JOIN
+
+--PRT DATA
+		:PRT_DATA AS "B"
+ON
+		"A"."ABN" = "B"."ABN"
+		
+-- Rel Status
+LEFT OUTER JOIN
+		:BUT050_DATA AS "C"
+ON
+		"A"."ABN" = "C"."ABN"
+		
+--Case Data
+LEFT OUTER JOIN
+		:CASE_DATA AS "D"
+ON
+		"A"."ABN" = "D"."ABN"	
+		
+--ECI Status
+LEFT OUTER JOIN
+		:ECI_STATUS_DATA  AS "E"
+ON
+		"A"."ABN" = "E"."ABN"		
+;
+
+
+--------------JOIN All the Data sets-----
+
+ALL_DATA_SET =
+
+SELECT DISTINCT
+		"DB_KEY"	,
+		"ALERT_ID"	,
+		"ABN"		,
+		"GJAHR"		,
+		TO_NVARCHAR("GJAHR") AS "FINANCIAL_YEAR",
+--ITR/BAS
+		"TRDNG_NM"		,
+		"ANZSIC_CD"		,
+		"ANZSIC_TITLE"	,
+--ABR
+		"GST_REGN_DT"	,
+		"GST_CANCN_DT"	,
+		"ENT_TYP_CD"	,
+--ASIC
+		"REGN_START_DT"	,
+		"REGN_END_DT"	,
+		"ASIC_STATUS"   ,
+--PRT
+		"PRT_START_DT"	,
+		"PRT_END_DT"	,
+		"PRT_REG_DT"	,
+		"PRT_GRP_STATUS",
+		"PRT_BP_NO",
+--ITR
+		"ACNT_PERD_BG_DT",
+		"ACNT_PERD_END_DT",
+		"CNSLDTD_HD_CMPNY",
+--CRM
+		"ECI_STATUS"	,
+--Questions
+		"NO_OPEN_CASE"  ,
+	--	'' AS "APP_WITH_RANGE",
+		CASE WHEN (TO_DECIMAL(("ATO_ITR_WAGES" - ("COUNT_APP_TRA" * 30000)), 15, 2)) < 1100000 THEN 'No' ELSE 'Yes'  END AS  "APP_WITH_RANGE",
+		"IS_A_TRUST"    ,
+		"TPAR_WAGE_GT"  ,
+--Wages
+		"WCQ_ACT_WAGES" ,
+		"ATO_ITR_WAGES" ,
+		"ATO_BAS_WAGES" ,
+		"ATO_PAYG_WAGES"
+		
+FROM
+(
+
+	SELECT
+		"A"."DB_KEY",
+		"A"."ALERT_ID",
+		"A"."ABN" ,
+		"A"."GJAHR",
+		
+		"B"."TOTL_PMT_FOR_WRK_AMT"  AS "ATO_BAS_WAGES",
+		
+		"C"."ACNT_PERD_BG_DT",
+		"C"."ACNT_PERD_END_DT",
+		"C"."CNSLDTD_HD_CMPNY",
+		"C"."SALARY_WAGES"	AS 	"ATO_ITR_WAGES",
+		
+		"D"."ACT_WAGES"		AS	"WCQ_ACT_WAGES",
+		
+		"E"."CLNT_TYP",
+		"E"."ANZSIC_CD",
+	    "E"."ANZSIC_TITLE",	
+	    
+	    "F"."ENT_TYP_CD",
+		"F"."GST_REGN_DT",
+		"F"."GST_CANCN_DT" ,
+		
+		"G"."REGN_START_DT",
+		"G"."REGN_END_DT",
+	    "G"."ASIC_STATUS",
+	    
+	    "H"."TPAR_WAGE_GT",
+	    
+	    "I"."COUNT_APP_TRA",
+	    "J"."TOTL_GRS_AMT" AS "ATO_PAYG_WAGES",
+	    
+	    "K"."PRT_REG_DT",
+		"K"."PRT_END_DT",
+		"K"."PRT_START_DT",
+		"K"."PRT_BP_NO",
+		"K"."PRT_GRP_STATUS",
+		"K"."IS_A_TRUST",
+		"K"."NO_OPEN_CASE",
+		"K"."ECI_STATUS",
+	    "L"."TRDNG_NM"
+FROM 
+
+		:ALERT_INFO AS "A"
+LEFT OUTER JOIN
+
+--BAS DATA
+		:BAS_AMT_DATA  AS "B"
+ON
+		"A"."ABN" = "B"."ABN"
+	AND "A"."GJAHR" = "B"."FINANCIAL_YEAR"	
+
+LEFT OUTER JOIN
+--ITR Data
+		:ITR_AMT_DATA AS "C"
+ON
+		"A"."ABN" = "C"."ABN"
+	AND "A"."GJAHR" = "C"."FINANCIAL_YEAR"	
+
+LEFT OUTER JOIN		
+--WCQ Data
+		:WCQ_AMT_DATA  AS "D"
+ON
+		"A"."ABN" = "D"."ABN"
+	AND "A"."GJAHR" = "D"."FINANCIAL_YEAR"		
+
+LEFT OUTER JOIN
+--IND Code
+		:IND_CODE_GRP AS "E"
+ON
+		"A"."ABN" = "E"."ABN"
+
+LEFT OUTER JOIN
+--ABR Code
+		:ABR_DATA AS "F"
+ON
+		"A"."ABN" = "F"."ABN"
+
+LEFT OUTER JOIN
+--ASIC Code
+		:ASIC_DATA	AS "G"
+ON
+		"A"."ABN" = "G"."ABN"
+LEFT OUTER JOIN
+--TPAR Data
+		:TPAR_DATA	AS "H"
+ON
+		"A"."ABN" = "H"."ABN"
+	AND "A"."GJAHR" = "H"."FINANCIAL_YEAR"		
+
+LEFT OUTER JOIN
+--DESBT Data
+		:DESBT_DATA	AS "I"
+ON
+		"A"."ABN" = "I"."ABN"
+
+LEFT OUTER JOIN
+--PAYG Data
+	:PAYG_DATA AS "J"
+ON
+		"A"."ABN"			 = "J"."ABN"
+	AND "A"."GJAHR" = "J"."FINANCIAL_YEAR"	
+	
+
+LEFT OUTER JOIN
+--RMS Data
+	:RMS_DATA_OUT AS "K"
+ON
+		"A"."ABN"	= "K"."ABN"
+	AND "A"."GJAHR" = "K"."GJAHR"		
+
+LEFT OUTER JOIN
+--Trading Name Data
+	:BAS_TRDNG_NAME AS "L"
+ON
+		"A"."ABN"	= "L"."ABN"
+	AND "A"."GJAHR" = "L"."FINANCIAL_YEAR"	
+)	
+;
+---------------------------------------------------
+RETURN
+SELECT DISTINCT
+		"DB_KEY"	,
+		"ALERT_ID"	,
+		"ABN"		,
+		"GJAHR"		,
+		"FINANCIAL_YEAR",
+--ITR/BAS
+		"TRDNG_NM"		,
+		"ANZSIC_CD"		,
+		"ANZSIC_TITLE"	,
+--ABR
+		"GST_REGN_DT"	,
+		"GST_CANCN_DT"	,
+		"ENT_TYP_CD"	,
+--ASIC
+		"REGN_START_DT"	,
+		"REGN_END_DT"	,
+		"ASIC_STATUS"   ,
+--PRT
+		"PRT_START_DT"	,
+		"PRT_END_DT"	,
+		"PRT_REG_DT"	,
+		"PRT_GRP_STATUS",
+		"PRT_BP_NO",
+--ITR
+		"ACNT_PERD_BG_DT",
+		"ACNT_PERD_END_DT",
+		"CNSLDTD_HD_CMPNY",
+--CRM
+		"ECI_STATUS"	,
+--Questions
+		"NO_OPEN_CASE"  ,
+		'' AS "APP_WITH_RANGE",
+--		CASE (TO_DECIMAL(("ATO_ITR_WAGES" - ("COUNT_APP_TRA" * 30000)), 15, 2)) < 1100000 THEN 'No' ELSE 'Yes'  END AS  "APP_WITH_RANGE"
+		"IS_A_TRUST"    ,
+		"TPAR_WAGE_GT"  ,
+--Wages
+		"WCQ_ACT_WAGES" ,
+		"ATO_ITR_WAGES" ,
+		"ATO_BAS_WAGES" ,
+		"ATO_PAYG_WAGES"
+FROM :ALL_DATA_SET 		
+;
+
 END;
