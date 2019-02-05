@@ -57,8 +57,9 @@ BEGIN
 	"FINANCIAL_YEAR",
 	"RISK_CATEGORY",
 	"SUB_RISK_CATEGORY"
-FROM "osr.edw.platform.fra.prt.dt.abn::CV_ABN_TPAR_SUMMARY_REP"
-	(placeholder."$$IP_FY$$"=> :IP_FY)
+--FROM "osr.edw.platform.fra.prt.dt.abn::CV_ABN_TPAR_SUMMARY_REP"
+--	(placeholder."$$IP_FY$$"=> :IP_FY)
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP"(:IP_FY)	
 
 ;
 
@@ -104,7 +105,7 @@ SELECT
 	SUM("TOTL_LUMP_AMT")					AS "TOTL_LUMP_AMT",
 	SUM("TOTL_ALWNC_AMT")					AS "TOTL_ALWNC_AMT",
 	SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT")	AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" 
-FROM "osr.edw.staging.td.ato.proxy::CV_PAYG_NIND_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()
 WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :ABN_SELECTIONS)
 
 GROUP BY
@@ -148,7 +149,7 @@ SELECT
 	SUM("PMNTS_TO_ASSOCS")		AS "PMNTS_TO_ASSOCS",
 	SUM("SALARY_WAGES") 		AS "SALARY_WAGES",
 	SUM("SUPER_EXPNS")			AS "SUPER_EXPNS"
-FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
 WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :ABN_SELECTIONS)
 GROUP BY
 	"ABN",
@@ -168,7 +169,7 @@ SELECT
 	SUM("TOTL_PMT_FOR_WRK_AMT") 	AS "TOTL_PMT_FOR_WRK_AMT",
 	SUM("PMT_FOR_WRK_IT_WHDG_AMT")	AS "PMT_FOR_WRK_IT_WHDG_AMT",
 	SUM("FBT_INST_AMT") 			AS "FBT_INST_AMT"
-FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()
 WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :ABN_SELECTIONS)
 GROUP BY
 	"ABN",
@@ -193,7 +194,7 @@ SELECT
 	"RSDNL_STATE_CD",
 	"CNT_EMPLOYEE"  ,
     SUM("CNT_EMPLOYEE")  OVER (PARTITION BY "ABN","INCM_YR" ORDER BY "ABN","INCM_YR") AS "TOTAL_EMP_CNT"
-FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"()
 WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :ABN_SELECTIONS)
 
 ) WHERE "RSDNL_STATE_CD" = 'QLD'

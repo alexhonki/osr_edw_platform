@@ -62,7 +62,7 @@ FROM
 		"PAYER_CNTCT_PH_NUM",
 		"PAYER_FAX_NUM",
 		"PAYER_EMAIL_ADDR"
-FROM 	"osr.edw.staging.td.ato.proxy::CV_TPAR_PAYER_C"	
+FROM 	"osr.edw.staging.td.ato.proxy::TF_TPAR_PAYER_C"()
 WHERE
 		"PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP"(:IP_FY/*IP_FY <NVARCHAR(4)>*/))
 AND

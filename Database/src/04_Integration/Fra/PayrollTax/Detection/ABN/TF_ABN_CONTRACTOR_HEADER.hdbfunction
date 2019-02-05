@@ -77,7 +77,7 @@ SELECT
 	"TW_TOTL_AMT",
 	"GST_TOTL_AMT",
 	"CHECK_CD"
-FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"()
 WHERE "FINANCIAL_YEAR" = :IP_FY 
 AND   "PAYEE_ABN"      <> ''
 )
@@ -94,7 +94,8 @@ SELECT DISTINCT
 	"PAYEE_ABN",
 	"PAYER_ABN",
 	"FINANCIAL_YEAR"
---FROM :PAYEE_DATASET
+FROM :PAYEE_DATASET
+/*
 FROM 
 (
 SELECT 
@@ -108,7 +109,8 @@ SELECT
 	"PAYER_ABN",
 	"FINANCIAL_YEAR"
 	HAVING SUM("GROSS_PD_AMT") >= 25000 AND SUM("GROSS_PD_AMT") <= 250000
-)	
+)	*/
+
 ;
 
 
@@ -130,7 +132,7 @@ SELECT
 	"PAYER_CNTCT_PH_NUM",
 	"PAYER_FAX_NUM",
 	"PAYER_EMAIL_ADDR"
-FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYER_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYER_C"()
 WHERE "FINANCIAL_YEAR" = :IP_FY 
 AND "PAYER_ABN" <> ''
 ;
@@ -191,7 +193,7 @@ SELECT
 	"RSDNL_STATE_CD",
 	"CNT_EMPLOYEE",
     SUM("CNT_EMPLOYEE")  OVER (PARTITION BY "ABN","INCM_YR" ORDER BY "ABN","INCM_YR") AS "TOTAL_EMP_CNT"
-FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"()
 WHERE   "INCM_YR" = :IP_FY 
 AND 	"ABN" IN ( 
 	               SELECT DISTINCT "ABN" FROM
@@ -259,7 +261,7 @@ SELECT DISTINCT
 	"POLICY_NO",
 	"ABN",
     UPPER("POLICY_STATUS") AS "POLICY_STATUS"
-FROM "osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C"
+FROM "osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"()
 WHERE 	 "ABN" IN ( SELECT DISTINCT "ABN" FROM
 	            			(
 	                		  SELECT DISTINCT  "PAYEE_ABN" AS "ABN" FROM :IT_SUB_SET  WHERE "PAYEE_ABN" <> ''
@@ -318,7 +320,7 @@ SELECT
 	"B"."ABN",
 	"B"."POLICY_STATUS"
 FROM 
-	"osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES_C" AS "A"
+	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"() AS "A"
 INNER JOIN
 	:WCQ_POLICY_NO AS "B"
 ON
@@ -487,7 +489,7 @@ SELECT
 	SUM("SALARY_WAGES")      AS "SALARY_WAGES",
 	SUM("SUPER_EXPNS")       AS "SUPER_EXPNS"
 	
-FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
+FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
 WHERE 	"INCM_YR" = :IP_FY
 AND 	"ABN"     IN ( SELECT DISTINCT "ABN" FROM
 	            			(
@@ -810,13 +812,13 @@ AND ( "PROP_EX_GST_GROSS_PD_AMT" > 80 OR  "PROP_TOTL_BUS_INCM_AMT" > 80 )
 
 AND  "PAYER_ABN" NOT IN (SELECT DISTINCT "ABN" FROM
 								(
-									SELECT DISTINCT  "ABN" FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
+									SELECT DISTINCT  "ABN" FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
 										WHERE "CLNT_TYP"  IN ('SUP','GOV')
 										AND   "INCM_YR"    = :IP_FY
 
 										UNION
 
-									SELECT DISTINCT "ABN" FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
+									SELECT DISTINCT "ABN" FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
 										WHERE "ATO_ANZSIC_CD" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
 										AND   "INCM_YR"    = :IP_FY
 										
