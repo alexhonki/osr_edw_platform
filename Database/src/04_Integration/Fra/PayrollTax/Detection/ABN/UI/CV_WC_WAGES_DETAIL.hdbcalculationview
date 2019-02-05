@@ -4,7 +4,7 @@
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
     <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="VARCHAR" length="13" mandatory="false">
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
       <valueDomain type="empty"/>
       <selection multiLine="false" type="Single"/>
     </variableProperties>
@@ -24,46 +24,50 @@
 <calculationViews/>
 <logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL">
   <attributes>
-    <attribute id="WAERS" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="WAERS"/>
-    </attribute>
-    <attribute id="DB_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="GJAHR"/>
     </attribute>
-    <attribute id="POLICY_NO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="WAERS"/>
+    </attribute>
+    <attribute id="POLICY_NO" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POLICY_NO"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="POLICY_NO"/>
     </attribute>
-    <attribute id="ASSESSMENT_YEAR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ASSESSMENT_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ASSESSMENT_YEAR"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ASSESSMENT_YEAR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="TOTAL_WAGES" order="1" aggregationType="sum" measureType="simple">
+    <measure id="TOTAL_WAGES" order="6" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="TOTAL_WAGES"/>
       <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="TOTAL_WAGES"/>
     </measure>
-    <measure id="ACT_WAGES" order="9" aggregationType="sum" measureType="simple">
+    <measure id="ACT_WAGES" order="10" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ACT_WAGES"/>
       <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_WAGES"/>
     </measure>
-    <measure id="ACT_APPR_WAGES" order="10" aggregationType="sum" measureType="simple">
+    <measure id="ACT_APPR_WAGES" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ACT_APPR_WAGES"/>
       <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_APPR_WAGES"/>
     </measure>
