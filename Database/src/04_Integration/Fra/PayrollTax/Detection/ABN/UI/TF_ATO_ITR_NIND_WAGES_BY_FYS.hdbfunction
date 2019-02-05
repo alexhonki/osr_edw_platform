@@ -3,6 +3,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_BY_FYS"(IN I
       RETURNS TABLE
 		(
 		DB_KEY					VARBINARY(16),
+		DB_KEY_DASH				NVARCHAR(32),
 		ALERT_ID				NVARCHAR(20),
 		ABN						NVARCHAR(20),
 		FINANCIAL_YEAR			NVARCHAR(4),
@@ -22,7 +23,7 @@ BEGIN
 	CREATED ON		: 20/12/2018
 	CREATION REASON	: To transpose the structure of the ATO ITR NIND WAGES Table Function and make it consumable as external view via UI
 **********/
-	RETURN
+	lt_data = 
 		SELECT 
 			"DB_KEY",
 			"ALERT_ID",
@@ -115,6 +116,35 @@ BEGIN
 			"MEASURE_NAME",
 			"WAERS"
 		;
+
+	RETURN
+	SELECT
+			"DB_KEY",
+			"DB_KEY_DASH",
+			"ALERT_ID",
+			"ABN",
+			"FINANCIAL_YEAR",
+			"MEASURE_NAME",
+			"WAERS",
+			SUM("FY0_WAGE") AS "FY0_WAGE",
+			SUM("FY1_WAGE") AS "FY1_WAGE",
+			SUM("FY2_WAGE") AS "FY2_WAGE",
+			SUM("FY3_WAGE") AS "FY3_WAGE",
+			SUM("FY4_WAGE") AS "FY4_WAGE"	
+	FROM 
+	(
+	SELECT *, REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH" 
+	FROM :lt_data
+	)
+	GROUP BY 
+		"DB_KEY",
+		"DB_KEY_DASH",
+		"ALERT_ID",
+		"ABN",
+		"FINANCIAL_YEAR",
+		"MEASURE_NAME",
+		"WAERS"
+	;
 
 
 END;

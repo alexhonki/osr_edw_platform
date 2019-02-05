@@ -8,7 +8,6 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(IN IP_ALERT_ID NVARCH
     RETURNS TABLE
 		(
 		DB_KEY				VARBINARY(16),
-		DB_KEY_DASH			NVARCHAR(32),
 		ALERT_ID			NVARCHAR(20),
 		ABN					NVARCHAR(20),
 		GJAHR			 	NVARCHAR(4),
@@ -92,7 +91,7 @@ lt_union =
 	FROM :lt_emp_cnt
 	;
 
-	lt_data =
+	RETURN
 	SELECT
 	"DB_KEY",
 	"ALERT_ID",
@@ -112,29 +111,5 @@ lt_union =
 	;
 END IF;
 
-RETURN
-SELECT
-"DB_KEY",
-"DB_KEY_DASH",
-"ALERT_ID",
-"ABN",
-"GJAHR",
-"WAERS",
-SUM("ACT_WAGES") AS "ACT_WAGES",
-SUM("ACT_APPR_WAGES") AS "ACT_APPR_WAGES",
-SUM("CNT_EMP") AS "CNT_EMP"
-FROM
-(
-SELECT *, REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH" 
-FROM :lt_data
-)
-GROUP BY 
-"DB_KEY",
-"DB_KEY_DASH",
-"ALERT_ID",
-"ABN",
-"GJAHR",
-"WAERS"
-;
 
 END;
