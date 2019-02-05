@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.abr.proxy::CV_BUSNIESS_NAMES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Business Names (ABR)"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.abr.synonym::CDS_ORG.TAB.BUSINESS_NAMES">
+    <resourceUri>osr.edw.source.md.abr.synonym::CDS_ORG.TAB.BUSINESS_NAMES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.abr.synonym::CDS_ORG.TAB.BUSINESS_NAMES">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="NAME"/>
+    </attribute>
+    <attribute id="ROWNUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROWNUMBER"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="ROWNUMBER"/>
+    </attribute>
+    <attribute id="ERROR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="PID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PID"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="PID"/>
+    </attribute>
+    <attribute id="BUS_NM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NM"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="BUS_NM"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.BUSINESS_NAMES" columnName="SOURCE_FIELD_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
