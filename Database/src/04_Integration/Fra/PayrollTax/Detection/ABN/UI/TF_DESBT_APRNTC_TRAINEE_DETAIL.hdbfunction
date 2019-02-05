@@ -1,0 +1,125 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"(IN IP_ALERT_ID NVARCHAR(20))
+      RETURNS TABLE
+		(
+			DB_KEY                    VARBINARY(16),
+			ALERT_ID                  NVARCHAR(20),
+			ABN                       NVARCHAR(20),
+			GJAHR                     NVARCHAR(4),
+			TRAINEE_ID                NVARCHAR(10), 
+			TRAINING_AGREEMENT_TYPE   NVARCHAR(1), 
+			STATUS_DESC               NVARCHAR(30), 
+			COMMENCEMENT_DATE         NVARCHAR(8), 
+			TERMINATION_DATE          NVARCHAR(8), 
+			CONTRACT_MODE             NVARCHAR(12), 
+			OCCUPATION_NAME           NVARCHAR(100), 
+			NOMINAL_COMPLETION_DATE   NVARCHAR(8), 
+			DATE_OF_BIRTH             NVARCHAR(8), 
+			GIVEN_NAME                NVARCHAR(30), 
+			MIDDLE_NAME               NVARCHAR(30), 
+			SURNAME                   NVARCHAR(30)
+		)
+
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+DESBT_DATA =
+
+
+				SELECT DISTINCT 
+            		"ABN" , 
+                	"TRAINEE_ID", 
+            		"TRAINING_AGREEMENT_TYPE", 
+                	"STATUS_DESC", 
+                	TO_DATS("COMMENCEMENT_DATE")		AS "COMMENCEMENT_DATE", 
+                	TO_DATS("TERMINATION_DATE") 		AS "TERMINATION_DATE", 
+                	"CONTRACT_MODE", 
+                	"OCCUPATION_NAME", 
+                	TO_DATS("NOMINAL_COMPLETION_DATE")	AS "NOMINAL_COMPLETION_DATE", 
+                	TO_DATS("DATE_OF_BIRTH")			AS "DATE_OF_BIRTH", 
+                	"GIVEN_NAME", 
+                	"MIDDLE_NAME", 
+                	"SURNAME"
+				FROM "osr.edw.staging.md.desbt.synonym::CDS_ORG.DSO.TRAINING.active_data"
+				WHERE	"TRAINING_AGREEMENT_TYPE"	IN ('A', 'T')
+				AND 	"ABN"						IN (SELECT "ABN"     FROM :ALERT_INFO )
+--          	AND       TO_DATS("COMMENCEMENT_DATE")    <=  CONCAT((SELECT DISTINCT MAX("GJAHR") FROM :ALERT_INFO ), '0630')
+--          	AND TO_DATS("NOMINAL_COMPLETION_DATE")             >=  CONCAT(TO_NVARCHAR(TO_INT((SELECT DISTINCT MIN("GJAHR") FROM :ALERT_INFO ) - 1)), '0701')
+
+
+;
+
+
+RETURN
+				SELECT
+                   "DB_KEY",
+                   "ALERT_ID",
+                   "ABN" ,
+                   "GJAHR",
+                   "TRAINEE_ID", 
+                   "TRAINING_AGREEMENT_TYPE", 
+                   "STATUS_DESC", 
+                   "COMMENCEMENT_DATE", 
+                   "TERMINATION_DATE", 
+                   "CONTRACT_MODE", 
+                   "OCCUPATION_NAME", 
+                   "NOMINAL_COMPLETION_DATE", 
+                   "DATE_OF_BIRTH", 
+                   "GIVEN_NAME", 
+                   "MIDDLE_NAME", 
+                   "SURNAME"
+				FROM
+				(                              
+                	SELECT
+                       "A"."DB_KEY",
+                       "A"."ALERT_ID",
+                       "A"."ABN" ,
+                       "A"."GJAHR",
+                       "B"."TRAINEE_ID", 
+                       "B"."TRAINING_AGREEMENT_TYPE", 
+                       "B"."STATUS_DESC", 
+                       "B"."COMMENCEMENT_DATE", 
+                       "B"."TERMINATION_DATE", 
+                       "B"."CONTRACT_MODE", 
+                       "B"."OCCUPATION_NAME", 
+                       "B"."NOMINAL_COMPLETION_DATE", 
+                       "B"."DATE_OF_BIRTH", 
+                       "B"."GIVEN_NAME", 
+                       "B"."MIDDLE_NAME", 
+                       "B"."SURNAME"
+					FROM		:ALERT_INFO 	AS "A"
+					INNER JOIN	:DESBT_DATA 	AS "B"
+					ON			 "A"."ABN"  	= "B"."ABN"
+
+				)
+				;
+
+END;      
