@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_TPAR_CNT" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_TPAR_CNT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_CNT" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_CNT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_CNT">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="PAYEE_STATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_STATE"/>
+      <keyMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="PAYEE_STATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PAYEE_COUNT" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PAYEE_COUNT"/>
+      <measureMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="PAYEE_COUNT"/>
+    </measure>
+    <measure id="TOTAL_PAYEE_COUNT" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTAL_PAYEE_COUNT"/>
+      <measureMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="TOTAL_PAYEE_COUNT"/>
+    </measure>
+    <measure id="PERCENT_PAYEE_BY_STATE" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PERCENT_PAYEE_BY_STATE"/>
+      <measureMapping columnObjectName="TF_ATO_TPAR_CNT" columnName="PERCENT_PAYEE_BY_STATE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
