@@ -18,6 +18,7 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 
+lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
 	RETURN
 		SELECT 
 			"DB_KEY",
@@ -27,7 +28,7 @@ BEGIN
 			'CONTRACTORS_PMNTS'		AS "MEASURE_NAME",
 			"CONTRACTORS_PMNTS" 	AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
@@ -37,7 +38,7 @@ BEGIN
 			'PMNTS_TO_ASSOCS'		AS "MEASURE_NAME",
 			"PMNTS_TO_ASSOCS"		AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
@@ -47,7 +48,7 @@ BEGIN
 			'SALARY_WAGES'			AS "MEASURE_NAME",
 			"SALARY_WAGES"			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
@@ -57,7 +58,7 @@ BEGIN
 			'SUPER_EXPNS'			AS "MEASURE_NAME",
 			"SUPER_EXPNS"			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
@@ -67,7 +68,7 @@ BEGIN
 			'TOTAL_WAGES'			AS "MEASURE_NAME",
 			"TOTAL_WAGES"			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		;
 
 

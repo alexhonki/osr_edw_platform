@@ -1,0 +1,58 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_FRESHNESS"(IN IP_ALERT_ID NVARCHAR(20) )
+RETURNS TABLE 
+(
+DB_KEY					VARBINARY(16),
+ALERT_ID				NVARCHAR(20),
+ABN						NVARCHAR(11),
+GJAHR					NVARCHAR(4),
+LAST_UPDATE_DATE		NVARCHAR(8)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+	
+	lt_result = 
+	SELECT 
+			"ALERT"."DB_KEY" AS "DB_KEY",
+			"ALERT"."ALERT_ID" AS "ALERT_ID",
+			"ALERT"."ABN"																AS "ABN",
+			"ALERT"."GJAHR" 															AS "GJAHR", 
+			"DATA"."NAME"																AS "NAME",
+			ROW_NUMBER() OVER (PARTITION BY "ALERT"."DB_KEY", "ALERT"."ALERT_ID", "ALERT"."ABN", "ALERT"."GJAHR"  ORDER BY "DATA"."NAME" DESC) AS "ROW_NUM"
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 			AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE"						AS "DATA"
+		ON  		"ALERT"."ABN" = LEFT("DATA"."PAYER_ABN",11)
+		AND 		TO_INT("ALERT"."GJAHR") = "DATA"."FINANCIAL_YEAR"
+		;
+ELSE
+	
+	lt_result = 
+	SELECT 
+			"ALERT"."DB_KEY" AS "DB_KEY",
+			"ALERT"."ALERT_ID" AS "ALERT_ID",
+			"ALERT"."ABN"																AS "ABN",
+			"ALERT"."GJAHR" 															AS "GJAHR", 
+			"DATA"."NAME"																AS "NAME",
+			ROW_NUMBER() OVER (PARTITION BY "ALERT"."DB_KEY", "ALERT"."ALERT_ID", "ALERT"."ABN", "ALERT"."GJAHR"  ORDER BY "DATA"."NAME" DESC) AS "ROW_NUM"
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 			AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE"						AS "DATA"
+		ON  		"ALERT"."ABN" = LEFT("DATA"."PAYER_ABN",11)
+		AND 		TO_INT("ALERT"."GJAHR") = "DATA"."FINANCIAL_YEAR"
+		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID;
+		
+END IF;
+
+RETURN 
+SELECT
+"DB_KEY",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+LEFT(RIGHT("NAME",8),4) || '0101' AS "LAST_UPDATE_DATE"
+FROM :lt_result
+WHERE "ROW_NUM" = 1
+;
+
+END;

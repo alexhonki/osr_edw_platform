@@ -32,10 +32,9 @@ BEGIN
 			SUM("DATA"."PMT_SMRY_CNT")													AS "PMT_SMRY_CNT",
 			'AUD'																		AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()				AS "ALERT"
-		INNER JOIN	"osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data"	AS "DATA"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_PAYG_IND_C"()						AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"
 		AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
 		GROUP BY 
 			"ALERT"."DB_KEY",
 			"ALERT"."ALERT_ID",
@@ -56,11 +55,10 @@ BEGIN
 			SUM("DATA"."PMT_SMRY_CNT")													AS "PMT_SMRY_CNT",
 			'AUD'																		AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 			AS "ALERT"
-		INNER JOIN	"osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data"	AS "DATA"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_PAYG_IND_C"()						AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"
 		AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
-		WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
-		AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
+		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 		GROUP BY 
 			"ALERT"."DB_KEY",
 			"ALERT"."ALERT_ID",

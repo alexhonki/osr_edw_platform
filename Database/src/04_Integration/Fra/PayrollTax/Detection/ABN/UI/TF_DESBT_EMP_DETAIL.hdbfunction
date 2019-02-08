@@ -1,0 +1,91 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_EMP_DETAIL"(IN IP_ALERT_ID NVARCHAR(20))
+
+	RETURNS TABLE
+	(
+		DB_KEY			VARBINARY(16),
+		ALERT_ID		NVARCHAR(20),
+		ABN				NVARCHAR(20),
+		GJAHR			NVARCHAR(4),
+		LEGAL_NAME		NVARCHAR(256), 
+		INDUSTRY_DESC	NVARCHAR(60), 
+		COUNT_APP_TRA	INTEGER
+	)
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                   "DB_KEY",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                   "DB_KEY",
+                   "ALERT_ID",
+                   "ABN" ,
+                   "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+DESBT_DATA =
+				SELECT 
+                	"ABN" , 
+                	"LEGAL_NAME", 
+                	"INDUSTRY_DESC", 
+                	COUNT("TRAINEE_ID") AS "COUNT_APP_TRA"
+				FROM  "osr.edw.staging.md.desbt.synonym::CDS_ORG.DSO.TRAINING.active_data"
+				WHERE	"TRAINING_AGREEMENT_TYPE"	IN ('A', 'T')
+                AND 	"ABN"						IN (SELECT "ABN" FROM :ALERT_INFO )
+--          	AND     TO_DATS("COMMENCEMENT_DATE")<=  CONCAT((SELECT DISTINCT MAX("GJAHR") FROM :ALERT_INFO ), '0630')
+--          	AND	TO_DATS("TERMINATION_DATE") >=  CONCAT(TO_NVARCHAR(TO_INT((SELECT DISTINCT MIN("GJAHR") FROM :ALERT_INFO ) - 1)), '0701')
+				GROUP BY 
+                    "ABN", 
+                    "LEGAL_NAME", 
+                    "INDUSTRY_DESC"
+				;
+
+
+	RETURN
+				SELECT
+                	"DB_KEY",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR",
+                    "LEGAL_NAME", 
+                    "INDUSTRY_DESC", 
+                    "COUNT_APP_TRA"
+				FROM
+				(                              
+                	SELECT
+                       "A"."DB_KEY",
+                       "A"."ALERT_ID",
+                       "A"."ABN" ,
+                       "A"."GJAHR",
+                       "B"."LEGAL_NAME", 
+                       "B"."INDUSTRY_DESC", 
+                       "B"."COUNT_APP_TRA"
+					FROM		:ALERT_INFO 	AS "A"
+					INNER JOIN	:DESBT_DATA 	AS "B"
+					ON			"A"."ABN"   = "B"."ABN"
+
+				)
+
+				;
+
+END ;
+
+       

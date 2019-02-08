@@ -4,14 +4,14 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
-    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND</resourceUri>
+  <DataSource id="osr.edw.staging.td.ato.proxy::CV_BASNIND">
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_BASNIND</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
-    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND</resourceUri>
+  <DataSource id="osr.edw.staging.td.ato.proxy::CV_ITRNIND">
+    <resourceUri>osr.edw.staging.td.ato.proxy::CV_ITRNIND</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
-    <resourceUri>osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY</resourceUri>
+  <DataSource id="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS">
+    <resourceUri>osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -27,7 +27,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND">
+    <input node="osr.edw.staging.td.ato.proxy::CV_BASNIND">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_BAS" source="ABN"/>
     </input>
   </calculationView>
@@ -36,15 +36,25 @@
       <viewAttribute id="ABN_ITR">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
+    
+      <viewAttribute id="INCM_YR">
+        <descriptions defaultDescription="INCM_YR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
         <formula>LEFT(&quot;ABN_ITR&quot;,11)</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(&quot;INCM_YR&quot;)</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND">
+    <input node="osr.edw.staging.td.ato.proxy::CV_ITRNIND">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_ITR" source="ABN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ">
@@ -59,7 +69,7 @@
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
+    <input node="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_WCQ" source="ABN"/>
     </input>
   </calculationView>

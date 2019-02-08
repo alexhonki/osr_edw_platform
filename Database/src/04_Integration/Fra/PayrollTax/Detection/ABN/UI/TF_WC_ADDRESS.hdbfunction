@@ -2,6 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_ADDRESS"(IN IP_ALERT_ID NVAR
        RETURNS TABLE
 (
 DB_KEY				VARBINARY(16),
+DB_KEY_DASH			NVARCHAR(32),
 ALERT_ID			NVARCHAR(20),
 ABN					NVARCHAR(20),
 GJAHR				NVARCHAR(4),
@@ -77,10 +78,10 @@ SELECT
 "D"."MAIL_COUNTRY",
 "D"."ACTIVE_FLAG",
 "D"."Z_CHANGE_TIME"
-FROM "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_DETAILS.active_data" AS "A"
+FROM "osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C" AS "A"
 --INNER JOIN "osr.edw.staging.td.wcq.synonym::CDS_WCQ.DSO.WAGES.active_data" AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
 --INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "C" ON TO_DATS("B"."ASSESSMENT_TO")=TO_DATS("C"."DATE_SQL")
-INNER JOIN "osr.edw.staging.md.wcq.synonym::CDS_WCQ.DSO.POLICY_ADDRESS.active_data" AS "D" ON "A"."POLICY_NO"="D"."POLICY_NO" 
+INNER JOIN "osr.edw.staging.md.wcq.proxy::CV_POLICY_ADDRESS_C" AS "D" ON "A"."POLICY_NO"="D"."POLICY_NO" 
 and "D"."RECORD_TYPE" = '08';
 
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
@@ -88,6 +89,7 @@ IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_AL
 RETURN
 SELECT
 "ALERT"."DB_KEY",
+"ALERT"."DB_KEY_DASH",
 "ALERT"."ALERT_ID",
 "ALERT"."ABN",
 "ALERT"."GJAHR",
@@ -132,6 +134,7 @@ ELSE
 RETURN
 SELECT
 "ALERT"."DB_KEY",
+"ALERT"."DB_KEY_DASH",
 "ALERT"."ALERT_ID",
 "ALERT"."ABN",
 "ALERT"."GJAHR",

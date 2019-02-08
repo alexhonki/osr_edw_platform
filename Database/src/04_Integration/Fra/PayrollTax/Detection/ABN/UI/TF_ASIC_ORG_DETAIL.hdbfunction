@@ -16,17 +16,15 @@ SQL SECURITY INVOKER AS
 BEGIN 
 	RETURN
 	SELECT 
-	TOP 1
-	''			AS "ABN",
-	''			AS "ORG_NUMBER",
-	''			AS "ORG_NAME",
-	''			AS "ORG_TYPE",
-	''			AS "ORG_STATUS",
-	''			AS "ORG_CLASS",
-	''			AS "DEREGISTRATION_CODE",
-	''			AS "PLACE_OF_INCORP",
-	''			AS "FILE_FIN_YEAR"
-	FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data";
-	--FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data";
+	"ABN",
+	 "ORG_NUMBER",
+	"ORG_NAME",
+	"ORG_TYPE",
+	"ORG_STATUS",
+	"ORG_CLASS",
+	"DEREGISTRATION_CODE",
+	"PLACE_OF_INCORP",
+	LEFT(RIGHT("NAME",8),4) AS "FILE_FIN_YEAR"
+	FROM "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C";
 	
 END;

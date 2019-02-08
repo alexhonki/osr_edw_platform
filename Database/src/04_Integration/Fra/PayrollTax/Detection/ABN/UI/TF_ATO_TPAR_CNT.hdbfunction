@@ -1,0 +1,120 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_CNT"(IN IP_ALERT_ID NVARCHAR(20))
+/**********
+	CREATED BY		: PRADEEP NARRA
+	CREATED ON		: 05/02/2019
+	CREATION REASON	: To provide consumable TPAR data as external view via UI
+**********/
+ 
+RETURNS TABLE
+	(
+		DB_KEY                      VARBINARY(16),
+		ALERT_ID                    NVARCHAR(20),
+		ABN                         NVARCHAR(20),
+		GJAHR                       NVARCHAR(4),
+		PAYEE_STATE                 NVARCHAR(3),
+		PAYEE_COUNT                 INTEGER,
+		TOTAL_PAYEE_COUNT			INTEGER,
+		PERCENT_PAYEE_BY_STATE      DECIMAL(13,2)
+	)
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                	"ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+TPAR_DATA =
+                SELECT  DISTINCT
+                    "PAYER_ABN",
+                    "FINANCIAL_YEAR",
+                    "PAYEE_STATE",
+                    "PAYEE_COUNT",
+					"TOTAL_PAYEE_COUNT",
+                    CASE WHEN	"PAYEE_COUNT"		> 0 
+                    	 AND	"TOTAL_PAYEE_COUNT" > 0 
+                    	 THEN	TO_DECIMAL(("PAYEE_COUNT" / "TOTAL_PAYEE_COUNT") * 100,13,2) 
+                    	 ELSE	0 
+                    	 END AS "PERCENT_PAYEE_BY_STATE"
+				FROM   
+				(
+                	SELECT  DISTINCT
+                		"PAYER_ABN",
+                		"FINANCIAL_YEAR",
+                		"PAYEE_STATE",
+                		"PAYEE_COUNT",
+                		SUM("PAYEE_COUNT") OVER ( PARTITION BY "PAYER_ABN", "FINANCIAL_YEAR" ORDER BY "PAYER_ABN", "FINANCIAL_YEAR") AS "TOTAL_PAYEE_COUNT"
+					FROM   
+					(
+                		SELECT  DISTINCT
+                			"PAYER_ABN",
+            				"FINANCIAL_YEAR",
+                			"PAYEE_STATE",
+                			COUNT("PAYEE_ABN") AS "PAYEE_COUNT"
+						FROM "osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE_C"
+						WHERE "PAYER_ABN"		IN (SELECT DISTINCT "ABN"	FROM :ALERT_INFO)
+						AND "FINANCIAL_YEAR"	IN (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
+				GROUP BY 
+                "PAYER_ABN",
+                "FINANCIAL_YEAR",
+                "PAYEE_STATE"
+					)              
+
+				)
+;
+
+RETURN
+	SELECT
+        "DB_KEY",
+        "ALERT_ID",
+        "ABN" ,
+        "GJAHR",
+        "PAYEE_STATE",
+        "PAYEE_COUNT",
+		"TOTAL_PAYEE_COUNT",
+        "PERCENT_PAYEE_BY_STATE"
+	FROM
+	(                              
+		SELECT
+           "A"."DB_KEY",
+           "A"."ALERT_ID",
+           "A"."ABN" ,
+           "A"."GJAHR",
+           "B"."PAYEE_STATE",
+           "B"."PAYEE_COUNT",
+		   "B"."TOTAL_PAYEE_COUNT",
+           "B"."PERCENT_PAYEE_BY_STATE"
+		FROM		:ALERT_INFO AS "A"
+		INNER JOIN	:TPAR_DATA  AS "B"
+		ON	"A"."ABN"   = "B"."PAYER_ABN"
+		AND "A"."GJAHR" = "B"."FINANCIAL_YEAR"
+	)
+;
+
+END;      
+      

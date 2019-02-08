@@ -1,0 +1,75 @@
+FUNCTION "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYER_C"( )
+RETURNS TABLE 
+            
+(
+    "PATH"							NVARCHAR(1024)	,
+	"NAME"							NVARCHAR(1024)	,
+	"ERROR"							NVARCHAR(1024)	,
+	"PARTITION"						INTEGER			,        	
+	"REF_ID"						DECIMAL(13,0)	,
+	"PAYER_ABN"						NVARCHAR(20)	,
+	"PAYER_ABN_STS"					NVARCHAR(9)		,
+	"FINANCIAL_YEAR"				INTEGER			,
+	"PAYER_NAME"					NVARCHAR(200)	,
+	"PAYER_TRDG_NM"					NVARCHAR(200)	,
+	"PAYER_ADDR_LN_1"				NVARCHAR(38)	,
+	"PAYER_ADDR_LN_2N"				NVARCHAR(38)	,
+	"PAYER_LOCALITY"				NVARCHAR(27)	,
+	"PAYER_STATE"					NVARCHAR(3)		,
+	"PAYER_PCODE"					NVARCHAR(4)		,
+	"PAYER_CNTCT_NM"				NVARCHAR(200)	,
+	"PAYER_CNTCT_PH_NUM"			NVARCHAR(15)	,
+	"PAYER_FAX_NUM"					NVARCHAR(15)	,
+	"PAYER_EMAIL_ADDR"				NVARCHAR(76)	,
+	"SOURCE_FIELD_VALUE"			NVARCHAR(20)	,	
+	"Z_CURR_FLAG"					NVARCHAR(1)		,
+	"Z_VALID_FROM"					DATE			,
+	"Z_VALID_TO"					DATE			,
+	"Z_CHANGE_TYPE"					NVARCHAR(1)		,
+	"Z_CHANGE_TIME"					TIMESTAMP		,
+	"Z_SOURCE_SYS"					NVARCHAR(5)		,
+	"Z_RUN_ROW_NO"					INTEGER			,
+	"Z_RUN_SEQ_ID"					INTEGER			
+            	
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+RETURN
+SELECT 
+	"PATH",
+	"NAME",
+	"ERROR",
+	"PARTITION",
+	"REF_ID",
+	"PAYER_ABN",
+	"PAYER_ABN_STS",
+	"FINANCIAL_YEAR",
+	"PAYER_NAME",
+	"PAYER_TRDG_NM",
+	"PAYER_ADDR_LN_1",
+	"PAYER_ADDR_LN_2N",
+	"PAYER_LOCALITY",
+	"PAYER_STATE",
+	"PAYER_PCODE",
+	"PAYER_CNTCT_NM",
+	"PAYER_CNTCT_PH_NUM",
+	"PAYER_FAX_NUM",
+	"PAYER_EMAIL_ADDR",
+	"SOURCE_FIELD_VALUE",
+	"Z_CURR_FLAG",
+	"Z_VALID_FROM",
+	"Z_VALID_TO",
+	"Z_CHANGE_TYPE",
+	"Z_CHANGE_TIME",
+	"Z_SOURCE_SYS",
+	"Z_RUN_ROW_NO",
+	"Z_RUN_SEQ_ID"
+FROM "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYER.active_data";
+
+
+END;

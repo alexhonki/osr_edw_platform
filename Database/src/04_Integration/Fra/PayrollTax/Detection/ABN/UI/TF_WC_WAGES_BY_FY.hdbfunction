@@ -9,7 +9,6 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_BY_FY"(IN IP_ALERT_ID 
 		DB_KEY					VARBINARY(16),
 		ALERT_ID				NVARCHAR(20),
 		ABN					    NVARCHAR(20),
-		POLICY_NO				NVARCHAR(12),
 		FINANCIAL_YEAR			NVARCHAR(4),	
 		MEASURE_NAME			NVARCHAR(30),
 		WAGES					DECIMAL(15,2),
@@ -19,28 +18,28 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_BY_FY"(IN IP_ALERT_ID 
        SQL SECURITY INVOKER AS 
 BEGIN 
 
+lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
+
 	RETURN
 		SELECT 
 			"DB_KEY",
 			"ALERT_ID",
 			"ABN",
-			"POLICY_NO"				AS "POLICY_NO",
 			"GJAHR"					AS "FINANCIAL_YEAR",
 			'ACT_WAGES'				AS "MEASURE_NAME",
 			"ACT_WAGES" 			AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		UNION
 		SELECT 
 			"DB_KEY",
 			"ALERT_ID",
 			"ABN",
-			"POLICY_NO"				AS "POLICY_NO",
 			"GJAHR"					AS "FINANCIAL_YEAR",
 			'CNT_EMP'				AS "MEASURE_NAME",
 			"CNT_EMP"				AS "WAGES",
 			"WAERS"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_DETAIL"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
+		FROM :lt_data_fy
 		;
 
 END;

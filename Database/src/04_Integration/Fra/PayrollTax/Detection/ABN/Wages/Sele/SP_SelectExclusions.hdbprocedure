@@ -28,7 +28,7 @@ FROM
 --		"ACN",
 		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
 		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
-	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_ITR_NIND"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND_C"
 	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :it_workset )
  
 	 UNION 
@@ -38,7 +38,7 @@ FROM
 --		"ACN",
 		"ANZSIC_CD"     AS "ANZSIC_CD",
 		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
-	FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND"
+	FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C"
 	WHERE  "ABN" IN ( SELECT DISTINCT "ABN" FROM :it_workset )
 
 	);
@@ -108,7 +108,7 @@ SELECT DISTINCT
 	"ACN",
 	"SPRSN_IND"
 FROM 
-	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data"
+	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"
  WHERE 
 "ABN" IN (SELECT DISTINCT "ABN" FROM  :it_workset )	
 --AND SPRSN_IND <> 'Y'
@@ -137,7 +137,7 @@ SELECT
 FROM
 	:ABR_AGENCY AS "AGENCY" 
 INNER JOIN
-	"osr.edw.staging.md.abr.proxy::CV_FUNDS" AS "FUND"
+	"osr.edw.staging.md.abr.proxy::CV_FUNDS_C" AS "FUND"
 ON 
 	"AGENCY"."PID" = "FUND"."PRIMARY_ID"
 )	
@@ -180,7 +180,7 @@ SELECT
 	"ORG_START_DATE",
 	"ORG_START_DT",
 	"ORG_STATUS"
-FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data"
+FROM "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C"
 WHERE  ABN IN ( SELECT DISTINCT "ABN" FROM  :it_workset )
 ) WHERE "RANK_1" = '1'
 
@@ -194,7 +194,7 @@ FROM
 	
 SELECT DISTINCT 
 	"ATO"."ABN" AS "ABN"
-FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO",
 	:it_workset AS "DET_OBJ"
 WHERE 
 	"ATO"."ABN" = "DET_OBJ"."ABN" 
@@ -206,7 +206,7 @@ UNION
 
 SELECT DISTINCT 
 	"ATO"."ABN" AS "ABN"
-FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO",
 	:it_workset AS "DET_OBJ"
 WHERE 
 	"ATO"."ABN" = "DET_OBJ"."ABN" 

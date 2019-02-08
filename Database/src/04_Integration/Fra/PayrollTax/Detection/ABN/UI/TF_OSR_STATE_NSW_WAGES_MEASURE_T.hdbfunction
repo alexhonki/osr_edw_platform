@@ -1,0 +1,35 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_NSW_WAGES_MEASURE_T"( )
+/**********
+	CREATED BY		: TUGCE GULER
+	CREATED ON		: 24/01/2018
+	CREATION REASON	: Having a measure field text mapping function. 
+**********/
+	RETURNS TABLE 
+	(
+	MEASURE_NAME	NVARCHAR(30),
+	LANGU			NVARCHAR(1),
+	MEASURE_TEXT	NVARCHAR(100)
+	)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+	lt_dummy = 
+	SELECT TOP 1 * 
+	FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data" AS "T009";
+
+RETURN 
+	SELECT 
+		'CLIENT_STATE_WAGES' 					AS "MEASURE_NAME",
+		'E' 									AS "LANGU",
+		'Alert entity wages NSW'				AS "MEASURE_TEXT"
+	FROM :lt_dummy
+	UNION
+	SELECT 
+		'GROUP_STATE_WAGES' 					AS "MEASURE_NAME",
+		'E' 									AS "LANGU",
+		'No. of Group Total NSW Wages'			AS "MEASURE_TEXT"
+	FROM :lt_dummy
+	;
+
+END;

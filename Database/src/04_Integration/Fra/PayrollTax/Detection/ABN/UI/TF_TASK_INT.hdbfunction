@@ -1,0 +1,116 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_TASK_INT"(IN IP_ALERT_ID NVARCHAR(20) )
+   RETURNS TABLE (
+ 
+   	--	DB_KEY			  VARBINARY(16),
+   	--	KEY1			  NVARCHAR(32),
+	--	ALERT_ID		  NVARCHAR(20),
+	--	ABN				  NVARCHAR(20),
+	--	GJAHR			  NVARCHAR(4),
+	--	PARTNER			  NVARCHAR(10),
+	--	REC_TASK		  INTEGER,	
+	--	REC_INT			  INTEGER
+	
+	GUID			NVARCHAR(200),
+	OBJECT_ID		NVARCHAR(10),
+	OBJECT_TYPE		NVARCHAR(10),
+	DESCRIPTION 	NVARCHAR(40)
+	
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN    
+
+ALERT_INFO = 
+SELECT
+	"ALERT"."DB_KEY" AS "DB_KEY",
+	"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
+	"ALERT"."ALERT_ID" AS "ALERT_ID",
+	"ALERT"."ABN" AS "ABN",
+	"ALERT"."GJAHR" AS "GJAHR"
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+; 
+ 
+ELSE 
+
+ALERT_INFO = 
+SELECT
+	"ALERT"."DB_KEY" AS "DB_KEY",
+	"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
+	"ALERT"."ALERT_ID" AS "ALERT_ID",
+	"ALERT"."ABN" AS "ABN",
+	"ALERT"."GJAHR" AS "GJAHR"
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+	
+END IF;	
+	
+
+/*	SELECT 
+	    "ALERT"."DB_KEY" AS "DB_KEY",
+		"ALERT"."KEY1" AS "KEY1",
+		"ALERT"."ALERT_ID" AS "ALERT_ID",
+		"ALERT"."ABN" AS "ABN",
+		"ALERT"."GJAHR" AS "GJAHR",
+		"BPID"."PARTNER" AS "PARTNER",
+		"BPID"."IDNUMBER" AS "IDNUMBER"
+		FROM :ALERT_ID AS "ALERT"
+		INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
+		ON "ALERT"."ABN" = "BPID"."IDNUMBER"
+		WHERE "BPID"."TYPE" = 'ZABN'; */
+		
+BPID_DATA = 
+SELECT 
+"PARTNER", 
+"IDNUMBER" 
+FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data"
+WHERE "TYPE" = 'ZABN'
+AND "IDNUMBER" IN (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+;
+
+BP_DATA =
+SELECT
+"PARTNER_GUID"
+FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
+WHERE "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM :BPID_DATA)
+;
+	
+CRMDPARTNER_DATA =
+SELECT
+"GUID"
+FROM "osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDPARTNER.active_data"
+WHERE "PARTNER_NO" IN (SELECT DISTINCT "PARTNER_GUID" FROM :BP_DATA )
+;
+
+CRMDLINK_DATA =
+SELECT 
+"GUID_HI"
+FROM "osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data"
+WHERE "GUID_SET" IN (SELECT DISTINCT "GUID" FROM :CRMDPARTNER_DATA)
+;
+
+CRMDORDERADMH_DATA =
+SELECT
+"GUID",
+"OBJECT_ID",
+"OBJECT_TYPE",
+"DESCRIPTION"
+FROM "osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data"
+WHERE "GUID" IN (SELECT DISTINCT "GUID_HI" FROM :CRMDLINK_DATA )
+;
+   
+RETURN 
+SELECT
+"GUID",
+"OBJECT_ID",
+"OBJECT_TYPE",
+"DESCRIPTION"
+FROM :CRMDORDERADMH_DATA
+;
+
+END;
