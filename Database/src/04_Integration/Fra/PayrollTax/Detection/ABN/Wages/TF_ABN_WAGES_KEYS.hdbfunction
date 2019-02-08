@@ -42,8 +42,10 @@ WHERE "CALENDAR"."DATE" = "TFKPERIOD"."ABRZU"
   AND LEFT("TFMCA_INCORR_PER"."INCOTYP",2) = 'PT'
   AND "ABR"."ENT_TYP_CD" <> 'IND'
   AND EXISTS (
+	--SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND_BY_FY" AS "ABN_NIND"
 	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND" AS "ABN_NIND"
-	WHERE LEFT("ABN_NIND"."ABN",11) = LEFT("ABR"."ABN",11)
+	WHERE "ABN_NIND"."ABN" = LEFT("ABR"."ABN",11)
+	  --AND "ABN_NIND"."GJAHR" = "CALENDAR"."FISCAL_YEAR"
   )
 ;
 
