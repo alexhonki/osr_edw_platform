@@ -87,13 +87,14 @@ BEGIN
 		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
 		;
 
-/*		
+	
 lt_aggr =  
 SELECT 
 		"DB_KEY",
 		"ALERT_ID",
 		"ABN",
 		"GJAHR",
+		"WAERS",
 		SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES",
 		SUM("ITR_WAGES") AS "ITR_WAGES",
 		SUM("BAS_WAGES") AS "BAS_WAGES",
@@ -108,7 +109,7 @@ SELECT
 		"GJAHR",
 		"WAERS"
 		;
-*/
+
 
 RETURN 
 SELECT 
@@ -121,7 +122,7 @@ SELECT
 		SUM("ITR_WAGES") - SUM("OSR_AUST_WAGES") AS "VAR2",
 		SUM("BAS_WAGES") - SUM("OSR_AUST_WAGES") AS "VAR3",
 		SUM("PAYG_WAGES") - SUM("OSR_AUST_WAGES") AS "VAR4"
-		FROM :lt_union
+		FROM :lt_aggr
 		GROUP BY 
 		"DB_KEY",
 		"ALERT_ID",
