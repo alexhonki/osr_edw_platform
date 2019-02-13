@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_PAYG_NIND_ADDRESS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PAYG_NIND_ADDRESS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_ADDRESS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_ADDRESS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_ADDRESS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_ADDRESS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_ADDRESS">
+  <attributes>
+    <attribute id="DB_KEY_DASH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_STATE"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="BUS_STATE"/>
+    </attribute>
+    <attribute id="NON_IDV_NM_LN_1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NON_IDV_NM_LN_1"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="NON_IDV_NM_LN_1"/>
+    </attribute>
+    <attribute id="BUS_PC" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="NON_IDV_NM_LN_2" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NON_IDV_NM_LN_2"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="NON_IDV_NM_LN_2"/>
+    </attribute>
+    <attribute id="INCM_YR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCM_YR"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="INCM_YR"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_1" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="BUS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_2" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="BUS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="BUS_LCLTY_NM" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="BUS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="DB_KEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_PAYG_NIND_ADDRESS" columnName="DB_KEY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

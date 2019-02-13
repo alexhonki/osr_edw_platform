@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_ITR_NIND_POSTAL_ADD"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
-<variableMappings/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD"/>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD</resourceUri>
@@ -64,6 +60,10 @@
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="GJAHR"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -83,6 +83,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_STATE" source="PSTL_STATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_PC" source="PSTL_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -147,6 +149,11 @@
     <attribute id="GJAHR" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+    </attribute>
+  
+    <attribute id="DB_KEY_DASH" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

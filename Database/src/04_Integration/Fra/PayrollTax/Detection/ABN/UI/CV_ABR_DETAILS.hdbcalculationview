@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ABR_DETAILS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABR_DETAILS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_DETAILS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_DETAILS">
+  <attributes>
+    <attribute id="GST_REGN_DT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GST_REGN_DT"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="GST_REGN_DT"/>
+    </attribute>
+    <attribute id="BUS_ADDR_COUNTRY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_COUNTRY"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_COUNTRY"/>
+    </attribute>
+    <attribute id="GST_CANCN_DT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GST_CANCN_DT"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="GST_CANCN_DT"/>
+    </attribute>
+    <attribute id="BUS_ADDR_DPID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_DPID"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_DPID"/>
+    </attribute>
+    <attribute id="ORG_NM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NM"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ORG_NM"/>
+    </attribute>
+    <attribute id="ENTITY_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENTITY_TYPE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ENTITY_TYPE"/>
+    </attribute>
+    <attribute id="ACN" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ACN"/>
+    </attribute>
+    <attribute id="LOCN_STRT_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCN_STRT_DATE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="LOCN_STRT_DATE"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_1" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="BUS_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_NAME"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_NAME"/>
+    </attribute>
+    <attribute id="BUS_LOCN_ADDR_LN_1" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_ADDR_LN_1"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_2" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="ANZSIC_CODE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_CODE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ANZSIC_CODE"/>
+    </attribute>
+    <attribute id="BUS_LOCN_ADDR_LN_2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_ADDR_LN_2"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="BUS_ADDR_SUBURB" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_SUBURB"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_SUBURB"/>
+    </attribute>
+    <attribute id="ANZSIC_DESC" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_DESC"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ANZSIC_DESC"/>
+    </attribute>
+    <attribute id="DB_KEY" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="BUS_LOCN_PH_AREA_CODE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_PH_AREA_CODE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_PH_AREA_CODE"/>
+    </attribute>
+    <attribute id="BUS_LOCN_SUBURB" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_SUBURB"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_SUBURB"/>
+    </attribute>
+    <attribute id="BUS_ADDR_STATE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_STATE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_STATE"/>
+    </attribute>
+    <attribute id="OTH_TRDG_NAME" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTH_TRDG_NAME"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="OTH_TRDG_NAME"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="BUS_LOCN_PH_NUM" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_PH_NUM"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_PH_NUM"/>
+    </attribute>
+    <attribute id="BUS_LOCN_STATE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_STATE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_STATE"/>
+    </attribute>
+    <attribute id="BUS_ADDR_PCODE" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_PCODE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_ADDR_PCODE"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="BUS_LOCN_PH_AREA_CD_MBL" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_PH_AREA_CD_MBL"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_PH_AREA_CD_MBL"/>
+    </attribute>
+    <attribute id="BUS_LOCN_PCODE" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_PCODE"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_PCODE"/>
+    </attribute>
+    <attribute id="GJAHR" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BUS_LOCN_PH_NUM_MBL" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_PH_NUM_MBL"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_PH_NUM_MBL"/>
+    </attribute>
+    <attribute id="BUS_LOCN_COUNTRY" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_COUNTRY"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_COUNTRY"/>
+    </attribute>
+    <attribute id="PID" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PID"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="PID"/>
+    </attribute>
+    <attribute id="BUS_LOCN_EML" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_EML"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_EML"/>
+    </attribute>
+    <attribute id="BUS_LOCN_DPID" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LOCN_DPID"/>
+      <keyMapping columnObjectName="TF_ABR_DETAILS" columnName="BUS_LOCN_DPID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

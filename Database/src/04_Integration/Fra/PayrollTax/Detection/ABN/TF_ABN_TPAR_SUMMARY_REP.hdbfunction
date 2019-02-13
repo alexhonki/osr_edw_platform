@@ -29,7 +29,6 @@ RETURNS TABLE(
 		"BP_FIN_STATUS"                         NVARCHAR(20)  ,
 		"BP_GRP_STATUS"                         NVARCHAR(20)  ,
 		"VALID_FROM"                            NVARCHAR(8)   ,
-		"VALID_TO"                              NVARCHAR(8)   ,		
 		"TRANSACTION_NUMBER"                    NVARCHAR(12)  ,
 		"A_APPRENT_PMT"                         DECIMAL(15,2) ,
 		"A_TRAINEES_PMT"                        DECIMAL(15,2) ,
@@ -407,7 +406,7 @@ FROM "osr.edw.source.md.rms.synonym::CDS_BP.TAB.ZBUT0000HJCXO9"
 WHERE "PARTNER" IN ( SELECT DISTINCT "PARTNER" FROM :BUT0ID )
 ) WHERE  "RANK_1" = 1;
 
-/*
+
 DPSOBBPACC =
 SELECT 
 	"PSOBKEY",
@@ -450,24 +449,6 @@ INNER JOIN
 :GRP_STATUS AS "B"
 ON "A"."PSOBKEY" = "B"."OBJID"
 ;
-*/
-GRP_FACT_GRP_STAUTS =
-SELECT * FROM 
-(
-
-SELECT
-	"BPARTNER" AS "PARTNER",
-	"GRP_STATUS" AS "BP_GRP_STATUS",
-	"PRT_LIAB_DATE",
-	"QLD_LIAB_DATE",
-	"VALID_FROM",
-	"VALID_TO",
-	RANK() OVER (PARTITION BY "BPARTNER" ORDER BY "BPARTNER", LEFT("VALID_TO",8) DESC) AS "RANK_1"
-FROM "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS"( ) 
-WHERE "BPARTNER" IN ( SELECT DISTINCT "PARTNER" FROM :BUT0ID )
-
-)
-WHERE "RANK_1" = '1';
 
 BP_ID_FIN_STATUS =
 SELECT
@@ -476,8 +457,7 @@ SELECT
 	"A"."IDNUMBER" AS "PAYER_ABN",
 	"B"."ZZTFLDPVC3OA"  AS "BP_FIN_STATUS",
 	"C"."BP_GRP_STATUS",
-	"C"."VALID_FROM",
-	"C"."VALID_TO"
+	"C"."VALID_FROM"
 FROM 
 	:BUT0ID AS "A"
 LEFT OUTER JOIN
@@ -585,7 +565,6 @@ SELECT
      "A"."BP_FIN_STATUS",
 	 "A"."BP_GRP_STATUS",
 	 "A"."VALID_FROM",
-	 "A"."VALID_TO",
      "B"."TRANSACTION_NUMBER",
 	 "B"."A_APPRENT_PMT",
 	 "B"."A_TRAINEES_PMT",
@@ -636,7 +615,6 @@ SELECT
     "PAYER_BP"                         AS "PAYER_BP"                      ,
     "BP_GRP_STATUS"                    AS "BP_GRP_STATUS"                 ,
     "VALID_FROM"                       AS "VALID_FROM"                    ,
-    "VALID_TO"						   AS "VALID_TO"					  ,	
     "BP_FIN_STATUS"                    AS "BP_FIN_STATUS"                 ,
     "TRANSACTION_NUMBER"               AS "TRANSACTION_NUMBER"            ,   
     "A_APPRENT_PMT"                    AS "A_APPRENT_PMT"                 ,
@@ -675,12 +653,11 @@ SELECT
 	END END END END AS "RISK_CATEGORY"
 */
 
-
-	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000                AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000  THEN '1' ELSE
-	CASE WHEN("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER") BETWEEN 500000 AND 1100000   AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000  THEN '2' ELSE
-	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000                 AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  <  800000  THEN '3' ELSE  '0' 
---    END END END 
-	END END END AS "RISK_CATEGORY"
+    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                  AND  "A_GROSS_SAL_WAGE" > 0   THEN '4' ELSE
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000                 AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000 THEN '1' ELSE
+	CASE WHEN("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER") BETWEEN 500000 AND 1100000   AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000 THEN '2' ELSE
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000                 AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  <  800000 THEN '3' ELSE  '0' 
+	END END END END AS "RISK_CATEGORY"
 	
 FROM
 (
@@ -711,7 +688,6 @@ SELECT
     "B"."BP_FIN_STATUS",
 	"B"."BP_GRP_STATUS",
 	"B"."VALID_FROM",
-	"B"."VALID_TO",
 	"B"."TRANSACTION_NUMBER" ,	
 	"B"."A_APPRENT_PMT",
 	"B"."A_TRAINEES_PMT",
@@ -813,7 +789,6 @@ SELECT
     "A"."PAYER_BP"                         AS "PAYER_BP"                      ,
     "A"."BP_GRP_STATUS"                    AS "BP_GRP_STATUS"                 ,
     "A"."VALID_FROM"                       AS "VALID_FROM"                    ,
-    "A"."VALID_TO"                         AS "VALID_TO"                      ,    
     "A"."BP_FIN_STATUS"                    AS "BP_FIN_STATUS"                 ,
     "A"."TRANSACTION_NUMBER"               AS "TRANSACTION_NUMBER"            ,
     "A"."A_APPRENT_PMT"                    AS "A_APPRENT_PMT"                 ,
@@ -864,11 +839,7 @@ SELECT DISTINCT
 	"PAYER_ABN"                     ,
 	"FINANCIAL_YEAR"                ,
 	"PAYER_NAME"                    ,
---	"RISK_CATEGORY"                 ,
-    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                 AND  TO_DATS("VALID_TO") >= TO_DATS(CONCAT(TO_NVARCHAR(TO_INT(:IP_FY) - 1),'0701')) AND  ( "TRANSACTION_NUMBER"  = '' OR  "TRANSACTION_NUMBER"  IS  NULL ) THEN '4' ELSE
-    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                 AND  ( "TRANSACTION_NUMBER"   <> '' OR "TRANSACTION_NUMBER"  IS NOT NULL ) AND  ("A_CONTRACTORS" = 0 OR "A_CONTRACTORS" IS NULL OR "A_CONTRACTORS" < 1 )  THEN '4' ELSE
-    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                 AND  "TRANSACTION_NUMBER"   <> '' AND  "A_CONTRACTORS" > 1   THEN '0' ELSE "RISK_CATEGORY"
-    END END END AS "RISK_CATEGORY" ,
+	"RISK_CATEGORY"                 ,
 	"SUB_RISK_CATEGORY"             ,
 
 	
@@ -887,7 +858,6 @@ SELECT DISTINCT
     "BP_FIN_STATUS"                 ,
     "BP_GRP_STATUS"                 ,
     "VALID_FROM"                    ,
-    "VALID_TO"						,
     "TRANSACTION_NUMBER"            ,
     "A_APPRENT_PMT"                 ,
 	"A_TRAINEES_PMT"                ,

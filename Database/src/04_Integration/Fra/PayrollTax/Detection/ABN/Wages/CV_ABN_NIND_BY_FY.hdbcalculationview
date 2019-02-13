@@ -18,7 +18,7 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS">
     <viewAttributes>
       <viewAttribute id="ABN_BAS">
         <descriptions defaultDescription="ABN"/>
@@ -45,9 +45,8 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
     </input>
-    <filter>&quot;ABN_BAS&quot; &lt;&gt; '' AND &quot;ABN_BAS&quot; IS NOT NULL</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR">
     <viewAttributes>
       <viewAttribute id="ABN_ITR">
         <descriptions defaultDescription="ABN"/>
@@ -74,10 +73,8 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
     </input>
-  
-    <filter>&quot;ABN_ITR&quot; &lt;&gt; '' AND &quot;ABN_ITR&quot; IS NOT NULL</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ">
     <viewAttributes>
       <viewAttribute id="ABN_WCQ">
         <descriptions defaultDescription="ABN"/>
@@ -102,8 +99,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_WCQ" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
     </input>
-  
-    <filter>&quot;ABN_WCQ&quot; &lt;&gt; '' AND &quot;ABN_WCQ&quot; IS NOT NULL</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_WCQ" cardinality="CN_N" joinType="inner">
     <viewAttributes>
