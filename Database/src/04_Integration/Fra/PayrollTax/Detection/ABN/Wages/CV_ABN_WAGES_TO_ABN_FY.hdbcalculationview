@@ -4,28 +4,53 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_TO_ABN_FY_IMPL">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_TO_ABN_FY_IMPL1</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_TO_ABN_FY_IMPL">
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Aggregation_1">
   <attributes>
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_TO_ABN_FY_IMPL" columnName="ABN"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="ABN"/>
     </attribute>
     <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERIOD_CATEGORY"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_TO_ABN_FY_IMPL" columnName="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="PERIOD_CATEGORY"/>
     </attribute>
     <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERIOD_KEY"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_TO_ABN_FY_IMPL" columnName="PERIOD_KEY"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="PERIOD_KEY"/>
     </attribute>
     <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_TO_ABN_FY_IMPL" columnName="GJAHR"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="GJAHR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -39,6 +64,12 @@
       <upperLeftCorner x="92" y="112"/>
     
       <rectangleSize width="160"/>
-    </shape></shapes>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>

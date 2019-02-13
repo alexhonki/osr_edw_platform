@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_FBT_ADD_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_FBT_ADD_DETAILS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_ADD_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_ADD_DETAILS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_ADD_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_ADD_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_ADD_DETAILS">
+  <attributes>
+    <attribute id="POSTAL_ADDRESS_LN_1" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTAL_ADDRESS_LN_1"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="POSTAL_ADDRESS_LN_1"/>
+    </attribute>
+    <attribute id="BUSINESS_ADDRESS_POSTCODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUSINESS_ADDRESS_POSTCODE"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="BUSINESS_ADDRESS_POSTCODE"/>
+    </attribute>
+    <attribute id="POSTAL_ADDRESS_LN_2" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTAL_ADDRESS_LN_2"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="POSTAL_ADDRESS_LN_2"/>
+    </attribute>
+    <attribute id="DB_KEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="POSTAL_ADDRESS_LOCALITY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTAL_ADDRESS_LOCALITY"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="POSTAL_ADDRESS_LOCALITY"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="POSTAL_ADDRESS_STATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTAL_ADDRESS_STATE"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="POSTAL_ADDRESS_STATE"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="POSTAL_ADDRESS_POSTCODE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTAL_ADDRESS_POSTCODE"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="POSTAL_ADDRESS_POSTCODE"/>
+    </attribute>
+    <attribute id="ABN" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="FBT_YEAR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBT_YEAR"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="FBT_YEAR"/>
+    </attribute>
+    <attribute id="GJAHR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BUSINESS_ADDRESS_LN_1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUSINESS_ADDRESS_LN_1"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="BUSINESS_ADDRESS_LN_1"/>
+    </attribute>
+    <attribute id="BUSINESS_ADDRESS_LN_2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUSINESS_ADDRESS_LN_2"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="BUSINESS_ADDRESS_LN_2"/>
+    </attribute>
+    <attribute id="BUSINESS_ADDRESS_LOCALITY" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUSINESS_ADDRESS_LOCALITY"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="BUSINESS_ADDRESS_LOCALITY"/>
+    </attribute>
+    <attribute id="BUSINESS_ADDRESS_STATE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUSINESS_ADDRESS_STATE"/>
+      <keyMapping columnObjectName="TF_FBT_ADD_DETAILS" columnName="BUSINESS_ADDRESS_STATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

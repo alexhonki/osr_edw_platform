@@ -30,7 +30,7 @@ BEGIN
 			--TO_NVARCHAR("DATA"."INCM_YR") AS "INCM_YR",
 			SUM("DATA"."TOTL_GRS_AMT"+"DATA"."TOTL_LUMP_AMT"+"DATA"."TOTL_ALWNC_AMT")		AS "TOTL_WAGES",
 			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
-			'AUD  '																			AS "WAERS"	
+			'AUD'																			AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
 		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"
@@ -53,7 +53,7 @@ BEGIN
 			--TO_NVARCHAR("DATA"."INCM_YR") AS "INCM_YR",
 			SUM("DATA"."TOTL_GRS_AMT"+"DATA"."TOTL_LUMP_AMT"+"DATA"."TOTL_ALWNC_AMT")		AS "TOTL_WAGES",
 			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
-			'AUD  '																			AS "WAERS"	
+			'AUD'																			AS "WAERS"	
 		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 				AS "ALERT"
 		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()					   AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"
