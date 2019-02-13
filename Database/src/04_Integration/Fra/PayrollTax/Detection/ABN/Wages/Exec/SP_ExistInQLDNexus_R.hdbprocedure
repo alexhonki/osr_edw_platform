@@ -75,7 +75,7 @@ BEGIN
 		"RISK_FACTOR_RATING_EMP_CNT_MAX"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "CNT"
 	WHERE
-		"CNT"."LOW"  >= :lv_qld_emp_cnt_thld_low
+		"CNT"."LOW"  > :lv_qld_emp_cnt_thld_low
 	AND "CNT"."HIGH" <= :lv_qld_emp_cnt_thld_high
 	GROUP BY
 		"CNT"."LOW",
@@ -98,7 +98,7 @@ BEGIN
 		"RISK_FACTOR_RATING_EMP_PC_MAX"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_PC" AS "PC"
 	WHERE
-		"PC"."LOW"  >= :lv_qld_emp_pc_thld_low
+		"PC"."LOW"  > :lv_qld_emp_pc_thld_low
 	AND "PC"."HIGH" <= :lv_qld_emp_pc_thld_high
 	GROUP BY
 		"PC"."LOW",
@@ -288,7 +288,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 				SELECT * FROM :lt_cnt			AS "CNT"
 				WHERE "RESULT"."ABN"			= "CNT"."ABN"
 				  AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
-				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+				  AND "CNT"."QLD_CNT_EMPLOYEE" > :lv_qld_emp_cnt_thld_low 
 				  AND "CNT"."QLD_CNT_EMPLOYEE" <= :lv_qld_emp_cnt_thld_high
 				  AND "TOP_BAND_EMP_CNT"	   <> 'X'
 			)
@@ -305,7 +305,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 				SELECT * FROM :lt_cnt			AS "CNT"
 				WHERE "RESULT"."ABN"			= "CNT"."ABN"
 				  AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
-				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+				  AND "CNT"."QLD_CNT_EMPLOYEE" > :lv_qld_emp_cnt_thld_low 
 				  AND "TOP_BAND_EMP_CNT"		='X'
 			)
 		;
@@ -336,7 +336,7 @@ IF :lx_flag_qld_emp_cnt = 'N' THEN
 				SELECT * FROM :lt_cnt			AS "CNT"
 				WHERE "RESULT"."ABN"			= "CNT"."ABN"
 				  AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
-				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+				  AND "CNT"."QLD_CNT_EMPLOYEE" > :lv_qld_emp_cnt_thld_low 
 				  AND "CNT"."QLD_CNT_EMPLOYEE" <= :lv_qld_emp_cnt_thld_high
 				  AND "TOP_BAND_EMP_CNT"	   <> 'X'
 			)
@@ -353,7 +353,7 @@ IF :lx_flag_qld_emp_cnt = 'N' THEN
 				SELECT * FROM :lt_cnt			AS "CNT"
 				WHERE "RESULT"."ABN"			= "CNT"."ABN"
 				  AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
-				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+				  AND "CNT"."QLD_CNT_EMPLOYEE" > :lv_qld_emp_cnt_thld_low 
 				  AND "TOP_BAND_EMP_CNT"		='X'
 			)
 		;
@@ -383,7 +383,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			SELECT * FROM :lt_cnt         AS "CNT"
 			WHERE "RESULT"."ABN"           = "CNT"."ABN"
 		  	  AND "RESULT"."GJAHR"         = "CNT"."GJAHR"
-			  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+			  AND "CNT"."QLD_PC_EMPLOYEE" > :lv_qld_emp_pc_thld_low 
 			  AND "CNT"."QLD_PC_EMPLOYEE" <= :lv_qld_emp_pc_thld_high
 			  AND "TOP_BAND_EMP_PC"       <> 'X'
 			)
@@ -400,7 +400,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			SELECT * FROM :lt_cnt         AS "CNT"
 			WHERE "RESULT"."ABN"           = "CNT"."ABN"
 			  AND "RESULT"."GJAHR"         = "CNT"."GJAHR"
-			  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+			  AND "CNT"."QLD_PC_EMPLOYEE" > :lv_qld_emp_pc_thld_low 
 			  AND "TOP_BAND_EMP_PC"        = 'X'
 			)
 		;
@@ -430,7 +430,7 @@ IF :lx_flag_qld_emp_pc = 'N' THEN
 			SELECT * FROM :lt_cnt         AS "CNT"
 			WHERE "RESULT"."ABN"           = "CNT"."ABN"
 		  	  AND "RESULT"."GJAHR"         = "CNT"."GJAHR"
-			  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+			  AND "CNT"."QLD_PC_EMPLOYEE" > :lv_qld_emp_pc_thld_low 
 			  AND "CNT"."QLD_PC_EMPLOYEE" <= :lv_qld_emp_pc_thld_high
 			  AND "TOP_BAND_EMP_PC"       <> 'X'
 			)
@@ -447,7 +447,7 @@ IF :lx_flag_qld_emp_pc = 'N' THEN
 			SELECT * FROM :lt_cnt         AS "CNT"
 			WHERE "RESULT"."ABN"           = "CNT"."ABN"
 			  AND "RESULT"."GJAHR"         = "CNT"."GJAHR"
-			  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+			  AND "CNT"."QLD_PC_EMPLOYEE" > :lv_qld_emp_pc_thld_low 
 			  AND "TOP_BAND_EMP_PC"        = 'X'
 			)
 		;
