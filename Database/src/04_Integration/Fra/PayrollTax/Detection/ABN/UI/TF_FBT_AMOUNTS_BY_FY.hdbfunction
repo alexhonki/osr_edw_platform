@@ -1,0 +1,69 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FY"(IN IP_ALERT_ID NVARCHAR(20), IN IP_FY_ADJUSTMENT INTEGER )
+RETURNS TABLE
+(
+DB_KEY					VARBINARY(16),
+ALERT_ID				NVARCHAR(20),
+ABN					    NVARCHAR(20),
+GJAHR					NVARCHAR(4),	
+MEASURE_NAME			NVARCHAR(30),
+AMOUNT					DECIMAL(15,2),
+WAERS					NVARCHAR(5)
+		)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS" (:IP_ALERT_ID, :IP_FY_ADJUSTMENT);
+	RETURN
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"							AS "GJAHR",
+			'TYP1_AGRGT_AMT'				AS "MEASURE_NAME",
+			"TYP1_AGRGT_AMT" 				AS "AMOUNT",
+			"WAERS"
+		FROM :lt_data_fy
+		UNION
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"							AS "GJAHR",
+			'TYP2_AGRGT_AMT'				AS "MEASURE_NAME",
+			"TYP2_AGRGT_AMT" 				AS "AMOUNT",
+			"WAERS"
+		FROM :lt_data_fy
+		UNION
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"							AS "GJAHR",
+			'TOTAL_AGRGT_AMT'				AS "MEASURE_NAME",
+			"TOTAL_AGRGT_AMT" 				AS "AMOUNT",
+			"WAERS"
+		FROM :lt_data_fy
+		UNION
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"							AS "GJAHR",
+			'GROSSED_UP_AMOUNT'				AS "MEASURE_NAME",
+			"GROSSED_UP_AMOUNT" 			AS "AMOUNT",
+			"WAERS"
+		FROM :lt_data_fy
+		UNION
+		SELECT 
+			"DB_KEY",
+			"ALERT_ID",
+			"ABN",
+			"GJAHR"							AS "GJAHR",
+			'TOTAL_EXCEPTIONS'				AS "MEASURE_NAME",
+			"TOTAL_EXCEPTIONS" 				AS "AMOUNT",
+			"WAERS"
+		FROM :lt_data_fy
+		;
+
+END;
