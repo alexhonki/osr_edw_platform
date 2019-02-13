@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_ADDRESS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_ADDRESS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_WC_ADDRESS"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
-<variableMappings/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_ADDRESS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_ADDRESS"/>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_ADDRESS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_ADDRESS</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
       <viewAttribute id="CONTACT_NAME">
         <descriptions defaultDescription="CONTACT_NAME"/>
@@ -115,6 +111,10 @@
       <viewAttribute id="LOC_ADDR_3">
         <descriptions defaultDescription="LOC_ADDR_3"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -151,6 +151,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT_TYPE" source="CONTACT_TYPE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MAIL_SUBURB" source="MAIL_SUBURB"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LOC_ADDR_3" source="LOC_ADDR_3"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input></calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
@@ -282,6 +284,11 @@
     <attribute id="LOC_ADDR_3" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Location Address 3 (Business)"/>
       <keyMapping columnObjectName="Projection_1" columnName="LOC_ADDR_3"/>
+    </attribute>
+  
+    <attribute id="DB_KEY_DASH" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
