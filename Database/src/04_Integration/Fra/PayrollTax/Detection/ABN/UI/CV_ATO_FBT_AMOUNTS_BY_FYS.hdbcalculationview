@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_FBT_AMOUNTS_BY_FYS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_FBT_AMOUNTS_BY_FYS"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_FBT_AMOUNTS_BY_FYS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_FBT_AMOUNTS_BY_FYS"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FYS" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FYS</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FYS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FYS</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_MEASURE_T" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_MEASURE_T</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_MEASURE_T" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_MEASURE_T</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_MEASURE_O" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_MEASURE_O</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_MEASURE_O" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_MEASURE_O</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -56,7 +56,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FYS">
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FYS">
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
@@ -85,7 +85,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_MEASURE_T">
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_MEASURE_T">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_NAME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
@@ -103,7 +103,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_MEASURE_O">
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_MEASURE_O">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_NAME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_SORT_ORDER" source="MEASURE_SORT_ORDER"/>
     </input>
@@ -310,25 +310,25 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="328.6900820831794" y="112"/>
+      <upperLeftCorner x="328" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="496.9999976158142"/>
+      <upperLeftCorner x="92" y="496"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_Text" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="496.9999976158142"/>
+      <upperLeftCorner x="302" y="496"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_Sort" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="395.83468516943316" y="356.9999988079071"/>
+      <upperLeftCorner x="395" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666663" y="356.9999988079071"/>
+      <upperLeftCorner x="118" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -340,7 +340,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="328.6900820831794" y="217"/>
+      <upperLeftCorner x="328" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">

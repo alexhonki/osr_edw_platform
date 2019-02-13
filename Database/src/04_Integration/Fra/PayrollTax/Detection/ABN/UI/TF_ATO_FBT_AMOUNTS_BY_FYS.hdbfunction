@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FYS"(IN IP_ALERT_ID NVARCHAR(20) )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FYS"(IN IP_ALERT_ID NVARCHAR(20) )
       RETURNS TABLE
 (
 DB_KEY					VARBINARY(16),
@@ -45,7 +45,7 @@ SELECT
 0 AS "FY3_AMOUNT",
 0 AS "FY4_AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,0)
+FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,0)
 UNION
 SELECT 
 "DB_KEY",
@@ -59,7 +59,7 @@ SELECT
 0 AS "FY3_AMOUNT",
 0 AS "FY4_AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,1)
+FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,1)
 UNION
 SELECT 
 "DB_KEY",
@@ -73,7 +73,7 @@ SELECT
 0 AS "FY3_AMOUNT",
 0 AS "FY4_AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,2)
+FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,2)
 UNION
 SELECT 
 "DB_KEY",
@@ -87,7 +87,7 @@ SELECT
 "AMOUNT" AS "FY3_AMOUNT",
 0 AS "FY4_AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,3)
+FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,3)
 UNION
 SELECT 
 "DB_KEY",
@@ -101,7 +101,7 @@ SELECT
 0 AS "FY3_AMOUNT",
 "AMOUNT" AS "FY4_AMOUNT",
 "WAERS"
-FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,4)
+FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_FBT_AMOUNTS_BY_FY"(:IP_ALERT_ID,4)
 )
 GROUP BY 
 "DB_KEY",
