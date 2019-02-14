@@ -1,152 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_ITR_NIND_POSTAL_ADD"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
-<variableMappings/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD"/>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
-    <viewAttributes>
-      <viewAttribute id="NON_IDV_NM_LN_1">
-        <descriptions defaultDescription="NON_IDV_NM_LN_1"/>
-      </viewAttribute>
-      <viewAttribute id="NON_IDV_NM_LN_2">
-        <descriptions defaultDescription="NON_IDV_NM_LN_2"/>
-      </viewAttribute>
-      <viewAttribute id="TRDNG_NM_LN_1">
-        <descriptions defaultDescription="TRDNG_NM_LN_1"/>
-      </viewAttribute>
-      <viewAttribute id="TRDNG_NM_LN_2">
-        <descriptions defaultDescription="TRDNG_NM_LN_2"/>
-      </viewAttribute>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="Z_CHANGE_TIME">
-        <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      </viewAttribute>
-      <viewAttribute id="PARENT_FULL_NM_TXT">
-        <descriptions defaultDescription="PARENT_FULL_NM_TXT"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="PSTL_ADDR_LN_1">
-        <descriptions defaultDescription="PSTL_ADDR_LN_1"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="PSTL_ADDR_LN_2">
-        <descriptions defaultDescription="PSTL_ADDR_LN_2"/>
-      </viewAttribute>
-      <viewAttribute id="PSTL_LCLTY_NM">
-        <descriptions defaultDescription="PSTL_LCLTY_NM"/>
-      </viewAttribute>
-      <viewAttribute id="PSTL_STATE">
-        <descriptions defaultDescription="PSTL_STATE"/>
-      </viewAttribute>
-      <viewAttribute id="PSTL_PC">
-        <descriptions defaultDescription="PSTL_PC"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD">
-      <mapping xsi:type="Calculation:AttributeMapping" target="NON_IDV_NM_LN_1" source="NON_IDV_NM_LN_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="NON_IDV_NM_LN_2" source="NON_IDV_NM_LN_2"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM_LN_1" source="TRDNG_NM_LN_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM_LN_2" source="TRDNG_NM_LN_2"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_FULL_NM_TXT" source="PARENT_FULL_NM_TXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_ADDR_LN_1" source="PSTL_ADDR_LN_1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_ADDR_LN_2" source="PSTL_ADDR_LN_2"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_LCLTY_NM" source="PSTL_LCLTY_NM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_STATE" source="PSTL_STATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PSTL_PC" source="PSTL_PC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-    </input>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_POSTAL_ADD">
   <attributes>
     <attribute id="NON_IDV_NM_LN_1" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NON_IDV_NM_LN_1"/>
-      <keyMapping columnObjectName="Projection_1" columnName="NON_IDV_NM_LN_1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="NON_IDV_NM_LN_1"/>
     </attribute>
     <attribute id="NON_IDV_NM_LN_2" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NON_IDV_NM_LN_2"/>
-      <keyMapping columnObjectName="Projection_1" columnName="NON_IDV_NM_LN_2"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="NON_IDV_NM_LN_2"/>
     </attribute>
     <attribute id="TRDNG_NM_LN_1" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TRDNG_NM_LN_1"/>
-      <keyMapping columnObjectName="Projection_1" columnName="TRDNG_NM_LN_1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="TRDNG_NM_LN_1"/>
     </attribute>
     <attribute id="TRDNG_NM_LN_2" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TRDNG_NM_LN_2"/>
-      <keyMapping columnObjectName="Projection_1" columnName="TRDNG_NM_LN_2"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="TRDNG_NM_LN_2"/>
     </attribute>
     <attribute id="DB_KEY" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="DB_KEY"/>
     </attribute>
     <attribute id="Z_CHANGE_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="Z_CHANGE_TIME"/>
     </attribute>
     <attribute id="PARENT_FULL_NM_TXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_FULL_NM_TXT"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PARENT_FULL_NM_TXT"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="PARENT_FULL_NM_TXT"/>
     </attribute>
     <attribute id="ALERT_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="ALERT_ID"/>
     </attribute>
     <attribute id="PSTL_ADDR_LN_1" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSTL_ADDR_LN_1"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PSTL_ADDR_LN_1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="PSTL_ADDR_LN_1"/>
     </attribute>
     <attribute id="ABN" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="ABN"/>
     </attribute>
     <attribute id="PSTL_ADDR_LN_2" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSTL_ADDR_LN_2"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PSTL_ADDR_LN_2"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="PSTL_ADDR_LN_2"/>
     </attribute>
     <attribute id="PSTL_LCLTY_NM" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSTL_LCLTY_NM"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PSTL_LCLTY_NM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="PSTL_LCLTY_NM"/>
     </attribute>
     <attribute id="PSTL_STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSTL_STATE"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PSTL_STATE"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="PSTL_STATE"/>
     </attribute>
     <attribute id="PSTL_PC" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PSTL_PC"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PSTL_PC"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="PSTL_PC"/>
     </attribute>
     <attribute id="GJAHR" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_POSTAL_ADD" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -158,12 +89,6 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="67" y="223"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
