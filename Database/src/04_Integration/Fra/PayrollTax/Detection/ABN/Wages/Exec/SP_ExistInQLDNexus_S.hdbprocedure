@@ -235,7 +235,36 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 				  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
 			)
 		;
+		
+END IF;
 
+IF :lx_flag_qld_emp_cnt = 'N' THEN
+
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0 			AS "DETECTION_RESULT"	
+			FROM 
+			:lt_result	AS "RESULT"
+			WHERE EXISTS (
+				SELECT * FROM :lt_cnt AS "CNT"
+				WHERE "RESULT"."ABN"			= "CNT"."ABN"
+				  AND "RESULT"."GJAHR"  		= "CNT"."GJAHR"
+				  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_qld_emp_cnt_thld_low 
+				  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_qld_emp_cnt_thld_high
+			)
+		;
 
 END IF;
 
@@ -266,7 +295,35 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			AND 	"CNT"."QLD_PC_EMPLOYEE" < :lv_qld_emp_pc_thld_high
 			)
 		;
+END IF;
 
+IF :lx_flag_qld_emp_pc = 'N' THEN
+
+	lt_result = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+		FROM :lt_result
+		UNION
+		SELECT
+			"RESULT"."ABN",
+			"RESULT"."PERIOD_CATEGORY",
+			"RESULT"."PERIOD_KEY",
+			"RESULT"."GJAHR",
+			0	 		AS "DETECTION_RESULT"	
+		FROM 
+			:lt_result  AS "RESULT"
+		WHERE EXISTS (
+			SELECT * FROM :lt_cnt AS "CNT"
+			WHERE	"RESULT"."ABN"			 = "CNT"."ABN"
+			AND 	"RESULT"."GJAHR"		 = "CNT"."GJAHR"
+			AND 	"CNT"."QLD_PC_EMPLOYEE" >= :lv_qld_emp_pc_thld_low 
+			AND 	"CNT"."QLD_PC_EMPLOYEE" < :lv_qld_emp_pc_thld_high
+			)
+		;
 
 END IF;
 

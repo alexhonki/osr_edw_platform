@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS_SCRIPT" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="ABN Wages Keys"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS_IMPL1">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS_IMPL1</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES_KEYS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES_KEYS</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS_IMPL1">
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES_KEYS">
   <attributes>
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="ABN"/>
     </attribute>
     <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="INCOTYP"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="PERIOD_CATEGORY"/>
+      <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="PERIOD_CATEGORY"/>
     </attribute>
     <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PERSL"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="PERIOD_KEY"/>
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="PERIOD_KEY"/>
     </attribute>
     <attribute id="PERIOD_END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABRZO"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="PERIOD_END_DATE"/>
+      <descriptions defaultDescription="PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="PERIOD_END_DATE"/>
     </attribute>
     <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="GJAHR"/>
     </attribute>
     <attribute id="ENTITY_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ENT_TYP_CD"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="ENTITY_TYPE"/>
+      <descriptions defaultDescription="ENTITY_TYPE"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="ENTITY_TYPE"/>
     </attribute>
     <attribute id="ANZSIC_CD" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MN_INDY_CLSN"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="ANZSIC_CD"/>
+      <descriptions defaultDescription="ANZSIC_CD"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="ANZSIC_CD"/>
     </attribute>
     <attribute id="ABN_REGN_DT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN_REGN_DT"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="ABN_REGN_DT"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="ABN_REGN_DT"/>
     </attribute>
     <attribute id="ABN_CANCN_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN_CANCN_DT"/>
-      <keyMapping columnObjectName="CV_ABN_WAGES_KEYS_IMPL1" columnName="ABN_CANCN_DT"/>
+      <keyMapping columnObjectName="TF_ABN_WAGES_KEYS" columnName="ABN_CANCN_DT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

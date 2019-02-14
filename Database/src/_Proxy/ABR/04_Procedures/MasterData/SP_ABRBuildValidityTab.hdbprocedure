@@ -1,0 +1,177 @@
+PROCEDURE "osr.edw.procedures.md.abr.proxy::SP_ABRBuildValidityTab"
+(
+	IN i_tabname_fullhist nvarchar(256), -- Name of the Table that has the full history
+	IN i_tabname_agghist nvarchar(256), -- Name of the Table that has the aggregated history
+	IN i_unique_key_name  nvarchar(256),  -- Name of Unique key as defined in the tables  
+	OUT o_abr_pid_validity_lookup table ("PID" Int,"NAME" nvarchar(1024),"VALID_FROM" nvarchar(10),"VALID_TO" nvarchar(10)),
+	OUT o_abr_name_validity_lookup table ("NAME" nvarchar(1024),"VALID_FROM" nvarchar(10),"VALID_TO" nvarchar(10))
+)	
+   LANGUAGE SQLSCRIPT 
+   SQL SECURITY INVOKER AS
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA AS
+BEGIN
+/******************************************************************************************************************************************************************************    
+      Background: Propagation & Staging layer for ABR tables aggregates the data, but it overwrites the column "NAME" (technical column) with the latest file name. 
+      This is a generic procedure that builds a lookup table with valid from/to dates for ABR tables referring back to the source layer 
+      
+      Limitation : Dynamic SQL is not supported in HANA Table Function or Read-Only Procedure - Hence this procedure is not Read-Only
+******************************************************************************************************************************************************************************    
+      Change log:
+      04.02.2018 - Balakumar Ganesan - SO008 - Creation of the procedure 
+ ******************************************************************************************************************************************************************************/    
+
+--- Local Declarations ---   
+DECLARE LV_DYN_SQL_STR nvarchar(5000);   
+DECLARE lt_src_abr_validity_build TABLE ("NAME" NVARCHAR(256),"VALID_FROM" DATE, "ROW_NUM" INT);
+DECLARE lt_pid_abr_validity_lookup TABLE ("PID" INT,"NAME" NVARCHAR(256),"VALID_FROM" DATE, "RANK" INT);                     
+
+
+-- Begins --> Frame "VALID FROM" Logic based on last 4 digits of the file name for ABR Agency Data (Column "NAME") <--- Begins --
+--- Example : if the file name is "ABR_AGENCY_DATA_FY1808.txt" is then "VALID FROM" is '2018-08-01' ---
+LV_DYN_SQL_STR :=                   
+ 'select distinct
+                           "NAME",
+                           TO_DATE((''20''
+                                    || left(right(left("NAME",length("NAME")-4),4),2)
+                                    || ''-''
+                                    || right(right(left("NAME",length("NAME")-4),4),2)
+                                    || ''-01''),''YYYY-MM-DD'')        as "VALID_FROM",
+                           ROW_NUMBER() OVER (ORDER BY "NAME" ASC) AS "ROW_NUM"
+                  from'
+                         ||  ' "' || :i_tabname_fullhist || '" ' ||
+                  'group by
+                           "NAME"
+                  order by
+                           "NAME"';                  
+
+EXECUTE IMMEDIATE (:LV_DYN_SQL_STR) into lt_src_abr_validity_build;
+
+-- Get the Valid to based on self lookup from previously generated lookup table, join current row number with next row number to get the "VALID TO" date --
+lt_src_abr_validity_lookup =
+select                DISTINCT
+                abr_validfrom."NAME"       as "NAME",
+                abr_validfrom."VALID_FROM" as "VALID_FROM"          ,
+                CASE
+                                WHEN abr_validto."VALID_FROM" IS NULL
+                                                THEN TO_DATE('9999-12-31', 'YYYY-MM-DD')
+                                                ELSE ADD_DAYS (abr_validto."VALID_FROM", -1)
+                END as "VALID_TO"
+from
+                (
+                (
+                       select
+                              "NAME"      ,
+                              "VALID_FROM",
+                              "ROW_NUM"
+                       from
+                              :lt_src_abr_validity_build
+                )
+                as abr_validfrom
+                left outer join
+                                (
+                                       select
+                                              "NAME"      ,
+                                              "VALID_FROM",
+                                              "ROW_NUM"
+                                       from
+                                              :lt_src_abr_validity_build
+                                )
+                                as abr_validto
+                                on
+                                                abr_validfrom.row_num = (abr_validto.row_num) -1 );
+
+o_abr_name_validity_lookup = select * from :lt_src_abr_validity_lookup;                                                
+--- Ends --> Frame Validity from Logic based on last 4 digits of the file name for ABR Agency Data (Column "NAME") <--- Ends --
+
+CREATE LOCAL temporary table #lt_src_abr_validity_lookup
+  AS (SELECT * FROM :lt_src_abr_validity_lookup);
+
+-- Begins --> Build up the Validity date based on the target table that does not have the Historical Data <-- Begins---
+-- Using Dyanmic SQL so that is procedure can be re-used for any ABR table may be with minor modification (if needed in future)
+LV_DYN_SQL_STR := 
+	 'SELECT DISTINCT    "PID",
+						 "NAME",
+						 CASE WHEN "RANK" = 1 THEN
+						 (SELECT TO_DATE((''20''
+											|| left(right(left(MIN("NAME"),length(MIN("NAME"))-4),4),2)
+											|| ''-''
+											|| right(right(left(MIN("NAME"),length(MIN("NAME"))-4),4),2)
+											|| ''-01''),''YYYY-MM-DD'') FROM #lt_src_abr_validity_lookup
+											WHERE "PID" = "PID")
+						ELSE
+						TO_DATE((''20''
+											|| left(right(left("NAME",length("NAME")-4),4),2)
+											|| ''-''
+											|| right(right(left("NAME",length("NAME")-4),4),2)
+											|| ''-01''),''YYYY-MM-DD'') END       as "VALID_FROM",
+						"RANK"
+				FROM
+				(
+				SELECT DISTINCT'|| ' "'
+								|| :i_unique_key_name
+								|| '" '
+								|| 'as "PID",
+										"NAME",
+										RANK() OVER (partition by'
+								|| ' "'
+								|| :i_unique_key_name
+								|| '" '
+								|| 'order by "NAME" ASC) AS "RANK"
+				FROM'
+								|| ' "'
+								|| :i_tabname_agghist
+								|| '" '
+								|| 'AS abr_prop
+				GROUP BY'
+								|| ' "'
+								|| :i_unique_key_name
+								|| '" '
+								|| ',
+								"NAME") GROUP BY "PID","NAME","RANK"';
+
+
+EXECUTE IMMEDIATE (:LV_DYN_SQL_STR) into lt_pid_abr_validity_lookup;
+DROP TABLE #lt_src_abr_validity_lookup;
+
+o_abr_pid_validity_lookup =
+select                DISTINCT
+                abr_validfrom."PID"        as "PID"        ,
+                abr_validfrom."NAME"       as "NAME"       ,
+                abr_validfrom."VALID_FROM" as "VALID_FROM" ,
+                CASE
+                                WHEN abr_validto."VALID_FROM" IS NULL
+                                                THEN TO_DATE('9999-12-31', 'YYYY-MM-DD')
+                                                ELSE ADD_DAYS (abr_validto."VALID_FROM", -1)
+                END as "VALID_TO"
+from
+                (
+                (
+                       select
+                              "PID"       ,
+                              "NAME"      ,
+                              "VALID_FROM",
+                              "RANK"
+                       from
+                              :lt_pid_abr_validity_lookup
+                )
+                as abr_validfrom
+                left outer join
+                                (
+                                       select
+                                              "PID"       ,
+                                              "NAME"      ,
+                                              "VALID_FROM",
+                                              "RANK"
+                                       from
+                                              :lt_pid_abr_validity_lookup
+                                )
+                                as abr_validto
+                                on
+                                                abr_validfrom."RANK"    = (abr_validto."RANK") -1
+                                                and abr_validfrom."PID" = abr_validto."PID" );
+
+
+-- Ends --> Build up the Validity date based on the target table that does not have the Historical Data <-- Ends---
+	
+END

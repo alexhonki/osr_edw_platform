@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_EMPLOYER" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_EMPLOYER" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_ITR_NIND_EMPLOYER"/>
-<localVariables/>
-<variableMappings>
-  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_EMPLOYER" value="NULL">
-    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_EMPLOYER"/>
-  </mapping>
-</variableMappings>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_EMPLOYER" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_EMPLOYER</resourceUri>
@@ -60,10 +64,6 @@
       <viewAttribute id="TRDNG_NM_LN_2">
         <descriptions defaultDescription="TRDNG_NM_LN_2"/>
       </viewAttribute>
-    
-      <viewAttribute id="DB_KEY_DASH">
-        <descriptions defaultDescription="DB_KEY_DASH"/>
-      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -83,8 +83,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM_LN_1" source="TRDNG_NM_LN_1"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TRDNG_NM_LN_2" source="TRDNG_NM_LN_2"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -149,11 +147,6 @@
     <attribute id="TRDNG_NM_LN_2" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TRDNG_NM_LN_2"/>
       <keyMapping columnObjectName="Projection_1" columnName="TRDNG_NM_LN_2"/>
-    </attribute>
-  
-    <attribute id="DB_KEY_DASH" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DB_KEY_DASH"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
