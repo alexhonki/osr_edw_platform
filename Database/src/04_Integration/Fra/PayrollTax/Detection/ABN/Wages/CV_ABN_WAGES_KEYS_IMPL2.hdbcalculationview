@@ -16,6 +16,9 @@
   <DataSource id="osr.edw.staging.md.rms.pscd.proxy::CV_TFKPERIOD">
     <resourceUri>osr.edw.staging.md.rms.pscd.proxy::CV_TFKPERIOD</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ABR" filterExpressionLanguage="SQL">
@@ -186,11 +189,50 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABRZU$DATE" source="ABRZU"/>
     </input>
-    <input node="Projection_CALENDAR">
+    <input node="Join_FY_RANGE">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ABRZU$DATE" source="DATE"/>
     </input>
     <joinAttribute name="JOIN$ABRZU$DATE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_FY_RANGE" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="DATE">
+        <descriptions defaultDescription="DATE"/>
+      </viewAttribute>
+      <viewAttribute id="DATE_SQL">
+        <descriptions defaultDescription="DATE_SQL"/>
+      </viewAttribute>
+      <viewAttribute id="CALENDAR_VARIANT">
+        <descriptions defaultDescription="CALENDAR_VARIANT"/>
+      </viewAttribute>
+      <viewAttribute id="FISCAL_YEAR">
+        <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MIN">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MAX">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_CALENDAR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_SQL" source="DATE_SQL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CALENDAR_VARIANT" source="CALENDAR_VARIANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DATE" source="DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+    <input node="Projection_FY_RANGE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR_MAX"/>
+    </input>
+    <filter>&quot;GJAHR&quot; &gt;= &quot;FINANCIAL_YEAR_MIN&quot; AND &quot;GJAHR&quot; &lt;= &quot;FINANCIAL_YEAR_MAX&quot;</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_3">
     <viewAttributes>
@@ -236,6 +278,30 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FY_RANGE">
+    <viewAttributes>
+      <viewAttribute id="GJAHR_MIN">
+        <descriptions defaultDescription="GJAHR_MIN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR_MAX">
+        <descriptions defaultDescription="GJAHR_MAX"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MIN">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MAX">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MIN" source="GJAHR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MAX" source="GJAHR_MAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR_MAX"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -286,29 +352,29 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="422" y="112"/>
+      <upperLeftCorner x="402.5688693075543" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_ABR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="489" y="356"/>
+      <upperLeftCorner x="281.227375672596" y="356.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_CALENDAR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="384" y="516"/>
+      <upperLeftCorner x="722.0000000000002" y="676.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_INCORR_PER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="676"/>
+      <upperLeftCorner x="92.00000000000006" y="676.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_TFKPERIOD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="676"/>
+      <upperLeftCorner x="302.0000000000003" y="676.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118" y="516"/>
+      <upperLeftCorner x="275.3333333333336" y="516.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_INCORR_PER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -320,19 +386,33 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="145" y="356"/>
+      <upperLeftCorner x="491.22737567259605" y="356.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="Projection_CALENDAR" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Join_FY_RANGE" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+  
+    <shape expanded="true" modelObjectName="Join_FY_RANGE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="538.6666666666667" y="516.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_CALENDAR" modelObjectNameSpace="Join_FY_RANGE" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="Join_FY_RANGE" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  <shape><upperLeftCorner/><rectangleSize/></shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="422" y="217"/>
+      <upperLeftCorner x="402.5688693075543" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_ABR" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -342,6 +422,10 @@
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000002" y="676.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
 </Calculation:scenario>
