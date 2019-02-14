@@ -182,23 +182,28 @@ END IF;
 IF :lx_flag_qld_emp_cnt = 'Y' OR :lx_flag_qld_emp_pc = 'Y' THEN
 
 lt_cnt = 
-	SELECT 
-        "ABN",
-        "GJAHR",
-        "CNT_EMPLOYEE",
-        "QLD_CNT_EMPLOYEE",
-        "QLD_PC_EMPLOYEE",
-        "LOW_EMP_CNT",
-        "HIGH_EMP_CNT",
-        "TOP_BAND_EMP_CNT",
-        "RFR_EMP_CNT"			AS "RFR_EMP_CNT",
-        MAX("RFR_EMP_CNT")		AS "RFR_EMP_CNT_MAX",
-        "LOW_EMP_PC",
-        "HIGH_EMP_PC",
-        "TOP_BAND_EMP_PC",
-        "RFR_EMP_PC"			AS "RFR_EMP_PC",
-        MAX("RFR_EMP_PC")		AS "RFR_EMP_PC_MAX"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_QLD_EMPLOYEE"()
+	SELECT  
+        "CNT"."ABN",
+        "CNT"."GJAHR",
+        "CNT"."CNT_EMPLOYEE",
+        "CNT"."QLD_CNT_EMPLOYEE",
+        "CNT"."QLD_PC_EMPLOYEE",
+        "CNT"."LOW_EMP_CNT",
+        "CNT"."HIGH_EMP_CNT",
+        "CNT"."TOP_BAND_EMP_CNT",
+        "CNT"."RFR_EMP_CNT"				AS "RFR_EMP_CNT",
+        MAX("CNT"."RFR_EMP_CNT")		AS "RFR_EMP_CNT_MAX",
+        "CNT"."LOW_EMP_PC",
+        "CNT"."HIGH_EMP_PC",
+        "CNT"."TOP_BAND_EMP_PC",
+        "CNT"."RFR_EMP_PC"				AS "RFR_EMP_PC",
+        MAX("CNT"."RFR_EMP_PC")			AS "RFR_EMP_PC_MAX"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_QLD_EMPLOYEE"() AS "CNT"
+	WHERE EXISTS 
+		(SELECT DISTINCT * FROM :lt_result AS "RESULT"
+			WHERE "CNT"."ABN"   = "RESULT"."ABN"
+			AND   "CNT"."GJAHR" = "RESULT"."GJAHR"
+		)
 	GROUP BY "ABN",
 			 "GJAHR",
 			 "CNT_EMPLOYEE",
