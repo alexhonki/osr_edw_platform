@@ -15,7 +15,7 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_BAS" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="ABN_BAS">
         <descriptions defaultDescription="ABN"/>
@@ -30,8 +30,10 @@
     <input node="osr.edw.staging.td.ato.proxy::CV_BASNIND">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_BAS" source="ABN"/>
     </input>
+  
+    <filter>&quot;ABN_BAS&quot; &lt;&gt; '' AND &quot;ABN_BAS&quot; IS NOT NULL</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ITR" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="ABN_ITR">
         <descriptions defaultDescription="ABN"/>
@@ -47,7 +49,9 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+    
         <formula>TO_NVARCHAR(&quot;INCM_YR&quot;)</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -56,8 +60,10 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
     </input>
+  
+    <filter>&quot;ABN_ITR&quot; &lt;&gt; '' AND &quot;ABN_ITR&quot; IS NOT NULL</filter>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_WCQ" filterExpressionLanguage="SQL">
     <viewAttributes>
       <viewAttribute id="ABN_WCQ">
         <descriptions defaultDescription="ABN"/>
@@ -72,6 +78,8 @@
     <input node="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_WCQ" source="ABN"/>
     </input>
+  
+    <filter>&quot;ABN_WCQ&quot; &lt;&gt; '' AND &quot;ABN_WCQ&quot; IS NOT NULL</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:UnionView" id="Union_ABN">
     <viewAttributes>

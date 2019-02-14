@@ -58,6 +58,10 @@
       <viewAttribute id="FY4_WAGE" aggregationType="sum">
         <descriptions defaultDescription="FY4_WAGE"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -72,7 +76,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY1_WAGE" source="FY1_WAGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY2_WAGE" source="FY2_WAGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY3_WAGE" source="FY3_WAGE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FY4_WAGE" source="FY4_WAGE"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FY4_WAGE" source="FY4_WAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+    </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Text" filterExpressionLanguage="SQL">
     <viewAttributes>
@@ -149,6 +155,10 @@
       <viewAttribute id="MEASURE_TEXT">
         <descriptions defaultDescription="MEASURE_TEXT"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -163,7 +173,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY1_WAGE" source="FY1_WAGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY2_WAGE" source="FY2_WAGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY3_WAGE" source="FY3_WAGE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FY4_WAGE" source="FY4_WAGE"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FY4_WAGE" source="FY4_WAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+    </input>
     <input node="Projection_Text">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_NAME"/>
@@ -211,6 +223,10 @@
       <viewAttribute id="MEASURE_SORT_ORDER" aggregationType="sum">
         <descriptions defaultDescription="MEASURE_SORT_ORDER"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -226,7 +242,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY2_WAGE" source="FY2_WAGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY3_WAGE" source="FY3_WAGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY4_WAGE" source="FY4_WAGE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/></input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+    </input>
     <input node="Projection_Sort">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_SORT_ORDER" source="MEASURE_SORT_ORDER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_NAME"/>
@@ -240,54 +258,58 @@
       <descriptions defaultDescription="DB_KEY"/>
       <keyMapping columnObjectName="Join_2" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Join_2" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="Join_2" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Join_2" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR"/>
       <keyMapping columnObjectName="Join_2" columnName="FINANCIAL_YEAR"/>
     </attribute>
-    <attribute id="MEASURE_NAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_NAME"/>
       <keyMapping columnObjectName="Join_2" columnName="MEASURE_NAME"/>
     </attribute>
-    <attribute id="MEASURE_TEXT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_TEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_TEXT"/>
       <keyMapping columnObjectName="Join_2" columnName="MEASURE_TEXT"/>
     </attribute>
-    <attribute id="MEASURE_SORT_ORDER" order="7" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_SORT_ORDER" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_SORT_ORDER"/>
       <keyMapping columnObjectName="Join_2" columnName="MEASURE_SORT_ORDER"/>
     </attribute>
-    <attribute id="WAERS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
       <keyMapping columnObjectName="Join_2" columnName="WAERS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="FY0_WAGE" order="9" aggregationType="sum" measureType="simple">
+    <measure id="FY0_WAGE" order="10" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY0_WAGE"/>
       <measureMapping columnObjectName="Join_2" columnName="FY0_WAGE"/>
     </measure>
-    <measure id="FY1_WAGE" order="10" aggregationType="sum" measureType="simple">
+    <measure id="FY1_WAGE" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY1_WAGE"/>
       <measureMapping columnObjectName="Join_2" columnName="FY1_WAGE"/>
     </measure>
-    <measure id="FY2_WAGE" order="11" aggregationType="sum" measureType="simple">
+    <measure id="FY2_WAGE" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY2_WAGE"/>
       <measureMapping columnObjectName="Join_2" columnName="FY2_WAGE"/>
     </measure>
-    <measure id="FY3_WAGE" order="12" aggregationType="sum" measureType="simple">
+    <measure id="FY3_WAGE" order="13" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY3_WAGE"/>
       <measureMapping columnObjectName="Join_2" columnName="FY3_WAGE"/>
     </measure>
-    <measure id="FY4_WAGE" order="13" aggregationType="sum" measureType="simple">
+    <measure id="FY4_WAGE" order="14" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY4_WAGE"/>
       <measureMapping columnObjectName="Join_2" columnName="FY4_WAGE"/>
     </measure>

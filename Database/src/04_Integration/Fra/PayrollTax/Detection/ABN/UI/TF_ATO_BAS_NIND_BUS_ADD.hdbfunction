@@ -2,7 +2,6 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_BUS_ADD"( IN IP_AL
           RETURNS TABLE
 (
 DB_KEY				VARBINARY(16),
-DB_KEY_DASH			NVARCHAR(36),
 ALERT_ID			NVARCHAR(20),
 ABN					NVARCHAR(20),
 GJAHR				NVARCHAR(4),
@@ -25,38 +24,9 @@ BEGIN
 
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
 
-ALERT_INFO =
-                SELECT
-                    "DB_KEY",
-                    "DB_KEY_DASH",
-                    "ALERT_ID",
-                    "ABN" ,
-                    "GJAHR"
-                FROM 
-                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
-;
-
-ELSE
-
-ALERT_INFO =
-                SELECT
-                                "DB_KEY",
-                                "DB_KEY_DASH",
-                                "ALERT_ID",
-                                "ABN" ,
-                                "GJAHR"
-                FROM 
-                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
-                WHERE 
-                                "ALERT_ID" = :IP_ALERT_ID
-;
-
-END IF;
-
 RETURN
  SELECT 
 	"ALERT"."DB_KEY" AS "DB_KEY",
-	"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
 	"ALERT"."ALERT_ID" AS "ALERT_ID",
 	"ALERT"."ABN" AS "ABN",
 	"ALERT"."GJAHR" AS "GJAHR",
@@ -67,7 +37,7 @@ RETURN
 	"DATA"."BUS_PC" AS "BUS_PC",
 	to_dats("DATA"."Z_CHANGE_TIME") AS "Z_CHANGE_TIME"
 FROM
-	:ALERT_INFO AS "ALERT"
+	"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 	INNER JOIN
 	"osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "DATA"
 	ON  "ALERT"."ABN" = "DATA"."ABN"
@@ -75,7 +45,6 @@ FROM
 	WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
 ;
 
-/*
 ELSE
 
 RETURN
@@ -101,5 +70,5 @@ FROM
 ;
 
 END IF;    
-*/    
+    
 END;

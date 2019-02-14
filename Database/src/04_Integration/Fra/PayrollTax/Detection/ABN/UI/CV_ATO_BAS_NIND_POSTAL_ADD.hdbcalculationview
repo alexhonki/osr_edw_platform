@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_BAS_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_BAS_NIND_POSTAL_ADD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_BAS_NIND_POSTAL_ADD"/>
-<localVariables/>
-<variableMappings>
-  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD" value="NULL">
-    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD"/>
-  </mapping>
-</variableMappings>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Input Parameter: Alert ID"/>
+    <variableProperties datatype="VARCHAR" length="20" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_POSTAL_ADD</resourceUri>
@@ -48,10 +52,6 @@
       <viewAttribute id="Z_CHANGE_TIME">
         <descriptions defaultDescription="Z_CHANGE_TIME"/>
       </viewAttribute>
-    
-      <viewAttribute id="DB_KEY_DASH">
-        <descriptions defaultDescription="DB_KEY_DASH"/>
-      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -67,8 +67,6 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="POS_STATE" source="POS_STATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="POS_PC" source="POS_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -117,11 +115,6 @@
     <attribute id="Z_CHANGE_TIME" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
-    </attribute>
-  
-    <attribute id="DB_KEY_DASH" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DB_KEY_DASH"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
