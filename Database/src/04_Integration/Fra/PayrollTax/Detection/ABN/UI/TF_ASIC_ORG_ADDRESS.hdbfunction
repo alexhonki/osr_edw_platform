@@ -1,27 +1,89 @@
 FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS"( IN IP_ALERT_ID NVARCHAR(20) )
 RETURNS TABLE
 (
-DB_KEY					VARBINARY(16),
-ALERT_ID				NVARCHAR(20),
-ABN						NVARCHAR(20),
-GJAHR					NVARCHAR(4),
-ADDR_LINE1				NVARCHAR(50),
-ADDR_LINE2				NVARCHAR(50),
-STREET_NUMBER			NVARCHAR(10),
-STREET_NAME				NVARCHAR(50),
-STREET_TYPE				NVARCHAR(10),
-LOCALITY				NVARCHAR(3),
-STATE					NVARCHAR(3),
-COUNTRY					NVARCHAR(30),
-POSTCODE				NVARCHAR(4)
+DB_KEY						VARBINARY(16),
+DB_KEY_DASH					NVARCHAR(36),
+ALERT_ID					NVARCHAR(20),
+ABN							NVARCHAR(20),
+GJAHR						NVARCHAR(4),
+ADDR_LINE1					NVARCHAR(50),
+ADDR_LINE2					NVARCHAR(50),
+STREET_NUMBER				NVARCHAR(10),
+STREET_NAME					NVARCHAR(50),
+STREET_TYPE					NVARCHAR(10),
+LOCALITY					NVARCHAR(3),
+STATE						NVARCHAR(20),
+COUNTRY						NVARCHAR(10),
+POSTCODE					NVARCHAR(4)
 )
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
+
 BEGIN 
 
-lt_adr = 
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+RETURN
+SELECT
+"DB_KEY",
+"DB_KEY_DASH",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+--"ORG_NUMBER", 
+--"ADDRESS_NUMBER",
+"ADDR_LINE1",
+"ADDR_LINE2",
+"STREET_NUMBER",
+"STREET_NAME",
+"STREET_TYPE",
+"LOCALITY",
+--"STATE",
+CASE WHEN UPPER("STATE") = 'QLD' THEN 'Queensland'
+	 WHEN UPPER("STATE") = 'NSW' THEN 'New South Wales'
+	 WHEN UPPER("STATE") = 'VIC' THEN 'Victoria'
+	 WHEN UPPER("STATE") = 'WA' THEN 'Western Australia'
+	 WHEN UPPER("STATE") = 'SA' THEN 'South Australia'
+	 WHEN UPPER("STATE") = 'ACT' THEN 'Australian Capital Territory'
+	 WHEN UPPER("STATE") = 'TAS' THEN 'Tasmania'
+	 WHEN UPPER("STATE") = 'NT' THEN 'Northern Territory'
+ELSE ''
+END AS "STATE",
+"COUNTRY",
+"POSTCODE"
+FROM
+(
 SELECT 
 "ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
 "ALERT"."ALERT_ID" AS "ALERT_ID",
 "ALERT"."ABN" AS "ABN",
 "ALERT"."GJAHR" AS "GJAHR",
@@ -34,22 +96,28 @@ SELECT
 "ADR"."STREET_TYPE" AS "STREET_TYPE",
 "ADR"."LOCALITY" AS "LOCALITY",
 "ADR"."STATE" AS "STATE",
-"ADR"."COUNTRY" AS "COUNTRY",
+CASE WHEN UPPER("ADR"."STATE") IN ('QLD','NSW','VIC','WA','SA','ACT','TAS','NT') THEN 'Australia'
+ELSE "ADR"."COUNTRY"
+END AS "COUNTRY",
+--"ADR"."COUNTRY" AS "COUNTRY",
 "ADR"."POSTCODE" AS "POSTCODE"
-FROM
-"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+FROM :ALERT_INFO AS "ALERT"
 INNER JOIN
-"osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" AS "ORG"
+(SELECT DISTINCT "ABN", "ORG_NUMBER" FROM "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C") AS "ORG"
 ON "ALERT"."ABN" = "ORG"."ABN"
 INNER JOIN
-"osr.edw.staging.md.asic.proxy::CV_HOLDING_C" AS "HOLD"
+(
+SELECT "ORG_NUMBER", MAX("ADDRESS_NUMBER") AS "ADDRESS_NUMBER" FROM "osr.edw.staging.md.asic.proxy::CV_HOLDING_C"
+GROUP BY "ORG_NUMBER"
+) AS "HOLD"
 ON "ORG"."ORG_NUMBER" = "HOLD"."ORG_NUMBER"
-INNER JOIN
-"osr.edw.staging.md.asic.proxy::CV_ADDRESS_C" AS "ADR"
-ON "HOLD"."ADDRESS_NUMBER" = "ADR"."ADDRESS_NUMBER"
-WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
-AND LEFT(RIGHT("ORG"."NAME",10),2) = 'FY';
+INNER JOIN "osr.edw.staging.md.asic.proxy::CV_ADDRESS_C" AS "ADR"
+ON "HOLD"."ADDRESS_NUMBER" = "ADR"."ADDRESS_NUMBER")
+--WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+--AND LEFT(RIGHT("ORG"."NAME",10),2) = 'FY'
+;
 
+/*
 RETURN
 SELECT
 "DB_KEY",
@@ -70,5 +138,5 @@ SELECT
 FROM
 :lt_adr
 ;
-
+*/
 END;
