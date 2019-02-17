@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.vh::CV_ABN_ORG_NM" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_ORG_NM"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C">
+    <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ABN_ABR">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="MN_TRDG_NM">
+        <descriptions defaultDescription="MN_TRDG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NM">
+        <descriptions defaultDescription="ORG_NM"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
+        <formula>&quot;ABN_ABR&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_ABR" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_TRDG_NM" source="MN_TRDG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NM" source="ORG_NM"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="ORG_NM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ORG_NM"/>
+    </attribute>
+    <attribute id="MN_TRDG_NM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_TRDG_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MN_TRDG_NM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="31" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
