@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DESBT_ADDRESS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_ADDRESS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_ADDRESS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_ADDRESS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_ADDRESS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_ADDRESS">
+  <attributes>
+    <attribute id="EMPLOYER_LOCATION_ADDRESS_3" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_LOCATION_ADDRESS_3"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_LOCATION_ADDRESS_3"/>
+    </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="EMPLOYER_LOCATION_POSTCODE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_LOCATION_POSTCODE"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_LOCATION_POSTCODE"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="EMPLOYER_POSTAL_ADDRESS_1" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_POSTAL_ADDRESS_1"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_POSTAL_ADDRESS_1"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="EMPLOYER_POSTAL_ADDRESS_2" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_POSTAL_ADDRESS_2"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_POSTAL_ADDRESS_2"/>
+    </attribute>
+    <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="ABN"/>
+    </attribute>
+    <attribute id="EMPLOYER_POSTAL_ADDRESS_3" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_POSTAL_ADDRESS_3"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_POSTAL_ADDRESS_3"/>
+    </attribute>
+    <attribute id="GJAHR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="EMPLOYER_POSTAL_POSTCODE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_POSTAL_POSTCODE"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_POSTAL_POSTCODE"/>
+    </attribute>
+    <attribute id="TRAINEE_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRAINEE_ID"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="TRAINEE_ID"/>
+    </attribute>
+    <attribute id="TRAINING_AGREEMENT_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRAINING_AGREEMENT_TYPE"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="TRAINING_AGREEMENT_TYPE"/>
+    </attribute>
+    <attribute id="STATUS_DESC" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS_DESC"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="STATUS_DESC"/>
+    </attribute>
+    <attribute id="EMPLOYER_LOCATION_ADDRESS_1" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_LOCATION_ADDRESS_1"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_LOCATION_ADDRESS_1"/>
+    </attribute>
+    <attribute id="EMPLOYER_LOCATION_ADDRESS_2" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLOYER_LOCATION_ADDRESS_2"/>
+      <keyMapping columnObjectName="TF_DESBT_ADDRESS" columnName="EMPLOYER_LOCATION_ADDRESS_2"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
