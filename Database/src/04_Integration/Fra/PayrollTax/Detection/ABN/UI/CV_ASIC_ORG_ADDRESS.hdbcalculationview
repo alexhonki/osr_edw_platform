@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ASIC_ORG_ADDRESS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ASIC_ORG_ADDRESS"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
+<localVariables/>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS">
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS" value="NULL">
     <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS"/>
-    <localVariable>IP_ALERT_ID</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>
@@ -57,7 +48,7 @@
       <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="ADDR_LINE2"/>
     </attribute>
     <attribute id="STREET_NUMBER" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="STREET_NUMBER"/>
+      <descriptions defaultDescription="STREET_NO"/>
       <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="STREET_NUMBER"/>
     </attribute>
     <attribute id="STREET_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
@@ -75,6 +66,10 @@
     <attribute id="STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATE"/>
       <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="STATE"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
