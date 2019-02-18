@@ -15,21 +15,18 @@ BEGIN
 
     RETURN 
      	 SELECT
-         LEFT("DATA"."ABN",11) AS "ID1",
+         LEFT("AGENCY_DATA"."ABN",11) AS "ID1",
          '' AS "ID2",
          '' AS "ID3",
          '' AS "ID4",
          '' AS "ID5",
          CASE 
-         WHEN "BUSINESS_NAMES"."BUS_NM" IS NULL THEN "DATA"."ABN"
-         ELSE "DATA"."ABN" || char(32) || "BUSINESS_NAMES"."BUS_NM"
+         WHEN "AGENCY_DATA"."ORG_NM" IS NULL OR "AGENCY_DATA"."ORG_NM" = '' THEN "AGENCY_DATA"."ABN"
+         ELSE "AGENCY_DATA"."ABN" || char(32) || "AGENCY_DATA"."ORG_NM"
          END
          AS "LABEL",
 	     '' AS "STYLE"
-	     FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "DATA"
-           LEFT OUTER JOIN
-       "osr.edw.staging.md.abr.proxy::CV_BUSINESS_NAMES_C" AS "BUSINESS_NAMES"
-       ON "DATA"."PID" = "BUSINESS_NAMES"."PID"
+	     FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "AGENCY_DATA"
        ;
 	
 END;
