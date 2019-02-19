@@ -166,6 +166,10 @@
       <viewAttribute id="VALID_TO">
         <descriptions defaultDescription="VALID_TO"/>
       </viewAttribute>
+    
+      <viewAttribute id="A_TOT_INT_WAGE">
+        <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -218,6 +222,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_TOT_INT_WAGE" source="A_TOT_INT_WAGE"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -283,27 +289,27 @@
       <descriptions defaultDescription="RMS Transaction Number"/>
       <keyMapping columnObjectName="Projection_1" columnName="TRANSACTION_NUMBER"/>
     </attribute>
-    <attribute id="CLNT_TYP" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CLNT_TYP" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Client Type"/>
       <keyMapping columnObjectName="Projection_1" columnName="CLNT_TYP"/>
     </attribute>
-    <attribute id="ANZSIC_CD" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ANZSIC_CD" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ANZSIC Code"/>
       <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_CD"/>
     </attribute>
-    <attribute id="ANZSIC_TITLE" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ANZSIC_TITLE" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ANZSIC Title"/>
       <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_TITLE"/>
     </attribute>
-    <attribute id="WCQ_PAYER" order="46" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WCQ_PAYER" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Flag: Payer in WCQ"/>
       <keyMapping columnObjectName="Projection_1" columnName="WCQ_PAYER"/>
     </attribute>
-    <attribute id="TPAR_PAYER_QLD" order="47" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TPAR_PAYER_QLD" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Flag: TPAR Address in QLD"/>
       <keyMapping columnObjectName="Projection_1" columnName="TPAR_PAYER_QLD"/>
     </attribute>
-    <attribute id="EMP_CNT_PAYER" order="48" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="EMP_CNT_PAYER" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Flag: 80 % EMP in QLD"/>
       <keyMapping columnObjectName="Projection_1" columnName="EMP_CNT_PAYER"/>
     </attribute>
@@ -398,19 +404,23 @@
       <descriptions defaultDescription="Tax Amount"/>
       <measureMapping columnObjectName="Projection_1" columnName="C_TAX_AMOUNT"/>
     </measure>
-    <measure id="PAYER_TOTL_BUS_INCM_AMT" order="42" aggregationType="sum" measureType="simple">
+    <measure id="A_TOT_INT_WAGE" order="39" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_TOT_INT_WAGE"/>
+    </measure>
+    <measure id="PAYER_TOTL_BUS_INCM_AMT" order="43" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Total of sales and income"/>
       <measureMapping columnObjectName="Projection_1" columnName="PAYER_TOTL_BUS_INCM_AMT"/>
     </measure>
-    <measure id="PAYER_CONTRACTORS_PMNTS" order="43" aggregationType="sum" measureType="simple">
+    <measure id="PAYER_CONTRACTORS_PMNTS" order="44" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Payments to contractors"/>
       <measureMapping columnObjectName="Projection_1" columnName="PAYER_CONTRACTORS_PMNTS"/>
     </measure>
-    <measure id="PAYER_SALARY_WAGES" order="44" aggregationType="sum" measureType="simple">
+    <measure id="PAYER_SALARY_WAGES" order="45" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Salary &amp; Wages "/>
       <measureMapping columnObjectName="Projection_1" columnName="PAYER_SALARY_WAGES"/>
     </measure>
-    <measure id="PAYER_SUPER_EXPNS" order="45" aggregationType="sum" measureType="simple">
+    <measure id="PAYER_SUPER_EXPNS" order="46" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="Superannuation expenses"/>
       <measureMapping columnObjectName="Projection_1" columnName="PAYER_SUPER_EXPNS"/>
     </measure>
@@ -419,6 +429,7 @@
     <measure id="FLAGGED_PAID_BY_PAYER_EX_GST" order="13" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="15" scale="1" expressionLanguage="SQL">
       <descriptions defaultDescription="Total Flagged Paid by Payer Excluding GST"/>
       <formula>&quot;FLAGGED_PAID_BY_PAYER&quot;-&quot;FLAGGED_GST_BY_PAYER&quot;</formula>
+      
       
       </measure>
   </calculatedMeasures>
