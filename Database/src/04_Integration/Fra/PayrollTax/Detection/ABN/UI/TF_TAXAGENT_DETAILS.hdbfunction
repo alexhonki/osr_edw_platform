@@ -1,0 +1,119 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_TAXAGENT_DETAILS"(IN IP_ALERT_ID NVARCHAR(20))
+             RETURNS TABLE
+		(
+			DB_KEY                  		VARBINARY(16),
+			DB_KEY_DASH						NVARCHAR(36),
+			ALERT_ID                		NVARCHAR(20),
+			ABN                     		NVARCHAR(20),
+			GJAHR                   		NVARCHAR(4),
+			TA_PSTL_ADDRESS_LN_1			NVARCHAR(40),
+			TA_PSTL_ADDRESS_LN_2			NVARCHAR(40),
+			TA_PSTL_SUBURB					NVARCHAR(30),
+			TA_PSTL_STATE					NVARCHAR(20),
+			TA_PSTL_POSTCODE				NVARCHAR(4),
+			TA_PHONE_NUM					NVARCHAR(15),
+			MOBILE_NUM						NVARCHAR(15),
+			FAX_NUM							NVARCHAR(15),
+			EMAIL_ADDR						NVARCHAR(80)
+			
+	)
+
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+TAXAGENT_DATA =
+
+
+				SELECT DISTINCT 
+            		"TA_NUM",
+					"TA_STATUS",
+					"TA_NM",
+					"TA_PSTL_ADDRESS_LN_1",
+					"TA_PSTL_ADDRESS_LN_2",
+					"TA_PSTL_SUBURB",
+					"TA_PSTL_STATE",
+					"TA_PSTL_POSTCODE",
+					"TA_PHONE_NUM",
+					"MOBILE_NUM",
+					"FAX_NUM",
+					"EMAIL_ADDR",
+					"SOURCE_TABLE"
+				FROM "osr.edw.staging.md.ato.synonym::CDS_TAG.DSO.TAXAGENT.active_data"
+				WHERE	"TA_NUM" IN (SELECT "ABN" FROM :ALERT_INFO )
+;
+
+
+RETURN
+				SELECT
+                	"DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN",
+                    "GJAHR",
+                	"TA_PSTL_ADDRESS_LN_1",
+					"TA_PSTL_ADDRESS_LN_2",
+					"TA_PSTL_SUBURB",
+					"TA_PSTL_STATE",
+					"TA_PSTL_POSTCODE",
+					"TA_PHONE_NUM",
+					"MOBILE_NUM",
+					"FAX_NUM",
+					"EMAIL_ADDR"
+				FROM
+				(                              
+                	SELECT
+                    	"A"."DB_KEY",
+                    	"A"."DB_KEY_DASH",
+                    	"A"."ALERT_ID",
+                    	"A"."ABN",
+                    	"A"."GJAHR",
+                    	"B"."TA_NUM",
+						"B"."TA_STATUS",
+						"B"."TA_NM",
+						"B"."TA_PSTL_ADDRESS_LN_1",
+						"B"."TA_PSTL_ADDRESS_LN_2",
+						"B"."TA_PSTL_SUBURB",
+						"B"."TA_PSTL_STATE",
+						"B"."TA_PSTL_POSTCODE",
+						"B"."TA_PHONE_NUM",
+						"B"."MOBILE_NUM",
+						"B"."FAX_NUM",
+						"B"."EMAIL_ADDR"
+					FROM		:ALERT_INFO 	AS "A"
+					INNER JOIN	:TAXAGENT_DATA 	AS "B"
+					ON			 "A"."ABN"  	= "B"."TA_NUM"
+				)
+				;
+
+END; 
