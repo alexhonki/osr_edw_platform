@@ -47,6 +47,7 @@ RETURNS TABLE(
 		"C_PAY_TAX_LIAB_CREDIT"                 DECIMAL(15,2) ,
 		"C_PAY_TAX_AMOUNT"                      DECIMAL(15,2) ,
 		"C_TAX_AMOUNT"                          DECIMAL(15,2) ,
+		"A_TOT_INT_WAGE"                        DECIMAL(15,2) ,
 	
 		"CLNT_TYP"								NVARCHAR(3)	  ,
 		"ANZSIC_CD"                             NVARCHAR(5)   ,
@@ -510,7 +511,8 @@ SELECT
 	SUM("C_TOT_QLD_TXBLE_WAGES")  AS "C_TOT_QLD_TXBLE_WAGES",
 	SUM("C_PAY_TAX_LIAB_CREDIT")  AS "C_PAY_TAX_LIAB_CREDIT",
 	SUM("C_PAY_TAX_AMOUNT")       AS "C_PAY_TAX_AMOUNT",
-	SUM("C_TAX_AMOUNT")           AS "C_TAX_AMOUNT"
+	SUM("C_TAX_AMOUNT")           AS "C_TAX_AMOUNT",
+	SUM("A_TOT_INT_WAGE")		  AS "A_TOT_INT_WAGE"
 FROM
 (
 SELECT 
@@ -540,7 +542,8 @@ SELECT
 	SUM("C"."C_TOT_QLD_TXBLE_WAGES")  AS "C_TOT_QLD_TXBLE_WAGES",
 	SUM("C"."C_PAY_TAX_LIAB_CREDIT")  AS "C_PAY_TAX_LIAB_CREDIT",
 	SUM("C"."C_PAY_TAX_AMOUNT")       AS "C_PAY_TAX_AMOUNT",
-	SUM("C"."C_TAX_AMOUNT")           AS "C_TAX_AMOUNT"
+	SUM("C"."C_TAX_AMOUNT")           AS "C_TAX_AMOUNT",
+	SUM("A_TOT_INT_WAGE")		      AS "A_TOT_INT_WAGE"
 FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "A" 
 INNER JOIN
 "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "B"
@@ -602,7 +605,8 @@ SELECT
 	 "B"."C_TOT_QLD_TXBLE_WAGES",
 	 "B"."C_PAY_TAX_LIAB_CREDIT",
 	 "B"."C_PAY_TAX_AMOUNT",
-     "B"."C_TAX_AMOUNT"
+     "B"."C_TAX_AMOUNT",
+     "B"."A_TOT_INT_WAGE"
 FROM
 		:BP_ID_FIN_STATUS AS "A"
 LEFT OUTER JOIN
@@ -654,7 +658,8 @@ SELECT
 	"C_TOT_QLD_TXBLE_WAGES"            AS "C_TOT_QLD_TXBLE_WAGES"         ,
 	"C_PAY_TAX_LIAB_CREDIT"            AS "C_PAY_TAX_LIAB_CREDIT"         ,
 	"C_PAY_TAX_AMOUNT"                 AS "C_PAY_TAX_AMOUNT"              ,
-    "C_TAX_AMOUNT"                     AS "C_TAX_AMOUNT"                   ,
+    "C_TAX_AMOUNT"                     AS "C_TAX_AMOUNT"                  ,
+    "A_TOT_INT_WAGE"                   AS "A_TOT_INT_WAGE"                ,
   
     "CLNT_TYP"                         AS "CLNT_TYP"                      ,
 	"ANZSIC_CD"                        AS "ANZSIC_CD"                     ,
@@ -728,7 +733,8 @@ SELECT
 	"B"."C_TOT_QLD_TXBLE_WAGES",
 	"B"."C_PAY_TAX_LIAB_CREDIT",
 	"B"."C_PAY_TAX_AMOUNT",
-    "B"."C_TAX_AMOUNT"
+    "B"."C_TAX_AMOUNT",
+    "B"."A_TOT_INT_WAGE"
 FROM :EXT_DATA_SET AS "A"
 LEFT OUTER JOIN
 :RMS_COMBINED AS "B"
@@ -832,6 +838,7 @@ SELECT
 	"A"."C_PAY_TAX_LIAB_CREDIT"            AS "C_PAY_TAX_LIAB_CREDIT"         ,
 	"A"."C_PAY_TAX_AMOUNT"                 AS "C_PAY_TAX_AMOUNT"              ,
     "A"."C_TAX_AMOUNT"                     AS "C_TAX_AMOUNT"                  ,
+    "A"."A_TOT_INT_WAGE"                   AS "A_TOT_INT_WAGE"                ,
   
     "A"."CLNT_TYP"                         AS "CLNT_TYP"                      ,
 	"A"."ANZSIC_CD"                        AS "ANZSIC_CD"                     ,
@@ -905,6 +912,7 @@ SELECT DISTINCT
 	"C_PAY_TAX_LIAB_CREDIT"         ,
 	"C_PAY_TAX_AMOUNT"              ,
 	"C_TAX_AMOUNT"                  ,
+	"A_TOT_INT_WAGE"				,
   
     "CLNT_TYP"                      ,
 	"ANZSIC_CD"                     ,
