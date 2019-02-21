@@ -242,7 +242,7 @@ ON  "W"."GJAHR" = "RATE"."GJAHR"
 AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 ;
 
-SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ATO_WAGE_VERSUS_THLD";
+SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
 
 lt_pre_result = 
 SELECT
