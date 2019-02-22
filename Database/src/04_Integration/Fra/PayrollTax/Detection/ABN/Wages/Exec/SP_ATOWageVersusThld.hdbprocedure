@@ -252,7 +252,7 @@ GROUP BY
 "WAGES"."PERIOD_KEY",
 "WAGES"."GJAHR",
 "WAGES"."WAERS"
-HAVING SUM("WAGES"."ATO_ITR_SALARY_WAGES")  < :lv_thld_yearly
+HAVING SUM("WAGES"."ATO_ITR_SALARY_WAGES")  < :lv_thld_yearly 
    AND SUM("WAGES"."ATO_ITR_SALARY_WAGES")  > 0
 )
 UNION
@@ -388,13 +388,13 @@ SELECT
 '/OSRQLD/FRA_PRT'       AS "MSGID",
 '001'                   AS "MSGNO",
 CASE 
-WHEN "BAS" = 'GE' THEN '>= threshold'
-WHEN "BAS" = 'LT' THEN '< threshold'
+WHEN "BAS" = 'GE' THEN '>= yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
+WHEN "BAS" = 'LT' THEN '<  yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
 ELSE ''
 END AS "MSGV1",
 CASE 
-WHEN "ITR" = 'GE' THEN '>= threshold'
-WHEN "ITR" = 'LT' THEN '< threshold'
+WHEN "ITR" = 'GE' THEN '>=  yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
+WHEN "ITR" = 'LT' THEN '<  yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
 WHEN 'ITR' = 'NIL' THEN 'not available'
 ELSE 'not available'
 END "MSGV2",
@@ -437,8 +437,8 @@ WHEN "BAS" = 'LT' THEN '< threshold'
 ELSE ''
 END AS "MSGV1",
 CASE 
-WHEN "ITR" = 'GE' THEN '>= threshold'
-WHEN "ITR" = 'LT' THEN '< threshold'
+WHEN "ITR" = 'GE' THEN '>= yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
+WHEN "ITR" = 'LT' THEN '<  yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
 WHEN 'ITR' = 'NIL' THEN 'not available'
 ELSE 'not available'
 END "MSGV2",

@@ -2,6 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_DEFAULT_ADDRESS"( IN IP_ALER
 RETURNS TABLE
 (
 DB_KEY				VARBINARY(16),
+DB_KEY_DASH			NVARCHAR(36),
 ALERT_ID			NVARCHAR(20),
 IDNUMBER			NVARCHAR(60),
 PARTNER             NVARCHAR(10),
@@ -21,11 +22,45 @@ SQL SECURITY INVOKER AS
 
 BEGIN 
 
+-----------------------------ALERT INFO--------------------
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
 BPID_DATA = 
 SELECT 
 "ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
 "ALERT"."ALERT_ID" AS "ALERT_ID",
 "ALERT"."ABN" AS "ABN",
+"ALERT"."GJAHR" AS "GJAHR",
 "BPID"."PARTNER" AS "PARTNER",
 "BPID"."IDNUMBER" AS "IDNUMBER",
 "BPID"."INSTITUTE",
@@ -34,77 +69,98 @@ SELECT
 "BPID"."VALID_DATE_TO"
 FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
-INNER JOIN 
-"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
---ON "BPID"."PARTNER" = "ALERT"."BPARTNER"
---WHERE "BPID"."TYPE" = 'ZABN'
---AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
+INNER JOIN :ALERT_INFO  AS "ALERT"
 ON "BPID"."IDNUMBER" = "ALERT"."ABN"
 WHERE "BPID"."TYPE" = 'ZABN'
-AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
 ;
 
 BP_NAME_DATA =
 SELECT
-	"PARTNER",
-	"TYPE",
-	"MC_NAME1",
-	"MC_NAME2",
-	TRIM("MC_NAME1" || CHAR(32) || TRIM("MC_NAME2")) AS "BP_DESC"
+                "PARTNER",
+                "TYPE",
+                "MC_NAME1",
+                "MC_NAME2",
+                TRIM("MC_NAME1" || CHAR(32) || TRIM("MC_NAME2")) AS "BP_DESC"
 FROM "osr.edw.staging.rms.synonym::CV_BUT000_Current"
-WHERE  "PARTNER" IN (SELECT 
---"BPARTNER" 
---FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
---WHERE "ALERT_ID" = :IP_ALERT_ID)
-"PARTNER"
-FROM :BPID_DATA
-WHERE "ALERT_ID" = :IP_ALERT_ID)
+WHERE  "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM :BPID_DATA)
 ;
 
+
 ADRC_BUT21FS =
+SELECT * FROM
+(
 SELECT
-	"BPID"."DB_KEY" AS "DB_KEY",
-	"BPID"."ALERT_ID" AS "ALERT_ID",
-	"BUT21FS"."PARTNER" AS "PARTNER",
-	"BUT21FS"."VALID_TO" AS "VALID_TO",
-	"BUT21FS"."VALID_FROM" AS "VALID_FROM",
-	"BUT21FS"."ADR_KIND" as "ADR_KIND",
-	"BUT21FS"."ADDRNUMBER",
-    "ADRC"."TITLE",
-	"ADRC"."NAME1",
-	"ADRC"."NAME2",
-	"ADRC"."NAME3",
-	"ADRC"."NAME4",
-	"ADRC"."NAME_TEXT",
-	"ADRC"."NAME_CO",
-	"ADRC"."HOUSE_NUM1" AS "HOUSE_NUM1",
-	"ADRC"."STREET"     AS "STREET" ,
-	"ADRC"."CITY1"      AS "CITY1",
-	"ADRC"."REGION"     AS "REGION",
-	"ADRC"."POST_CODE1"  AS "POST_CODE1",
-	"ADRC"."COUNTRY"     AS "COUNTRY",
-	"BPID"."IDNUMBER" AS "IDNUMBER",
-	"BP_NAME"."BP_DESC" AS "BP_DESC"
---	'' AS "IDNUMBER"
-	FROM 
-"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS "BUT21FS" 
+                "DB_KEY",
+                "DB_KEY_DASH",
+                "ALERT_ID",
+                "IDNUMBER",
+                "PARTNER",
+                "BP_DESC",
+                "ADR_KIND",
+                "VALID_FROM",
+                "VALID_TO"  ,
+                "HOUSE_NUM1",
+                "STREET",
+                "CITY1",
+                "REGION",
+                "POST_CODE1",
+                "COUNTRY",
+RANK() OVER (PARTITION BY "DB_KEY","ALERT_ID","IDNUMBER","PARTNER"  ORDER BY "DB_KEY","ALERT_ID","IDNUMBER","PARTNER","ADR_KIND" DESC ) AS "RANK_1"
+FROM
+(
+SELECT
+                "BPID"."DB_KEY"                              AS "DB_KEY"                      ,
+                 "BPID"."DB_KEY_DASH"                        AS "DB_KEY_DASH"                      ,
+                "BPID"."ALERT_ID"                          AS "ALERT_ID"  ,
+                "BUT21FS"."PARTNER" AS "PARTNER"   ,
+                "BUT21FS"."VALID_TO" AS "VALID_TO" ,
+                "BUT21FS"."VALID_FROM"          AS "VALID_FROM"          ,
+                "BUT21FS"."ADR_KIND" AS "ADR_KIND" ,
+                "BUT21FS"."ADDRNUMBER"       AS "ADDRNUMBER"       ,
+    "ADRC"."TITLE"                                             AS "TITLE"                           ,
+                "ADRC"."NAME1"                                            AS "NAME1"                      ,
+                "ADRC"."NAME2"                                            AS "NAME2"                      ,
+                "ADRC"."NAME3"                                            AS "NAME3"                      ,
+                "ADRC"."NAME4"                                            AS "NAME4"                      ,
+                "ADRC"."NAME_TEXT"                  AS "NAME_TEXT"            ,
+                "ADRC"."NAME_CO"                      AS "NAME_CO" ,
+                "ADRC"."HOUSE_NUM1"              AS "HOUSE_NUM1"        ,
+                "ADRC"."STREET"             AS "STREET"       ,
+                "ADRC"."CITY1"                AS "CITY1"                           ,
+                "ADRC"."REGION"            AS "REGION"                     ,               
+                "ADRC"."POST_CODE1" AS "POST_CODE1"          ,
+                "ADRC"."COUNTRY"        AS "COUNTRY"  ,
+                "BPID"."IDNUMBER"                      AS "IDNUMBER"               ,
+                "BP_NAME"."BP_DESC"                AS "BP_DESC"    
+
+--             '' AS "IDNUMBER"
+FROM 
+                :BPID_DATA AS "BPID" 
 INNER JOIN
-"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ADRC.active_data" AS "ADRC" 
-ON  "BUT21FS"."ADDRNUMBER" = "ADRC"."ADDRNUMBER"
+                "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS "BUT21FS"
+ON 
+                "BPID"."PARTNER" = "BUT21FS"."PARTNER"        
 INNER JOIN 
-:BPID_DATA AS "BPID" 
-ON "BUT21FS"."PARTNER" = "BPID"."PARTNER" 
+                "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ADRC.active_data"         AS "ADRC" 
+ON  
+                "BUT21FS"."ADDRNUMBER" = "ADRC"."ADDRNUMBER"
 INNER JOIN
-:BP_NAME_DATA AS "BP_NAME"
-ON "BUT21FS"."PARTNER" = "BP_NAME"."PARTNER"
-WHERE "BUT21FS"."ADR_KIND" = 'XXDEFAULT'
-OR   "BUT21FS"."ADR_KIND" = 'PRT_MAIL'
+                :BP_NAME_DATA AS "BP_NAME"             
+ON 
+                "BUT21FS"."PARTNER" = "BP_NAME"."PARTNER"
+WHERE 
+                "BUT21FS"."ADR_KIND" = 'XXDEFAULT'
+OR  "BUT21FS"."ADR_KIND" = 'PRT_MAIL'
+)
+) WHERE "RANK_1" = 1
 ;
+
 
 
 RETURN
 SELECT
 "DB_KEY",
+"DB_KEY_DASH",
 "ALERT_ID",
 "IDNUMBER",
 "PARTNER",
