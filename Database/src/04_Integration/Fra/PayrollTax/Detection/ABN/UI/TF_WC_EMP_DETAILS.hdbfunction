@@ -19,12 +19,42 @@ LEGAL_ENTITY	NVARCHAR(40),
 POLICY_STATUS	NVARCHAR(10),
 WIC 			NVARCHAR(10),
 WIC_DSCR		NVARCHAR(60),
-START_EMPLOY_DATE		DATE,
-CEASED_DATE 			DATE
+START_EMPLOY_DATE	NVARCHAR(8),
+CEASED_DATE 		NVARCHAR(8)
 )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
+       
 BEGIN 
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
 
 lt_emp_details =
 SELECT 
@@ -42,8 +72,8 @@ SELECT
 "A"."POLICY_STATUS",
 "B"."WIC",
 "B"."WIC_DSCR",
-"A"."START_EMPLOY_DATE",
-"A"."CEASED_DATE",
+TO_NVARCHAR(to_dats("A"."START_EMPLOY_DATE")) AS "START_EMPLOY_DATE",
+TO_NVARCHAR(to_dats("A"."CEASED_DATE")) AS "CEASED_DATE",
 "C"."FISCAL_YEAR" AS "ASSESSMENT_YEAR"
 FROM "osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"() AS "A"
 INNER JOIN "osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()  AS "B" ON "A"."POLICY_NO"="B"."POLICY_NO"
@@ -73,8 +103,8 @@ SELECT
 "DATA"."START_EMPLOY_DATE",
 "DATA"."CEASED_DATE"
 FROM  :lt_emp_details AS "DATA"
-INNER JOIN  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
-AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."ASSESSMENT_YEAR")
-  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
+INNER JOIN  :ALERT_INFO AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
+AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."ASSESSMENT_YEAR");
+--  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID;
 
 END;
