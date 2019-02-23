@@ -1,7 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExistInQLDNexus_R"
 (
 	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
-	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus_r",
 	OUT ET_RESULT 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -12,16 +12,14 @@ BEGIN
 
 	DECLARE lv_mode 						 NVARCHAR(1);  
 	DECLARE lv_previous_year				 NVARCHAR(4);
-	DECLARE lv_qld_emp_pc_thld_low			 DECIMAL(5,2) ;
-	DECLARE lv_qld_emp_pc_thld_high			 DECIMAL(5,2) ;
-	DECLARE lv_qld_emp_cnt_thld_low			 INTEGER;
-	DECLARE lv_qld_emp_cnt_thld_high		 INTEGER;
-	DECLARE lx_flag_wcq_policy				 NVARCHAR(1);
-	DECLARE lx_flag_qld_address 			 NVARCHAR(1);
 	DECLARE lx_flag_qld_emp_cnt 			 NVARCHAR(1);
 	DECLARE lx_flag_qld_emp_pc				 NVARCHAR(1);
 	DECLARE lx_text_qld_address				 NVARCHAR(60);
 	DECLARE lx_text_wcq_policy 	 			 NVARCHAR(60);
+		DECLARE lv_qld_emp_pc_thld_low	 DECIMAL(5,2) ;
+		DECLARE lv_qld_emp_pc_thld_high	 DECIMAL(5,2) ;
+		DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
+		DECLARE lv_qld_emp_cnt_thld_high INTEGER;
 	DECLARE lx_text_emp_cnt 				 NVARCHAR(60);
 	DECLARE lx_text_emp_pc					 NVARCHAR(60);
 	DECLARE lx_text							 NVARCHAR(255);	
@@ -33,23 +31,11 @@ BEGIN
 	SELECT
 		"RUN_MODE",
 		"GJAHR_ADJUSTMENT",
-		"QLD_EMP_PC_THLD_LOW",
-		"QLD_EMP_PC_THLD_HIGH",
-		"QLD_EMP_CNT_THLD_LOW",
-		"QLD_EMP_CNT_THLD_HIGH",
-		"FLAG_WCQ_POLICY", 
-		"FLAG_QLD_ADDRESS",
 		"FLAG_QLD_EMP_CNT",
 		"FLAG_QLD_EMP_PC"
 	INTO
 		lv_mode,
 		lv_previous_year,
-		lv_qld_emp_pc_thld_low,
-		lv_qld_emp_pc_thld_high,
-		lv_qld_emp_cnt_thld_low,
-		lv_qld_emp_cnt_thld_high,
-		lx_flag_wcq_policy,
-		lx_flag_qld_address,
 		lx_flag_qld_emp_cnt,
 		lx_flag_qld_emp_pc
 	FROM :PARAMETERS LIMIT 1;
@@ -82,20 +68,6 @@ lt_result =
 		;
 		
 
-IF  :lx_flag_qld_address  = 'Y' THEN
-	 lx_text_qld_address  = 'QLD Address is found';
-END IF;
-IF  :lx_flag_qld_address  = 'N' THEN 
-	 lx_text_qld_address  = 'QLD Address is not found';
-END IF;
-
-IF  :lx_flag_wcq_policy   = 'Y' THEN
-	 lx_text_wcq_policy   = 'WCQ Policy is found';
-END IF;
-IF  :lx_flag_wcq_policy   = 'N' THEN 
-	 lx_text_wcq_policy   = 'WCQ Policy is not found';
-END IF;
-
 IF  :lx_flag_qld_emp_cnt  = 'Y' THEN
 	 lx_text_emp_cnt	  = 'QLD Employee Count check is selected';
 END IF;
@@ -109,90 +81,7 @@ END IF;
 IF  :lx_flag_qld_emp_pc   = 'N' THEN 
 	 lx_text_emp_pc  	  = 'QLD Employee Percentage check is not selected';
 END IF;
-			
-IF :lx_flag_qld_address = 'Y' THEN 
-	lt_result = 
-		SELECT
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			"FY_CHECK",
-			"DETECTION_RESULT"
-		FROM :lt_result
-		UNION
-		SELECT
-			"RESULT"."ABN",
-			"RESULT"."PERIOD_CATEGORY",
-			"RESULT"."PERIOD_KEY",
-			"RESULT"."GJAHR",
-			"RESULT"."FY_CHECK",
-			0 AS "DETECTION_RESULT"	
-		FROM 
-		:lt_result AS "RESULT"
-		WHERE EXISTS (
-			SELECT * FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BASNIND"
-			WHERE	"RESULT"."ABN"		  = LEFT("BASNIND"."ABN",11)
-			AND 	"RESULT"."FY_CHECK"	  = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
-			AND 	"BASNIND"."BUS_STATE" = 'QLD'
-			)
-		UNION
-		SELECT
-			"RESULT"."ABN",
-			"RESULT"."PERIOD_CATEGORY",
-			"RESULT"."PERIOD_KEY",
-			"RESULT"."GJAHR",
-			"RESULT"."FY_CHECK",
-			0 AS "DETECTION_RESULT"	
-		FROM 
-		:lt_result AS "RESULT"
-		WHERE EXISTS (
-			SELECT * FROM
-			(
-				SELECT LEFT("AGENCY_DATA"."ABN",11) AS "ABN" 
-					FROM
-					"osr.edw.staging.md.abr.proxy::CV_BUSINESS_LOCATION_C" AS "BUSINESS_LOCATION"
-					INNER JOIN
-					"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"		AS "AGENCY_DATA"
-					ON	  "BUSINESS_LOCATION"."PID"			 = "AGENCY_DATA"."PID"
-					WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
-			) AS  "BUS_ADDR"
-			WHERE "RESULT"."ABN" = LEFT("BUS_ADDR"."ABN",11)
-			)
-			;
-			
-END IF;
-
-IF :lx_flag_wcq_policy = 'Y' THEN 
-	lt_result = 
-		SELECT
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			"FY_CHECK",
-			"DETECTION_RESULT"
-		FROM :lt_result
-		UNION
-		SELECT
-			"RESULT"."ABN",
-			"RESULT"."PERIOD_CATEGORY",
-			"RESULT"."PERIOD_KEY",
-			"RESULT"."GJAHR",
-			"RESULT"."FY_CHECK",
-			0		AS "DETECTION_RESULT"	
-		FROM 
-		:lt_result	AS "RESULT"
-		WHERE EXISTS (
-			SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WCQ"
-			WHERE "RESULT"."ABN"	= "WCQ"."ABN"
-			  AND "RESULT"."FY_CHECK"	= "WCQ"."GJAHR"
-			)
-		;
-
-			
-END IF;
-
+		
 IF :lx_flag_qld_emp_cnt = 'Y' OR :lx_flag_qld_emp_pc = 'Y' THEN
 
 lt_cnt = 
