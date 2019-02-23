@@ -65,8 +65,9 @@ lt_rfr_max =
 	SELECT
 		"ABN",
 		"PERIOD_CATEGORY",
-		 TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year))	AS "PERIOD_KEY",
-		 TO_NVARCHAR(TO_INT("GJAHR")	  - TO_INT(:lv_previous_year))	AS "GJAHR"
+		"PERIOD_KEY",
+		"GJAHR",
+		 TO_NVARCHAR(TO_INT("GJAHR")	  - TO_INT(:lv_previous_year))	AS "FY_CHECK"
    FROM :IT_DATA_FOR_RULE;
 
 lt_result = 
@@ -75,6 +76,7 @@ lt_result =
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
+		"FY_CHECK",
 		0 AS "DETECTION_RESULT"
 		FROM  :LT_DATA_FOR_RULE
 		;
@@ -115,6 +117,7 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
+			"FY_CHECK",
 			"DETECTION_RESULT"
 		FROM :lt_result
 		UNION
@@ -123,13 +126,14 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			0 AS "DETECTION_RESULT"	
 		FROM 
 		:lt_result AS "RESULT"
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BASNIND"
 			WHERE	"RESULT"."ABN"		  = LEFT("BASNIND"."ABN",11)
-			AND 	"RESULT"."GJAHR"	  = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
+			AND 	"RESULT"."FY_CHECK"	  = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
 			AND 	"BASNIND"."BUS_STATE" = 'QLD'
 			)
 		UNION
@@ -138,6 +142,7 @@ IF :lx_flag_qld_address = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			0 AS "DETECTION_RESULT"	
 		FROM 
 		:lt_result AS "RESULT"
@@ -165,6 +170,7 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
+			"FY_CHECK",
 			"DETECTION_RESULT"
 		FROM :lt_result
 		UNION
@@ -173,13 +179,14 @@ IF :lx_flag_wcq_policy = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			0		AS "DETECTION_RESULT"	
 		FROM 
 		:lt_result	AS "RESULT"
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WCQ"
 			WHERE "RESULT"."ABN"	= "WCQ"."ABN"
-			  AND "RESULT"."GJAHR"	= "WCQ"."GJAHR"
+			  AND "RESULT"."FY_CHECK"	= "WCQ"."GJAHR"
 			)
 		;
 
@@ -227,7 +234,7 @@ lt_cnt =
 	WHERE EXISTS 
 		(SELECT DISTINCT * FROM :lt_result AS "RESULT"
 			WHERE "CNT"."ABN"   = "RESULT"."ABN"
-			AND   "CNT"."GJAHR" = "RESULT"."GJAHR"
+			AND   "CNT"."GJAHR" = "RESULT"."FY_CHECK"
 		)
 	GROUP BY "ABN",
 			 "GJAHR",
@@ -259,6 +266,7 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
+			"FY_CHECK",
 			"DETECTION_RESULT"
 			FROM :lt_result
 		UNION
@@ -267,15 +275,16 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			(("CNT"."RFR_EMP_CNT") / ("CNT"."RFR_EMP_CNT_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM		:lt_result 	AS "RESULT"
 			INNER JOIN	:lt_cnt		AS "CNT"
 				ON  "RESULT"."ABN"				= "CNT"."ABN"
-				AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
+				AND "RESULT"."FY_CHECK"			= "CNT"."GJAHR"
 			WHERE EXISTS (
 				SELECT * FROM :lt_cnt			AS "CNT"
 				WHERE "RESULT"."ABN"			= "CNT"."ABN"
-				  AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
+				  AND "RESULT"."FY_CHECK"		= "CNT"."GJAHR"
 				  AND "CNT"."LOW_EMP_CNT"		= :lv_qld_emp_cnt_thld_low 
 				  AND "CNT"."HIGH_EMP_CNT"		= :lv_qld_emp_cnt_thld_high
 				  AND "TOP_BAND_EMP_CNT"	    <> 'X'
@@ -286,15 +295,16 @@ IF :lx_flag_qld_emp_cnt = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			(("CNT"."RFR_EMP_CNT") / ("CNT"."RFR_EMP_CNT_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM		:lt_result 	AS "RESULT"
 			INNER JOIN	:lt_cnt		AS "CNT"
 				ON  "RESULT"."ABN"				= "CNT"."ABN"
-				AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
+				AND "RESULT"."FY_CHECK"			= "CNT"."GJAHR"
 			WHERE EXISTS (
 				SELECT * FROM :lt_cnt			AS "CNT"
 				WHERE "RESULT"."ABN"			= "CNT"."ABN"
-				  AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
+				  AND "RESULT"."FY_CHECK"			= "CNT"."GJAHR"
 				  AND "CNT"."LOW_EMP_CNT"		= :lv_qld_emp_cnt_thld_low 
 				  AND "TOP_BAND_EMP_CNT"		= 'X'
 			)
@@ -310,6 +320,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
+			"FY_CHECK",
 			"DETECTION_RESULT"
 		FROM :lt_result
 		UNION
@@ -318,15 +329,16 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			(("CNT"."RFR_EMP_PC") / ("CNT"."RFR_EMP_PC_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM		:lt_result 	AS "RESULT"
 			INNER JOIN	:lt_cnt		AS "CNT"
 				ON  "RESULT"."ABN"				= "CNT"."ABN"
-				AND "RESULT"."GJAHR"			= "CNT"."GJAHR"
+				AND "RESULT"."FY_CHECK"			= "CNT"."GJAHR"
 		WHERE EXISTS (
 			SELECT * FROM :lt_cnt         AS "CNT"
 			WHERE "RESULT"."ABN"           = "CNT"."ABN"
-		  	  AND "RESULT"."GJAHR"         = "CNT"."GJAHR"
+		  	  AND "RESULT"."FY_CHECK"         = "CNT"."GJAHR"
 			  AND "CNT"."LOW_EMP_PC"	   = :lv_qld_emp_pc_thld_low 
 			  AND "CNT"."HIGH_EMP_PC"	   = :lv_qld_emp_pc_thld_high
 			  AND "TOP_BAND_EMP_PC"       <> 'X'
@@ -337,15 +349,16 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 			"RESULT"."PERIOD_CATEGORY",
 			"RESULT"."PERIOD_KEY",
 			"RESULT"."GJAHR",
+			"RESULT"."FY_CHECK",
 			(("CNT"."RFR_EMP_PC") / ("CNT"."RFR_EMP_PC_MAX"))*100 AS "DETECTION_RESULT"	
 			FROM		:lt_result 	AS "RESULT"
 			INNER JOIN	:lt_cnt		AS "CNT"
 				ON  "RESULT"."ABN"				= "CNT"."ABN"
-				AND "RESULT"."GJAHR"			= "CNT"."GJAHR"		
+				AND "RESULT"."FY_CHECK"			= "CNT"."GJAHR"		
 		WHERE EXISTS (
 			SELECT * FROM :lt_cnt         AS "CNT"
 			WHERE "RESULT"."ABN"           = "CNT"."ABN"
-			  AND "RESULT"."GJAHR"         = "CNT"."GJAHR"
+			  AND "RESULT"."FY_CHECK"         = "CNT"."GJAHR"
 			  AND "CNT"."LOW_EMP_PC"	   = :lv_qld_emp_pc_thld_low 
 			  AND "TOP_BAND_EMP_PC"        = 'X'
 			)
@@ -353,7 +366,7 @@ IF :lx_flag_qld_emp_pc = 'Y' THEN
 
 END IF;
 
-lt_result = 
+et_result = 
 		SELECT
 			"ABN",
 			"PERIOD_CATEGORY",
@@ -370,16 +383,6 @@ lt_result =
 			HAVING SUM("DETECTION_RESULT") > 0
 		;
 
-et_result = 
-		SELECT
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			"DETECTION_RESULT"
-		FROM
-			:lt_result
-		;
 
 lx_text = :lx_text_qld_address || ',' || :lx_text_wcq_policy || ',' || :lx_text_emp_cnt || ',' || :lx_text_emp_pc;
 
@@ -401,7 +404,7 @@ et_text =
 			''		 AS "MSGV3_FC",
 			''		 AS "MSGV4_FC"
 		FROM 
-		:lt_result
+		:et_result
 		;
 
 
