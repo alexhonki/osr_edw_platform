@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_EMP_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_WC_EMP_DETAILS"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
+<localVariables/>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_EMP_DETAILS">
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_EMP_DETAILS" value="NULL">
     <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_EMP_DETAILS"/>
-    <localVariable>IP_ALERT_ID</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>
@@ -110,7 +101,9 @@
   
     <attribute id="WIC_1" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WIC_1"/>
+  
       <keyMapping columnObjectName="TF_WC_EMP_DETAILS" columnName="WIC"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>

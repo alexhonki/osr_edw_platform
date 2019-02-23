@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_ITR_NIND_WAGES_DETAIL"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
-<variableMappings/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL"/>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL</resourceUri>
@@ -53,6 +49,13 @@
       <viewAttribute id="TOTAL_WAGES">
         <descriptions defaultDescription="TOTAL_WAGES"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -69,6 +72,9 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_WAGES" source="TOTAL_WAGES"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
     <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
   </calculationView>
@@ -83,17 +89,26 @@
       <descriptions defaultDescription="Alert ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="WAERS" order="8" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
       <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
     </attribute>
-    <attribute id="ABN" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
     </attribute>
-    <attribute id="INCM_YR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INCM_YR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Fiscal Year"/>
       <keyMapping columnObjectName="Projection_1" columnName="INCM_YR"/>
+    </attribute>
+  
+    <attribute id="DB_KEY_DASH" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="GJAHR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -118,16 +133,16 @@
       <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="CONTRACTORS_PMNTS"/>
     </measure>
-    <measure id="PMNTS_TO_ASSOCS" order="7" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Payments to Associates"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
-    </measure>
   
-    <measure id="TOTAL_WAGES" order="11" semanticType="amount" aggregationType="sum" measureType="amount">
+    <measure id="TOTAL_WAGES" order="10" semanticType="amount" aggregationType="sum" measureType="amount">
       <descriptions defaultDescription="Total Wages"/>
       <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="TOTAL_WAGES"/>
+    </measure>
+  
+    <measure id="PMNTS_TO_ASSOCS" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
