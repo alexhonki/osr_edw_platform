@@ -7,10 +7,9 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_CASE_INVESTIGATION"( 
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
-    /*****************************
-        Write your function logic
-    ****************************/
-lt_dummy = SELECT TOP 1 * FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data" AS "T009";
+
+lt_dummy = SELECT TOP 1 * FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR";
+
 RETURN
 
 SELECT 'PROD'     AS "CASE_OUTCOME",   'PRT'   AS "CASE_CATEGORY",  5  AS "RISK_FACTOR_RATING" FROM :lt_dummy UNION
