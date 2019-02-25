@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_TPAR_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_TPAR_DETAILS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_DETAILS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PAYEE_FAMILY_NM">
+        <descriptions defaultDescription="PAYEE_FAMILY_NM"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_FIRST_GIVEN_NM">
+        <descriptions defaultDescription="PAYEE_FIRST_GIVEN_NM"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_MIDDLE_NM">
+        <descriptions defaultDescription="PAYEE_MIDDLE_NM"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_NON_IDV_BUS_NM">
+        <descriptions defaultDescription="PAYEE_NON_IDV_BUS_NM"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_TRDG_NM">
+        <descriptions defaultDescription="PAYEE_TRDG_NM"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_PH_NUM">
+        <descriptions defaultDescription="PAYEE_PH_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_ABN">
+        <descriptions defaultDescription="PAYEE_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GROSS_PD_AMT">
+        <descriptions defaultDescription="GROSS_PD_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_ABN_STS">
+        <descriptions defaultDescription="PAYEE_ABN_STS"/>
+      </viewAttribute>
+      <viewAttribute id="TW_TOTL_AMT">
+        <descriptions defaultDescription="TW_TOTL_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_ABN">
+        <descriptions defaultDescription="PAYER_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GST_TOTL_AMT">
+        <descriptions defaultDescription="GST_TOTL_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_ABN_STS">
+        <descriptions defaultDescription="PAYER_ABN_STS"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_DETAILS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_FAMILY_NM" source="PAYEE_FAMILY_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_FIRST_GIVEN_NM" source="PAYEE_FIRST_GIVEN_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_MIDDLE_NM" source="PAYEE_MIDDLE_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_NON_IDV_BUS_NM" source="PAYEE_NON_IDV_BUS_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_TRDG_NM" source="PAYEE_TRDG_NM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_PH_NUM" source="PAYEE_PH_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ABN" source="PAYEE_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROSS_PD_AMT" source="GROSS_PD_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ABN_STS" source="PAYEE_ABN_STS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TW_TOTL_AMT" source="TW_TOTL_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN" source="PAYER_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_TOTL_AMT" source="GST_TOTL_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN_STS" source="PAYER_ABN_STS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="PAYEE_FAMILY_NM" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_FAMILY_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_FAMILY_NM"/>
+    </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="PAYEE_FIRST_GIVEN_NM" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_FIRST_GIVEN_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_FIRST_GIVEN_NM"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="PAYEE_MIDDLE_NM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_MIDDLE_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_MIDDLE_NM"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="PAYEE_NON_IDV_BUS_NM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_NON_IDV_BUS_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_NON_IDV_BUS_NM"/>
+    </attribute>
+    <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="PAYEE_TRDG_NM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_TRDG_NM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_TRDG_NM"/>
+    </attribute>
+    <attribute id="GJAHR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="PAYEE_PH_NUM" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_PH_NUM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_PH_NUM"/>
+    </attribute>
+    <attribute id="PAYEE_ABN" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_ABN"/>
+    </attribute>
+    <attribute id="PAYEE_ABN_STS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_ABN_STS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYEE_ABN_STS"/>
+    </attribute>
+    <attribute id="PAYER_ABN" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_ABN"/>
+    </attribute>
+    <attribute id="PAYER_ABN_STS" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_ABN_STS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_ABN_STS"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="GROSS_PD_AMT" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GROSS_PD_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GROSS_PD_AMT"/>
+    </measure>
+    <measure id="TW_TOTL_AMT" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TW_TOTL_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TW_TOTL_AMT"/>
+    </measure>
+    <measure id="GST_TOTL_AMT" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GST_TOTL_AMT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="GST_TOTL_AMT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="88" y="210"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
