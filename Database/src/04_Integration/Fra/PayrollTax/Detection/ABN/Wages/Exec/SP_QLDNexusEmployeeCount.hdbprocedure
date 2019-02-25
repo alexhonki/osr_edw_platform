@@ -159,7 +159,7 @@ SELECT
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_result
+:et_result
 ;
 
 END IF;
@@ -167,6 +167,8 @@ END IF;
 IF :lv_mode = 'R' THEN
 
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_rfr_max FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT";
+
+
 
 et_result = 
 SELECT
@@ -178,10 +180,9 @@ SELECT
 FROM
 :lt_data_for_rule AS "RESULT",
 :lt_cnt AS "CNT",
-"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "RFR"
+(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" WHERE "TOP_BAND" = 'X') AS "RFR"
 WHERE "RESULT"."ABN" = "CNT"."ABN"
   AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
-  AND  "RFR"."TOP_BAND" = 'X'
   AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
 UNION
 SELECT
@@ -193,10 +194,9 @@ SELECT
 FROM
 :lt_data_for_rule AS "RESULT",
 :lt_cnt AS "CNT",
-"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" AS "RFR"
+(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" WHERE "TOP_BAND" <> 'X') AS "RFR"
 WHERE "RESULT"."ABN" = "CNT"."ABN"
   AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
-  AND  "RFR"."TOP_BAND" <> 'X'
   AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
   AND "CNT"."QLD_CNT_EMPLOYEE" < "RFR"."HIGH"
 ;
