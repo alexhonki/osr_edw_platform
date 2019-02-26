@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD"( )
+FUNCTION "osr.edw.platform.fra.prt.view::TF_ABR_BP_MD"( )
        RETURNS TABLE 
        (
        	ACN					NVARCHAR(20),
@@ -19,14 +19,9 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD"( )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
-    /*****************************
-        Author		: Tugce Guler
-        Created On  : 19/12/2018
-        Created For : Get BP Master Data for UI BP Creation
-    ****************************/
-    lt_bp =
+
+   RETURN
     	SELECT
-    		"AGENCY"."PID"																			AS	"PID",	
     		"AGENCY"."ACN"																			AS	"ACN",
     		"AGENCY"."ABN"																			AS	"ABN",
     		'2' 																					AS	"PARTNER_TYPE",
@@ -37,28 +32,9 @@ BEGIN
     		"AGENCY"."MN_BUS_ADDR_LN_1"																AS  "BUS_ADDR",
     		"AGENCY"."MN_BUS_SBRB"																	AS  "BUS_CITY",
     		"AGENCY"."MN_BUS_STT"																	AS  "BUS_STATE",
-    		"AGENCY"."MN_BUS_PC"																	AS  "BUS_PC"
-    	FROM	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"									AS	"AGENCY";
---    	INNER JOIN	"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.BUSINESS_NAMES.active_data"	AS	"BP_NAMES"
---    	ON			"AGENCY"."PID" = "BP_NAMES"."PID";
-    
-    RETURN
-    	SELECT 
-    		"ACN",
-    		"ABN",
-    		"PARTNER_TYPE",
-    		"BUS_INDUSTRY",
-    		"BUS_NM_TITLE",
-    		"BUS_NAME_2",
-    		"BUS_NAME_1",
-    		"BUS_ADDR",
-    		"BUS_CITY",
-    		"BUS_STATE",
-    		"BUS_PC",
+    		"AGENCY"."MN_BUS_PC"																	AS  "BUS_PC",
     		''																						AS  "BUS_EMAIL",
     		''																						AS	"BUS_PH_NUM"
-    	FROM		:lt_bp;
---    	INNER JOIN	"osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.CONTACTS.active_data"			AS	"BUS_CONTACTS"
---    	ON			:lt_bp."PID" = "BUS_CONTACTS"."PID";
+    	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()									AS	"AGENCY";
     
 END;

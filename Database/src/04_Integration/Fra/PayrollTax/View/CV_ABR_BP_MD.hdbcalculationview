@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ABR_BP_MD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.view::CV_ABR_BP_MD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ABR_BP_MD"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.view::TF_ABR_BP_MD" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.view::TF_ABR_BP_MD</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY</resourceUri>
@@ -56,7 +56,7 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ABR_BP_MD">
+    <input node="osr.edw.platform.fra.prt.view::TF_ABR_BP_MD">
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="BUS_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_NAME_2" source="BUS_NAME_2"/>
@@ -161,8 +161,8 @@
       <viewAttribute id="ALERT_ID">
         <descriptions defaultDescription="ALERT_ID"/>
       </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
       </viewAttribute>
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="GJAHR"/>
@@ -170,13 +170,13 @@
       <viewAttribute id="BPARTNER">
         <descriptions defaultDescription="BPARTNER"/>
       </viewAttribute>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
       <viewAttribute id="GROUP_ID">
         <descriptions defaultDescription="GROUP_ID"/>
       </viewAttribute>
-    </viewAttributes>
+    
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute></viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
     <input node="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY">
@@ -272,17 +272,17 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="221.11302679000914" y="112"/>
+      <upperLeftCorner x="221" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <upperLeftCorner x="92" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <upperLeftCorner x="221" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -294,7 +294,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <upperLeftCorner x="302" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
