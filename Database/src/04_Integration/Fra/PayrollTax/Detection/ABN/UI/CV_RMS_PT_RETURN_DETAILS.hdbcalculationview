@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_RMS_PT_RETURN_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_RMS_PT_RETURN_DETAILS"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="VARCHAR" length="13" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS">
+  <attributes>
+    <attribute id="ALERT_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BPARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="FBNUM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="WAERS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="C_TOT_QLD_TXBLE_WAGES" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_QLD_TXBLE_WAGES"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="C_TOT_QLD_TXBLE_WAGES"/>
+    </measure>
+    <measure id="A_TOT_INT_WAGE" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_TOT_INT_WAGE"/>
+    </measure>
+    <measure id="A_APPRENT_PMT" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_APPRENT_PMT"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_APPRENT_PMT"/>
+    </measure>
+    <measure id="A_TRAINEES_PMT" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TRAINEES_PMT"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_TRAINEES_PMT"/>
+    </measure>
+    <measure id="A_OTH_NON_TAX_WAGE" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_OTH_NON_TAX_WAGE"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_OTH_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="A_FRINGE_BENEFIT" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_FRINGE_BENEFIT"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_FRINGE_BENEFIT"/>
+    </measure>
+    <measure id="C_TOT_QLD_NON_TAX_WAGE" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_QLD_NON_TAX_WAGE"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="C_TOT_QLD_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="A_COMMISSION" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_COMMISSION"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_COMMISSION"/>
+    </measure>
+    <measure id="C_TOT_GRP_AUST_WAGES" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_GRP_AUST_WAGES"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="C_TOT_GRP_AUST_WAGES"/>
+    </measure>
+    <measure id="A_DIRECTOR_FEE" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_DIRECTOR_FEE"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_DIRECTOR_FEE"/>
+    </measure>
+    <measure id="C_DEDUCTION_ALLOWED" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_DEDUCTION_ALLOWED"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="C_DEDUCTION_ALLOWED"/>
+    </measure>
+    <measure id="A_ELIG_TERM_PMT" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ELIG_TERM_PMT"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_ELIG_TERM_PMT"/>
+    </measure>
+    <measure id="A_BONUS" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_BONUS"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_BONUS"/>
+    </measure>
+    <measure id="A_ALLOWANCE" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ALLOWANCE"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_ALLOWANCE"/>
+    </measure>
+    <measure id="C_PAY_TAX_AMOUNT" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAY_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="C_PAY_TAX_AMOUNT"/>
+    </measure>
+    <measure id="A_CONTRACTORS" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_CONTRACTORS"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_CONTRACTORS"/>
+    </measure>
+    <measure id="C_TAX_AMOUNT" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="C_TAX_AMOUNT"/>
+    </measure>
+    <measure id="A_EMPL_SUP_CONTRIB" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_EMPL_SUP_CONTRIB"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_EMPL_SUP_CONTRIB"/>
+    </measure>
+    <measure id="A_GROSS_SAL_WAGE" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_GROSS_SAL_WAGE"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_GROSS_SAL_WAGE"/>
+    </measure>
+    <measure id="A_SHARE_SCHEMES" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_SHARE_SCHEMES"/>
+      <measureMapping columnObjectName="TF_RMS_PT_RETURN_DETAILS" columnName="A_SHARE_SCHEMES"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
