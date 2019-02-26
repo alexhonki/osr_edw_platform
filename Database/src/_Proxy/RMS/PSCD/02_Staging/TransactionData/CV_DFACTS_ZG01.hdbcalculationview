@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.pscd.proxy::CV_DFACTS_ZG01" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DFACTS_ZG01"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZG01" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZG01</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZG01">
+  <attributes>
+    <attribute id="OBJID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJID"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="OBJID"/>
+    </attribute>
+    <attribute id="FACT_CAT_SEQ_05" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_CAT_SEQ_05"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_CAT_SEQ_05"/>
+    </attribute>
+    <attribute id="FACT_TYPE_SEQ" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_TYPE_SEQ"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_TYPE_SEQ"/>
+    </attribute>
+    <attribute id="FACT_CAT_SEQ_10" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_CAT_SEQ_10"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_CAT_SEQ_10"/>
+    </attribute>
+    <attribute id="FACT_TYPE_REP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_TYPE_REP"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_TYPE_REP"/>
+    </attribute>
+    <attribute id="FACT_CAT_REP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_CAT_REP"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_CAT_REP"/>
+    </attribute>
+    <attribute id="VALID_TO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_TO"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="VALID_TO"/>
+    </attribute>
+    <attribute id="CHDATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHDATE"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="CHDATE"/>
+    </attribute>
+    <attribute id="VALID_FROM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALID_FROM"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="VALID_FROM"/>
+    </attribute>
+    <attribute id="FACT_SET" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_SET"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_SET"/>
+    </attribute>
+    <attribute id="CLIENT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="OBART" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBART"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="OBART"/>
+    </attribute>
+    <attribute id="FACT_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FACT_TYPE"/>
+      <keyMapping columnObjectName="TF_DFACTS_ZG01" columnName="FACT_TYPE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
