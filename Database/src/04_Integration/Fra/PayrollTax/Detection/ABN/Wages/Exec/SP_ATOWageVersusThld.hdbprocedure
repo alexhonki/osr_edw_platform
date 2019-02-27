@@ -25,6 +25,7 @@ lv_mode,
 lv_thld_yearly
 FROM :PARAMETERS LIMIT 1;
 
+/*
 lt_wages = 
 SELECT 
 "ABN",
@@ -410,6 +411,9 @@ FROM
 
 END IF;
 
+*/
+
+--0 score is provided if it is used in standard format
 IF :lv_mode = 'S' THEN
 
 et_result = 
@@ -418,8 +422,8 @@ SELECT
 "RESULT"."PERIOD_CATEGORY",
 "RESULT"."PERIOD_KEY",
 "RESULT"."GJAHR",
-100 AS "DETECTION_RESULT"
-FROM :lt_result AS "RESULT"
+0 AS "DETECTION_RESULT"
+FROM :it_data_for_rule AS "RESULT"
 ;
 
 et_text = 
@@ -429,29 +433,267 @@ SELECT
 "PERIOD_KEY",
 "GJAHR",
 '' AS "TEXT",
-'/OSRQLD/FRA_PRT'       AS "MSGID",
-'001'                   AS "MSGNO",
-CASE 
-WHEN "BAS" = 'GE' THEN '>= threshold'
-WHEN "BAS" = 'LT' THEN '< threshold'
-ELSE ''
-END AS "MSGV1",
-CASE 
-WHEN "ITR" = 'GE' THEN '>= yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
-WHEN "ITR" = 'LT' THEN '<  yearly threshold' || char(32) || :lv_thld_yearly || 'AUD'
-WHEN 'ITR' = 'NIL' THEN 'not available'
-ELSE 'not available'
-END "MSGV2",
-TO_VARCHAR(TO_INT("RISK_FACTOR_RATING")) AS "MSGV3",
-'AUD' AS "MSGV4",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
 '' AS "MSGV1_FC",
 '' AS "MSGV2_FC",
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_pre_result
+:it_data_for_rule
 ;
 
 END IF;
+ 
+IF :lv_mode = 'R' THEN
+ 	
+ 	lt_wages = 
+ 	SELECT
+	"WAGES"."ABN" AS"ABN",
+	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+	"WAGES"."GJAHR" AS "GJAHR",
+	"WAGES"."WAERS" AS "WAERS",
+	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES",
+	SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES" AS "WAGES"
+	WHERE EXISTS (
+	 	SELECT * FROM :it_data_for_rule AS "KEYS"
+ 			WHERE "KEYS"."ABN" = "WAGES"."ABN"
+ 			AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 			AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+ 			AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	)
+	GROUP BY 
+	"WAGES"."ABN", 
+	"WAGES"."PERIOD_CATEGORY", 
+	"WAGES"."PERIOD_KEY", 
+	"WAGES"."GJAHR", 
+	"WAGES"."WAERS";
+	
+	lt_result_5 = 
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	100*5/:lv_max_rating AS "DETECTION_RESULT",
+	5 AS "RFR_RATING"
+	FROM (
+	SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES",
+	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+	FROM :lt_wages
+	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+	HAVING SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") > :lv_thld_yearly
+	   AND SUM("ATO_ITR_SALARY_WAGES") > :lv_thld_yearly
+	   AND SUM("WCQ_ACT_WAGES") > :lv_thld_yearly
+	)
+	;
+	
+	lt_result_4 = 
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	100*4/:lv_max_rating AS "DETECTION_RESULT",
+	4 AS "RFR_RATING"
+	FROM (
+	SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+	HAVING SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") > :lv_thld_yearly
+	   AND SUM("ATO_ITR_SALARY_WAGES") > :lv_thld_yearly
+	) AS "RESULT"
+	;	
+	
+	lt_result_3 = 
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	100*3/:lv_max_rating AS "DETECTION_RESULT",
+	3 AS "RFR_RATING"
+	FROM (
+	SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+	HAVING SUM("ATO_ITR_SALARY_WAGES") > :lv_thld_yearly
+	) AS "RESULT"
+	;	
+	
+	lt_result_2 = 
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	100*2/:lv_max_rating AS "DETECTION_RESULT",
+	2 AS "RFR_RATING"
+	FROM (
+	SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+	HAVING SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") > :lv_thld_yearly
+	) AS "RESULT"
+	;
+	
+	lt_result_1 = 
+	SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	100*1/:lv_max_rating AS "DETECTION_RESULT",
+	1 AS "RFR_RATING"
+	FROM (
+	SELECT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"WAERS",
+	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
+	HAVING SUM("WCQ_ACT_WAGES") > :lv_thld_yearly
+	) AS "RESULT"
+	;
+	
+lt_result = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+MAX("DETECTION_RESULT") AS "DETECTION_RESULT",
+MAX("RFR_RATING") AS "RFR_RATING"
+FROM 
+(
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RFR_RATING"
+FROM :lt_result_1
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RFR_RATING"
+FROM :lt_result_2
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RFR_RATING"
+FROM :lt_result_3
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RFR_RATING"
+FROM :lt_result_4
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+"RFR_RATING"
+FROM :lt_result_5
+)
+GROUP BY 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR";
+
+et_result = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+CASE 
+WHEN "RFR_RATING" = 5 THEN TO_NVARCHAR('All wages Over')
+WHEN "RFR_RATING" = 4 THEN TO_NVARCHAR('ATO BAS and ITR wages Over')
+WHEN "RFR_RATING" = 3 THEN TO_NVARCHAR('ATO ITR wages Over')
+WHEN "RFR_RATING" = 2 THEN TO_NVARCHAR('ATO BAS wages Over')
+WHEN "RFR_RATING" = 1 THEN TO_NVARCHAR('WCQ wages over')
+ELSE TO_NVARCHAR('No wage over')
+END
+AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:lt_result
+;
+
+END IF;
+
 
 END
