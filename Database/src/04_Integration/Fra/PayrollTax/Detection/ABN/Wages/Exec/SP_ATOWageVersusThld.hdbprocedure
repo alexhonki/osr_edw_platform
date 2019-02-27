@@ -451,6 +451,8 @@ END IF;
  
 IF :lv_mode = 'R' THEN
  	
+ 	lv_max_rating := 5;
+ 	
  	lt_wages = 
  	SELECT
 	"WAGES"."ABN" AS"ABN",
@@ -519,7 +521,7 @@ IF :lv_mode = 'R' THEN
 	"WAERS",
 	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	FROM :lt_wages
 	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
 	HAVING SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") > :lv_thld_yearly
 	   AND SUM("ATO_ITR_SALARY_WAGES") > :lv_thld_yearly
@@ -542,7 +544,7 @@ IF :lv_mode = 'R' THEN
 	"GJAHR",
 	"WAERS",
 	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	FROM :lt_wages
 	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
 	HAVING SUM("ATO_ITR_SALARY_WAGES") > :lv_thld_yearly
 	) AS "RESULT"
@@ -564,7 +566,7 @@ IF :lv_mode = 'R' THEN
 	"GJAHR",
 	"WAERS",
 	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	FROM :lt_wages
 	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
 	HAVING SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") > :lv_thld_yearly
 	) AS "RESULT"
@@ -586,7 +588,7 @@ IF :lv_mode = 'R' THEN
 	"GJAHR",
 	"WAERS",
 	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES"
+	FROM :lt_wages
 	GROUP BY "ABN", "PERIOD_CATEGORY", "PERIOD_KEY", "GJAHR", "WAERS"
 	HAVING SUM("WCQ_ACT_WAGES") > :lv_thld_yearly
 	) AS "RESULT"
