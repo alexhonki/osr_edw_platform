@@ -30,7 +30,7 @@ IF lv_pt_q_cnt > 0 THEN
 END IF;
 
 SELECT COUNT(*) INTO lv_pt_a_cnt FROM :it_data_for_rule WHERE "PERIOD_CATEGORY" = 'PT-A';
-IF lv_pt_q_cnt > 0 THEN 
+IF lv_pt_a_cnt > 0 THEN 
 	lt_data_for_rule = SELECT * FROM :it_data_for_rule  WHERE "PERIOD_CATEGORY" = 'PT-A';
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualWageApproachingThld"( 
     	it_data_for_rule	=> :lt_data_for_rule,
