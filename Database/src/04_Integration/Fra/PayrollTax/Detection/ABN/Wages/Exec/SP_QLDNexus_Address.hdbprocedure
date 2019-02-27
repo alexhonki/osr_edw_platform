@@ -21,33 +21,27 @@ BEGIN
 			lv_previous_year
 		FROM :PARAMETERS LIMIT 1;
 
-   LT_DATA_FOR_RULE = 
+   lt_data_for_rule = 
 	SELECT
    "ABN",
    "PERIOD_CATEGORY",
-   TO_NVARCHAR(TO_INT(LEFT("PERIOD_KEY",2)) - TO_INT(:lv_previous_year)) || RIGHT("PERIOD_KEY",8)	AS "PERIOD_KEY",
-   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
+   "PERIOD_KEY",
+   "GJAHR",
+   TO_NVARCHAR(TO_INT(LEFT("PERIOD_KEY",2)) - TO_INT(:lv_previous_year)) || RIGHT("PERIOD_KEY",8)	AS "PERIOD_KEY_CHECK",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR_CHECK"
    FROM :IT_DATA_FOR_RULE
    WHERE "PERIOD_CATEGORY" <> 'PT-A'
    UNION
    SELECT
    "ABN",
    "PERIOD_CATEGORY",
-   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year)) 	AS "PERIOD_KEY",
-   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR"
+   "PERIOD_KEY",
+   "GJAHR",
+   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year)) 	AS "PERIOD_KEY_CHECK",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR_CHECK"
    FROM :IT_DATA_FOR_RULE
    WHERE "PERIOD_CATEGORY" = 'PT-A';  
   
-lt_result = 
-	SELECT
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
-		0 AS "DETECTION_RESULT"
-		FROM  :LT_DATA_FOR_RULE
-		;	
-			
 
 	lt_result = 
 		SELECT
@@ -55,44 +49,44 @@ lt_result =
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			"DETECTION_RESULT"
-			FROM :lt_result
+			0 AS "DETECTION_RESULT"
+			FROM :lt_data_for_rule
 		UNION
 		SELECT
-			"RESULT"."ABN",
-			"RESULT"."PERIOD_CATEGORY",
-			"RESULT"."PERIOD_KEY",
-			"RESULT"."GJAHR",
+			"DATA"."ABN",
+			"DATA"."PERIOD_CATEGORY",
+			"DATA"."PERIOD_KEY",
+			"DATA"."GJAHR",
 			100 AS "DETECTION_RESULT"	
 			FROM 
-			:lt_result AS "RESULT"
+			:lt_data_for_rule AS "DATA"
 			WHERE EXISTS (
-				SELECT * FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "BASNIND"
-				WHERE "RESULT"."ABN" = LEFT("BASNIND"."ABN",11)
-				  AND "RESULT"."GJAHR" = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
+				SELECT * FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "BASNIND"
+				WHERE "DATA"."ABN" = LEFT("BASNIND"."ABN",11)
+				  AND "DATA"."GJAHR_CHECK" = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
 				  AND "BASNIND"."BUS_STATE" = 'QLD'
 			)
 		UNION
 		SELECT
-			"RESULT"."ABN",
-			"RESULT"."PERIOD_CATEGORY",
-			"RESULT"."PERIOD_KEY",
-			"RESULT"."GJAHR",
+			"DATA"."ABN",
+			"DATA"."PERIOD_CATEGORY",
+			"DATA"."PERIOD_KEY",
+			"DATA"."GJAHR",
 			100 AS "DETECTION_RESULT"	
 			FROM 
-			:lt_result AS "RESULT"
+			:lt_data_for_rule AS "DATA"
 			WHERE EXISTS (
 				SELECT * FROM
 				(
 					SELECT LEFT("AGENCY_DATA"."ABN",11) AS "ABN" 
 						FROM
-						"osr.edw.staging.md.abr.proxy::CV_BUSINESS_LOCATION_C" AS "BUSINESS_LOCATION"
+						"osr.edw.staging.md.abr.proxy::TF_BUSINESS_LOCATION_C"() AS "BUSINESS_LOCATION"
 						INNER JOIN
-						"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "AGENCY_DATA"
+						"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY_DATA"
 						ON "BUSINESS_LOCATION"."PID" = "AGENCY_DATA"."PID"
 						WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
 				) AS "BUS_ADDR"
-				WHERE "RESULT"."ABN" = LEFT("BUS_ADDR"."ABN",11)
+				WHERE "DATA"."ABN" = LEFT("BUS_ADDR"."ABN",11)
 			)
 			;	
 
