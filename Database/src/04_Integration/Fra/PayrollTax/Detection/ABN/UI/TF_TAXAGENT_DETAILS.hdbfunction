@@ -6,6 +6,9 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_TAXAGENT_DETAILS"(IN IP_ALERT_I
 			ALERT_ID                		NVARCHAR(20),
 			ABN                     		NVARCHAR(20),
 			GJAHR                   		NVARCHAR(4),
+			TA_NUM							NVARCHAR(20),
+  			TA_STATUS						NVARCHAR(1),
+			TA_NM							NVARCHAR(200),
 			TA_PSTL_ADDRESS_LN_1			NVARCHAR(40),
 			TA_PSTL_ADDRESS_LN_2			NVARCHAR(40),
 			TA_PSTL_SUBURB					NVARCHAR(30),
@@ -52,68 +55,80 @@ ALERT_INFO =
 END IF;
 
 
-TAXAGENT_DATA =
+GET_TA_FOR_ABN =
+SELECT DISTINCT 
+	"ABN",
+	"FINANCIAL_YEAR",
+	"TA_NUM"
 
-
-				SELECT DISTINCT 
-            		"TA_NUM",
-					"TA_STATUS",
-					"TA_NM",
-					"TA_PSTL_ADDRESS_LN_1",
-					"TA_PSTL_ADDRESS_LN_2",
-					"TA_PSTL_SUBURB",
-					"TA_PSTL_STATE",
-					"TA_PSTL_POSTCODE",
-					"TA_PHONE_NUM",
-					"MOBILE_NUM",
-					"FAX_NUM",
-					"EMAIL_ADDR",
-					"SOURCE_TABLE"
-				FROM "osr.edw.staging.md.ato.synonym::CDS_TAG.DSO.TAXAGENT.active_data"
-				WHERE	"TA_NUM" IN (SELECT "ABN" FROM :ALERT_INFO )
+FROM
+(
+SELECT 
+	"ABN",
+	"FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
+	"TA_NUM",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN", "FINANCIAL_YEAR" DESC) AS "RANK_1"
+FROM 
+	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()
+WHERE "TA_NUM" <> '0'
+AND "ABN" IN (SELECT  DISTINCT "ABN" FROM :ALERT_INFO)
+) 
+WHERE "RANK_1" = 1 
+ORDER BY "ABN"
 ;
 
-
 RETURN
-				SELECT
-                	"DB_KEY",
-                    "DB_KEY_DASH",
-                    "ALERT_ID",
-                    "ABN",
-                    "GJAHR",
-                	"TA_PSTL_ADDRESS_LN_1",
-					"TA_PSTL_ADDRESS_LN_2",
-					"TA_PSTL_SUBURB",
-					"TA_PSTL_STATE",
-					"TA_PSTL_POSTCODE",
-					"TA_PHONE_NUM",
-					"MOBILE_NUM",
-					"FAX_NUM",
-					"EMAIL_ADDR"
-				FROM
-				(                              
-                	SELECT
-                    	"A"."DB_KEY",
-                    	"A"."DB_KEY_DASH",
-                    	"A"."ALERT_ID",
-                    	"A"."ABN",
-                    	"A"."GJAHR",
-                    	"B"."TA_NUM",
-						"B"."TA_STATUS",
-						"B"."TA_NM",
-						"B"."TA_PSTL_ADDRESS_LN_1",
-						"B"."TA_PSTL_ADDRESS_LN_2",
-						"B"."TA_PSTL_SUBURB",
-						"B"."TA_PSTL_STATE",
-						"B"."TA_PSTL_POSTCODE",
-						"B"."TA_PHONE_NUM",
-						"B"."MOBILE_NUM",
-						"B"."FAX_NUM",
-						"B"."EMAIL_ADDR"
-					FROM		:ALERT_INFO 	AS "A"
-					INNER JOIN	:TAXAGENT_DATA 	AS "B"
-					ON			 "A"."ABN"  	= "B"."TA_NUM"
-				)
+		SELECT
+           	"DB_KEY",
+            "DB_KEY_DASH",
+            "ALERT_ID",
+            "ABN",
+            "GJAHR",
+            "TA_NUM",
+            "TA_STATUS",
+            "TA_NM",
+          	"TA_PSTL_ADDRESS_LN_1",
+			"TA_PSTL_ADDRESS_LN_2",
+			"TA_PSTL_SUBURB",
+			"TA_PSTL_STATE",
+			"TA_PSTL_POSTCODE",
+			"TA_PHONE_NUM",
+			"MOBILE_NUM",
+			"FAX_NUM",
+			"EMAIL_ADDR"
+		FROM
+		(                              
+		SELECT
+    		"ALERT"."DB_KEY",
+    		"ALERT"."DB_KEY_DASH",
+    		"ALERT"."ALERT_ID",
+    		"ALERT"."ABN",
+    		"ALERT"."GJAHR",
+			"A"."FINANCIAL_YEAR",
+			"A"."TA_NUM",
+			"B"."TA_STATUS",
+			"B"."TA_NM",
+			"B"."TA_PSTL_ADDRESS_LN_1",
+			"B"."TA_PSTL_ADDRESS_LN_2",
+			"B"."TA_PSTL_SUBURB",
+			"B"."TA_PSTL_STATE",
+			"B"."TA_PSTL_POSTCODE",
+			"B"."TA_PHONE_NUM",
+			"B"."MOBILE_NUM",
+			"B"."FAX_NUM",
+			"B"."EMAIL_ADDR"
+	FROM
+		:ALERT_INFO  AS "ALERT"
+	INNER JOIN
+ 		:GET_TA_FOR_ABN 	AS "A"
+	ON
+		"ALERT"."ABN" = "A"."ABN"
+
+	INNER JOIN
+		"osr.edw.staging.md.ato.synonym::CDS_TAG.DSO.TAXAGENT.active_data" AS "B"
+	 ON 	
+		"A"."TA_NUM" = "B"."TA_NUM"
+	)
 				;
 
 END; 
