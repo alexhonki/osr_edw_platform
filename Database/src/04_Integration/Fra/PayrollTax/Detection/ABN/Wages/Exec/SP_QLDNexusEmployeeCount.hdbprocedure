@@ -15,6 +15,7 @@ BEGIN
 		DECLARE lv_qld_emp_cnt_thld_low	 INTEGER;
 		DECLARE lv_qld_emp_cnt_thld_high INTEGER;
 		DECLARE lv_rfr_max				DECIMAL(3,2);
+		DECLARE lv_rfr_max_low           INTEGER;
 
 		SELECT
 			"RUN_MODE",
@@ -57,7 +58,7 @@ LEFT("EMP_CNT"."ABN",11) AS "ABN",
 LEFT(TO_NVARCHAR("EMP_CNT"."INCM_YR"),4) AS "GJAHR",
 "EMP_CNT"."CNT_EMPLOYEE" AS "CNT_EMPLOYEE",
 "EMP_CNT"."RSDNL_STATE_CD" AS "RSDNL_STATE_CD"
-FROM "osr.edw.staging.td.ato.proxy::CV_EMP_CNT_C" AS "EMP_CNT"
+FROM "osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"() AS "EMP_CNT"
 WHERE EXISTS (
 	SELECT * FROM :lt_data_for_rule AS "WS"
 	WHERE "WS"."ABN" = LEFT("EMP_CNT"."ABN",11) 
@@ -166,9 +167,23 @@ END IF;
 
 IF :lv_mode = 'R' THEN
 
-SELECT MAX("RISK_FACTOR_RATING") INTO lv_rfr_max FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT";
+SELECT MAX("RISK_FACTOR_RATING") 
+INTO lv_rfr_max 
+FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT";
 
+SELECT "LOW" INTO lv_rfr_max_low 
+FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" 
+WHERE "TOP_BAND" = 'X';
 
+lt_rfr = 
+SELECT
+	"LOW",
+	CASE WHEN "TOP_BAND" = 'X' THEN 999999999 
+	ELSE "HIGH" END AS "HIGH",
+	"TOP_BAND",
+	"RISK_FACTOR_RATING"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT"
+;
 
 et_result = 
 SELECT
@@ -176,14 +191,13 @@ SELECT
 "RESULT"."PERIOD_CATEGORY",
 "RESULT"."PERIOD_KEY",
 "RESULT"."GJAHR",
-100*"RFR"."RISK_FACTOR_RATING"/:lv_rfr_max AS "DETECTION_RESULT"
+100 AS "DETECTION_RESULT"
 FROM
 :lt_data_for_rule AS "RESULT",
-:lt_cnt AS "CNT",
-(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" WHERE "TOP_BAND" = 'X') AS "RFR"
+:lt_cnt AS "CNT"
 WHERE "RESULT"."ABN" = "CNT"."ABN"
   AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
-  AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
+  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_rfr_max_low
 UNION
 SELECT
 "RESULT"."ABN",
@@ -199,7 +213,9 @@ WHERE "RESULT"."ABN" = "CNT"."ABN"
   AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
   AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
   AND "CNT"."QLD_CNT_EMPLOYEE" < "RFR"."HIGH"
+  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_rfr_max_low
 ;
+
 
 et_text = 
 SELECT 
