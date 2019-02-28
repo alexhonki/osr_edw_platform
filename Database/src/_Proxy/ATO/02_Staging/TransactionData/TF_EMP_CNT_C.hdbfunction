@@ -12,11 +12,23 @@ BEGIN
 
 RETURN
 SELECT
+"ABN",
+"CNT_EMPLOYEE",
+"RSDNL_STATE_CD",
+"AGG_GROSS",
+"INCM_YR"
+FROM
+(
+	SELECT
 	"ABN",
 	"CNT_EMPLOYEE",
 	"RSDNL_STATE_CD",
 	"AGG_GROSS",
-	"INCM_YR"
-FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data";
+	"INCM_YR",
+	RANK() OVER ( PARTITION BY "ABN", "INCM_YR", "RSDNL_STATE_CD" ORDER BY "NAME" DESC ) AS "RANK"	
+	FROM "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data"
+)
+WHERE "RANK" = 1
+;
 
 END;
