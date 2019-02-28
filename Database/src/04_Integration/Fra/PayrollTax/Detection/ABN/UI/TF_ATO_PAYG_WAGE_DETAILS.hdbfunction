@@ -1,0 +1,86 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_WAGE_DETAILS"(IN IP_ALERT_ID NVARCHAR(20))
+              RETURNS TABLE 
+    	(
+			DB_KEY								VARBINARY(16)	,
+--			DB_KEY_DASH							NVARCHAR(32)	,
+			ALERT_ID							NVARCHAR(20)	,
+			ABN									NVARCHAR(20)	,
+			GJAHR								NVARCHAR(4)		,
+			BUS_STATE							NVARCHAR(3) 	,			
+			INCM_YR 							SMALLINT		,
+			PMT_SMRY_CNT						INTEGER			,
+			TOTL_GRS_AMT						DECIMAL(15,2)	,
+			TOTL_LUMP_AMT						DECIMAL(15,2)	,
+			TOTL_ALWNC_AMT						DECIMAL(15,2)	,
+			RPRTBL_EMPLYR_SUPER_CNTRBN_AMT		DECIMAL(15,2)   ,
+			WAERS								NVARCHAR(5)
+    	)    		
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+ IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN   
+ 
+ RETURN
+		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			"DATA"."BUS_STATE"															    AS "BUS_STATE",
+			"DATA"."INCM_YR"																AS "INCM_YR",
+			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
+			SUM("DATA"."TOTL_GRS_AMT")														AS "TOTL_GRS_AMT",
+			SUM("DATA"."TOTL_LUMP_AMT") 													AS "TOTL_LUMP_AMT",
+			SUM("DATA"."TOTL_ALWNC_AMT")													AS "TOTL_ALWNC_AMT",
+			SUM("DATA"."RPRTBL_EMPLYR_SUPER_CNTRBN_AMT")                                    AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT",
+			'AUD'																			AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		--AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+		GROUP BY 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR",
+			"DATA"."BUS_STATE",
+			"DATA"."INCM_YR"
+		ORDER BY "ALERT"."ABN" ASC ,"DATA"."INCM_YR" ASC
+		;
+		
+	ELSE
+	
+	RETURN
+    		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			"DATA"."BUS_STATE"															    AS "BUS_STATE",
+			"DATA"."INCM_YR"																AS "INCM_YR",
+			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
+			SUM("DATA"."TOTL_GRS_AMT")														AS "TOTL_GRS_AMT",
+			SUM("DATA"."TOTL_LUMP_AMT") 													AS "TOTL_LUMP_AMT",
+			SUM("DATA"."TOTL_ALWNC_AMT")													AS "TOTL_ALWNC_AMT",
+			SUM("DATA"."RPRTBL_EMPLYR_SUPER_CNTRBN_AMT")                                    AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT",
+			'AUD'																			AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		--AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+		GROUP BY 
+			"ALERT"."DB_KEY",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR",
+			"DATA"."BUS_STATE",
+			"DATA"."INCM_YR"
+		ORDER BY "DATA"."INCM_YR" ASC
+		;
+		
+		END IF;
+END;
