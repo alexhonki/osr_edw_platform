@@ -86,6 +86,7 @@ END IF;
 --------------------------END OF ALERT-----------------------
 
 ------------------WCQ DATA-------------------------
+/*
 WCQ_POLICY_NO =
 SELECT DISTINCT 
 	"POLICY_NO",
@@ -140,9 +141,11 @@ WHERE
 ) GROUP BY "ABN","ASSESSMENT_YEAR"
 )
 ;
+*/
 
 -----------------------END OF WCQ-----------------
 ----------------------BAS Data--------------------------
+/*
 BAS_AMT_DATA =
 SELECT	
 		"ABN",
@@ -156,7 +159,7 @@ GROUP BY
 		"ABN","FINANCIAL_YEAR"
 		
 ;
-
+*/
 
 
 TRD_NM =
@@ -207,6 +210,7 @@ FROM :FULL_NAME
 ;
 -----------------------END OF BAS -------------------
 ----------------------ITR Data-----------------------------
+/*
 ITR_AMT_DATA =
 
 SELECT	
@@ -227,8 +231,22 @@ GROUP BY
 		"ACNT_PERD_END_DT",
 		"CNSLDTD_HD_CMPNY"
 ;	
+*/
 
-
+ITR_AMT_DATA = 
+SELECT	
+		"ALERT"."ABN" AS "ABN",
+		"ALERT"."GJAHR" AS "FINANCIAL_YEAR",
+		"ITR"."ACNT_PERD_BG_DT" AS "ACNT_PERD_BG_DT",
+		"ITR"."ACNT_PERD_END_DT" AS "ACNT_PERD_END_DT",
+		"ITR"."CNSLDTD_HD_CMPNY" AS "CNSLDTD_HD_CMPNY"
+FROM 
+"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ITR"
+INNER JOIN
+:ALERT_INFO AS "ALERT"
+ON  "ITR"."ABN" = "ALERT"."ABN"
+AND LEFT(TO_NVARCHAR("ITR"."INCM_YR"),4) = "ALERT"."GJAHR"
+;
 -----------------END OF ITR------------------------------
 
 ----------------------------
@@ -319,17 +337,19 @@ SELECT
 
 ABR_DATA =
 
-SELECT "ABN",
-		"ENT_TYP_CD",
-		MIN("GST_REGN_DT")  AS 	"GST_REGN_DT",
-		MIN("GST_CANCN_DT") AS  "GST_CANCN_DT" 
+SELECT "AGENCY"."ABN" AS "ABN",
+		"AGENCY"."ENT_TYP_CD" AS "ENT_TYP_CD",
+		MIN("AGENCY"."GST_REGN_DT")  AS 	"GST_REGN_DT",
+		MIN("AGENCY"."GST_CANCN_DT") AS  "GST_CANCN_DT" 
 FROM
-	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" 
-WHERE 
-	"ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
+	WHERE EXISTS (
+		SELECT * FROM  :ALERT_INFO AS "ALERT"
+		WHERE "AGENCY"."ABN" = "ALERT"."ABN"
+	)
 GROUP BY 
-	"ABN",
-	"ENT_TYP_CD"
+	"AGENCY"."ABN",
+	"AGENCY"."ENT_TYP_CD"
 ;
 
 --------------END OF ABR-----------
@@ -344,17 +364,19 @@ ASIC_DATA =
 FROM
 (
 	SELECT 
-		"ABN",
-		"ORG_START_DT",
-		"ORG_END_DT",
-		"ORG_STATUS" AS "ASIC_STATUS",
-		TO_DATS("REGN_START_DT") AS "REGN_START_DT",
-		TO_DATS("REGN_END_DT")	 AS "REGN_END_DT",
-		RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN","ORG_END_DT" DESC,"ORG_START_DT" DESC) AS "RANK_1"
+		"ORG"."ABN" AS "ABN",
+		"ORG"."ORG_START_DT" AS "ORG_START_DT",
+		"ORG"."ORG_END_DT" AS "ORG_END_DT",
+		"ORG"."ORG_STATUS" AS "ASIC_STATUS",
+		TO_DATS("ORG"."REGN_START_DT") AS "REGN_START_DT",
+		TO_DATS("ORG"."REGN_END_DT")	 AS "REGN_END_DT",
+		RANK() OVER (PARTITION BY "ORG"."ABN" ORDER BY "ORG"."ABN","ORG"."ORG_END_DT" DESC,"ORG"."ORG_START_DT" DESC) AS "RANK_1"
 	FROM 
-		"osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" 
-	WHERE 
-		"ABN"  IN  (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+		"osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" AS "ORG"
+	WHERE EXISTS (
+		SELECT * FROM  :ALERT_INFO AS "ALERT"
+		WHERE "ORG"."ABN" = "ALERT"."ABN"
+	)
 )
 WHERE "RANK_1" = 1
 ;
@@ -379,6 +401,7 @@ GROUP BY 	"PAYER_ABN",
 ;
 -------------END OF TPAR--------------
 ----------------PAYG-----------
+/*
 PAYG_DATA =
 SELECT 
 	"ABN",
@@ -397,6 +420,7 @@ AND 	"INCM_YR"	IN (SELECT DISTINCT "GJAHR" FROM :ALERT_INFO)
 GROUP BY 	"ABN",
 			"INCM_YR"
 ;
+*/
 -------------------DESBT-------------------------
 
 DESBT_DATA =
@@ -421,12 +445,15 @@ GROUP BY "ABN", "COMMENCEMENT_DATE","TERMINATION_DATE", "NOMINAL_COMPLETION_DATE
 
 BUT0ID =
 SELECT DISTINCT
-	"PARTNER",
-	"TYPE",
-	"IDNUMBER"
-	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data"
+	"BUT0ID"."PARTNER" AS "PARTNER",
+	"BUT0ID"."TYPE" AS "TYPE",
+	"BUT0ID"."IDNUMBER" AS "IDNUMBER"
+	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BUT0ID"
 WHERE "TYPE" = 'ZABN'
-AND   "IDNUMBER" IN (SELECT DISTINCT "ABN" FROM :ALERT_INFO)
+AND EXISTS (
+	SELECT * FROM :ALERT_INFO AS "ALERT"
+	WHERE "BUT0ID"."IDNUMBER" = "ALERT"."ABN"
+)
 ;
 
 
@@ -658,17 +685,20 @@ FROM
 	SELECT
 		"A"."DB_KEY",
 		"A"."ALERT_ID",
-		"A"."ABN" ,
+		"A"."ABN" AS "ABN",
 		"A"."GJAHR",
 		
-		"B"."TOTL_PMT_FOR_WRK_AMT"  AS "ATO_BAS_WAGES",
+		--"B"."TOTL_PMT_FOR_WRK_AMT"  AS "ATO_BAS_WAGES",
+		"ABN_WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT" AS	"ATO_BAS_WAGES",
 		
 		"C"."ACNT_PERD_BG_DT",
 		"C"."ACNT_PERD_END_DT",
 		"C"."CNSLDTD_HD_CMPNY",
-		"C"."SALARY_WAGES"	AS 	"ATO_ITR_WAGES",
+		--"C"."SALARY_WAGES"	AS 	"ATO_ITR_WAGES",
+		"ABN_WAGES"."ATO_ITR_SALARY_WAGES" AS	"ATO_ITR_WAGES",
 		
-		"D"."ACT_WAGES"		AS	"WCQ_ACT_WAGES",
+		--"D"."ACT_WAGES"		AS	"WCQ_ACT_WAGES",
+		"ABN_WAGES"."WCQ_ACT_WAGES" AS	"WCQ_ACT_WAGES",
 		
 		"E"."CLNT_TYP",
 		"E"."ANZSIC_CD",
@@ -685,7 +715,8 @@ FROM
 	    "H"."TPAR_WAGE_GT",
 	    
 	    "I"."COUNT_APP_TRA",
-	    "J"."TOTL_GRS_AMT" AS "ATO_PAYG_WAGES",
+	    --"J"."TOTL_GRS_AMT" AS "ATO_PAYG_WAGES",
+	    "ABN_WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT" AS "ATO_PAYG_WAGES",
 	    
 	    "K"."PRT_REG_DT",
 		"K"."PRT_END_DT",
@@ -699,28 +730,28 @@ FROM
 FROM 
 
 		:ALERT_INFO AS "A"
-LEFT OUTER JOIN
+/*LEFT OUTER JOIN
 
 --BAS DATA
 		:BAS_AMT_DATA  AS "B"
 ON
 		"A"."ABN" = "B"."ABN"
 	AND "A"."GJAHR" = "B"."FINANCIAL_YEAR"	
-
+*/
 LEFT OUTER JOIN
 --ITR Data
 		:ITR_AMT_DATA AS "C"
 ON
 		"A"."ABN" = "C"."ABN"
 	AND "A"."GJAHR" = "C"."FINANCIAL_YEAR"	
-
+/*
 LEFT OUTER JOIN		
 --WCQ Data
 		:WCQ_AMT_DATA  AS "D"
 ON
 		"A"."ABN" = "D"."ABN"
 	AND "A"."GJAHR" = "D"."FINANCIAL_YEAR"		
-
+*/
 LEFT OUTER JOIN
 --IND Code
 		:IND_CODE_GRP AS "E"
@@ -751,13 +782,13 @@ LEFT OUTER JOIN
 ON
 		"A"."ABN" = "I"."ABN"
 
-LEFT OUTER JOIN
+/*LEFT OUTER JOIN
 --PAYG Data
 	:PAYG_DATA AS "J"
 ON
 		"A"."ABN"			 = "J"."ABN"
 	AND "A"."GJAHR" = "J"."FINANCIAL_YEAR"	
-	
+*/
 
 LEFT OUTER JOIN
 --RMS Data
@@ -772,7 +803,15 @@ LEFT OUTER JOIN
 ON
 		"A"."ABN"	= "L"."ABN"
 	AND "A"."GJAHR" = "L"."FINANCIAL_YEAR"	
+	
+LEFT OUTER JOIN
+(SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) WHERE "PERIOD_CATEGORY" = 'PT-A')  AS "ABN_WAGES"
+	 ON	"A"."ABN"	= "ABN_WAGES"."ABN"
+	AND "A"."GJAHR" = "ABN_WAGES"."GJAHR"	
 )	
+
+
+	
 ;
 ---------------------------------------------------
 RETURN
