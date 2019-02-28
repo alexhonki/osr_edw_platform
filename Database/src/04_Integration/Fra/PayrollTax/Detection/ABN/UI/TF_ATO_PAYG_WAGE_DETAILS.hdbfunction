@@ -2,12 +2,12 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_WAGE_DETAILS"(IN IP_AL
               RETURNS TABLE 
     	(
 			DB_KEY								VARBINARY(16)	,
---			DB_KEY_DASH							NVARCHAR(32)	,
+			DB_KEY_DASH							NVARCHAR(36)    ,
 			ALERT_ID							NVARCHAR(20)	,
 			ABN									NVARCHAR(20)	,
 			GJAHR								NVARCHAR(4)		,
 			BUS_STATE							NVARCHAR(3) 	,			
-			INCM_YR 							SMALLINT		,
+			INCM_YR 							NVARCHAR(4)		,
 			PMT_SMRY_CNT						INTEGER			,
 			TOTL_GRS_AMT						DECIMAL(15,2)	,
 			TOTL_LUMP_AMT						DECIMAL(15,2)	,
@@ -26,11 +26,12 @@ BEGIN
  RETURN
 		SELECT 
 			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
 			"ALERT"."ALERT_ID",
 			"ALERT"."ABN"																	AS "ABN",
 			"ALERT"."GJAHR" 																AS "GJAHR", 
 			"DATA"."BUS_STATE"															    AS "BUS_STATE",
-			"DATA"."INCM_YR"																AS "INCM_YR",
+			TO_NVARCHAR("DATA"."INCM_YR")													AS "INCM_YR",
 			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
 			SUM("DATA"."TOTL_GRS_AMT")														AS "TOTL_GRS_AMT",
 			SUM("DATA"."TOTL_LUMP_AMT") 													AS "TOTL_LUMP_AMT",
@@ -43,6 +44,7 @@ BEGIN
 		--AND 		TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
 		GROUP BY 
 			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
 			"ALERT"."ALERT_ID",
 			"ALERT"."ABN",
 			"ALERT"."GJAHR",
@@ -56,11 +58,12 @@ BEGIN
 	RETURN
     		SELECT 
 			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
 			"ALERT"."ALERT_ID",
 			"ALERT"."ABN"																	AS "ABN",
 			"ALERT"."GJAHR" 																AS "GJAHR", 
 			"DATA"."BUS_STATE"															    AS "BUS_STATE",
-			"DATA"."INCM_YR"																AS "INCM_YR",
+			TO_NVARCHAR("DATA"."INCM_YR")													AS "INCM_YR",
 			SUM("DATA"."PMT_SMRY_CNT")														AS "PMT_SMRY_CNT",
 			SUM("DATA"."TOTL_GRS_AMT")														AS "TOTL_GRS_AMT",
 			SUM("DATA"."TOTL_LUMP_AMT") 													AS "TOTL_LUMP_AMT",
@@ -74,6 +77,7 @@ BEGIN
 		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
 		GROUP BY 
 			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
 			"ALERT"."ALERT_ID",
 			"ALERT"."ABN",
 			"ALERT"."GJAHR",
