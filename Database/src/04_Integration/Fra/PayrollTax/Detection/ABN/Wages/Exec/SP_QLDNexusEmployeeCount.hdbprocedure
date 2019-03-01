@@ -175,29 +175,34 @@ SELECT "LOW" INTO lv_rfr_max_low
 FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" 
 WHERE "TOP_BAND" = 'X';
 
-lt_rfr = 
+lt_cnt_for_check = 
 SELECT
-	"LOW",
-	CASE WHEN "TOP_BAND" = 'X' THEN 999999999 
-	ELSE "HIGH" END AS "HIGH",
-	"TOP_BAND",
-	"RISK_FACTOR_RATING"
-FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT"
+"RESULT"."ABN" AS "ABN",
+"RESULT"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"RESULT"."PERIOD_KEY" AS "PERIOD_KEY",
+"RESULT"."GJAHR" AS "GJAHR",
+"CNT"."QLD_CNT_EMPLOYEE" AS "QLD_CNT_EMPLOYEE"
+FROM
+:lt_data_for_rule AS "RESULT"
+INNER JOIN
+:lt_cnt AS "CNT"
+ON  "RESULT"."ABN" = "CNT"."ABN"
+AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
 ;
 
+SELECT * FROM :lt_cnt_for_check;
+
 et_result = 
+
 SELECT
 "RESULT"."ABN",
 "RESULT"."PERIOD_CATEGORY",
 "RESULT"."PERIOD_KEY",
 "RESULT"."GJAHR",
 100 AS "DETECTION_RESULT"
-FROM
-:lt_data_for_rule AS "RESULT",
-:lt_cnt AS "CNT"
-WHERE "RESULT"."ABN" = "CNT"."ABN"
-  AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
-  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_rfr_max_low
+FROM 
+:lt_cnt_for_check AS "RESULT"
+WHERE "RESULT"."QLD_CNT_EMPLOYEE" >= :lv_rfr_max_low
 UNION
 SELECT
 "RESULT"."ABN",
@@ -205,15 +210,11 @@ SELECT
 "RESULT"."PERIOD_KEY",
 "RESULT"."GJAHR",
 100*"RFR"."RISK_FACTOR_RATING"/:lv_rfr_max AS "DETECTION_RESULT"
-FROM
-:lt_data_for_rule AS "RESULT",
-:lt_cnt AS "CNT",
+FROM :lt_cnt_for_check AS "RESULT",
 (SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" WHERE "TOP_BAND" <> 'X') AS "RFR"
-WHERE "RESULT"."ABN" = "CNT"."ABN"
-  AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
-  AND "CNT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
-  AND "CNT"."QLD_CNT_EMPLOYEE" < "RFR"."HIGH"
-  AND "CNT"."QLD_CNT_EMPLOYEE" < :lv_rfr_max_low
+WHERE "RESULT"."QLD_CNT_EMPLOYEE" >= "RFR"."LOW"
+  AND "RESULT"."QLD_CNT_EMPLOYEE" < "RFR"."HIGH"
+  AND "RESULT"."QLD_CNT_EMPLOYEE" < :lv_rfr_max_low
 ;
 
 
