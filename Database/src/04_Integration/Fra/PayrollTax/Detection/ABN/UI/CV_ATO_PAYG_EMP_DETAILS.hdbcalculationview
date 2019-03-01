@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_PAYG_EMP_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_PAYG_EMP_DETAILS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_EMP_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_EMP_DETAILS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_EMP_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_EMP_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_EMP_DETAILS">
+  <attributes>
+    <attribute id="NON_IDV_NM_LN_2" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NON_IDV_NM_LN_2"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="NON_IDV_NM_LN_2"/>
+    </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="NON_IDV_NM_LN_1" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NON_IDV_NM_LN_1"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_EMP_DETAILS" columnName="NON_IDV_NM_LN_1"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

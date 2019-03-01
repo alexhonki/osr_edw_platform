@@ -526,8 +526,9 @@ ON
 )
 ;	
 
-
+/*
 PRT_DATA =
+
 SELECT DISTINCT 
 	"ABN",
     "OBJID",
@@ -567,7 +568,7 @@ ON
 )
 ) WHERE "RANK_1" = 1
 ;
-
+*/
 CASE_DATA =
 SELECT
 	"ABN",
@@ -614,10 +615,10 @@ RMS_DATA_OUT =
 		"A"."GJAHR",
 
 		"B"."PARTNER" AS "PRT_BP_NO",
-		"B"."PRT_REG_DT",
-		"B"."PRT_END_DT",
-		"B"."PRT_START_DT",
-		"B"."PRT_GRP_STATUS" ,
+		'' AS "PRT_REG_DT",
+		'' AS "PRT_END_DT",
+		'' AS "PRT_START_DT",
+		'' AS "PRT_GRP_STATUS" ,
 		
 		CASE WHEN 	"A"."ABN" = "C"."ABN" THEN 'Yes' ELSE 'No' END AS "IS_A_TRUST",
 		
@@ -631,7 +632,7 @@ FROM
 LEFT OUTER JOIN
 
 --PRT DATA
-		:PRT_DATA AS "B"
+		:RMS_PTX_DATA AS "B"
 ON
 		"A"."ABN" = "B"."ABN"
 		

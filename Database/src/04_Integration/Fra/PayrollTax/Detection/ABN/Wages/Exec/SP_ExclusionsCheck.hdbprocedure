@@ -62,31 +62,20 @@ SELECT DISTINCT
    
 ;
  
+PT_REG_FACTS =
 
-
- 
-  PT_REG_FACTS =
- SELECT * FROM
-(
-SELECT 
-	"BPARTNER" AS "PARTNER",
-	"PRT_LIAB_DATE",
-	"QLD_LIAB_DATE",
-	"VALID_FROM",
-	"VALID_TO",
-	RANK() OVER (PARTITION BY "BPARTNER" ORDER BY "BPARTNER" ,"VALID_TO" DESC) AS "RANK_1"
+SELECT DISTINCT 
+	"BPARTNER" AS "PARTNER"
 FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_REG_FACTS"
-
-)
-WHERE "RANK_1" = 1
-AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM :step1)
-AND to_dats("VALID_TO") >= to_dats(:lv_role_dt );
+WHERE "BPARTNER" IN (SELECT DISTINCT "PARTNER" FROM :step1)
+AND to_dats("VALID_TO") >= to_dats(:lv_role_dt )
+;
 
 PT_DATA =
 SELECT DISTINCT 
    "S1"."ABN"      AS "ABN",
    "S1"."PARTNER"  AS "PARTNER",
-    'PT'           AS "PT_ROLE"
+   'PT'            AS "PT_ROLE"
 FROM 
 	:step1 AS "S1" 
 INNER JOIN
@@ -106,9 +95,13 @@ SELECT  DISTINCT
 	"PARTNER",
 	"PARTNERACCTYP"
 FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data"
-WHERE "PSOBKEY" IN (SELECT "OBJID" FROM "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01"()
+WHERE "PSOBKEY" IN (SELECT DISTINCT "OBJID" FROM "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01"()
 WHERE FACT_SET = 'ZIND'
-AND to_dats(FACT_CAT_SEQ_82) >= to_dats(:lv_role_dt));
+AND to_dats(FACT_CAT_SEQ_82) >= to_dats(:lv_role_dt)
+--AND  "FACT_CAT_SEQ_10" IN (SELECT DISTINCT "PARTNER" FROM :step1)
+)
+AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM :step1)
+;
 
 ID_DATA =
 SELECT DISTINCT 
@@ -141,8 +134,9 @@ SELECT
 	to_dats(LEFT("CREATE_TIME",8)) AS "CREATE_DATE"
 FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
 WHERE "CASE_CATEGORY" = 'PRT'
+AND to_dats(LEFT("CREATE_TIME",8)) >= to_dats(:lv_pt_case_dt) 
 )
-WHERE to_dats(LEFT("CREATE_DATE",8)) >= to_dats(:lv_pt_case_dt) 
+
 ;
 
 ---------------------------------------------------------------
