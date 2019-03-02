@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_DESBT_APRNTC_TRAINEE_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_DESBT_APRNTC_TRAINEE_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_DESBT_APRNTC_TRAINEE_DETAIL"/>
-<localVariables/>
-<variableMappings/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL</resourceUri>
@@ -15,63 +28,67 @@
       <descriptions defaultDescription="DB_KEY"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="GJAHR"/>
     </attribute>
-    <attribute id="TRAINEE_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TRAINEE_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TRAINEE_ID"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="TRAINEE_ID"/>
     </attribute>
-    <attribute id="TRAINING_AGREEMENT_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TRAINING_AGREEMENT_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TRAINING_AGREEMENT_TYPE"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="TRAINING_AGREEMENT_TYPE"/>
     </attribute>
-    <attribute id="STATUS_DESC" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="STATUS_DESC" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATUS_DESC"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="STATUS_DESC"/>
     </attribute>
-    <attribute id="COMMENCEMENT_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="COMMENCEMENT_DATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="COMMENCEMENT_DATE"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="COMMENCEMENT_DATE"/>
     </attribute>
-    <attribute id="TERMINATION_DATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TERMINATION_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TERMINATION_DATE"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="TERMINATION_DATE"/>
     </attribute>
-    <attribute id="CONTRACT_MODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CONTRACT_MODE" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CONTRACT_MODE"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="CONTRACT_MODE"/>
     </attribute>
-    <attribute id="GIVEN_NAME" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GIVEN_NAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GIVEN_NAME"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="GIVEN_NAME"/>
     </attribute>
-    <attribute id="MIDDLE_NAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MIDDLE_NAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MIDDLE_NAME"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="MIDDLE_NAME"/>
     </attribute>
-    <attribute id="SURNAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SURNAME" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SURNAME"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="SURNAME"/>
     </attribute>
-    <attribute id="OCCUPATION_NAME" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="OCCUPATION_NAME" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OCCUPATION_NAME"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="OCCUPATION_NAME"/>
     </attribute>
-    <attribute id="NOMINAL_COMPLETION_DATE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="NOMINAL_COMPLETION_DATE" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOMINAL_COMPLETION_DATE"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="NOMINAL_COMPLETION_DATE"/>
     </attribute>
-    <attribute id="DATE_OF_BIRTH" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DATE_OF_BIRTH" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DATE_OF_BIRTH"/>
       <keyMapping columnObjectName="TF_DESBT_APRNTC_TRAINEE_DETAIL" columnName="DATE_OF_BIRTH"/>
     </attribute>

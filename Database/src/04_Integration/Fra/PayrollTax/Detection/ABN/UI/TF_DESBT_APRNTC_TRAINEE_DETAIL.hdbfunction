@@ -2,6 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"(IN
       RETURNS TABLE
 		(
 			DB_KEY                    VARBINARY(16),
+			DB_KEY_DASH				  NVARCHAR(32),
 			ALERT_ID                  NVARCHAR(20),
 			ABN                       NVARCHAR(20),
 			GJAHR                     NVARCHAR(4),
@@ -81,6 +82,7 @@ DESBT_DATA =
 RETURN
 				SELECT
                    "DB_KEY",
+                   REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH",                   
                    "ALERT_ID",
                    "ABN" ,
                    "GJAHR",
