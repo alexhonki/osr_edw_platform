@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_VIC_RELATIONSHIPS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_VIC_RELATIONSHIPS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_RELATIONSHIPS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_RELATIONSHIPS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_RELATIONSHIPS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_RELATIONSHIPS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_RELATIONSHIPS">
+  <attributes>
+    <attribute id="DB_KEY_DASH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="CLIENT_NO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT_NO"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="CLIENT_NO"/>
+    </attribute>
+    <attribute id="LEGAL_NAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LEGAL_NAME"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="LEGAL_NAME"/>
+    </attribute>
+    <attribute id="ACN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="ACN"/>
+    </attribute>
+    <attribute id="GROUP_START_DATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_START_DATE"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="GROUP_START_DATE"/>
+    </attribute>
+    <attribute id="GROUP_END_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_END_DATE"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="GROUP_END_DATE"/>
+    </attribute>
+    <attribute id="DB_KEY" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_VIC_RELATIONSHIPS" columnName="DB_KEY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

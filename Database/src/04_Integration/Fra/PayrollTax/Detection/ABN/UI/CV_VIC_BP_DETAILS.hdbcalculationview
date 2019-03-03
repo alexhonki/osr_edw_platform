@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_VIC_BP_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_VIC_BP_DETAILS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_BP_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_BP_DETAILS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_BP_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_BP_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_BP_DETAILS">
+  <attributes>
+    <attribute id="ACN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="ACN"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ANZSIC_CODE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_CODE"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="ANZSIC_CODE"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ANZSIC_DESCRIPTION" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_DESCRIPTION"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="ANZSIC_DESCRIPTION"/>
+    </attribute>
+    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="VIC_PERIOD_START_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIC_PERIOD_START_DATE"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="VIC_PERIOD_START_DATE"/>
+    </attribute>
+    <attribute id="VIC_PERIOD_END_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VIC_PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="VIC_PERIOD_END_DATE"/>
+    </attribute>
+    <attribute id="INT_PERIOD_START_DATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INT_PERIOD_START_DATE"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="INT_PERIOD_START_DATE"/>
+    </attribute>
+    <attribute id="INT_PERIOD_END_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INT_PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="INT_PERIOD_END_DATE"/>
+    </attribute>
+    <attribute id="GJAHR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="CLIENT_NO" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT_NO"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="CLIENT_NO"/>
+    </attribute>
+    <attribute id="LEGAL_NAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LEGAL_NAME"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="LEGAL_NAME"/>
+    </attribute>
+    <attribute id="DB_KEY" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_VIC_BP_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
