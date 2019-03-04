@@ -72,6 +72,7 @@ FROM
 	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()
 WHERE "TA_NUM" <> '0'
 AND "ABN" IN (SELECT  DISTINCT "ABN" FROM :ALERT_INFO)
+AND "BAS_QTR" = 'FY'
 ) 
 WHERE "RANK_1" = 1 
 ORDER BY "ABN"
