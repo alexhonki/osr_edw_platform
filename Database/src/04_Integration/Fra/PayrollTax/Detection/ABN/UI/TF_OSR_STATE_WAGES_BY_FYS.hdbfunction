@@ -2,7 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS"(IN IP_A
 RETURNS TABLE
 (
 DB_KEY					VARBINARY(16),
---DB_KEY_DASH				NVARCHAR(32),
+DB_KEY_DASH				NVARCHAR(32),
 ALERT_ID				NVARCHAR(20),
 ABN						NVARCHAR(20),
 GJAHR					NVARCHAR(4),
@@ -178,6 +178,7 @@ GROUP BY
 RETURN
 SELECT 
 "DB_KEY",
+REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH",
 "ALERT_ID",
 "ABN",
 "GJAHR",
@@ -213,6 +214,7 @@ ON "WAGES_KEYS"."ALERT_ID" = "ALERT"."ALERT_ID"
 UNION
 SELECT 
 "DB_KEY",
+REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH",
 "ALERT_ID",
 "ABN",
 "GJAHR",
