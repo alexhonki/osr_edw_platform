@@ -127,7 +127,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_SORT_ORDER" source="MEASURE_SORT_ORDER"/>
     </input>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="inner">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
     <viewAttributes>
       <viewAttribute id="DB_KEY">
         <descriptions defaultDescription="DB_KEY"/>
@@ -193,7 +193,7 @@
     </input>
     <input node="Projection_Text">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_NAME" source="MEASURE_NAME"/>
     </input>
     <joinAttribute name="MEASURE_NAME"/>
   </calculationView>
