@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_OSR_STATE_IJR_VIC_WAGES_BY_FYS" enforceSqlExecution="false" cacheInvalidationPeriod="NONE" outputViewType="Projection" schemaVersion="3.0" dataCategory="DEFAULT" applyPrivilegeType="NONE">
+<descriptions defaultDescription="CV_OSR_STATE_IJR_VIC_WAGES_BY_FYS"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties mandatory="false" length="20" datatype="NVARCHAR">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS" value="VIC">
+    <targetVariable name="IP_STATE_CODE" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_T" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_T</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_O" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_O</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ROW3_VALUE">
+        <descriptions defaultDescription="ROW3_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="ROW4_VALUE">
+        <descriptions defaultDescription="ROW4_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_NAME">
+        <descriptions defaultDescription="ROW_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ROW0_VALUE">
+        <descriptions defaultDescription="ROW0_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW1_VALUE">
+        <descriptions defaultDescription="ROW1_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW2_VALUE">
+        <descriptions defaultDescription="ROW2_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_BY_FYS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW3_VALUE" source="ROW3_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW4_VALUE" source="ROW4_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW0_VALUE" source="ROW0_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW1_VALUE" source="ROW1_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW2_VALUE" source="ROW2_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Text" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ROW_NAME">
+        <descriptions defaultDescription="ROW_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_TEXT">
+        <descriptions defaultDescription="ROW_TEXT"/>
+      </viewAttribute>
+    
+      <viewAttribute id="LANGU">
+        <descriptions defaultDescription="LANGU"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_T">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_TEXT" source="ROW_TEXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGU" source="LANGU"/>
+    </input>
+    <filter>&quot;LANGU&quot; = 'E'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Sort">
+    <viewAttributes>
+      <viewAttribute id="ROW_NAME">
+        <descriptions defaultDescription="ROW_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_SORT_ODER">
+        <descriptions defaultDescription="ROW_SORT_ODER"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_O">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_SORT_ODER" source="ROW_SORT_ODER"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ROW3_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW3_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="ROW4_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW4_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_NAME">
+        <descriptions defaultDescription="ROW_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ROW0_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW0_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW1_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW1_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW2_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW2_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_TEXT">
+        <descriptions defaultDescription="ROW_TEXT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW3_VALUE" source="ROW3_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW4_VALUE" source="ROW4_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW0_VALUE" source="ROW0_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW1_VALUE" source="ROW1_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW2_VALUE" source="ROW2_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+    </input>
+    <input node="Projection_Text">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_TEXT" source="ROW_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+    </input>
+    <joinAttribute name="ROW_NAME"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ROW3_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW3_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="ROW4_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW4_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_NAME">
+        <descriptions defaultDescription="ROW_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ROW0_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW0_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW1_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW1_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ROW2_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="ROW2_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_TEXT">
+        <descriptions defaultDescription="ROW_TEXT"/>
+      </viewAttribute>
+      <viewAttribute id="ROW_SORT_ODER" aggregationType="sum">
+        <descriptions defaultDescription="ROW_SORT_ODER"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW3_VALUE" source="ROW3_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW4_VALUE" source="ROW4_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW0_VALUE" source="ROW0_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW1_VALUE" source="ROW1_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW2_VALUE" source="ROW2_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_TEXT" source="ROW_TEXT"/>
+    </input>
+    <input node="Projection_Sort">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_SORT_ODER" source="ROW_SORT_ODER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROW_NAME" source="ROW_NAME"/>
+    </input>
+    <joinAttribute name="ROW_NAME"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_2">
+  <attributes>
+    <attribute id="DB_KEY_DASH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Join_2" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Join_2" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Join_2" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_2" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Join_2" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="ROW_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW_NAME"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW_NAME"/>
+    </attribute>
+    <attribute id="ROW_TEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW_TEXT"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW_TEXT"/>
+    </attribute>
+    <attribute id="ROW_SORT_ODER" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW_SORT_ODER"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW_SORT_ODER"/>
+    </attribute>
+    <attribute id="ROW0_VALUE" order="9" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW0_VALUE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW0_VALUE"/>
+    </attribute>
+    <attribute id="ROW1_VALUE" order="10" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW1_VALUE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW1_VALUE"/>
+    </attribute>
+    <attribute id="ROW2_VALUE" order="11" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW2_VALUE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW2_VALUE"/>
+    </attribute>
+    <attribute id="ROW3_VALUE" order="12" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW3_VALUE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW3_VALUE"/>
+    </attribute>
+    <attribute id="ROW4_VALUE" order="13" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW4_VALUE"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROW4_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape modelObjectNameSpace="MeasureGroup" modelObjectName="Output" expanded="true">
+      <upperLeftCorner y="112" x="328"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape modelObjectNameSpace="CalculationView" modelObjectName="Projection_1" expanded="true">
+      <upperLeftCorner y="496" x="92"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectNameSpace="CalculationView" modelObjectName="Projection_Text" expanded="true">
+      <upperLeftCorner y="496" x="302"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectNameSpace="CalculationView" modelObjectName="Projection_Sort" expanded="true">
+      <upperLeftCorner y="356" x="395"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectNameSpace="CalculationView" modelObjectName="Join_1" expanded="true">
+      <upperLeftCorner y="356" x="118"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_Text" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectNameSpace="CalculationView" modelObjectName="Join_2" expanded="true">
+      <upperLeftCorner y="217" x="328"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectNameSpace="Join_2" modelObjectName="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner y="30" x="20"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectNameSpace="Join_2" modelObjectName="Projection_Sort" modelObjectType="JoinNodeInput">
+      <upperLeftCorner y="30" x="320"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
