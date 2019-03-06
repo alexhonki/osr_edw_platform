@@ -11,12 +11,11 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionsCheck"
    READS SQL DATA AS
 BEGIN
 
-DECLARE lv_role_dt                    VARCHAR(8)  ;
+DECLARE lv_role_dt                    VARCHAR(8) ;
 DECLARE lv_pt_role                    NVARCHAR(1) ;
 DECLARE lv_id_role                    NVARCHAR(1) ;
-DECLARE lv_pt_case_dt                 VARCHAR(8)  ;
+DECLARE lv_pt_case_dt                 VARCHAR(8) ;
 DECLARE lv_pt_case                    NVARCHAR(1) ;
-DECLARE lv_pt_exm_case				  NVARCHAR(1) ;
 DECLARE lv_flag_abr_acnc              NVARCHAR(1) ;
 DECLARE lv_flag_asic_regd             NVARCHAR(1) ;
 DECLARE lv_flag_sup_gov_exmpt_anzsic  NVARCHAR(1) ;
@@ -30,7 +29,6 @@ SELECT
 "ID_ROLE",
 "PT_CASE_DATE",
 "PT_CASE",
-"FLAG_EXM_CASE",
 "FLAG_ABR_ACNC", 
 "FLAG_ASIC_REGD", 
 "FLAG_SUP_GOV_EXMPT_ANZSIC"
@@ -40,7 +38,6 @@ lv_pt_role,
 lv_id_role,
 lv_pt_case_dt,
 lv_pt_case,
-lv_pt_exm_case,
 lv_flag_abr_acnc,
 lv_flag_asic_regd,
 lv_flag_sup_gov_exmpt_anzsic
@@ -91,6 +88,21 @@ ON
 ---------------------------------------------------------
 -------------------Identify the ID Role -----------------
 
+/*
+LT_ID_CO =
+
+SELECT  DISTINCT 
+	"PSOBKEY",
+	"PARTNER",
+	"PARTNERACCTYP"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data"
+WHERE "PSOBKEY" IN (SELECT DISTINCT "OBJID" FROM "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_RG01"()
+WHERE FACT_SET = 'ZIND'
+AND to_dats(FACT_CAT_SEQ_82) >= to_dats(:lv_role_dt)
+--AND  "FACT_CAT_SEQ_10" IN (SELECT DISTINCT "PARTNER" FROM :step1)
+)
+AND "PARTNER" IN (SELECT DISTINCT "PARTNER" FROM :step1)
+*/
 LT_ID_CO =
 SELECT 
 DISTINCT
@@ -152,23 +164,6 @@ AND "ABN" IN (SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE)
 
 ;
 
-PT_EXM_CASE =
-SELECT DISTINCT "ABN" FROM 
-(
-SELECT
-	"ABN",
-	"PARTNER",
-	"CASE_OUTCOME",
-	RANK() OVER (PARTITION BY "ABN", "PARTNER" ORDER BY "ABN", "PARTNER" DESC, "CASE_ID" DESC) AS "RANK_1"
-FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
-WHERE "CASE_CATEGORY" = 'PRT'
-AND   "CASE_TYPE"     = 'ZEXM'
-AND   "REASON_CODE"	  = 'ALLD'
-AND   "ABN" IN (SELECT DISTINCT "ABN" FROM :IT_DATA_FOR_RULE)
-)
-WHERE "RANK_1" = 1
-
-;
 ---------------------------------------------------------------
 
 
@@ -178,14 +173,16 @@ SELECT DISTINCT
 		"A"."PERIOD_CATEGORY",
 		"A"."PERIOD_KEY",
 		"A"."GJAHR",
-		
+--		"A"."ANZSIC_CD",
+--		"A"."IND_CODE_GRP",
+--		"A"."IND_DIVISION",
 		CASE WHEN :lv_flag_abr_acnc = 'Y'  AND "A"."ABR_ACNC_FLAG" = 'Y' THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
+--		"A"."ASIC_ORG_STATUS",
 		CASE WHEN :lv_flag_asic_regd = 'Y' AND "A"."ASIC_REGD" = 'N'    THEN 'N' ELSE 'Y' END AS "ASIC_REGD",
 		CASE WHEN :lv_flag_sup_gov_exmpt_anzsic = 'Y' AND "A"."SUP_GOV_EXMPT_ANZSIC" = 'Y' THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC",
-		CASE WHEN :lv_pt_role = 'Y' 	AND "B"."PT_ROLE" = 'PT'   THEN 'Y' ELSE 'N' END AS "PT_ROLE",
-		CASE WHEN :lv_id_role = 'Y' 	AND "C"."ID_ROLE" = 'ID'   THEN 'Y' ELSE 'N' END AS "ID_ROLE",
-		CASE WHEN :lv_pt_case = 'Y' 	AND "D"."ABN" IS NOT NULL  THEN 'Y' ELSE 'N' END AS "PT_CASE",
-		CASE WHEN :lv_pt_exm_case = 'Y'	AND "E"."ABN" IS NOT NULL  THEN 'Y' ELSE 'N' END AS "FLAG_EXM_CASE"
+		CASE WHEN :lv_pt_role = 'Y' AND "B"."PT_ROLE" = 'PT'  THEN 'Y' ELSE 'N' END AS "PT_ROLE",
+		CASE WHEN :lv_id_role = 'Y' AND "C"."ID_ROLE" = 'ID'  THEN 'Y' ELSE 'N' END AS "ID_ROLE",
+		CASE WHEN :lv_pt_case = 'Y' AND "D"."ABN" IS NOT NULL THEN 'Y' ELSE 'N' END AS "PT_CASE"
 FROM 
 		:IT_DATA_FOR_RULE AS "A" 
 	LEFT OUTER JOIN
@@ -199,11 +196,7 @@ FROM
     LEFT OUTER JOIN
 		:PT_CASE  AS "D" 
 	ON
-		"A"."ABN" = "D"."ABN"	
-	LEFT OUTER JOIN
-		:PT_EXM_CASE  AS "E" 
-	ON
-		"A"."ABN" = "E"."ABN"	
+		"A"."ABN" = "D"."ABN"		
 	
 ;
 
@@ -227,7 +220,6 @@ OR	"PT_CASE"					= 'Y'
 OR	"ABR_ACNC_FLAG" 			= 'Y'
 OR	"ASIC_REGD"    			    = 'N'
 OR	"SUP_GOV_EXMPT_ANZSIC"      = 'Y'
-OR  "FLAG_EXM_CASE"				= 'Y'
    ;
 
 ------------------------------------------------
@@ -253,7 +245,7 @@ SELECT DISTINCT
 		"A"."ABR_ACNC_FLAG",
 		"A"."ASIC_REGD",
 		"A"."SUP_GOV_EXMPT_ANZSIC" ,
-		CASE WHEN ("B"."PT_ROLE" = 'PT' OR 	"C"."ID_ROLE" = 'ID' OR  "D"."ABN" IS NOT NULL OR "E"."ABN" IS NOT NULL) THEN 'Y' ELSE 'N' END AS "PT_ID_CASE"
+		CASE WHEN ("B"."PT_ROLE" = 'PT' OR 	"C"."ID_ROLE" = 'ID' OR  "D"."ABN" IS NOT NULL) THEN 'Y' ELSE 'N' END AS "PT_ID_CASE"
 FROM 
 		:IT_DATA_FOR_RULE AS "A" 
 	LEFT OUTER JOIN
@@ -268,10 +260,6 @@ FROM
 		:PT_CASE  AS "D" 
 	ON
 		"A"."ABN" = "D"."ABN"	
-	LEFT OUTER JOIN
-		:PT_EXM_CASE  AS "E" 
-	ON
-		"A"."ABN" = "E"."ABN"	
 WHERE "A"."ABN" IN ( SELECT DISTINCT "ABN" FROM :ET_RESULT)		
 )	
 ;
