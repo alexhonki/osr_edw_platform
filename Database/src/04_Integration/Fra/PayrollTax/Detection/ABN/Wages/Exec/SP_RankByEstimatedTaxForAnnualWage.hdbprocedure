@@ -269,7 +269,7 @@ AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
 
 SELECT "LOW" INTO lv_rfr_max_low 
-FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_QLD_EMPLOYEE_CNT" 
+FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" 
 WHERE "TOP_BAND" = 'X';
 
 
@@ -324,7 +324,7 @@ SELECT
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
 '017' AS "MSGNO",
-"RISK_AMOUNT" AS "MSGV1",
+TO_DECIMAL("RISK_AMOUNT",15,2) AS "MSGV1",
 "CURRENCY" AS "MSGV2",
 "RISK_FACTOR_RATING" AS "MSGV3",
 '' AS "MSGV4",
@@ -360,7 +360,7 @@ SELECT
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
 '017' AS "MSGNO",
-"RISK_AMOUNT" AS "MSGV1",
+TO_DECIMAL("RISK_AMOUNT",15,2) AS "MSGV1",
 "CURRENCY" AS "MSGV2",
 "RISK_FACTOR_RATING" AS "MSGV3",
 '' AS "MSGV4",
