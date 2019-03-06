@@ -12,9 +12,8 @@ BEGIN
 
 DECLARE lv_mode NVARCHAR(1);  
 DECLARE lv_thld_yearly Decimal(15,2) ;
-
 DECLARE lv_max_rating Decimal(3,2);
-
+DECLARE lv_rfr_max_low Decimal(15,2);
 
 SELECT 
 "RUN_MODE",
@@ -171,14 +170,12 @@ SELECT
 "W"."PERIOD_CATEGORY",
 "W"."PERIOD_KEY",
 "W"."GJAHR",
-"R"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
+:lv_max_rating AS "RISK_FACTOR_RATING",
 "W"."RISK_AMOUNT" AS "RISK_AMOUNT",
 "W"."CURRENCY" AS "CURRENCY"
-FROM 
-:lt_estimated_tax AS "W", 
-"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
-WHERE "W"."RISK_AMOUNT" > "R"."LOW"
-  AND "R"."TOP_BAND" = 'X'
+FROM
+:lt_estimated_tax AS "W"
+WHERE "W"."RISK_AMOUNT" >= :lv_rfr_max_low
 UNION
 SELECT
 "W"."ABN",
