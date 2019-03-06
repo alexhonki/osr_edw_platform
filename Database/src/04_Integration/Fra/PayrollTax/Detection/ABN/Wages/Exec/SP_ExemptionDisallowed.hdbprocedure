@@ -10,23 +10,6 @@ READS SQL DATA AS
 
 BEGIN
 
-lt_ws_data =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
-FROM :it_data_for_rule
-;
-
-lt_exm_case_data = 
-SELECT *
-FROM
-"osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
-WHERE "CASE_TYPE" = 'ZEXM'
-AND  "REASON_CODE" <> 'INVD'
-;
-
 lt_exm_priority =
 SELECT
 "CASE_ID", 
@@ -35,38 +18,45 @@ SELECT
 "REASON_CODE",
 "ABN",
 "PARTNER" AS "BPARTNER",
-"CREATE_TIME"
+"CREATE_TIME",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
 FROM
 (
 	SELECT
-	"CASE_ID",
-	"CASE_TYPE",
-	"CASE_CATEGORY",
-	"REASON_CODE",
-	"ABN",
-	"PARTNER",
-	"CREATE_TIME",
-	RANK() OVER (PARTITION BY "ABN", "PARTNER" ORDER BY "ABN", "PARTNER", "CASE_ID" DESC) AS "RANK_1"
+	"case"."CASE_ID",
+	"case"."CASE_TYPE",
+	"case"."CASE_CATEGORY",
+	"case"."REASON_CODE",
+	"case"."ABN",
+	"case"."PARTNER",
+	"case"."CREATE_TIME",
+	"wages"."PERIOD_CATEGORY",
+	"wages"."PERIOD_KEY",
+	"wages"."GJAHR",
+	RANK() OVER (PARTITION BY "case"."ABN", "case"."PARTNER" ORDER BY "case"."ABN", "case"."PARTNER", "case"."CASE_ID" DESC) AS "RANK_1"
 	FROM
-	:lt_exm_case_data
+	"osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE" AS "case"
+	INNER JOIN :it_data_for_rule AS "wages"
+	ON "case"."ABN" = "wages"."ABN"
+	AND "case"."CASE_TYPE" = 'ZEXM'
+	AND "case"."REASON_CODE" <> 'INVD'
 )
 	WHERE "RANK_1" = '1'
 ;
 
 lt_pre_result =
 SELECT 
-"W"."ABN",
-"W"."PERIOD_CATEGORY",
-"W"."PERIOD_KEY",
-"W"."GJAHR",
-"C"."REASON_CODE" AS "REASON_CODE",
-"C"."CASE_ID" AS "CASE_ID",
-"C"."BPARTNER" AS "BPARTNER"
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"REASON_CODE" AS "REASON_CODE",
+"CASE_ID" AS "CASE_ID",
+"BPARTNER" AS "BPARTNER"
 FROM
-:lt_ws_data AS "W"
-INNER JOIN
-:lt_exm_priority AS "C"
-ON "W"."ABN" = "C"."ABN"
+:lt_exm_priority
 ;
 
 et_result = 
