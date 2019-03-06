@@ -150,13 +150,13 @@ TO_NVARCHAR(TO_DATS("AGENCY"."GST_CANCN_DT")) AS "GST_CANCN_DT",
 "BL"."BUS_LOCN_PH_NUM_MBL" AS "BUS_LOCN_PH_NUM_MBL",
 "BL"."BUS_LOCN_EML" AS "BUS_LOCN_EML"
 FROM :ALERT_INFO AS "ALERT"
-INNER JOIN "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "AGENCY"
+INNER JOIN "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"( )AS "AGENCY"
 ON "ALERT"."ABN" = "AGENCY"."ABN"
-LEFT OUTER JOIN	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_NAMES.active_data" AS "B"
+LEFT OUTER JOIN	"osr.edw.staging.md.abr.proxy::TF_BUSINESS_NAMES_C"( ) AS "B"
 ON "B"."PID" = "AGENCY"."PID"
-LEFT OUTER JOIN	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.BUSINESS_LOCATION.active_data" AS "BL"
+LEFT OUTER JOIN	"osr.edw.staging.md.abr.proxy::TF_BUSINESS_LOCATION_C"() AS "BL"
 ON "BL"."PID" = "AGENCY"."PID"
-LEFT OUTER JOIN	"osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.OTHER_TRADING_NAMES.active_data" AS "OTH"
+LEFT OUTER JOIN	"osr.edw.staging.md.abr.proxy::TF_OTHER_TRADING_NAMES_C"()  AS "OTH"
 ON "OTH"."PRIMARY_ID" = "AGENCY"."PID"
 )
 ;
