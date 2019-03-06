@@ -1,0 +1,132 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_WAGES_ROW_T"( )
+/**********
+	CREATED BY		: LAKSHMI
+	CREATED ON		: 04/03/2019
+	CREATION REASON	: Having a measure field text mapping function. 
+**********/
+	RETURNS TABLE 
+	(
+	ROW_NAME	NVARCHAR(30),
+	LANGU			NVARCHAR(1),
+	ROW_TEXT	NVARCHAR(100)
+	)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+	lt_dummy = 
+	SELECT TOP 1 * 
+	FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data" AS "T009";
+
+RETURN 
+	SELECT 
+		'CLIENT_NAME'		 					AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Organisation Name'						AS "ROW_TEXT"
+	FROM :lt_dummy
+	UNION
+	SELECT 
+		'ABN' 									AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'ABN'									AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'ACN' 									AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'ACN'									AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'STATE_CLIENT_ID'	 					AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Customer ID'							AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'STATE_GROUP_ID'	 					AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Group ID'								AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'CLIENT_STATE_WAGES' 					AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Client_State_Wages'					AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'CLIENT_INTERSTATE_WAGES' 				AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Client_Interstate_Wages'				AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_ALLOWANCE' 						AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Allowance'						AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_APPRENTICE' 						AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Apprentice'						AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_BONUS' 							AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Bonus'							AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_COMMISSION' 						AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Commission'						AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_CONTRACTOR' 						AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Contractor'						AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_DIRECTOR' 						AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Director'							AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_TERMINATION' 						AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Termination'						AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_FB' 								AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_FB'								AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_SALARY' 							AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Salary'							AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_SUPER' 							AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Super'							AS "ROW_TEXT"
+	FROM :lt_dummy
+		UNION
+	SELECT 
+		'WAGE_OTHER' 							AS "ROW_NAME",
+		'E' 									AS "LANGU",
+		'Wage_Other'							AS "ROW_TEXT"
+	FROM :lt_dummy
+	
+	;
+
+END;

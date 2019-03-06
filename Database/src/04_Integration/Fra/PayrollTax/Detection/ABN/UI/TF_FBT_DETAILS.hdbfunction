@@ -1,0 +1,97 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_FBT_DETAILS"(IN IP_ALERT_ID NVARCHAR(20))
+              RETURNS TABLE 
+    	(
+			DB_KEY								VARBINARY(16)	,
+			DB_KEY_DASH							NVARCHAR(36)    ,
+			ALERT_ID							NVARCHAR(20)	,
+			ABN									NVARCHAR(20)	,
+			GJAHR								NVARCHAR(4)		,
+			FBT_YEAR 							NVARCHAR(4)		,
+			TYP1_AGRGT_AMT						DECIMAL(15,2)	,
+			TYP2_AGRGT_AMT						DECIMAL(15,2)	,
+			AGRGT_NON_EXMT_AMT					DECIMAL(15,2)	,
+			FBTABLE_AMT							DECIMAL(15,2)	,
+			TAX_PYBL_AMT						DECIMAL(15,2)	,
+			EMPLES_RCVG_FB_CNT					INTEGER			,
+			ENTRMNT_TXBL_AMT					DECIMAL(15,2)	,
+			CAR_PARKG_VAL_OF_BNFTS_AMT			DECIMAL(15,2)	,
+			MEAL_ENTRTNT_VAL_OF_BNFTS_AMT		DECIMAL(15,2)	,
+			WAERS								NVARCHAR(5)
+    	)    		
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+ IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN   
+ 
+ RETURN
+		SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			TO_NVARCHAR("DATA"."FBT_YEAR")													AS "FBT_YEAR",
+			SUM("TYP1_AGRGT_AMT")  AS "TYP1_AGRGT_AMT",
+			SUM("TYP2_AGRGT_AMT")  AS "TYP2_AGRGT_AMT",
+			SUM("AGRGT_NON_EXMT_AMT")  AS "AGRGT_NON_EXMT_AMT" ,
+			SUM("FBTABLE_AMT") AS   "FBTABLE_AMT"  ,
+			SUM("TAX_PYBL_AMT") AS "TAX_PYBL_AMT"   ,
+			SUM("EMPLES_RCVG_FB_CNT")  AS "EMPLES_RCVG_FB_CNT"   ,
+			SUM("ENTRMNT_TXBL_AMT")  AS "ENTRMNT_TXBL_AMT"   ,
+			SUM("CAR_PARKG_VAL_OF_BNFTS_AMT")  AS "CAR_PARKG_VAL_OF_BNFTS_AMT"  ,
+			SUM("MEAL_ENTRTNT_VAL_OF_BNFTS_AMT") AS "MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" ,
+			'AUD'																			AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_FBT_C"()								AS "DATA"					
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		--AND 		TO_NVARCHAR("DATA"."FBT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+		GROUP BY 
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR",
+			"DATA"."FBT_YEAR"
+		ORDER BY "ALERT"."ABN" ASC ,"DATA"."FBT_YEAR" ASC
+		;
+		
+	ELSE
+	
+	RETURN
+			SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			TO_NVARCHAR("DATA"."FBT_YEAR")													AS "FBT_YEAR",
+			SUM("TYP1_AGRGT_AMT")  AS "TYP1_AGRGT_AMT",
+			SUM("TYP2_AGRGT_AMT")  AS "TYP2_AGRGT_AMT",
+			SUM("AGRGT_NON_EXMT_AMT")  AS "AGRGT_NON_EXMT_AMT" ,
+			SUM("FBTABLE_AMT") AS   "FBTABLE_AMT"  ,
+			SUM("TAX_PYBL_AMT") AS "TAX_PYBL_AMT"   ,
+			SUM("EMPLES_RCVG_FB_CNT")  AS "EMPLES_RCVG_FB_CNT"   ,
+			SUM("ENTRMNT_TXBL_AMT")  AS "ENTRMNT_TXBL_AMT"   ,
+			SUM("CAR_PARKG_VAL_OF_BNFTS_AMT")  AS "CAR_PARKG_VAL_OF_BNFTS_AMT"  ,
+			SUM("MEAL_ENTRTNT_VAL_OF_BNFTS_AMT") AS "MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" ,
+			'AUD'																			AS "WAERS"	
+		FROM		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_FBT_C"()								AS "DATA"					
+		ON  		"ALERT"."ABN" = "DATA"."ABN"
+		WHERE "ALERT"."ALERT_ID" = :IP_ALERT_ID
+		--AND 		TO_NVARCHAR("DATA"."FBT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+		GROUP BY 
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR",
+			"DATA"."FBT_YEAR"
+		ORDER BY "ALERT"."ABN" ASC ,"DATA"."FBT_YEAR" ASC
+		;
+
+		END IF;
+END;

@@ -1,0 +1,237 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QLDNexus_Address_And_WCQPolicy"
+(
+	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
+	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus_s_default",
+	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+		DECLARE lv_mode 				 NVARCHAR(1);  
+		DECLARE lv_previous_year		 NVARCHAR(4);
+		DECLARE lx_flag_wcq_policy		 NVARCHAR(1);
+		DECLARE lx_flag_qld_address 	 NVARCHAR(1);
+
+		SELECT
+			"RUN_MODE",
+			"GJAHR_ADJUSTMENT",
+			"FLAG_WCQ_POLICY", 
+			"FLAG_QLD_ADDRESS"
+		INTO
+			lv_mode,
+			lv_previous_year,
+			lx_flag_wcq_policy,
+			lx_flag_qld_address
+		FROM :PARAMETERS LIMIT 1;
+
+   lt_data_for_rule = 
+	SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   TO_NVARCHAR(TO_INT(LEFT("PERIOD_KEY",2)) - TO_INT(:lv_previous_year)) || RIGHT("PERIOD_KEY",8)	AS "PERIOD_KEY_CHECK",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR_CHECK"
+   FROM :IT_DATA_FOR_RULE
+   WHERE "PERIOD_CATEGORY" <> 'PT-A'
+   UNION
+   SELECT
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   TO_NVARCHAR(TO_INT("PERIOD_KEY") - TO_INT(:lv_previous_year)) 	AS "PERIOD_KEY_CHECK",
+   TO_NVARCHAR(TO_INT("GJAHR") - TO_INT(:lv_previous_year))			AS "GJAHR_CHECK"
+   FROM :IT_DATA_FOR_RULE
+   WHERE "PERIOD_CATEGORY" = 'PT-A';  
+  
+
+	lt_address = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			0 AS "DETECTION_RESULT",
+			'Y' AS "FLAG_ADDR"
+			FROM :lt_data_for_rule
+		UNION
+		SELECT
+			"DATA"."ABN",
+			"DATA"."PERIOD_CATEGORY",
+			"DATA"."PERIOD_KEY",
+			"DATA"."GJAHR",
+			100 AS "DETECTION_RESULT",
+			'Y' AS "FLAG_ADDR"
+			FROM 
+			:lt_data_for_rule AS "DATA"
+			WHERE EXISTS (
+				SELECT * FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "BASNIND"
+				WHERE "DATA"."ABN" = LEFT("BASNIND"."ABN",11)
+				  AND "DATA"."GJAHR_CHECK" = LEFT(TO_NVARCHAR("BASNIND"."FINANCIAL_YEAR"),4)
+				  AND "BASNIND"."BUS_STATE" = 'QLD'
+			)
+		UNION
+		SELECT
+			"DATA"."ABN",
+			"DATA"."PERIOD_CATEGORY",
+			"DATA"."PERIOD_KEY",
+			"DATA"."GJAHR",
+			100 AS "DETECTION_RESULT",
+			'Y' AS "FLAG_ADDR"
+			FROM 
+			:lt_data_for_rule AS "DATA"
+			WHERE EXISTS (
+				SELECT * FROM
+				(
+					SELECT LEFT("AGENCY_DATA"."ABN",11) AS "ABN" 
+						FROM
+						"osr.edw.staging.md.abr.proxy::TF_BUSINESS_LOCATION_C"() AS "BUSINESS_LOCATION"
+						INNER JOIN
+						"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY_DATA"
+						ON "BUSINESS_LOCATION"."PID" = "AGENCY_DATA"."PID"
+						WHERE "BUSINESS_LOCATION"."BUS_LOCN_STT" = 'QLD'
+				) AS "BUS_ADDR"
+				WHERE "DATA"."ABN" = LEFT("BUS_ADDR"."ABN",11)
+			)
+			;	
+
+	lt_policy = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			0 AS "DETECTION_RESULT",
+			'Y' AS "FLAG_POLICY"
+			FROM :lt_data_for_rule
+		UNION
+		SELECT
+			"DATA"."ABN",
+			"DATA"."PERIOD_CATEGORY",
+			"DATA"."PERIOD_KEY",
+			"DATA"."GJAHR",
+			100 AS "DETECTION_RESULT",
+			'Y' AS "FLAG_POLICY"
+			FROM 
+			:lt_data_for_rule AS "DATA"
+			WHERE EXISTS (
+				SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WCQ"
+				WHERE "DATA"."ABN" = "WCQ"."ABN"
+				  AND "DATA"."GJAHR_CHECK" = "WCQ"."GJAHR"
+			)
+		;
+		
+	lt_consolidation = 
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_address
+			WHERE "FLAG_ADDR" = :lx_flag_qld_address
+			UNION
+		SELECT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"DETECTION_RESULT"
+			FROM :lt_policy
+			WHERE "FLAG_POLICY" = :lx_flag_wcq_policy
+	;
+			
+lt_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+SUM("DETECTION_RESULT") AS "DETECTION_RESULT"
+FROM
+:lt_consolidation
+GROUP BY
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+HAVING SUM("DETECTION_RESULT") > 0
+;
+
+IF :lv_mode = 'S' THEN
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:lt_result
+;
+
+END IF;
+
+IF :lv_mode = 'R' THEN
+
+et_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+0 AS "DETECTION_RESULT"
+FROM
+:lt_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:et_result
+;
+
+END IF;
+
+END

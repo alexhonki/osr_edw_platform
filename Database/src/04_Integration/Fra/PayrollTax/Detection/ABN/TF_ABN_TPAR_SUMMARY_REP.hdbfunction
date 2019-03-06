@@ -1,0 +1,933 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP" (IN IP_FY NVARCHAR(4))
+
+RETURNS TABLE( 
+
+	    "PAYER_ABN"                 			NVARCHAR(11)  ,
+	    "FINANCIAL_YEAR"            			NVARCHAR(4)   ,	
+--Payer Details
+	    "PAYER_NAME"                			NVARCHAR(200) ,
+--	    "PAYER_TRDG_NM"               NVARCHAR(200) ,
+
+		"RISK_CATEGORY"                         NVARCHAR(1)   ,
+		"SUB_RISK_CATEGORY"                     NVARCHAR(1)   ,
+
+		"ASIC_STATUS"                           NVARCHAR(4)   ,	    
+
+		"GST_REGN_DT"							NVARCHAR(8)   ,
+		"GST_CANCN_DT"							NVARCHAR(8)   ,
+		
+		"ECI_STATUS"                            NVARCHAR(4)   ,
+		
+		"FLAGGED_PAID_BY_PAYER"                 DECIMAL(15,2) ,
+		"FLAGGED_TAX_WITHELD_BY_PAYER"          DECIMAL(15,2) ,
+		"FLAGGED_GST_BY_PAYER"                  DECIMAL(15,2) ,
+		"TOTAL_PAID_BY_PAYER"                   DECIMAL(15,2) ,
+		"TOTAL_TAX_WITHELD_BY_PAYER"            DECIMAL(15,2) ,
+		"TOTAL_GST_BY_PAYER"                    DECIMAL(15,2) ,
+		
+    	"PAYER_BP"                              NVARCHAR(10)  ,
+		"BP_FIN_STATUS"                         NVARCHAR(20)  ,
+		"BP_GRP_STATUS"                         NVARCHAR(20)  ,
+		"VALID_FROM"                            NVARCHAR(8)   ,
+		"VALID_TO"                              NVARCHAR(8)   ,		
+		"TRANSACTION_NUMBER"                    NVARCHAR(12)  ,
+		"A_APPRENT_PMT"                         DECIMAL(15,2) ,
+		"A_TRAINEES_PMT"                        DECIMAL(15,2) ,
+		"A_CONTRACTORS"                         DECIMAL(15,2) ,
+		"A_COMMISSION"                          DECIMAL(15,2) ,
+		"A_GROSS_SAL_WAGE"                      DECIMAL(15,2) ,
+		"A_DIRECTOR_FEE"                        DECIMAL(15,2) ,
+		"A_EMPL_SUP_CONTRIB"                    DECIMAL(15,2) ,
+		"A_FRINGE_BENEFIT"                      DECIMAL(15,2) ,
+		"A_SHARE_SCHEMES"                       DECIMAL(15,2) ,
+		"A_OTH_NON_TAX_WAGE"                    DECIMAL(15,2) ,
+		"C_DEDUCTION_ALLOWED"                   DECIMAL(15,2) ,
+		"C_TOT_QLD_NON_TAX_WAGE"                DECIMAL(15,2) ,
+		"C_TOT_QLD_TXBLE_WAGES"                 DECIMAL(15,2) ,
+		"C_PAY_TAX_LIAB_CREDIT"                 DECIMAL(15,2) ,
+		"C_PAY_TAX_AMOUNT"                      DECIMAL(15,2) ,
+		"C_TAX_AMOUNT"                          DECIMAL(15,2) ,
+		"A_TOT_INT_WAGE"                        DECIMAL(15,2) ,
+	
+		"CLNT_TYP"								NVARCHAR(3)	  ,
+		"ANZSIC_CD"                             NVARCHAR(5)   ,
+		"ANZSIC_TITLE"                          NVARCHAR(79)  ,
+		"PAYER_TOTL_BUS_INCM_AMT"               DECIMAL(15,2) ,
+		"PAYER_CONTRACTORS_PMNTS"               DECIMAL(15,2) ,
+		"PAYER_SALARY_WAGES"                    DECIMAL(15,2) ,
+		"PAYER_SUPER_EXPNS"                     DECIMAL(15,2) ,
+		
+		"WCQ_PAYER"                             NVARCHAR(1)   ,
+		"TPAR_PAYER_QLD"                        NVARCHAR(1)   ,
+		"EMP_CNT_PAYER"                         NVARCHAR(1)   
+		
+)
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+CONTRACTOR_HEADER =
+SELECT
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	"WCQ_PAYEE",
+	"TPAR_PAYEE_QLD",
+	"EMP_CNT_PAYEE",
+	"PAYEE_BP",
+	"PAYEE_PRT_LIAB_DATE",
+	"WCQ_PAYER",
+	"TPAR_PAYER_QLD",
+	"EMP_CNT_PAYER",
+	"PAYER_BP",
+	"PAYER_PRT_LIAB_DATE",
+	"STEP2_FLAG",
+	"BASIC_FILTER_PAYEE",
+	"BASIC_FILTER_PAYER",
+	"WCQ_ACT_WG_PAYEE",
+	"EX_GST_GROSS_PD_AMT",
+	"PROP_EX_GST_GROSS_PD_AMT",
+	"EMP_CNT_PER_PAYEE",
+	"EMP_CNT_AUS_PAYEE",
+	"TOT_EX_GST_GROSS_PD_AMT",
+	"TOTL_BUS_INCM_AMT",
+	"PROP_TOTL_BUS_INCM_AMT",
+	"WCQ_ACT_WG_PAYER",
+	"EMP_CNT_AUS_PAYER",
+	"EMP_CNT_PER_PAYER",
+	"PAYEE_SALARY_WAGES",
+	"PAYEE_SUPER_EXPNS",
+	"PAYEE_CONTRACTORS_PMNTS",
+	"PAYER_TOTL_BUS_INCM_AMT",
+	"PAYER_CONTRACTORS_PMNTS",
+	"PAYER_SALARY_WAGES",
+	"PAYER_SUPER_EXPNS"
+	
+--	SUM("EX_GST_GROSS_PD_AMT") OVER (PARTITION BY "PAYER_ABN", "FINANCIAL_YEAR" ORDER BY "PAYER_ABN", "FINANCIAL_YEAR") AS "PAYER_GROSS_PD_AMT"
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_ABN_CONTRACTOR_HEADER"(:IP_FY)
+	--(placeholder."$$IP_FY$$"=> :IP_FY)
+;
+
+-- Totals and Flagged Amount
+
+
+TPAR_PAYEE =
+SELECT 
+	"PAYEE_ABN",
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	"GROSS_PD_AMT",
+	"TW_TOTL_AMT",
+	"GST_TOTL_AMT"
+FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"()
+WHERE "PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :CONTRACTOR_HEADER)
+AND  "FINANCIAL_YEAR" = :IP_FY
+
+;
+------
+PAYER_DATA =
+
+SELECT DISTINCT
+	 "PAYER_ABN", 
+	 "PAYER_NAME"
+FROM
+(
+SELECT
+	"PAYER_ABN",
+	"PAYER_ABN_STS",
+	"FINANCIAL_YEAR",
+	"PAYER_NAME",
+	"PAYER_TRDG_NM",
+    ROW_NUMBER( )  OVER (PARTITION BY "PAYER_ABN", "FINANCIAL_YEAR" ORDER BY "PAYER_ABN", "FINANCIAL_YEAR", "PAYER_ABN_STS" ASC ) AS "ROW_NUM"
+FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYER_C"()
+WHERE"PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :CONTRACTOR_HEADER)
+AND "FINANCIAL_YEAR" = :IP_FY
+) 
+WHERE "ROW_NUM" =  1;
+
+
+-------------------------------
+ITR_DATA =
+SELECT 
+	"ABN",
+	SUM("TOTL_BUS_INCM_AMT") AS "PAYER_TOTL_BUS_INCM_AMT",
+	SUM("PURCHS_OTH_COSTS")  AS "PAYER_PURCHS_OTH_COSTS",
+	SUM("CONTRACTORS_PMNTS") AS "PAYER_CONTRACTORS_PMNTS",
+	SUM("PMNTS_TO_ASSOCS")   AS "PAYER_PMNTS_TO_ASSOCS",
+	SUM("SALARY_WAGES")      AS "PAYER_SALARY_WAGES",
+	SUM("SUPER_EXPNS")       AS "PAYER_SUPER_EXPNS"
+FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
+WHERE  "ABN" IN ( SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE   )
+AND    "INCM_YR" = :IP_FY
+GROUP BY
+	"ABN"
+;
+
+
+
+ IND_CODE = 
+	 SELECT DISTINCT
+		"ABN",
+		"CLNT_TYP",
+		"ATO_ANZSIC_CD" AS "ANZSIC_CD",
+		"ANZSIC_TITLE"  AS "ANZSIC_TITLE"
+	FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"()
+	WHERE  "ABN" IN ( SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE   )
+	AND "INCM_YR" = :IP_FY;
+
+IND_CODE_GRP =	
+SELECT 	DISTINCT 
+		"ABN",
+		"CLNT_TYP",
+		"ANZSIC_CD",
+	    "ANZSIC_TITLE",
+		"IND_CODE_GRP",
+		"IND_DIVISION",
+		"RISK_FACTOR_RATING" 
+FROM
+(
+SELECT  
+	"ABN",
+	"CLNT_TYP",
+	"ANZSIC_CD",
+	"ANZSIC_TITLE",
+	"IND_CODE_GRP",
+	"IND_DIVISION",
+	"RISK_FACTOR_RATING",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"RISK_FACTOR_RATING" DESC, "ANZSIC_CD" DESC) AS "RANK_1"
+FROM
+(
+SELECT
+		"A"."ABN"            AS "ABN",
+		"A"."CLNT_TYP"       AS "CLNT_TYP",
+		"A"."ANZSIC_CD"      AS "ANZSIC_CD",
+		"A"."ANZSIC_TITLE"   AS "ANZSIC_TITLE",
+		"B"."IND_CODE_GRP"   AS "IND_CODE_GRP",
+		"B"."IND_DIVISION"   AS "IND_DIVISION" ,
+		"C"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING"
+	FROM 
+		:IND_CODE AS "A" 
+	LEFT OUTER JOIN
+		"osr.edw.staging.md.ato.proxy::CV_IND_CODE_GRP" AS "B"
+	ON 
+		LEFT("A"."ANZSIC_CD", 3) = 	"B"."IND_CODE_GRP"
+    LEFT OUTER JOIN
+    	"osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_INDUSTRY" AS "C"
+	ON
+		"B"."IND_DIVISION" = "C"."IND_DIVISION"
+)) WHERE "RANK_1" = 1		
+;	
+-----------------------------
+FLAGGED_TOTAL_PAYMENTS =
+
+SELECT 
+	"PAYER_ABN",
+	"FINANCIAL_YEAR",
+	SUM("FLAGGED_PAID_BY_PAYER")             AS "FLAGGED_PAID_BY_PAYER",
+	SUM("FLAGGED_TAX_WITHELD_BY_PAYER")      AS "FLAGGED_TAX_WITHELD_BY_PAYER",
+	SUM("FLAGGED_GST_BY_PAYER")              AS "FLAGGED_GST_BY_PAYER",
+	SUM("TOTAL_PAID_BY_PAYER")               AS "TOTAL_PAID_BY_PAYER",
+	SUM("TOTAL_TAX_WITHELD_BY_PAYER")        AS "TOTAL_TAX_WITHELD_BY_PAYER",
+	SUM("TOTAL_GST_BY_PAYER")                AS "TOTAL_GST_BY_PAYER"
+FROM	
+(	
+SELECT 
+    "PAYER_ABN",
+	"FINANCIAL_YEAR",
+	SUM("GROSS_PD_AMT") AS "FLAGGED_PAID_BY_PAYER",
+	SUM("TW_TOTL_AMT")  AS "FLAGGED_TAX_WITHELD_BY_PAYER",
+	SUM("GST_TOTL_AMT") AS "FLAGGED_GST_BY_PAYER",
+	0 AS    "TOTAL_PAID_BY_PAYER",
+	0 AS 	"TOTAL_TAX_WITHELD_BY_PAYER",
+	0 AS 	"TOTAL_GST_BY_PAYER"
+	FROM
+	(
+			SELECT 
+			"A"."PAYEE_ABN",
+			"A"."PAYER_ABN",
+			"A"."FINANCIAL_YEAR",
+			"A"."GROSS_PD_AMT",
+			"A"."TW_TOTL_AMT",
+			"A"."GST_TOTL_AMT"
+		FROM 
+			:TPAR_PAYEE AS "A" 
+		INNER JOIN
+			:CONTRACTOR_HEADER AS "B"
+		ON 	  
+				 "A"."PAYEE_ABN"      = "B"."PAYEE_ABN"
+		AND 	 "A"."PAYER_ABN"      = "B"."PAYER_ABN"		 
+)
+GROUP BY
+    "PAYER_ABN",
+	"FINANCIAL_YEAR"
+	
+UNION
+
+SELECT 
+    "PAYER_ABN",
+	"FINANCIAL_YEAR",
+	0   AS "FLAGGED_PAID_BY_PAYER",
+	0   AS "FLAGGED_TAX_WITHELD_BY_PAYER",
+	0   AS "FLAGGED_GST_BY_PAYER",
+	SUM("GROSS_PD_AMT") AS "TOTAL_PAID_BY_PAYER",
+	SUM("TW_TOTL_AMT")  AS "TOTAL_TAX_WITHELD_BY_PAYER",
+	SUM("GST_TOTL_AMT") AS "TOTAL_GST_BY_PAYER"
+FROM :TPAR_PAYEE
+GROUP BY 
+    "PAYER_ABN",
+	"FINANCIAL_YEAR"
+)	   
+GROUP BY
+	"PAYER_ABN",
+	"FINANCIAL_YEAR"
+	;
+	
+-------ABR-------------
+ABR_DATA =
+
+SELECT "ABN",	
+		MIN("GST_REGN_DT")  AS 	"GST_REGN_DT",
+		MIN("GST_CANCN_DT") AS  "GST_CANCN_DT" 
+	FROM
+"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" 
+WHERE "ABN" IN (SELECT DISTINCT "PAYEE_ABN" FROM :TPAR_PAYEE )
+GROUP BY "ABN"
+;
+----------------------
+-----------------------------
+--Agg Data Set
+EXT_DATA_SET =
+SELECT 
+
+	"A"."PAYER_ABN",
+	"A"."FINANCIAL_YEAR",
+	"A"."FLAGGED_PAID_BY_PAYER",
+	"A"."FLAGGED_TAX_WITHELD_BY_PAYER",
+	"A"."FLAGGED_GST_BY_PAYER",
+	"A"."TOTAL_PAID_BY_PAYER",
+	"A"."TOTAL_TAX_WITHELD_BY_PAYER",
+	"A"."TOTAL_GST_BY_PAYER",
+	"B"."WCQ_PAYER",
+	"B"."TPAR_PAYER_QLD",
+	"B"."EMP_CNT_PAYER",
+	"C"."ORG_STATUS",
+	"D"."GST_REGN_DT",
+	"D"."GST_CANCN_DT",
+	"E"."CLNT_TYP",
+	"E"."ANZSIC_CD",
+	"E"."ANZSIC_TITLE",
+	"F"."PAYER_TOTL_BUS_INCM_AMT",
+	"F"."PAYER_CONTRACTORS_PMNTS",
+	"F"."PAYER_SALARY_WAGES",
+	"F"."PAYER_SUPER_EXPNS",
+	"G"."PAYER_NAME"
+	
+FROM :FLAGGED_TOTAL_PAYMENTS AS "A" 
+
+INNER JOIN
+:CONTRACTOR_HEADER AS "B"
+ON 	  "A"."PAYER_ABN" = 	"B"."PAYER_ABN"
+
+
+LEFT OUTER JOIN   
+--ASIC
+( SELECT DISTINCT "ABN" AS "PAYER_ABN", "ORG_STATUS" FROM
+(
+SELECT
+	"ABN",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN" ,"ORG_END_DATE" DESC, "ORG_START_DATE" DESC) AS "RANK_1",
+	"ORG_STATUS"
+FROM "osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C"
+WHERE "ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :FLAGGED_TOTAL_PAYMENTS)
+) WHERE "RANK_1" = '1') AS "C"
+ON 	"A"."PAYER_ABN" = 	"C"."PAYER_ABN"
+
+
+LEFT OUTER JOIN
+--ABR
+:ABR_DATA AS "D"
+ON 	"A"."PAYER_ABN" = 	"D"."ABN"
+
+--ITR Data
+LEFT OUTER JOIN
+:IND_CODE_GRP AS "E"
+ON
+"A"."PAYER_ABN" = 	"E"."ABN"
+
+LEFT OUTER JOIN
+:ITR_DATA AS "F"
+ON
+"A"."PAYER_ABN" = 	"F"."ABN"
+
+LEFT OUTER JOIN
+:PAYER_DATA AS "G"
+ON
+"A"."PAYER_ABN" = 	"G"."PAYER_ABN"
+;
+
+-----------------------------------------------------------------------
+
+--RMS_DATA
+BUT0ID =
+SELECT DISTINCT
+	"PARTNER",
+	"TYPE",
+	"IDNUMBER"
+	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data"
+WHERE "TYPE" = 'ZABN'
+AND   "IDNUMBER" IN (SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE )
+AND   "PARTNER"  IN (
+	SELECT 	DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data" 
+	WHERE"PARTNER" IN (SELECT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data" WHERE 	"PARTNERACCTYP" = 'PT')
+	AND  "AUGRP"  IN ('ZOSR') AND "XDELE" <> 'X'
+	
+	
+)
+;
+
+
+ 
+
+BP_FINSTATUS =
+SELECT DISTINCT "PARTNER", "ZZTFLDPVC3OA" FROM
+(
+	SELECT 
+		"CLIENT",
+		"PARTNER",
+		"ZZTFLD2WCKOA",
+		"DATE_TO",
+		"DATE_FROM",
+		"ZZTFLD2ACBOA",
+		"ZZTFLDPVC3OA",
+	RANK() OVER (PARTITION BY "PARTNER" ORDER BY "PARTNER" ,TO_DATS("ZZTFLD2ACBOA") DESC, TO_DATS("ZZTFLD2WCKOA") DESC) AS "RANK_1"
+
+FROM "osr.edw.source.md.rms.synonym::CDS_BP.TAB.ZBUT0000HJCXO9"
+WHERE "PARTNER" IN ( SELECT DISTINCT "PARTNER" FROM :BUT0ID )
+) WHERE  "RANK_1" = 1;
+
+/*
+DPSOBBPACC =
+SELECT 
+	"PSOBKEY",
+	"PARTNER",
+	"PARTNERACCTYP",
+	"XOBSL",
+	"PARTNERACC"
+FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DPSOBBPACC.active_data"
+WHERE 
+	"PARTNERACCTYP" = 'PT' 
+AND	"PARTNER" IN ( SELECT DISTINCT "PARTNER" FROM :BUT0ID );
+
+GRP_STATUS =
+SELECT * FROM
+(
+SELECT 
+   "OBJID",
+   LEFT("VALID_TO",8)   AS "VALID_TO",
+   LEFT("VALID_FROM",8) AS "VALID_FROM",
+   "FACT_CAT_SEQ_11" ,
+	RANK() OVER (PARTITION BY "OBJID" ORDER BY "OBJID", LEFT("VALID_TO",8) DESC) AS "RANK_1"
+FROM "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_ZPRE"()
+WHERE 
+	"OBJID" IN (SELECT DISTINCT "PSOBKEY" FROM :DPSOBBPACC)
+) 
+WHERE "RANK_1" = 1
+;
+
+GRP_FACT_GRP_STAUTS =
+SELECT 
+	"A"."PSOBKEY",
+	"A"."PARTNER",
+	"A"."PARTNERACCTYP",
+	"A"."XOBSL",
+	"A"."PARTNERACC",
+	"B"."FACT_CAT_SEQ_11" AS "BP_GRP_STATUS",
+	"B"."VALID_FROM"        AS "VALID_FROM" 
+FROM :DPSOBBPACC AS "A"
+INNER JOIN
+:GRP_STATUS AS "B"
+ON "A"."PSOBKEY" = "B"."OBJID"
+;
+*/
+GRP_FACT_GRP_STAUTS =
+SELECT * FROM 
+(
+
+SELECT
+	"BPARTNER" AS "PARTNER",
+	"GRP_STATUS" AS "BP_GRP_STATUS",
+	"PRT_LIAB_DATE",
+	"QLD_LIAB_DATE",
+	"VALID_FROM",
+	"VALID_TO",
+	RANK() OVER (PARTITION BY "BPARTNER" ORDER BY "BPARTNER", LEFT("VALID_TO",8) DESC) AS "RANK_1"
+FROM "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS"( ) 
+WHERE "BPARTNER" IN ( SELECT DISTINCT "PARTNER" FROM :BUT0ID )
+
+)
+WHERE "RANK_1" = '1';
+
+BP_ID_FIN_STATUS =
+SELECT
+	"A"."PARTNER" AS "PAYER_BP",
+	"A"."TYPE",
+	"A"."IDNUMBER" AS "PAYER_ABN",
+	"B"."ZZTFLDPVC3OA"  AS "BP_FIN_STATUS",
+	"C"."BP_GRP_STATUS",
+	"C"."VALID_FROM",
+	"C"."VALID_TO"
+FROM 
+	:BUT0ID AS "A"
+LEFT OUTER JOIN
+	:BP_FINSTATUS  AS "B"
+ON
+	"A"."PARTNER" = "B"."PARTNER"
+LEFT OUTER JOIN
+    :GRP_FACT_GRP_STAUTS AS "C"
+ON
+	"A"."PARTNER" = "C"."PARTNER"
+;
+
+RMS_FROM_DATA = 
+SELECT 
+	"TAXPAYER" AS "PAYER_BP",
+	"FISCAL_YEAR" AS "FISCAL_YEAR",
+	"FBNUM"       AS "TRANSACTION_NUMBER",
+	SUM("A_APPRENT_PMT")          AS "A_APPRENT_PMT",
+	SUM("A_TRAINEES_PMT")         AS "A_TRAINEES_PMT",
+	SUM("A_CONTRACTORS")          AS "A_CONTRACTORS",
+	SUM("A_COMMISSION")           AS "A_COMMISSION",
+	SUM("A_GROSS_SAL_WAGE")       AS "A_GROSS_SAL_WAGE",
+	SUM("A_DIRECTOR_FEE")         AS "A_DIRECTOR_FEE",
+	SUM("A_EMPL_SUP_CONTRIB")     AS "A_EMPL_SUP_CONTRIB",
+	SUM("A_FRINGE_BENEFIT")       AS "A_FRINGE_BENEFIT",
+	SUM("A_SHARE_SCHEMES")        AS "A_SHARE_SCHEMES",
+	SUM("A_OTH_NON_TAX_WAGE")     AS "A_OTH_NON_TAX_WAGE",
+	SUM("C_DEDUCTION_ALLOWED")    AS "C_DEDUCTION_ALLOWED",
+	SUM("C_TOT_QLD_NON_TAX_WAGE") AS "C_TOT_QLD_NON_TAX_WAGE",
+	SUM("C_TOT_QLD_TXBLE_WAGES")  AS "C_TOT_QLD_TXBLE_WAGES",
+	SUM("C_PAY_TAX_LIAB_CREDIT")  AS "C_PAY_TAX_LIAB_CREDIT",
+	SUM("C_PAY_TAX_AMOUNT")       AS "C_PAY_TAX_AMOUNT",
+	SUM("C_TAX_AMOUNT")           AS "C_TAX_AMOUNT",
+	SUM("A_TOT_INT_WAGE")		  AS "A_TOT_INT_WAGE"
+FROM
+(
+SELECT 
+	"A"."CASE_GUID",
+	"A"."FBNUM",
+	"A"."FBTYP",
+	"A"."REVENUE_TYPE",
+	"A"."TAXPAYER",
+	"A"."APPLY_FROM",
+	"A"."APPLY_TO",
+	"A"."PERIOD_KEY",
+	"B"."FISCAL_YEAR",
+	"A"."FBSTA",
+	"A"."TRANSACTION_TYPE",
+	SUM("C"."A_APPRENT_PMT")          AS "A_APPRENT_PMT",
+	SUM("C"."A_TRAINEES_PMT")         AS "A_TRAINEES_PMT",
+	SUM("C"."A_CONTRACTORS")          AS "A_CONTRACTORS",
+	SUM("C"."A_COMMISSION")           AS "A_COMMISSION",
+	SUM("C"."A_GROSS_SAL_WAGE")       AS "A_GROSS_SAL_WAGE",
+	SUM("C"."A_DIRECTOR_FEE")         AS "A_DIRECTOR_FEE",
+	SUM("C"."A_EMPL_SUP_CONTRIB")     AS "A_EMPL_SUP_CONTRIB",
+	SUM("C"."A_FRINGE_BENEFIT")       AS "A_FRINGE_BENEFIT",
+	SUM("C"."A_SHARE_SCHEMES")        AS "A_SHARE_SCHEMES",
+	SUM("C"."A_OTH_NON_TAX_WAGE")     AS "A_OTH_NON_TAX_WAGE",
+	SUM("C"."C_DEDUCTION_ALLOWED")    AS "C_DEDUCTION_ALLOWED",
+	SUM("C"."C_TOT_QLD_NON_TAX_WAGE") AS "C_TOT_QLD_NON_TAX_WAGE",
+	SUM("C"."C_TOT_QLD_TXBLE_WAGES")  AS "C_TOT_QLD_TXBLE_WAGES",
+	SUM("C"."C_PAY_TAX_LIAB_CREDIT")  AS "C_PAY_TAX_LIAB_CREDIT",
+	SUM("C"."C_PAY_TAX_AMOUNT")       AS "C_PAY_TAX_AMOUNT",
+	SUM("C"."C_TAX_AMOUNT")           AS "C_TAX_AMOUNT",
+	SUM("A_TOT_INT_WAGE")		      AS "A_TOT_INT_WAGE"
+FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "A" 
+INNER JOIN
+"osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "B"
+
+ON
+TO_DATS("A"."APPLY_TO") = TO_DATS("B"."DATE_SQL")
+INNER JOIN 
+"osr.edw.staging.rms.forms.proxy::CV_FORM_3PYA_M_LV" AS "C"
+ON
+"A"."FBNUM" = "C"."FBNUM"
+AND "A"."REVENUE_TYPE" = 'PT'
+AND "A"."FBTYP" IN ('ZPTM','ZPA2')
+AND "A"."FBSTA" = 'IP014'
+AND "A"."TAXPAYER"   IN (SELECT DISTINCT "PARTNER" FROM :BUT0ID)
+AND "A"."CASE_GUID"  IN (SELECT "RETURN_ID" FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_FORMS.active_data" WHERE "FORM" IN ('/OSRQLD/IPA1_FORM','Z3PYA'))
+AND "B"."FISCAL_YEAR" = :IP_FY
+AND "B"."CALENDAR_VARIANT" = 'Z6'
+GROUP BY
+	"A"."CASE_GUID",
+	"A"."FBNUM",
+	"A"."FBTYP",
+	"A"."REVENUE_TYPE",
+	"A"."TAXPAYER",
+	"A"."APPLY_FROM",
+	"A"."APPLY_TO",
+	"A"."PERIOD_KEY",
+	"B"."FISCAL_YEAR",
+	"A"."FBSTA",
+	"A"."TRANSACTION_TYPE"
+)
+WHERE "FISCAL_YEAR" = :IP_FY
+GROUP BY 	"TAXPAYER", "FISCAL_YEAR","FBNUM"  
+;
+
+
+
+RMS_COMBINED =
+ 
+SELECT
+  	 "A"."PAYER_BP",
+     "A"."PAYER_ABN",
+     "A"."BP_FIN_STATUS",
+	 "A"."BP_GRP_STATUS",
+	 "A"."VALID_FROM",
+	 "A"."VALID_TO",
+     "B"."TRANSACTION_NUMBER",
+	 "B"."A_APPRENT_PMT",
+	 "B"."A_TRAINEES_PMT",
+	 "B"."A_CONTRACTORS",
+	 "B"."A_COMMISSION",
+	 "B"."A_GROSS_SAL_WAGE",
+	 "B"."A_DIRECTOR_FEE",
+	 "B"."A_EMPL_SUP_CONTRIB",
+	 "B"."A_FRINGE_BENEFIT",
+	 "B"."A_SHARE_SCHEMES",
+	 "B"."A_OTH_NON_TAX_WAGE",
+	 "B"."C_DEDUCTION_ALLOWED",
+	 "B"."C_TOT_QLD_NON_TAX_WAGE",
+	 "B"."C_TOT_QLD_TXBLE_WAGES",
+	 "B"."C_PAY_TAX_LIAB_CREDIT",
+	 "B"."C_PAY_TAX_AMOUNT",
+     "B"."C_TAX_AMOUNT",
+     "B"."A_TOT_INT_WAGE"
+FROM
+		:BP_ID_FIN_STATUS AS "A"
+LEFT OUTER JOIN
+		:RMS_FROM_DATA AS "B"
+ON
+"A"."PAYER_BP" = "B"."PAYER_BP"
+;
+
+
+
+
+
+---------------------End of RMS Data---------------------
+EXT_RMS_DATA =
+
+SELECT 
+	"PAYER_ABN"                 	   AS "PAYER_ABN"                     ,
+	"FINANCIAL_YEAR"            	   AS "FINANCIAL_YEAR"                ,
+	"PAYER_NAME"                       AS "PAYER_NAME"                    ,
+	"ORG_STATUS"                	   AS "ASIC_STATUS"                   ,
+	"GST_REGN_DT"               	   AS "GST_REGN_DT"                   ,
+	"GST_CANCN_DT"              	   AS "GST_CANCN_DT"                  ,
+
+	"FLAGGED_PAID_BY_PAYER"     	   AS "FLAGGED_PAID_BY_PAYER"         ,
+	"FLAGGED_TAX_WITHELD_BY_PAYER"     AS "FLAGGED_TAX_WITHELD_BY_PAYER"  ,
+	"FLAGGED_GST_BY_PAYER"             AS "FLAGGED_GST_BY_PAYER"          ,
+	"TOTAL_PAID_BY_PAYER"              AS "TOTAL_PAID_BY_PAYER"           ,
+	"TOTAL_TAX_WITHELD_BY_PAYER"       AS "TOTAL_TAX_WITHELD_BY_PAYER"    ,
+	"TOTAL_GST_BY_PAYER"               AS "TOTAL_GST_BY_PAYER"            ,
+
+    "PAYER_BP"                         AS "PAYER_BP"                      ,
+    "BP_GRP_STATUS"                    AS "BP_GRP_STATUS"                 ,
+    "VALID_FROM"                       AS "VALID_FROM"                    ,
+    "VALID_TO"						   AS "VALID_TO"					  ,	
+    "BP_FIN_STATUS"                    AS "BP_FIN_STATUS"                 ,
+    "TRANSACTION_NUMBER"               AS "TRANSACTION_NUMBER"            ,   
+    "A_APPRENT_PMT"                    AS "A_APPRENT_PMT"                 ,
+    "A_TRAINEES_PMT"                   AS "A_TRAINEES_PMT"                ,
+    "A_COMMISSION"                     AS "A_COMMISSION"                  ,
+    "A_CONTRACTORS"                    AS "A_CONTRACTORS"                 ,
+    "C_DEDUCTION_ALLOWED"              AS "C_DEDUCTION_ALLOWED"           ,
+    "A_DIRECTOR_FEE"                   AS "A_DIRECTOR_FEE"                ,
+    "A_EMPL_SUP_CONTRIB"               AS "A_EMPL_SUP_CONTRIB"            ,
+    "A_FRINGE_BENEFIT"                 AS "A_FRINGE_BENEFIT"              ,
+    "A_GROSS_SAL_WAGE"                 AS "A_GROSS_SAL_WAGE"              ,
+    "A_OTH_NON_TAX_WAGE"               AS "A_OTH_NON_TAX_WAGE"            ,
+    "A_SHARE_SCHEMES"                  AS "A_SHARE_SCHEMES"               ,
+    "C_TOT_QLD_NON_TAX_WAGE"           AS "C_TOT_QLD_NON_TAX_WAGE"        ,
+	"C_TOT_QLD_TXBLE_WAGES"            AS "C_TOT_QLD_TXBLE_WAGES"         ,
+	"C_PAY_TAX_LIAB_CREDIT"            AS "C_PAY_TAX_LIAB_CREDIT"         ,
+	"C_PAY_TAX_AMOUNT"                 AS "C_PAY_TAX_AMOUNT"              ,
+    "C_TAX_AMOUNT"                     AS "C_TAX_AMOUNT"                  ,
+    "A_TOT_INT_WAGE"                   AS "A_TOT_INT_WAGE"                ,
+  
+    "CLNT_TYP"                         AS "CLNT_TYP"                      ,
+	"ANZSIC_CD"                        AS "ANZSIC_CD"                     ,
+	"ANZSIC_TITLE"                     AS "ANZSIC_TITLE"                  ,
+	"PAYER_TOTL_BUS_INCM_AMT"          AS "PAYER_TOTL_BUS_INCM_AMT"       ,
+	"PAYER_CONTRACTORS_PMNTS"          AS "PAYER_CONTRACTORS_PMNTS"       ,
+	"PAYER_SALARY_WAGES"               AS "PAYER_SALARY_WAGES"            ,
+	"PAYER_SUPER_EXPNS"                AS "PAYER_SUPER_EXPNS"             ,
+    
+    "WCQ_PAYER"                        AS "WCQ_PAYER"                     ,
+	"TPAR_PAYER_QLD"                   AS "TPAR_PAYER_QLD"                ,
+	"EMP_CNT_PAYER"                    AS "EMP_CNT_PAYER"                 ,
+/*	
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000               AND "C_TOT_QLD_TXBLE_WAGES" = 0  AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000 THEN '1' ELSE
+	CASE WHEN("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER") BETWEEN 500000 AND 1100000 AND "C_TOT_QLD_TXBLE_WAGES" = 0  AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000 THEN '2' ELSE
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000               AND "C_TOT_QLD_TXBLE_WAGES" = 0  AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  <  800000 THEN '3' ELSE
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                AND "C_TOT_QLD_TXBLE_WAGES" > 0                                                              THEN '4' ELSE '0' 
+	END END END END AS "RISK_CATEGORY"
+*/
+
+
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                  AND  "A_GROSS_SAL_WAGE" > 0   THEN '4' ELSE
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000                 AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000  THEN '1' ELSE
+	CASE WHEN("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER") BETWEEN 500000 AND 1100000   AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  >= 800000  THEN '2' ELSE
+	CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 1100000                 AND ("PAYER_SALARY_WAGES" + "PAYER_SUPER_EXPNS")  <  800000  THEN '3' ELSE  '0' 
+--    END END END 
+	END END END END AS "RISK_CATEGORY"
+	
+FROM
+(
+SELECT 
+	"A"."PAYER_ABN",
+	"A"."FINANCIAL_YEAR",
+	"A"."PAYER_NAME",
+	"A"."FLAGGED_PAID_BY_PAYER",
+	"A"."FLAGGED_TAX_WITHELD_BY_PAYER",
+	"A"."FLAGGED_GST_BY_PAYER",
+	"A"."TOTAL_PAID_BY_PAYER",
+	"A"."TOTAL_TAX_WITHELD_BY_PAYER",
+	"A"."TOTAL_GST_BY_PAYER",
+	"A"."WCQ_PAYER",
+	"A"."TPAR_PAYER_QLD",
+	"A"."EMP_CNT_PAYER",
+	"A"."PAYER_TOTL_BUS_INCM_AMT",
+	"A"."PAYER_CONTRACTORS_PMNTS",
+	"A"."PAYER_SALARY_WAGES",
+	"A"."PAYER_SUPER_EXPNS",
+	"A"."ORG_STATUS",
+	"A"."GST_REGN_DT",
+	"A"."GST_CANCN_DT",
+	"A"."CLNT_TYP",
+	"A"."ANZSIC_CD",
+	"A"."ANZSIC_TITLE",
+	"B"."PAYER_BP",
+    "B"."BP_FIN_STATUS",
+	"B"."BP_GRP_STATUS",
+	"B"."VALID_FROM",
+	"B"."VALID_TO",
+	"B"."TRANSACTION_NUMBER" ,	
+	"B"."A_APPRENT_PMT",
+	"B"."A_TRAINEES_PMT",
+	"B"."A_CONTRACTORS",
+	"B"."A_COMMISSION",
+	"B"."A_GROSS_SAL_WAGE",
+	"B"."A_DIRECTOR_FEE",
+	"B"."A_EMPL_SUP_CONTRIB",
+	"B"."A_FRINGE_BENEFIT",
+	"B"."A_SHARE_SCHEMES",
+	"B"."A_OTH_NON_TAX_WAGE",
+	"B"."C_DEDUCTION_ALLOWED",
+	"B"."C_TOT_QLD_NON_TAX_WAGE",
+	"B"."C_TOT_QLD_TXBLE_WAGES",
+	"B"."C_PAY_TAX_LIAB_CREDIT",
+	"B"."C_PAY_TAX_AMOUNT",
+    "B"."C_TAX_AMOUNT",
+    "B"."A_TOT_INT_WAGE"
+FROM :EXT_DATA_SET AS "A"
+LEFT OUTER JOIN
+:RMS_COMBINED AS "B"
+ON
+"A"."PAYER_ABN" = "B"."PAYER_ABN"
+)
+;
+
+-----------------------------------CASE_DATA--------------------
+CRM_CASE =
+SELECT 
+	"CASE_GUID",
+	"CASE_ID",
+	"CASE_TITLE",
+	"CASE_TYPE",
+	"CASE_CATEGORY",
+	"CASE_PRIORITY",
+	"CASE_OUTCOME",
+	"REASON_CODE",
+	"ABN",
+	"PARTNER",
+	"STAT_ORDERNO",
+	"PROCESSOR",
+	"CREATE_TIME",
+	"CHANGE_TIME",
+	"CLOSING_TIME",
+	"ZZTOTASSMT"
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE "ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM :TPAR_PAYEE)
+AND   "CASE_CATEGORY" = 'PRT';
+
+SUB_CAT =
+SELECT DISTINCT  "PAYER_ABN", "SUB_CAT" FROM
+(
+SELECT DISTINCT "PAYER_ABN","SUB_CAT",
+RANK() OVER (PARTITION BY "PAYER_ABN"ORDER BY "PAYER_ABN", "SUB_CAT" ASC) AS "RANK_1"
+FROM
+(
+SELECT
+	"A"."PAYER_ABN",
+	CASE WHEN "A"."PAYER_ABN" = "B"."ABN" AND "CASE_OUTCOME" = 'PROD' THEN '2' ELSE
+	CASE WHEN "A"."PAYER_ABN" = "B"."ABN" THEN '3' ELSE '1' END END AS "SUB_CAT"
+	
+FROM 
+	:TPAR_PAYEE AS "A"
+LEFT OUTER JOIN
+	:CRM_CASE   AS  "B"
+ON  "A"."PAYER_ABN" = "B"."ABN"
+AND "B"."CASE_TYPE" = 'ZINV'
+)
+) WHERE "RANK_1" = 1
+
+;
+
+ECI_STATUS =
+SELECT DISTINCT 
+	"ABN",
+	"CASE_TYPE",
+	"REASON_CODE" AS "ECI_STATUS"
+FROM :CRM_CASE 	
+WHERE "CASE_TYPE" = 'ZEXM'	
+
+
+;
+
+EXT_RMS_CRM =
+SELECT 
+	"A"."PAYER_ABN"                 	   AS "PAYER_ABN"                     ,
+	"A"."FINANCIAL_YEAR"            	   AS "FINANCIAL_YEAR"                ,
+	"A"."PAYER_NAME"                       AS "PAYER_NAME"                    ,
+	"A"."ASIC_STATUS"                	   AS "ASIC_STATUS"                   ,
+	"A"."GST_REGN_DT"               	   AS "GST_REGN_DT"                   ,
+	"A"."GST_CANCN_DT"              	   AS "GST_CANCN_DT"                  ,
+
+	"A"."FLAGGED_PAID_BY_PAYER"     	   AS "FLAGGED_PAID_BY_PAYER"         ,
+	"A"."FLAGGED_TAX_WITHELD_BY_PAYER"     AS "FLAGGED_TAX_WITHELD_BY_PAYER"  ,
+	"A"."FLAGGED_GST_BY_PAYER"             AS "FLAGGED_GST_BY_PAYER"          ,
+	"A"."TOTAL_PAID_BY_PAYER"              AS "TOTAL_PAID_BY_PAYER"           ,
+	"A"."TOTAL_TAX_WITHELD_BY_PAYER"       AS "TOTAL_TAX_WITHELD_BY_PAYER"    ,
+	"A"."TOTAL_GST_BY_PAYER"               AS "TOTAL_GST_BY_PAYER"            ,
+
+    "A"."PAYER_BP"                         AS "PAYER_BP"                      ,
+    "A"."BP_GRP_STATUS"                    AS "BP_GRP_STATUS"                 ,
+    "A"."VALID_FROM"                       AS "VALID_FROM"                    ,
+    "A"."VALID_TO"                         AS "VALID_TO"                      ,    
+    "A"."BP_FIN_STATUS"                    AS "BP_FIN_STATUS"                 ,
+    "A"."TRANSACTION_NUMBER"               AS "TRANSACTION_NUMBER"            ,
+    "A"."A_APPRENT_PMT"                    AS "A_APPRENT_PMT"                 ,
+    "A"."A_TRAINEES_PMT"                   AS "A_TRAINEES_PMT"                ,
+    "A"."A_COMMISSION"                     AS "A_COMMISSION"                  ,
+    "A"."A_CONTRACTORS"                    AS "A_CONTRACTORS"                 ,
+    "A"."C_DEDUCTION_ALLOWED"              AS "C_DEDUCTION_ALLOWED"           ,
+    "A"."A_DIRECTOR_FEE"                   AS "A_DIRECTOR_FEE"                ,
+    "A"."A_EMPL_SUP_CONTRIB"               AS "A_EMPL_SUP_CONTRIB"            ,
+    "A"."A_FRINGE_BENEFIT"                 AS "A_FRINGE_BENEFIT"              ,
+    "A"."A_GROSS_SAL_WAGE"                 AS "A_GROSS_SAL_WAGE"              ,
+    "A"."A_OTH_NON_TAX_WAGE"               AS "A_OTH_NON_TAX_WAGE"            ,
+    "A"."A_SHARE_SCHEMES"                  AS "A_SHARE_SCHEMES"               ,
+    "A"."C_TOT_QLD_NON_TAX_WAGE"           AS "C_TOT_QLD_NON_TAX_WAGE"        ,
+	"A"."C_TOT_QLD_TXBLE_WAGES"            AS "C_TOT_QLD_TXBLE_WAGES"         ,
+	"A"."C_PAY_TAX_LIAB_CREDIT"            AS "C_PAY_TAX_LIAB_CREDIT"         ,
+	"A"."C_PAY_TAX_AMOUNT"                 AS "C_PAY_TAX_AMOUNT"              ,
+    "A"."C_TAX_AMOUNT"                     AS "C_TAX_AMOUNT"                  ,
+    "A"."A_TOT_INT_WAGE"                   AS "A_TOT_INT_WAGE"                ,
+  
+    "A"."CLNT_TYP"                         AS "CLNT_TYP"                      ,
+	"A"."ANZSIC_CD"                        AS "ANZSIC_CD"                     ,
+	"A"."ANZSIC_TITLE"                     AS "ANZSIC_TITLE"                  ,
+	"A"."PAYER_TOTL_BUS_INCM_AMT"          AS "PAYER_TOTL_BUS_INCM_AMT"       ,
+	"A"."PAYER_CONTRACTORS_PMNTS"          AS "PAYER_CONTRACTORS_PMNTS"       ,
+	"A"."PAYER_SALARY_WAGES"               AS "PAYER_SALARY_WAGES"            ,
+	"A"."PAYER_SUPER_EXPNS"                AS "PAYER_SUPER_EXPNS"             ,
+    
+    "A"."WCQ_PAYER"                        AS "WCQ_PAYER"                     ,
+	"A"."TPAR_PAYER_QLD"                   AS "TPAR_PAYER_QLD"                ,
+	"A"."EMP_CNT_PAYER"                    AS "EMP_CNT_PAYER"                 ,
+	"A"."RISK_CATEGORY"                    AS "RISK_CATEGORY"                 ,
+	"B"."SUB_CAT"                          AS "SUB_RISK_CATEGORY"             ,
+	"C"."ECI_STATUS"                       AS "ECI_STATUS"
+FROM 
+	:EXT_RMS_DATA AS "A"	
+LEFT OUTER JOIN
+	:SUB_CAT  AS "B"
+ON
+	"A"."PAYER_ABN"   = "B"."PAYER_ABN"  
+LEFT OUTER JOIN
+   :ECI_STATUS AS "C"
+ON
+	"A"."PAYER_ABN"   = "C"."ABN"  
+;
+
+RETURN
+SELECT DISTINCT 
+	"PAYER_ABN"                     ,
+	"FINANCIAL_YEAR"                ,
+	"PAYER_NAME"                    ,
+	"RISK_CATEGORY"                 ,
+--    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                 AND  TO_DATS("VALID_TO") >= TO_DATS(CONCAT(TO_NVARCHAR(TO_INT(:IP_FY) - 1),'0701')) AND  ( "TRANSACTION_NUMBER"  = '' OR  "TRANSACTION_NUMBER"  IS  NULL ) THEN '4' ELSE
+--    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                 AND  ( "TRANSACTION_NUMBER"   <> '' OR "TRANSACTION_NUMBER"  IS NOT NULL ) AND  ("A_CONTRACTORS" = 0 OR "A_CONTRACTORS" IS NULL OR "A_CONTRACTORS" < 1 )  THEN '4' ELSE
+--    CASE WHEN ("FLAGGED_PAID_BY_PAYER" - "FLAGGED_GST_BY_PAYER")  >= 500000                 AND  "TRANSACTION_NUMBER"   <> '' AND  "A_CONTRACTORS" > 1   THEN '0' ELSE "RISK_CATEGORY"
+--    END END END AS "RISK_CATEGORY" ,
+	"SUB_RISK_CATEGORY"             ,
+
+	
+	"ASIC_STATUS"                   ,
+	"GST_REGN_DT"                   ,
+	"GST_CANCN_DT"                  ,
+	"ECI_STATUS"                    , 
+	"FLAGGED_PAID_BY_PAYER"         ,
+	"FLAGGED_TAX_WITHELD_BY_PAYER"  ,
+	"FLAGGED_GST_BY_PAYER"          ,
+	"TOTAL_PAID_BY_PAYER"           ,
+	"TOTAL_TAX_WITHELD_BY_PAYER"    ,
+	"TOTAL_GST_BY_PAYER"            ,
+
+    "PAYER_BP"                      ,
+    "BP_FIN_STATUS"                 ,
+    "BP_GRP_STATUS"                 ,
+    "VALID_FROM"                    ,
+    "VALID_TO"						,
+    "TRANSACTION_NUMBER"            ,
+    "A_APPRENT_PMT"                 ,
+	"A_TRAINEES_PMT"                ,
+    "A_CONTRACTORS"                 ,
+	"A_COMMISSION"                  ,
+	"A_GROSS_SAL_WAGE"              ,
+	"A_DIRECTOR_FEE"                ,
+	"A_EMPL_SUP_CONTRIB"            ,
+	"A_FRINGE_BENEFIT"              ,
+	"A_SHARE_SCHEMES"               ,
+	"A_OTH_NON_TAX_WAGE"            ,
+	"C_DEDUCTION_ALLOWED"           ,
+	"C_TOT_QLD_NON_TAX_WAGE"        ,
+	"C_TOT_QLD_TXBLE_WAGES"         ,
+	"C_PAY_TAX_LIAB_CREDIT"         ,
+	"C_PAY_TAX_AMOUNT"              ,
+	"C_TAX_AMOUNT"                  ,
+	"A_TOT_INT_WAGE"				,
+  
+    "CLNT_TYP"                      ,
+	"ANZSIC_CD"                     ,
+	"ANZSIC_TITLE"                  ,
+	"PAYER_TOTL_BUS_INCM_AMT"       ,
+	"PAYER_CONTRACTORS_PMNTS"       ,
+	"PAYER_SALARY_WAGES"            ,
+	"PAYER_SUPER_EXPNS"             ,
+    
+    "WCQ_PAYER"                     ,
+	"TPAR_PAYER_QLD"                ,
+	"EMP_CNT_PAYER"                 
+FROM :EXT_RMS_CRM
+;
+
+
+END;

@@ -8,7 +8,7 @@
     <resourceUri>osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
-    <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA</resourceUri>
+    <resourceUri>osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C</resourceUri>
   </DataSource>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE</resourceUri>
@@ -206,22 +206,22 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="337.8268736718046" y="112"/>
+      <upperLeftCorner x="337" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_FY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999991" y="621.9999976158142"/>
+      <upperLeftCorner x="91" y="621"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   
   
     <shape expanded="true" modelObjectName="Projection_ABR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="405.8649461248091" y="356.9999988079071"/>
+      <upperLeftCorner x="405" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="337.8268736718046" y="217"/>
+      <upperLeftCorner x="337" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_ABR" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -233,7 +233,7 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666663" y="356.9999988079071"/>
+      <upperLeftCorner x="118" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -246,11 +246,11 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
     </shape><shape><upperLeftCorner/><rectangleSize/></shape>
   
     <shape expanded="true" modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.9999999999999" y="516.9999976158142"/>
+      <upperLeftCorner x="301" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Aggregation_FY" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999989" y="516.9999976158142"/>
+      <upperLeftCorner x="91" y="516"/>
     
       <rectangleSize width="160"/>
     </shape>

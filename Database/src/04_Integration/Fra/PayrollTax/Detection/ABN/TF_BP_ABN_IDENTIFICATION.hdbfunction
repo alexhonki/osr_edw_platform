@@ -17,7 +17,13 @@ SELECT
 "BUT0ID"."VALID_DATE_TO"
 FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BUT0ID"
+INNER JOIN
+"osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BUT000"
+ON "BUT0ID"."PARTNER" = "BUT000"."PARTNER"
 WHERE "BUT0ID"."TYPE" = 'ZABN'
+  AND "BUT000"."XDELE" <> 'X' 
+  AND "BUT000"."BU_GROUP" <> 'OLGR'
+  AND "BUT000"."AUGRP" <>'ZOFT' 
 ;
 
 END;

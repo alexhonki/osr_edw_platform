@@ -1,0 +1,92 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_EMP_DETAILS"( IN IP_ALERT_ID NVARCHAR(20))
+              RETURNS TABLE 
+    	(
+			DB_KEY			VARBINARY(16),
+			DB_KEY_DASH		NVARCHAR(32),
+			ALERT_ID		NVARCHAR(20),
+			ABN				NVARCHAR(20),
+			GJAHR			NVARCHAR(4),
+			NON_IDV_NM_LN_1 NVARCHAR(200) ,
+			NON_IDV_NM_LN_2 NVARCHAR(200) 
+    	)    		
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+RETURN
+
+SELECT 	DISTINCT	
+			"DB_KEY"          ,
+			"DB_KEY_DASH"     ,
+			"ALERT_ID"        ,
+			"ABN"			  ,
+			"GJAHR" 		  , 
+			"NON_IDV_NM_LN_1" ,		
+			"NON_IDV_NM_LN_2"	
+FROM
+(
+			
+	SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			"DATA"."NON_IDV_NM_LN_1"														AS "NON_IDV_NM_LN_1" ,		
+			"DATA"."NON_IDV_NM_LN_2"														AS "NON_IDV_NM_LN_2" 
+		FROM		
+			"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	
+			"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
+		ON  		
+				"ALERT"."ABN" = "DATA"."ABN"
+		AND 	TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+
+		
+)		
+		;
+
+ELSE
+
+RETURN
+SELECT 	DISTINCT	
+			"DB_KEY"          ,
+			"DB_KEY_DASH"     ,
+			"ALERT_ID"        ,
+			"ABN"			  ,
+			"GJAHR" 		  , 
+			"NON_IDV_NM_LN_1" ,		
+			"NON_IDV_NM_LN_2"	
+FROM
+(
+	SELECT 
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN"																	AS "ABN",
+			"ALERT"."GJAHR" 																AS "GJAHR", 
+			"DATA"."NON_IDV_NM_LN_1"														AS "NON_IDV_NM_LN_1",		
+			"DATA"."NON_IDV_NM_LN_2"														AS "NON_IDV_NM_LN_2"														
+		FROM		
+			"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
+		INNER JOIN	
+			"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
+		ON  		
+				"ALERT"."ABN" = "DATA"."ABN"
+		AND 	TO_NVARCHAR("DATA"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+		WHERE 
+			"ALERT"."ALERT_ID" = :IP_ALERT_ID
+		
+
+)		
+;
+END IF;
+
+
+
+END;

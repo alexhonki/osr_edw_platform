@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ALERT_PT_ABN_FY" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ALERT_PT_ABN_FY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="INVEST_REASON" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_REASON"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="INVEST_REASON"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BPARTNER" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="TF_ALERT_PT_ABN_FY" columnName="GROUP_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

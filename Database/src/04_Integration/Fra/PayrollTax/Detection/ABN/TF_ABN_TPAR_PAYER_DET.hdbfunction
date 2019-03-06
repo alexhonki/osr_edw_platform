@@ -1,0 +1,75 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_CONTACT_DET"(IN IP_FY NVARCHAR(4))
+      RETURNS TABLE( 
+		"REF_ID"                      DECIMAL(13,0) ,
+	    "PAYER_ABN"                   NVARCHAR(11)  ,
+		"PAYER_ABN_STS"               NVARCHAR(9)   ,
+		"FINANCIAL_YEAR"              NVARCHAR(4)   ,
+		"PAYER_NAME"                  NVARCHAR(200) ,
+		"PAYER_TRDG_NM"               NVARCHAR(200) ,
+		"PAYER_ADDR_LN_1"             NVARCHAR(38)  ,
+		"PAYER_ADDR_LN_2N"             NVARCHAR(38)  ,
+		"PAYER_LOCALITY"              NVARCHAR(27)  ,
+		"PAYER_STATE"                 NVARCHAR(3)   ,
+		"PAYER_PCODE"                 NVARCHAR(4)   ,
+		"PAYER_CNTCT_NM"              NVARCHAR(200) ,
+		"PAYER_CNTCT_PH_NUM"          NVARCHAR(15)  ,
+		"PAYER_FAX_NUM"               NVARCHAR(15)  ,
+		"PAYER_EMAIL_ADDR"            NVARCHAR(76) ,
+		"ROW_NUM"                     NVARCHAR(4)
+       	
+       	
+)
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+RETURN
+    SELECT 
+    	"REF_ID",
+		"PAYER_ABN",
+		"PAYER_ABN_STS",
+		"FINANCIAL_YEAR",
+		"PAYER_NAME",
+		"PAYER_TRDG_NM",
+		"PAYER_ADDR_LN_1",
+		"PAYER_ADDR_LN_2N",
+		"PAYER_LOCALITY",
+		"PAYER_STATE",
+		"PAYER_PCODE",
+		"PAYER_CNTCT_NM",
+		"PAYER_CNTCT_PH_NUM",
+		"PAYER_FAX_NUM",
+		"PAYER_EMAIL_ADDR",
+		ROW_NUMBER( )  OVER (PARTITION BY "PAYER_ABN", "FINANCIAL_YEAR" ORDER BY "PAYER_ABN", "FINANCIAL_YEAR", "PAYER_ABN_STS" ASC ) AS "ROW_NUM"
+FROM
+( 
+	SELECT DISTINCT
+    	"REF_ID",
+		"PAYER_ABN",
+		"PAYER_ABN_STS",
+		"FINANCIAL_YEAR",
+		"PAYER_NAME",
+		"PAYER_TRDG_NM",
+		"PAYER_ADDR_LN_1",
+		"PAYER_ADDR_LN_2N",
+		"PAYER_LOCALITY",
+		"PAYER_STATE",
+		"PAYER_PCODE",
+		"PAYER_CNTCT_NM",
+		"PAYER_CNTCT_PH_NUM",
+		"PAYER_FAX_NUM",
+		"PAYER_EMAIL_ADDR"
+FROM 	"osr.edw.staging.td.ato.proxy::TF_TPAR_PAYER_C"()
+WHERE
+		"PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP"(:IP_FY/*IP_FY <NVARCHAR(4)>*/))
+AND
+		"FINANCIAL_YEAR" = :IP_FY
+)
+ORDER BY "PAYER_ABN", "ROW_NUM" ASC
+		;
+    
+    
+END;

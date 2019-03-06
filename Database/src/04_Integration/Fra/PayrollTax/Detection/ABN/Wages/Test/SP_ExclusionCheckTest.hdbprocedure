@@ -6,6 +6,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_ExclusionCheckTest"
 	IN iv_id_role           		 NVARCHAR(1)  ,
 	IN iv_pt_case_dt            	 NVARCHAR(8)  ,
 	IN iv_pt_case           		 NVARCHAR(1)  ,
+	IN iv_pt_exm_case                NVARCHAR(1)  ,
 	IN iv_flag_abr_acnc              NVARCHAR(1)  ,
 	IN iv_flag_asic_regd             NVARCHAR(1)  ,
 	IN iv_flag_sup_gov_exmpt_anzsic  NVARCHAR(1)  ,
@@ -63,6 +64,7 @@ TOP 1
 	:iv_id_role                    AS   "ID_ROLE",
 	:iv_pt_case_dt                 AS   "PT_CASE_DATE" ,
 	:iv_pt_case                    AS   "PT_CASE",
+	:iv_pt_exm_case                AS   "FLAG_EXM_CASE",
 	:iv_flag_abr_acnc              AS   "FLAG_ABR_ACNC", 
 	:iv_flag_asic_regd             AS   "FLAG_ASIC_REGD", 
 	:iv_flag_sup_gov_exmpt_anzsic  AS   "FLAG_SUP_GOV_EXMPT_ANZSIC"

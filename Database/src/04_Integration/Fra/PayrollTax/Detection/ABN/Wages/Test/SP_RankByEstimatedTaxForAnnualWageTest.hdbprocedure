@@ -1,0 +1,49 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_RankByEstimatedTaxForAnnualWageTest" (
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	IN lv_run_mode			NVARCHAR(1),
+	IN lv_thld_yearly		Decimal(15,2),
+	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_rank_estimated_tax",
+	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "ABN"   = :iv_abn
+  AND "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
+;
+
+lt_param =
+SELECT
+TOP 1
+:lv_run_mode    AS "RUN_MODE",
+:lv_thld_yearly AS "THRESHOLD_YEARLY"
+FROM  :lt_workset;
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
+:lt_workset,
+lt_out_for_rule );
+
+
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_RankByEstimatedTax"(
+:lt_out_for_rule,
+:lt_param,
+et_result,
+et_text );
+ 
+END;

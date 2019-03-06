@@ -1,0 +1,132 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_ADDRESS"(IN IP_ALERT_ID NVARCHAR(20))
+       RETURNS TABLE
+		(
+			DB_KEY                  		VARBINARY(16),
+			DB_KEY_DASH						NVARCHAR(36),
+			ALERT_ID                		NVARCHAR(20),
+			ABN                     		NVARCHAR(20),
+			GJAHR                   		NVARCHAR(4),
+			TRAINEE_ID              		NVARCHAR(10), 
+			TRAINING_AGREEMENT_TYPE 		NVARCHAR(1), 
+			STATUS_DESC						NVARCHAR(30), 
+			EMPLOYER_LOCATION_ADDRESS_1		NVARCHAR(60),
+			EMPLOYER_LOCATION_ADDRESS_2		NVARCHAR(60),
+			EMPLOYER_LOCATION_ADDRESS_3		NVARCHAR(60),
+			EMPLOYER_LOCATION_POSTCODE		INTEGER,
+			EMPLOYER_POSTAL_ADDRESS_1		NVARCHAR(60),
+			EMPLOYER_POSTAL_ADDRESS_2		NVARCHAR(60),
+			EMPLOYER_POSTAL_ADDRESS_3		NVARCHAR(60),
+			EMPLOYER_POSTAL_POSTCODE		INTEGER
+		)
+
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+DESBT_ADD =
+
+
+				SELECT DISTINCT 
+            		"ABN" , 
+                	"TRAINEE_ID", 
+            		"TRAINING_AGREEMENT_TYPE", 
+                	"STATUS_DESC", 
+                	"EMPLOYER_LOCATION_ADDRESS_1",
+					"EMPLOYER_LOCATION_ADDRESS_2",
+					"EMPLOYER_LOCATION_ADDRESS_3",
+					"EMPLOYER_LOCATION_POSTCODE",
+					"EMPLOYER_POSTAL_ADDRESS_1",
+					"EMPLOYER_POSTAL_ADDRESS_2",
+					"EMPLOYER_POSTAL_ADDRESS_3",
+					"EMPLOYER_POSTAL_POSTCODE",
+                	TO_DATS("COMMENCEMENT_DATE")		AS "COMMENCEMENT_DATE", 
+                	TO_DATS("TERMINATION_DATE") 		AS "TERMINATION_DATE", 
+                	"CONTRACT_MODE", 
+                	"OCCUPATION_NAME", 
+                	TO_DATS("NOMINAL_COMPLETION_DATE")	AS "NOMINAL_COMPLETION_DATE", 
+                	TO_DATS("DATE_OF_BIRTH")			AS "DATE_OF_BIRTH", 
+                	"GIVEN_NAME", 
+                	"MIDDLE_NAME", 
+                	"SURNAME"
+				FROM "osr.edw.staging.md.desbt.synonym::CDS_ORG.DSO.TRAINING.active_data"
+				WHERE	"TRAINING_AGREEMENT_TYPE"	IN ('A', 'T')
+				AND 	"ABN"						IN (SELECT "ABN" FROM :ALERT_INFO )
+ --         		AND       TO_DATS("COMMENCEMENT_DATE")    <=  CONCAT((SELECT DISTINCT MAX("GJAHR") FROM :ALERT_INFO ), '0630')
+ --         		AND TO_DATS("TERMINATION_DATE")             >=  CONCAT(TO_NVARCHAR(TO_INT((SELECT DISTINCT MIN("GJAHR") FROM :ALERT_INFO ) - 1)), '0701')
+;
+
+
+RETURN
+				SELECT
+                	"DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN",
+                    "GJAHR",
+                	"TRAINEE_ID", 
+            		"TRAINING_AGREEMENT_TYPE", 
+                	"STATUS_DESC", 
+                	"EMPLOYER_LOCATION_ADDRESS_1",
+					"EMPLOYER_LOCATION_ADDRESS_2",
+					"EMPLOYER_LOCATION_ADDRESS_3",
+					"EMPLOYER_LOCATION_POSTCODE",
+					"EMPLOYER_POSTAL_ADDRESS_1",
+					"EMPLOYER_POSTAL_ADDRESS_2",
+					"EMPLOYER_POSTAL_ADDRESS_3",
+					"EMPLOYER_POSTAL_POSTCODE"
+				FROM
+				(                              
+                	SELECT
+                    	"A"."DB_KEY",
+                    	"A"."DB_KEY_DASH",
+                    	"A"."ALERT_ID",
+                    	"A"."ABN",
+                    	"A"."GJAHR",
+                    	"B"."TRAINEE_ID", 
+                    	"B"."TRAINING_AGREEMENT_TYPE", 
+                    	"B"."STATUS_DESC", 
+                    	"B"."EMPLOYER_LOCATION_ADDRESS_1",
+						"B"."EMPLOYER_LOCATION_ADDRESS_2",
+						"B"."EMPLOYER_LOCATION_ADDRESS_3",
+						"B"."EMPLOYER_LOCATION_POSTCODE",
+						"B"."EMPLOYER_POSTAL_ADDRESS_1",
+						"B"."EMPLOYER_POSTAL_ADDRESS_2",
+						"B"."EMPLOYER_POSTAL_ADDRESS_3",
+						"B"."EMPLOYER_POSTAL_POSTCODE"
+					FROM		:ALERT_INFO 	AS "A"
+					INNER JOIN	:DESBT_ADD 	AS "B"
+					ON			 "A"."ABN"  	= "B"."ABN"
+				)
+				;
+
+END;      

@@ -2,180 +2,158 @@ _schema-version: '2.0'
 ID: OSR_EDW_PLATFORM
 description: OSR EDW Platform
 version: 0.0.1
-
-
 modules:
- - name:  OSR_EDW_PLATFORM-DWF
-   type: dwf
-#   parameters:
-#      app-name: OSR_EDW_PLATFORM-DWF
-   path: DWF
-   requires:
-#      - name: OSR_EDW_PLATFORM-uaa
+  - name: OSR_EDW_PLATFORM-DWF
+    type: dwf
+    path: DWF
+    requires:
       - name: OSR_EDW_PLATFORM-dws
-
- - name: OSR_EDW_PLATFORM-Backend
-   type: nodejs
-#   parameters:
-#      app-name: OSR_EDW_PLATFORM-Backend
-   path: Backend
-   requires:
-#      - name: OSR_EDW_PLATFORM-uaa
+  - name: OSR_EDW_PLATFORM-Backend
+    type: nodejs
+    path: Backend
+    requires:
       - name: OSR_EDW_PLATFORM-container
       - name: OSR_EDW_PLATFORM-dws
-   properties:
-     API_END_POINT: "${xs-api-url}"
-#     SAP_JWT_TRUST_ACL: "[{\"clientid\":\"*\",\"identityzone\":\"*\"}]"
-   provides:
-    - name:  OSR_EDW_PLATFORM-Backend
-      properties:
-       service_url: ${default-url}
-   build-parameters:
+    properties:
+      API_END_POINT: '${xs-api-url}'
+    provides:
+      - name: OSR_EDW_PLATFORM-Backend
+        properties:
+          service_url: '${default-url}'
+    build-parameters:
       timeout: 30m
- - name: OSR_EDW_PLATFORM-Database
-   type: hdb
-#   parameters:
-#      app-name: OSR_EDW_PLATFORM-Database
-   path: Database
-   requires:
-    - name: OSR_EDW_PLATFORM-container
-      properties:
+  - name: OSR_EDW_PLATFORM-Database
+    type: hdb
+    path: Database
+    requires:
+      - name: OSR_EDW_PLATFORM-container
+        properties:
           TARGET_CONTAINER: '~{hdi-container-name}'
-    - name: OSR-EDW-SOURCE-RMS-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-RMS-grantor
-        service: '~{OSR-EDW-SOURCE-RMS-grantor-service}'
-    - name: OSR-EDW-SOURCE-TMR-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-TMR-grantor
-        service: '~{OSR-EDW-SOURCE-TMR-grantor-service}'
-    - name: OSR-EDW-SOURCE-ABR-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-ABR-grantor
-        service: '~{OSR-EDW-SOURCE-ABR-grantor-service}'
-    - name: OSR-EDW-SOURCE-ASIC-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-ASIC-grantor
-        service: '~{OSR-EDW-SOURCE-ASIC-grantor-service}'
-    - name: OSR-EDW-SOURCE-ATO-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-ATO-grantor
-        service: '~{OSR-EDW-SOURCE-ATO-grantor-service}'
-    - name: OSR-EDW-SOURCE-WCQ-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-WCQ-grantor
-        service: '~{OSR-EDW-SOURCE-WCQ-grantor-service}'
-    - name: OSR-EDW-SOURCE-CRM-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-CRM-grantor
-        service: '~{OSR-EDW-SOURCE-CRM-grantor-service}'
-    - name: OSR-EDW-SOURCE-FRA-grantor
-      group: SERVICE_REPLACEMENTS
-      properties:
-        key: logical-OSR-EDW-SOURCE-FRA-grantor
-        service: '~{OSR-EDW-SOURCE-FRA-grantor-service}'        
-    - name: acs-ext-access-grantor
-    - name: edw-ext-access-grantor
+      - name: OSR-EDW-SOURCE-RMS-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-RMS-grantor
+          service: '~{OSR-EDW-SOURCE-RMS-grantor-service}'
+      - name: OSR-EDW-SOURCE-TMR-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-TMR-grantor
+          service: '~{OSR-EDW-SOURCE-TMR-grantor-service}'
+      - name: OSR-EDW-SOURCE-ABR-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-ABR-grantor
+          service: '~{OSR-EDW-SOURCE-ABR-grantor-service}'
+      - name: OSR-EDW-SOURCE-ASIC-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-ASIC-grantor
+          service: '~{OSR-EDW-SOURCE-ASIC-grantor-service}'
+      - name: OSR-EDW-SOURCE-ATO-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-ATO-grantor
+          service: '~{OSR-EDW-SOURCE-ATO-grantor-service}'
+      - name: OSR-EDW-SOURCE-WCQ-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-WCQ-grantor
+          service: '~{OSR-EDW-SOURCE-WCQ-grantor-service}'
+      - name: OSR-EDW-SOURCE-CRM-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-CRM-grantor
+          service: '~{OSR-EDW-SOURCE-CRM-grantor-service}'
+      - name: OSR-EDW-SOURCE-FRA-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-FRA-grantor
+          service: '~{OSR-EDW-SOURCE-FRA-grantor-service}'
+      - name: OSR-EDW-SOURCE-OSRSTATE-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-OSRSTATE-grantor
+          service: '~{OSR-EDW-SOURCE-OSRSTATE-grantor-service}'
+      - name: OSR-EDW-SOURCE-DESBT-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-DESBT-grantor
+          service: '~{OSR-EDW-SOURCE-DESBT-grantor-service}'
+      - name: acs-ext-access-grantor
+      - name: edw-ext-access-grantor
 resources:
-# - name: OSR_EDW_PLATFORM-uaa
-#   type: com.sap.xs.uaa
-#   parameters:
-#     service-name: OSR_EDW_PLATFORM-uaa
-#     service-plan: space
-#     config:
-#         xsappname: OSR_EDW_PLATFORM
-#         scopes:
-#          - name: $XSAPPNAME.TOE
-#            description: access for TOE
-#            grant-as-authority-to-apps:
-#             - dwf-toe
-#             - dwf-runtime
-#            granted-apps:
-#             - dwf-toe
-#             - dwf-runtime
-#         authorities:
-#          - $ACCEPT_GRANTED_AUTHORITIES
-#         role-templates:
-#           - name: User
-#             description: Access API
-#             scope-references:
-#              - $XSAPPNAME.TOE
-#              - cloud_controller.read
-
- - name: OSR-EDW-SOURCE-RMS-grantor
-   properties:
-     OSR-EDW-SOURCE-RMS-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_RMS-deploy
-#     service-name: D043051-lufb2asszmec20vd-OSR_EDW_SOURCE_RMS-OSR_EDW_SOURCE_RMS-container
-   type: org.cloudfoundry.existing-service
-   
- - name: OSR-EDW-SOURCE-TMR-grantor
-   properties:
-     OSR-EDW-SOURCE-TMR-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_TMR-deploy
-   type: org.cloudfoundry.existing-service
- - name: OSR-EDW-SOURCE-ABR-grantor
-   properties:
-     OSR-EDW-SOURCE-ABR-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_ABR-deploy
-   type: org.cloudfoundry.existing-service
- - name: OSR-EDW-SOURCE-ASIC-grantor
-   properties:
-     OSR-EDW-SOURCE-ASIC-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_ASIC-deploy
-   type: org.cloudfoundry.existing-service
- - name: OSR-EDW-SOURCE-ATO-grantor
-   properties:
-     OSR-EDW-SOURCE-ATO-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_ATO-deploy
-   type: org.cloudfoundry.existing-service
- - name: OSR-EDW-SOURCE-WCQ-grantor
-   properties:
-     OSR-EDW-SOURCE-WCQ-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_WCQ-deploy
-   type: org.cloudfoundry.existing-service  
- - name: OSR-EDW-SOURCE-CRM-grantor
-   properties:
-     OSR-EDW-SOURCE-CRM-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_CRM-deploy
-   type: org.cloudfoundry.existing-service
- - name: OSR-EDW-SOURCE-FRA-grantor
-   properties:
-     OSR-EDW-SOURCE-FRA-grantor-service: '${service-name}'
-   parameters:
-     service-name: OSR_EDW_SOURCE_FRA-deploy
-   type: org.cloudfoundry.existing-service   
- - name: OSR_EDW_PLATFORM-dws
-   properties:
-      dwf-edw-client-name: ${service-name}
-#      dwf-edw-client-name: OSR_EDW_PLATFORM-dws
-#   parameters:
-#      service-name: OSR_EDW_PLATFORM-dws
-   type: com.sap.xs.dwf-edw-client
- - name: OSR_EDW_PLATFORM-container
-   properties:
-      hdi-container-name: ${service-name}
-#      hdi-container-name: OSR_EDW_PLATFORM-container
-#   parameters:
-#      service-name: OSR_EDW_PLATFORM-container
-   type: com.sap.xs.hdi-container
- - name: acs-ext-access-grantor
-   type: org.cloudfoundry.existing-service
-   description: acs-ext-access-grantor
- - name: edw-ext-access-grantor
-   type: org.cloudfoundry.existing-service
-   description: edw-ext-access-grantor  
+  - name: OSR-EDW-SOURCE-RMS-grantor
+    properties:
+      OSR-EDW-SOURCE-RMS-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_RMS-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-TMR-grantor
+    properties:
+      OSR-EDW-SOURCE-TMR-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_TMR-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-ABR-grantor
+    properties:
+      OSR-EDW-SOURCE-ABR-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_ABR-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-ASIC-grantor
+    properties:
+      OSR-EDW-SOURCE-ASIC-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_ASIC-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-ATO-grantor
+    properties:
+      OSR-EDW-SOURCE-ATO-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_ATO-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-WCQ-grantor
+    properties:
+      OSR-EDW-SOURCE-WCQ-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_WCQ-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-CRM-grantor
+    properties:
+      OSR-EDW-SOURCE-CRM-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_CRM-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-FRA-grantor
+    properties:
+      OSR-EDW-SOURCE-FRA-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_FRA-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-OSRSTATE-grantor
+    properties:
+      OSR-EDW-SOURCE-OSRSTATE-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_OSR_STATE-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-DESBT-grantor
+    properties:
+      OSR-EDW-SOURCE-DESBT-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_DESBT-deploy
+    type: org.cloudfoundry.existing-service
+    
+  - name: OSR_EDW_PLATFORM-dws
+    properties:
+      dwf-edw-client-name: '${service-name}'
+    type: com.sap.xs.dwf-edw-client
+  - name: OSR_EDW_PLATFORM-container
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
+  - name: acs-ext-access-grantor
+    type: org.cloudfoundry.existing-service
+    description: acs-ext-access-grantor
+  - name: edw-ext-access-grantor
+    type: org.cloudfoundry.existing-service
+    description: edw-ext-access-grantor

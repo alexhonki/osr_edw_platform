@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_AVAILABILITY" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="ABN Wages Availability"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggr_ATO_BAS">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="WAGE_SOURCE" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>'ATO_BAS'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggr_ATO_ITR">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="WAGE_SOURCE" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>'ATO_ITR'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggr_WCQ">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="WAGE_SOURCE" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>'WCQ'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY">
+        <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="PERIOD_KEY">
+        <descriptions defaultDescription="PERIOD_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="WAGE_SOURCE">
+        <descriptions defaultDescription="WAGE_SOURCE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Aggr_ATO_BAS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAGE_SOURCE" source="WAGE_SOURCE"/>
+    </input>
+    <input node="Aggr_ATO_ITR">
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="GJAHR" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_CATEGORY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_KEY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="WAGE_SOURCE" null="true" value=""/>
+    </input>
+    <input node="Aggr_WCQ">
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="GJAHR" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_CATEGORY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="PERIOD_KEY" null="true" value=""/>
+      <mapping xsi:type="Calculation:ConstantAttributeMapping" target="WAGE_SOURCE" null="true" value=""/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Union_1">
+  <attributes>
+    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Union_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="Union_1" columnName="PERIOD_CATEGORY"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="Union_1" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="WAGE_SOURCE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAGE_SOURCE"/>
+      <keyMapping columnObjectName="Union_1" columnName="WAGE_SOURCE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="426.93008445826183" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggr_ATO_BAS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="391.9999976158142"/>
+      <rectangleSize height="30" width="234"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggr_ATO_ITR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="585.9999999999999" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggr_WCQ" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="375.99999999999994" y="391.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="376" y="236.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

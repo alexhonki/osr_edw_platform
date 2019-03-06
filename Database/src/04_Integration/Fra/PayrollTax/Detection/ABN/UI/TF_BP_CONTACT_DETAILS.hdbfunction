@@ -2,30 +2,69 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_BP_CONTACT_DETAILS"( IN IP_ALER
 RETURNS TABLE
 (
 DB_KEY				NVARCHAR(32),
+DB_KEY_DASH			NVARCHAR(36),
 ALERT_ID			NVARCHAR(20),
+ABN					NVARCHAR(20),
+GJAHR				NVARCHAR(4),
 IDNUMBER			NVARCHAR(60),
 PARTNER             NVARCHAR(10),
 BP_DESC             NVARCHAR(120),
 ADR_KIND			NVARCHAR(10),
 ADDRNUMBER			NVARCHAR(20),	
-VALID_FROM          DECIMAL(15,0),
-VALID_TO            DECIMAL(15,0),
+--VALID_FROM          DECIMAL(15,0),
+--VALID_TO            DECIMAL(15,0),
+VALID_FROM          NVARCHAR(8),
+VALID_TO            NVARCHAR(8),
+RANK1				INTEGER,
 TEL_NUMBER          NVARCHAR(30),
 TEL_EXTENS       	NVARCHAR(10),
-FAX_NUMBER          NVARCHAR(30),
 MOBILE_NO           NVARCHAR(30),
-SMTP_ADDR           NVARCHAR(241)
+FAX_NUMBER          NVARCHAR(30),
+EMAIL1              NVARCHAR(241)
 )
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
 
 BEGIN 
 
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
 BPID_DATA = 
 SELECT 
 "ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
 "ALERT"."ALERT_ID" AS "ALERT_ID",
 "ALERT"."ABN" AS "ABN",
+"ALERT"."GJAHR" AS "GJAHR",
 "BPID"."PARTNER" AS "PARTNER",
 "BPID"."IDNUMBER" AS "IDNUMBER",
 "BPID"."INSTITUTE",
@@ -34,13 +73,10 @@ SELECT
 "BPID"."VALID_DATE_TO"
 FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
-INNER JOIN 
-"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
---ON "BPID"."PARTNER" = "ALERT"."BPARTNER"
+INNER JOIN :ALERT_INFO AS "ALERT"
 ON "BPID"."IDNUMBER" = "ALERT"."ABN"
 WHERE "BPID"."TYPE" = 'ZABN'
-  AND "ALERT"."ALERT_ID" = :IP_ALERT_ID
- ;
+;
 
 BP_NAME_DATA =
 SELECT
@@ -58,26 +94,52 @@ SELECT
 --FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
 --WHERE "ALERT_ID" = :IP_ALERT_ID )
 "PARTNER"
-FROM :BPID_DATA
-WHERE "ALERT_ID" = :IP_ALERT_ID)
+FROM :BPID_DATA)
+--WHERE "ALERT_ID" = :IP_ALERT_ID)
 ;
 
 ADRC_BUT21FS =
+SELECT 
+"DB_KEY",
+"DB_KEY_DASH",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+"IDNUMBER",
+"PARTNER",
+"BP_DESC",
+"ADR_KIND",
+"ADDRNUMBER",
+--"VALID_FROM",
+--"VALID_TO"  ,
+TO_NVARCHAR(to_dats(left("VALID_FROM",8))) AS "VALID_FROM",
+TO_NVARCHAR(to_dats(left("VALID_TO",8))) AS "VALID_TO",
+rank() OVER ( PARTITION BY "ABN","ADR_KIND" ORDER BY  "ABN","ADR_KIND", "VALID_FROM" DESC, "VALID_TO" DESC) AS "RANK1",
+"TEL_NUMBER" ,
+"TEL_EXTENS" ,
+"MOBILE_NO" ,
+"FAX_NUMBER",
+"EMAIL1"
+FROM
+(
 SELECT
 "BPID"."DB_KEY" AS "DB_KEY",
+"BPID"."DB_KEY_DASH" AS "DB_KEY_DASH",
 "BPID"."ALERT_ID" AS "ALERT_ID",
-	"BUT21FS"."PARTNER" AS "PARTNER",
-	"BUT21FS"."VALID_TO" AS "VALID_TO",
-	"BUT21FS"."VALID_FROM" AS "VALID_FROM",
-	"BUT21FS"."ADR_KIND" as "ADR_KIND",
-	"BUT21FS"."ADDRNUMBER" AS "ADDRNUMBER",
-    "ADRC"."TEL_NUMBER",
-	"ADRC"."TEL_EXTENS",
-	"ADRC"."FAX_NUMBER",
-	"ADR6"."SMTP_ADDR",
-	"ADR2"."TELNR_LONG" AS "MOBILE_NO",
-	"BPID"."IDNUMBER" AS "IDNUMBER",
-	"BP_NAME"."BP_DESC" AS "BP_DESC"
+"BPID"."ABN" AS "ABN",
+"BPID"."GJAHR" AS "GJAHR",
+"BUT21FS"."PARTNER" AS "PARTNER",
+"BUT21FS"."VALID_TO" AS "VALID_TO",
+"BUT21FS"."VALID_FROM" AS "VALID_FROM",
+"BUT21FS"."ADR_KIND" as "ADR_KIND",
+"BUT21FS"."ADDRNUMBER" AS "ADDRNUMBER",
+"ADRC"."TEL_NUMBER",
+"ADRC"."TEL_EXTENS",
+"ADRC"."FAX_NUMBER",
+"ADR6"."SMTP_ADDR" AS "EMAIL1",
+"ADR2"."TELNR_LONG" AS "MOBILE_NO",
+"BPID"."IDNUMBER" AS "IDNUMBER",
+"BP_NAME"."BP_DESC" AS "BP_DESC"
 --	'' AS "IDNUMBER"
 	FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data" AS "BUT21FS" 
@@ -99,25 +161,33 @@ INNER JOIN
 :BP_NAME_DATA AS "BP_NAME"
 ON "BUT21FS"."PARTNER" = "BP_NAME"."PARTNER" 
 --WHERE "ADR2"."R3_USER" = '3'
+)
 ;
 
 RETURN
 SELECT
 "DB_KEY",
+"DB_KEY_DASH",
 "ALERT_ID",
-		"IDNUMBER",
-		"PARTNER",
-		"BP_DESC",
-		"ADR_KIND",
-		"ADDRNUMBER",
-		"VALID_FROM",
-		"VALID_TO"  ,
-		"TEL_NUMBER" ,
-		"TEL_EXTENS" ,
-		"FAX_NUMBER" ,
-		"MOBILE_NO" ,
-		"SMTP_ADDR"
+"ABN",
+"GJAHR",
+"IDNUMBER",
+"PARTNER",
+"BP_DESC",
+"ADR_KIND",
+"ADDRNUMBER",
+"VALID_FROM",
+"VALID_TO"  ,
+--TO_NVARCHAR(to_dats(left("VALID_FROM",8))) AS "VALID_FROM",
+--TO_NVARCHAR(to_dats(left("VALID_TO",8))) AS "VALID_TO",
+"RANK1",
+"TEL_NUMBER" ,
+"TEL_EXTENS" ,
+"MOBILE_NO" ,
+"FAX_NUMBER",
+"EMAIL1"
 FROM :ADRC_BUT21FS
+WHERE "RANK1" = 1
 ;
 
 END;

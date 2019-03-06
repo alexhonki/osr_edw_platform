@@ -1,0 +1,89 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_PAYG_NIND_ADDRESS"(IN IP_ALERT_ID NVARCHAR(20) )
+      RETURNS TABLE
+(
+DB_KEY				VARBINARY(16),
+DB_KEY_DASH			NVARCHAR(32),
+ALERT_ID			NVARCHAR(20),
+ABN					NVARCHAR(20),
+GJAHR				NVARCHAR(4),
+NON_IDV_NM_LN_1		NVARCHAR(200),
+NON_IDV_NM_LN_2		NVARCHAR(200),
+BUS_ADDR_LN_1		NVARCHAR(38),
+BUS_ADDR_LN_2		NVARCHAR(38),
+BUS_LCLTY_NM		NVARCHAR(27),
+BUS_STATE			NVARCHAR(3),
+BUS_PC				NVARCHAR(4),
+INCM_YR				NVARCHAR(4)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+RETURN
+SELECT
+"DB_KEY",
+"DB_KEY_DASH",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+"NON_IDV_NM_LN_1",
+"NON_IDV_NM_LN_2",
+"BUS_ADDR_LN_1",
+"BUS_ADDR_LN_2",
+"BUS_LCLTY_NM",
+"BUS_STATE",
+"BUS_PC",
+"INCM_YR"
+FROM
+(
+SELECT
+"ALERT"."DB_KEY",
+"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
+"ALERT"."ALERT_ID",
+"ALERT"."ABN",
+"ALERT"."GJAHR",
+"DATA"."NON_IDV_NM_LN_1",
+"DATA"."NON_IDV_NM_LN_2",
+"DATA"."BUS_ADDR_LN_1",
+"DATA"."BUS_ADDR_LN_2",
+"DATA"."BUS_LCLTY_NM",
+"DATA"."BUS_STATE",
+"DATA"."BUS_PC",
+"DATA"."INCM_YR"
+FROM  "osr.edw.staging.td.ato.proxy::CV_PAYG_NIND_C"() AS "DATA"
+INNER JOIN  :ALERT_INFO AS "ALERT" ON "ALERT"."ABN" = "DATA"."ABN"
+AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."INCM_YR"))
+;
+
+END;

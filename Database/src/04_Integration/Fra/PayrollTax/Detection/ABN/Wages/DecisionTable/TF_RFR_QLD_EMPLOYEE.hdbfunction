@@ -1,0 +1,152 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages.dt::TF_RFR_QLD_EMPLOYEE"( )
+              RETURNS TABLE (
+                                
+                                ABN                      NVARCHAR(11),
+                                GJAHR                    NVARCHAR(4),
+                                CNT_EMPLOYEE             INTEGER,
+                                QLD_CNT_EMPLOYEE         INTEGER,
+                                QLD_PC_EMPLOYEE          DECIMAL(13,2),
+                                LOW_EMP_CNT              INTEGER,            
+                                HIGH_EMP_CNT             INTEGER,
+                                TOP_BAND_EMP_CNT         NVARCHAR(1),
+                                RFR_EMP_CNT              DECIMAL(3,2),
+                                LOW_EMP_PC               Decimal(5,2),    
+                                HIGH_EMP_PC              Decimal(5,2),
+                                TOP_BAND_EMP_PC          NVARCHAR(1),
+                                RFR_EMP_PC               DECIMAL(3,2)
+
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+lt_emp_data = 
+SELECT DISTINCT
+                "ABN",
+                "INCM_YR"       AS "GJAHR",
+                "CNT_EMPLOYEE"  AS "QLD_CNT_EMPLOYEE",
+                "TOTAL_EMP_CNT" AS "CNT_EMPLOYEE",
+                CASE WHEN "CNT_EMPLOYEE" <> '0' AND  "TOTAL_EMP_CNT" <> '0' THEN TO_DECIMAL(( "CNT_EMPLOYEE" /  "TOTAL_EMP_CNT" ) * 100,13,2) ELSE 0 END AS "QLD_PC_EMPLOYEE"
+FROM
+(
+                
+SELECT 
+                "ABN",
+                "INCM_YR",
+                "RSDNL_STATE_CD",
+                "CNT_EMPLOYEE"  ,
+                SUM("CNT_EMPLOYEE")  OVER (PARTITION BY "ABN","INCM_YR" ORDER BY "ABN","INCM_YR") AS "TOTAL_EMP_CNT"
+FROM 
+(
+SELECT 
+                "ABN",
+                "INCM_YR",
+                "RSDNL_STATE_CD",
+                SUM("CNT_EMPLOYEE") AS  "CNT_EMPLOYEE"
+FROM "osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"()
+GROUP BY
+                "ABN",
+                "INCM_YR",
+                "RSDNL_STATE_CD"
+)                                                              
+) WHERE "RSDNL_STATE_CD" = 'QLD'
+
+;
+
+
+                                
+                
+lt_data =
+
+SELECT 
+                "ABN",
+                "GJAHR",
+                "CNT_EMPLOYEE",
+                "QLD_CNT_EMPLOYEE",
+                "QLD_PC_EMPLOYEE",
+                "LOW_EMP_CNT",
+                "HIGH_EMP_CNT",
+                "TOP_BAND_EMP_CNT",
+                "RFR_EMP_CNT",
+                "LOW_EMP_PC",
+                "HIGH_EMP_PC",
+                "TOP_BAND_EMP_PC",
+                "RFR_EMP_PC"
+FROM
+(              
+SELECT
+                "ABN",
+                "GJAHR",
+                "CNT_EMPLOYEE",
+                "QLD_CNT_EMPLOYEE",
+                "QLD_PC_EMPLOYEE",
+                CASE WHEN "QLD_CNT_EMPLOYEE" = 0                                THEN 0	ELSE
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 0  AND "QLD_CNT_EMPLOYEE" <= 10  THEN 0	ELSE    
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 10 AND "QLD_CNT_EMPLOYEE" <= 20  THEN 10 ELSE           
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 20 AND "QLD_CNT_EMPLOYEE" <= 30  THEN 20 ELSE  
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 30                               THEN 30 ELSE 0 END END END END END AS "LOW_EMP_CNT",
+                
+                CASE WHEN "QLD_CNT_EMPLOYEE" = 0                                THEN 0	ELSE
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 0  AND "QLD_CNT_EMPLOYEE" <= 10  THEN 10 ELSE    
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 10 AND "QLD_CNT_EMPLOYEE" <= 20  THEN 20 ELSE           
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 20 AND "QLD_CNT_EMPLOYEE" <= 30  THEN 30 ELSE  
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 30                               THEN 40 ELSE 0	END END END END END AS "HIGH_EMP_CNT",
+                
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 30                              THEN 'X' ELSE '' END AS "TOP_BAND_EMP_CNT",
+                
+                CASE WHEN "QLD_CNT_EMPLOYEE" = 0                                THEN 1 ELSE
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 0  AND "QLD_CNT_EMPLOYEE" <= 10  THEN 2 ELSE    
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 10 AND "QLD_CNT_EMPLOYEE" <= 20  THEN 3 ELSE             
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 20 AND "QLD_CNT_EMPLOYEE" <= 30  THEN 4 ELSE  
+                CASE WHEN "QLD_CNT_EMPLOYEE" > 30                               THEN 5 ELSE 0 END END END END END AS "RFR_EMP_CNT",
+                
+                CASE WHEN "QLD_PC_EMPLOYEE" = 0                                THEN 0	ELSE
+                CASE WHEN "QLD_PC_EMPLOYEE" > 0  AND "QLD_PC_EMPLOYEE" <= 25   THEN 0	ELSE    
+                CASE WHEN "QLD_PC_EMPLOYEE" > 25 AND "QLD_PC_EMPLOYEE" <= 50   THEN 25	ELSE               
+                CASE WHEN "QLD_PC_EMPLOYEE" > 50 AND "QLD_PC_EMPLOYEE" <= 75   THEN 50	ELSE  
+                CASE WHEN "QLD_PC_EMPLOYEE" > 75                               THEN 100 ELSE 0 END END END END END AS "LOW_EMP_PC",
+
+
+                CASE WHEN "QLD_PC_EMPLOYEE" = 0                                THEN 0	ELSE
+                CASE WHEN "QLD_PC_EMPLOYEE" > 0  AND "QLD_PC_EMPLOYEE" <= 25   THEN 25	ELSE    
+                CASE WHEN "QLD_PC_EMPLOYEE" > 25 AND "QLD_PC_EMPLOYEE" <= 50   THEN 50	ELSE               
+                CASE WHEN "QLD_PC_EMPLOYEE" > 50 AND "QLD_PC_EMPLOYEE" <= 75   THEN 75	ELSE  
+                CASE WHEN "QLD_PC_EMPLOYEE" > 75                               THEN 100 ELSE 0	END END END END END AS "HIGH_EMP_PC",
+                
+                CASE WHEN "QLD_PC_EMPLOYEE" > 75                        	   THEN 'X' ELSE '' END AS "TOP_BAND_EMP_PC",
+                
+                CASE WHEN "QLD_PC_EMPLOYEE" = 0                                THEN 1 ELSE
+                CASE WHEN "QLD_PC_EMPLOYEE" > 0  AND "QLD_PC_EMPLOYEE" <= 25   THEN 2 ELSE    
+                CASE WHEN "QLD_PC_EMPLOYEE" > 25 AND "QLD_PC_EMPLOYEE" <= 50   THEN 3 ELSE                  
+                CASE WHEN "QLD_PC_EMPLOYEE" > 50 AND "QLD_PC_EMPLOYEE" <= 75   THEN 4 ELSE  
+                CASE WHEN "QLD_PC_EMPLOYEE" > 75                               THEN 5 ELSE 0 END END END END END AS "RFR_EMP_PC"
+                
+                
+FROM :lt_emp_data       
+                
+) ;             
+                
+                
+                
+
+RETURN
+SELECT 
+                "ABN",
+                "GJAHR",
+                "CNT_EMPLOYEE",
+                "QLD_CNT_EMPLOYEE",
+                "QLD_PC_EMPLOYEE",
+                "LOW_EMP_CNT",
+                "HIGH_EMP_CNT",
+                "TOP_BAND_EMP_CNT",
+                "RFR_EMP_CNT",
+                "LOW_EMP_PC",
+                "HIGH_EMP_PC",
+                "TOP_BAND_EMP_PC",
+                "RFR_EMP_PC"
+FROM
+:lt_data
+;
+
+    
+END;

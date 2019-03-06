@@ -321,7 +321,7 @@ SELECT DISTINCT
 --	"ATO"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
 --	"ATO"."BAS_QTR"        AS "BAS_QTR" ,
 --	"ATO"."ACN"            AS "ACN"
-FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO",
 :BP_DATA AS "DET_OBJ"
 WHERE "ATO"."ABN" = "DET_OBJ"."ABN" 
 --AND "ATO"."FINANCIAL_YEAR" = "DET_OBJ"."FINANCIAL_YEAR_STRING" 
@@ -338,7 +338,7 @@ SELECT DISTINCT
 --	"ATO"."FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
 --	"ATO"."BAS_QTR"        AS "BAS_QTR" ,
 --	"ATO"."ACN"            AS "ACN"
-FROM "osr.edw.staging.td.ato.proxy::CV_ATO_BAS_NIND" AS "ATO",
+FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO",
 :BP_DATA AS "DET_OBJ"
 WHERE "ATO"."ABN" = "DET_OBJ"."ABN" 
 --AND "ATO"."FINANCIAL_YEAR" = "DET_OBJ"."FINANCIAL_YEAR_STRING" 

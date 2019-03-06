@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_RMS_NON_TAXABLE_WAGES_BY_FYS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_RMS_NON_TAXABLE_WAGES_BY_FYS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_RMS_NON_TAXABLE_WAGES_BY_FYS"/>
-<localVariables/>
-<variableMappings/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_NON_TAXABLE_WAGES_BY_FYS">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_NON_TAXABLE_WAGES_BY_FYS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_NON_TAXABLE_WAGES_BY_FYS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_NON_TAXABLE_WAGES_BY_FYS</resourceUri>
@@ -53,6 +66,10 @@
       <viewAttribute id="FY4_AMOUNT" aggregationType="sum">
         <descriptions defaultDescription="FY4_AMOUNT"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -69,6 +86,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY2_AMOUNT" source="FY2_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY3_AMOUNT" source="FY3_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY4_AMOUNT" source="FY4_AMOUNT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Text" filterExpressionLanguage="SQL">
@@ -149,6 +168,10 @@
       <viewAttribute id="MEASURE_TEXT">
         <descriptions defaultDescription="MEASURE_TEXT"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -165,6 +188,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY2_AMOUNT" source="FY2_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY3_AMOUNT" source="FY3_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY4_AMOUNT" source="FY4_AMOUNT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input>
     <input node="Projection_Text">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
@@ -216,6 +241,10 @@
       <viewAttribute id="MEASURE_SORT_ORDER" aggregationType="sum">
         <descriptions defaultDescription="MEASURE_SORT_ORDER"/>
       </viewAttribute>
+    
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -233,6 +262,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="FY3_AMOUNT" source="FY3_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="FY4_AMOUNT" source="FY4_AMOUNT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_TEXT" source="MEASURE_TEXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
     </input>
     <input node="Projection_Sort">
       <mapping xsi:type="Calculation:AttributeMapping" target="MEASURE_SORT_ORDER" source="MEASURE_SORT_ORDER"/>
@@ -247,58 +278,62 @@
       <descriptions defaultDescription="DB_KEY"/>
       <keyMapping columnObjectName="Join_2" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Join_2" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="Join_2" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Join_2" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="Join_2" columnName="GJAHR"/>
     </attribute>
-    <attribute id="BPARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="BPARTNER" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
       <keyMapping columnObjectName="Join_2" columnName="BPARTNER"/>
     </attribute>
-    <attribute id="MEASURE_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_NAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_NAME"/>
       <keyMapping columnObjectName="Join_2" columnName="MEASURE_NAME"/>
     </attribute>
-    <attribute id="MEASURE_TEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_TEXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_TEXT"/>
       <keyMapping columnObjectName="Join_2" columnName="MEASURE_TEXT"/>
     </attribute>
-    <attribute id="MEASURE_SORT_ORDER" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MEASURE_SORT_ORDER" order="9" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEASURE_SORT_ORDER"/>
       <keyMapping columnObjectName="Join_2" columnName="MEASURE_SORT_ORDER"/>
     </attribute>
-    <attribute id="WAERS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WAERS" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
       <keyMapping columnObjectName="Join_2" columnName="WAERS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="FY0_AMOUNT" order="10" aggregationType="sum" measureType="simple">
+    <measure id="FY0_AMOUNT" order="11" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY0_AMOUNT"/>
       <measureMapping columnObjectName="Join_2" columnName="FY0_AMOUNT"/>
     </measure>
-    <measure id="FY1_AMOUNT" order="11" aggregationType="sum" measureType="simple">
+    <measure id="FY1_AMOUNT" order="12" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY1_AMOUNT"/>
       <measureMapping columnObjectName="Join_2" columnName="FY1_AMOUNT"/>
     </measure>
-    <measure id="FY2_AMOUNT" order="12" aggregationType="sum" measureType="simple">
+    <measure id="FY2_AMOUNT" order="13" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY2_AMOUNT"/>
       <measureMapping columnObjectName="Join_2" columnName="FY2_AMOUNT"/>
     </measure>
-    <measure id="FY3_AMOUNT" order="13" aggregationType="sum" measureType="simple">
+    <measure id="FY3_AMOUNT" order="14" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY3_AMOUNT"/>
       <measureMapping columnObjectName="Join_2" columnName="FY3_AMOUNT"/>
     </measure>
-    <measure id="FY4_AMOUNT" order="14" aggregationType="sum" measureType="simple">
+    <measure id="FY4_AMOUNT" order="15" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="FY4_AMOUNT"/>
       <measureMapping columnObjectName="Join_2" columnName="FY4_AMOUNT"/>
     </measure>
@@ -310,25 +345,25 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="328.6900820831794" y="112"/>
+      <upperLeftCorner x="328" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="516.9999976158142"/>
+      <upperLeftCorner x="92" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_Text" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="516.9999976158142"/>
+      <upperLeftCorner x="302" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_Sort" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="395.83468516943316" y="376.9999988079071"/>
+      <upperLeftCorner x="395" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666663" y="376.9999988079071"/>
+      <upperLeftCorner x="118" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -340,7 +375,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="328.6900820831794" y="217"/>
+      <upperLeftCorner x="328" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">

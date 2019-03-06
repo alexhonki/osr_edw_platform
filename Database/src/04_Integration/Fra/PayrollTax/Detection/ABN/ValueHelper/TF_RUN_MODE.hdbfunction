@@ -9,12 +9,12 @@ BEGIN
 
 RETURN
 SELECT TOP 1 
-'S' AS "RUN_MODE",
+TO_NVARCHAR('S') AS "RUN_MODE",
 'Standard' AS "RUN_MODE_DESCR"
 FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
 UNION
 SELECT TOP 1 
-'R' AS "RUN_MODE",
+TO_NVARCHAR('R') AS "RUN_MODE",
 'Ranking' AS "RUN_MODE_DESCR"
 FROM "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.T009.active_data"
 ;

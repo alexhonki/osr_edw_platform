@@ -7,8 +7,8 @@
   <DataSource id="osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY">
     <resourceUri>osr.edw.staging.md.wcq.proxy::CV_WCQ_POLICY</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
-    <resourceUri>osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES</resourceUri>
+  <DataSource id="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES">
+    <resourceUri>osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -41,7 +41,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" source="ACN" target="ACN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
     </input>
-    <input node="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES">
+    <input node="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES">
       <mapping xsi:type="Calculation:AttributeMapping" source="POLICY_NO" target="POLICY_NO"/>
       <mapping xsi:type="Calculation:AttributeMapping" source="ASSESSMENT_YEAR" target="ASSESSMENT_YEAR"/>
       <mapping xsi:type="Calculation:AttributeMapping" source="ACT_WAGES" target="ACT_WAGES"/>
@@ -131,7 +131,7 @@
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape modelObjectName="osr.edw.staging.td.wcq.proxy::CV_WCQ_WAGES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="osr.edw.staging.td.wcq.proxy::CV_POLICY_WAGES" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>

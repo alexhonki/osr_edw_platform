@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_KEY_INFO" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_KEY_INFO" applyPrivilegeType="NONE" dataCategory="DEFAULT" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_KEY_INFO"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
     <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="VARCHAR" length="20" mandatory="true">
+    <variableProperties datatype="VARCHAR" length="20" mandatory="false">
       <valueDomain type="empty"/>
       <selection multiLine="false" type="Single"/>
     </variableProperties>
   </variable>
 </localVariables>
-<variableMappings/>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO</resourceUri>
@@ -81,6 +86,40 @@
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="GJAHR"/>
       </viewAttribute>
+    
+      <viewAttribute id="WCQ_ACT_WAGES">
+        <descriptions defaultDescription="WCQ_ACT_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_GRP_STATUS">
+        <descriptions defaultDescription="PRT_GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_ITR_WAGES">
+        <descriptions defaultDescription="ATO_ITR_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_BP_NO">
+        <descriptions defaultDescription="PRT_BP_NO"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_BAS_WAGES">
+        <descriptions defaultDescription="ATO_BAS_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="ATO_PAYG_WAGES">
+        <descriptions defaultDescription="ATO_PAYG_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="NO_OPEN_CASE">
+        <descriptions defaultDescription="NO_OPEN_CASE"/>
+      </viewAttribute>
+      <viewAttribute id="ASIC_STATUS">
+        <descriptions defaultDescription="ASIC_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="APP_WITH_RANGE">
+        <descriptions defaultDescription="APP_WITH_RANGE"/>
+      </viewAttribute>
+      <viewAttribute id="IS_A_TRUST">
+        <descriptions defaultDescription="IS_A_TRUST"/>
+      </viewAttribute>
+      <viewAttribute id="TPAR_WAGE_GT">
+        <descriptions defaultDescription="TPAR_WAGE_GT"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -107,6 +146,18 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ACT_WAGES" source="WCQ_ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_GRP_STATUS" source="PRT_GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_ITR_WAGES" source="ATO_ITR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_BP_NO" source="PRT_BP_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_BAS_WAGES" source="ATO_BAS_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ATO_PAYG_WAGES" source="ATO_PAYG_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NO_OPEN_CASE" source="NO_OPEN_CASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASIC_STATUS" source="ASIC_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="APP_WITH_RANGE" source="APP_WITH_RANGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_A_TRUST" source="IS_A_TRUST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TPAR_WAGE_GT" source="TPAR_WAGE_GT"/>
     </input></calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
@@ -189,15 +240,65 @@
   
     <attribute id="DB_KEY" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
+  
       <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+  
     </attribute>
     <attribute id="GJAHR" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
     </attribute>
+  
+    <attribute id="PRT_GRP_STATUS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT_GRP_STATUS"/>
+  
+      <keyMapping columnObjectName="Projection_1" columnName="PRT_GRP_STATUS"/>
+  
+    </attribute>
+    <attribute id="PRT_BP_NO" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT_BP_NO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRT_BP_NO"/>
+    </attribute>
+    <attribute id="ASIC_STATUS" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASIC_STATUS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ASIC_STATUS"/>
+    </attribute>
+    <attribute id="APP_WITH_RANGE" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APP_WITH_RANGE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="APP_WITH_RANGE"/>
+    </attribute>
+    <attribute id="IS_A_TRUST" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_A_TRUST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="IS_A_TRUST"/>
+    </attribute>
+    <attribute id="TPAR_WAGE_GT" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TPAR_WAGE_GT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TPAR_WAGE_GT"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures/>
+  <baseMeasures>
+    <measure id="WCQ_ACT_WAGES" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="WCQ_ACT_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="WCQ_ACT_WAGES"/>
+    </measure>
+    <measure id="ATO_ITR_WAGES" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ATO_ITR_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATO_ITR_WAGES"/>
+    </measure>
+    <measure id="ATO_BAS_WAGES" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ATO_BAS_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATO_BAS_WAGES"/>
+    </measure>
+    <measure id="ATO_PAYG_WAGES" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ATO_PAYG_WAGES"/>
+      <measureMapping columnObjectName="Projection_1" columnName="ATO_PAYG_WAGES"/>
+    </measure>
+    <measure id="NO_OPEN_CASE" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NO_OPEN_CASE"/>
+      <measureMapping columnObjectName="Projection_1" columnName="NO_OPEN_CASE"/>
+    </measure>
+  </baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
 </logicalModel>

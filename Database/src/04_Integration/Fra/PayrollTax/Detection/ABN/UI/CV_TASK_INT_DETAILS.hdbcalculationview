@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_TASK_INT_DETAILS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TASK_INT_DETAILS"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_TASK_INT_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_TASK_INT_DETAILS"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_TASK_INT_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_TASK_INT_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_TASK_INT_DETAILS">
+  <attributes>
+    <attribute id="DB_KEY_DASH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="OBJECT_TYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_TYPE"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="OBJECT_TYPE"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ACTIVITY_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTIVITY_TYPE"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="ACTIVITY_TYPE"/>
+    </attribute>
+    <attribute id="ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="START_DATE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="START_DATE"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="START_DATE"/>
+    </attribute>
+    <attribute id="GJAHR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="END_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="END_DATE"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="END_DATE"/>
+    </attribute>
+    <attribute id="PARTNER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="DESCRIPTION"/>
+    </attribute>
+    <attribute id="PARTNER_GUID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_GUID"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="PARTNER_GUID"/>
+    </attribute>
+    <attribute id="USER_STATUS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USER_STATUS"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="USER_STATUS"/>
+    </attribute>
+    <attribute id="PARTNER_NO" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_NO"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="PARTNER_NO"/>
+    </attribute>
+    <attribute id="PER_RES" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PER_RES"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="PER_RES"/>
+    </attribute>
+    <attribute id="GUID_CRMDPARTNER" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_CRMDPARTNER"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="GUID_CRMDPARTNER"/>
+    </attribute>
+    <attribute id="PRIORITY1" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRIORITY1"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="PRIORITY1"/>
+    </attribute>
+    <attribute id="GUID_HI_CRMDLINK" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_HI_CRMDLINK"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="GUID_HI_CRMDLINK"/>
+    </attribute>
+    <attribute id="GUID_CRMDORDERADMH" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_CRMDORDERADMH"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="GUID_CRMDORDERADMH"/>
+    </attribute>
+    <attribute id="DB_KEY" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="OBJECT_ID" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="TF_TASK_INT_DETAILS" columnName="OBJECT_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

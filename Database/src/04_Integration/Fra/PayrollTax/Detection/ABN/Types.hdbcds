@@ -82,6 +82,18 @@ context Types {
             FLAG_QLD_EMP_CNT      : String(1);
             FLAG_QLD_EMP_PC       : String(1);
         };
+        table type param_qld_nexus_s_default {
+            RUN_MODE         : String(1);
+            GJAHR_ADJUSTMENT : String(4);
+            FLAG_WCQ_POLICY  : String(1);
+            FLAG_QLD_ADDRESS : String(1);
+        };
+        table type param_qld_nexus_r {
+            RUN_MODE         : String(1);
+            GJAHR_ADJUSTMENT : String(4);
+            FLAG_QLD_EMP_CNT : String(1);
+            FLAG_QLD_EMP_PC  : String(1);
+        };
         table type param_qld_nexus_emp_cnt {
             RUN_MODE              : String(1);
             GJAHR_ADJUSTMENT      : String(4);
@@ -149,6 +161,7 @@ context Types {
             ID_ROLE                   : String(1);
             PT_CASE_DATE              : String(8);
             PT_CASE                   : String(1);
+            FLAG_EXM_CASE			  : String(1);
             FLAG_ABR_ACNC             : String(1);
             FLAG_ASIC_REGD            : String(1);
             FLAG_SUP_GOV_EXMPT_ANZSIC : String(1);

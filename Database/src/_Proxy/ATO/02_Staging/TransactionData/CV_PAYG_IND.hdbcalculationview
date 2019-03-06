@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.ato.proxy::CV_PAYG_IND" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PAYG_IND"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data">
+    <resourceUri>osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="4" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="REF_ID" order="5" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REF_ID"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="REF_ID"/>
+    </attribute>
+    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="ABN"/>
+    </attribute>
+    <attribute id="NM_TITL" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NM_TITL"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="NM_TITL"/>
+    </attribute>
+    <attribute id="FIRST_NM" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRST_NM"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="FIRST_NM"/>
+    </attribute>
+    <attribute id="OTHR_GVN_NM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTHR_GVN_NM"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="OTHR_GVN_NM"/>
+    </attribute>
+    <attribute id="SRNM" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SRNM"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="SRNM"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_1" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_1"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="BUS_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="BUS_ADDR_LN_2" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_ADDR_LN_2"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="BUS_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="BUS_LCLTY_NM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_LCLTY_NM"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="BUS_LCLTY_NM"/>
+    </attribute>
+    <attribute id="BUS_STATE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_STATE"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="BUS_STATE"/>
+    </attribute>
+    <attribute id="BUS_PC" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUS_PC"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="BUS_PC"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="SOURCE_FIELD_VALUE"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="31" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="33" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="34" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PMT_SMRY_CNT" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PMT_SMRY_CNT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="PMT_SMRY_CNT"/>
+    </measure>
+    <measure id="TOTL_GRS_AMT" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_GRS_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="TOTL_GRS_AMT"/>
+    </measure>
+    <measure id="TOTL_LUMP_AMT" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_LUMP_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="TOTL_LUMP_AMT"/>
+    </measure>
+    <measure id="TOTL_ALWNC_AMT" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="TOTL_ALWNC_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="TOTL_ALWNC_AMT"/>
+    </measure>
+    <measure id="INCM_YR" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="INCM_YR"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="INCM_YR"/>
+    </measure>
+    <measure id="LSPA_AMT" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="LSPA_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="LSPA_AMT"/>
+    </measure>
+    <measure id="LSPB_AMT" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="LSPB_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="LSPB_AMT"/>
+    </measure>
+    <measure id="LSPD_AMT" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="LSPD_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="LSPD_AMT"/>
+    </measure>
+    <measure id="LSPE_AMT" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="LSPE_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="LSPE_AMT"/>
+    </measure>
+    <measure id="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+      <measureMapping columnObjectName="CDS_PAYG.DSO.PAYG_IND.active_data" columnName="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

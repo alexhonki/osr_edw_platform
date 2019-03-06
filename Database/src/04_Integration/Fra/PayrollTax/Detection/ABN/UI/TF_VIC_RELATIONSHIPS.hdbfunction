@@ -1,0 +1,89 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_VIC_RELATIONSHIPS"( IN IP_ALERT_ID NVARCHAR(20) )
+         RETURNS TABLE
+(
+DB_KEY						VARBINARY(16),
+DB_KEY_DASH					NVARCHAR(36),
+ALERT_ID					NVARCHAR(20),
+ABN							NVARCHAR(20),
+GJAHR						NVARCHAR(4),
+GROUP_ID                    INTEGER,
+CLIENT_NO				INTEGER,
+LEGAL_NAME				NVARCHAR(200),
+ACN						NVARCHAR(20),
+GROUP_START_DATE		NVARCHAR(8),
+GROUP_END_DATE			NVARCHAR(8)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+RETURN
+
+SELECT
+DISTINCT
+"DB_KEY",
+"DB_KEY_DASH",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+"GROUP_ID",
+"CLIENT_NO",
+"LEGAL_NAME",
+"ACN",
+"GROUP_START_DATE",
+"GROUP_END_DATE"
+FROM
+(
+ SELECT 
+"ALERT"."DB_KEY" AS "DB_KEY",
+"ALERT"."DB_KEY_DASH" AS "DB_KEY_DASH",
+"ALERT"."ALERT_ID" AS "ALERT_ID",
+"ALERT"."ABN" AS "ABN",
+"ALERT"."GJAHR" AS "GJAHR",
+"DATA"."GROUP_ID",
+"DATA"."CLIENT_NO",
+"DATA"."LEGAL_NAME",
+--"ABN",
+"DATA"."ACN",
+'00000000' AS "GROUP_START_DATE",
+'00000000' AS "GROUP_END_DATE"
+FROM :ALERT_INFO AS "ALERT"
+INNER JOIN "osr.edw.staging.td.osrstate.synonym::CDS_OSRSTATE.DSO.VIC_PRT_ANNL.active_data"  AS "DATA"
+ON  "ALERT"."ABN" = "DATA"."ABN"
+AND (RIGHT("ALERT"."GJAHR",2)) = (RIGHT("DATA"."SOURCE_FIELD_VALUE",2))
+AND "DATA"."GROUP_ID" <> '0'
+)
+;
+
+END;

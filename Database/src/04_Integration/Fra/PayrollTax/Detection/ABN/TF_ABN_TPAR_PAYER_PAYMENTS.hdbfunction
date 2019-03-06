@@ -1,0 +1,62 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_PAYMENTS" (IN IP_FY NVARCHAR(4) )
+       RETURNS TABLE
+       
+       (
+     "REF_ID_PAYEE"				DECIMAL(13,0)   ,
+	"PAYEE_ABN" 				NVARCHAR(11)    ,
+	"PAYEE_ABN_STS" 			NVARCHAR(9)     ,
+	"REF_ID_PAYER"				DECIMAL(13,0)   ,
+	"PAYER_ABN"					NVARCHAR(20)    ,
+	"PAYER_ABN_STS"				NVARCHAR(9)     ,
+	"FINANCIAL_YEAR"			NVARCHAR(4)     ,
+	"PAYEE_FAMILY_NM"			NVARCHAR(40)    ,
+	"PAYEE_FIRST_GIVEN_NM"		NVARCHAR(15)    ,
+	"PAYEE_MIDDLE_NM"			NVARCHAR(30)    ,
+	"PAYEE_NON_IDV_BUS_NM"		NVARCHAR(200)   ,
+	"PAYEE_TRDG_NM"				NVARCHAR(200)   ,
+	"PAYEE_ADDR_LN_1"			NVARCHAR(38)    ,
+	"PAYEE_ADDR_LN_2"			NVARCHAR(38)    ,
+	"PAYEE_LCLTY_NM"			NVARCHAR(27)    ,
+	"PAYEE_STATE"				NVARCHAR(3)     ,
+	"PAYEE_PCODE"				NVARCHAR(4)     ,
+	"PAYEE_PH_NUM"				NVARCHAR(15)    ,
+	"GROSS_PD_AMT"				DECIMAL(15,2)   ,
+	"TW_TOTL_AMT"				DECIMAL(15,2)   ,
+	"GST_TOTL_AMT"				DECIMAL(15,2)  	
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+  RETURN
+    SELECT 
+	"REF_ID_PAYEE",
+	"PAYEE_ABN",
+	"PAYEE_ABN_STS",
+	"REF_ID_PAYER",
+	"PAYER_ABN",
+	"PAYER_ABN_STS",
+	"FINANCIAL_YEAR",
+	"PAYEE_FAMILY_NM",
+	"PAYEE_FIRST_GIVEN_NM",
+	"PAYEE_MIDDLE_NM",
+	"PAYEE_NON_IDV_BUS_NM",
+	"PAYEE_TRDG_NM",
+	"PAYEE_ADDR_LN_1",
+	"PAYEE_ADDR_LN_2",
+	"PAYEE_LCLTY_NM",
+	"PAYEE_STATE",
+	"PAYEE_PCODE",
+	"PAYEE_PH_NUM",
+	"GROSS_PD_AMT",
+	"TW_TOTL_AMT",
+	"GST_TOTL_AMT"
+FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"()
+WHERE
+		"PAYER_ABN" IN (SELECT DISTINCT "PAYER_ABN" FROM "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP"(:IP_FY/*IP_FY <NVARCHAR(4)>*/))
+AND
+		"FINANCIAL_YEAR" = :IP_FY;
+    
+END;

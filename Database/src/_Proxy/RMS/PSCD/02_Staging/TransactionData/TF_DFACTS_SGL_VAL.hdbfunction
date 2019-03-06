@@ -8,6 +8,7 @@ FUNCTION "osr.edw.staging.td.rms.pscd.proxy::TF_DFACTS_SGL_VAL" ( )
 		FACT_CAT_SEQ	NVARCHAR(2),
 		FACT_CAT_REP	NVARCHAR(4),
 		VALID_TO		NVARCHAR(15),
+		CHDATE			NVARCHAR(15),
 		VALID_FROM		NVARCHAR(15),
 		FACT_SET		NVARCHAR(6),
 		FACT_TYPE		NVARCHAR(4),
@@ -24,8 +25,8 @@ BEGIN
  into the corresponding fact category for each fact type instance in DFACTS
  only fact category with single value are considered
  *************************************************************************/ 
- RETURN
- SELECT 
+RETURN
+SELECT 
 COMPLETE_TYPE_CAT.CLIENT AS CLIENT,
 COMPLETE_TYPE_CAT.OBART AS OBART,
 COMPLETE_TYPE_CAT.OBJID AS OBJID,
@@ -34,6 +35,7 @@ COMPLETE_TYPE_CAT.FACT_TYPE_REP AS FACT_TYPE_REP,
 COMPLETE_TYPE_CAT.FACT_CAT_SEQ AS FACT_CAT_SEQ,
 '0000' AS FACT_CAT_REP,
 COMPLETE_TYPE_CAT.VALID_TO AS VALID_TO,
+NULL AS "CHDATE",
 COMPLETE_TYPE_CAT.VALID_FROM AS VALID_FROM,
 COMPLETE_TYPE_CAT.FACT_SET AS FACT_SET,
 COMPLETE_TYPE_CAT.FACT_TYPE AS FACT_TYPE,
@@ -55,5 +57,269 @@ AND COMPLETE_TYPE_CAT.FACT_TYPE_REP = DFACTS.FACT_TYPE_REP
 AND COMPLETE_TYPE_CAT.FACT_CAT_SEQ = DFACTS.FACT_CAT_SEQ
 AND COMPLETE_TYPE_CAT.VALID_TO = DFACTS.VALID_TO
 ;
+
+
+/*
+  --***get all dfactshistory list
+    lt_dfactsh =
+    select distinct
+    a.client as client,
+    a.obart as obart,
+    a.objid as objid,
+    a.fact_type_seq as fact_type_seq,
+    a.fact_type_rep as fact_type_rep,
+    a.fact_cat_seq as fact_cat_seq,
+    a.fact_cat_rep as fact_cat_rep,
+    d.valid_to as valid_to,
+    a.chdate as chdate,
+    a.valid_from as valid_from,
+    a.fact_set as fact_set,
+    a.fact_type as fact_type,
+    a.fact_category as fact_category,
+    a.value_generic as value_generic,
+    a.qual_generic as qual_generic,
+    a.objnr as objnr
+    from "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTSH.active_data" as a
+    inner join "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" as d
+    on  a.obart = d.obart
+    and a.objid = d.objid
+    and a.fact_type_seq = d.fact_type_seq
+    and a.fact_type_rep = d.fact_type_rep
+    and a.fact_cat_seq = d.fact_cat_seq
+    and a.fact_cat_rep = d.fact_cat_rep
+    and a.valid_from = d.valid_from
+--    and d.valid_to = a.valid_to
+    ;
+--***get dfacts where old values changed
+    lt_dfactsh0 =
+    select distinct
+    a.client as client,
+    a.obart as obart,
+    a.objid as objid,
+    a.fact_type_seq as fact_type_seq,
+    a.fact_type_rep as fact_type_rep,
+    a.fact_cat_seq as fact_cat_seq,
+    a.fact_cat_rep as fact_cat_rep,
+    a.valid_to as valid_to,
+    a.chdate as chdate,
+    a.valid_from as valid_from,
+    a.fact_set as fact_set,
+    a.fact_type as fact_type,
+    a.fact_category as fact_category,
+    a.value_generic as value_generic,
+    a.qual_generic as qual_generic,
+    a.objnr as objnr
+    from "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTSH.active_data" as a
+    inner join "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" as d
+    on  a.obart = d.obart
+    and a.objid = d.objid
+    and a.fact_type_seq = d.fact_type_seq
+    and a.fact_type_rep = d.fact_type_rep
+    and a.fact_cat_seq = d.fact_cat_seq
+    and a.fact_cat_rep = d.fact_cat_rep
+    and a.valid_from = d.valid_from
+--    and d.valid_to = a.valid_to
+    ;
+    lt_dfactsh1 =
+    SELECT DISTINCT
+    d.client as client,
+    d.obart as obart,
+    d.objid as objid,
+    d.fact_type_seq as fact_type_seq,
+    d.fact_type_rep as fact_type_rep,
+    d.fact_cat_seq as fact_cat_seq,
+    d.fact_cat_rep as fact_cat_rep,
+    d.valid_to as valid_to,
+    a.chdate + 1 as chdate,
+    d.valid_from as valid_from,
+    d.fact_set as fact_set,
+    d.fact_type as fact_type,
+    d.fact_category as fact_category,
+    d.value_generic as value_generic,
+    d.qual_generic as qual_generic,
+    d.objnr as objnr
+    from "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" as d
+    inner join :lt_dfactsh0 as a
+    on d.obart = a.obart
+    and d.objid = a.objid
+    and d.fact_type_seq = a.fact_type_seq
+    and d.fact_type_rep = a.fact_type_rep
+    and d.fact_cat_seq = a.fact_cat_seq
+    and d.fact_cat_rep = a.fact_cat_rep
+    and d.valid_to = a.valid_to
+    and d.valid_from = a.valid_from
+    and d.value_generic <> a.value_generic
+    where d.valid_to <> '99991231235959'
+    ;
+    
+--***get all current dfacts records
+    lt_dfacts =
+    select distinct
+    client as client,
+    obart as obart,
+    objid as objid,
+    fact_type_seq as fact_type_seq,
+    fact_type_rep as fact_type_rep,
+    fact_cat_seq as fact_cat_seq,
+    fact_cat_rep as fact_cat_rep,
+    valid_to as valid_to,
+    '99991231235959' as chdate,
+    valid_from as valid_from,
+    fact_set as fact_set,
+    fact_type as fact_type,
+    fact_category as fact_category,
+    value_generic as value_generic,
+    qual_generic as qual_generic,
+    objnr as objnr
+    from "osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data"
+    where valid_to = '99991231235959'
+    ;
+
+    lt_out =
+    select
+    client as client,
+    obart as obart,
+    objid as objid,
+    fact_type_seq as fact_type_seq,
+    fact_type_rep as fact_type_rep,
+    fact_cat_seq as fact_cat_seq,
+    fact_cat_rep as fact_cat_rep,
+    valid_to as valid_to,
+    chdate as chdate,
+    valid_from as valid_from,
+    fact_set as fact_set,
+    fact_type as fact_type,
+    fact_category as fact_category,
+    value_generic as value_generic,
+    qual_generic as qual_generic,
+    objnr as objnr
+    from :lt_dfacts
+
+    union
+
+    select
+    client as client,
+    obart as obart,
+    objid as objid,
+    fact_type_seq as fact_type_seq,
+    fact_type_rep as fact_type_rep,
+    fact_cat_seq as fact_cat_seq,
+    fact_cat_rep as fact_cat_rep,
+    valid_to as valid_to,
+    chdate as chdate,
+    valid_from as valid_from,
+    fact_set as fact_set,
+    fact_type as fact_type,
+    fact_category as fact_category,
+    value_generic as value_generic,
+    qual_generic as qual_generic,
+    objnr as objnr
+    from :lt_dfactsh
+
+    union
+
+    select distinct
+    client as client,
+    obart as obart,
+    objid as objid,
+    fact_type_seq as fact_type_seq,
+    fact_type_rep as fact_type_rep,
+    fact_cat_seq as fact_cat_seq,
+    fact_cat_rep as fact_cat_rep,
+    valid_to as valid_to,
+    chdate as chdate,
+    valid_from as valid_from,
+    fact_set as fact_set,
+    fact_type as fact_type,
+    fact_category as fact_category,
+    value_generic as value_generic,
+    qual_generic as qual_generic,
+    objnr as objnr
+    from :lt_dfactsh1
+;
+
+--***get all possible fact type
+	lt_out1=
+	select distinct
+	d.client as client,
+	d.obart as obart,
+	d.objid as objid,
+	d.fact_type_seq as fact_type_seq,
+	d.fact_type_rep as fact_type_rep,
+	d.valid_to as valid_to,
+	d.chdate as chdate,
+	d.valid_from as valid_from,
+	d.fact_set as fact_set,
+	d.fact_type as fact_type,
+	t.fact_cat_seq as fact_cat_seq,
+	t.fact_category as fact_category
+	from
+	:lt_out as d
+	inner join
+	"osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.TFACT_TYPEPART.active_data" as T
+	on d.client = t.client
+	and d.fact_type = t.fact_type
+	where t.multiple = ''
+	;
+
+--***get all values of facts part type of dfacts and history
+	lt_out2 =
+	select
+	c.client as client,
+	c.obart as obart,
+	c.objid as objid,
+	c.fact_type_seq as fact_type_seq,
+	c.fact_type_rep as fact_type_rep,
+	c.fact_cat_seq as fact_cat_seq,
+	'0000' as fact_cat_rep,
+	c.valid_to as valid_to,
+	c.chdate as chdate,
+	c.valid_from as valid_from,
+	c.fact_set as fact_set,
+	c.fact_type as fact_type,
+	c.fact_category as fact_category,
+	case when d.value_generic is NULL THEN '' ELSE d.value_generic END AS value_generic,
+	case when d.qual_generic is NULL THEN '' ELSE d.qual_generic END AS qual_generic,
+	d.objnr as objnr
+	from
+	(select * from :lt_out1)
+	as c
+	left outer join
+	:lt_out as d
+	on c.client = d.client
+	and c.obart = d.obart
+	and c.objid = d.objid
+	and c.fact_type_seq = d.fact_type_seq
+	and c.fact_type_rep = d.fact_type_rep
+	and c.fact_cat_seq = d.fact_cat_seq
+	and c.valid_to = d.valid_to
+	and c.chdate = d.chdate
+	;
+
+--*** geturn output
+	RETURN
+	select
+	client as client,
+	obart as obart,
+	objid as objid,
+	fact_type_seq as fact_type_seq,
+	fact_type_rep as fact_type_rep,
+	fact_cat_seq as fact_cat_seq,
+	fact_cat_rep as fact_cat_rep,
+	valid_to as valid_to,
+	chdate as chdate,
+	valid_from as valid_from,
+	fact_set as fact_set,
+	fact_type as fact_type,
+	fact_category as fact_category,
+	value_generic as value_generic,
+	qual_generic as qual_generic,
+	objnr as objnr
+	from
+	:lt_out2    
+	 ;
+
+*/
+
 
 END;

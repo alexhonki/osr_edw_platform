@@ -1,166 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ASIC_ORG_ADDRESS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ASIC_ORG_ADDRESS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ASIC_ORG_ADDRESS"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription="Input Parameter: Alert ID"/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="true">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
-<variableMappings/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS"/>
+  </mapping>
+</variableMappings>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
-    <viewAttributes>
-      <viewAttribute id="COUNTRY">
-        <descriptions defaultDescription="COUNTRY"/>
-      </viewAttribute>
-      <viewAttribute id="POSTCODE">
-        <descriptions defaultDescription="POSTCODE"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="Z_CHANGE_TIME">
-        <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="ADDR_LINE1">
-        <descriptions defaultDescription="ADDR_LINE1"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="ADDR_LINE2">
-        <descriptions defaultDescription="ADDR_LINE2"/>
-      </viewAttribute>
-      <viewAttribute id="STREET_NUMBER">
-        <descriptions defaultDescription="STREET_NUMBER"/>
-      </viewAttribute>
-      <viewAttribute id="STREET_NAME">
-        <descriptions defaultDescription="STREET_NAME"/>
-      </viewAttribute>
-      <viewAttribute id="STREET_TYPE">
-        <descriptions defaultDescription="STREET_TYPE"/>
-      </viewAttribute>
-      <viewAttribute id="LOCALITY">
-        <descriptions defaultDescription="LOCALITY"/>
-      </viewAttribute>
-      <viewAttribute id="STATE">
-        <descriptions defaultDescription="STATE"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS">
-      <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="POSTCODE" source="POSTCODE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ADDR_LINE1" source="ADDR_LINE1"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ADDR_LINE2" source="ADDR_LINE2"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_NUMBER" source="STREET_NUMBER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_NAME" source="STREET_NAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STREET_TYPE" source="STREET_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="LOCALITY" source="LOCALITY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="STATE" source="STATE"/>
-    </input>
-    <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_ADDRESS">
   <attributes>
-    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="COUNTRY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COUNTRY"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="COUNTRY"/>
+    </attribute>
+    <attribute id="POSTCODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTCODE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="POSTCODE"/>
+    </attribute>
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="GJAHR"/>
     </attribute>
-    <attribute id="DB_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ADDR_LINE1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_LINE1"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="ADDR_LINE1"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ADDR_LINE1" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Address Line 1"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ADDR_LINE1"/>
+    <attribute id="ADDR_LINE2" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_LINE2"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="ADDR_LINE2"/>
     </attribute>
-    <attribute id="ADDR_LINE2" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Address Line 2"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ADDR_LINE2"/>
+    <attribute id="STREET_NUMBER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STREET_NO"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="STREET_NUMBER"/>
     </attribute>
-    <attribute id="STREET_NUMBER" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Street Number"/>
-      <keyMapping columnObjectName="Projection_1" columnName="STREET_NUMBER"/>
+    <attribute id="STREET_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STREET_NAME"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="STREET_NAME"/>
     </attribute>
-    <attribute id="STREET_NAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Street Name"/>
-      <keyMapping columnObjectName="Projection_1" columnName="STREET_NAME"/>
+    <attribute id="STREET_TYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STREET_TYPE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="STREET_TYPE"/>
     </attribute>
-    <attribute id="STREET_TYPE" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Street Type"/>
-      <keyMapping columnObjectName="Projection_1" columnName="STREET_TYPE"/>
+    <attribute id="LOCALITY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCALITY"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="LOCALITY"/>
     </attribute>
-    <attribute id="LOCALITY" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Locality"/>
-      <keyMapping columnObjectName="Projection_1" columnName="LOCALITY"/>
+    <attribute id="STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="STATE"/>
     </attribute>
-    <attribute id="STATE" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="State"/>
-      <keyMapping columnObjectName="Projection_1" columnName="STATE"/>
-    </attribute>
-    <attribute id="COUNTRY" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Country"/>
-      <keyMapping columnObjectName="Projection_1" columnName="COUNTRY"/>
-    </attribute>
-    <attribute id="POSTCODE" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Postcode"/>
-      <keyMapping columnObjectName="Projection_1" columnName="POSTCODE"/>
+    <attribute id="DB_KEY_DASH" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_ADDRESS" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="Z_CHANGE_TIME" order="14" aggregationType="min" measureType="simple">
-      <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <measureMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
-    </measure>
-  </baseMeasures>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="92" y="112"/>
     
       <rectangleSize width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="217"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

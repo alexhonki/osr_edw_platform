@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_TPAR_SUMMARY_REP" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="TPAR Payer Summary Report"/>
+<localVariables>
+  <variable id="IP_FY" parameter="true">
+    <descriptions defaultDescription="Fiscal Year"/>
+    <variableProperties datatype="NVARCHAR" length="4" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP">
+    <targetVariable name="IP_FY" resourceUri="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP"/>
+    <localVariable>IP_FY</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="A_DIRECTOR_FEE">
+        <descriptions defaultDescription="A_DIRECTOR_FEE"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_GST_BY_PAYER">
+        <descriptions defaultDescription="TOTAL_GST_BY_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="TPAR_PAYER_QLD">
+        <descriptions defaultDescription="TPAR_PAYER_QLD"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_TITLE">
+        <descriptions defaultDescription="ANZSIC_TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="A_SHARE_SCHEMES">
+        <descriptions defaultDescription="A_SHARE_SCHEMES"/>
+      </viewAttribute>
+      <viewAttribute id="A_EMPL_SUP_CONTRIB">
+        <descriptions defaultDescription="A_EMPL_SUP_CONTRIB"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_BP">
+        <descriptions defaultDescription="PAYER_BP"/>
+      </viewAttribute>
+      <viewAttribute id="EMP_CNT_PAYER">
+        <descriptions defaultDescription="EMP_CNT_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_ABN">
+        <descriptions defaultDescription="PAYER_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="A_OTH_NON_TAX_WAGE">
+        <descriptions defaultDescription="A_OTH_NON_TAX_WAGE"/>
+      </viewAttribute>
+      <viewAttribute id="A_FRINGE_BENEFIT">
+        <descriptions defaultDescription="A_FRINGE_BENEFIT"/>
+      </viewAttribute>
+      <viewAttribute id="BP_FIN_STATUS">
+        <descriptions defaultDescription="BP_FIN_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="C_DEDUCTION_ALLOWED">
+        <descriptions defaultDescription="C_DEDUCTION_ALLOWED"/>
+      </viewAttribute>
+      <viewAttribute id="BP_GRP_STATUS">
+        <descriptions defaultDescription="BP_GRP_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_NAME">
+        <descriptions defaultDescription="PAYER_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="GST_CANCN_DT">
+        <descriptions defaultDescription="GST_CANCN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_TOTL_BUS_INCM_AMT">
+        <descriptions defaultDescription="PAYER_TOTL_BUS_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="C_TOT_QLD_NON_TAX_WAGE">
+        <descriptions defaultDescription="C_TOT_QLD_NON_TAX_WAGE"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_FROM">
+        <descriptions defaultDescription="VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_CATEGORY">
+        <descriptions defaultDescription="RISK_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="ECI_STATUS">
+        <descriptions defaultDescription="ECI_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_CONTRACTORS_PMNTS">
+        <descriptions defaultDescription="PAYER_CONTRACTORS_PMNTS"/>
+      </viewAttribute>
+      <viewAttribute id="C_TOT_QLD_TXBLE_WAGES">
+        <descriptions defaultDescription="C_TOT_QLD_TXBLE_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="TRANSACTION_NUMBER">
+        <descriptions defaultDescription="TRANSACTION_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="SUB_RISK_CATEGORY">
+        <descriptions defaultDescription="SUB_RISK_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="FLAGGED_PAID_BY_PAYER">
+        <descriptions defaultDescription="FLAGGED_PAID_BY_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="C_PAY_TAX_LIAB_CREDIT">
+        <descriptions defaultDescription="C_PAY_TAX_LIAB_CREDIT"/>
+      </viewAttribute>
+      <viewAttribute id="A_APPRENT_PMT">
+        <descriptions defaultDescription="A_APPRENT_PMT"/>
+      </viewAttribute>
+      <viewAttribute id="ASIC_STATUS">
+        <descriptions defaultDescription="ASIC_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="FLAGGED_TAX_WITHELD_BY_PAYER">
+        <descriptions defaultDescription="FLAGGED_TAX_WITHELD_BY_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="C_PAY_TAX_AMOUNT">
+        <descriptions defaultDescription="C_PAY_TAX_AMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="A_TRAINEES_PMT">
+        <descriptions defaultDescription="A_TRAINEES_PMT"/>
+      </viewAttribute>
+      <viewAttribute id="GST_REGN_DT">
+        <descriptions defaultDescription="GST_REGN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="FLAGGED_GST_BY_PAYER">
+        <descriptions defaultDescription="FLAGGED_GST_BY_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_SALARY_WAGES">
+        <descriptions defaultDescription="PAYER_SALARY_WAGES"/>
+      </viewAttribute>
+      <viewAttribute id="C_TAX_AMOUNT">
+        <descriptions defaultDescription="C_TAX_AMOUNT"/>
+      </viewAttribute>
+      <viewAttribute id="A_CONTRACTORS">
+        <descriptions defaultDescription="A_CONTRACTORS"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_PAID_BY_PAYER">
+        <descriptions defaultDescription="TOTAL_PAID_BY_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_SUPER_EXPNS">
+        <descriptions defaultDescription="PAYER_SUPER_EXPNS"/>
+      </viewAttribute>
+      <viewAttribute id="CLNT_TYP">
+        <descriptions defaultDescription="CLNT_TYP"/>
+      </viewAttribute>
+      <viewAttribute id="A_COMMISSION">
+        <descriptions defaultDescription="A_COMMISSION"/>
+      </viewAttribute>
+      <viewAttribute id="A_GROSS_SAL_WAGE">
+        <descriptions defaultDescription="A_GROSS_SAL_WAGE"/>
+      </viewAttribute>
+      <viewAttribute id="TOTAL_TAX_WITHELD_BY_PAYER">
+        <descriptions defaultDescription="TOTAL_TAX_WITHELD_BY_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_PAYER">
+        <descriptions defaultDescription="WCQ_PAYER"/>
+      </viewAttribute>
+      <viewAttribute id="ANZSIC_CD">
+        <descriptions defaultDescription="ANZSIC_CD"/>
+      </viewAttribute>
+    
+      <viewAttribute id="VALID_TO">
+        <descriptions defaultDescription="VALID_TO"/>
+      </viewAttribute>
+    
+      <viewAttribute id="A_TOT_INT_WAGE">
+        <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_SUMMARY_REP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_DIRECTOR_FEE" source="A_DIRECTOR_FEE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_GST_BY_PAYER" source="TOTAL_GST_BY_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TPAR_PAYER_QLD" source="TPAR_PAYER_QLD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_TITLE" source="ANZSIC_TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_SHARE_SCHEMES" source="A_SHARE_SCHEMES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_EMPL_SUP_CONTRIB" source="A_EMPL_SUP_CONTRIB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_BP" source="PAYER_BP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMP_CNT_PAYER" source="EMP_CNT_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN" source="PAYER_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_OTH_NON_TAX_WAGE" source="A_OTH_NON_TAX_WAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_FRINGE_BENEFIT" source="A_FRINGE_BENEFIT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BP_FIN_STATUS" source="BP_FIN_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_DEDUCTION_ALLOWED" source="C_DEDUCTION_ALLOWED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BP_GRP_STATUS" source="BP_GRP_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_NAME" source="PAYER_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_CANCN_DT" source="GST_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_TOTL_BUS_INCM_AMT" source="PAYER_TOTL_BUS_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_QLD_NON_TAX_WAGE" source="C_TOT_QLD_NON_TAX_WAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_CATEGORY" source="RISK_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ECI_STATUS" source="ECI_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_CONTRACTORS_PMNTS" source="PAYER_CONTRACTORS_PMNTS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TOT_QLD_TXBLE_WAGES" source="C_TOT_QLD_TXBLE_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TRANSACTION_NUMBER" source="TRANSACTION_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUB_RISK_CATEGORY" source="SUB_RISK_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLAGGED_PAID_BY_PAYER" source="FLAGGED_PAID_BY_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_TAX_LIAB_CREDIT" source="C_PAY_TAX_LIAB_CREDIT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_APPRENT_PMT" source="A_APPRENT_PMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASIC_STATUS" source="ASIC_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLAGGED_TAX_WITHELD_BY_PAYER" source="FLAGGED_TAX_WITHELD_BY_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_PAY_TAX_AMOUNT" source="C_PAY_TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_TRAINEES_PMT" source="A_TRAINEES_PMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GST_REGN_DT" source="GST_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLAGGED_GST_BY_PAYER" source="FLAGGED_GST_BY_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_SALARY_WAGES" source="PAYER_SALARY_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="C_TAX_AMOUNT" source="C_TAX_AMOUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_CONTRACTORS" source="A_CONTRACTORS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_PAID_BY_PAYER" source="TOTAL_PAID_BY_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_SUPER_EXPNS" source="PAYER_SUPER_EXPNS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLNT_TYP" source="CLNT_TYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_COMMISSION" source="A_COMMISSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_GROSS_SAL_WAGE" source="A_GROSS_SAL_WAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_TAX_WITHELD_BY_PAYER" source="TOTAL_TAX_WITHELD_BY_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_PAYER" source="WCQ_PAYER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="A_TOT_INT_WAGE" source="A_TOT_INT_WAGE"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="PAYER_ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer ABN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_ABN"/>
+    </attribute>
+    <attribute id="PAYER_NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Business Name"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_NAME"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Financial Year"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="RISK_CATEGORY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Risk Category"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RISK_CATEGORY"/>
+    </attribute>
+    <attribute id="SUB_RISK_CATEGORY" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sub Risk Category"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SUB_RISK_CATEGORY"/>
+    </attribute>
+    <attribute id="ASIC_STATUS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASIC Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ASIC_STATUS"/>
+    </attribute>
+    <attribute id="GST_REGN_DT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Date the GST (Register)"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GST_REGN_DT"/>
+    </attribute>
+    <attribute id="GST_CANCN_DT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Date the GST (Cancelled)"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GST_CANCN_DT"/>
+    </attribute>
+    <attribute id="ECI_STATUS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ECI Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ECI_STATUS"/>
+    </attribute>
+    <attribute id="PAYER_BP" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer BP Number"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PAYER_BP"/>
+    </attribute>
+    <attribute id="BP_FIN_STATUS" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Financial Current Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BP_FIN_STATUS"/>
+    </attribute>
+    <attribute id="BP_GRP_STATUS" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Group Status"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BP_GRP_STATUS"/>
+    </attribute>
+    <attribute id="VALID_FROM" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Valid From"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_FROM"/>
+    </attribute>
+    <attribute id="VALID_TO" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Valid To"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_TO"/>
+    </attribute>
+    <attribute id="TRANSACTION_NUMBER" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RMS Transaction Number"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TRANSACTION_NUMBER"/>
+    </attribute>
+    <attribute id="CLNT_TYP" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Client Type"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CLNT_TYP"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC Code"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="ANZSIC_TITLE" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC Title"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ANZSIC_TITLE"/>
+    </attribute>
+    <attribute id="WCQ_PAYER" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Flag: Payer in WCQ"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WCQ_PAYER"/>
+    </attribute>
+    <attribute id="TPAR_PAYER_QLD" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Flag: TPAR Address in QLD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TPAR_PAYER_QLD"/>
+    </attribute>
+    <attribute id="EMP_CNT_PAYER" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Flag: 80 % EMP in QLD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMP_CNT_PAYER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="FLAGGED_PAID_BY_PAYER" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Flagged Payments to the Payee from the Payer"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FLAGGED_PAID_BY_PAYER"/>
+    </measure>
+    <measure id="FLAGGED_TAX_WITHELD_BY_PAYER" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Flagged Tax withheld by the Payee from the Payer"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FLAGGED_TAX_WITHELD_BY_PAYER"/>
+    </measure>
+    <measure id="FLAGGED_GST_BY_PAYER" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Flagged GST by the Payer"/>
+      <measureMapping columnObjectName="Projection_1" columnName="FLAGGED_GST_BY_PAYER"/>
+    </measure>
+    <measure id="TOTAL_PAID_BY_PAYER" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Paid by the Payer"/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_PAID_BY_PAYER"/>
+    </measure>
+    <measure id="TOTAL_TAX_WITHELD_BY_PAYER" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Tax Withheld by the Payer "/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_TAX_WITHELD_BY_PAYER"/>
+    </measure>
+    <measure id="TOTAL_GST_BY_PAYER" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total GST by the Payer "/>
+      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_GST_BY_PAYER"/>
+    </measure>
+    <measure id="A_APPRENT_PMT" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Wages for apprentices"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_APPRENT_PMT"/>
+    </measure>
+    <measure id="A_TRAINEES_PMT" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Wages for trainees"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_TRAINEES_PMT"/>
+    </measure>
+    <measure id="A_COMMISSION" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Commissions"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_COMMISSION"/>
+    </measure>
+    <measure id="A_CONTRACTORS" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Contractors"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_CONTRACTORS"/>
+    </measure>
+    <measure id="C_DEDUCTION_ALLOWED" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Deductions"/>
+      <measureMapping columnObjectName="Projection_1" columnName="C_DEDUCTION_ALLOWED"/>
+    </measure>
+    <measure id="A_DIRECTOR_FEE" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Directors Fees"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_DIRECTOR_FEE"/>
+    </measure>
+    <measure id="A_EMPL_SUP_CONTRIB" order="29" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Employer Super Contributions"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_EMPL_SUP_CONTRIB"/>
+    </measure>
+    <measure id="A_SHARE_SCHEMES" order="30" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Shares and Options"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_SHARE_SCHEMES"/>
+    </measure>
+    <measure id="A_FRINGE_BENEFIT" order="31" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Fringe Benefits"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_FRINGE_BENEFIT"/>
+    </measure>
+    <measure id="A_GROSS_SAL_WAGE" order="32" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Gross Salary and Wages"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_GROSS_SAL_WAGE"/>
+    </measure>
+    <measure id="A_OTH_NON_TAX_WAGE" order="33" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Other non-taxable Wages"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_OTH_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="C_TOT_QLD_NON_TAX_WAGE" order="34" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Qld non-taxable Wages"/>
+      <measureMapping columnObjectName="Projection_1" columnName="C_TOT_QLD_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="C_TOT_QLD_TXBLE_WAGES" order="35" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total Qld Taxable Wages"/>
+      <measureMapping columnObjectName="Projection_1" columnName="C_TOT_QLD_TXBLE_WAGES"/>
+    </measure>
+    <measure id="C_PAY_TAX_LIAB_CREDIT" order="36" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Payroll Tax Liability / Credit"/>
+      <measureMapping columnObjectName="Projection_1" columnName="C_PAY_TAX_LIAB_CREDIT"/>
+    </measure>
+    <measure id="C_PAY_TAX_AMOUNT" order="37" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Payroll Tax Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="C_PAY_TAX_AMOUNT"/>
+    </measure>
+    <measure id="C_TAX_AMOUNT" order="38" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Tax Amount"/>
+      <measureMapping columnObjectName="Projection_1" columnName="C_TAX_AMOUNT"/>
+    </measure>
+    <measure id="A_TOT_INT_WAGE" order="39" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      <measureMapping columnObjectName="Projection_1" columnName="A_TOT_INT_WAGE"/>
+    </measure>
+    <measure id="PAYER_TOTL_BUS_INCM_AMT" order="43" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total of sales and income"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_TOTL_BUS_INCM_AMT"/>
+    </measure>
+    <measure id="PAYER_CONTRACTORS_PMNTS" order="44" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Payments to contractors"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_CONTRACTORS_PMNTS"/>
+    </measure>
+    <measure id="PAYER_SALARY_WAGES" order="45" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Salary &amp; Wages "/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_SALARY_WAGES"/>
+    </measure>
+    <measure id="PAYER_SUPER_EXPNS" order="46" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Superannuation expenses"/>
+      <measureMapping columnObjectName="Projection_1" columnName="PAYER_SUPER_EXPNS"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures>
+    <measure id="FLAGGED_PAID_BY_PAYER_EX_GST" order="13" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="15" scale="1" expressionLanguage="SQL">
+      <descriptions defaultDescription="Total Flagged Paid by Payer Excluding GST"/>
+      <formula>&quot;FLAGGED_PAID_BY_PAYER&quot;-&quot;FLAGGED_GST_BY_PAYER&quot;</formula>
+      
+      
+      </measure>
+  </calculatedMeasures>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="20" y="238"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

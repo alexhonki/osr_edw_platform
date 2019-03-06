@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_TPAR_PAYER_DET" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="TPAR Payer Contact Details"/>
+<localVariables>
+  <variable id="IP_FY" parameter="true">
+    <descriptions defaultDescription="Fiscal Year"/>
+    <variableProperties datatype="NVARCHAR" length="4" mandatory="true">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_CONTACT_DET">
+    <targetVariable name="IP_FY" resourceUri="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_CONTACT_DET"/>
+    <localVariable>IP_FY</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_CONTACT_DET" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_CONTACT_DET</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_PAYER_CONTACT_DET">
+  <attributes>
+    <attribute id="REF_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ref ID"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="REF_ID"/>
+    </attribute>
+    <attribute id="PAYER_ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer ABN"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_ABN"/>
+    </attribute>
+    <attribute id="PAYER_ABN_STS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer ABN Status"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_ABN_STS"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Financial Year"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="PAYER_NAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Business Name"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_NAME"/>
+    </attribute>
+    <attribute id="PAYER_TRDG_NM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Trading Name"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_TRDG_NM"/>
+    </attribute>
+    <attribute id="PAYER_CNTCT_NM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Contact Name"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_CNTCT_NM"/>
+    </attribute>
+    <attribute id="PAYER_ADDR_LN_1" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Address Line 1"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="PAYER_ADDR_LN_2N" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Address Line 2"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_ADDR_LN_2N"/>
+    </attribute>
+    <attribute id="PAYER_LOCALITY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Locality"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_LOCALITY"/>
+    </attribute>
+    <attribute id="PAYER_STATE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer State"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_STATE"/>
+    </attribute>
+    <attribute id="PAYER_PCODE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Postcode"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_PCODE"/>
+    </attribute>
+    <attribute id="PAYER_CNTCT_PH_NUM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Contact Phone"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_CNTCT_PH_NUM"/>
+    </attribute>
+    <attribute id="PAYER_FAX_NUM" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Fax Number"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_FAX_NUM"/>
+    </attribute>
+    <attribute id="PAYER_EMAIL_ADDR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Payer Email Address"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="PAYER_EMAIL_ADDR"/>
+    </attribute>
+    <attribute id="ROW_NUM" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROW_NUM"/>
+      <keyMapping columnObjectName="TF_ABN_TPAR_PAYER_CONTACT_DET" columnName="ROW_NUM"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

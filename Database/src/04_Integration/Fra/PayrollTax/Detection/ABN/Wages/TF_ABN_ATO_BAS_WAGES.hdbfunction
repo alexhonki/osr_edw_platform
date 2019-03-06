@@ -14,14 +14,15 @@ BEGIN
 	RETURN
 -- ATO BAS Data   
 	SELECT
-		LEFT("ATO_BAS"."ABN",11)                                                                               AS  "ABN",
-		CASE WHEN LOCATE(RIGHT(RTRIM("ATO_BAS"."NAME",'.txt'),4),'Q') = 0 THEN 'PT-A' ELSE 'PT-Q' END          AS  "PERIOD_CATEGORY",
-		RIGHT(RTRIM ("ATO_BAS"."NAME",'.txt'),4)                                                               AS  "PERIOD_KEY",
-		LEFT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR"),4)                                                     AS  "GJAHR",
-		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                              AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+		LEFT("ATO_BAS"."ABN",11)                                                                		AS  "ABN",
+		CASE WHEN "ATO_BAS"."BAS_QTR" = 'FY' THEN 'PT-A' ELSE 'PT-Q' END								AS  "PERIOD_CATEGORY",
+		CASE WHEN "ATO_BAS"."BAS_QTR" = 'FY' THEN LEFT("ATO_BAS"."FINANCIAL_YEAR",4) 
+		ELSE RIGHT("ATO_BAS"."FINANCIAL_YEAR",2) ||  "ATO_BAS"."BAS_QTR" END							AS  "PERIOD_KEY",
+		LEFT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR"),4)                                     			AS  "GJAHR",
+		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                            	AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
-		"osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "ATO_BAS"
-	WHERE "ABN" <> 'no ABN';
+		"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ATO_BAS"
+	WHERE "ATO_BAS"."ABN" <> 'no ABN';
 
 END;

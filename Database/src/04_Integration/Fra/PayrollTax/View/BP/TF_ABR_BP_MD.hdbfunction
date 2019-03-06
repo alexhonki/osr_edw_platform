@@ -1,0 +1,40 @@
+FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_ABR_BP_MD"( )
+       RETURNS TABLE 
+       (
+       	ACN					NVARCHAR(20),
+       	ABN					NVARCHAR(20),
+       	PARTNER_TYPE		INTEGER,
+       	BUS_INDUSTRY		NVARCHAR(5),
+		BUS_NM_TITLE		NVARCHAR(12),
+		BUS_NAME_2			NVARCHAR(200),
+		BUS_NAME_1			NVARCHAR(200),
+		BUS_ADDR			NVARCHAR(38),
+		BUS_CITY			NVARCHAR(46),
+		BUS_STATE			NVARCHAR(3),
+		BUS_PC				NVARCHAR(12),
+		BUS_EMAIL			NVARCHAR(200),
+		BUS_PH_NUM			NVARCHAR(15)
+       )
+     
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+   RETURN
+    	SELECT
+    		"AGENCY"."ACN"																			AS	"ACN",
+    		"AGENCY"."ABN"																			AS	"ABN",
+    		'2' 																					AS	"PARTNER_TYPE",
+    		"AGENCY"."MN_INDY_CLSN"																	AS  "BUS_INDUSTRY",
+    		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
+    		LEFT	 ("AGENCY"."ORG_NM",40)															AS  "BUS_NAME_2",
+    		SUBSTRING("AGENCY"."ORG_NM",41,200)														AS  "BUS_NAME_1",
+    		"AGENCY"."MN_BUS_ADDR_LN_1"																AS  "BUS_ADDR",
+    		"AGENCY"."MN_BUS_SBRB"																	AS  "BUS_CITY",
+    		"AGENCY"."MN_BUS_STT"																	AS  "BUS_STATE",
+    		"AGENCY"."MN_BUS_PC"																	AS  "BUS_PC",
+    		''																						AS  "BUS_EMAIL",
+    		''																						AS	"BUS_PH_NUM"
+    	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()									AS	"AGENCY";
+    
+END;

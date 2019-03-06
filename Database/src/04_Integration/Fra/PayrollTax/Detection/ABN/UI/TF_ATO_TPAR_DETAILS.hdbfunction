@@ -1,0 +1,109 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_DETAILS"( IN IP_ALERT_ID NVARCHAR(20))
+       RETURNS TABLE
+		(
+			DB_KEY                  		VARBINARY(16),
+			DB_KEY_DASH						NVARCHAR(36),
+			ALERT_ID                		NVARCHAR(20),
+			ABN                     		NVARCHAR(20),
+			GJAHR                   		NVARCHAR(4),
+			PAYEE_ABN						NVARCHAR(20),
+			PAYEE_ABN_STS					NVARCHAR(9),
+			PAYER_ABN						NVARCHAR(20),
+			PAYER_ABN_STS					NVARCHAR(9),
+			FINANCIAL_YEAR					NVARCHAR(4),
+			PAYEE_FAMILY_NM					NVARCHAR(40),
+			PAYEE_FIRST_GIVEN_NM			NVARCHAR(15),
+			PAYEE_MIDDLE_NM					NVARCHAR(30),
+			PAYEE_NON_IDV_BUS_NM			NVARCHAR(200),
+			PAYEE_TRDG_NM					NVARCHAR(200),
+			PAYEE_PH_NUM					NVARCHAR(15),
+			GROSS_PD_AMT					DECIMAL(15,2),
+			TW_TOTL_AMT						DECIMAL(15,2),
+			GST_TOTL_AMT					DECIMAL(15,2)
+		)
+
+
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+RETURN
+SELECT DISTINCT
+"DB_KEY",
+"DB_KEY_DASH",
+"ALERT_ID",
+"ABN",
+"GJAHR",
+"PAYEE_ABN",
+"PAYEE_ABN_STS",
+"PAYER_ABN",
+"PAYER_ABN_STS",
+"FINANCIAL_YEAR",
+"PAYEE_FAMILY_NM",
+"PAYEE_FIRST_GIVEN_NM",
+"PAYEE_MIDDLE_NM",
+"PAYEE_NON_IDV_BUS_NM",
+"PAYEE_TRDG_NM",
+"PAYEE_PH_NUM",
+"GROSS_PD_AMT",
+"TW_TOTL_AMT",
+"GST_TOTL_AMT"
+FROM
+(
+SELECT 
+"A"."DB_KEY",
+"A"."DB_KEY_DASH",
+"A"."ALERT_ID",
+"A"."ABN",
+"A"."GJAHR",
+"T"."PAYEE_ABN",
+"T"."PAYEE_ABN_STS",
+"T"."PAYER_ABN",
+"T"."PAYER_ABN_STS",
+TO_NVARCHAR("T"."FINANCIAL_YEAR") AS "FINANCIAL_YEAR",
+"T"."PAYEE_FAMILY_NM",
+"T"."PAYEE_FIRST_GIVEN_NM",
+"T"."PAYEE_MIDDLE_NM",
+"T"."PAYEE_NON_IDV_BUS_NM",
+"T"."PAYEE_TRDG_NM",
+"T"."PAYEE_PH_NUM",
+"T"."GROSS_PD_AMT",
+"T"."TW_TOTL_AMT",
+"T"."GST_TOTL_AMT"
+FROM :ALERT_INFO AS "A"
+INNER JOIN	"osr.edw.staging.td.ato.proxy::CV_TPAR_PAYEE" AS "T"
+ON  "A"."ABN" = "T"."PAYEE_ABN"
+AND "A"."GJAHR" = TO_NVARCHAR("T"."FINANCIAL_YEAR")
+)
+;
+
+END;      
