@@ -37,7 +37,7 @@ SELECT
 FROM 
 :it_data_for_rule AS "WS"
 WHERE NOT EXISTS (
-	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
+	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
 		WHERE "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
 )
 ;
