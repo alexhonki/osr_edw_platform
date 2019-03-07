@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_IJR_BP_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_OSR_STATE_IJR_BP_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_IJR_BP_DETAILS"/>
 <localVariables/>
 <variableMappings>
-  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_IJR_BP_DETAILS" value="NULL">
-    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_IJR_BP_DETAILS"/>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_IJR_BP_DETAILS" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_IJR_BP_DETAILS"/>
   </mapping>
 </variableMappings>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_IJR_BP_DETAILS" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_IJR_BP_DETAILS</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_IJR_BP_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_IJR_BP_DETAILS</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_IJR_BP_DETAILS">
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_OSR_STATE_IJR_BP_DETAILS">
   <attributes>
     <attribute id="ANZSIC_CODE" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ANZSIC_CODE"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="ANZSIC_CODE"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="ANZSIC_CODE"/>
     </attribute>
     <attribute id="STATE_CODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATE_CODE"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="STATE_CODE"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="STATE_CODE"/>
     </attribute>
     <attribute id="DATE_REGISTERED" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DATE_REGISTERED"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="DATE_REGISTERED"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="DATE_REGISTERED"/>
     </attribute>
     <attribute id="DATE_CANCELLED" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DATE_CANCELLED"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="DATE_CANCELLED"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="DATE_CANCELLED"/>
     </attribute>
     <attribute id="AUDIT_FLAG" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AUDIT_FLAG"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="AUDIT_FLAG"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="AUDIT_FLAG"/>
     </attribute>
     <attribute id="ALERT_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="ALERT_ID"/>
     </attribute>
     <attribute id="TOP_1000_FLAG" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TOP_1000_FLAG"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="TOP_1000_FLAG"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="TOP_1000_FLAG"/>
     </attribute>
     <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="ABN"/>
     </attribute>
     <attribute id="GJAHR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="GJAHR"/>
     </attribute>
     <attribute id="CLIENT_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT_NAME"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="CLIENT_NAME"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="CLIENT_NAME"/>
     </attribute>
     <attribute id="ACN" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="ACN"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="ACN"/>
     </attribute>
     <attribute id="DB_KEY" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="DB_KEY"/>
     </attribute>
     <attribute id="STATE_CLIENT_ID" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATE_CLIENT_ID"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="STATE_CLIENT_ID"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="STATE_CLIENT_ID"/>
     </attribute>
     <attribute id="DB_KEY_DASH" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY_DASH"/>
-      <keyMapping columnObjectName="TF_IJR_BP_DETAILS" columnName="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_OSR_STATE_IJR_BP_DETAILS" columnName="DB_KEY_DASH"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
