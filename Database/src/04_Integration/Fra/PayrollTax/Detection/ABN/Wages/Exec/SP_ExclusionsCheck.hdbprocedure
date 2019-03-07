@@ -110,7 +110,7 @@ WHERE
 AND  "A"."FACT_TYPE" = 'RG01'
 AND "A"."FACT_CAT_SEQ" = '82'
 AND "A"."FACT_SET" = 'ZIND'
-AND TO_DATS("A"."VALUE_GENERIC") >= to_dats('20170101')
+AND TO_DATS("A"."VALUE_GENERIC") >= to_dats(:lv_role_dt)
 AND  "B"."PARTNERACCTYP" = 'ID'
 
 ;
