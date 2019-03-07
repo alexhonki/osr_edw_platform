@@ -190,7 +190,7 @@ FROM
 :lt_cnt AS "CNT"
 WHERE "RESULT"."ABN" = "CNT"."ABN"
   AND "RESULT"."GJAHR_CHECK" = "CNT"."GJAHR"
-  AND "CNT"."QLD_CNT_EMPLOYEE" >= :lv_rfr_max_low
+  AND "CNT"."QLD_PC_EMPLOYEE" >= :lv_rfr_max_low
   
 UNION
 SELECT
