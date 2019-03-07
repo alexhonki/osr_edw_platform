@@ -12,51 +12,31 @@ BEGIN
 
 lt_exm_priority =
 SELECT
-"CASE_ID", 
-"CASE_TYPE", 
-"CASE_CATEGORY", 
-"REASON_CODE",
-"ABN",
-"PARTNER" AS "BPARTNER",
-"CREATE_TIME",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
+"DO"."ABN",
+"DO"."PERIOD_CATEGORY",
+"DO"."PERIOD_KEY",
+"DO"."GJAHR",
+"CASE"."CASE_ID",
+"CASE"."PARTNER",
+"CASE"."REASON_CODE" 
 FROM
-(
-	SELECT
-	"case"."CASE_ID",
-	"case"."CASE_TYPE",
-	"case"."CASE_CATEGORY",
-	"case"."REASON_CODE",
-	"case"."ABN",
-	"case"."PARTNER",
-	"case"."CREATE_TIME",
-	"wages"."PERIOD_CATEGORY",
-	"wages"."PERIOD_KEY",
-	"wages"."GJAHR",
-	RANK() OVER (PARTITION BY "case"."ABN", "case"."PARTNER" ORDER BY "case"."ABN", "case"."PARTNER", "case"."CASE_ID" DESC) AS "RANK_1"
-	FROM
-	"osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE" AS "case"
-	INNER JOIN :it_data_for_rule AS "wages"
-	ON "case"."ABN" = "wages"."ABN"
-	AND "case"."CASE_TYPE" = 'ZEXM'
-	AND "case"."REASON_CODE" <> 'INVD'
-)
-	WHERE "RANK_1" = '1'
-;
+        (
+    		SELECT "ABN", "CASE_ID", "PARTNER", "REASON_CODE" FROM     
+					(              
+							SELECT "ABN",
+									"CASE_ID",
+									"PARTNER",
+									"REASON_CODE", 
+									RANK() OVER (PARTITION BY "ABN", "PARTNER" ORDER BY "ABN", "PARTNER" DESC, "CASE_ID" DESC) AS "RANK_1" 
+							FROM   "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE" 
+							WHERE "CASE_TYPE" = 'ZEXM'
+							AND "REASON_CODE" <> 'INVD'
 
-lt_pre_result =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-"REASON_CODE" AS "REASON_CODE",
-"CASE_ID" AS "CASE_ID",
-"BPARTNER" AS "BPARTNER"
-FROM
-:lt_exm_priority
+					)
+			WHERE "RANK_1" = 1) AS "CASE" 
+INNER JOIN 
+:it_data_for_rule AS "DO"
+ON "CASE"."ABN" = "DO"."ABN"
 ;
 
 et_result = 
@@ -71,7 +51,7 @@ THEN 100
 ELSE 0
 END AS "DETECTION_RESULT"
 FROM
-:lt_pre_result
+:lt_exm_priority
 ;
 
 et_text = 
@@ -87,7 +67,7 @@ THEN '009'
 ELSE '010'
 END AS "MSGNO",
 LTRIM("CASE_ID") AS "MSGV1",
-LTRIM("BPARTNER") AS "MSGV2",
+LTRIM("PARTNER") AS "MSGV2",
 '' AS "MSGV3",
 '' AS "MSGV4",
 '' AS "MSGV1_FC",
@@ -95,7 +75,7 @@ LTRIM("BPARTNER") AS "MSGV2",
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:lt_pre_result
+:lt_exm_priority
 ;
 
 END
