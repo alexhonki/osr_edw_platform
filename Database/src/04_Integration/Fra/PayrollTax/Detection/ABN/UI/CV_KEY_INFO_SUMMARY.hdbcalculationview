@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_KEY_INFO_SUMMARY" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Summary Key Info View"/>
+<localVariables>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription="Alert ID"/>
+    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO_SUMMARY">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO_SUMMARY"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO_SUMMARY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO_SUMMARY</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO_SUMMARY">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="INVEST_REASON" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVEST_REASON"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="INVEST_REASON"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="BPARTNER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="FINANCIAL_YEAR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="TRDNG_NM" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRDNG_NM"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="TRDNG_NM"/>
+    </attribute>
+    <attribute id="ANZSIC_CD" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_CD"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="ANZSIC_CD"/>
+    </attribute>
+    <attribute id="ANZSIC_TITLE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_TITLE"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="ANZSIC_TITLE"/>
+    </attribute>
+    <attribute id="ENT_TYP_CD" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENT_TYP_CD"/>
+      <keyMapping columnObjectName="TF_KEY_INFO_SUMMARY" columnName="ENT_TYP_CD"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="254"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

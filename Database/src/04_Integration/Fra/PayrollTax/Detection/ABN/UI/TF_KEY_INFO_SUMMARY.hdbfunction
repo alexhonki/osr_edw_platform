@@ -1,0 +1,125 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_KEY_INFO_SUMMARY"(IN IP_ALERT_ID NVARCHAR(20) )
+       RETURNS TABLE
+(
+--ALERT	
+DB_KEY				VARBINARY(16),
+DB_KEY_DASH			NVARCHAR(32),
+ALERT_ID			NVARCHAR(20),
+INVEST_OBJ_TYPE 	NVARCHAR(10),
+INVEST_REASON   	NVARCHAR(10),
+ABN			    	NVARCHAR(11),
+GJAHR				NVARCHAR(4),
+BPARTNER        	NVARCHAR(11),
+GROUP_ID			NVARCHAR(32),
+FINANCIAL_YEAR      NVARCHAR(4),
+--ABR
+TRDNG_NM			NVARCHAR(200),
+ANZSIC_CD			NVARCHAR(5),
+ANZSIC_TITLE		NVARCHAR(79),
+ENT_TYP_CD			NVARCHAR(150)
+
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+    
+-----------------------------ALERT INFO--------------------
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+	SELECT
+		"DB_KEY",
+		"DB_KEY_DASH",
+		"INVEST_REASON",
+		"INVEST_OBJ_TYPE",
+		"ALERT_ID",
+		"ABN",
+		"GJAHR",
+		"BPARTNER",
+		"GROUP_ID"
+	FROM 
+		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+	SELECT
+		"DB_KEY",
+		"DB_KEY_DASH",
+		"INVEST_REASON",
+		"INVEST_OBJ_TYPE",
+		"ALERT_ID",
+		"ABN",
+		"GJAHR",
+		"BPARTNER",
+		"GROUP_ID"
+	FROM 
+		"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+	WHERE 
+		"ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+--------------------------END OF ALERT-----------------------
+-------------ABR Agency Data-------------------
+
+RETURN
+SELECT DISTINCT
+--Alert Data
+		"DB_KEY",
+		"DB_KEY_DASH",
+		"ALERT_ID",
+		"INVEST_OBJ_TYPE",
+		"INVEST_REASON",
+		"ABN",
+		"GJAHR",
+		"BPARTNER",
+		"GROUP_ID",
+		"GJAHR" AS "FINANCIAL_YEAR",
+--		"ENT_TYP_CD",
+--ABR Data
+		"TRDNG_NM",
+		"ANZSIC_CD",
+		"ANZSIC_TITLE",
+		"ENTITY_DESCRIPTION" AS "ENT_TYP_CD"
+FROM		
+(
+SELECT DISTINCT
+		"A"."DB_KEY",
+		"A"."DB_KEY_DASH",
+		"A"."INVEST_REASON",
+		"A"."INVEST_OBJ_TYPE",
+		"A"."ALERT_ID",
+		"A"."ABN",
+		"A"."GJAHR",
+		"A"."BPARTNER",
+		"A"."GROUP_ID",
+		"B"."ENT_TYP_CD" AS "ENT_TYP_CD",
+		"C"."ENTITY_DESCRIPTION",
+		"B"."MN_INDY_CLSN" AS "ANZSIC_CD",
+		UPPER("B"."MN_INDY_CLSN_DESCN") AS "ANZSIC_TITLE",
+		UPPER("B"."ORG_NM") AS "TRDNG_NM"
+FROM
+:ALERT_INFO AS "A" 
+LEFT OUTER JOIN
+"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"  AS "B"
+ON
+"A"."ABN" = "B"."ABN"
+LEFT OUTER JOIN
+"osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C" AS "C"
+ON
+"B"."ENT_TYP_CD" = "C".	"ENTITY_TYPE_CODE"
+)
+
+;
+
+--------------END OF ABR-----------
+
+
+    
+END;
