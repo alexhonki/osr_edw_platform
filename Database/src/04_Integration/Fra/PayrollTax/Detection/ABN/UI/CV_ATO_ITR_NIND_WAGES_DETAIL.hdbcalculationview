@@ -75,9 +75,7 @@
     
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-    </input>
-    <filter>&quot;ALERT_ID&quot; = '$$IP_ALERT_ID$$'</filter>
-  </calculationView>
+    </input></calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
   <attributes>
@@ -104,7 +102,9 @@
   
     <attribute id="DB_KEY_DASH" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY_DASH"/>
+  
       <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
+  
     </attribute>
     <attribute id="GJAHR" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
