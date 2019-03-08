@@ -34,6 +34,10 @@ LEFT("BPID"."IDNUMBER",11) AS "ABN"
 FROM 
 "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "BPID"
 WHERE "BPID"."TYPE" = 'ZABN'
+AND "BPID"."PARTNER" NOT IN ( 
+	SELECT 	DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
+		WHERE "XDELE" = 'X'
+					)
 
 ;
 -----Get Case Information-----------
