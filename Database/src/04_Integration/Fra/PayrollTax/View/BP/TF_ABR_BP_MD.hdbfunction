@@ -8,6 +8,10 @@ FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_ABR_BP_MD"( )
 		BUS_NM_TITLE		NVARCHAR(12),
 		BUS_NAME_2			NVARCHAR(200),
 		BUS_NAME_1			NVARCHAR(200),
+		NAME_ORG1			NVARCHAR(40),
+		NAME_ORG2			NVARCHAR(40),
+		NAME_ORG3			NVARCHAR(40),
+		NAME_ORG4			NVARCHAR(40),
 		BUS_ADDR			NVARCHAR(38),
 		BUS_CITY			NVARCHAR(46),
 		BUS_STATE			NVARCHAR(3),
@@ -29,6 +33,19 @@ BEGIN
     		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
     		LEFT	 ("AGENCY"."ORG_NM",40)															AS  "BUS_NAME_2",
     		SUBSTRING("AGENCY"."ORG_NM",41,200)														AS  "BUS_NAME_1",
+			CASE 
+			WHEN length("AGENCY"."ORG_NM") > 40
+				AND locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 4)) <> length("AGENCY"."ORG_NM")
+				THEN left("AGENCY"."ORG_NM", locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 4)))
+			ELSE left(("AGENCY"."ORG_NM"), 40)
+			END AS "NAME_ORG1",
+			CASE
+			WHEN length("AGENCY"."ORG_NM") > 40
+				THEN LEFT(right("AGENCY"."ORG_NM", (length("AGENCY"."ORG_NM") - locate("AGENCY"."ORG_NM", ' ', (length("AGENCY"."ORG_NM") / 2)))),40)
+			ELSE ''
+			END AS "NAME_ORG2",
+			'' AS "NAME_ORG3",
+			'' AS "NAME_ORG4",
     		"AGENCY"."MN_BUS_ADDR_LN_1"																AS  "BUS_ADDR",
     		"AGENCY"."MN_BUS_SBRB"																	AS  "BUS_CITY",
     		"AGENCY"."MN_BUS_STT"																	AS  "BUS_STATE",

@@ -1,0 +1,20 @@
+FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG"(IV_STR NVARCHAR(400) )
+RETURNS TABLE (
+LINE_NUM INTEGER,
+LINE_STR  NVARCHAR(40)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+DECLARE lv_pointer INTEGER;
+DECLARE lv_str NVARCHAR(400);
+
+lv_str := :IV_STR;
+
+lt_dummy = select top 1 * from "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR";
+
+RETURN 
+SELECT 1 AS "LINE_NUM", LEFT('SS', 40) AS "LINE_STR" FROM :lt_dummy;
+
+END;
