@@ -53,6 +53,19 @@
       <viewAttribute id="BUS_STATE">
         <descriptions defaultDescription="BUS_STATE"/>
       </viewAttribute>
+    
+      <viewAttribute id="NAME_ORG1">
+        <descriptions defaultDescription="NAME_ORG1"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG2">
+        <descriptions defaultDescription="NAME_ORG2"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG3">
+        <descriptions defaultDescription="NAME_ORG3"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG4">
+        <descriptions defaultDescription="NAME_ORG4"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -70,6 +83,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR" source="BUS_ADDR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_CITY" source="BUS_CITY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG1" source="NAME_ORG1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG2" source="NAME_ORG2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG3" source="NAME_ORG3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG4" source="NAME_ORG4"/>
     </input>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
@@ -128,6 +146,19 @@
       <viewAttribute id="GROUP_ID">
         <descriptions defaultDescription="GROUP_ID"/>
       </viewAttribute>
+    
+      <viewAttribute id="NAME_ORG1">
+        <descriptions defaultDescription="NAME_ORG1"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG2">
+        <descriptions defaultDescription="NAME_ORG2"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG3">
+        <descriptions defaultDescription="NAME_ORG3"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG4">
+        <descriptions defaultDescription="NAME_ORG4"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -145,6 +176,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_ADDR" source="BUS_ADDR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_CITY" source="BUS_CITY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_STATE" source="BUS_STATE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG1" source="NAME_ORG1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG2" source="NAME_ORG2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG3" source="NAME_ORG3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG4" source="NAME_ORG4"/>
     </input>
     <input node="Projection_2">
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
@@ -262,6 +298,23 @@
     <attribute id="BUS_STATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_STATE"/>
       <keyMapping columnObjectName="Join_1" columnName="BUS_STATE"/>
+    </attribute>
+  
+    <attribute id="NAME_ORG1" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME_ORG1"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME_ORG1"/>
+    </attribute>
+    <attribute id="NAME_ORG2" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME_ORG2"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME_ORG2"/>
+    </attribute>
+    <attribute id="NAME_ORG3" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME_ORG3"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME_ORG3"/>
+    </attribute>
+    <attribute id="NAME_ORG4" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME_ORG4"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME_ORG4"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

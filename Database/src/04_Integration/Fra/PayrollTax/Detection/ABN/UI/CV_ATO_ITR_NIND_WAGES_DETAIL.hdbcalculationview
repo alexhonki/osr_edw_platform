@@ -13,7 +13,7 @@
   </DataSource>
 </dataSources>
 <calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
       <viewAttribute id="DB_KEY">
         <descriptions defaultDescription="DB_KEY"/>
@@ -140,8 +140,10 @@
       <measureMapping columnObjectName="Projection_1" columnName="TOTAL_WAGES"/>
     </measure>
   
-    <measure id="PMNTS_TO_ASSOCS" order="13" aggregationType="sum" measureType="simple">
+    <measure id="PMNTS_TO_ASSOCS" order="13" aggregationType="sum" measureType="amount" semanticType="amount">
       <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
+  
+      <unitCurrencyAttribute attributeName="WAERS"/>
       <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
     </measure>
   </baseMeasures>
