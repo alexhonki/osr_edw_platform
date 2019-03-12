@@ -160,7 +160,7 @@ AND "W"."GJAHR" = "THLD"."GJAHR"
 INNER JOIN
 "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
 ON  "W"."GJAHR" = "RATE"."GJAHR"
-AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+AND "W"."GJAHR" = "RATE"."PERIOD_KEY"
 ;
 
 IF :lv_mode = 'S' THEN
