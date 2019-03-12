@@ -59,6 +59,7 @@ HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly
 ;
 
 -- use the WCQ wages from previous year as the predicted wage for the current year
+/*
 lt_wcq_predict = 
 SELECT 
 "ABN",
@@ -90,7 +91,27 @@ GROUP BY
 "GJAHR",
 "WAERS"
 ;
-
+*/
+lt_wcq_predict = 
+SELECT 
+"KEYS"."ABN" AS "ABN",
+"KEYS"."GJAHR" AS "GJAHR",
+"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+"WAGES"."WAERS" AS "WAERS",
+SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
+INNER JOIN :it_data_for_rule AS "KEYS"
+ON  "KEYS"."ABN" = "WAGES"."ABN"
+AND "KEYS"."GJAHR" = TO_NVARCHAR(TO_INT("WAGES"."GJAHR") + 1)
+WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+GROUP BY 
+"KEYS"."ABN",
+"KEYS"."PERIOD_CATEGORY",
+"KEYS"."PERIOD_KEY",
+"KEYS"."GJAHR",
+"WAGES"."WAERS"
+;
 
 lt_wage_for_tax = 
 SELECT 
