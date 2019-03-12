@@ -1,10 +1,12 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QuarterWageExceedingThldTest" (
-	IN iv_abn				NVARCHAR(11),
-	IN iv_gjahr				NVARCHAR(4),
-	IN lv_run_mode			NVARCHAR(1),
-	IN lv_thld_yearly		Decimal(15,2),
-	IN lx_ato			NVARCHAR(1),
-	IN lx_wcq				NVARCHAR(1),
+	IN  iv_abn				NVARCHAR(11),
+	IN  iv_gjahr			NVARCHAR(4),
+	IN  lv_run_mode			NVARCHAR(1),
+	IN  lv_thld_yearly		Decimal(15,2),
+	IN  lx_ato				NVARCHAR(1),
+	IN  lx_wcq				NVARCHAR(1),
+    OUT lt_out_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    OUT lt_param        	"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
