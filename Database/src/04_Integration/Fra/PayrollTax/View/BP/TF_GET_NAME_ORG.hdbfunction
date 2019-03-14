@@ -11,13 +11,16 @@ DECLARE lv_pointer INTEGER;
 DECLARE lv_i INTEGER;
 DECLARE lv_j INTEGER;
 
+
+
+
+
 DECLARE lv_str NVARCHAR(400);
 DECLARE lv_stop INTEGER;
 DECLARE lv_line_stop INTEGER;
 DECLARE lv_line_count INTEGER;
 DECLARE lv_line_length INTEGER;
 DECLARE lv_line NVARCHAR(40);
-DECLARE lv_token NVARCHAR(40);
 
 DECLARE lv_outer INTEGER;
 DECLARE lv_inner INTEGER;
@@ -37,6 +40,11 @@ lv_line_length := 0;
 lt_dummy = select top 1 0 AS "LINE_NUM", '@' AS "LINE_STR"  FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR";
 lt_result = select top 1 0 AS "LINE_NUM", '@' AS "LINE_STR" FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR";
 
+IF :lv_str IS NULL OR :lv_str = '' THEN
+	RETURN SELECT  1 AS "LINE_NUM", '' AS "LINE_STR" FROM :lt_dummy;
+END IF;
+
+IF length(rtrim(:lv_str)) > :iv_line_length THEN
 WHILE length(rtrim(:lv_str)) > :iv_line_length  AND :lv_outer <10 DO
 	
 	WHILE LOCATE(:lv_str, char(32), 0 , :lv_i ) <= :iv_line_length  AND :lv_inner <10 DO
@@ -55,7 +63,7 @@ WHILE length(rtrim(:lv_str)) > :iv_line_length  AND :lv_outer <10 DO
 	
 	lv_line_count := :lv_line_count + 1;
 	lt_result = 
-	select top 1 :lv_line_count AS "LINE_NUM", :lv_line AS "LINE_STR"  
+	select top 1 :lv_line_count AS "LINE_NUM", ltrim(rtrim(:lv_line)) AS "LINE_STR"  
 	from :lt_dummy
 	UNION
 	select "LINE_NUM", "LINE_STR"  
@@ -71,14 +79,23 @@ WHILE length(rtrim(:lv_str)) > :iv_line_length  AND :lv_outer <10 DO
 END WHILE;
 
 lt_result = 
-select top 1 :lv_line_count + 1 AS "LINE_NUM", :lv_str AS "LINE_STR"  
+select top 1 :lv_line_count + 1 AS "LINE_NUM", ltrim(rtrim(:lv_line)) AS "LINE_STR"  
 from :lt_dummy
 UNION
 select "LINE_NUM", "LINE_STR"  
 FROM :lt_result;
 
-
 RETURN 
 SELECT "LINE_NUM", "LINE_STR" FROM :lt_result WHERE "LINE_NUM" <> 0;
+
+ELSE
+
+RETURN 
+SELECT  1 AS "LINE_NUM", ltrim(rtrim(:lv_str)) "LINE_STR" FROM :lt_dummy;
+
+END IF;
+
+
+
 
 END;

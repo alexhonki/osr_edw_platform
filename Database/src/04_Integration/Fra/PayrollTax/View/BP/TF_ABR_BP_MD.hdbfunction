@@ -31,39 +31,18 @@ BEGIN
     		'2' 																					AS	"PARTNER_TYPE",
     		"AGENCY"."MN_INDY_CLSN"																	AS  "BUS_INDUSTRY",
     		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
-/*    		CASE
-			WHEN length("AGENCY"."ORG_NM") > 40
-				THEN LEFT(right("AGENCY"."ORG_NM", (length("AGENCY"."ORG_NM") - locate("AGENCY"."ORG_NM", ' ', (length("AGENCY"."ORG_NM") / 2)))),40)
-			ELSE ''
-			END 																					AS  "BUS_NAME_2",
-    		CASE
-    		WHEN length("AGENCY"."ORG_NM") > 40
-				AND locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 2)) <> length("AGENCY"."ORG_NM")
-				THEN left("AGENCY"."ORG_NM", locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 2)))
-			ELSE left(("AGENCY"."ORG_NM"), 40)														
-			END 																					AS  "BUS_NAME_1",
-			CASE 
-			WHEN length("AGENCY"."ORG_NM") > 40
-				AND locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 4)) <> length("AGENCY"."ORG_NM")
-				THEN left("AGENCY"."ORG_NM", locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 4)))
-			ELSE left(("AGENCY"."ORG_NM"), 40)
-			END AS "NAME_ORG1",
-			CASE
-			WHEN length("AGENCY"."ORG_NM") > 40
-				THEN LEFT(right("AGENCY"."ORG_NM", (length("AGENCY"."ORG_NM") - locate("AGENCY"."ORG_NM", ' ', (length("AGENCY"."ORG_NM") / 4)))),40)
-			ELSE ''
-			END AS "NAME_ORG2",
-			'' AS "NAME_ORG3",
-			'' AS "NAME_ORG4",
-*/
 			CASE WHEN LENGTH("AGENCY"."ORG_NM") > 40  THEN  SUBSTRING("AGENCY"."ORG_NM", 41, 40)    ELSE ''                 END           AS  "BUS_NAME_2",
 			CASE WHEN LENGTH("AGENCY"."ORG_NM") > 40  THEN  SUBSTRING("AGENCY"."ORG_NM", 0, 40)     ELSE "AGENCY"."ORG_NM"  END           AS  "BUS_NAME_1",
-
+/*
 			CASE WHEN LENGTH("AGENCY"."ORG_NM") > 40  THEN  SUBSTRING("AGENCY"."ORG_NM", 0, 40)     ELSE "AGENCY"."ORG_NM"  END           AS  "NAME_ORG1",
 			CASE WHEN LENGTH("AGENCY"."ORG_NM") > 40  THEN  SUBSTRING("AGENCY"."ORG_NM", 41, 40)    ELSE ''                 END           AS  "NAME_ORG2",
 			CASE WHEN LENGTH("AGENCY"."ORG_NM") > 80  THEN  SUBSTRING("AGENCY"."ORG_NM", 81, 40)    ELSE ''                 END           AS  "NAME_ORG3",
 			CASE WHEN LENGTH("AGENCY"."ORG_NM") > 120 THEN  SUBSTRING("AGENCY"."ORG_NM", 121, 40)   ELSE ''                 END           AS  "NAME_ORG4",
-			
+*/
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 1) AS  "NAME_ORG1",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 2) AS  "NAME_ORG2",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 3) AS  "NAME_ORG3",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 4) AS  "NAME_ORG4",
     		"AGENCY"."MN_BUS_ADDR_LN_1"																                                      AS  "BUS_ADDR",
     		CASE WHEN LENGTH("AGENCY"."MN_BUS_SBRB") > 40 THEN 	SUBSTRING("AGENCY"."MN_BUS_SBRB", 0, 40) ELSE "AGENCY"."MN_BUS_SBRB" END  AS  "BUS_CITY",
     		"AGENCY"."MN_BUS_STT"																                                    	  AS  "BUS_STATE",
@@ -71,6 +50,8 @@ BEGIN
     		
     		''																						                                      AS  "BUS_EMAIL",
     		''																					 	                                      AS  "BUS_PH_NUM"
-    	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY";
+    	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
+    	WHERE "ENT_TYP_CD" <> 'IND'
+    	;
     
 END;
