@@ -1,8 +1,16 @@
 FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_ABR_BP_MD"( )
        RETURNS TABLE 
        (
+    	DB_KEY				VARBINARY(16),
+    	DB_KEY_DASH			NVARCHAR(32),
+    	ALERT_ID			NVARCHAR(20),
+    	INVEST_OBJ_TYPE 	NVARCHAR(10),
+    	INVEST_REASON   	NVARCHAR(10),
+		ABN			    	NVARCHAR(11),
+		GJAHR				NVARCHAR(4),
+		BPARTNER        	NVARCHAR(11),
+		GROUP_ID			NVARCHAR(32),
        	ACN					NVARCHAR(20),
-       	ABN					NVARCHAR(20),
        	PARTNER_TYPE		INTEGER,
        	BUS_INDUSTRY		NVARCHAR(5),
 		BUS_NM_TITLE		NVARCHAR(12),
@@ -26,8 +34,16 @@ BEGIN
 
    RETURN
     	SELECT
+			"ALERT"."DB_KEY",
+			REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "ALERT"."DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."INVEST_OBJ_TYPE",
+			"ALERT"."INVEST_REASON",
+			"ALERT"."ABN" AS "ABN",
+			"ALERT"."GJAHR" AS "GJAHR",
+			"ALERT"."BPARTNER" AS "BPARTNER",
+			"ALERT"."GROUP_ID" AS "GROUP_ID",
     		"AGENCY"."ACN"																			AS	"ACN",
-    		"AGENCY"."ABN"																			AS	"ABN",
     		'2' 																					AS	"PARTNER_TYPE",
     		"AGENCY"."MN_INDY_CLSN"																	AS  "BUS_INDUSTRY",
     		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
@@ -51,7 +67,9 @@ BEGIN
     		''																						                                      AS  "BUS_EMAIL",
     		''																					 	                                      AS  "BUS_PH_NUM"
     	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
-    	WHERE "ENT_TYP_CD" <> 'IND'
+    	INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+    	ON "ALERT"."ABN" = "AGENCY"."ABN"
+    	WHERE "AGENCY"."ENT_TYP_CD" <> 'IND'
     	;
     
 END;
