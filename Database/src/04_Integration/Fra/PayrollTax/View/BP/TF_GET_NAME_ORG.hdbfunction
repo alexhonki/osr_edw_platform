@@ -45,57 +45,53 @@ IF :lv_str IS NULL OR :lv_str = '' THEN
 END IF;
 
 IF length(rtrim(:lv_str)) > :iv_line_length THEN
-WHILE length(rtrim(:lv_str)) > :iv_line_length  AND :lv_outer <10 DO
-	
-	WHILE LOCATE(:lv_str, char(32), 0 , :lv_i ) <= :iv_line_length  AND :lv_inner <10 DO
-		lv_i := :lv_i + 1;	
-		lv_inner := :lv_inner + 1;
+
+	WHILE length(rtrim(:lv_str)) > :iv_line_length DO
+		
+		WHILE LOCATE(:lv_str, char(32), 0 , :lv_i ) <= :iv_line_length  AND :lv_inner <40 DO
+			lv_i := :lv_i + 1;	
+			lv_inner := :lv_inner + 1;
+		END WHILE;
+		
+		lv_line_length := LOCATE(:lv_str, char(32), 0 , :lv_i );
+		WHILE SUBSTRING(:lv_str , :iv_line_length - :lv_j + 1, 1) <> char(32)
+		DO
+			lv_j := :lv_j +1;
+		END WHILE;
+		lv_line := SUBSTRING(:lv_str, 0, :iv_line_length - :lv_j + 1 );
+		lv_pointer := :iv_line_length - :lv_j + 1;
+		
+		
+		lv_line_count := :lv_line_count + 1;
+		lt_result = 
+		select top 1 :lv_line_count AS "LINE_NUM", ltrim(rtrim(:lv_line)) AS "LINE_STR"  
+		from :lt_dummy
+		UNION
+		select "LINE_NUM", "LINE_STR"  
+		FROM :lt_result;
+				
+		lv_str = SUBSTRING(:lv_str, :lv_pointer);	
+		lv_pointer := 0;
+		
+		lv_i := 1;
+		lv_j := 1;
+		lv_inner := 0;
+		
 	END WHILE;
-	
-	lv_line_length := LOCATE(:lv_str, char(32), 0 , :lv_i );
-	WHILE SUBSTRING(:lv_str , :iv_line_length - :lv_j + 1, 1) <> char(32)
-	DO
-		lv_j := :lv_j +1;
-	END WHILE;
-	lv_line := SUBSTRING(:lv_str, 0, :iv_line_length - :lv_j + 1 );
-	lv_pointer := :iv_line_length - :lv_j + 1;
-	
-	
-	lv_line_count := :lv_line_count + 1;
+
 	lt_result = 
-	select top 1 :lv_line_count AS "LINE_NUM", ltrim(rtrim(:lv_line)) AS "LINE_STR"  
+	select top 1 :lv_line_count + 1 AS "LINE_NUM", ltrim(rtrim(:lv_str)) AS "LINE_STR"  
 	from :lt_dummy
 	UNION
 	select "LINE_NUM", "LINE_STR"  
 	FROM :lt_result;
-			
-	lv_str = SUBSTRING(:lv_str, :lv_pointer);	
-	lv_pointer := 0;
-	
-	lv_i := 1;
-	lv_j := 1;
-	lv_inner := 0;
-	lv_outer := :lv_outer + 1;
-END WHILE;
 
-lt_result = 
-select top 1 :lv_line_count + 1 AS "LINE_NUM", ltrim(rtrim(:lv_line)) AS "LINE_STR"  
-from :lt_dummy
-UNION
-select "LINE_NUM", "LINE_STR"  
-FROM :lt_result;
-
-RETURN 
-SELECT "LINE_NUM", "LINE_STR" FROM :lt_result WHERE "LINE_NUM" <> 0;
+	RETURN SELECT "LINE_NUM", "LINE_STR" FROM :lt_result WHERE "LINE_NUM" <> 0;
 
 ELSE
 
-RETURN 
-SELECT  1 AS "LINE_NUM", ltrim(rtrim(:lv_str)) "LINE_STR" FROM :lt_dummy;
+	RETURN SELECT  1 AS "LINE_NUM", ltrim(rtrim(:lv_str)) "LINE_STR" FROM :lt_dummy;
 
 END IF;
-
-
-
 
 END;
