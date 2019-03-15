@@ -1,0 +1,26 @@
+FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"(
+iv_str NVARCHAR(400), 
+iv_line_length INTEGER,
+iv_line_num INTEGER
+)
+RETURNS ev_line_str NVARCHAR(40)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+DECLARE lv_cnt integer;
+
+SELECT count(*) INTO lv_cnt FROM "osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG"(:iv_str, :iv_line_length)
+WHERE "LINE_NUM" = :iv_line_num;
+
+IF :lv_cnt > 0 THEN 
+
+SELECT "LINE_STR" INTO EV_LINE_STR FROM "osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG"(:iv_str, :iv_line_length)
+WHERE "LINE_NUM" = :iv_line_num;
+
+ELSE 
+
+ev_line_str := '';
+END IF;
+
+END;

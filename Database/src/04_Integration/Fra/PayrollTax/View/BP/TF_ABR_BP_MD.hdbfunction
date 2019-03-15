@@ -1,18 +1,29 @@
 FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_ABR_BP_MD"( )
        RETURNS TABLE 
        (
+    	DB_KEY				VARBINARY(16),
+    	DB_KEY_DASH			NVARCHAR(32),
+    	ALERT_ID			NVARCHAR(20),
+    	INVEST_OBJ_TYPE 	NVARCHAR(10),
+    	INVEST_REASON   	NVARCHAR(10),
+		ABN			    	NVARCHAR(11),
+		GJAHR				NVARCHAR(4),
+		BPARTNER        	NVARCHAR(11),
+		GROUP_ID			NVARCHAR(32),
        	ACN					NVARCHAR(20),
-       	ABN					NVARCHAR(20),
        	PARTNER_TYPE		INTEGER,
        	BUS_INDUSTRY		NVARCHAR(5),
 		BUS_NM_TITLE		NVARCHAR(12),
 		BUS_NAME_2			NVARCHAR(200),
 		BUS_NAME_1			NVARCHAR(200),
+		ORG_NAME			NVARCHAR(200),
 		NAME_ORG1			NVARCHAR(40),
 		NAME_ORG2			NVARCHAR(40),
 		NAME_ORG3			NVARCHAR(40),
 		NAME_ORG4			NVARCHAR(40),
 		BUS_ADDR			NVARCHAR(38),
+		BUS_ADDR_LN_1		NVARCHAR(38),
+		BUS_ADDR_LN_2		NVARCHAR(38),
 		BUS_CITY			NVARCHAR(46),
 		BUS_STATE			NVARCHAR(3),
 		BUS_PC				NVARCHAR(12),
@@ -26,41 +37,39 @@ BEGIN
 
    RETURN
     	SELECT
+			"ALERT"."DB_KEY",
+			REPLACE_REGEXPR('(.{8})(.{4})(.{4})(.{4})(.*)' IN "ALERT"."DB_KEY" with '\1-\2-\3-\4-\5') AS "DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."INVEST_OBJ_TYPE",
+			"ALERT"."INVEST_REASON",
+			"ALERT"."ABN" AS "ABN",
+			"ALERT"."GJAHR" AS "GJAHR",
+			"ALERT"."BPARTNER" AS "BPARTNER",
+			"ALERT"."GROUP_ID" AS "GROUP_ID",
     		"AGENCY"."ACN"																			AS	"ACN",
-    		"AGENCY"."ABN"																			AS	"ABN",
     		'2' 																					AS	"PARTNER_TYPE",
     		"AGENCY"."MN_INDY_CLSN"																	AS  "BUS_INDUSTRY",
     		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
-    		CASE
-			WHEN length("AGENCY"."ORG_NM") > 40
-				THEN LEFT(right("AGENCY"."ORG_NM", (length("AGENCY"."ORG_NM") - locate("AGENCY"."ORG_NM", ' ', (length("AGENCY"."ORG_NM") / 2)))),40)
-			ELSE ''
-			END 																					AS  "BUS_NAME_2",
-    		CASE
-    		WHEN length("AGENCY"."ORG_NM") > 40
-				AND locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 2)) <> length("AGENCY"."ORG_NM")
-				THEN left("AGENCY"."ORG_NM", locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 2)))
-			ELSE left(("AGENCY"."ORG_NM"), 40)														
-			END 																					AS  "BUS_NAME_1",
-			CASE 
-			WHEN length("AGENCY"."ORG_NM") > 40
-				AND locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 2)) <> length("AGENCY"."ORG_NM")
-				THEN left("AGENCY"."ORG_NM", locate("AGENCY"."ORG_NM", char(32), (length("AGENCY"."ORG_NM") / 2)))
-			ELSE left(("AGENCY"."ORG_NM"), 40)
-			END AS "NAME_ORG1",
-			CASE
-			WHEN length("AGENCY"."ORG_NM") > 40
-				THEN LEFT(right("AGENCY"."ORG_NM", (length("AGENCY"."ORG_NM") - locate("AGENCY"."ORG_NM", ' ', (length("AGENCY"."ORG_NM") / 2)))),40)
-			ELSE ''
-			END AS "NAME_ORG2",
-			'' AS "NAME_ORG3",
-			'' AS "NAME_ORG4",
-    		"AGENCY"."MN_BUS_ADDR_LN_1"																AS  "BUS_ADDR",
-    		"AGENCY"."MN_BUS_SBRB"																	AS  "BUS_CITY",
-    		"AGENCY"."MN_BUS_STT"																	AS  "BUS_STATE",
-    		"AGENCY"."MN_BUS_PC"																	AS  "BUS_PC",
-    		''																						AS  "BUS_EMAIL",
-    		''																						AS	"BUS_PH_NUM"
-    	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()									AS	"AGENCY";
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 2)								    AS  "BUS_NAME_2",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 1)									AS  "BUS_NAME_1",
+			"AGENCY"."ORG_NM" AS "ORG_NAME",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 1) AS  "NAME_ORG1",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 2) AS  "NAME_ORG2",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 3) AS  "NAME_ORG3",
+			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 4) AS  "NAME_ORG4",
+    		LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_1")) || CHAR(32) || LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_2"))                  		  AS  "BUS_ADDR", 		
+    		LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_1"))													               					  AS  "BUS_ADDR_LN_1", 			
+    		LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_2"))                  																	  AS  "BUS_ADDR_LN_2",
+    		CASE WHEN LENGTH("AGENCY"."MN_BUS_SBRB") > 40 THEN 	SUBSTRING("AGENCY"."MN_BUS_SBRB", 0, 40) ELSE "AGENCY"."MN_BUS_SBRB" END  AS  "BUS_CITY",
+    		"AGENCY"."MN_BUS_STT"																                                    	  AS  "BUS_STATE",
+    		CASE WHEN LENGTH("AGENCY"."MN_BUS_PC") > 10 THEN  SUBSTRING("AGENCY"."MN_BUS_PC", 0, 10)     ELSE "AGENCY"."MN_BUS_PC"   END  AS  "BUS_PC",
+    		
+    		''																						                                      AS  "BUS_EMAIL",
+    		''																					 	                                      AS  "BUS_PH_NUM"
+    	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
+    	INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+    	ON "ALERT"."ABN" = "AGENCY"."ABN"
+    	WHERE "AGENCY"."ENT_TYP_CD" <> 'IND'
+    	;
     
 END;

@@ -46,7 +46,8 @@ THEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")/2*4
 WHEN RIGHT("WAGES"."PERIOD_KEY",2) = 'Q3'
 THEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")/3*4
 END 
-AS "WAGE"
+AS "WAGE",
+SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "QTR_WAGE"
 FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
 WHERE "PERIOD_CATEGORY" = 'PT-Q'
   AND EXISTS (
@@ -79,15 +80,14 @@ GROUP BY
 "PERIOD_KEY",
 "GJAHR",
 "WAERS"
-HAVING SUM("WAGE")  >= :lv_thld_yearly
+HAVING SUM("QTR_WAGE")  >= :lv_thld_yearly
 ;
 
 -- use the WCQ wages from previous year as the predicted wage for the current year
+/*
 lt_wcq_predict = 
 SELECT 
 "ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
 "GJAHR",
 "WAERS",
 SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
@@ -109,10 +109,29 @@ WHERE "PERIOD_CATEGORY" = 'PT-A'
 )
 GROUP BY 
 "ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
 "GJAHR",
 "WAERS"
+;
+*/
+lt_wcq_predict = 
+SELECT 
+"KEYS"."ABN" AS "ABN",
+"KEYS"."GJAHR" AS "GJAHR",
+"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+"WAGES"."WAERS" AS "WAERS",
+SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
+INNER JOIN :it_data_for_rule AS "KEYS"
+ON  "KEYS"."ABN" = "WAGES"."ABN"
+AND "KEYS"."GJAHR" = TO_NVARCHAR(TO_INT("WAGES"."GJAHR") + 1)
+WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+GROUP BY 
+"KEYS"."ABN",
+"KEYS"."PERIOD_CATEGORY",
+"KEYS"."PERIOD_KEY",
+"KEYS"."GJAHR",
+"WAGES"."WAERS"
 ;
 
 
@@ -154,7 +173,7 @@ GROUP BY
 "GJAHR",
 "WAERS"
 ;
- 	
+
 lt_result = 
 SELECT 
 "W"."ABN",
@@ -183,7 +202,7 @@ AND "W"."GJAHR" = "THLD"."GJAHR"
 INNER JOIN
 "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
 ON  "W"."GJAHR" = "RATE"."GJAHR"
-AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+AND "W"."GJAHR" = "RATE"."PERIOD_KEY"
 ;
 
 IF :lv_mode = 'S' THEN
@@ -210,8 +229,8 @@ SELECT
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
 '005' AS "MSGNO",
-"WAGE" AS "MSGV1",
-:lv_thld_yearly AS "MSGV2",
+TO_DECIMAL("WAGE",15,2) AS "MSGV1",
+TO_DECIMAL(:lv_thld_yearly,15,2) AS "MSGV2",
 "PERIOD_KEY" AS "MSGV3",
 "CURRENCY" AS "MSGV4",
 'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV1_FC",
@@ -248,8 +267,8 @@ SELECT
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
 '005' AS "MSGNO",
-"WAGE" AS "MSGV1",
-:lv_thld_yearly AS "MSGV2",
+TO_DECIMAL("WAGE",15,2) AS "MSGV1",
+TO_DECIMAL(:lv_thld_yearly,15,2) AS "MSGV2",
 "PERIOD_KEY" AS "MSGV3",
 "CURRENCY" AS "MSGV4",
 'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV1_FC",
