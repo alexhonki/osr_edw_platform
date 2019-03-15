@@ -38,7 +38,6 @@ SELECT
 "WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
 "WAGES"."GJAHR" AS "GJAHR",
 "WAGES"."WAERS" AS "WAERS",
-/*
 CASE 
 WHEN RIGHT("WAGES"."PERIOD_KEY",2) = 'Q1'
 THEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")*4
@@ -47,9 +46,8 @@ THEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")/2*4
 WHEN RIGHT("WAGES"."PERIOD_KEY",2) = 'Q3'
 THEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")/3*4
 END 
-*/
-SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")
-AS "WAGE"
+AS "WAGE",
+SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "QTR_WAGE"
 FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
 WHERE "PERIOD_CATEGORY" = 'PT-Q'
   AND EXISTS (
@@ -82,7 +80,7 @@ GROUP BY
 "PERIOD_KEY",
 "GJAHR",
 "WAERS"
-HAVING SUM("WAGE")  >= :lv_thld_yearly
+HAVING SUM("QTR_WAGE")  >= :lv_thld_yearly
 ;
 
 -- use the WCQ wages from previous year as the predicted wage for the current year
