@@ -41,9 +41,9 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data": {
+  "osr.edw.source.td.ato.synonym::CDS_BAS.TAB.BASBNFCRY": {
     "target": {
-      "object": "osr.edw.staging.td.ato::CDS_EMP.DSO.EMP_CNT.active_data",
+      "object": "osr.edw.source.td.ato::CDS_BAS.TAB.BASBNFCRY",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
@@ -59,9 +59,9 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASBNFCRY.active_data": {
+  "osr.edw.staging.td.ato.synonym::CDS_EMP.DSO.EMP_CNT.active_data": {
     "target": {
-      "object": "osr.edw.staging.td.ato::CDS_BAS.DSO.BASBNFCRY.active_data",
+      "object": "osr.edw.staging.td.ato::CDS_EMP.DSO.EMP_CNT.active_data",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
@@ -71,9 +71,9 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.source.td.ato.synonym::CDS_BAS.TAB.BASBNFCRY": {
+  "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASBNFCRY.active_data": {
     "target": {
-      "object": "osr.edw.source.td.ato::CDS_BAS.TAB.BASBNFCRY",
+      "object": "osr.edw.staging.td.ato::CDS_BAS.DSO.BASBNFCRY.active_data",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
@@ -113,21 +113,15 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data": {
-    "target": {
-      "object": "osr.edw.staging.td.ato::CDS_TPAR.DSO.TPAR_PAYEE.active_data",
-      "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
-    }
-  },
   "osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_NIND.active_data": {
     "target": {
       "object": "osr.edw.staging.td.ato::CDS_PAYG.DSO.PAYG_NIND.active_data",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.staging.td.ato.synonym::CDS_FBT.DSO.FBT.active_data": {
+  "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYEE.active_data": {
     "target": {
-      "object": "osr.edw.staging.td.ato::CDS_FBT.DSO.FBT.active_data",
+      "object": "osr.edw.staging.td.ato::CDS_TPAR.DSO.TPAR_PAYEE.active_data",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
@@ -143,9 +137,9 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.staging.md.ato.synonym::CDS_TAG.DSO.TAXAGENT.active_data": {
+  "osr.edw.staging.td.ato.synonym::CDS_FBT.DSO.FBT.active_data": {
     "target": {
-      "object": "osr.edw.staging.md.ato::CDS_TAG.DSO.TAXAGENT.active_data",
+      "object": "osr.edw.staging.td.ato::CDS_FBT.DSO.FBT.active_data",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
@@ -161,6 +155,12 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
+  "osr.edw.staging.md.ato.synonym::CDS_TAG.DSO.TAXAGENT.active_data": {
+    "target": {
+      "object": "osr.edw.staging.md.ato::CDS_TAG.DSO.TAXAGENT.active_data",
+      "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
+    }
+  },
   "osr.edw.staging.td.ato.synonym::CDS_TPAR.DSO.TPAR_PAYER.active_data": {
     "target": {
       "object": "osr.edw.staging.td.ato::CDS_TPAR.DSO.TPAR_PAYER.active_data",
@@ -173,15 +173,15 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data": {
-    "target": {
-      "object": "osr.edw.staging.td.ato::CDS_PAYG.DSO.PAYG_IND.active_data",
-      "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
-    }
-  },
   "osr.edw.source.td.ato.synonym::CDS_PAYG.TAB.PAYG_IND": {
     "target": {
       "object": "osr.edw.source.td.ato::CDS_PAYG.TAB.PAYG_IND",
+      "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
+    }
+  },
+  "osr.edw.staging.td.ato.synonym::CDS_PAYG.DSO.PAYG_IND.active_data": {
+    "target": {
+      "object": "osr.edw.staging.td.ato::CDS_PAYG.DSO.PAYG_IND.active_data",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
@@ -191,15 +191,15 @@
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   },
-  "osr.edw.source.td.ato.synonym::CDS_ITR.TAB.ITRBNFCRY": {
-    "target": {
-      "object": "osr.edw.source.td.ato::CDS_ITR.TAB.ITRBNFCRY",
-      "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
-    }
-  },
   "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data": {
     "target": {
       "object": "osr.edw.staging.td.ato::CDS_BAS.DSO.BASNIND.active_data",
+      "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
+    }
+  },
+  "osr.edw.source.td.ato.synonym::CDS_ITR.TAB.ITRBNFCRY": {
+    "target": {
+      "object": "osr.edw.source.td.ato::CDS_ITR.TAB.ITRBNFCRY",
       "schema.configure": "logical-OSR-EDW-SOURCE-ATO-grantor/schema"
     }
   }
