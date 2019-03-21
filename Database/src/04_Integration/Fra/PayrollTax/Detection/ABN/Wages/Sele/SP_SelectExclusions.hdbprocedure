@@ -197,6 +197,14 @@ ABN_EXMPT_GOV_SUP =
 SELECT DISTINCT "ABN"
 FROM
 (
+
+/*
+--Defect UAT057
+"The Exclusion for GOV or SUP entity types is not necessarily required for 
+Exceeding but ANSZIC code check is. The ideal solution is to incorporate the 
+Exempt ANZSIC Code flag in the ""ABR Fund and ACNC Flag check"" and rename to
+""Other Exempt Indicator"" and Remove ""Sup or Gov"" check. 
+This won't impact Approaching because we can exclude this in the parameters.
 	
 SELECT DISTINCT 
 	"ATO"."ABN" AS "ABN"
@@ -210,7 +218,7 @@ AND
 	TO_NVARCHAR("ATO"."FINANCIAL_YEAR") = "DET_OBJ"."GJAHR"
 
 UNION
-
+*/
 SELECT DISTINCT 
 	"ATO"."ABN" AS "ABN"
 FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO",
