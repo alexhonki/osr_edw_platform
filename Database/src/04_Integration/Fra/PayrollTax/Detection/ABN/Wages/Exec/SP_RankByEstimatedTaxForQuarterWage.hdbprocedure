@@ -176,12 +176,12 @@ FROM
 :lt_wage_for_tax AS "W"
 INNER JOIN 
 "osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD" AS "THLD"
-ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
-AND "W"."GJAHR" = "THLD"."GJAHR"
+ON "W"."GJAHR" = "THLD"."GJAHR"
 INNER JOIN
 "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
 ON  "W"."GJAHR" = "RATE"."GJAHR"
 AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+WHERE "THLD"."INCOTYP" = 'PT-A' --estimated tax based on the annual threshold
 ;
 
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
