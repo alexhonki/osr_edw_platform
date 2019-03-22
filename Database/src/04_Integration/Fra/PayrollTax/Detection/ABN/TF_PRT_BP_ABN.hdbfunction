@@ -27,6 +27,7 @@ INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_REG_FACTS"() AS "BP_REG"
 ON "BUT0ID"."PARTNER" = "BP_REG"."BPARTNER"
 WHERE "BUT0ID"."TYPE" = 'ZABN'
+  AND "BG_REG"."GRP_STATUS" <> 'NEP'
 ;
 
 END;

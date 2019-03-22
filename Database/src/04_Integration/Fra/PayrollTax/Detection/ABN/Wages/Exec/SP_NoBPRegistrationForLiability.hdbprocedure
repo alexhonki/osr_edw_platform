@@ -90,7 +90,7 @@ ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
 INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn::CV_PRT_BP_ABN" as "BP_ABN"
 ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
-WHERE "FY"."END_DATE" > "BP_ABN"."VALID_DATE_FROM" 
+WHERE "FY"."END_DATE" > "BP_ABN"."VALID_DATE_FROM"
 ;
 
 lt_reinstatment_result = 
@@ -123,6 +123,7 @@ SELECT COUNT(*) INTO lv_reinstatement_cnt FROM :lt_reinstatment;
 
  
 IF :lv_reinstatement_cnt > 0 THEN 
+
 lt_reinstatment_text =
 SELECT 
 "ABN",
@@ -141,7 +142,28 @@ RIGHT("VALID_TO",2) || '/' || RIGHT(LEFT("VALID_TO",6),2) || '/' || LEFT("VALID_
 'BPARTNER'		        AS "MSGV3_FC",
 ''                      AS "MSGV4_FC"
 FROM 
-:lt_reinstatment_result;
+(
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"PRT_LIAB_DATE",
+"VALID_TO",
+"BPARTNER",
+ROW_NUMBER() OVER (
+PARTITION BY "ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR", 
+"BPARTNER"
+ORDER BY "PRT_LIAB_DATE" DESC
+) 
+AS "ROW_NUM"
+FROM
+:lt_reinstatment_result
+)
+WHERE "ROW_NUM" = 1;
 END IF;
 
 END IF;
