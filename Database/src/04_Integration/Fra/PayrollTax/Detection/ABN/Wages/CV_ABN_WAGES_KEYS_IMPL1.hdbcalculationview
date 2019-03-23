@@ -16,11 +16,14 @@
   <DataSource id="osr.edw.staging.md.rms.pscd.proxy::CV_TFKPERIOD">
     <resourceUri>osr.edw.staging.md.rms.pscd.proxy::CV_TFKPERIOD</resourceUri>
   </DataSource>
-  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND">
-    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND</resourceUri>
-  </DataSource>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C">
+    <resourceUri>osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -237,6 +240,30 @@
     </input>
     <filter>&quot;GJAHR&quot; &gt;= &quot;FINANCIAL_YEAR_MIN&quot; AND &quot;GJAHR&quot; &lt;= &quot;FINANCIAL_YEAR_MAX&quot;</filter>
   </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FY_RANGE">
+    <viewAttributes>
+      <viewAttribute id="FINANCIAL_YEAR_MIN">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MAX">
+        <descriptions defaultDescription="FINANCIAL_YEAR"/>
+      </viewAttribute>
+    
+      <viewAttribute id="GJAHR_MIN">
+        <descriptions defaultDescription="GJAHR_MIN"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR_MAX">
+        <descriptions defaultDescription="GJAHR_MAX"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MIN" source="GJAHR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MAX" source="GJAHR_MAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR_MIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR_MAX"/>
+    </input>
+  </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_3">
     <viewAttributes>
       <viewAttribute id="ABN">
@@ -269,9 +296,9 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="Projection_ABR">
+    <input node="Join_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ENTITY_TYPE" source="ENTITY_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENTITY_TYPE" source="PARENT_ENTITY_CODE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_REGN_DT" source="ABN_REGN_DT"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN_CANCN_DT" source="ABN_CANCN_DT"/>
@@ -282,6 +309,58 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
     </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_ENTITY_CODE">
+        <descriptions defaultDescription="PARENT_ENTITY_CODE"/>
+      </viewAttribute>
+    
+      <viewAttribute id="ANZSIC_CD">
+        <descriptions defaultDescription="MN_INDY_CLSN"/>
+      </viewAttribute>
+      <viewAttribute id="ABN_REGN_DT">
+        <descriptions defaultDescription="ABN_REGN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABN_CANCN_DT">
+        <descriptions defaultDescription="ABN_CANCN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABR_ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ORIGIN_ENTITY_TYPE">
+        <descriptions defaultDescription="ENT_TYP_CD"/>
+      </viewAttribute>
+      <viewAttribute id="ABR_ABN_REGN_DT">
+        <descriptions defaultDescription="ABN_REGN_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABR_ABN_CANCN_DT">
+        <descriptions defaultDescription="ABN_CANCN_DT"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="ENTITY_TYPE" datatype="NVARCHAR" length="3" expressionLanguage="COLUMN_ENGINE">
+        <formula>IF(ISNULL(&quot;PARENT_ENTITY_CODE&quot;),'', leftstr(&quot;PARENT_ENTITY_CODE&quot;,3))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Projection_ABR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABR_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORIGIN_ENTITY_TYPE" source="ENTITY_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN_REGN_DT" source="ABR_ABN_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN_CANCN_DT" source="ABR_ABN_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_REGN_DT" source="ABN_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_CANCN_DT" source="ABN_CANCN_DT"/>
+    </input>
+    <input node="osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_ENTITY_CODE" source="PARENT_ENTITY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORIGIN_ENTITY_TYPE" source="ENTITY_TYPE_CODE"/>
+    </input>
+    <joinAttribute name="ORIGIN_ENTITY_TYPE"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_N" joinType="inner">
     <viewAttributes>
@@ -331,30 +410,6 @@
     </input>
     <joinAttribute name="ABN"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FY_RANGE">
-    <viewAttributes>
-      <viewAttribute id="GJAHR_MIN">
-        <descriptions defaultDescription="GJAHR_MIN"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR_MAX">
-        <descriptions defaultDescription="GJAHR_MAX"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_MIN">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_MAX">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MIN" source="GJAHR_MIN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MAX" source="GJAHR_MAX"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR_MIN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR_MAX"/>
-    </input>
-  </calculationView>
 </calculationViews>
 <logicalModel id="Join_4">
   <attributes>
@@ -403,29 +458,29 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="462.8509427151633" y="112"/>
+      <upperLeftCorner x="697.8649651082364" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_ABR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="292.75171148796255" y="516.9999976158142"/>
+      <upperLeftCorner x="762.1275757899084" y="676.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_CALENDAR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="836.9999952316284"/>
+      <upperLeftCorner x="301.99999999999983" y="836.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_INCORR_PER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.99999999999994" y="836.9999952316284"/>
+      <upperLeftCorner x="721.9999999999999" y="836.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_TFKPERIOD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="722" y="836.9999952316284"/>
+      <upperLeftCorner x="511.99999999999983" y="836.9999952316284"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="538.6666666666666" y="676.9999964237213"/>
+      <upperLeftCorner x="538.6666666666665" y="676.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_INCORR_PER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -437,7 +492,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.99999999999994" y="516.9999976158142"/>
+      <upperLeftCorner x="511.9999999999998" y="516.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -449,7 +504,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_FY_RANGE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="275.3333333333333" y="676.9999964237213"/>
+      <upperLeftCorner x="275.33333333333314" y="676.9999964237213"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_CALENDAR" modelObjectNameSpace="Join_FY_RANGE" modelObjectType="JoinNodeInput">
@@ -459,21 +514,38 @@
     <shape modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="Join_FY_RANGE" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999994" y="836.9999952316284"/>
+      <rectangleSize height="30" width="160"/>
     </shape><shape><upperLeftCorner/><rectangleSize/></shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="434.73143228360834" y="376.9999988079071"/>
+      <upperLeftCorner x="672.6576108244839" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Projection_ABR" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Join_5" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="250"/>
-    </shape>
+    </shape><shape><upperLeftCorner/><rectangleSize/></shape>
     <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="723.3612509474074" y="516.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_ABR" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="652" y="4"/>
+      <rectangleSize width="250"/>
+    </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="434.73143228360834" y="236.9999988079071"/>
+      <upperLeftCorner x="672.6576108244839" y="236.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -483,11 +555,6 @@
     <shape modelObjectName="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="836.9999952316284"/>
-      <rectangleSize height="30" width="160"/>
     </shape></shapes>
 </layout>
 </Calculation:scenario>
