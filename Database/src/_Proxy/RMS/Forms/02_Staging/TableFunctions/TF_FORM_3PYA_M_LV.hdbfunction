@@ -4,6 +4,7 @@ RETURN_ID NVARCHAR(32),
 FORM NVARCHAR(30),
 FORM_NUMBER NVARCHAR(4),
 CASE_GUID NVARCHAR(32),
+FIELDINDEX INTEGER,
 TIMESTAMP NVARCHAR(15),
 FORM_CLASS NVARCHAR(2),
 FORM_STATUS NVARCHAR(1),
@@ -60,7 +61,7 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 /**********************************************************************************************
- ISR scenario 3PYA ver. 001 main
+ ISR scenario 3PYA | scenario ver. all | main table | form ver. latest
  **********************************************************************************************/ 
 RETURN
 SELECT
@@ -68,6 +69,7 @@ RETURN_ID,
 FORM,
 FORM_NUMBER,
 CASE_GUID,
+FIELDINDEX,
 TIMESTAMP,
 FORM_CLASS,
 FORM_STATUS,
@@ -126,6 +128,7 @@ RETURN_ID,
 FORM,
 FORM_NUMBER,
 CASE_GUID,
+FIELDINDEX,
 TIMESTAMP,
 FORM_CLASS,
 FORM_STATUS,
