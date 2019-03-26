@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_3PYA_M" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_3PYA_M"/>
+<descriptions defaultDescription="CV_3PYA_M">
+  <comment text="Form 3PYA | main table | form ver. all"/>
+</descriptions>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -11,21 +13,33 @@
 <calculationViews/>
 <logicalModel id="osr.edw.staging.rms.forms.tf.proxy::TF_3PYA_M">
   <attributes>
-    <attribute id="FBSTB" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CASE_GUID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="TF_3PYA_M" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="FBNUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="TF_3PYA_M" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="REVENUE_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REVENUE_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M" columnName="REVENUE_TYPE"/>
+    </attribute>
+    <attribute id="TAXPAYER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXPAYER"/>
+      <keyMapping columnObjectName="TF_3PYA_M" columnName="TAXPAYER"/>
+    </attribute>
+    <attribute id="FBSTB" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBSTB"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="FBSTB"/>
     </attribute>
-    <attribute id="FORM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FORM" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FORM"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="FORM"/>
     </attribute>
-    <attribute id="LAST_FILING" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="LAST_FILING" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAST_FILING"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="LAST_FILING"/>
-    </attribute>
-    <attribute id="CASE_GUID" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CASE_GUID"/>
-      <keyMapping columnObjectName="TF_3PYA_M" columnName="CASE_GUID"/>
     </attribute>
     <attribute id="X_ESTIMATED" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="X_ESTIMATED"/>
@@ -55,10 +69,6 @@
       <descriptions defaultDescription="AS_FILED_EXT"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="AS_FILED_EXT"/>
     </attribute>
-    <attribute id="FBNUM" order="18" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FBNUM"/>
-      <keyMapping columnObjectName="TF_3PYA_M" columnName="FBNUM"/>
-    </attribute>
     <attribute id="FBTYP" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBTYP"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="FBTYP"/>
@@ -87,10 +97,6 @@
       <descriptions defaultDescription="DATE_SOL"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="DATE_SOL"/>
     </attribute>
-    <attribute id="REVENUE_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REVENUE_TYPE"/>
-      <keyMapping columnObjectName="TF_3PYA_M" columnName="REVENUE_TYPE"/>
-    </attribute>
     <attribute id="ZZSENDER" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ZZSENDER"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="ZZSENDER"/>
@@ -99,6 +105,10 @@
       <descriptions defaultDescription="JOINT_REG_ID"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="JOINT_REG_ID"/>
     </attribute>
+    <attribute id="FIELDINDEX" order="34" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <keyMapping columnObjectName="TF_3PYA_M" columnName="FIELDINDEX"/>
+    </attribute>
     <attribute id="C_F_LAST_PER_START" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_F_LAST_PER_START"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="C_F_LAST_PER_START"/>
@@ -106,10 +116,6 @@
     <attribute id="BATCH_ID" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BATCH_ID"/>
       <keyMapping columnObjectName="TF_3PYA_M" columnName="BATCH_ID"/>
-    </attribute>
-    <attribute id="TAXPAYER" order="37" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TAXPAYER"/>
-      <keyMapping columnObjectName="TF_3PYA_M" columnName="TAXPAYER"/>
     </attribute>
     <attribute id="C_F_RESID_START" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_F_RESID_START"/>
@@ -338,15 +344,16 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="A_TOT_QLD_GM" order="1" aggregationType="sum" measureType="simple">
+    <measure id="A_TOT_QLD_GM" order="2" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="A_TOT_QLD_GM"/>
       <measureMapping columnObjectName="TF_3PYA_M" columnName="A_TOT_QLD_GM"/>
     </measure>
-    <measure id="C_PAY_TAX_LIAB_CREDIT" order="2" aggregationType="sum" measureType="simple">
+    <measure id="C_PAY_TAX_LIAB_CREDIT" order="3" aggregationType="sum" measureType="amount" semanticType="amount">
       <descriptions defaultDescription="C_PAY_TAX_LIAB_CREDIT"/>
+      <fixedCurrency>AUD</fixedCurrency>
       <measureMapping columnObjectName="TF_3PYA_M" columnName="C_PAY_TAX_LIAB_CREDIT"/>
     </measure>
-    <measure id="C_TOT_GRP_AUST_WAGES" order="5" aggregationType="sum" measureType="simple">
+    <measure id="C_TOT_GRP_AUST_WAGES" order="6" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="C_TOT_GRP_AUST_WAGES"/>
       <measureMapping columnObjectName="TF_3PYA_M" columnName="C_TOT_GRP_AUST_WAGES"/>
     </measure>
@@ -381,10 +388,6 @@
     <measure id="VALIDATION" order="33" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="VALIDATION"/>
       <measureMapping columnObjectName="TF_3PYA_M" columnName="VALIDATION"/>
-    </measure>
-    <measure id="FIELDINDEX" order="34" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="FIELDINDEX"/>
-      <measureMapping columnObjectName="TF_3PYA_M" columnName="FIELDINDEX"/>
     </measure>
     <measure id="A_CONTRACTORS" order="38" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="A_CONTRACTORS"/>
