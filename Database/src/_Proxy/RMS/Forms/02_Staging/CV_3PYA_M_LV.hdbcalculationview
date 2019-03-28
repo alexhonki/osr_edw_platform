@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_3PYA_M_LV" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Form 3PYA | main table | form ver. latest"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.rms.forms.tf.proxy::TF_3PYA_M_LV" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.tf.proxy::TF_3PYA_M_LV</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.rms.forms.tf.proxy::TF_3PYA_M_LV">
+  <attributes>
+    <attribute id="A_CURRENCY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CURRENCY"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="A_CURRENCY"/>
+    </attribute>
+    <attribute id="RETURN_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="X_CONS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="X_CONS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="X_CONS"/>
+    </attribute>
+    <attribute id="BATCH_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="BATCH_ID"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="SUPERSEDED_BY"/>
+    </attribute>
+    <attribute id="JOINT_ID_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_ID_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="JOINT_ID_TYPE"/>
+    </attribute>
+    <attribute id="FBSTB" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBSTB"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FBSTB"/>
+    </attribute>
+    <attribute id="C_F_TOTAL_PER_END" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_F_TOTAL_PER_END"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="C_F_TOTAL_PER_END"/>
+    </attribute>
+    <attribute id="ZZELNOID" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZELNOID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZELNOID"/>
+    </attribute>
+    <attribute id="C_CURRENCY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CURRENCY"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="C_CURRENCY"/>
+    </attribute>
+    <attribute id="FORM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM"/>
+    </attribute>
+    <attribute id="X_ESTIMATED" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="X_ESTIMATED"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="X_ESTIMATED"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="SUPERSEDE_TO"/>
+    </attribute>
+    <attribute id="JOINT_FILER_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_FILER_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="JOINT_FILER_ID"/>
+    </attribute>
+    <attribute id="FBUST" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBUST"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FBUST"/>
+    </attribute>
+    <attribute id="C_P_AND_P_END_DATE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_P_AND_P_END_DATE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="C_P_AND_P_END_DATE"/>
+    </attribute>
+    <attribute id="ZZELNOTXN" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZELNOTXN"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZELNOTXN"/>
+    </attribute>
+    <attribute id="FBTYP" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="TRANSACTION_TYPE" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRANSACTION_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="TRANSACTION_TYPE"/>
+    </attribute>
+    <attribute id="RECEIPT_TS" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="RECEIPT_TS"/>
+    </attribute>
+    <attribute id="ACCOUNT" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACCOUNT"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ACCOUNT"/>
+    </attribute>
+    <attribute id="FBSTZ" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBSTZ"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FBSTZ"/>
+    </attribute>
+    <attribute id="C_F_RESID_START" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_F_RESID_START"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="C_F_RESID_START"/>
+    </attribute>
+    <attribute id="STATE_ID" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATE_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="STATE_ID"/>
+    </attribute>
+    <attribute id="IN_CHANNEL" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IN_CHANNEL"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="IN_CHANNEL"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="TEMPLATE_VER"/>
+    </attribute>
+    <attribute id="REG_ID" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REG_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="REG_ID"/>
+    </attribute>
+    <attribute id="CURRENT_VERSION" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENT_VERSION"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="CURRENT_VERSION"/>
+    </attribute>
+    <attribute id="APPLY_FROM" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLY_FROM"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="APPLY_FROM"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="WAERS" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="WAERS"/>
+    </attribute>
+    <attribute id="TAX_PREPARER" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAX_PREPARER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="TAX_PREPARER"/>
+    </attribute>
+    <attribute id="FORM_BATCH_ID" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_BATCH_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_BATCH_ID"/>
+    </attribute>
+    <attribute id="REG_TYPE" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REG_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="REG_TYPE"/>
+    </attribute>
+    <attribute id="ZZRFR_REQUESTER" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZRFR_REQUESTER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZRFR_REQUESTER"/>
+    </attribute>
+    <attribute id="APPLY_TO" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLY_TO"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="APPLY_TO"/>
+    </attribute>
+    <attribute id="FORM_CASE_GUID" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CASE_GUID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_CASE_GUID"/>
+    </attribute>
+    <attribute id="FBNUM" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="ERNAM" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERNAM"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ERNAM"/>
+    </attribute>
+    <attribute id="INDPR" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INDPR"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="INDPR"/>
+    </attribute>
+    <attribute id="FORM_LOCATOR_NUMBER" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="JOINT_ACCOUNT" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_ACCOUNT"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="JOINT_ACCOUNT"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="REVENUE_TYPE" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REVENUE_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="REVENUE_TYPE"/>
+    </attribute>
+    <attribute id="KEYPP" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEYPP"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="KEYPP"/>
+    </attribute>
+    <attribute id="VERSION" order="70" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="VERSION"/>
+    </attribute>
+    <attribute id="JOINT_REG_ID" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_REG_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="JOINT_REG_ID"/>
+    </attribute>
+    <attribute id="DUE_DATE" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUE_DATE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="DUE_DATE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="BEGRU" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEGRU"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="BEGRU"/>
+    </attribute>
+    <attribute id="RECONCILIATION" order="78" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECONCILIATION"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="RECONCILIATION"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="79" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="TAXPAYER" order="80" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXPAYER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="TAXPAYER"/>
+    </attribute>
+    <attribute id="AENAM" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AENAM"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="AENAM"/>
+    </attribute>
+    <attribute id="ZZREASSESSED" order="83" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZREASSESSED"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZREASSESSED"/>
+    </attribute>
+    <attribute id="JOINT_REG_TYPE" order="85" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_REG_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="JOINT_REG_TYPE"/>
+    </attribute>
+    <attribute id="DEFERRAL_DATE" order="86" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFERRAL_DATE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="DEFERRAL_DATE"/>
+    </attribute>
+    <attribute id="CONSOLIDATED_BY" order="90" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONSOLIDATED_BY"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="CONSOLIDATED_BY"/>
+    </attribute>
+    <attribute id="LAST_FILING" order="92" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAST_FILING"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="LAST_FILING"/>
+    </attribute>
+    <attribute id="FORM_CLASS" order="93" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_CLASS"/>
+    </attribute>
+    <attribute id="JOINT_FILER" order="94" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_FILER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="JOINT_FILER"/>
+    </attribute>
+    <attribute id="ZZTRANSFERRED" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZTRANSFERRED"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZTRANSFERRED"/>
+    </attribute>
+    <attribute id="REFUND_COMPLETE" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFUND_COMPLETE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="REFUND_COMPLETE"/>
+    </attribute>
+    <attribute id="DUPLICATE_TO" order="103" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUPLICATE_TO"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="DUPLICATE_TO"/>
+    </attribute>
+    <attribute id="AS_FILED_EXT" order="105" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AS_FILED_EXT"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="AS_FILED_EXT"/>
+    </attribute>
+    <attribute id="FORM_STATUS" order="106" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_STATUS"/>
+    </attribute>
+    <attribute id="BU_ID_TYPE" order="107" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BU_ID_TYPE"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="BU_ID_TYPE"/>
+    </attribute>
+    <attribute id="KEYDT" order="108" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEYDT"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="KEYDT"/>
+    </attribute>
+    <attribute id="ZZCLIENTREF" order="110" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZCLIENTREF"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZCLIENTREF"/>
+    </attribute>
+    <attribute id="POSTMARK_EXT" order="112" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTMARK_EXT"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="POSTMARK_EXT"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="114" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="A_INT_WAGES_Q" order="115" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_INT_WAGES_Q"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="A_INT_WAGES_Q"/>
+    </attribute>
+    <attribute id="FORMPROC" order="116" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORMPROC"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORMPROC"/>
+    </attribute>
+    <attribute id="DATE_SOL" order="118" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_SOL"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="DATE_SOL"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS" order="119" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FORM_STATUS_TS"/>
+    </attribute>
+    <attribute id="TAXPAYER_ID" order="120" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXPAYER_ID"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="TAXPAYER_ID"/>
+    </attribute>
+    <attribute id="FBSTA" order="121" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBSTA"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="FBSTA"/>
+    </attribute>
+    <attribute id="C_F_LAST_PER_START" order="122" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_F_LAST_PER_START"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="C_F_LAST_PER_START"/>
+    </attribute>
+    <attribute id="ZZSENDER" order="123" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZSENDER"/>
+      <keyMapping columnObjectName="TF_3PYA_M_LV" columnName="ZZSENDER"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="A_F_P_AND_P_RESID" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_F_P_AND_P_RESID"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_F_P_AND_P_RESID"/>
+    </measure>
+    <measure id="A_DIRECTOR_FEE" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_DIRECTOR_FEE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_DIRECTOR_FEE"/>
+    </measure>
+    <measure id="A_EXCESS_DEDUCT" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_EXCESS_DEDUCT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_EXCESS_DEDUCT"/>
+    </measure>
+    <measure id="A_EMPL_SUP_CONTRIB" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_EMPL_SUP_CONTRIB"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_EMPL_SUP_CONTRIB"/>
+    </measure>
+    <measure id="A_EXCESS_REB" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_EXCESS_REB"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_EXCESS_REB"/>
+    </measure>
+    <measure id="A_FRINGE_BENEFIT" order="31" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_FRINGE_BENEFIT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_FRINGE_BENEFIT"/>
+    </measure>
+    <measure id="BETRW" order="32" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="BETRW"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="BETRW"/>
+    </measure>
+    <measure id="VALIDATION" order="36" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="VALIDATION"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="VALIDATION"/>
+    </measure>
+    <measure id="C_DEDUCTION_ALLOWED" order="37" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_DEDUCTION_ALLOWED"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_DEDUCTION_ALLOWED"/>
+    </measure>
+    <measure id="A_ELIG_TERM_PMT" order="39" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ELIG_TERM_PMT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_ELIG_TERM_PMT"/>
+    </measure>
+    <measure id="C_TOT_QLD_TXBLE_WAGES" order="44" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_QLD_TXBLE_WAGES"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_TOT_QLD_TXBLE_WAGES"/>
+    </measure>
+    <measure id="POSTMARK" order="48" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="POSTMARK"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="POSTMARK"/>
+    </measure>
+    <measure id="C_TAX_AMOUNT" order="49" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_TAX_AMOUNT"/>
+    </measure>
+    <measure id="A_CONTRACTORS" order="51" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_CONTRACTORS"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_CONTRACTORS"/>
+    </measure>
+    <measure id="C_TOT_QLD_NON_TAX_WAGE" order="56" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_QLD_NON_TAX_WAGE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_TOT_QLD_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="RECEIPT" order="60" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RECEIPT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="RECEIPT"/>
+    </measure>
+    <measure id="C_BASE_TAX" order="61" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_BASE_TAX"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_BASE_TAX"/>
+    </measure>
+    <measure id="Z_RUN_SEQ_ID" order="62" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="Z_RUN_SEQ_ID"/>
+    </measure>
+    <measure id="A_SHARE_SCHEMES" order="63" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_SHARE_SCHEMES"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_SHARE_SCHEMES"/>
+    </measure>
+    <measure id="FIELDINDEX" order="65" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="FIELDINDEX"/>
+    </measure>
+    <measure id="ERTSP" order="67" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ERTSP"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="ERTSP"/>
+    </measure>
+    <measure id="C_REBATE_CALC" order="68" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_REBATE_CALC"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_REBATE_CALC"/>
+    </measure>
+    <measure id="C_REBATE_NETT" order="73" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_REBATE_NETT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_REBATE_NETT"/>
+    </measure>
+    <measure id="A_APPRENT_PMT" order="75" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_APPRENT_PMT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_APPRENT_PMT"/>
+    </measure>
+    <measure id="A_TOT_INT_WAGE" order="77" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_TOT_INT_WAGE"/>
+    </measure>
+    <measure id="C_TOT_GRP_AUST_WAGES" order="82" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_GRP_AUST_WAGES"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_TOT_GRP_AUST_WAGES"/>
+    </measure>
+    <measure id="A_GROSS_SAL_WAGE" order="84" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_GROSS_SAL_WAGE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_GROSS_SAL_WAGE"/>
+    </measure>
+    <measure id="C_PAY_TAX_AMOUNT" order="87" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAY_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_PAY_TAX_AMOUNT"/>
+    </measure>
+    <measure id="Z_CHANGE_TIME" order="88" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="Z_CHANGE_TIME"/>
+    </measure>
+    <measure id="A_TRAINEES_PMT" order="89" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TRAINEES_PMT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_TRAINEES_PMT"/>
+    </measure>
+    <measure id="A_TOT_QLD_GM" order="91" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_QLD_GM"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_TOT_QLD_GM"/>
+    </measure>
+    <measure id="AETSP" order="95" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="AETSP"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="AETSP"/>
+    </measure>
+    <measure id="C_F_TOTAL_PER_AMNT" order="96" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_F_TOTAL_PER_AMNT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_F_TOTAL_PER_AMNT"/>
+    </measure>
+    <measure id="A_ALLOWANCE" order="98" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ALLOWANCE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_ALLOWANCE"/>
+    </measure>
+    <measure id="C_TOT_PAID_PAYABLE" order="100" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_PAID_PAYABLE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_TOT_PAID_PAYABLE"/>
+    </measure>
+    <measure id="Z_RUN_ROW_NO" order="101" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="Z_RUN_ROW_NO"/>
+    </measure>
+    <measure id="A_OTH_NON_TAX_WAGE" order="102" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_OTH_NON_TAX_WAGE"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_OTH_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="A_TOT_INT_GM" order="104" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_INT_GM"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_TOT_INT_GM"/>
+    </measure>
+    <measure id="C_F_LAST_PER_AMNT" order="109" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_F_LAST_PER_AMNT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_F_LAST_PER_AMNT"/>
+    </measure>
+    <measure id="A_BONUS" order="111" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_BONUS"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_BONUS"/>
+    </measure>
+    <measure id="C_PAY_TAX_LIAB_CREDIT" order="113" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAY_TAX_LIAB_CREDIT"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="C_PAY_TAX_LIAB_CREDIT"/>
+    </measure>
+    <measure id="A_F_P_AND_P_FINAL" order="117" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_F_P_AND_P_FINAL"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_F_P_AND_P_FINAL"/>
+    </measure>
+    <measure id="A_COMMISSION" order="124" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_COMMISSION"/>
+      <measureMapping columnObjectName="TF_3PYA_M_LV" columnName="A_COMMISSION"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

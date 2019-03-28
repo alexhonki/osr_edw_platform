@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_DESBT_APRNTC_TRAINEE_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_DESBT_APRNTC_TRAINEE_DETAIL"/>
-<localVariables>
-  <variable id="IP_ALERT_ID" parameter="true">
-    <descriptions defaultDescription=""/>
-    <variableProperties datatype="NVARCHAR" length="20" mandatory="false">
-      <valueDomain type="empty"/>
-      <selection multiLine="false" type="Single"/>
-    </variableProperties>
-  </variable>
-</localVariables>
+<localVariables/>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL">
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL" value="NULL">
     <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"/>
-    <localVariable>IP_ALERT_ID</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>

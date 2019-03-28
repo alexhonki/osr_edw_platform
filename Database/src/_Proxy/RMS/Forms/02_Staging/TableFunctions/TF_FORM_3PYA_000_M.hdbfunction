@@ -4,6 +4,7 @@ RETURN_ID NVARCHAR(32),
 FORM NVARCHAR(30),
 FORM_NUMBER NVARCHAR(4),
 CASE_GUID NVARCHAR(32),
+FIELDINDEX INTEGER,
 TIMESTAMP NVARCHAR(15),
 FORM_CLASS NVARCHAR(2),
 FORM_STATUS NVARCHAR(1),
@@ -62,7 +63,7 @@ C_CURRENCY NVARCHAR(5)
        SQL SECURITY INVOKER AS 
 BEGIN 
 /**********************************************************************************************
- ISR scenario 3PYA ver. 000
+ ISR scenario 3PYA | scenario ver. 000 | main table | form ver. all
  **********************************************************************************************/ 
 RETURN
 SELECT
@@ -70,6 +71,7 @@ MAIN.RETURN_ID,
 MAIN.FORM,
 MAIN.FORM_NUMBER,
 MAIN.CASE_GUID,
+MAIN.FIELDINDEX,
 MAIN.TIMESTAMP,
 MAIN.FORM_CLASS,
 MAIN.FORM_STATUS,
@@ -82,7 +84,7 @@ MAIN.BATCH_ID,
 MAIN.LOCATOR_NUMBER,
 MAIN.FBTYP,
 MAIN.FBNUM,
-'' AS VERSION,
+'00001' AS VERSION,
 MAIN.A_GROSS_SAL_WAGE,
 MAIN.A_ALLOWANCE,
 MAIN.A_BONUS,

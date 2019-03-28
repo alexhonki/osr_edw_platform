@@ -64,7 +64,7 @@ A_GM_NAME NVARCHAR(50)
        SQL SECURITY INVOKER AS 
 BEGIN 
 /**********************************************************************************************
- ISR scenario 3PYA ver. 001 main + subs
+ ISR scenario 3PYA | scenario ver. 001 | main table + sub tables | form ver. all
  **********************************************************************************************/ 
 RETURN
 SELECT
@@ -138,7 +138,7 @@ ON
 DFMCA_FORMS.MANDT = MAIN.CLIENT AND
 DFMCA_FORMS.RETURN_ID = MAIN.BUNDLE_ID
 LEFT OUTER JOIN 
-(SELECT * FROM "osr.edw.staging.rms.forms.proxy::TF_GET_3PYA_001_01"()) AS SUBS 
+"osr.edw.staging.rms.forms.proxy::TF_GET_3PYA_001_01"() AS SUBS 
 ON  MAIN.CLIENT = SUBS.CLIENT 
 AND MAIN.RECORD_ID = SUBS.PARENT_ID
 WHERE DFMCA_FORMS.FORM = 'Z3PYA'
