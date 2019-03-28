@@ -61,10 +61,10 @@ SELECT
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "DFMCA_RETURN"
 INNER JOIN
-"osr.edw.staging.rms.forms.proxy::CV_FORM_0IDP_LV" AS "0IDP"
+"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS "0IDP"
 ON "DFMCA_RETURN"."CASE_GUID" = "0IDP"."RETURN_ID"
 INNER JOIN
-"osr.edw.staging.rms.forms.proxy::CV_FORM_3PYA_M_LV" AS "3PYA"
+"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
 ON "DFMCA_RETURN"."CASE_GUID" = "3PYA"."RETURN_ID"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
 ON "0IDP"."C_START_DATE" = "CALENDAR"."DATE"
@@ -108,10 +108,10 @@ SELECT
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "DFMCA_RETURN"
 INNER JOIN
-"osr.edw.staging.rms.forms.proxy::CV_FORM_0IDP_LV" AS "0IDP"
+"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS "0IDP"
 ON "DFMCA_RETURN"."CASE_GUID" = "0IDP"."RETURN_ID"
 INNER JOIN
-"osr.edw.staging.rms.forms.proxy::CV_FORM_3PYA_M_LV" AS "3PYA"
+"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
 ON "DFMCA_RETURN"."CASE_GUID" = "3PYA"."RETURN_ID"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
 ON "0IDP"."C_START_DATE" = "CALENDAR"."DATE"
