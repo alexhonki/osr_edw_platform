@@ -335,8 +335,8 @@ ON
 	"A"."PARTNER" = "B"."PARTNER"
 )
 ;	
-
-
+---------------------
+/*
 PRT_DATA =
 SELECT 
 "OBJID",
@@ -394,6 +394,98 @@ AND "E"."FACT_CAT_SEQ" = '11'
 
 )
 ;
+*/
+--------------
+
+PRT_DATA =
+SELECT 
+"OBJID",
+"PARTNER",
+"ABN",
+"FACT_CAT_SEQ_21" AS  "PRT_LIAB_DATE",
+"FACT_CAT_SEQ_20" AS  "QLD_LIAB_DATE",
+"FACT_CAT_SEQ_11" AS  "PRT_GRP_STATUS",
+CASE WHEN "VALID_FROM" < '19000101' THEN TO_DATS('19000101') ELSE TO_DATS(LEFT("VALID_FROM",8)) END AS "VALID_FROM" ,
+TO_DATS(LEFT("VALID_TO",8)) AS "VALID_TO"
+FROM
+(
+SELECT 
+"A"."OBJID",
+"A"."PARTNER",
+"A"."ABN",
+"A"."VALID_FROM",
+"A"."VALID_TO",
+"B"."VALUE_GENERIC" AS "FACT_CAT_SEQ_21",
+"C"."VALUE_GENERIC" AS "FACT_CAT_SEQ_20", 
+"D"."VALUE_GENERIC" AS "FACT_CAT_SEQ_11"
+FROM
+	(
+	SELECT * FROM
+	(
+	SELECT
+		"OBJID",
+		"PARTNER",
+		"ABN",
+		"VALID_FROM",
+		"VALID_TO",
+		RANK() OVER (PARTITION BY "OBJID","ABN" ORDER BY   "OBJID","ABN"  , "VALID_FROM" DESC , "VALID_TO" DESC) AS "RANK_1"
+	FROM
+		(
+		SELECT 
+			"A"."OBJID",
+			"A"."PARTNER",
+			"A"."ABN",
+			TO_NVARCHAR(LEFT("E"."VALID_FROM",8)) AS "VALID_FROM",
+			TO_NVARCHAR(LEFT("E"."VALID_TO",8)) AS "VALID_TO"
+		FROM
+
+			:RMS_PTX_DATA  AS "A"  
+
+		INNER JOIN
+			"osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" AS "E" ON
+			"A"."OBJID" = "E"."OBJID"
+		WHERE 
+				"E"."FACT_TYPE" = 'ZPRE'
+		AND 	"E"."FACT_CAT_SEQ" = '11'
+		)
+	)
+	WHERE RANK_1 = 1
+	) AS "A"
+
+INNER JOIN
+"osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" AS "B" ON
+"A"."OBJID" = "B"."OBJID"
+AND "A"."VALID_FROM" = TO_NVARCHAR(LEFT("B"."VALID_FROM",8))
+AND "A"."VALID_TO" = TO_NVARCHAR(LEFT("B"."VALID_TO",8))
+
+INNER JOIN
+"osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" AS "C" ON
+"A"."OBJID" = "C"."OBJID"
+AND "A"."VALID_FROM" = TO_NVARCHAR(LEFT("C"."VALID_FROM",8))
+AND "A"."VALID_TO" = TO_NVARCHAR(LEFT("C"."VALID_TO",8))
+
+INNER JOIN
+"osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data" AS "D" ON
+"A"."OBJID" = "D"."OBJID"
+AND "A"."VALID_FROM" = TO_NVARCHAR(LEFT("D"."VALID_FROM",8))
+AND "A"."VALID_TO" = TO_NVARCHAR(LEFT("D"."VALID_TO",8))
+
+WHERE 
+
+	"B"."FACT_TYPE" = 'ZPRE'
+AND "B"."FACT_CAT_SEQ" = '21'
+
+AND "C"."FACT_TYPE" = 'ZPRE'
+AND "C"."FACT_CAT_SEQ" = '20'
+
+AND "D"."FACT_TYPE" = 'ZPRE'
+AND "D"."FACT_CAT_SEQ" = '11'
+
+)
+;
+--------------
+
+
 
 CASE_DATA =
 SELECT
