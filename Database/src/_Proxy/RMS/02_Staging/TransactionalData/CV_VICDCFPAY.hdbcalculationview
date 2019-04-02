@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_VICDCFPAY" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_VICDCFPAY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_PSCD2.DSO.VICDCFPAY.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_PSCD2.DSO.VICDCFPAY.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_PSCD2.DSO.VICDCFPAY.active_data">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="MANDT"/>
+    </attribute>
+    <attribute id="CFPAYGUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CFPAYGUID"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CFPAYGUID"/>
+    </attribute>
+    <attribute id="CONDGUID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONDGUID"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CONDGUID"/>
+    </attribute>
+    <attribute id="CONDVALIDFROM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONDVALIDFROM"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CONDVALIDFROM"/>
+    </attribute>
+    <attribute id="REFGUID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFGUID"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="REFGUID"/>
+    </attribute>
+    <attribute id="INTRENO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENO"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="INTRENO"/>
+    </attribute>
+    <attribute id="RERF" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RERF"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="RERF"/>
+    </attribute>
+    <attribute id="DERF" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DERF"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DERF"/>
+    </attribute>
+    <attribute id="TERF" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERF"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERF"/>
+    </attribute>
+    <attribute id="REHER" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REHER"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="REHER"/>
+    </attribute>
+    <attribute id="RBEAR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RBEAR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="RBEAR"/>
+    </attribute>
+    <attribute id="DBEAR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DBEAR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DBEAR"/>
+    </attribute>
+    <attribute id="TBEAR" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TBEAR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TBEAR"/>
+    </attribute>
+    <attribute id="RBHER" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RBHER"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="RBHER"/>
+    </attribute>
+    <attribute id="BBWHR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BBWHR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="BBWHR"/>
+    </attribute>
+    <attribute id="BNWHR" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BNWHR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="BNWHR"/>
+    </attribute>
+    <attribute id="DBERVON" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DBERVON"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DBERVON"/>
+    </attribute>
+    <attribute id="SEXCLVON" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEXCLVON"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SEXCLVON"/>
+    </attribute>
+    <attribute id="SULTVON" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SULTVON"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SULTVON"/>
+    </attribute>
+    <attribute id="DBERBIS" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DBERBIS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DBERBIS"/>
+    </attribute>
+    <attribute id="SINCLBIS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SINCLBIS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SINCLBIS"/>
+    </attribute>
+    <attribute id="SULTBIS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SULTBIS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SULTBIS"/>
+    </attribute>
+    <attribute id="DVALUT" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DVALUT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DVALUT"/>
+    </attribute>
+    <attribute id="SINCL" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SINCL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SINCL"/>
+    </attribute>
+    <attribute id="SVINCL" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SVINCL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SVINCL"/>
+    </attribute>
+    <attribute id="SVULT" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SVULT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SVULT"/>
+    </attribute>
+    <attribute id="DFAELL" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DFAELL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DFAELL"/>
+    </attribute>
+    <attribute id="SFINCL" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SFINCL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SFINCL"/>
+    </attribute>
+    <attribute id="SFULT" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SFULT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SFULT"/>
+    </attribute>
+    <attribute id="DDISPO" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DDISPO"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DDISPO"/>
+    </attribute>
+    <attribute id="SINCLVERR" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SINCLVERR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SINCLVERR"/>
+    </attribute>
+    <attribute id="SULTVERR" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SULTVERR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SULTVERR"/>
+    </attribute>
+    <attribute id="ATAGE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATAGE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ATAGE"/>
+    </attribute>
+    <attribute id="ABASTAGE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABASTAGE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ABASTAGE"/>
+    </attribute>
+    <attribute id="APERTAGE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APERTAGE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="APERTAGE"/>
+    </attribute>
+    <attribute id="STGMETH" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STGMETH"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="STGMETH"/>
+    </attribute>
+    <attribute id="STGBASIS" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STGBASIS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="STGBASIS"/>
+    </attribute>
+    <attribute id="SZBMETH" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SZBMETH"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SZBMETH"/>
+    </attribute>
+    <attribute id="DBPERIOD" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DBPERIOD"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DBPERIOD"/>
+    </attribute>
+    <attribute id="SPAEXCL" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPAEXCL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SPAEXCL"/>
+    </attribute>
+    <attribute id="SPAULT" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPAULT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SPAULT"/>
+    </attribute>
+    <attribute id="DEPERIOD" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEPERIOD"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DEPERIOD"/>
+    </attribute>
+    <attribute id="SPEINCL" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPEINCL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SPEINCL"/>
+    </attribute>
+    <attribute id="SPEULT" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPEULT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SPEULT"/>
+    </attribute>
+    <attribute id="SWHRKOND" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SWHRKOND"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SWHRKOND"/>
+    </attribute>
+    <attribute id="BKOND" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BKOND"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="BKOND"/>
+    </attribute>
+    <attribute id="SSTAFF" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SSTAFF"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SSTAFF"/>
+    </attribute>
+    <attribute id="SBASIS" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SBASIS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SBASIS"/>
+    </attribute>
+    <attribute id="JSOFVERR" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JSOFVERR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="JSOFVERR"/>
+    </attribute>
+    <attribute id="AMMRHY" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AMMRHY"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="AMMRHY"/>
+    </attribute>
+    <attribute id="ATTRHY" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATTRHY"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ATTRHY"/>
+    </attribute>
+    <attribute id="SSORTZIT" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SSORTZIT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SSORTZIT"/>
+    </attribute>
+    <attribute id="SZEITANT" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SZEITANT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SZEITANT"/>
+    </attribute>
+    <attribute id="SSALBAS" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SSALBAS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SSALBAS"/>
+    </attribute>
+    <attribute id="SKONDGRP" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SKONDGRP"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SKONDGRP"/>
+    </attribute>
+    <attribute id="LCNETAMOUNT" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LCNETAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="LCNETAMOUNT"/>
+    </attribute>
+    <attribute id="LCGROSSAMOUNT" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LCGROSSAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="LCGROSSAMOUNT"/>
+    </attribute>
+    <attribute id="LCTAXAMOUNT" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LCTAXAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="LCTAXAMOUNT"/>
+    </attribute>
+    <attribute id="LOCALCURR" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCALCURR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="LOCALCURR"/>
+    </attribute>
+    <attribute id="CCNETAMOUNT" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CCNETAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CCNETAMOUNT"/>
+    </attribute>
+    <attribute id="CCGROSSAMOUNT" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CCGROSSAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CCGROSSAMOUNT"/>
+    </attribute>
+    <attribute id="CCTAXAMOUNT" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CCTAXAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CCTAXAMOUNT"/>
+    </attribute>
+    <attribute id="CONDCURR" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONDCURR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CONDCURR"/>
+    </attribute>
+    <attribute id="TAXTYPE" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TAXTYPE"/>
+    </attribute>
+    <attribute id="TAXGROUP" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXGROUP"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TAXGROUP"/>
+    </attribute>
+    <attribute id="TXJCD" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXJCD"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TXJCD"/>
+    </attribute>
+    <attribute id="ISGROSS" order="67" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ISGROSS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ISGROSS"/>
+    </attribute>
+    <attribute id="WHEREFROM" order="68" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WHEREFROM"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="WHEREFROM"/>
+    </attribute>
+    <attribute id="FLOWTYPE" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLOWTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="FLOWTYPE"/>
+    </attribute>
+    <attribute id="ORIGFLOWTYPE" order="70" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIGFLOWTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ORIGFLOWTYPE"/>
+    </attribute>
+    <attribute id="REFFLOWREL" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFFLOWREL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="REFFLOWREL"/>
+    </attribute>
+    <attribute id="CFSTATUS" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CFSTATUS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CFSTATUS"/>
+    </attribute>
+    <attribute id="FDLEV" order="73" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDLEV"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="FDLEV"/>
+    </attribute>
+    <attribute id="FDUPD" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDUPD"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="FDUPD"/>
+    </attribute>
+    <attribute id="FDELETE" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FDELETE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="FDELETE"/>
+    </attribute>
+    <attribute id="ORIGDUEDATE" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIGDUEDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ORIGDUEDATE"/>
+    </attribute>
+    <attribute id="PARTNER" order="77" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="PARTNEROBJNR" order="78" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNEROBJNR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="PARTNEROBJNR"/>
+    </attribute>
+    <attribute id="CONDTYPE" order="79" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONDTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CONDTYPE"/>
+    </attribute>
+    <attribute id="TERMNOPY" order="80" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNOPY"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNOPY"/>
+    </attribute>
+    <attribute id="TERMNORH" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNORH"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNORH"/>
+    </attribute>
+    <attribute id="TERMNOAJ" order="82" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNOAJ"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNOAJ"/>
+    </attribute>
+    <attribute id="TERMNOOA" order="83" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNOOA"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNOOA"/>
+    </attribute>
+    <attribute id="TERMNOSR" order="84" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNOSR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNOSR"/>
+    </attribute>
+    <attribute id="TERMNOMR" order="85" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNOMR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNOMR"/>
+    </attribute>
+    <attribute id="TERMNOWT" order="86" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TERMNOWT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TERMNOWT"/>
+    </attribute>
+    <attribute id="ORIGEXDUEDATE" order="87" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIGEXDUEDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="ORIGEXDUEDATE"/>
+    </attribute>
+    <attribute id="SEAPSTATUS" order="88" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEAPSTATUS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="SEAPSTATUS"/>
+    </attribute>
+    <attribute id="POSTINGDATE" order="89" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTINGDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="POSTINGDATE"/>
+    </attribute>
+    <attribute id="DOCUMENTDATE" order="90" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DOCUMENTDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="DOCUMENTDATE"/>
+    </attribute>
+    <attribute id="VALUATIONDATE" order="91" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALUATIONDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="VALUATIONDATE"/>
+    </attribute>
+    <attribute id="REVERSAL_FOR" order="92" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REVERSAL_FOR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="REVERSAL_FOR"/>
+    </attribute>
+    <attribute id="REVERSAL_BY" order="93" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REVERSAL_BY"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="REVERSAL_BY"/>
+    </attribute>
+    <attribute id="FOLLOWUP_FOR" order="94" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FOLLOWUP_FOR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="FOLLOWUP_FOR"/>
+    </attribute>
+    <attribute id="BOOK_FLOWTYPE" order="95" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BOOK_FLOWTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="BOOK_FLOWTYPE"/>
+    </attribute>
+    <attribute id="BOOK_REFFLOWREL" order="96" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BOOK_REFFLOWREL"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="BOOK_REFFLOWREL"/>
+    </attribute>
+    <attribute id="TAXDATE" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="TAXDATE"/>
+    </attribute>
+    <attribute id="MODDUEDATE" order="98" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODDUEDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="MODDUEDATE"/>
+    </attribute>
+    <attribute id="CALCDUEDATE" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CALCDUEDATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CALCDUEDATE"/>
+    </attribute>
+    <attribute id="CFSPLITFORGUID" order="100" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CFSPLITFORGUID"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CFSPLITFORGUID"/>
+    </attribute>
+    <attribute id="CFSPLITBASIS" order="101" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CFSPLITBASIS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CFSPLITBASIS"/>
+    </attribute>
+    <attribute id="CDSPLITNO" order="102" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CDSPLITNO"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CDSPLITNO"/>
+    </attribute>
+    <attribute id="COMPANYCODE" order="103" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPANYCODE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="COMPANYCODE"/>
+    </attribute>
+    <attribute id="CMCFGROUP" order="104" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CMCFGROUP"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CMCFGROUP"/>
+    </attribute>
+    <attribute id="CTRULE" order="105" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTRULE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTRULE"/>
+    </attribute>
+    <attribute id="CTLCNETAMOUNT" order="106" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTLCNETAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTLCNETAMOUNT"/>
+    </attribute>
+    <attribute id="CTLCGROSSAMOUNT" order="107" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTLCGROSSAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTLCGROSSAMOUNT"/>
+    </attribute>
+    <attribute id="CTLCTAXAMOUNT" order="108" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTLCTAXAMOUNT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTLCTAXAMOUNT"/>
+    </attribute>
+    <attribute id="CTRATE" order="109" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTRATE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTRATE"/>
+    </attribute>
+    <attribute id="CTRATEORIG" order="110" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTRATEORIG"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTRATEORIG"/>
+    </attribute>
+    <attribute id="CTPOSTCDCURR" order="111" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTPOSTCDCURR"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTPOSTCDCURR"/>
+    </attribute>
+    <attribute id="CTDATEREQ" order="112" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTDATEREQ"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTDATEREQ"/>
+    </attribute>
+    <attribute id="CTDATEACT" order="113" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTDATEACT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTDATEACT"/>
+    </attribute>
+    <attribute id="CTDATEACTORIG" order="114" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTDATEACTORIG"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTDATEACTORIG"/>
+    </attribute>
+    <attribute id="CTDATEFROMCFPOS" order="115" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CTDATEFROMCFPOS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="CTDATEFROMCFPOS"/>
+    </attribute>
+    <attribute id="OBJNRCOND" order="116" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNRCOND"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="OBJNRCOND"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="117" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="118" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="119" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="120" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="121" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_PSCD2.DSO.VICDCFPAY.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
