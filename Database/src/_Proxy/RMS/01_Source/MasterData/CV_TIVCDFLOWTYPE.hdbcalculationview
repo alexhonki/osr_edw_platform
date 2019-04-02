@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TIVCDFLOWTYPE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TIVCDFLOWTYPE"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_PSCD2.TAB.TIVCDFLOWTYPE">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_PSCD2.TAB.TIVCDFLOWTYPE</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.rms.synonym::CDS_PSCD2.TAB.TIVCDFLOWTYPE">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="MANDT"/>
+    </attribute>
+    <attribute id="FLOWTYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLOWTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="FLOWTYPE"/>
+    </attribute>
+    <attribute id="SSOLHAB" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SSOLHAB"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="SSOLHAB"/>
+    </attribute>
+    <attribute id="ANTACRTYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANTACRTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="ANTACRTYPE"/>
+    </attribute>
+    <attribute id="TRAACRTYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRAACRTYPE"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="TRAACRTYPE"/>
+    </attribute>
+    <attribute id="FLOWTYPECNDS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLOWTYPECNDS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="FLOWTYPECNDS"/>
+    </attribute>
+    <attribute id="FCOMRELEVANT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FCOMRELEVANT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="FCOMRELEVANT"/>
+    </attribute>
+    <attribute id="ISCMCFRELEVANT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ISCMCFRELEVANT"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="ISCMCFRELEVANT"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_PSCD2.TAB.TIVCDFLOWTYPE" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_TB001" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TB001"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.TB001">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.TB001</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.TB001">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="MANDT"/>
+    </attribute>
+    <attribute id="BU_GROUP" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BU_GROUP"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="BU_GROUP"/>
+    </attribute>
+    <attribute id="NRRNG" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NRRNG"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="NRRNG"/>
+    </attribute>
+    <attribute id="XINST" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XINST"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="XINST"/>
+    </attribute>
+    <attribute id="XEXST" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XEXST"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="XEXST"/>
+    </attribute>
+    <attribute id="XSUPPRESS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XSUPPRESS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="XSUPPRESS"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB001" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TB003" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TB003"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_BP.TAB.TB003">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_BP.TAB.TB003</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.rms.synonym::CDS_BP.TAB.TB003">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="ROLE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROLE"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="ROLE"/>
+    </attribute>
+    <attribute id="ROLECATEGORY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROLECATEGORY"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="ROLECATEGORY"/>
+    </attribute>
+    <attribute id="STND_ROLECAT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STND_ROLECAT"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="STND_ROLECAT"/>
+    </attribute>
+    <attribute id="BPVIEW" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPVIEW"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="BPVIEW"/>
+    </attribute>
+    <attribute id="XSUPPRESS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XSUPPRESS"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="XSUPPRESS"/>
+    </attribute>
+    <attribute id="POSNR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSNR"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="POSNR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TB003" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
