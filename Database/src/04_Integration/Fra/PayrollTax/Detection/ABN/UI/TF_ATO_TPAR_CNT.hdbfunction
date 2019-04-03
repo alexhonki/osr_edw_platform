@@ -8,6 +8,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_TPAR_CNT"(IN IP_ALERT_ID NV
 RETURNS TABLE
 	(
 		DB_KEY                      VARBINARY(16),
+		DB_KEY_DASH					NVARCHAR(36),
 		ALERT_ID                    NVARCHAR(20),
 		ABN                         NVARCHAR(20),
 		GJAHR                       NVARCHAR(4),
@@ -28,6 +29,7 @@ IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_AL
 ALERT_INFO =
                 SELECT
                     "DB_KEY",
+                    "DB_KEY_DASH",
                 	"ALERT_ID",
                     "ABN" ,
                     "GJAHR"
@@ -39,6 +41,7 @@ ELSE
 ALERT_INFO =
                 SELECT
                     "DB_KEY",
+                    "DB_KEY_DASH",
                     "ALERT_ID",
                     "ABN" ,
                     "GJAHR"
@@ -91,6 +94,7 @@ TPAR_DATA =
 RETURN
 	SELECT
         "DB_KEY",
+        "DB_KEY_DASH",
         "ALERT_ID",
         "ABN" ,
         "GJAHR",
@@ -102,6 +106,7 @@ RETURN
 	(                              
 		SELECT
            "A"."DB_KEY",
+           "A"."DB_KEY_DASH",
            "A"."ALERT_ID",
            "A"."ABN" ,
            "A"."GJAHR",
