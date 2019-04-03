@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TSAD3" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TSAD3"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_BP.TAB.TSAD3">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_BP.TAB.TSAD3</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.rms.synonym::CDS_BP.TAB.TSAD3">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="TITLE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TITLE"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="TITLE"/>
+    </attribute>
+    <attribute id="GENERATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GENERATE"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="GENERATE"/>
+    </attribute>
+    <attribute id="PERSON" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="PERSON"/>
+    </attribute>
+    <attribute id="ORGANIZATN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORGANIZATN"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="ORGANIZATN"/>
+    </attribute>
+    <attribute id="XGROUP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XGROUP"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="XGROUP"/>
+    </attribute>
+    <attribute id="SEX" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEX"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="SEX"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_BP.TAB.TSAD3" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
