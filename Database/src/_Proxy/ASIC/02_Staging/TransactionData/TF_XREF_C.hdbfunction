@@ -1,0 +1,30 @@
+FUNCTION "osr.edw.staging.td.asic.proxy::TF_XREF_C"( )
+       RETURNS TABLE (
+       		"OWNER_SOURCE_ID"		NVARCHAR(10),
+			"XREF_ROLE"				NVARCHAR(2),
+			"MEMBER_SOURCE_ID"		NVARCHAR(10),
+			"ROLE_START_DT"			DATE,
+			"XREF_END_DT"			DATE,
+			"ADDRESS_NUM"			INTEGER,
+			"REC_START_DT"			DATE,
+			"REC_END_DT"			DATE,
+			"EXPIRY_DT"				TIMESTAMP
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN
+SELECT 
+	"OWNER_SOURCE_ID",
+	"XREF_ROLE",
+	"MEMBER_SOURCE_ID",
+	"ROLE_START_DT",
+	"XREF_END_DT",
+	"ADDRESS_NUM",
+	"REC_START_DT",
+	"REC_END_DT",
+	"EXPIRY_DT"
+	FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.XREF.active_data";
+	
+END;
