@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staing.td.crm.proxy::CV_CRM_JEST" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRM_JEST"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRM_JEST.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRM_JEST.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRM_JEST.active_data">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="MANDT"/>
+    </attribute>
+    <attribute id="OBJNR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNR"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="OBJNR"/>
+    </attribute>
+    <attribute id="STAT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAT"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="STAT"/>
+    </attribute>
+    <attribute id="INACT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INACT"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="INACT"/>
+    </attribute>
+    <attribute id="CHGNR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHGNR"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="CHGNR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRM_JEST.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

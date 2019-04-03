@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_TB002" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TB002"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.TB002">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.TB002</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.TB002">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="MANDT"/>
+    </attribute>
+    <attribute id="SPRAS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPRAS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="SPRAS"/>
+    </attribute>
+    <attribute id="BU_GROUP" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BU_GROUP"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="BU_GROUP"/>
+    </attribute>
+    <attribute id="TXT15" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXT15"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="TXT15"/>
+    </attribute>
+    <attribute id="TXT40" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXT40"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="TXT40"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.TB002" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

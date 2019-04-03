@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TFK003" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TFK003"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFK003">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFK003</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFK003">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="MANDT"/>
+    </attribute>
+    <attribute id="APPLK" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLK"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="APPLK"/>
+    </attribute>
+    <attribute id="BLART" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BLART"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="BLART"/>
+    </attribute>
+    <attribute id="NUMKR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUMKR"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="NUMKR"/>
+    </attribute>
+    <attribute id="BLLFZ" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BLLFZ"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="BLLFZ"/>
+    </attribute>
+    <attribute id="ARCLFZ" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ARCLFZ"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="ARCLFZ"/>
+    </attribute>
+    <attribute id="XGSUB" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XGSUB"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="XGSUB"/>
+    </attribute>
+    <attribute id="XINTF" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XINTF"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="XINTF"/>
+    </attribute>
+    <attribute id="NEGBL" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NEGBL"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="NEGBL"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFK003" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

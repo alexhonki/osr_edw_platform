@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TFKTVOT" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TFKTVOT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFKTVOT">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFKTVOT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFKTVOT">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="MANDT"/>
+    </attribute>
+    <attribute id="SPRAS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPRAS"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="SPRAS"/>
+    </attribute>
+    <attribute id="APPLK" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLK"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="APPLK"/>
+    </attribute>
+    <attribute id="HVORG" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HVORG"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="HVORG"/>
+    </attribute>
+    <attribute id="TVORG" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TVORG"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="TVORG"/>
+    </attribute>
+    <attribute id="TXT30" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXT30"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="TXT30"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_FICA.TAB.TFKTVOT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
