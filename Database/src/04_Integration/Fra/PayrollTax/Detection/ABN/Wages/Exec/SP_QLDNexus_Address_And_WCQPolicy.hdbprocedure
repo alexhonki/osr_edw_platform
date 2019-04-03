@@ -175,27 +175,6 @@ FROM
 :lt_result
 ;
 
-et_text = 
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-'' AS "TEXT",
-'' AS "MSGID",
-'' AS "MSGNO",
-'' AS "MSGV1",
-'' AS "MSGV2",
-'' AS "MSGV3",
-'' AS "MSGV4",
-'' AS "MSGV1_FC",
-'' AS "MSGV2_FC",
-'' AS "MSGV3_FC",
-'' AS "MSGV4_FC"
-FROM 
-:lt_result
-;
-
 END IF;
 
 IF :lv_mode = 'R' THEN
@@ -211,13 +190,15 @@ FROM
 :lt_result
 ;
 
+END IF;
+
 et_text = 
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-'' AS "TEXT",
+'QLD address/workcover policy is found' AS "TEXT",
 '' AS "MSGID",
 '' AS "MSGNO",
 '' AS "MSGV1",
@@ -231,7 +212,5 @@ SELECT
 FROM 
 :et_result
 ;
-
-END IF;
 
 END
