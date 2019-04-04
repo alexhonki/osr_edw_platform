@@ -6,6 +6,8 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_TAXAGENT_DETAILS"(IN IP_ALERT_I
 			ALERT_ID                		NVARCHAR(20),
 			ABN                     		NVARCHAR(20),
 			GJAHR                   		NVARCHAR(4),
+		    BAS_QTR                         NVARCHAR(4),
+	        FINANCIAL_YEAR                  NVARCHAR(4),
 			TA_NUM							NVARCHAR(20),
   			TA_STATUS						NVARCHAR(1),
 			TA_NM							NVARCHAR(200),
@@ -55,36 +57,194 @@ ALERT_INFO =
 END IF;
 
 
+
+GET_ALERT_DET = 
+SELECT * FROM
+(
+SELECT         
+		"DB_KEY",
+        "DB_KEY_DASH",
+        "ALERT_ID",
+        "ABN" ,
+        "GJAHR",
+        "ITEM_NUM",
+		"DETECT_OBJ_TYPE",
+		"DETECT_OBJ_ID",
+		"DETECT_OBJ_ID2",
+		"DETECT_OBJ_ID3",
+		"BAS_QTR",
+		RANK() OVER (PARTITION BY "ALERT_ID" ORDER BY "ALERT_ID", "ITEM_NUM" DESC) AS "RANK_1"
+FROM
+(
+SELECT
+        "A"."DB_KEY",
+        "A"."DB_KEY_DASH",
+        "A"."ALERT_ID",
+        "A"."ABN" ,
+        "A"."GJAHR",
+        "C"."ITEM_NUM",
+		"C"."DETECT_OBJ_TYPE",
+		"C"."DETECT_OBJ_ID",
+		"C"."DETECT_OBJ_ID2",
+		"C"."DETECT_OBJ_ID3",
+		CASE WHEN "C"."DETECT_OBJ_ID2" = 'PT-Q' AND RIGHT("C"."DETECT_OBJ_ID3",2) IN ('Q1','Q2','Q3') THEN RIGHT("C"."DETECT_OBJ_ID3",2) ELSE 
+		CASE WHEN "C"."DETECT_OBJ_ID2" = 'PT-Q' AND RIGHT("C"."DETECT_OBJ_ID3",2) IN ('Q4') THEN 'FY' ELSE
+		CASE WHEN "C"."DETECT_OBJ_ID2" = 'PT-A' THEN 'FY' ELSE '' END END END AS "BAS_QTR"
+FROM
+	:ALERT_INFO AS "A"
+INNER JOIN
+	"osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ITEM" AS "C"
+ON
+	"A"."DB_KEY" = "C"."PARENT_KEY"
+WHERE
+    "C"."DETECT_OBJ_TYPE" = 'PT_ABN_WGE'
+)
+) WHERE  "RANK_1" = '1'
+;        
+
+------ Get Agent for the Annuals--------
+GET_AGENT_FY =
+SELECT         
+		"A"."DB_KEY",
+        "A"."DB_KEY_DASH",
+        "A"."ALERT_ID",
+        "A"."ABN" ,
+        "A"."GJAHR",
+        "A"."BAS_QTR",
+        "B"."TA_NUM",
+        "B"."FINANCIAL_YEAR"
+FROM
+(SELECT * FROM	:GET_ALERT_DET WHERE "BAS_QTR" = 'FY')AS "A"
+INNER JOIN
+	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "B"
+ON
+	"A"."ABN"     = "B"."ABN"
+AND "A"."GJAHR"   = "B"."FINANCIAL_YEAR"
+AND "A"."BAS_QTR" = "B"."BAS_QTR"
+WHERE TO_NVARCHAR("B"."TA_NUM") <> '0'
+;
+
+--------Get Agent for Qtrs-----------
+GET_AGENT_QTR =
+SELECT         
+		"A"."DB_KEY",
+        "A"."DB_KEY_DASH",
+        "A"."ALERT_ID",
+        "A"."ABN" ,
+        "A"."GJAHR",
+        "A"."BAS_QTR",
+        "B"."TA_NUM",
+        "B"."FINANCIAL_YEAR"
+FROM
+(SELECT * FROM	:GET_ALERT_DET WHERE "BAS_QTR" IN ('Q1','Q2','Q3'))AS "A"
+LEFT OUTER JOIN
+	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "B"
+ON
+	"A"."ABN"     = "B"."ABN"
+AND "A"."GJAHR"   = "B"."FINANCIAL_YEAR"
+AND "A"."BAS_QTR" = "B"."BAS_QTR"
+
+;
+
+----If the agent is not there for that qtr then get the agent from the preceding BAS FY  -------------
+GET_AGENT_QTR_1 =
+SELECT         
+		"A"."DB_KEY",
+        "A"."DB_KEY_DASH",
+        "A"."ALERT_ID",
+        "A"."ABN" ,
+        "A"."GJAHR",
+        "A"."BAS_QTR",
+        "B"."TA_NUM",
+        "B"."FINANCIAL_YEAR"
+FROM
+	(
+		SELECT * FROM	:GET_AGENT_QTR 
+		WHERE 
+				"BAS_QTR" IN ('Q1','Q2','Q3') 
+			AND	"TA_NUM" IS NULL
+			OR	TO_NVARCHAR("TA_NUM") = '0'
+			OR	TO_NVARCHAR("TA_NUM") = ''
+	)		AS "A"
+INNER JOIN
+	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "B"
+ON
+	"A"."ABN"     = "B"."ABN"
+AND TO_NVARCHAR(TO_INT("A"."GJAHR") - 1)   = "B"."FINANCIAL_YEAR"
+WHERE TO_NVARCHAR("B"."TA_NUM") <> '0'
+AND "B"."BAS_QTR" = 'FY'
+
+;
+
+
 GET_TA_FOR_ABN =
 SELECT DISTINCT 
-	"ABN",
-	"FINANCIAL_YEAR",
-	"TA_NUM"
+		"DB_KEY",
+        "DB_KEY_DASH",
+        "ALERT_ID",
+        "ABN" ,
+        "GJAHR",
+        "BAS_QTR",
+        "TA_NUM",
+        "FINANCIAL_YEAR"
 
 FROM
 (
-SELECT 
-	"ABN",
-	"FINANCIAL_YEAR" AS "FINANCIAL_YEAR",
-	"TA_NUM",
-	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN", "FINANCIAL_YEAR" DESC) AS "RANK_1"
-FROM 
-	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"()
-WHERE "TA_NUM" <> '0'
-AND "ABN" IN (SELECT  DISTINCT "ABN" FROM :ALERT_INFO)
-AND "BAS_QTR" = 'FY'
+SELECT         
+		"DB_KEY",
+        "DB_KEY_DASH",
+        "ALERT_ID",
+        "ABN" ,
+        "GJAHR",
+        "BAS_QTR",
+        "TA_NUM",
+        "FINANCIAL_YEAR"
+  FROM 
+  :GET_AGENT_FY 
+UNION
+SELECT         
+		"DB_KEY",
+        "DB_KEY_DASH",
+        "ALERT_ID",
+        "ABN" ,
+        "GJAHR",
+        "BAS_QTR",
+        "TA_NUM",
+        "FINANCIAL_YEAR"
+  FROM 
+	:GET_AGENT_QTR
+  WHERE 		"TA_NUM" IS NOT NULL
+			OR	TO_NVARCHAR("TA_NUM") <> '0'
+			OR	TO_NVARCHAR("TA_NUM") <> ''
+UNION  
+SELECT         
+		"DB_KEY",
+        "DB_KEY_DASH",
+        "ALERT_ID",
+        "ABN" ,
+        "GJAHR",
+        "BAS_QTR",
+        "TA_NUM",
+        "FINANCIAL_YEAR"
+  FROM 
+  :GET_AGENT_QTR_1 
+
 ) 
-WHERE "RANK_1" = 1 
+
 ORDER BY "ABN"
 ;
 
+
+
 RETURN
-		SELECT
+		SELECT DISTINCT
            	"DB_KEY",
             "DB_KEY_DASH",
             "ALERT_ID",
             "ABN",
             "GJAHR",
+	        "BAS_QTR",
+	        "FINANCIAL_YEAR",
             "TA_NUM",
             "TA_STATUS",
             "TA_NM",
@@ -99,14 +259,16 @@ RETURN
 			"EMAIL_ADDR"
 		FROM
 		(                              
-		SELECT
-    		"ALERT"."DB_KEY",
-    		"ALERT"."DB_KEY_DASH",
-    		"ALERT"."ALERT_ID",
-    		"ALERT"."ABN",
-    		"ALERT"."GJAHR",
-			"A"."FINANCIAL_YEAR",
-			"A"."TA_NUM",
+			SELECT
+		    "ALERT"."DB_KEY",
+    	    "ALERT"."DB_KEY_DASH",
+    	    "ALERT"."ALERT_ID",
+    	    "ALERT"."ABN" ,
+    	    "ALERT"."GJAHR",
+    	    "ALERT"."FINANCIAL_YEAR",
+    	    "ALERT"."BAS_QTR",
+    	    "ALERT"."TA_NUM",
+
 			"B"."TA_STATUS",
 			"B"."TA_NM",
 			"B"."TA_PSTL_ADDRESS_LN_1",
@@ -119,17 +281,14 @@ RETURN
 			"B"."FAX_NUM",
 			"B"."EMAIL_ADDR"
 	FROM
-		:ALERT_INFO  AS "ALERT"
-	INNER JOIN
- 		:GET_TA_FOR_ABN 	AS "A"
-	ON
-		"ALERT"."ABN" = "A"."ABN"
 
+	:GET_TA_FOR_ABN  AS "ALERT"
 	INNER JOIN
 		"osr.edw.staging.md.ato.synonym::CDS_TAG.DSO.TAXAGENT.active_data" AS "B"
 	 ON 	
-		"A"."TA_NUM" = "B"."TA_NUM"
-	)
+		"ALERT"."TA_NUM" = "B"."TA_NUM"
+		
+	) WHERE "TA_STATUS" = 'A'
 				;
 
 END; 
