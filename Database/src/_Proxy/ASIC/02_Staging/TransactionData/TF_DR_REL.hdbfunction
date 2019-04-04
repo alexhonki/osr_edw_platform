@@ -36,7 +36,7 @@ SELECT
 	"EXPIRY_DT"
 	FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.XREF.active_data"
 	WHERE "XREF_ROLE" = 'DR'
-	  AND "EXPIRY_DT" >= :LV_KEY_DATE 
+	  AND "XREF_END_DT" >= :LV_KEY_DATE 
 	  AND "ROLE_START_DT" <= :LV_KEY_DATE;
 	
 END;
