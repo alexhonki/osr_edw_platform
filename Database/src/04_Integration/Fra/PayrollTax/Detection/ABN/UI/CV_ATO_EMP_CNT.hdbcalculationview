@@ -108,6 +108,9 @@
       <viewAttribute id="DB_KEY">
         <descriptions defaultDescription="DB_KEY"/>
       </viewAttribute>
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>  
+      </viewAttribute>
       <viewAttribute id="ALERT_ID">
         <descriptions defaultDescription="ALERT_ID"/>
       </viewAttribute>
@@ -151,6 +154,7 @@
     <input node="Projection_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="GJAHR"/>
     </input>
@@ -162,6 +166,12 @@
       <viewAttribute id="ALERT_ID">
         <descriptions defaultDescription="ALERT_ID"/>
       </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY_DASH">
+        <descriptions defaultDescription="DB_KEY_DASH"/>
+      </viewAttribute>
       <viewAttribute id="ABN">
         <descriptions defaultDescription="ABN"/>
       </viewAttribute>
@@ -170,9 +180,6 @@
       </viewAttribute>
       <viewAttribute id="BPARTNER">
         <descriptions defaultDescription="BPARTNER"/>
-      </viewAttribute>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
       </viewAttribute>
       <viewAttribute id="GROUP_ID">
         <descriptions defaultDescription="GROUP_ID"/>
@@ -186,6 +193,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
     </input>
   </calculationView>
@@ -196,38 +204,42 @@
       <descriptions defaultDescription="DB_KEY"/>
       <keyMapping columnObjectName="Join_2" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Join_2" columnName="DB_KEY_DASH"/>  
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="Join_2" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="Join_2" columnName="ABN"/>
     </attribute>
-    <attribute id="INCM_YR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="INCM_YR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INCM_YR"/>
       <keyMapping columnObjectName="Join_2" columnName="INCM_YR"/>
     </attribute>
-    <attribute id="RSDNL_STATE_CD" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RSDNL_STATE_CD" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RSDNL_STATE_CD"/>
       <keyMapping columnObjectName="Join_2" columnName="RSDNL_STATE_CD"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="CNT_EMPLOYEE_BY_STATE" order="6" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_BY_STATE" order="7" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE"/>
       <measureMapping columnObjectName="Join_2" columnName="CNT_EMPLOYEE_BY_STATE"/>
     </measure>
-    <measure id="CNT_EMPLOYEE_AU" order="7" aggregationType="sum" measureType="simple">
+    <measure id="CNT_EMPLOYEE_AU" order="8" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="CNT_EMPLOYEE"/>
       <measureMapping columnObjectName="Join_2" columnName="CNT_EMPLOYEE_AU"/>
     </measure>
-    <measure id="EMP_PRCNT_BY_STATE" order="8" aggregationType="sum" measureType="simple">
+    <measure id="EMP_PRCNT_BY_STATE" order="9" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="EMP_PRCNT_BY_STATE"/>
       <measureMapping columnObjectName="Join_2" columnName="EMP_PRCNT_BY_STATE"/>
     </measure>
-    <measure id="INTERSTATE_EMP_CNT" order="9" aggregationType="sum" measureType="simple">
+    <measure id="INTERSTATE_EMP_CNT" order="10" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="INTERSTATE_EMP_CNT"/>
       <measureMapping columnObjectName="Join_2" columnName="INTERSTATE_EMP_CNT"/>
     </measure>
@@ -245,15 +257,15 @@
     </shape>
   
     <shape expanded="true" modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="551.9999976158142"/>
+      <upperLeftCorner x="92" y="536.9999976158142"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="EMP_CNT_BY_STATE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="551.9999976158142"/>
+      <upperLeftCorner x="302" y="536.9999976158142"/>
       <rectangleSize width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="J_EMP_CNT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="118.66666666666666" y="391.9999988079071"/>
+      <upperLeftCorner x="118.66666666666666" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="EMP_CNT_ALL" modelObjectNameSpace="J_EMP_CNT" modelObjectType="JoinNodeInput">
@@ -265,7 +277,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="328.6900820831794" y="232"/>
+      <upperLeftCorner x="328.6900820831794" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="J_EMP_CNT" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -277,7 +289,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="395.83468516943316" y="391.9999988079071"/>
+      <upperLeftCorner x="395.83468516943316" y="376.9999988079071"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
