@@ -55,8 +55,22 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <viewAttribute id="ENT_TYP_CD">
         <descriptions defaultDescription="ENT_TYP_CD"/>
       </viewAttribute>
+    
+      <viewAttribute id="MN_BUS_SBRB">
+        <descriptions defaultDescription="MN_BUS_SBRB"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_STT">
+        <descriptions defaultDescription="MN_BUS_STT"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_CNTRY_CD">
+        <descriptions defaultDescription="MN_BUS_CNTRY_CD"/>
+      </viewAttribute>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="MN_BUS_SBRB_STT_PC" datatype="VARCHAR" length="70" expressionLanguage="COLUMN_ENGINE">
+        <formula>RTRIM(&quot;MN_BUS_SBRB&quot;) + ' ' + RTRIM(&quot;MN_BUS_STT&quot;) + ' ' + RTRIM(&quot;MN_BUS_PC&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABN"/>
@@ -65,6 +79,10 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <mapping xsi:type="Calculation:AttributeMapping" target="MN_INDY_CLSN_DESCN" source="MN_INDY_CLSN_DESCN"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="ENT_TYP_CD" source="ENT_TYP_CD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_SBRB" source="MN_BUS_SBRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_STT" source="MN_BUS_STT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_CNTRY_CD" source="MN_BUS_CNTRY_CD"/>
     </input>
     <filter>&quot;ENT_TYP_CD&quot; &lt;&gt; 'IND'</filter>
   </calculationView>
@@ -82,6 +100,20 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
     
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="FISCAL_YEAR"/>
+      </viewAttribute>
+    
+      <viewAttribute id="MN_BUS_SBRB">
+        <descriptions defaultDescription="MN_BUS_SBRB"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_STT">
+        <descriptions defaultDescription="MN_BUS_STT"/>
+      </viewAttribute>
+      <viewAttribute id="MN_BUS_CNTRY_CD">
+        <descriptions defaultDescription="MN_BUS_CNTRY_CD"/>
+      </viewAttribute>
+    
+      <viewAttribute id="MN_BUS_SBRB_STT_PC">
+        <descriptions defaultDescription="MN_BUS_SBRB_STT_PC"/>
       </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
@@ -106,6 +138,12 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABR_ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="BUS_PC" source="MN_BUS_PC"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="MN_INDY_CLSN"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_SBRB" source="MN_BUS_SBRB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_STT" source="MN_BUS_STT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_CNTRY_CD" source="MN_BUS_CNTRY_CD"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MN_BUS_SBRB_STT_PC" source="MN_BUS_SBRB_STT_PC"/>
     </input>
     <input node="Join_2">
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
@@ -197,6 +235,21 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <descriptions defaultDescription="LOCATION"/>
       <keyMapping columnObjectName="Join_1" columnName="LOCATION"/>
     </attribute>
+  
+    <attribute id="MN_BUS_SBRB" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_BUS_SBRB"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="MN_BUS_SBRB"/>
+  
+    </attribute>
+    <attribute id="MN_BUS_STT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_BUS_STT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MN_BUS_STT"/>
+    </attribute>
+    <attribute id="MN_BUS_CNTRY_CD" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_BUS_CNTRY_CD"/>
+      <keyMapping columnObjectName="Join_1" columnName="MN_BUS_CNTRY_CD"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
@@ -256,4 +309,4 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario>
+</Calculation:scenario>  
