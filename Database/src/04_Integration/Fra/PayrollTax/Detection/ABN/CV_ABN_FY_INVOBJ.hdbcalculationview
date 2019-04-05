@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_ABN_FY_INVOBJ" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_ABN_FY_INVOBJ"/>
+<descriptions defaultDescription="Payroll Tax ABN Investigation Object"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -250,6 +250,11 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <descriptions defaultDescription="MN_BUS_CNTRY_CD"/>
       <keyMapping columnObjectName="Join_1" columnName="MN_BUS_CNTRY_CD"/>
     </attribute>
+  
+    <attribute id="MN_BUS_SBRB_STT_PC" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MN_BUS_SBRB_STT_PC"/>
+      <keyMapping columnObjectName="Join_1" columnName="MN_BUS_SBRB_STT_PC"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
@@ -309,4 +314,4 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario>  
+</Calculation:scenario>
