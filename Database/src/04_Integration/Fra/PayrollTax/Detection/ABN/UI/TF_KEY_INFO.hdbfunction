@@ -283,17 +283,38 @@ FROM
 SELECT 
 	"A"."IDNUMBER" AS "ABN",
 	"A"."PARTNER",
-	"B"."PARTNER2",
+	"B"."PARTNER2" AS "T_PARTNER",
 	"B"."DATE_TO",
 	"B"."DATE_FROM",
 	"B"."RELTYP"
 FROM
-	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" AS "A"
+	:BUT0ID AS "A"
 INNER JOIN 
 	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" AS "B"
 ON
 	"A"."PARTNER" = "B"."PARTNER1"
 WHERE	"B"."RELTYP" = 'ZTRU'
+AND     "A"."TYPE" = 'ZABN'
+
+
+UNION
+
+SELECT 
+	"A"."IDNUMBER" AS "ABN",
+	"A"."PARTNER",
+	"B"."PARTNER1" AS "T_PARTNER",
+	"B"."DATE_TO",
+	"B"."DATE_FROM",
+	"B"."RELTYP"
+FROM
+	:BUT0ID AS "A"
+INNER JOIN 
+	"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" AS "B"
+ON
+	"A"."PARTNER" = "B"."PARTNER2"
+WHERE	"B"."RELTYP" = 'ZTRU'
+AND     "A"."TYPE" = 'ZABN'
+
 )
 ;
 
@@ -559,17 +580,63 @@ ON
 		"A"."ABN" = "E"."ABN"		
 ;
 ------------------WAGE Data-----------------
-ABN_WAGES =
 
+--Get the BAS Amount for the Qarter the alert belongs to.
+
+--Get  Alert Item to identify the quarter alert belongs to
+ALERT_ITEM =
 SELECT 
-	"ABN",
-	"GJAHR",
-	SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-	SUM("ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES",
-	SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES",
-	SUM("ATO_PAYG_NIND_TOTL_GRS_AMT") AS  "ATO_PAYG_NIND_TOTL_GRS_AMT"
+	"DB_KEY",
+	"PARENT_KEY",
+	"ITEM_NUM",
+	"DETECT_OBJ_ID",
+	"DETECT_OBJ_ID2",
+	"DETECT_OBJ_ID3",
+	"QTR" 
 FROM
 (
+SELECT 
+	"DB_KEY",
+	"PARENT_KEY",
+	"ITEM_NUM",
+	"DETECT_OBJ_TYPE",
+	"DETECT_OBJ_ID",
+	"DETECT_OBJ_ID2",
+	"DETECT_OBJ_ID3",
+	CASE WHEN "DETECT_OBJ_ID2" = 'PT-Q' AND RIGHT("DETECT_OBJ_ID3",2) IN ('Q1','Q2','Q3') THEN RIGHT("DETECT_OBJ_ID3",2) ELSE 
+	CASE WHEN "DETECT_OBJ_ID2" = 'PT-Q' AND RIGHT("DETECT_OBJ_ID3",2) IN ('Q4') THEN 'FY' ELSE
+	CASE WHEN "DETECT_OBJ_ID2" = 'PT-A' THEN 'FY' ELSE 'FY' END END END AS "QTR",
+	RANK() OVER (PARTITION BY "PARENT_KEY" ORDER BY "PARENT_KEY", "ITEM_NUM" DESC) AS "RANK_1"
+FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ITEM"
+WHERE "DETECT_OBJ_TYPE" = 'PT_ABN_WGE'
+AND "PARENT_KEY" IN ( SELECT DISTINCT "DB_KEY" FROM  :ALERT_INFO  )
+) WHERE RANK_1 = '1'
+;
+
+ALERT_DATA_BAS =
+SELECT
+	"ALERT"."DB_KEY",
+	"ALERT"."ALERT_ID",
+	"ALERT"."ABN" ,
+	"ALERT"."GJAHR",
+  	CASE WHEN"ALERT"."DB_KEY" = "ITEM"."PARENT_KEY" THEN  "ITEM"."QTR" ELSE 'FY' END AS "QTR"
+FROM
+	:ALERT_INFO AS "ALERT"
+LEFT OUTER JOIN
+	:ALERT_ITEM  AS "ITEM"
+ON
+	"ALERT"."DB_KEY" = "ITEM"."PARENT_KEY"
+;
+
+/*
+This table function was taking 15sec to get the results
+osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"() , 
+To improve the performance we need to directly query the proxy tables (Except for WCQ).
+*/
+
+
+/*
+ABN_WAGES =
 SELECT
 	"ABN",
 	"GJAHR",
@@ -586,45 +653,96 @@ WHERE EXISTS (
 )
 
 GROUP BY "ABN", "GJAHR"
-
-UNION
--- To get the Approaching BAS Wages
-SELECT DISTINCT 
-	"ABN", 
-	"GJAHR", 
-	"ATO_BAS_TOTL_PMT_FOR_WRK_AMT" ,
-	0 AS "ATO_ITR_SALARY_WAGES",
-	0 AS "WCQ_ACT_WAGES",
-	0 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"
-	
+;
+*/
+ABN_WAGES =
+SELECT 
+"ABN",
+"GJAHR",
+SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+SUM("ATO_ITR_SALARY_WAGES")         AS "ATO_ITR_SALARY_WAGES",
+SUM("WCQ_ACT_WAGES")                AS "WCQ_ACT_WAGES",
+SUM("ATO_PAYG_NIND_TOTL_GRS_AMT")   AS "ATO_PAYG_NIND_TOTL_GRS_AMT"	
 FROM
 (
 
- SELECT 
-	"DATA"."ABN",
-	"ALERT"."GJAHR",
-	SUM("DATA"."TOTL_PMT_FOR_WRK_AMT") AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-	RANK() OVER (PARTITION BY "DATA"."ABN", "DATA"."FINANCIAL_YEAR" ORDER BY "DATA"."ABN" ,"DATA"."FINANCIAL_YEAR" DESC, "DATA"."BAS_QTR" DESC  ) AS "RANK_1"
-FROM
-	:ALERT_INFO  AS "ALERT"
-INNER JOIN
-	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "DATA"
-    ON 	"ALERT"."ABN"   = "DATA"."ABN"
-	AND "ALERT"."GJAHR" = "DATA"."FINANCIAL_YEAR" 
-WHERE 
-	"DATA"."FINANCIAL_YEAR" NOT IN ( SELECT DISTINCT FINANCIAL_YEAR FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() WHERE "BAS_QTR" = 'FY')
-GROUP BY 
-	"DATA"."ABN",
-	"ALERT"."GJAHR",
-	"DATA"."FINANCIAL_YEAR",
-	"DATA"."BAS_QTR"
-) 
-WHERE 
-	"RANK_1" = 1
-)	
-GROUP BY 	"ABN",
-	"GJAHR"
+----Annual BAS NIND ------
+SELECT
+	"ABN"."ABN"                         AS "ABN",
+	"ABN"."FINANCIAL_YEAR"              AS "GJAHR",
+	SUM("ABN"."TOTL_PMT_FOR_WRK_AMT")	AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	0   								AS "ATO_ITR_SALARY_WAGES",
+	0   								AS "WCQ_ACT_WAGES",
+	0   								AS "ATO_PAYG_NIND_TOTL_GRS_AMT"	
+FROM 	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ABN"
+WHERE EXISTS (
+	SELECT * FROM :ALERT_DATA_BAS AS "ALERT"
+	WHERE "ABN"."ABN" = "ALERT"."ABN"
+	AND   LEFT(TO_NVARCHAR("ABN"."FINANCIAL_YEAR"),4) = "ALERT"."GJAHR"
+	AND   "ABN"."BAS_QTR" = "ALERT"."QTR"
+)              
+GROUP BY "ABN"."ABN","ABN"."FINANCIAL_YEAR" 
+
+UNION
+---ITR NIND-----
+SELECT
+	"ABN"."ABN"                          AS "ABN",
+	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) AS  "GJAHR",
+	0   								 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	SUM("ABN"."SALARY_WAGES") + SUM("ABN"."SUPER_EXPNS")  AS "ATO_ITR_SALARY_WAGES",
+	0   								 AS "WCQ_ACT_WAGES",
+	0   								 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"	
+	
+FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ABN"
+WHERE EXISTS (
+	SELECT * FROM :ALERT_INFO AS "ALERT"
+	WHERE "ABN"."ABN" = "ALERT"."ABN"
+	AND   	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) = "ALERT"."GJAHR"
+	
+)   
+GROUP BY 	"ABN"."ABN","ABN"."INCM_YR"
+
+UNION
+
+---WCQ---------
+SELECT
+	"ABN"."ABN"     					 AS "ABN",
+	"ABN"."GJAHR"       				 AS "GJAHR",
+	0									 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	0									 AS "ATO_ITR_SALARY_WAGES",
+	SUM("ABN"."WCQ_ACT_WAGES")			 AS "WCQ_ACT_WAGES",
+	0   								 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS  "ABN"
+WHERE EXISTS (
+	SELECT * FROM :ALERT_INFO AS "ALERT"
+	WHERE "ABN"."ABN" = "ALERT"."ABN"
+	AND   "ABN"."GJAHR" = "ALERT"."GJAHR"
+)
+GROUP BY 	"ABN"."ABN","ABN"."GJAHR"
+
+UNION
+----PAYG NIND--------
+SELECT 
+	LEFT("ABN"."ABN",11)		         AS "ABN",
+	LEFT("ABN"."INCM_YR",4)	             AS "GJAHR",
+	0   								 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+	0   								 AS "ATO_ITR_SALARY_WAGES",
+	0   								 AS "WCQ_ACT_WAGES",
+	SUM("ABN"."TOTL_GRS_AMT")   	  	 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"
+	
+FROM "osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"() AS "ABN"
+WHERE EXISTS (
+	SELECT * FROM :ALERT_INFO AS "ALERT"
+	WHERE   LEFT("ABN"."ABN",11)                 = "ALERT"."ABN"
+	AND   	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) = "ALERT"."GJAHR"
+	)   GROUP BY "ABN"."ABN","ABN"."INCM_YR"
+
+) GROUP BY "ABN", "GJAHR"
+
 ;
+
+
+
 
 
 
