@@ -669,7 +669,7 @@ FROM
 ----Annual BAS NIND ------
 SELECT
 	"ABN"."ABN"                         AS "ABN",
-	"ABN"."FINANCIAL_YEAR"              AS "GJAHR",
+	TO_NVARCHAR("ABN"."FINANCIAL_YEAR") AS "GJAHR",
 	SUM("ABN"."TOTL_PMT_FOR_WRK_AMT")	AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	0   								AS "ATO_ITR_SALARY_WAGES",
 	0   								AS "WCQ_ACT_WAGES",
@@ -687,7 +687,7 @@ UNION
 ---ITR NIND-----
 SELECT
 	"ABN"."ABN"                          AS "ABN",
-	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) AS  "GJAHR",
+	TO_NVARCHAR("ABN"."INCM_YR")         AS  "GJAHR",
 	0   								 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	SUM("ABN"."SALARY_WAGES") + SUM("ABN"."SUPER_EXPNS")  AS "ATO_ITR_SALARY_WAGES",
 	0   								 AS "WCQ_ACT_WAGES",
@@ -696,7 +696,7 @@ SELECT
 FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ABN"
 WHERE EXISTS (
 	SELECT * FROM :ALERT_INFO AS "ALERT"
-	WHERE "ABN"."ABN" = "ALERT"."ABN"
+	WHERE   "ABN"."ABN"  = "ALERT"."ABN"
 	AND   	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) = "ALERT"."GJAHR"
 	
 )   
@@ -707,7 +707,7 @@ UNION
 ---WCQ---------
 SELECT
 	"ABN"."ABN"     					 AS "ABN",
-	"ABN"."GJAHR"       				 AS "GJAHR",
+	TO_NVARCHAR("ABN"."GJAHR")   		 AS "GJAHR",
 	0									 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	0									 AS "ATO_ITR_SALARY_WAGES",
 	SUM("ABN"."WCQ_ACT_WAGES")			 AS "WCQ_ACT_WAGES",
@@ -716,7 +716,7 @@ FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS  "ABN"
 WHERE EXISTS (
 	SELECT * FROM :ALERT_INFO AS "ALERT"
 	WHERE "ABN"."ABN" = "ALERT"."ABN"
-	AND   "ABN"."GJAHR" = "ALERT"."GJAHR"
+	AND   TO_NVARCHAR("ABN"."GJAHR") = "ALERT"."GJAHR"
 )
 GROUP BY 	"ABN"."ABN","ABN"."GJAHR"
 
@@ -724,7 +724,7 @@ UNION
 ----PAYG NIND--------
 SELECT 
 	LEFT("ABN"."ABN",11)		         AS "ABN",
-	LEFT("ABN"."INCM_YR",4)	             AS "GJAHR",
+	TO_NVARCHAR("ABN"."INCM_YR")         AS "GJAHR",
 	0   								 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	0   								 AS "ATO_ITR_SALARY_WAGES",
 	0   								 AS "WCQ_ACT_WAGES",
@@ -733,7 +733,7 @@ SELECT
 FROM "osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"() AS "ABN"
 WHERE EXISTS (
 	SELECT * FROM :ALERT_INFO AS "ALERT"
-	WHERE   LEFT("ABN"."ABN",11)                 = "ALERT"."ABN"
+	WHERE   LEFT("ABN"."ABN",11)    = "ALERT"."ABN"
 	AND   	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) = "ALERT"."GJAHR"
 	)   GROUP BY "ABN"."ABN","ABN"."INCM_YR"
 
