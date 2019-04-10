@@ -36,6 +36,133 @@ FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_ABR_BP_MD"( )
        SQL SECURITY INVOKER AS 
 BEGIN 
 
+ABN_ADDRESS =
+SELECT * FROM
+(
+SELECT 
+"ABN",
+"ORG_NM",
+"ADDR_LN_1",
+"ADDR_LN_2",
+"CITY",
+"STATE",
+"POSTCODE",
+"COUNTRY_CD",
+"CHANGE_DATE",
+"ADDRESS_TYPE",
+RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN", "ADDRESS_TYPE" ASC) AS "RANK_2"
+FROM
+(
+
+---------------ABR Service Address-------------
+SELECT * FROM
+(
+SELECT
+	"ABR"."ABN"           AS "ABN",
+	"ABR"."ORG_NM"        AS "ORG_NM",
+	"ABR"."SON_ADDR_LN_1" AS "ADDR_LN_1",
+	"ABR"."SON_ADDR_LN_2" AS "ADDR_LN_2",
+	"ABR"."SON_SBRB"      AS "CITY",
+	"ABR"."SON_STT"       AS "STATE",
+	"ABR"."SON_PC"        AS "POSTCODE",
+	"ABR"."SON_CNTRY_CD"  AS "COUNTRY_CD",
+	TO_DATS("ABR"."Z_CHANGE_TIME") AS "CHANGE_DATE",
+	'1 ABR SON' AS "ADDRESS_TYPE",
+	RANK() OVER (PARTITION BY "ABR"."ABN" ORDER BY "ABR"."ABN", TO_DATS("ABR"."Z_CHANGE_TIME") DESC) AS "RANK_1"
+FROM "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
+WHERE EXISTS
+(
+SELECT * FROM"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+    	WHERE  "ABR"."ABN" = "ALERT"."ABN"	
+)
+AND "ABR"."ENT_TYP_CD" <> 'IND'
+
+) WHERE "RANK_1" = '1'
+AND "ADDR_LN_1" <> ''
+
+UNION
+
+-------------ABR Business Address-------------
+SELECT * FROM
+(
+SELECT
+	"ABR"."ABN" AS "ABN",
+	"ABR"."ORG_NM" AS "ORG_NM",
+	"ABR"."MN_BUS_ADDR_LN_1" AS "ADDR_LN_1",
+	"ABR"."MN_BUS_ADDR_LN_2" AS "ADDR_LN_2",
+	"ABR"."MN_BUS_SBRB"      AS "CITY",
+	"ABR"."MN_BUS_STT"       AS "STATE",
+	"ABR"."MN_BUS_PC"        AS "POSTCODE",
+	"ABR"."MN_BUS_CNTRY_CD"  AS "COUNTRY_CD",
+	TO_DATS("ABR"."Z_CHANGE_TIME") AS "CHANGE_DATE",
+	'3 ABR BUS' AS "ADDRESS_TYPE",
+	RANK() OVER (PARTITION BY "ABR"."ABN" ORDER BY "ABR"."ABN", TO_DATS("ABR"."Z_CHANGE_TIME") DESC) AS "RANK_1"
+FROM "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
+WHERE EXISTS
+(
+SELECT * FROM"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+    	WHERE  "ABR"."ABN" = "ALERT"."ABN"	
+)
+AND "ABR"."ENT_TYP_CD" <> 'IND'
+
+) WHERE "RANK_1" = '1'
+AND "ADDR_LN_1" <> ''
+
+UNION
+
+----------BAS Postal -------------
+SELECT DISTINCT
+"ABN",
+"ORG_NM",
+"ADDR_LN_1",
+"ADDR_LN_2",
+"CITY",
+"STATE",
+"PST_CODE",
+"COUNTRY_CD",
+"CHANGE_DATE",
+"ADDRESS_TYPE",
+"RANK_1"
+FROM
+(
+SELECT
+	"BAS"."ABN" AS "ABN",
+	"BAS"."FULL_NM_TXT" 	AS "ORG_NM",
+	"BAS"."CAC_NUM",
+	"BAS"."FINANCIAL_YEAR",
+	"BAS"."BAS_QTR",
+	CASE WHEN "BAS"."BAS_QTR" = 'Q1' then TO_NVARCHAR(CONCAT(TO_NVARCHAR(TO_INT("BAS"."FINANCIAL_YEAR")-1),'0930')) ELSE
+	CASE WHEN "BAS"."BAS_QTR" = 'Q2' then TO_NVARCHAR(CONCAT(TO_NVARCHAR(TO_INT("BAS"."FINANCIAL_YEAR")-1),'1231')) ELSE
+	CASE WHEN "BAS"."BAS_QTR" = 'Q3' then TO_NVARCHAR(CONCAT("BAS"."FINANCIAL_YEAR",'0331')) ELSE
+	CASE WHEN "BAS"."BAS_QTR" = 'Q4' then TO_NVARCHAR(CONCAT("BAS"."FINANCIAL_YEAR",'0630')) ELSE 
+	CASE WHEN "BAS"."BAS_QTR" = 'FY' then TO_NVARCHAR(CONCAT("BAS"."FINANCIAL_YEAR",'0630')) ELSE '' END END END END END AS "QT_END_DATE",
+	"BAS"."POS_ADDR_LN_1"	AS "ADDR_LN_1",
+	"BAS"."POS_ADDR_LN_2"	AS "ADDR_LN_2",
+	"BAS"."POS_LCLTY_NM"	AS "CITY",
+	"BAS"."POS_STATE"   	AS "STATE",
+	"BAS"."POS_PC"      	AS "PST_CODE",
+	''          			AS "COUNTRY_CD",
+	TO_DATS("BAS"."Z_CHANGE_TIME") AS "CHANGE_DATE",
+	'2 BAS POS' AS "ADDRESS_TYPE",
+	RANK() OVER (PARTITION BY "BAS"."ABN" ORDER BY "BAS"."ABN", "BAS"."FINANCIAL_YEAR" DESC,RIGHT("BAS"."BAS_QTR",1) DESC,"BAS"."CAC_NUM" ASC,TO_DATS("BAS"."Z_CHANGE_TIME") DESC ) AS "RANK_1"
+	
+FROM "osr.edw.staging.td.ato.synonym::CDS_BAS.DSO.BASNIND.active_data" AS "BAS"
+WHERE EXISTS
+(
+SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+    	WHERE  "BAS"."ABN" = "ALERT"."ABN"
+)
+AND "BAS"."POS_ADDR_LN_1" <> ''
+AND "BAS"."FINANCIAL_YEAR" IN (TO_NVARCHAR(LEFT(TO_DATS(NOW()),4)),TO_NVARCHAR(TO_INT(LEFT(TO_DATS(NOW()),4)) - 1))
+) WHERE "RANK_1" = '1'
+--AND --"QT_END_DATE" >= TO_NVARCHAR(CONCAT(TO_NVARCHAR(TO_INT(LEFT(TO_DATS(NOW()),4)) - 1), RIGHT(TO_DATS(NOW()),4)))
+))
+
+WHERE "RANK_2" = '1'
+ORDER BY "ABN" 
+;
+
+
    RETURN
     	SELECT
 			"ALERT"."DB_KEY",
@@ -59,18 +186,20 @@ BEGIN
 			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 2) AS  "NAME_ORG2",
 			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 3) AS  "NAME_ORG3",
 			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 4) AS  "NAME_ORG4",
-    		LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_1")) || CHAR(32) || LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_2"))                  		  AS  "BUS_ADDR", 		
-    		LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_1"))													               					  AS  "BUS_ADDR_LN_1", 			
-    		LTRIM(RTRIM("AGENCY"."MN_BUS_ADDR_LN_2"))                  																	  AS  "BUS_ADDR_LN_2",
-    		CASE WHEN LENGTH("AGENCY"."MN_BUS_SBRB") > 40 THEN 	SUBSTRING("AGENCY"."MN_BUS_SBRB", 0, 40) ELSE "AGENCY"."MN_BUS_SBRB" END  AS  "BUS_CITY",
-    		"AGENCY"."MN_BUS_STT"																                                    	  AS  "BUS_STATE",
-    		CASE WHEN LENGTH("AGENCY"."MN_BUS_PC") > 10 THEN  SUBSTRING("AGENCY"."MN_BUS_PC", 0, 10)     ELSE "AGENCY"."MN_BUS_PC"   END  AS  "BUS_PC",
+    		LTRIM(RTRIM("ADDRESS"."ADDR_LN_1")) || CHAR(32) || LTRIM(RTRIM("ADDRESS"."ADDR_LN_2"))                  		              AS  "BUS_ADDR", 		
+    		LTRIM(RTRIM("ADDRESS"."ADDR_LN_1"))													               					          AS  "BUS_ADDR_LN_1", 			
+    		LTRIM(RTRIM("ADDRESS"."ADDR_LN_2"))                  																	      AS  "BUS_ADDR_LN_2",
+    		CASE WHEN LENGTH("ADDRESS"."CITY") > 40 THEN 	SUBSTRING("ADDRESS"."CITY", 0, 40) ELSE "ADDRESS"."CITY" END                  AS  "BUS_CITY",
+    		"ADDRESS"."STATE"																                                    	      AS  "BUS_STATE",
+    		CASE WHEN LENGTH("ADDRESS"."POSTCODE") > 10 THEN  SUBSTRING("ADDRESS"."POSTCODE", 0, 10)     ELSE "ADDRESS"."POSTCODE"   END  AS  "BUS_PC",
     		
     		''																						                                      AS  "BUS_EMAIL",
     		''																					 	                                      AS  "BUS_PH_NUM"
     	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
     	INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
     	ON "ALERT"."ABN" = "AGENCY"."ABN"
+    	LEFT OUTER JOIN :ABN_ADDRESS AS "ADDRESS"
+    	ON "ALERT"."ABN" = "ADDRESS"."ABN"
     	LEFT OUTER JOIN "osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C" AS "MAP"
     	ON "AGENCY"."ENT_TYP_CD" = "MAP"."ENTITY_TYPE_CODE"
     	WHERE "AGENCY"."ENT_TYP_CD" <> 'IND'
