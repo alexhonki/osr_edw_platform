@@ -628,6 +628,7 @@ ON
 	"ALERT"."DB_KEY" = "ITEM"."PARENT_KEY"
 ;
 
+
 /*
 This table function was taking 15sec to get the results
 osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"() , 
@@ -659,6 +660,7 @@ ABN_WAGES =
 SELECT 
 "ABN",
 "GJAHR",
+"ALERT_ID",
 SUM("ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 SUM("ATO_ITR_SALARY_WAGES")         AS "ATO_ITR_SALARY_WAGES",
 SUM("WCQ_ACT_WAGES")                AS "WCQ_ACT_WAGES",
@@ -670,37 +672,40 @@ FROM
 SELECT
 	"ABN"."ABN"                         AS "ABN",
 	TO_NVARCHAR("ABN"."FINANCIAL_YEAR") AS "GJAHR",
+	"ALERT"."ALERT_ID"                  AS "ALERT_ID",
 	SUM("ABN"."TOTL_PMT_FOR_WRK_AMT")	AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	0   								AS "ATO_ITR_SALARY_WAGES",
 	0   								AS "WCQ_ACT_WAGES",
 	0   								AS "ATO_PAYG_NIND_TOTL_GRS_AMT"	
-FROM 	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ABN"
-WHERE EXISTS (
-	SELECT * FROM :ALERT_DATA_BAS AS "ALERT"
-	WHERE "ABN"."ABN" = "ALERT"."ABN"
+FROM 	
+	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ABN"
+INNER JOIN
+		:ALERT_DATA_BAS AS "ALERT"
+ON
+		  "ABN"."ABN" = "ALERT"."ABN"
 	AND   LEFT(TO_NVARCHAR("ABN"."FINANCIAL_YEAR"),4) = "ALERT"."GJAHR"
 	AND   "ABN"."BAS_QTR" = "ALERT"."QTR"
-)              
-GROUP BY "ABN"."ABN","ABN"."FINANCIAL_YEAR" 
+GROUP BY "ABN"."ABN","ABN"."FINANCIAL_YEAR","ALERT"."ALERT_ID" 
 
 UNION
 ---ITR NIND-----
 SELECT
 	"ABN"."ABN"                          AS "ABN",
 	TO_NVARCHAR("ABN"."INCM_YR")         AS  "GJAHR",
+	"ALERT"."ALERT_ID"                   AS "ALERT_ID",
 	0   								 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	SUM("ABN"."SALARY_WAGES") + SUM("ABN"."SUPER_EXPNS")  AS "ATO_ITR_SALARY_WAGES",
 	0   								 AS "WCQ_ACT_WAGES",
 	0   								 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"	
 	
-FROM "osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ABN"
-WHERE EXISTS (
-	SELECT * FROM :ALERT_INFO AS "ALERT"
-	WHERE   "ABN"."ABN"  = "ALERT"."ABN"
+FROM 
+		"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ABN"
+INNER JOIN
+		:ALERT_INFO AS "ALERT"
+ON
+			"ABN"."ABN"  = "ALERT"."ABN"
 	AND   	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) = "ALERT"."GJAHR"
-	
-)   
-GROUP BY 	"ABN"."ABN","ABN"."INCM_YR"
+GROUP BY 	"ABN"."ABN","ABN"."INCM_YR","ALERT"."ALERT_ID"
 
 UNION
 
@@ -708,36 +713,40 @@ UNION
 SELECT
 	"ABN"."ABN"     					 AS "ABN",
 	TO_NVARCHAR("ABN"."GJAHR")   		 AS "GJAHR",
+	"ALERT"."ALERT_ID"                   AS "ALERT_ID",	
 	0									 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	0									 AS "ATO_ITR_SALARY_WAGES",
 	SUM("ABN"."WCQ_ACT_WAGES")			 AS "WCQ_ACT_WAGES",
 	0   								 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"
-FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS  "ABN"
-WHERE EXISTS (
-	SELECT * FROM :ALERT_INFO AS "ALERT"
-	WHERE "ABN"."ABN" = "ALERT"."ABN"
+FROM 
+	"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS  "ABN"
+INNER JOIN
+	:ALERT_INFO AS "ALERT"
+ON 
+		  "ABN"."ABN" = "ALERT"."ABN"
 	AND   TO_NVARCHAR("ABN"."GJAHR") = "ALERT"."GJAHR"
-)
-GROUP BY 	"ABN"."ABN","ABN"."GJAHR"
+GROUP BY 	"ABN"."ABN","ABN"."GJAHR","ALERT"."ALERT_ID"    
 
 UNION
 ----PAYG NIND--------
 SELECT 
 	LEFT("ABN"."ABN",11)		         AS "ABN",
 	TO_NVARCHAR("ABN"."INCM_YR")         AS "GJAHR",
+	"ALERT"."ALERT_ID"                   AS "ALERT_ID",	
 	0   								 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
 	0   								 AS "ATO_ITR_SALARY_WAGES",
 	0   								 AS "WCQ_ACT_WAGES",
 	SUM("ABN"."TOTL_GRS_AMT")   	  	 AS "ATO_PAYG_NIND_TOTL_GRS_AMT"
 	
-FROM "osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"() AS "ABN"
-WHERE EXISTS (
-	SELECT * FROM :ALERT_INFO AS "ALERT"
-	WHERE   LEFT("ABN"."ABN",11)    = "ALERT"."ABN"
+FROM 
+	"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"() AS "ABN"
+INNER JOIN
+	:ALERT_INFO AS "ALERT"
+ON		    LEFT("ABN"."ABN",11)    = "ALERT"."ABN"
 	AND   	LEFT(TO_NVARCHAR("ABN"."INCM_YR"),4) = "ALERT"."GJAHR"
-	)   GROUP BY "ABN"."ABN","ABN"."INCM_YR"
+GROUP BY "ABN"."ABN","ABN"."INCM_YR","ALERT"."ALERT_ID"    
 
-) GROUP BY "ABN", "GJAHR"
+) GROUP BY "ABN", "GJAHR","ALERT_ID"
 
 ;
 
@@ -889,6 +898,7 @@ LEFT OUTER JOIN
 :ABN_WAGES AS "ABN_WAGES"
 	 ON	"A"."ABN"	= "ABN_WAGES"."ABN"
 	AND "A"."GJAHR" = "ABN_WAGES"."GJAHR"	
+	AND "A"."ALERT_ID" = "ABN_WAGES"."ALERT_ID"
 )	
 
 
