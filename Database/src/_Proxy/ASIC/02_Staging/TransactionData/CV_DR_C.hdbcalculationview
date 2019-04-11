@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.staging.td.asic.proxy::CV_DR_C" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_DR"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.asic.proxy::TF_DR_REL_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.td.asic.proxy::TF_DR_REL_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_PERSON_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_PERSON_C</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="XREF_END_DT">
+        <descriptions defaultDescription="XREF_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ADDRESS_NUM">
+        <descriptions defaultDescription="ADDRESS_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NUMBER">
+        <descriptions defaultDescription="ORG_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="EXPIRY_DT">
+        <descriptions defaultDescription="EXPIRY_DT"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_NUM">
+        <descriptions defaultDescription="PERSON_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="ROLE_START_DT">
+        <descriptions defaultDescription="ROLE_START_DT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.asic.proxy::TF_DR_REL_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="XREF_END_DT" source="XREF_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADDRESS_NUM" source="ADDRESS_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPIRY_DT" source="EXPIRY_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROLE_START_DT" source="ROLE_START_DT"/>
+    </input>
+    <input node="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+    </input>
+    <joinAttribute name="ORG_NUMBER"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="XREF_END_DT">
+        <descriptions defaultDescription="XREF_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ADDRESS_NUM">
+        <descriptions defaultDescription="ADDRESS_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NUMBER">
+        <descriptions defaultDescription="ORG_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="EXPIRY_DT">
+        <descriptions defaultDescription="EXPIRY_DT"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_NUM">
+        <descriptions defaultDescription="PERSON_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="ROLE_START_DT">
+        <descriptions defaultDescription="ROLE_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME2">
+        <descriptions defaultDescription="GIVEN_NAME2"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_STATE">
+        <descriptions defaultDescription="BIRTH_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME3">
+        <descriptions defaultDescription="GIVEN_NAME3"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_COUNTRY_CODE">
+        <descriptions defaultDescription="BIRTH_COUNTRY_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="SURNAME">
+        <descriptions defaultDescription="SURNAME"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_COUNTRY">
+        <descriptions defaultDescription="BIRTH_COUNTRY"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_DT">
+        <descriptions defaultDescription="BIRTH_DT"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_LOCALITY">
+        <descriptions defaultDescription="BIRTH_LOCALITY"/>
+      </viewAttribute>
+      <viewAttribute id="DEFAULT_ADDRESS_NUM">
+        <descriptions defaultDescription="DEFAULT_ADDRESS_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="PERS_START_DT">
+        <descriptions defaultDescription="PERS_START_DT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="XREF_END_DT" source="XREF_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADDRESS_NUM" source="ADDRESS_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXPIRY_DT" source="EXPIRY_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROLE_START_DT" source="ROLE_START_DT"/>
+    </input>
+    <input node="osr.edw.staging.md.asic.proxy::TF_PERSON_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME2" source="GIVEN_NAME2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_STATE" source="BIRTH_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME3" source="GIVEN_NAME3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_COUNTRY_CODE" source="BIRTH_COUNTRY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SURNAME" source="SURNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_COUNTRY" source="BIRTH_COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_DT" source="BIRTH_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_LOCALITY" source="BIRTH_LOCALITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEFAULT_ADDRESS_NUM" source="DEFAULT_ADDRESS_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DT" source="PERS_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
+    </input>
+    <joinAttribute name="PERSON_NUM"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_2">
+  <attributes>
+    <attribute id="XREF_END_DT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="XREF_END_DT"/>
+      <keyMapping columnObjectName="Join_2" columnName="XREF_END_DT"/>
+    </attribute>
+    <attribute id="ADDRESS_NUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDRESS_NUM"/>
+      <keyMapping columnObjectName="Join_2" columnName="ADDRESS_NUM"/>
+    </attribute>
+    <attribute id="ORG_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NUMBER"/>
+      <keyMapping columnObjectName="Join_2" columnName="ORG_NUMBER"/>
+    </attribute>
+    <attribute id="EXPIRY_DT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXPIRY_DT"/>
+      <keyMapping columnObjectName="Join_2" columnName="EXPIRY_DT"/>
+    </attribute>
+    <attribute id="PERSON_NUM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_NUM"/>
+      <keyMapping columnObjectName="Join_2" columnName="PERSON_NUM"/>
+    </attribute>
+    <attribute id="ROLE_START_DT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROLE_START_DT"/>
+      <keyMapping columnObjectName="Join_2" columnName="ROLE_START_DT"/>
+    </attribute>
+    <attribute id="ABN" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_2" columnName="ABN"/>
+    </attribute>
+    <attribute id="GIVEN_NAME2" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME2"/>
+      <keyMapping columnObjectName="Join_2" columnName="GIVEN_NAME2"/>
+    </attribute>
+    <attribute id="BIRTH_STATE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_STATE"/>
+      <keyMapping columnObjectName="Join_2" columnName="BIRTH_STATE"/>
+    </attribute>
+    <attribute id="GIVEN_NAME3" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME3"/>
+      <keyMapping columnObjectName="Join_2" columnName="GIVEN_NAME3"/>
+    </attribute>
+    <attribute id="BIRTH_COUNTRY_CODE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_COUNTRY_CODE"/>
+      <keyMapping columnObjectName="Join_2" columnName="BIRTH_COUNTRY_CODE"/>
+    </attribute>
+    <attribute id="SURNAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SURNAME"/>
+      <keyMapping columnObjectName="Join_2" columnName="SURNAME"/>
+    </attribute>
+    <attribute id="BIRTH_COUNTRY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_COUNTRY"/>
+      <keyMapping columnObjectName="Join_2" columnName="BIRTH_COUNTRY"/>
+    </attribute>
+    <attribute id="BIRTH_DT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_DT"/>
+      <keyMapping columnObjectName="Join_2" columnName="BIRTH_DT"/>
+    </attribute>
+    <attribute id="BIRTH_LOCALITY" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_LOCALITY"/>
+      <keyMapping columnObjectName="Join_2" columnName="BIRTH_LOCALITY"/>
+    </attribute>
+    <attribute id="DEFAULT_ADDRESS_NUM" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFAULT_ADDRESS_NUM"/>
+      <keyMapping columnObjectName="Join_2" columnName="DEFAULT_ADDRESS_NUM"/>
+    </attribute>
+    <attribute id="PERS_START_DT" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERS_START_DT"/>
+      <keyMapping columnObjectName="Join_2" columnName="PERS_START_DT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="337"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.td.asic.proxy::TF_DR_REL_C" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.md.asic.proxy::TF_PERSON_C" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
