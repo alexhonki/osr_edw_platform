@@ -30,7 +30,7 @@ FUNCTION "osr.edw.platform.fra.prt.view.bp::TF_ABR_BP_MD"( )
 		BUS_PC				NVARCHAR(12),
 		BUS_EMAIL			NVARCHAR(200),
 		BUS_PH_NUM			NVARCHAR(15),
-		CHANGE_ON_DATE   	DATE
+		CHANGED_ON_DATE   	DATE
        )
      
        LANGUAGE SQLSCRIPT 
@@ -196,7 +196,7 @@ ORDER BY "ABN"
     		
     		''																						                                      AS  "BUS_EMAIL",
     		''																					 	                                      AS  "BUS_PH_NUM",
-    		"ADDRESS"."CHANGE_DATE"																										  AS  "CHANGE_ON_DATE"
+    		"ADDRESS"."CHANGE_DATE"																										  AS  "CHANGED_ON_DATE"
     	FROM	"osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
     	INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
     	ON "ALERT"."ABN" = "AGENCY"."ABN"
