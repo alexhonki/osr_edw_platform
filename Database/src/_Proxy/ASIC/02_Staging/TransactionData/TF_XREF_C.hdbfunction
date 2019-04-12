@@ -23,7 +23,7 @@ SELECT
 	"XREF_END_DT",
 	"ADDRESS_NUM",
 	"REC_START_DT",
-	"REC_END_DT",
+	CASE WHEN "REC_END_DT"<"REC_START_DT" THEN TO_DATE('9999-12-31') ELSE "REC_END_DT" END AS "REC_END_DT",
 	"EXPIRY_DT"
 	FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.XREF.active_data";
 	

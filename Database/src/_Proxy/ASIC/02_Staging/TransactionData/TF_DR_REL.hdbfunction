@@ -8,7 +8,8 @@ FUNCTION "osr.edw.staging.td.asic.proxy::TF_DR_REL"(IV_KEY_DATE DATE )
 			"REC_START_DT"			DATE,
 			"REC_END_DT"			DATE,
 			"EXPIRY_DT"				TIMESTAMP,
-			"DR_COUNT"				INTEGER
+			"DR_COUNT"				INTEGER,
+			"INTEREST_PCT"			DECIMAL(5,2)
        )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
@@ -37,7 +38,10 @@ SELECT
 	FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.XREF.active_data"
 	WHERE "XREF_ROLE" = 'DR'
 	  AND "XREF_END_DT" >= :LV_KEY_DATE 
-	  AND "ROLE_START_DT" <= :LV_KEY_DATE;
+	  AND "ROLE_START_DT" <= :LV_KEY_DATE
+	  AND "REC_END_DT" >= :LV_KEY_DATE
+	  AND "REC_START_DT" <= :LV_KEY_DATE
+	  ;
 
 lt_dr_cnt = 	
 SELECT "ORG_NUMBER", COUNT(*) AS "DR_COUNT" FROM :lt_rel GROUP BY "ORG_NUMBER";
@@ -52,7 +56,8 @@ SELECT
 	"REL"."REC_START_DT",
 	"REL"."REC_END_DT",
 	"REL"."EXPIRY_DT",
-	"CNT"."DR_COUNT"
+	"CNT"."DR_COUNT",
+	1/"CNT"."DR_COUNT"*100 AS "INTEREST_PCT"
 	FROM :lt_rel AS "REL" INNER JOIN :lt_dr_cnt AS "CNT"
 	ON "REL"."ORG_NUMBER" = "CNT"."ORG_NUMBER"
 	;
