@@ -23,10 +23,13 @@ SELECT
 	"REC_START_DT",
 	"REC_END_DT",
 	"EXPIRY_DT"
-	FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.XREF.active_data"
+	FROM "osr.edw.staging.td.asic.proxy::TF_XREF_C"( )
 	WHERE "XREF_ROLE" = 'DR'
 	  AND "XREF_END_DT" >= CURRENT_DATE 
-	  AND "ROLE_START_DT" <= CURRENT_DATE;
+	  AND "ROLE_START_DT" <= CURRENT_DATE
+	  AND "REC_END_DT" >= CURRENT_DATE
+	  AND "REC_START_DT" <= CURRENT_DATE	  
+	  ;
 
 
 END;
