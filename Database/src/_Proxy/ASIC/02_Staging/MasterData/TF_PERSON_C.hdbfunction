@@ -1,5 +1,6 @@
 FUNCTION "osr.edw.staging.md.asic.proxy::TF_PERSON_C"( )
        RETURNS TABLE (
+       	"ID"					NVARCHAR(10),
 		"PERSON_NUM"			NVARCHAR(9),
 		"GIVEN_NAME1"			NVARCHAR(20),
 		"GIVEN_NAME2"			NVARCHAR(20),
@@ -22,6 +23,7 @@ BEGIN
 
 RETURN
 SELECT
+	'P' || LPAD("PERSON_NUM",9,'0') AS "ID",
 	"PERSON_NUM",
 	"GIVEN_NAME1",
 	"GIVEN_NAME2",

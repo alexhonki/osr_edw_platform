@@ -1,5 +1,6 @@
 FUNCTION "osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C"( )
        RETURNS TABLE (
+       		"ID"					NVARCHAR(10),
 			"ORG_NUMBER"			NVARCHAR(9),
 			"ORG_NAME"				NVARCHAR(100),
 			"ORG_TYPE"				NVARCHAR(4),
@@ -21,6 +22,7 @@ BEGIN
 
 RETURN
 SELECT
+	'O' || LPAD("ORG_NUMBER",9,'0') AS "ID",
 	"ORG_NUMBER",
 	"ORG_NAME",
 	"ORG_TYPE",
