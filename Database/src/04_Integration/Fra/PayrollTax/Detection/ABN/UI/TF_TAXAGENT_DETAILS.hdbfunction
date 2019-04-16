@@ -55,8 +55,27 @@ ALERT_INFO =
 ;
 
 END IF;
-
-
+--Get the BAS data for all the alerts
+GET_BAS_QTR = 
+SELECT * FROM (
+SELECT 
+	"BAS"."ABN", 
+	"BAS"."CAC_NUM", 
+	"BAS"."FINANCIAL_YEAR",
+	"BAS"."BAS_QTR",
+	"BAS"."TA_NUM",
+	RANK() OVER (PARTITION BY "BAS"."ABN","BAS"."FINANCIAL_YEAR", "BAS"."BAS_QTR" ORDER BY "BAS"."ABN","BAS"."FINANCIAL_YEAR", "BAS"."BAS_QTR", "BAS"."CAC_NUM" ASC) AS"RANK"
+FROM "osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "BAS"
+WHERE EXISTS
+(
+SELECT * FROM :ALERT_INFO AS "ALERT"
+    	WHERE  "BAS"."ABN"			  = "ALERT"."ABN"	
+    	AND    "BAS"."FINANCIAL_YEAR" >= "ALERT"."GJAHR"
+)
+AND 			"TA_NUM" >=1
+)WHERE "RANK" = '1'
+ORDER BY "FINANCIAL_YEAR" DESC, RIGHT("BAS_QTR",1) DESC,"CAC_NUM" ASC
+;
 
 GET_ALERT_DET = 
 SELECT * FROM
@@ -104,6 +123,8 @@ WHERE
 
 ------ Get Agent for the Annuals--------
 GET_AGENT_FY =
+SELECT * FROM
+(
 SELECT         
 		"A"."DB_KEY",
         "A"."DB_KEY_DASH",
@@ -112,20 +133,25 @@ SELECT
         "A"."GJAHR",
         "A"."BAS_QTR",
         "B"."TA_NUM",
-        "B"."FINANCIAL_YEAR"
+        "B"."FINANCIAL_YEAR",
+        RANK() OVER (PARTITION BY 	"A"."ALERT_ID", "A"."ABN" ORDER BY 	"A"."ALERT_ID", "A"."ABN" , "B"."FINANCIAL_YEAR" DESC,RIGHT("B"."BAS_QTR",1) DESC) AS "RANK_1"
 FROM
 (SELECT * FROM	:GET_ALERT_DET WHERE "BAS_QTR" = 'FY')AS "A"
 INNER JOIN
-	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "B"
+	:GET_BAS_QTR AS "B"
 ON
-	"A"."ABN"     = "B"."ABN"
-AND "A"."GJAHR"   = "B"."FINANCIAL_YEAR"
-AND "A"."BAS_QTR" = "B"."BAS_QTR"
+	"B"."ABN" = "A"."ABN"
+AND CONCAT("B"."FINANCIAL_YEAR",RIGHT("B"."BAS_QTR",1)) >= CONCAT("A"."GJAHR" ,RIGHT("A"."BAS_QTR",1))
 WHERE TO_NVARCHAR("B"."TA_NUM") <> '0'
+)
+WHERE "RANK_1" = '1'
 ;
+
 
 --------Get Agent for Qtrs-----------
 GET_AGENT_QTR =
+SELECT * FROM
+(
 SELECT         
 		"A"."DB_KEY",
         "A"."DB_KEY_DASH",
@@ -134,15 +160,20 @@ SELECT
         "A"."GJAHR",
         "A"."BAS_QTR",
         "B"."TA_NUM",
-        "B"."FINANCIAL_YEAR"
+        "B"."FINANCIAL_YEAR",
+	    RANK() OVER (PARTITION BY "A"."ALERT_ID","A"."ABN" ORDER BY "A"."ALERT_ID","A"."ABN", "B"."FINANCIAL_YEAR" DESC,"B"."BAS_QTR" DESC) AS "RANK_1"
+
 FROM
 (SELECT * FROM	:GET_ALERT_DET WHERE "BAS_QTR" IN ('Q1','Q2','Q3'))AS "A"
-LEFT OUTER JOIN
-	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "B"
+INNER JOIN
+	:GET_BAS_QTR AS "B"
 ON
 	"A"."ABN"     = "B"."ABN"
 AND "A"."GJAHR"   = "B"."FINANCIAL_YEAR"
-AND "A"."BAS_QTR" = "B"."BAS_QTR"
+AND RIGHT("A"."BAS_QTR",1) >= RIGHT("B"."BAS_QTR",1)
+WHERE TO_NVARCHAR("B"."TA_NUM") <> '0'
+AND "B"."BAS_QTR" <> 'FY'
+) WHERE "RANK_1" = '1'
 
 ;
 
@@ -159,12 +190,7 @@ SELECT
         "B"."FINANCIAL_YEAR"
 FROM
 	(
-		SELECT * FROM	:GET_AGENT_QTR 
-		WHERE 
-				"BAS_QTR" IN ('Q1','Q2','Q3') 
-			AND	"TA_NUM" IS NULL
-			OR	TO_NVARCHAR("TA_NUM") = '0'
-			OR	TO_NVARCHAR("TA_NUM") = ''
+		SELECT * FROM	:GET_ALERT_DET WHERE "BAS_QTR" IN ('Q1','Q2','Q3') AND "ALERT_ID" NOT IN (SELECT DISTINCT "ALERT_ID" FROM	:GET_AGENT_QTR) 
 	)		AS "A"
 INNER JOIN
 	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "B"
