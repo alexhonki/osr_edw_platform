@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.asic.proxy::CV_PERSON_C" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PERSON_C"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_PERSON_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_PERSON_C</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.md.asic.proxy::TF_PERSON_C">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="ID"/>
+    </attribute>
+    <attribute id="PERSON_NUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_NUM"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="PERSON_NUM"/>
+    </attribute>
+    <attribute id="BIRTH_COUNTRY_CODE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_COUNTRY_CODE"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="BIRTH_COUNTRY_CODE"/>
+    </attribute>
+    <attribute id="GIVEN_NAME1" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME1"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="GIVEN_NAME1"/>
+    </attribute>
+    <attribute id="GIVEN_NAME2" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME2"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="GIVEN_NAME2"/>
+    </attribute>
+    <attribute id="GIVEN_NAME3" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME3"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="GIVEN_NAME3"/>
+    </attribute>
+    <attribute id="SURNAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SURNAME"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="SURNAME"/>
+    </attribute>
+    <attribute id="BIRTH_COUNTRY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_COUNTRY"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="BIRTH_COUNTRY"/>
+    </attribute>
+    <attribute id="BIRTH_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_DT"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="BIRTH_DT"/>
+    </attribute>
+    <attribute id="BIRTH_LOCALITY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_LOCALITY"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="BIRTH_LOCALITY"/>
+    </attribute>
+    <attribute id="DEFAULT_ADDRESS_NUM" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFAULT_ADDRESS_NUM"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="DEFAULT_ADDRESS_NUM"/>
+    </attribute>
+    <attribute id="ABN" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="ABN"/>
+    </attribute>
+    <attribute id="BIRTH_STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_STATE"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="BIRTH_STATE"/>
+    </attribute>
+    <attribute id="PERS_START_DT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERS_START_DT"/>
+      <keyMapping columnObjectName="TF_PERSON_C" columnName="PERS_START_DT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
