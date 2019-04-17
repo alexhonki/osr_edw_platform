@@ -1,0 +1,155 @@
+namespace osr.edw.platform.fra.prt.model;
+
+context Types {
+    table type SubsetT {
+        PAR_CNT        : Integer;
+        SUBSET_NO      : Integer;
+        SUBSET_MEM_CNT : Integer;
+        MEMBER         : Integer;
+    };
+
+    context ASICTypes {
+        table type ASICOrgDetailT {
+            GJAHR                : String(4);
+            GRP_DATE             : LocalDate;
+            ORG_ID               : String(10);
+            DR_GROUP_MEM         : String(1);
+            SH_GROUP_MEM         : String(1);
+            INTERSTATE_GROUP_MEM : String(1);
+            CCTRL_GROUP_MEM      : String(1);
+            RBC_GROUP_MEM        : String(1);
+        };
+        table type ASICOrgT {
+            GJAHR    : String(4);
+            GRP_DATE : LocalDate;
+            ORG_ID   : String(10);
+        };
+        table type ASICCCtrlPartitionT {
+            PAR_MEM_CNT  : Integer64;
+            INTEREST_PCT : Double;
+            ORG_ID       : String(10);
+            HOLDER       : String(255);
+            ROW_NUM_W    : Integer64;
+        };
+        table type ASICCCtrlEntityT {
+            REL_TYPE             : String(2);
+            ORG_ID               : String(10);
+            COMMON_CTRL_ENTITY   : String(255);
+            CCTRL_ENTITY_CNT     : Integer;
+            MAX_CCTRL_ENTITY_CNT : Integer;
+            INTEREST_PCT         : Double;
+            INTEREST_PCT_DESCR   : String(100);
+        };
+        table type ASICCCtrlEntityHolderT {
+            REL_TYPE           : String(2);
+            COMMON_CTRL_ENTITY : String(255);
+            HOLDER             : String(150);
+        };
+        table type ASICShareHoldingFYT {
+            GJAHR          : String(4);
+            ORG_ID         : String(10);
+            SHARE_CLASS    : String(8);
+            PARENT_ID      : String(10);
+            HLDG_START_DT  : LocalDate;
+            HOLDING_END_DT : LocalDate;
+            BENEF_FLAG     : String(1);
+            INTEREST_PCT   : Double;
+            ZASCHCA        : Double;
+            ZASCTOT        : Double;
+        };
+        table type ASICShareHoldingRelT {
+            INTEREST_PCT     : Double;
+            INTEREST_PCT_IND : Double;
+            INTEREST_PCT_CAL : Double;
+            ORG_ID           : String(10);
+            PARENT_ID        : String(255);
+            ROOT             : String(255);
+            DISTANCE         : Integer;
+            PATH             : String(255);
+            GJAHR            : String(4);
+            GRP_DATE         : LocalDate;
+        };
+        table type ASICDirectorRelT {
+            ORG_ID       : String(10);
+            DIRECTOR     : String(16);
+            INTEREST_PCT : Double;
+            DR_COUNT     : Integer;
+            GJAHR        : String(4);
+            GRP_DATE     : LocalDate;
+        };
+        table type ASICHoldingFullT {
+            INTEREST_PCT         : Double;
+            INTEREST_PCT_IND     : Double;
+            INTEREST_PCT_CAL     : Double;
+            ORG_ID               : String(10);
+            PARENT_ID            : String(255);
+            HOLDER               : String(255);
+            ROOT                 : String(255);
+            FROM_HOLDER_DISTANCE : Integer;
+            FROM_HOLDER_PATH     : String(255);
+            FROM_ROOT_DISTANCE   : Integer;
+            FROM_ROOT_PATH       : String(255);
+            GJAHR                : String(4);
+            GRP_DATE             : LocalDate;
+        };
+        table type ASICHolderT {
+            HOLDER   : String(255);
+            ROOT     : String(255);
+            LEVEL    : Integer;
+            GJAHR    : String(4);
+            GRP_DATE : LocalDate;
+        };
+        table type ASICHoldingFullTrcT {
+            INTEREST_PCT         : Double;
+            INTEREST_PCT_IND     : Double;
+            INTEREST_PCT_CAL     : Double;
+            ORG_ID               : String(10);
+            PARENT_ID            : String(255);
+            HOLDER               : String(255);
+            ROOT                 : String(255);
+            FROM_HOLDER_DISTANCE : Integer;
+            FROM_HOLDER_PATH     : String(255);
+            HAS_MULTI_HOLDING    : String(1);
+            HAS_TRC              : String(1);
+            GROUP_ID             : String(255);
+            GRP_DET_LEVEL        : Integer;
+            GJAHR                : String(4);
+            GRP_DATE             : LocalDate;
+        };
+        table type ASICPersonGroupT {
+            PERSON_ID        : String(10);
+            PGRP_KEY         : String(16);
+            PGRP_RULE        : String(10);
+            PERSON_FULL_NAME : String(255);
+            PERSON_NAME      : String(255);
+        };
+        table type ASICOrgNumT {
+            GJAHR       : String(4);
+            GRP_DATE    : LocalDate;
+            ELEMENT_NUM : Integer;
+            ORG_ID      : String(13);
+        };
+        table type DisjointElementT {
+            ELEMENT_NUM : Integer;
+            ELEMENT     : String(13);
+        };
+        table type DisjointElementRelT {
+            ELEMENT_L_NUM : Integer;
+            ELEMENT_R_NUM : Integer;
+        };
+        table type DisjointSetsT {
+            GJAHR              : String(4);
+            GRP_DATE           : LocalDate;
+            ELEMENT_NUM        : Integer;
+            PARENT_ELEMENT_NUM : Integer;
+            ELEMENT            : String(13);
+            PARENT_ELEMENT     : String(13);
+        };
+        table type PRTGroupT {
+            GJAHR    : String(4);
+            GRP_DATE : LocalDate;
+            ORG_ID   : String(10);
+            GROUP_ID : String(32);
+        };
+    };
+};

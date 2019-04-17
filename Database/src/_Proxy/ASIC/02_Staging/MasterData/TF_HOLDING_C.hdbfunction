@@ -31,6 +31,8 @@ SELECT
 	"REC_START_DT",
 	"REC_END_DT",
 	"HLDG_NUMBER"
-FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.HOLDING.active_data";
+FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.HOLDING.active_data"
+WHERE "REC_START_DT" <= CURRENT_DATE 
+  AND "REC_END_DT" >= CURRENT_DATE;
 
 END;
