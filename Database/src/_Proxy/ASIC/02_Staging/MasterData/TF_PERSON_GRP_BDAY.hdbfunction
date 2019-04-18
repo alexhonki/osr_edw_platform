@@ -1,0 +1,70 @@
+FUNCTION "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP_BDAY"(IV_KEY_DATE DATE)
+RETURNS TABLE (
+"ID"			NVARCHAR(10),
+"PERSON_NUM"	NVARCHAR(9),
+"PGRP_KEY"      NVARCHAR(9),
+"PGRP_RULE"     NVARCHAR(10)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+/**********************************************************************   
+ Matching Rule:
+ 1. Name + House Number + Birthday	BOTH
+ 2. Name + House Number				ADDR	
+ 3. Name + Birthday					BDAY
+ *********************************************************************/
+DECLARE LV_KEY_DATE DATE;
+
+IF :IV_KEY_DATE IS NULL OR :IV_KEY_DATE = TO_DATE('9999-12-31') OR :IV_KEY_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_KEY_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_KEY_DATE := :IV_KEY_DATE;
+END IF;
+	
+	lt_bday = 
+ 	SELECT 
+	"NAME",
+	"BIRTH"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE)
+	WHERE "PERS_START_DT" <= :LV_KEY_DATE
+	  AND "BIRTH_DT" <> TO_DATE('1900-01-01')
+	  AND "BIRTH_COUNTRY_CODE" <> ''
+	;
+	
+	lt_bday_duplicate = 
+ 	SELECT
+ 	"NAME", "BIRTH", COUNT(*) AS "CNT"
+ 	FROM :lt_bday
+ 	GROUP BY "NAME", "BIRTH"
+ 	HAVING COUNT(*) > 1
+	;
+	
+	lt_pgrp_key =
+	SELECT
+	"PERSON"."NAME" AS "NAME", 
+	"PERSON"."BIRTH" AS "BIRTH",
+	STRING_AGG("PERSON"."PERSON_NUM",'|' ORDER BY "PERSON"."PERSON_NUM" ASC) AS "PGRP_KEY"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE) AS "PERSON"
+	INNER JOIN
+	:lt_bday_duplicate AS "DUP"
+	ON  "PERSON"."NAME" = "DUP"."NAME"
+	AND "PERSON"."BIRTH" = "DUP"."BIRTH"
+	GROUP BY 
+	"PERSON"."NAME", "PERSON"."BIRTH"
+	;
+	
+	RETURN
+	SELECT
+	"PERSON"."ID",
+	"PERSON"."PERSON_NUM",
+	"DUP"."PGRP_KEY" AS "PGRP_KEY",
+	'BDAY' AS "PGRP_RULE"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE) AS "PERSON"
+	INNER JOIN
+	:lt_pgrp_key AS "DUP"
+	ON  "PERSON"."NAME" = "DUP"."NAME"
+	AND "PERSON"."BIRTH" = "DUP"."BIRTH"
+	;
+
+END;
