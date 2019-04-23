@@ -11,8 +11,6 @@ FUNCTION "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(IV_KEY_DATE DATE)
 		"BIRTH_LOCALITY"		NVARCHAR(75),
 		"DEFAULT_ADDRESS_NUM"	NVARCHAR(200),
 		"PERS_START_DT"			DATE,
-		"REC_START_DT"			DATE,
-		"REC_END_DT"			DATE,
 		"ABN"					NVARCHAR(11),
 		"BIRTH_STATE"			NVARCHAR(3),
 		"BIRTH_COUNTRY_CODE"    NVARCHAR(2),	
@@ -55,14 +53,6 @@ END IF;
 	WHERE "PERS_START_DT" <= :LV_KEY_DATE
 	;
 	
-	lt_duplicate = 
- 	SELECT
- 	"NAME", COUNT(*) AS "CNT"
- 	FROM :lt_person
- 	GROUP BY "NAME"
- 	HAVING COUNT(*) > 1
-	;
-	
 	RETURN
 	SELECT
 	"ID",
@@ -76,8 +66,6 @@ END IF;
 	"BIRTH_LOCALITY",
 	"DEFAULT_ADDRESS_NUM",
 	"PERS_START_DT",
-	"REC_START_DT",
-	"REC_END_DT",
 	"ABN",
 	"BIRTH_STATE",
 	"BIRTH_COUNTRY_CODE",
@@ -85,9 +73,16 @@ END IF;
 	"PERSON"."BIRTH" AS "BIRTH"
 	FROM 
 	:lt_person AS "PERSON"
+	/*
 	INNER JOIN
-	:lt_duplicate AS "DUP"
+	(
+		SELECT	"NAME", COUNT(*) AS "CNT" FROM :lt_person
+ 		GROUP BY "NAME"
+ 		HAVING COUNT(*) > 1	
+	)
+	AS "DUP"
 	ON "PERSON"."NAME" = "DUP"."NAME"
+	*/
 	;
 	
 	

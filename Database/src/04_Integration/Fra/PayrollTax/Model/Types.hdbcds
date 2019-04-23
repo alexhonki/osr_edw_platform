@@ -7,6 +7,12 @@ context Types {
         SUBSET_MEM_CNT : Integer;
         MEMBER         : Integer;
     };
+    table type GrpRelT {
+        "CHILD_ID"     : String(10);
+        "PARENT_ID"    : String(10);
+        "REL_TYPE"     : String(2);
+        "INTEREST_PCT" : Decimal(5, 2);
+    };
 
     context ASICTypes {
         table type ASICOrgDetailT {
