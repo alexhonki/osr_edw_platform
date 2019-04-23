@@ -20,6 +20,9 @@ FROM
 INNER JOIN
 "osr.edw.staging.rms.synonym::CV_BUT000_Current" AS "BUT000"
 ON "BUT0ID"."PARTNER" = "BUT000"."PARTNER"
+INNER JOIN
+(SELECT DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT100.active_data"  WHERE "RLTYP" = 'MKK') AS "BUT100"
+ON "BUT0ID"."PARTNER" = "BUT100"."PARTNER"
 WHERE "BUT0ID"."TYPE" = 'ZABN'
   AND "BUT000"."XDELE" <> 'X' 
   AND "BUT000"."BU_GROUP" <> 'OLGR'
