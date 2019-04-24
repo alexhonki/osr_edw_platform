@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ASIC_ORG_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ASIC_ORG_DETAIL"/>
+<localVariables/>
+<variableMappings>
+  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_DETAIL" value="NULL">
+    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_DETAIL"/>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_DETAIL" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_DETAIL</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_DETAIL">
+  <attributes>
+    <attribute id="ACN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ACN"/>
+    </attribute>
+    <attribute id="DEREGISTRATION_CODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="DEREGISTRATION_CODE"/>
+    </attribute>
+    <attribute id="ORG_NAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NAME"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ORG_NAME"/>
+    </attribute>
+    <attribute id="ORG_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_TYPE"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ORG_TYPE"/>
+    </attribute>
+    <attribute id="ORG_STATUS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_STATUS"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ORG_STATUS"/>
+    </attribute>
+    <attribute id="PLACE_OF_INCORP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="PLACE_OF_INCORP"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ORG_CLASS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_CLASS"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ORG_CLASS"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="REGN_START_DT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_START_DT"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="REGN_START_DT"/>
+    </attribute>
+    <attribute id="ABN" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="ABN"/>
+    </attribute>
+    <attribute id="REGN_END_DT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_END_DT"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="REGN_END_DT"/>
+    </attribute>
+    <attribute id="DB_KEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="GJAHR" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ASIC_ORG_DETAIL" columnName="GJAHR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
