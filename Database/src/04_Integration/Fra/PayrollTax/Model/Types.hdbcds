@@ -7,11 +7,17 @@ context Types {
         SUBSET_MEM_CNT : Integer;
         MEMBER         : Integer;
     };
-    table type GrpRelT {
+    table type GroupRelT {
         "CHILD_ID"     : String(10);
         "PARENT_ID"    : String(10);
         "REL_TYPE"     : String(2);
         "INTEREST_PCT" : Decimal(5, 2);
+    };
+    table type GroupT {
+        GJAHR    : String(4);
+        GRP_DATE : LocalDate;
+        ORG_ID   : String(10);
+        GROUP_ID : String(32);
     };
 
     context ASICTypes {
@@ -150,12 +156,6 @@ context Types {
             PARENT_ELEMENT_NUM : Integer;
             ELEMENT            : String(13);
             PARENT_ELEMENT     : String(13);
-        };
-        table type PRTGroupT {
-            GJAHR    : String(4);
-            GRP_DATE : LocalDate;
-            ORG_ID   : String(10);
-            GROUP_ID : String(32);
         };
     };
 };
