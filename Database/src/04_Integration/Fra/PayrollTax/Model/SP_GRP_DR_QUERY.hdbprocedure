@@ -29,38 +29,53 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 		ET_REL			=> LT_REL
 	)
 	;
-	
-	LT_REL = SELECT * FROM :LT_REL WHERE "REL_TYPE" = 'DR';
 
 	IF :IV_MATCH_PERSON = 'Y' THEN
-	    ET_GROUP = 
-		SELECT 
-		:LV_GJAHR AS "GJAHR",
-		:LV_GRP_DATE AS "GRP_DATE",
+	    LT_DR = 
+		SELECT
 		"L"."CHILD_ID" AS "ORG_ID",
 	    CASE 
-	    WHEN ("R"."PGRP_KEY" IS NOT NULL) THEN CAST(HASH_MD5(TO_BINARY("R"."PGRP_KEY")) AS NVARCHAR)
-	    ELSE CAST(HASH_MD5(TO_BINARY("L"."PARENT_ID")) AS NVARCHAR)
-	    END AS "GROUP_ID",
-	    'DR' AS "GROUP_TYPE"
+	    WHEN ("R"."PGRP_KEY" IS NOT NULL) THEN "R"."PGRP_KEY"
+	    ELSE "L"."PARENT_ID"
+	    END AS "GROUP_ID"
 	    FROM
 	    :LT_REL AS "L" 
 	    LEFT OUTER JOIN 
 	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE,'') AS "R" 
-	    ON "L"."PARENT_ID" = "R"."ID";
+	    ON "L"."PARENT_ID" = "R"."ID"
+	    WHERE "L"."REL_TYPE" = 'DR';
 	    
 	ELSE
-	    ET_GROUP = 
-		SELECT 
-		:LV_GJAHR AS "GJAHR",
-		:LV_GRP_DATE AS "GRP_DATE",
+	    LT_DR = 
+		SELECT
 		"CHILD_ID" AS "ORG_ID",
-	    CAST(HASH_MD5(TO_BINARY("PARENT_ID")) AS NVARCHAR) AS "GROUP_ID",
-	    'DR' AS "GROUP_TYPE"
+	    "PARENT_ID" AS "GROUP_ID"
 	    FROM
 	    :LT_REL
-	    ;
+		WHERE "REL_TYPE" = 'DR'
+		;
 	    
 	END IF;
+	
+	LT_DR = 
+	SELECT 
+	"L"."ORG_ID", 
+	"L"."GROUP_ID"
+	FROM :LT_DR AS "L"
+	INNER JOIN
+	(
+	SELECT "GROUP_ID", COUNT(*) FROM :LT_DR GROUP BY "GROUP_ID" HAVING COUNT(*) > 1	
+	) AS "R"
+	ON "L"."GROUP_ID" = "R"."GROUP_ID"
+	;
+	
+	ET_GROUP = 
+	SELECT 
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	"ORG_ID",
+	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
+	'DR' AS "GROUP_TYPE"
+	FROM :LT_DR;
 	
 END
