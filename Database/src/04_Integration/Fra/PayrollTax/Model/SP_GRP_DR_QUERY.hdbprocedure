@@ -39,9 +39,10 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 		:LV_GRP_DATE AS "GRP_DATE",
 		"L"."CHILD_ID" AS "ORG_ID",
 	    CASE 
-	    WHEN ("R"."PGRP_KEY" IS NOT NULL) THEN "R"."PGRP_KEY" 
-	    ELSE "L"."PARENT_ID" 
-	    END AS "GROUP_ID"
+	    WHEN ("R"."PGRP_KEY" IS NOT NULL) THEN CAST(HASH_MD5(TO_BINARY("R"."PGRP_KEY")) AS NVARCHAR)
+	    ELSE CAST(HASH_MD5(TO_BINARY("L"."PARENT_ID")) AS NVARCHAR)
+	    END AS "GROUP_ID",
+	    'DR' AS "GROUP_TYPE"
 	    FROM
 	    :LT_REL AS "L" 
 	    LEFT OUTER JOIN 
@@ -54,7 +55,8 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 		:LV_GJAHR AS "GJAHR",
 		:LV_GRP_DATE AS "GRP_DATE",
 		"CHILD_ID" AS "ORG_ID",
-	    "PARENT_ID" AS "GROUP_ID"
+	    CAST(HASH_MD5(TO_BINARY("PARENT_ID")) AS NVARCHAR) AS "GROUP_ID",
+	    'DR' AS "GROUP_TYPE"
 	    FROM
 	    :LT_REL
 	    ;

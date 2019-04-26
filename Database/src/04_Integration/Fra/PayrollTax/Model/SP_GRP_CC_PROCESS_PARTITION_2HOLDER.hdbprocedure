@@ -1,0 +1,30 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_CC_PROCESS_PARTITION_2HOLDER"(
+	IN	IV_REL_TYPE 	NVARCHAR(4),
+	IN  IT_PARTITION 	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlPartitionT", 
+	OUT ET_CCTRL_ENTITY "osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
+	OUT ET_CCTRL_HOLDER	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityHolderT"
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+lt_common_ctrl = 
+SELECT "ORG_ID", STRING_AGG("HOLDER",'|') AS "COMMON_CTRL_ENTITY", TO_DECIMAL(SUM("INTEREST_PCT"),5,2) AS "INTEREST_PCT", STRING_AGG(TO_DECIMAL("INTEREST_PCT",5,2),'|') AS "INTEREST_PCT_DESCR"
+FROM (SELECT * FROM :it_partition ORDER BY "ORG_ID", "HOLDER") 
+GROUP BY "ORG_ID";
+
+et_cctrl_entity = 
+SELECT :iv_rel_type AS "REL_TYPE", "ORG_ID", "COMMON_CTRL_ENTITY", 2 AS "CCTRL_ENTITY_CNT", 2 AS "MAX_CCTRL_ENTITY_CNT", "INTEREST_PCT", "INTEREST_PCT_DESCR" FROM :lt_common_ctrl
+;
+
+ET_CCTRL_HOLDER = 
+SELECT :iv_rel_type AS "REL_TYPE", "L"."COMMON_CTRL_ENTITY", "R"."HOLDER" 
+FROM 
+:lt_common_ctrl AS "L"
+INNER JOIN 
+:it_partition AS "R"
+ON "L"."ORG_ID" = "R"."ORG_ID"
+;
+	    
+END

@@ -1,0 +1,175 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_CCDR_QUERY"(
+	IN	IV_GRP_DATE 		DATE ,
+	IN  IV_GRAPH_ID			NVARCHAR(32),
+	IN  IV_MAX_MEM_CNT  	INTEGER DEFAULT 2,
+	OUT ET_CCTRL_ENTITY   	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
+	OUT ET_CCTRL_INIT_GRP 	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
+	OUT ET_CCTRL_HOLDER    	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityHolderT",
+	OUT ET_GROUP			"osr.edw.platform.fra.prt.model::Types.GroupT"
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
+	IV_GRP_DATE 	=> :LV_GRP_DATE,
+	IV_GRAPH_ID		=> :IV_GRAPH_ID,
+	IV_REL_TYPE     => 'DR',
+	ET_REL			=> LT_REL
+)
+;
+
+-- Dummy result
+ET_CCTRL_ENTITY = 
+SELECT 
+'CCDR' AS "REL_TYPE", 
+'DUMMY' AS "ORG_ID", 
+'DUMMY' AS "COMMON_CTRL_ENTITY", 
+0 AS "CCTRL_ENTITY_CNT", 
+0 AS "MAX_CCTRL_ENTITY_CNT", 
+0 AS "INTEREST_PCT", 
+'DUMMY' AS "INTEREST_PCT_DESCR" 
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
+
+ET_CCTRL_HOLDER = 
+SELECT 
+'CCDR' AS "REL_TYPE", 
+'DUMMY' AS "COMMON_CTRL_ENTITY", 
+'DUMMY' AS "HOLDER"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
+
+
+	lt_drdata_le50 = 
+	SELECT 
+	"CHILD_ID"  AS "ORG_ID", 
+	"PARENT_ID" AS "DIRECTOR", 
+	"INTEREST_PCT"
+	FROM :LT_REL 
+	WHERE "INTEREST_PCT" < 100
+	;
+	
+	lt_drdata = 
+	select 
+	"INTEREST_PCT",  
+	"ORG_ID",
+	"DIRECTOR",
+	row_number() over (partition by "ORG_ID" ORDER BY "ORG_ID", "INTEREST_PCT") AS "ROW_NUM_W"
+	from :lt_drdata_le50
+	order by 
+	"ORG_ID",
+	"DIRECTOR";
+	
+	--partition key
+	lt_par_key = SELECT DISTINCT "ORG_ID" FROM :lt_drdata_le50;
+	
+	--how many members for each partition
+	lt_par_mem_cnt = 
+	SELECT "ORG_ID", COUNT(*) AS "PAR_MEM_CNT" FROM :lt_drdata GROUP BY "ORG_ID";
+	
+	lt_par = 
+	SELECT 
+	"L"."ORG_ID",
+	"R"."PAR_MEM_CNT"
+	FROM :lt_par_key AS "L" INNER JOIN :lt_par_mem_cnt AS "R"
+	ON "L"."ORG_ID" = "R"."ORG_ID";
+	
+	-- 2 shareholders treated seperately, aggregation can be done in parallel for all companies
+	lt_par_2dr = 
+	SELECT 
+	"ORG_ID",
+	"PAR_MEM_CNT"
+	FROM :lt_par
+	WHERE "PAR_MEM_CNT" = 2;
+	--process companies with 2 shareholders
+	lt_2dr_partition =
+	SELECT 
+	2 AS "PAR_MEM_CNT",
+	"INTEREST_PCT", 
+	"ORG_ID",
+	"DIRECTOR" AS "HOLDER", 
+	"ROW_NUM_W"
+	FROM :lt_drdata 
+	WHERE "ORG_ID" IN (SELECT "ORG_ID" FROM :lt_par_2dr);
+	--create common ctrl entity
+	CALL "osr.edw.platform.fra.prt.model::SP_GRP_CC_PROCESS_PARTITION_2HOLDER"('DR', :lt_2dr_partition, lt_cctrl_entity, lt_cctrl_holder);
+	ET_CCTRL_ENTITY = SELECT * FROM :lt_cctrl_entity;
+	ET_CCTRL_HOLDER = SELECT * FROM :lt_cctrl_holder;
+	
+	
+	-- >2 directors
+	lt_par_gt2dr = 
+	SELECT 
+	"ORG_ID",
+	"PAR_MEM_CNT"
+	FROM :lt_par
+	WHERE "PAR_MEM_CNT" > 2 AND "PAR_MEM_CNT"<= :IV_MAX_MEM_CNT;
+	--prepare partitions
+	lt_partition = 
+	SELECT "R"."PAR_MEM_CNT", "L"."INTEREST_PCT","L"."ORG_ID","L"."DIRECTOR" AS "HOLDER", "L"."ROW_NUM_W" 
+	FROM 
+	:lt_drdata AS "L" 
+	INNER JOIN 
+	:lt_par_gt2dr AS "R"
+	ON "L"."ORG_ID" = "R"."ORG_ID";
+	
+	--process partitions
+	CALL "osr.edw.platform.fra.prt.model::SP_GRP_CC_PROCESS_PARTITION"('DR', :lt_partition, lt_drcctrl_entity,lt_drcctrl_holder);
+	
+	ET_CCTRL_ENTITY = 
+	SELECT * FROM :lt_cctrl_entity 
+	UNION 
+	SELECT * FROM :ET_CCTRL_ENTITY 
+	WHERE "ORG_ID" <> 'DUMMY';
+	
+	ET_CCTRL_HOLDER = 
+	SELECT * FROM :lt_cctrl_holder 
+	UNION 
+	SELECT * FROM :ET_CCTRL_HOLDER 
+	WHERE "HOLDER" <> 'DUMMY';
+			
+	et_cctrl_init_grp = 
+	SELECT 
+	"REL_TYPE", "ORG_ID", "COMMON_CTRL_ENTITY", 
+	"CCTRL_ENTITY_CNT", "MAX_CCTRL_ENTITY_CNT", "INTEREST_PCT", "INTEREST_PCT_DESCR"
+	FROM (
+	SELECT DISTINCT "REL_TYPE", "ORG_ID", "COMMON_CTRL_ENTITY", "CCTRL_ENTITY_CNT", "MAX_CCTRL_ENTITY_CNT", "INTEREST_PCT", "INTEREST_PCT_DESCR"  FROM
+	(
+	 SELECT * FROM :ET_CCTRL_ENTITY AS "L"
+	 	WHERE EXISTS 
+	 	(
+	 	SELECT * FROM (SELECT "REL_TYPE", "COMMON_CTRL_ENTITY", "CCTRL_ENTITY_CNT" from :ET_CCTRL_ENTITY GROUP BY "REL_TYPE", "COMMON_CTRL_ENTITY", "CCTRL_ENTITY_CNT" HAVING COUNT(*) >= 2) AS "R" 
+	 	WHERE "L"."REL_TYPE" = "R"."REL_TYPE"
+	 	  AND "L"."COMMON_CTRL_ENTITY" = "R"."COMMON_CTRL_ENTITY"
+	 	  AND "L"."CCTRL_ENTITY_CNT"   = "R"."CCTRL_ENTITY_CNT"
+	 	)
+	)	
+	);
+	
+	ET_GROUP = 
+	SELECT 
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	"ORG_ID" AS "ORG_ID",
+	CAST(HASH_MD5(TO_BINARY("COMMON_CTRL_ENTITY")) AS NVARCHAR) AS "GROUP_ID",
+	'CCDR' AS "GROUP_TYPE"
+	FROM
+	:et_cctrl_init_grp
+	;
+	    
+END

@@ -10,18 +10,35 @@ context Types {
     table type GroupRelT {
         "CHILD_ID"     : String(10);
         "PARENT_ID"    : String(10);
-        "REL_TYPE"     : String(2);
+        "REL_TYPE"     : String(4);
         "INTEREST_PCT" : Decimal(5, 2);
     };
     table type GroupT {
-        GJAHR    : String(4);
-        GRP_DATE : LocalDate;
-        ORG_ID   : String(10);
-        GROUP_ID : String(32);
+        GJAHR      : String(4);
+        GRP_DATE   : LocalDate;
+        ORG_ID     : String(10);
+        GROUP_ID   : String(32);
+        GROUP_TYPE : String(4);
+    };
+    table type DisjointElementT {
+        ELEMENT_NUM : Integer;
+        ELEMENT     : String(13);
+    };
+    table type DisjointElementRelT {
+        ELEMENT_L_NUM : Integer;
+        ELEMENT_R_NUM : Integer;
+    };
+    table type DisjointSetsT {
+        GJAHR              : String(4);
+        GRP_DATE           : LocalDate;
+        ELEMENT_NUM        : Integer;
+        PARENT_ELEMENT_NUM : Integer;
+        ELEMENT            : String(13);
+        PARENT_ELEMENT     : String(13);
     };
 
-    context ASICTypes {
-        table type ASICOrgDetailT {
+    context ASIC {
+        table type OrgDetailT {
             GJAHR                : String(4);
             GRP_DATE             : LocalDate;
             ORG_ID               : String(10);
@@ -31,19 +48,19 @@ context Types {
             CCTRL_GROUP_MEM      : String(1);
             RBC_GROUP_MEM        : String(1);
         };
-        table type ASICOrgT {
+        table type OrgT {
             GJAHR    : String(4);
             GRP_DATE : LocalDate;
             ORG_ID   : String(10);
         };
-        table type ASICCCtrlPartitionT {
+        table type CCtrlPartitionT {
             PAR_MEM_CNT  : Integer64;
             INTEREST_PCT : Double;
             ORG_ID       : String(10);
             HOLDER       : String(255);
             ROW_NUM_W    : Integer64;
         };
-        table type ASICCCtrlEntityT {
+        table type CCtrlEntityT {
             REL_TYPE             : String(2);
             ORG_ID               : String(10);
             COMMON_CTRL_ENTITY   : String(255);
@@ -52,12 +69,12 @@ context Types {
             INTEREST_PCT         : Double;
             INTEREST_PCT_DESCR   : String(100);
         };
-        table type ASICCCtrlEntityHolderT {
+        table type CCtrlEntityHolderT {
             REL_TYPE           : String(2);
             COMMON_CTRL_ENTITY : String(255);
             HOLDER             : String(150);
         };
-        table type ASICShareHoldingFYT {
+        table type ShareHoldingFYT {
             GJAHR          : String(4);
             ORG_ID         : String(10);
             SHARE_CLASS    : String(8);
@@ -69,7 +86,7 @@ context Types {
             ZASCHCA        : Double;
             ZASCTOT        : Double;
         };
-        table type ASICShareHoldingRelT {
+        table type ShareHoldingRelT {
             INTEREST_PCT     : Double;
             INTEREST_PCT_IND : Double;
             INTEREST_PCT_CAL : Double;
@@ -81,7 +98,7 @@ context Types {
             GJAHR            : String(4);
             GRP_DATE         : LocalDate;
         };
-        table type ASICDirectorRelT {
+        table type DirectorRelT {
             ORG_ID       : String(10);
             DIRECTOR     : String(16);
             INTEREST_PCT : Double;
@@ -89,7 +106,7 @@ context Types {
             GJAHR        : String(4);
             GRP_DATE     : LocalDate;
         };
-        table type ASICHoldingFullT {
+        table type HoldingFullT {
             INTEREST_PCT         : Double;
             INTEREST_PCT_IND     : Double;
             INTEREST_PCT_CAL     : Double;
@@ -104,14 +121,14 @@ context Types {
             GJAHR                : String(4);
             GRP_DATE             : LocalDate;
         };
-        table type ASICHolderT {
+        table type HolderT {
             HOLDER   : String(255);
             ROOT     : String(255);
             LEVEL    : Integer;
             GJAHR    : String(4);
             GRP_DATE : LocalDate;
         };
-        table type ASICHoldingFullTrcT {
+        table type HoldingFullTrcT {
             INTEREST_PCT         : Double;
             INTEREST_PCT_IND     : Double;
             INTEREST_PCT_CAL     : Double;
@@ -128,34 +145,18 @@ context Types {
             GJAHR                : String(4);
             GRP_DATE             : LocalDate;
         };
-        table type ASICPersonGroupT {
+        table type PersonGroupT {
             PERSON_ID        : String(10);
             PGRP_KEY         : String(16);
             PGRP_RULE        : String(10);
             PERSON_FULL_NAME : String(255);
             PERSON_NAME      : String(255);
         };
-        table type ASICOrgNumT {
+        table type OrgNumT {
             GJAHR       : String(4);
             GRP_DATE    : LocalDate;
             ELEMENT_NUM : Integer;
             ORG_ID      : String(13);
-        };
-        table type DisjointElementT {
-            ELEMENT_NUM : Integer;
-            ELEMENT     : String(13);
-        };
-        table type DisjointElementRelT {
-            ELEMENT_L_NUM : Integer;
-            ELEMENT_R_NUM : Integer;
-        };
-        table type DisjointSetsT {
-            GJAHR              : String(4);
-            GRP_DATE           : LocalDate;
-            ELEMENT_NUM        : Integer;
-            PARENT_ELEMENT_NUM : Integer;
-            ELEMENT            : String(13);
-            PARENT_ELEMENT     : String(13);
         };
     };
 };

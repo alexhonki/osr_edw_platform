@@ -1,0 +1,98 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_CC_PROCESS_PARTITION"(
+	IN	IV_REL_TYPE 	NVARCHAR(4),
+	IN  IT_PARTITION 	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlPartitionT", 
+	OUT ET_CCTRL_ENTITY "osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
+	OUT ET_CCTRL_HOLDER	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityHolderT"
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+lt_subset = 
+SELECT "PAR_CNT" AS "PAR_MEM_CNT", "SUBSET_NO", "SUBSET_MEM_CNT", "MEMBER" 
+FROM "osr.edw.platform.fra.prt.model::TF_SUBSET"( )
+WHERE "SUBSET_MEM_CNT" >= 2;
+
+lt_subset_assignment = 
+SELECT * FROM 
+(
+SELECT 
+"L"."PAR_MEM_CNT",
+"L"."ORG_ID",
+"L"."INTEREST_PCT",
+"L"."ROW_NUM_W", 
+"R"."SUBSET_NO"
+FROM :it_partition AS "L" INNER JOIN :lt_subset AS "R"
+ON  "L"."PAR_MEM_CNT" = "R"."PAR_MEM_CNT" 
+AND "L"."ROW_NUM_W" = "R"."MEMBER"
+) 
+ORDER BY "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO", "ROW_NUM_W";
+
+lt_subset_aggr = 
+SELECT 
+"PAR_MEM_CNT", 
+"ORG_ID",
+"SUBSET_NO", 
+SUM("INTEREST_PCT") AS "INTEREST_PCT" 
+FROM :lt_subset_assignment 
+GROUP BY "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO" HAVING SUM("INTEREST_PCT")>50;
+
+--subset number & subset members for each valid group
+lt_subset_for_grp = 
+SELECT * FROM 
+(
+SELECT 
+"L"."ROW_NUM_W",
+"L"."PAR_MEM_CNT", 
+"L"."ORG_ID",  
+"L"."SUBSET_NO" 
+FROM :lt_subset_assignment AS "L" INNER JOIN :lt_subset_aggr AS "R"
+ON 	"L"."PAR_MEM_CNT" = "R"."PAR_MEM_CNT"
+AND "L"."ORG_ID" = "R"."ORG_ID"
+AND "L"."SUBSET_NO" = "R"."SUBSET_NO"
+)
+ORDER BY "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO", "ROW_NUM_W";
+
+----partition info for each subset no & subset members in the group
+lt_par_for_grp = 
+SELECT * FROM 
+(
+SELECT 
+"L"."INTEREST_PCT", "L"."PAR_MEM_CNT", "L"."ORG_ID", "L"."HOLDER", "L"."ROW_NUM_W", "R"."SUBSET_NO" 
+FROM :it_partition AS "L" INNER JOIN :lt_subset_for_grp AS "R"
+ON  "L"."PAR_MEM_CNT" = "R"."PAR_MEM_CNT"
+AND "L"."ORG_ID" = "R"."ORG_ID"
+AND "L"."ROW_NUM_W" = "R"."ROW_NUM_W"
+)
+ORDER BY "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO", "ROW_NUM_W";
+
+lt_common_ctrl = 
+SELECT "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO", STRING_AGG("HOLDER",'|') AS "COMMON_CTRL_ENTITY", TO_DECIMAL(SUM("INTEREST_PCT"),5,2) AS "INTEREST_PCT", STRING_AGG(TO_DECIMAL("INTEREST_PCT",5,2),'|') AS "INTEREST_PCT_DESCR"
+FROM 
+(SELECT * FROM :lt_par_for_grp ORDER BY "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO", "HOLDER")
+GROUP BY "PAR_MEM_CNT", "ORG_ID", "SUBSET_NO";
+
+et_cctrl_entity = 
+SELECT 
+:iv_rel_type AS "REL_TYPE", "L"."ORG_ID", "L"."COMMON_CTRL_ENTITY", "R"."SUBSET_MEM_CNT" AS "CCTRL_ENTITY_CNT", "L"."PAR_MEM_CNT" AS "MAX_CCTRL_ENTITY_CNT", "L"."INTEREST_PCT", "L"."INTEREST_PCT_DESCR"
+FROM 
+:lt_common_ctrl AS "L"
+INNER JOIN 
+(SELECT DISTINCT "PAR_MEM_CNT", "SUBSET_NO", "SUBSET_MEM_CNT" FROM :lt_subset) AS "R"
+ON  "L"."PAR_MEM_CNT" = "R"."PAR_MEM_CNT"
+AND "L"."SUBSET_NO"   = "R"."SUBSET_NO"
+;
+
+ET_CCTRL_HOLDER = 
+SELECT :iv_rel_type AS "REL_TYPE", "L"."COMMON_CTRL_ENTITY", "R"."HOLDER" 
+FROM 
+:lt_common_ctrl AS "L"
+INNER JOIN 
+:lt_par_for_grp AS "R"
+ON  "L"."PAR_MEM_CNT" = "R"."PAR_MEM_CNT"
+AND "L"."ORG_ID"     = "R"."ORG_ID"
+AND "L"."SUBSET_NO"   = "R"."SUBSET_NO"
+;
+	    
+END
