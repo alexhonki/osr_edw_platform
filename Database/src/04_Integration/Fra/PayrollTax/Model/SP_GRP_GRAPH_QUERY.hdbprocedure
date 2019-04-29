@@ -1,7 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 	IN	IV_GRP_DATE 	DATE , 
 	IN	IV_GRAPH_ID 	NVARCHAR(32),
-	IN  IV_REL_TYPE		NVARCHAR(2),
+	IN  IV_REL_TYPE		NVARCHAR(6),
 	OUT ET_REL			"osr.edw.platform.fra.prt.model::Types.GroupRelT"
 	)
    LANGUAGE SQLSCRIPT
@@ -10,6 +10,7 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 BEGIN
 
 IF :IV_GRAPH_ID IS NULL OR :IV_GRAPH_ID = '' THEN
+
    LT_REL = 
    SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
    FROM 
@@ -18,8 +19,13 @@ IF :IV_GRAPH_ID IS NULL OR :IV_GRAPH_ID = '' THEN
    SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
    FROM 
    "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
+   UNION
+   SELECT  "ID" AS "CHILD_ID",  LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
+   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
    ;
+  
 ELSE
+
    LT_REL = 
    SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
    FROM 
@@ -28,7 +34,11 @@ ELSE
    SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
    FROM 
    "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
+   UNION
+   SELECT  "ID" AS "CHILD_ID", LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
+   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
    ;
+   
 END IF;
 
 IF :IV_REL_TYPE IS NULL OR :IV_REL_TYPE = '' THEN
