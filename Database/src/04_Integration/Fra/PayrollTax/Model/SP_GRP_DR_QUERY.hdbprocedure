@@ -1,0 +1,81 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_DR_QUERY"(
+	IN	IV_GRP_DATE 	DATE , 
+	IN	IV_MATCH_PERSON	NVARCHAR(1),
+	IN  IV_GRAPH_ID		NVARCHAR(32),
+	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT"
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+	CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
+		IV_GRP_DATE 	=> :LV_GRP_DATE,
+		IV_GRAPH_ID		=> :IV_GRAPH_ID,
+		IV_REL_TYPE     => 'DR',
+		ET_REL			=> LT_REL
+	)
+	;
+
+	IF :IV_MATCH_PERSON = 'Y' THEN
+	    LT_DR = 
+		SELECT
+		"L"."CHILD_ID" AS "ORG_ID",
+	    CASE 
+	    WHEN ("R"."PGRP_KEY" IS NOT NULL) THEN "R"."PGRP_KEY"
+	    ELSE "L"."PARENT_ID"
+	    END AS "GROUP_ID"
+	    FROM
+	    :LT_REL AS "L" 
+	    LEFT OUTER JOIN 
+	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE,'') AS "R" 
+	    ON "L"."PARENT_ID" = "R"."ID"
+	    WHERE "L"."REL_TYPE" = 'DR';
+	    
+	ELSE
+	    LT_DR = 
+		SELECT
+		"CHILD_ID" AS "ORG_ID",
+	    "PARENT_ID" AS "GROUP_ID"
+	    FROM
+	    :LT_REL
+		WHERE "REL_TYPE" = 'DR'
+		;
+	    
+	END IF;
+	
+	LT_DR = 
+	SELECT 
+	"L"."ORG_ID", 
+	"L"."GROUP_ID"
+	FROM :LT_DR AS "L"
+	INNER JOIN
+	(
+	SELECT "GROUP_ID", COUNT(*) FROM :LT_DR GROUP BY "GROUP_ID" HAVING COUNT(*) > 1	
+	) AS "R"
+	ON "L"."GROUP_ID" = "R"."GROUP_ID"
+	;
+	
+	ET_GROUP = 
+	SELECT 
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	"ORG_ID",
+	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
+	'DR' AS "GROUP_TYPE"
+	FROM :LT_DR;
+	
+END
