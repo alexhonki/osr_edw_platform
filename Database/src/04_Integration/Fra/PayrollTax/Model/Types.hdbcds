@@ -18,12 +18,12 @@ context Types {
         GRP_DATE    : LocalDate;
         ORG_ID      : String(10);
         GROUP_ID    : String(32);
-        GROUP_DESCR : String(1000);
+        GROUP_DESCR : String(255);
         GROUP_TYPE  : String(4);
     };
     table type DisjointElementT {
         ELEMENT_NUM : Integer64;
-        ELEMENT     : String(13);
+        ELEMENT     : String(32);
     };
     table type DisjointElementRelT {
         ELEMENT_L_NUM : Integer64;
@@ -34,8 +34,8 @@ context Types {
         GRP_DATE           : LocalDate;
         ELEMENT_NUM        : Integer64;
         PARENT_ELEMENT_NUM : Integer64;
-        ELEMENT            : String(13);
-        PARENT_ELEMENT     : String(13);
+        ELEMENT            : String(32);
+        PARENT_ELEMENT     : String(32);
     };
 
     context ASIC {

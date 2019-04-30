@@ -35,7 +35,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 		SELECT
 		"L"."CHILD_ID" AS "ORG_ID",
 	    CASE 
-	    WHEN ("R"."PGRP_KEY" IS NOT NULL) THEN "R"."PGRP_KEY"
+	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
 	    ELSE "L"."PARENT_ID"
 	    END AS "GROUP_ID"
 	    FROM

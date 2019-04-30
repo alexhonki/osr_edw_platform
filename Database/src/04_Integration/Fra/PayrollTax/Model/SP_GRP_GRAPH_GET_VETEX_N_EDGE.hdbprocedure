@@ -1,5 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VETEX_N_EDGE"(
 	IN  IV_GRP_DATE        DATE,
+	IN	IV_MATCH_PERSON	   NVARCHAR(1),
 	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
 	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
 )
@@ -8,11 +9,13 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VETEX_N_EDGE"(
    READS SQL DATA AS
 BEGIN
 
-DECLARE LV_ORG_PREFIX  NVARCHAR(1); 
-DECLARE LV_PSN_PREFIX  NVARCHAR(1);
+DECLARE LV_ORG_PREFIX	NVARCHAR(1); 
+DECLARE LV_PSN_PREFIX	NVARCHAR(1);
+DECLARE LV_PGP_PREFIX	NVARCHAR(1);
 
 LV_ORG_PREFIX := '1';
 LV_PSN_PREFIX := '2';
+LV_PGP_PREFIX := '3';
 
    LT_ELEMENT_REL = 
 -- shareholding relation
