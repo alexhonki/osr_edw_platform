@@ -22,10 +22,10 @@ SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJA
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 	CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
-		IV_GRP_DATE 	=> :LV_GRP_DATE,
-		IV_GRAPH_ID		=> :IV_GRAPH_ID,
-		IV_REL_TYPE     => 'IS',
-		ET_REL			=> LT_REL
+		IV_GRP_DATE 		=> :LV_GRP_DATE,
+		IV_GRAPH_ID			=> :IV_GRAPH_ID,
+		IV_REL_TYPE     	=> 'IS',
+		ET_REL				=> LT_REL
 	)
 	;
 
