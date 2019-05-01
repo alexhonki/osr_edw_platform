@@ -43,8 +43,10 @@ ALERT_INFO =
                     "DB_KEY_DASH",
                     "ALERT_ID",
                     "ABN" ,
-                    "GJAHR"
+                    "GJAHR",
+                    "BPARTNER"
                 FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+
 ;
 
 ELSE
@@ -55,7 +57,8 @@ ALERT_INFO =
                     "DB_KEY_DASH",
                     "ALERT_ID",
                     "ABN" ,
-                    "GJAHR"
+                    "GJAHR",
+                    "BPARTNER"
                 FROM  "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
                 WHERE "ALERT_ID" = :IP_ALERT_ID
 ;
@@ -64,17 +67,12 @@ END IF;
 
 ALERT_BP =
 	SELECT DISTINCT 
-        "PARTNER" ,
-        "IDNUMBER" AS "ABN"
+        "ABN",
+        "BPARTNER" AS "PARTNER"
     FROM 
-		"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" 
- 	WHERE "TYPE" = 'ZABN'
- 	AND "PARTNER"  NOT IN ( 
- 		
- 		SELECT 	DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
-		WHERE "BU_GROUP" IN ('OLGR') OR "AUGRP"  IN ('ZOFT') OR "XDELE" = 'X'
- 	) 
-   AND "IDNUMBER" IN (SELECT DISTINCT "ABN" FROM :ALERT_INFO  )
+		:ALERT_INFO
+    WHERE 
+    	"BPARTNER" <> ''	
 ;
 
 TRUST_TRUSTEE_REL =
@@ -88,7 +86,7 @@ FROM
 (
  SELECT  
    "A"."ABN",
-   "B"."PARTNER1" AS "ALERT_BP",
+   "A"."PARTNER" AS "ALERT_BP",
    "B"."PARTNER1" AS "TRUST_PARTNER",
    'Has Trustees' AS "TYPE",
    "B"."PARTNER2" AS "TRUSTEE_PARTNER"
@@ -105,7 +103,7 @@ UNION
 
  SELECT  
   "A"."ABN",
-  "B"."PARTNER2" AS "ALERT_BP",
+  "A"."PARTNER"  AS "ALERT_BP",
   "B"."PARTNER1" AS "TRUST_PARTNER",
   'Has Trustees' AS "TYPE",
   "B"."PARTNER2" AS "TRUSTEE_PARTNER"
@@ -134,9 +132,9 @@ PRT_BP =
 					(
 					SELECT PARTNER FROM
 						(
-							SELECT DISTINCT "TRUST_PARTNER"   AS "PARTNER" FROM :TRUST_TRUSTEE_REL
+							SELECT DISTINCT "TRUST_PARTNER"   AS "PARTNER" FROM :TRUST_TRUSTEE_REL WHERE "TRUST_PARTNER"   NOT IN ( SELECT "PARTNER" FROM :ALERT_BP)
 							UNION
-							SELECT DISTINCT "TRUSTEE_PARTNER" AS "PARTNER" FROM :TRUST_TRUSTEE_REL
+							SELECT DISTINCT "TRUSTEE_PARTNER" AS "PARTNER" FROM :TRUST_TRUSTEE_REL WHERE "TRUSTEE_PARTNER" NOT IN ( SELECT "PARTNER" FROM :ALERT_BP)
 						)	
 					)
 
@@ -374,7 +372,7 @@ INNER JOIN
 "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
 ON "DFMCA_RETURN"."CASE_GUID" = "3PYA"."RETURN_ID"
 INNER JOIN
-:ALERT_JOIN AS "ALERT"
+(SELECT DISTINCT "DB_KEY","ALERT_ID","ABN","GJAHR","PRT_REG_PARTNER" FROM :ALERT_JOIN) AS "ALERT"
 ON "DFMCA_RETURN"."TAXPAYER" = "ALERT"."PRT_REG_PARTNER"
 AND "APPLY_FROM" <= TO_NVARCHAR(CONCAT("ALERT"."GJAHR",'0630'))
 AND "APPLY_TO"   >= TO_NVARCHAR(CONCAT((TO_INT("ALERT"."GJAHR") - 1),'0701'))
@@ -463,6 +461,14 @@ SELECT
 
 FROM	:JOIN_OUTPUT 
 ;
+
+
+
+
+
+
+
+
 
 
 END;
