@@ -41,6 +41,7 @@ LV_PGP_PREFIX := '3';
    ;
    
    IF :IV_MATCH_PERSON = 'Y' THEN
+   LT_ELEMENT_REL = 
 	SELECT 
    "ELEMENT_L_NUM", 
    "ELEMENT_R_NUM",
@@ -50,7 +51,7 @@ LV_PGP_PREFIX := '3';
    UNION
 -- person to person group relation  
    SELECT 
-    TO_BIGINT(:LV_PSN_PREFIX || "ID") AS "ELEMENT_L_NUM", 
+    TO_BIGINT(:LV_PSN_PREFIX || RIGHT("ID",9)) AS "ELEMENT_L_NUM", 
     TO_BIGINT(:LV_PGP_PREFIX || RIGHT("PGRP_ID",9)) AS "ELEMENT_R_NUM",
     "ID" AS "CHILD_ID",
     "PGRP_ID" AS "PARENT_ID"
