@@ -1,5 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VETEX_N_EDGE"(
 	IN  IV_GRP_DATE        DATE,
+	IN	IV_MATCH_PERSON	   NVARCHAR(1),
 	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
 	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
 )
@@ -8,11 +9,13 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VETEX_N_EDGE"(
    READS SQL DATA AS
 BEGIN
 
-DECLARE LV_ORG_PREFIX  NVARCHAR(1); 
-DECLARE LV_PSN_PREFIX  NVARCHAR(1);
+DECLARE LV_ORG_PREFIX	NVARCHAR(1); 
+DECLARE LV_PSN_PREFIX	NVARCHAR(1);
+DECLARE LV_PGP_PREFIX	NVARCHAR(1);
 
 LV_ORG_PREFIX := '1';
 LV_PSN_PREFIX := '2';
+LV_PGP_PREFIX := '3';
 
    LT_ELEMENT_REL = 
 -- shareholding relation
@@ -25,7 +28,7 @@ LV_PSN_PREFIX := '2';
    "CHILD_ID",
    "PARENT_ID"
    FROM 
-   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, '')
+   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, 'ORD')
    UNION
 -- director relation 
    SELECT 
@@ -36,6 +39,25 @@ LV_PSN_PREFIX := '2';
    FROM 
    "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
    ;
+   
+   IF :IV_MATCH_PERSON = 'Y' THEN
+	SELECT 
+   "ELEMENT_L_NUM", 
+   "ELEMENT_R_NUM",
+   "CHILD_ID",
+   "PARENT_ID"
+   FROM :LT_ELEMENT_REL
+   UNION
+-- person to person group relation  
+   SELECT 
+    TO_BIGINT(:LV_PSN_PREFIX || "ID") AS "ELEMENT_L_NUM", 
+    TO_BIGINT(:LV_PGP_PREFIX || RIGHT("PGRP_ID",9)) AS "ELEMENT_R_NUM",
+    "ID" AS "CHILD_ID",
+    "PGRP_ID" AS "PARENT_ID"
+   FROM
+	"osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE, '')
+   ;
+   END IF;
    
    ET_ELEMENT = 
    SELECT 

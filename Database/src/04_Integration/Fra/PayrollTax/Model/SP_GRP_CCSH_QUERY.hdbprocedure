@@ -1,6 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_CCSH_QUERY"(
 	IN	IV_GRP_DATE 		DATE ,
 	IN  IV_GRAPH_ID			NVARCHAR(32),
+	IN	IV_MATCH_PERSON		NVARCHAR(1),
 	IN  IV_MAX_MEM_CNT  	INTEGER DEFAULT 2,
 	OUT ET_CCTRL_ENTITY   	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
 	OUT ET_CCTRL_INIT_GRP 	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
@@ -176,6 +177,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 	:LV_GRP_DATE AS "GRP_DATE",
 	"ORG_ID" AS "ORG_ID",
 	CAST(HASH_MD5(TO_BINARY("COMMON_CTRL_ENTITY")) AS NVARCHAR) AS "GROUP_ID",
+	"COMMON_CTRL_ENTITY" AS "GROUP_DESCR",
 	'CCSH' AS "GROUP_TYPE"
 	FROM
 	:et_cctrl_init_grp

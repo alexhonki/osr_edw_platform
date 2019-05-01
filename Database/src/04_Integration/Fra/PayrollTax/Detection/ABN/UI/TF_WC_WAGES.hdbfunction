@@ -23,6 +23,10 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(IN IP_ALERT_ID NVARCH
 BEGIN 
 
 	IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+		lt_alert = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"();
+	ELSE
+		lt_alert = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() WHERE "ALERT_ID" = :IP_ALERT_ID;
+	END IF;
 
 	lt_wages =
 	SELECT 
@@ -35,7 +39,7 @@ BEGIN
 	FROM 
 	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()	AS "WAGES",
 	"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"() AS "DETAILS",
-	"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+	:lt_alert AS "ALERT"
 	WHERE "WAGES"."POLICY_NO" =	"DETAILS"."POLICY_NO"
 	  AND "ALERT"."ABN" = "DETAILS"."ABN"
 	  AND  TO_NVARCHAR("WAGES"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
@@ -56,7 +60,7 @@ lt_emp_cnt =
 	FROM		 
 	"osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"( )												AS "EMP_CNT"
 	INNER JOIN 
-	"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() 									AS "ALERT"
+	:lt_alert												 									AS "ALERT"
 	ON   "ALERT"."ABN" = "EMP_CNT"."ABN"
 	AND  TO_NVARCHAR("EMP_CNT"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
 	WHERE	"EMP_CNT"."RSDNL_STATE_CD"		= 'QLD'
@@ -109,7 +113,6 @@ lt_union =
 	"GJAHR",
 	"WAERS"
 	;
-END IF;
 
 
 END;
