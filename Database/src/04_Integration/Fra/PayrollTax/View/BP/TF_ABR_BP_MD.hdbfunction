@@ -177,7 +177,7 @@ ORDER BY "ABN"
 			"ALERT"."GROUP_ID" AS "GROUP_ID",
     		"AGENCY"."ACN"																			AS	"ACN",
     		'2'					 																	AS	"PARTNER_TYPE",
-    		"PARENT_ENTITY_CODE"																	AS "ENTITY_TYPE_CODE",
+    		"AGENCY"."ENT_TYP_CD"																			AS "ENTITY_TYPE_CODE",
     		"AGENCY"."MN_INDY_CLSN"																	AS  "BUS_INDUSTRY",
     		"AGENCY"."NM_TITL_CD"																	AS  "BUS_NM_TITLE",
 			"osr.edw.platform.fra.prt.view.bp::TF_GET_NAME_ORG_BY_LINE_NUM"("AGENCY"."ORG_NM", 40, 2)								    AS  "BUS_NAME_2",
@@ -202,8 +202,8 @@ ORDER BY "ABN"
     	ON "ALERT"."ABN" = "AGENCY"."ABN"
     	LEFT OUTER JOIN :ABN_ADDRESS AS "ADDRESS"
     	ON "ALERT"."ABN" = "ADDRESS"."ABN"
-    	LEFT OUTER JOIN "osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C" AS "MAP"
-    	ON "AGENCY"."ENT_TYP_CD" = "MAP"."ENTITY_TYPE_CODE"
+    	--LEFT OUTER JOIN "osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C" AS "MAP"
+    --	ON "AGENCY"."ENT_TYP_CD" = "MAP"."ENTITY_TYPE_CODE"
     	WHERE "AGENCY"."ENT_TYP_CD" <> 'IND'
     	;
     
