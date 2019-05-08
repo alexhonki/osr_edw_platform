@@ -66,7 +66,7 @@ CRM_CASE =
     ON 
     	"CASE"."CASE_GUID" = "CASE_INDX"."CASE_GUID"
 --    	AND "CASE"."CASE_TYPE" = 'ZINV'
-    	AND "CASE_INDX"."PARTNER_FCT" IN ('Z0000002','00000009')
+    	AND "CASE_INDX"."PARTNER_FCT" = 'Z0000002'
 --    	AND "CASE_INDX"."CRM_MAIN_PARTNER" = 'X'
     INNER JOIN
     	"osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMD_CMGCASE_AT.active_data" AS "CASE_OUTCOME"
@@ -106,7 +106,7 @@ FROM
 ;
 -----------------------------------------------
 RETURN
-SELECT DISTINCT
+SELECT 
     	"PARTNER",
     	"ABN"    ,	
 		"CASE_GUID",
