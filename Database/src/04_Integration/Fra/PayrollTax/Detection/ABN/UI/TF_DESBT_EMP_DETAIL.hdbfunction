@@ -84,7 +84,7 @@ DESBT_DATA =
                        "B"."INDUSTRY_DESC", 
                        "B"."COUNT_APP_TRA"
 					FROM		:ALERT_INFO 	AS "A"
-					INNER JOIN	:DESBT_DATA 	AS "B"
+					LEFT OUTER JOIN	:DESBT_DATA 	AS "B"
 					ON			"A"."ABN"   = "B"."ABN"
 
 				)
