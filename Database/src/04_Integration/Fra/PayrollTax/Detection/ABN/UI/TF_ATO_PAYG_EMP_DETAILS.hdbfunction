@@ -41,7 +41,7 @@ FROM
 			"DATA"."NON_IDV_NM_LN_2"														AS "NON_IDV_NM_LN_2" 
 		FROM		
 			"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
-		INNER JOIN	
+		LEFT OUTER JOIN	
 			"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
 		ON  		
 				"ALERT"."ABN" = "DATA"."ABN"
@@ -74,7 +74,7 @@ FROM
 			"DATA"."NON_IDV_NM_LN_2"														AS "NON_IDV_NM_LN_2"														
 		FROM		
 			"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()					AS "ALERT"
-		INNER JOIN	
+		LEFT OUTER JOIN	
 			"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()						AS "DATA"
 		ON  		
 				"ALERT"."ABN" = "DATA"."ABN"

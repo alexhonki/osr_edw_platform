@@ -42,16 +42,16 @@ to_nvarchar("DATA"."ACN") AS "ACN",
 "DATA"."CNTCT_PH_NUM" AS "CNTCT_PH_NUM",
 to_dats("DATA"."Z_CHANGE_TIME") AS "Z_CHANGE_TIME"
 FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
-INNER JOIN "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"
+LEFT OUTER JOIN "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"
 ON  "ALERT"."ABN" = "DATA"."ABN"
 AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."INCM_YR")
-WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+--WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
 ;
 
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
 
 RETURN
-SELECT
+SELECT DISTINCT
 "DB_KEY",
 "DB_KEY_DASH",
 "ALERT_ID",
@@ -73,7 +73,7 @@ FROM  :lt_nind_emp;
 ELSE
 
 RETURN
-SELECT
+SELECT DISTINCT
 "DB_KEY",
 "DB_KEY_DASH",
 "ALERT_ID",
