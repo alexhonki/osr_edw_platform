@@ -30,6 +30,7 @@ ELSE
    SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
    FROM 
    "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, '')
+   WHER
    UNION
    SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
    FROM 

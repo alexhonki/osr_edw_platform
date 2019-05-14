@@ -1,0 +1,98 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_PROCESS"( 
+	IN IV_GRP_DATE 				DATE, 
+	IN IV_GRAPH_ID				NVARCHAR(32),
+	IN IV_QUERY_LEVEL 			INTEGER, 
+	IN IV_DR_QUERY              VARCHAR(1),
+	IN IV_SH_QUERY              VARCHAR(1),
+	IN IV_ABS              		VARCHAR(1),
+	IN IV_CCDR					VARCHAR(1),
+	IN IV_CCSH					VARCHAR(1),
+	IN IV_MATCH_PERSON 			VARCHAR(1)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+IF :iv_dr_query = 'Y' THEN
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_DR_QUERY"(
+	IV_GRP_DATE => :LV_GRP_DATE,
+	IV_GRAPH_ID => :IV_GRAPH_ID,
+	IV_MATCH_PERSON => :IV_MATCH_PERSON,
+	ET_GROUP => ?
+);
+
+END IF;
+
+IF :iv_sh_query = 'Y' THEN
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_SH_QUERY"(
+	IV_GRP_DATE => :LV_GRP_DATE,
+	IV_GRAPH_ID => :IV_GRAPH_ID,
+	IV_QUERY_LEVEL => :IV_QUERY_LEVEL,
+	IV_ROOT => '?',
+	IV_MATCH_PERSON => :IV_MATCH_PERSON,
+	ET_SH_REL => ?,
+	ET_SH_FULL => ?,
+	ET_HOLDER => ?
+);
+	
+END IF;
+
+IF :iv_abs = 'Y' THEN
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY"(
+	IV_GRP_DATE => :LV_GRP_DATE,
+	IV_GRAPH_ID => :IV_GRAPH_ID,
+	IV_ROOT => '?'/*<NVARCHAR(50)>*/,
+	IV_START_LEVEL => 1/*<INTEGER>*/,
+	ET_SH_TRC => ?
+);
+
+END IF;
+
+IF :IV_CCDR = 'Y' THEN
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_CCDR_QUERY"(
+	IV_GRP_DATE => :LV_GRP_DATE,
+	IV_GRAPH_ID => :IV_GRAPH_ID,
+	IV_MATCH_PERSON => :IV_MATCH_PERSON,
+	IV_MAX_MEM_CNT => 5,
+	ET_CCTRL_ENTITY => ?,
+	ET_CCTRL_INIT_GRP => ?,
+	ET_CCTRL_HOLDER => ?,
+	ET_GROUP => ?
+);
+
+END IF;
+
+IF :IV_CCSH = 'Y' THEN
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_CCSH_QUERY"(
+	IV_GRP_DATE => :LV_GRP_DATE,
+	IV_GRAPH_ID => :IV_GRAPH_ID,
+	IV_MATCH_PERSON => :IV_MATCH_PERSON,
+	IV_MAX_MEM_CNT => 5,
+	ET_CCTRL_ENTITY => ?,
+	ET_CCTRL_INIT_GRP => ?,
+	ET_CCTRL_HOLDER => ?,
+	ET_GROUP => ?
+);
+
+END IF;
+
+END
