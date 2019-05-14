@@ -77,15 +77,16 @@ context Types {
         };
         table type ShareHoldingFYT {
             GJAHR          : String(4);
+            CHILD_ID       : String(10);
+            PARENT_ID      : String(10);
             ORG_ID         : String(10);
             SHARE_CLASS    : String(8);
-            PARENT_ID      : String(10);
             HLDG_START_DT  : LocalDate;
             HOLDING_END_DT : LocalDate;
             BENEF_FLAG     : String(1);
             INTEREST_PCT   : Double;
-            ZASCHCA        : Double;
-            ZASCTOT        : Double;
+            HLDG_COUNT     : Double;
+            HLDG_COUNT_TOT : Double;
         };
         table type ShareHoldingRelT {
             INTEREST_PCT     : Double;
