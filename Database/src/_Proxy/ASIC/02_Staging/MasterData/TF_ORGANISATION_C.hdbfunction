@@ -37,7 +37,7 @@ SELECT
 	"ORG_START_DT",
 	"DEREGISTRATION_CODE",
 	"PLACE_OF_INCORP"
-FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data"
+FROM "osr.edw.source.md.asic.proxy::TF_ORGANISATION_LF"( )
 ;
 
 END;

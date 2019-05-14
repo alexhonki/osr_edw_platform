@@ -1,0 +1,236 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_QUERY"(
+	IN	IV_GRP_DATE 	DATE , 
+	IN  IV_GRAPH_ID		NVARCHAR(32),
+	IN IV_QUERY_LEVEL 			INTEGER,
+	IN IV_ROOT 					NVARCHAR(50), 
+	IN IV_MATCH_PERSON 			VARCHAR(1),
+	OUT ET_SH_REL 				"osr.edw.platform.fra.prt.model::Types.ASIC.ShareHoldingRelT", 
+	OUT ET_SH_FULL		"osr.edw.platform.fra.prt.model::Types.ASIC.HoldingFullT",
+	OUT ET_HOLDER       "osr.edw.platform.fra.prt.model::Types.ASIC.HolderT"	
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+	DECLARE lv_flg integer;
+	DECLARE lv_level integer;
+	DECLARE lv_cyclic_flg integer;
+	DECLARE lv_cyclic_found integer;
+	DECLARE lv_ascrstd varchar(8);
+	DECLARE lv_ascrend varchar(8);
+	DECLARE lv_grpdate varchar(8);
+	DECLARE lv_root varchar(50);
+	DECLARE lv_pmatch_found integer;
+	
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
+	IV_GRP_DATE 	=> :LV_GRP_DATE,
+	IV_GRAPH_ID		=> :IV_GRAPH_ID,
+	IV_REL_TYPE     => 'SH',
+	ET_REL			=> LT_REL
+)
+;
+
+	   
+-- get valid shareholding relationship for the given financial year 
+	    lt_asic_sh_fy =     
+	    SELECT DISTINCT "INTEREST_PCT", "CHILD_ID", "PARENT_ID" FROM :LT_REL
+	    ;
+	
+		IF :iv_match_person = 'Y' THEN
+	   
+	    lt_asic_sh_pmatch = 
+	    SELECT DISTINCT
+	    TO_DOUBLE("L"."INTEREST_PCT") AS "INTEREST_PCT",
+	    "L"."CHILD_ID", 
+	    CASE 
+	    WHEN ("R"."PGRP_ID" IS NOT NULL) 
+	    THEN "R"."PGRP_ID" 
+	    ELSE "L"."PARENT_ID" 
+	    END 
+	    AS "PARENT_ID"
+	    FROM :lt_asic_sh_fy 
+	    AS "L" 
+	    LEFT OUTER JOIN 
+	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE,'')  AS "R" 
+	    ON "L"."PARENT_ID" = "R"."ID";
+	    
+	    lt_asic_sh = 
+	    SELECT CASE WHEN "INTEREST_PCT">100 THEN 100 ELSE "INTEREST_PCT" END AS "INTEREST_PCT", "CHILD_ID", "PARENT_ID" FROM
+	    ( 
+	    	SELECT SUM("INTEREST_PCT") AS "INTEREST_PCT", "CHILD_ID", "PARENT_ID" FROM :lt_asic_sh_pmatch
+	    	GROUP BY "CHILD_ID", "PARENT_ID"
+	    );
+	    
+			IF :IV_ROOT LIKE '%P%' THEN
+				SELECT COUNT("PGRP_ID") INTO lv_pmatch_found FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE,'')  WHERE "ID" = :IV_ROOT;
+				IF :lv_pmatch_found IS NULL OR :lv_pmatch_found = 0 THEN 
+					lv_root := :iv_root; 
+			 	ELSE
+			 		SELECT "PGRP_ID" INTO lv_root FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE,'')  WHERE "ID" = :IV_ROOT;
+				END IF;
+			END IF;
+		    
+	    ELSE
+	    
+	    	lt_asic_sh = SELECT * FROM :lt_asic_sh_fy;
+	    	lv_root := :iv_root;
+	    	
+	    END IF;
+
+      
+-- query for root
+		IF :IV_ROOT IS NULL OR :IV_ROOT = '' OR :IV_ROOT = '?' THEN
+		
+		lt_sh_root = 
+		SELECT DISTINCT "PARENT_ID" AS "ROOT" FROM :lt_asic_sh
+		WHERE  "PARENT_ID" NOT IN
+		(SELECT DISTINCT "CHILD_ID"  FROM :lt_asic_sh);
+		
+		ELSE
+		
+		lt_sh_root = 
+		SELECT DISTINCT "PARENT_ID" AS "ROOT" FROM :lt_asic_sh
+		WHERE  "PARENT_ID" NOT IN
+		(SELECT DISTINCT "CHILD_ID"  FROM :lt_asic_sh) 
+		  AND  "PARENT_ID" = :iv_root;
+		  	
+		END IF;
+	
+	
+-- set loop flag for shareholding graph query
+		lv_flg := 0;
+		lv_level := 1;
+	
+-- set cyclic found flag
+		lv_cyclic_found := 0;	
+
+-- initial query for direct child under root 	
+		lt_result =
+	 	SELECT
+	 	TO_DOUBLE(i."INTEREST_PCT") AS "INTEREST_PCT",
+	 	TO_DOUBLE(0) AS "INTEREST_PCT_IND",
+	 	i."CHILD_ID", 
+	 	i."PARENT_ID", 
+	 	j."ROOT", 
+	 	1 AS "DISTANCE", 
+	 	('#' || i."PARENT_ID" || '#' || i."CHILD_ID" || '#') AS "PATH"
+	 	FROM :lt_asic_sh AS i
+	 	INNER JOIN :lt_sh_root AS j
+	 	ON i."PARENT_ID" = j."ROOT";
+	 	
+	 	lt_predecessor = SELECT * FROM :lt_result;
+	 	
+	 	SELECT count(*) INTO lv_flg FROM :lt_result;
+		
+	 	WHILE :lv_flg>0 AND :lv_level < :IV_QUERY_LEVEL
+	 	DO
+	 	
+	 	lv_level := :lv_level + 1;
+ 	
+-- get successors
+	 	lt_successor =
+	 	SELECT
+	 	TO_DOUBLE(i."INTEREST_PCT") AS "INTEREST_PCT", 
+	 	CASE WHEN :lv_level = 2 THEN TO_DOUBLE(i."INTEREST_PCT" * p."INTEREST_PCT"/100)
+	 	ELSE TO_DOUBLE(i."INTEREST_PCT" * p."INTEREST_PCT_IND"/100) END AS "INTEREST_PCT_IND",
+	 	i."CHILD_ID", 
+	 	i."PARENT_ID", 
+	 	p."ROOT", (p."DISTANCE" + 1) AS "DISTANCE", 
+	 	left((p."PATH" || i."CHILD_ID" || '#'),500) AS "PATH" 
+	 	FROM :lt_asic_sh AS i
+	 	INNER JOIN :lt_predecessor AS p
+	 	ON i."PARENT_ID" = p."CHILD_ID"
+	 	WHERE p."PATH" NOT LIKE ('%' || '#' || i."CHILD_ID" || '#' || '%')
+	 	;
+		
+		lt_cyclic_successor =
+	    SELECT
+	 	TO_DOUBLE(i."INTEREST_PCT") AS "INTEREST_PCT", 
+	 	CASE WHEN :lv_level = 2 THEN TO_DOUBLE(i."INTEREST_PCT" * p."INTEREST_PCT"/100)
+	 	ELSE TO_DOUBLE(i."INTEREST_PCT" * p."INTEREST_PCT_IND"/100) END AS "INTEREST_PCT_IND",
+	    i."CHILD_ID", 
+	    i."PARENT_ID", 
+	    p."ROOT", 
+	    (p."DISTANCE" + 1) AS "DISTANCE", 
+	    left((p."PATH" || i."CHILD_ID" || '#'),500) AS "PATH" 
+	    FROM :lt_asic_sh AS i
+	    INNER JOIN :lt_predecessor AS p
+	    ON i."PARENT_ID" = p."CHILD_ID"
+	    WHERE p."PATH" LIKE ('%' || '#' || i."CHILD_ID" || '#' || '%')
+	    ;
+		
+	 	lt_result = SELECT * FROM :lt_successor UNION ALL SELECT * FROM :lt_result;
+	 	
+		SELECT count(*) INTO lv_cyclic_flg FROM :lt_cyclic_successor;
+		
+		IF :lv_cyclic_flg > 0 THEN
+			IF :lv_cyclic_found = 0 THEN
+				lt_cyclic_result = SELECT * FROM :lt_cyclic_successor;
+				lv_cyclic_found := 1;
+			ELSE 
+				lt_cyclic_result = SELECT * FROM :lt_cyclic_successor union all SELECT * FROM :lt_cyclic_result;
+			END IF;
+		END IF;
+	 	
+	 	SELECT count(*) INTO lv_flg FROM :lt_successor;
+	 	
+	 	lt_predecessor = SELECT * FROM :lt_successor;
+	
+	 	END WHILE;
+	 	
+	 	IF :lv_cyclic_found > 0 THEN
+	 		lt_result = SELECT * FROM :lt_result union all SELECT * FROM :lt_cyclic_result;
+	 	END IF;
+	 	
+	 	lt_final_result = 
+	 	SELECT
+		"INTEREST_PCT", 
+		"INTEREST_PCT_IND",
+		CASE 
+		WHEN "DISTANCE" = 1 THEN "INTEREST_PCT"
+		ELSE "INTEREST_PCT_IND" 
+		END AS "INTEREST_PCT_CAL",
+		"CHILD_ID" AS "ORG_ID", 
+		"PARENT_ID", 
+		"ROOT", 
+		"DISTANCE", 
+		"PATH"
+		FROM :lt_result;
+	
+-- share holding relation 	 	
+	 	lt_sh_rel = SELECT DISTINCT * FROM (SELECT *, :LV_GJAHR AS "GJAHR", :LV_GRP_DATE AS "GRP_DATE" FROM :lt_final_result);
+	
+-- get full shareholding information for each organization held by each holder
+	 	CALL "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_QUERY"(
+	 		IV_GRP_DATE				=>:IV_GRP_DATE,
+	 		IV_QUERY_LEVEL			=>:IV_QUERY_LEVEL,
+	 		IV_ROOT					=>:IV_ROOT,
+	 		IV_START_LEVEL          =>0,--query each level for the holders on the given level
+	 		IV_END_LEVEL            =>0,
+	 		IT_SH_REL				=>:lt_sh_rel,
+	 		ET_SH_FULL				=>et_sh_full,
+	 		ET_HOLDER               =>et_holder
+	 	);
+	
+	
+	 	et_sh_rel = SELECT * FROM :lt_sh_rel;
+ 	 
+ 	
+
+
+	
+END

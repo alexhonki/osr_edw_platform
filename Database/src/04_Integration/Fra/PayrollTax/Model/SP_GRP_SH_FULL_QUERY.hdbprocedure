@@ -1,0 +1,187 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_QUERY"(
+	IN	IV_GRP_DATE 	DATE , 
+	IN  IV_QUERY_LEVEL 	INTEGER, 
+	IN  IV_ROOT 		NVARCHAR(50),
+	IN  IV_START_LEVEL  INTEGER, 
+	IN  IV_END_LEVEL    INTEGER,
+	IN  IT_SH_REL 		"osr.edw.platform.fra.prt.model::Types.ASIC.ShareHoldingRelT",
+	OUT ET_SH_FULL		"osr.edw.platform.fra.prt.model::Types.ASIC.HoldingFullT",
+	OUT ET_HOLDER       "osr.edw.platform.fra.prt.model::Types.ASIC.HolderT"	
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+ 	DECLARE lv_start_level integer;
+ 	DECLARE lv_end_level integer;
+ 	DECLARE lv_flg integer;
+	DECLARE lv_level integer;
+	DECLARE lv_round integer; --current round to loop from top node of current level to leaf
+	DECLARE lv_root varchar(50);
+	
+	
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+	IF :IV_ROOT IS NULL OR :IV_ROOT = '' OR :IV_ROOT = '?' THEN
+	
+		lt_sh_rel = SELECT * FROM :IT_SH_REL;
+	
+	ELSE
+		lt_sh_rel = SELECT * FROM :IT_SH_REL WHERE "ROOT" = :IV_ROOT;
+	  	
+	END IF;
+	
+-- dummy total result entry to avoid  unassigned situation for the first :lt_total_result UNION :lt_result	
+	lt_total_result = 
+	SELECT 0.00 AS "INTEREST_PCT", 0.00 AS "INTEREST_PCT_IND", 
+	'DUMMY' AS "ORG_ID",'DUMMY' AS "PARENT_ID", 'DUMMY' AS "HOLDER", 'DUMMY' AS "ROOT", 
+	0 AS "FROM_HOLDER_DISTANCE", 'DUMMY' AS "FROM_HOLDER_PATH", 0 AS "FROM_ROOT_DISTANCE", 'DUMMY' AS "FROM_ROOT_PATH"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY";
+	
+-- holders for all levels
+	lt_holders = SELECT 'DUMMY' AS "HOLDER", 'DUMMY' AS "ROOT", 0 AS "LEVEL" FROM "osr.hana.platform.synonym::SYS.DUMMY";
+	
+	IF :iv_start_level <> 0 AND :iv_end_level <> 0 THEN
+		lv_start_level := iv_start_level;
+		lv_end_level := iv_end_level;
+		lv_round := :lv_start_level;
+	ELSE
+		lv_start_level := 2;
+		lv_end_level := iv_query_level;
+		lv_round := 2;
+	END IF; 
+	
+	WHILE :lv_round <= :lv_end_level DO
+	
+		lv_flg := 0;
+		lv_level := :lv_round;
+	     
+-- query for holders for the current level
+	lt_level_holder = 
+	SELECT DISTINCT "ORG_ID" AS "HOLDER", "ROOT", :lv_level AS "LEVEL" FROM :lt_sh_rel WHERE "DISTANCE" = (:lv_level-1);
+	lt_holders = SELECT "HOLDER", "ROOT", "LEVEL" FROM :lt_holders UNION SELECT "HOLDER", "ROOT", "LEVEL" FROM :lt_level_holder;
+
+-- initial query for direct child under the holders for the current level 	
+	lt_result =
+ 	SELECT
+ 	TO_DOUBLE("L"."INTEREST_PCT") AS "INTEREST_PCT",
+ 	TO_DOUBLE(0) AS "INTEREST_PCT_IND",
+ 	"L"."ORG_ID", 
+ 	"L"."PARENT_ID",
+ 	"R"."HOLDER", 
+ 	"R"."ROOT", 
+ 	1 AS "FROM_HOLDER_DISTANCE", 
+ 	('#' || "L"."PARENT_ID" || '#' || "L"."ORG_ID" || '#') AS "FROM_HOLDER_PATH",
+ 	"L"."DISTANCE" AS "FROM_ROOT_DISTANCE", 
+ 	"L"."PATH" AS "FROM_ROOT_PATH"
+ 	FROM 
+ 	(SELECT * FROM :lt_sh_rel WHERE "DISTANCE" = :lv_level) AS "L"
+ 	INNER JOIN 
+ 	:lt_level_holder AS "R"
+ 	ON  "L"."PARENT_ID" = "R"."HOLDER"
+ 	AND "L"."ROOT" = "R"."ROOT";
+ 	
+ 	lt_predecessor = SELECT * FROM :lt_result;
+ 	
+ 	SELECT count(*) INTO lv_flg FROM :lt_result;
+ 	WHILE :lv_flg>0 AND :lv_level < :iv_query_level
+ 	DO
+ 	
+ 	lv_level := :lv_level + 1;
+ 	
+-- get successors 
+ 	lt_successor =
+ 	SELECT
+ 	TO_DOUBLE("L"."INTEREST_PCT") AS "INTEREST_PCT", 
+ 	CASE WHEN :lv_level = (:lv_round + 1) THEN TO_DOUBLE("L"."INTEREST_PCT" * p."INTEREST_PCT"/100)
+ 	ELSE TO_DOUBLE("L"."INTEREST_PCT" * p."INTEREST_PCT_IND"/100) END AS "INTEREST_PCT_IND",
+ 	"L"."ORG_ID", 
+ 	"L"."PARENT_ID",
+ 	"P"."HOLDER",  
+ 	"P"."ROOT", 
+ 	("P"."FROM_HOLDER_DISTANCE" + 1) AS "FROM_HOLDER_DISTANCE", 
+ 	left(("P"."FROM_HOLDER_PATH" || "L"."ORG_ID" || '#'),500) AS "FROM_HOLDER_PATH", 
+ 	"L"."DISTANCE" AS "FROM_ROOT_DISTANCE", 
+ 	"L"."PATH" AS "FROM_ROOT_PATH"
+ 	FROM 
+ 	(SELECT * FROM :lt_sh_rel WHERE "DISTANCE" = :lv_level) AS "L"
+ 	INNER JOIN 
+ 	:lt_predecessor AS "P"
+ 	ON  "L"."PARENT_ID" = "P"."ORG_ID"
+ 	AND "L"."ROOT" = "P"."ROOT"
+ 	;
+
+-- for successors: SELECT DISTINCT for duplicate paths: e.g. ROOT='ASCP017649287', GJAHR='2012'
+	lt_successor = SELECT DISTINCT * FROM :lt_successor;
+	
+ 	lt_result = SELECT * FROM :lt_successor UNION ALL SELECT * FROM :lt_result;
+ 	
+ 	SELECT count(*) INTO lv_flg FROM :lt_successor;
+ 	
+ 	lt_predecessor = SELECT * FROM :lt_successor;
+
+ 	END WHILE; --loop for level
+ 			
+	lt_total_result = SELECT * FROM :lt_total_result UNION SELECT * FROM :lt_result;
+ 	
+ 	lv_round := :lv_round + 1;
+ 	
+ 	END WHILE; --loop for round
+ 	
+-- First level is already available
+ 	lt_final_result = 
+ 	SELECT "INTEREST_PCT", "INTEREST_PCT_IND", CASE WHEN "FROM_HOLDER_DISTANCE" = 1 THEN "INTEREST_PCT" ELSE "INTEREST_PCT_IND" END AS "INTEREST_PCT_CAL", 
+ 	"ORG_ID" AS "ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+ 	"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH", "FROM_ROOT_DISTANCE", "FROM_ROOT_PATH"
+ 	FROM :lt_total_result
+ 	UNION 
+ 	SELECT "INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL", 
+ 	"ORG_ID" AS "ORG_ID", "PARENT_ID", "ROOT" AS "HOLDER", "ROOT", 
+ 	"DISTANCE" AS "FROM_HOLDER_DISTANCE", "PATH" AS "FROM_HOLDER_PATH", "DISTANCE" AS "FROM_ROOT_DISTANCE", "PATH" AS "FROM_ROOT_PATH"
+ 	FROM :lt_sh_rel; 
+ 	
+ 	-- query for holders for the current level
+	lt_level_holder = 
+	SELECT DISTINCT "ROOT" AS "HOLDER", "ROOT", 1 AS "LEVEL" FROM :lt_sh_rel;
+	lt_holders = SELECT "HOLDER", "ROOT", "LEVEL" FROM :lt_holders UNION SELECT "HOLDER", "ROOT", "LEVEL" FROM :lt_level_holder;
+ 	
+ 	et_sh_full = 
+ 	SELECT 
+ 	"INTEREST_PCT",
+ 	"INTEREST_PCT_IND",
+ 	CASE WHEN "FROM_HOLDER_DISTANCE" = 1 THEN "INTEREST_PCT" ELSE "INTEREST_PCT_IND" END AS "INTEREST_PCT_CAL", 
+ 	"ORG_ID" AS "ORG_ID",
+ 	"PARENT_ID",
+ 	"HOLDER",
+ 	"ROOT",
+ 	"FROM_HOLDER_DISTANCE",
+ 	"FROM_HOLDER_PATH",
+ 	"FROM_ROOT_DISTANCE",
+ 	"FROM_ROOT_PATH",
+	:LV_GJAHR AS "GJAHR",
+	:lv_grp_date AS "GRP_DATE"
+	FROM :lt_final_result
+	WHERE "ROOT"<>'DUMMY';	
+	
+	et_holder = 
+	SELECT 
+	"HOLDER", 
+	"ROOT", 
+	"LEVEL", 
+	:LV_GJAHR AS "GJAHR",
+	:lv_grp_date AS "GRP_DATE" 
+	FROM :lt_holders WHERE "LEVEL" <> 0;
+
+
+	
+END

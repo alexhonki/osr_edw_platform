@@ -39,7 +39,7 @@ SELECT
 	"ABN",
 	"BIRTH_STATE",
 	"BIRTH_COUNTRY_CODE"
-FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data"
+FROM "osr.edw.source.md.asic.proxy::TF_PERSON_LF"( )
 WHERE "REC_START_DT" <= CURRENT_DATE 
   AND "REC_END_DT" >= CURRENT_DATE;
 
