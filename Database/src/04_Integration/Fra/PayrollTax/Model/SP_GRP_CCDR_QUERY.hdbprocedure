@@ -129,13 +129,13 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 	CALL "osr.edw.platform.fra.prt.model::SP_GRP_CC_PROCESS_PARTITION"('DR', :lt_partition, lt_drcctrl_entity,lt_drcctrl_holder);
 	
 	ET_CCTRL_ENTITY = 
-	SELECT * FROM :lt_cctrl_entity 
+	SELECT * FROM :lt_drcctrl_entity 
 	UNION 
 	SELECT * FROM :ET_CCTRL_ENTITY 
 	WHERE "ORG_ID" <> 'DUMMY';
 	
 	ET_CCTRL_HOLDER = 
-	SELECT * FROM :lt_cctrl_holder 
+	SELECT * FROM :lt_drcctrl_holder 
 	UNION 
 	SELECT * FROM :ET_CCTRL_HOLDER 
 	WHERE "HOLDER" <> 'DUMMY';
