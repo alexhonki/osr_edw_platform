@@ -66,6 +66,7 @@ ELSE
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX"(:IV_GRP_DATE) AS "GRAPH"
 			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VETEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
 			   --OR "REL_DATA"."PARENT_ID" = "GRAPH"."GRAPH_VETEX_ID"
 		)
     	;
@@ -81,6 +82,7 @@ ELSE
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX"(:IV_GRP_DATE) AS "GRAPH"
 			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VETEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
 			   --OR "REL_DATA"."PARENT_ID" = "GRAPH"."GRAPH_VETEX_ID"
 		)
 		;
@@ -95,6 +97,7 @@ ELSE
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX"(:IV_GRP_DATE) AS "GRAPH"
 			WHERE "REL_DATA"."ID" = "GRAPH"."GRAPH_VETEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
 			   --OR (LEFT("REL_DATA"."STATE_CODE",3) || '_' || "REL_DATA"."STATE_GROUP_ID") = "GRAPH"."GRAPH_VETEX_ID"
 		)
     	;
@@ -122,6 +125,7 @@ ELSE
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX"(:IV_GRP_DATE) AS "GRAPH"
 			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VETEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
 			   --OR "REL_DATA"."PARENT_ID" = "GRAPH"."GRAPH_VETEX_ID"
 		)
     	;	   
