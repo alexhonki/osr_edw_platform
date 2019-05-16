@@ -9,21 +9,37 @@
       <selection multiLine="false" type="Single"/>
     </variableProperties>
   </variable>
+
+  <variable id="IP_MODE" parameter="true">
+    <descriptions defaultDescription="Reading Mode"/>
+    <variableProperties datatype="NVARCHAR" length="1" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange lowValue="R"/>
+    </variableProperties>
+  </variable>
 </localVariables>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP">
-    <targetVariable name="IV_KEY_DATE" resourceUri="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"/>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP">
+    <targetVariable name="IV_KEY_DATE" resourceUri="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"/>
     <localVariable>IP_GRP_DATE</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP">
+    <targetVariable name="IV_MODE" resourceUri="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"/>
+    <localVariable>IP_MODE</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>
-  <DataSource id="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.staging.md.asic.proxy::TF_PERSON_GRP</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
+      <viewAttribute id="PGRP_DESCR">
+        <descriptions defaultDescription="PGRP_DESCR"/>
+      </viewAttribute>
       <viewAttribute id="ID">
         <descriptions defaultDescription="ID"/>
       </viewAttribute>
@@ -33,37 +49,34 @@
       <viewAttribute id="PGRP_ID">
         <descriptions defaultDescription="PGRP_ID"/>
       </viewAttribute>
-      <viewAttribute id="PGRP_DESCR">
-        <descriptions defaultDescription="PGRP_DESCR"/>
-      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP">
+    <input node="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_DESCR" source="PGRP_DESCR"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_ID" source="PGRP_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_DESCR" source="PGRP_DESCR"/>
     </input>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
   <attributes>
-    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PGRP_DESCR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PGRP_DESCR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PGRP_DESCR"/>
+    </attribute>
+    <attribute id="ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="ID"/>
     </attribute>
-    <attribute id="PERSON_NUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PERSON_NUM" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSON_NUM"/>
       <keyMapping columnObjectName="Projection_1" columnName="PERSON_NUM"/>
     </attribute>
-    <attribute id="PGRP_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PGRP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PGRP_ID"/>
       <keyMapping columnObjectName="Projection_1" columnName="PGRP_ID"/>
-    </attribute>
-    <attribute id="PGRP_DESCR" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PGRP_DESCR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PGRP_DESCR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

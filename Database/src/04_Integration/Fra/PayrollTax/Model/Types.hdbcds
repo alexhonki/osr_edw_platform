@@ -148,11 +148,10 @@ context Types {
             GRP_DATE             : LocalDate;
         };
         table type PersonGroupT {
-            PERSON_ID        : String(10);
-            PGRP_KEY         : String(16);
-            PGRP_RULE        : String(10);
-            PERSON_FULL_NAME : String(255);
-            PERSON_NAME      : String(255);
+            "ID"         : String(10);
+            "PERSON_NUM" : String(9);
+            "PGRP_ID"    : String(10);
+            "PGRP_DESCR" : String(1000);
         };
         table type OrgNumT {
             GJAHR       : String(4);
