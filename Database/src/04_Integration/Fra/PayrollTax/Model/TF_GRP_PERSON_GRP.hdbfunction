@@ -12,18 +12,6 @@ BEGIN
 --'R' for read, 'C' for calculate
 IF :IV_MODE = 'R' OR :IV_MODE = '' OR :IV_MODE IS NULL THEN 
 
-RETURN
-SELECT
-	"ID",
-	"PERSON_NUM",
-	"PGRP_ID",
-	"PGRP_DESCR"
-	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_KEY_DATE,'');
-
-END IF;
-
-IF :IV_MODE = 'C' THEN 
-
 RETURN 
 SELECT
 	"ID",
@@ -31,8 +19,19 @@ SELECT
 	"PGRP_ID",
 	"PGRP_DESCR"
 	FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP";
-	
+
 END IF;
 
+IF :IV_MODE = 'C' THEN 
+
+RETURN
+SELECT
+	"ID",
+	"PERSON_NUM",
+	"PGRP_ID",
+	"PGRP_DESCR"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_KEY_DATE,'');
+	
+END IF;
 
 END;
