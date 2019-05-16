@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_PERSON_GRP" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_GRP_PERSON_GRP"/>
+<localVariables>
+  <variable id="IP_GRP_DATE" parameter="true">
+    <descriptions defaultDescription="Group Date"/>
+    <variableProperties datatype="DATE" mandatory="false">
+      <valueDomain type="Date"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP">
+    <targetVariable name="IV_KEY_DATE" resourceUri="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"/>
+    <localVariable>IP_GRP_DATE</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_PERSON_GRP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_NUM">
+        <descriptions defaultDescription="PERSON_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="PGRP_ID">
+        <descriptions defaultDescription="PGRP_ID"/>
+      </viewAttribute>
+      <viewAttribute id="PGRP_DESCR">
+        <descriptions defaultDescription="PGRP_DESCR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.asic.proxy::TF_PERSON_GRP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_ID" source="PGRP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_DESCR" source="PGRP_DESCR"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ID"/>
+    </attribute>
+    <attribute id="PERSON_NUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_NUM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PERSON_NUM"/>
+    </attribute>
+    <attribute id="PGRP_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PGRP_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PGRP_ID"/>
+    </attribute>
+    <attribute id="PGRP_DESCR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PGRP_DESCR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PGRP_DESCR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
