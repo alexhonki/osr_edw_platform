@@ -37,7 +37,7 @@ SELECT
 	"REC_START_DT",
 	"REC_END_DT",
 	"EXPIRY_DT"
-	FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.XREF.active_data"
+	FROM "osr.edw.source.md.asic.proxy::TF_XREF_LF"( )
 	WHERE "XREF_ROLE" = 'DR'
 	  AND "XREF_END_DT" >= :LV_KEY_DATE 
 	  AND "ROLE_START_DT" <= :LV_KEY_DATE
