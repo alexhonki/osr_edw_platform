@@ -41,7 +41,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	
 -- dummy total result entry to avoid  unassigned situation for the first :lt_total_result UNION :lt_result	
 	lt_total_result = 
-	SELECT 0.00 AS "INTEREST_PCT", 0.00 AS "INTEREST_PCT_IND", 
+	SELECT TO_DECIMAL(0,5,2) AS "INTEREST_PCT", TO_DECIMAL(0,5,2) AS "INTEREST_PCT_IND", 
 	'DUMMY' AS "ORG_ID",'DUMMY' AS "PARENT_ID", 'DUMMY' AS "HOLDER", 'DUMMY' AS "ROOT", 
 	0 AS "FROM_HOLDER_DISTANCE", 'DUMMY' AS "FROM_HOLDER_PATH", 0 AS "FROM_ROOT_DISTANCE", 'DUMMY' AS "FROM_ROOT_PATH"
 	FROM "osr.hana.platform.synonym::SYS.DUMMY";
@@ -130,7 +130,10 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
  	END WHILE; --loop for level
  			
-	lt_total_result = SELECT * FROM :lt_total_result UNION SELECT * FROM :lt_result;
+	lt_total_result = 
+	SELECT * FROM :lt_total_result 
+	UNION 
+	SELECT * FROM :lt_result;
  	
  	lv_round := :lv_round + 1;
  	
