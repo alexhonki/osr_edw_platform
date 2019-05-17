@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_GRAPH_VETEX" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_GRP_GRAPH_VETEX"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_GRAPH_VERTEX" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_GRP_GRAPH_VERTEX"/>
 <localVariables>
   <variable id="IP_GRP_DATE" parameter="true">
     <descriptions defaultDescription=""/>
@@ -10,14 +10,14 @@
     </variableProperties>
   </variable></localVariables>
 <variableMappings>
-  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX">
-    <targetVariable name="IV_GRP_DATE" resourceUri="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX"/>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX">
+    <targetVariable name="IV_GRP_DATE" resourceUri="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"/>
     <localVariable>IP_GRP_DATE</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -26,8 +26,8 @@
       <viewAttribute id="GRP_DATE">
         <descriptions defaultDescription="GRP_DATE"/>
       </viewAttribute>
-      <viewAttribute id="GRAPH_VETEX_ID">
-        <descriptions defaultDescription="GRAPH_VETEX_ID"/>
+      <viewAttribute id="GRAPH_VERTEX_ID">
+        <descriptions defaultDescription="GRAPH_VERTEX_ID"/>
       </viewAttribute>
       <viewAttribute id="GRAPH_ID">
         <descriptions defaultDescription="GRAPH_ID"/>
@@ -35,9 +35,9 @@
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VETEX">
+    <input node="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX">
       <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GRAPH_VETEX_ID" source="GRAPH_VETEX_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRAPH_VERTEX_ID" source="GRAPH_VERTEX_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="GRAPH_ID" source="GRAPH_ID"/>
     </input>
   </calculationView>
@@ -48,9 +48,9 @@
       <descriptions defaultDescription="GRP_DATE"/>
       <keyMapping columnObjectName="Projection_1" columnName="GRP_DATE"/>
     </attribute>
-    <attribute id="GRAPH_VETEX_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GRAPH_VETEX_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GRAPH_VETEX_ID"/>
+    <attribute id="GRAPH_VERTEX_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRAPH_VERTEX_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GRAPH_VERTEX_ID"/>
     </attribute>
     <attribute id="GRAPH_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GRAPH_ID"/>
