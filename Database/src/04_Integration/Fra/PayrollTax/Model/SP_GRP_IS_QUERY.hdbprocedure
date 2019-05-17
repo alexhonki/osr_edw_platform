@@ -27,6 +27,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 	ET_GROUP = 
 	SELECT 
+	DISTINCT
 	:LV_GJAHR AS "GJAHR",
 	:LV_GRP_DATE AS "GRP_DATE",
 	"CHILD_ID" AS "ORG_ID",
