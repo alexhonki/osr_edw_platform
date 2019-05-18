@@ -1,0 +1,92 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_ELEMENT_N_REL"(
+	IN  IV_GRP_DATE        DATE,
+	IN	IV_MATCH_PERSON	   NVARCHAR(1),
+	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
+	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_ORG_PREFIX	NVARCHAR(1); 
+DECLARE LV_PSN_PREFIX	NVARCHAR(1);
+DECLARE LV_PGP_PREFIX	NVARCHAR(1);
+
+LV_ORG_PREFIX := '0';
+LV_PSN_PREFIX := '1';
+LV_PGP_PREFIX := '2';
+
+lt_2bsubsume = 
+SELECT "ORG_ID", "GROUP_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+WHERE "ORG_ID" IN(
+SELECT "ORG_ID" FROM (SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI")
+GROUP BY "ORG_ID" HAVING COUNT(*) > 1
+);
+
+lt_disjoint_element_rel = 
+-- members in the same initial group should have relation
+SELECT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
+FROM 
+(SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI") AS "L" 
+INNER JOIN 
+(SELECT DISTINCT "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI") AS "R"
+ON "L"."GROUP_ID" = "R"."GROUP_ID"
+UNION
+-- members in different initial groups should have relation
+SELECT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
+FROM 
+(SELECT DISTINCT  "ORG_ID", "GROUP_ID" FROM :lt_2bsubsume 
+) 
+AS "L"
+INNER JOIN
+(SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+) 
+AS "R"
+ON "L"."GROUP_ID" = "R"."GROUP_ID"  
+;
+
+et_element_rel = 
+SELECT "ELEMENT_L_NUM", "ELEMENT_R_NUM" 
+FROM
+	(
+	SELECT "REL_KEY", "ELEMENT_L_NUM", "ELEMENT_R_NUM", ROW_NUMBER( ) OVER (PARTITION BY "REL_KEY" ORDER BY "ELEMENT_L_NUM") AS "ROW_NUM_PARTITION"
+	FROM 
+		(
+		SELECT 
+		"ELEMENT_L_NUM", 
+		"ELEMENT_R_NUM", 
+		CASE WHEN "ELEMENT_L_NUM" < "ELEMENT_R_NUM" THEN CONCAT("ELEMENT_L_NUM","ELEMENT_R_NUM") 
+		     WHEN "ELEMENT_L_NUM" > "ELEMENT_R_NUM" THEN CONCAT("ELEMENT_R_NUM","ELEMENT_L_NUM") 
+		     ELSE 'SELF_ORG_REL' END AS "REL_KEY"
+		FROM 
+			(
+				SELECT DISTINCT 
+				"ORG_ID_L", 
+				"ORG_ID_R", 
+				TO_BIGINT(:LV_ORG_PREFIX || RIGHT("ORG_ID_L",9)) AS "ELEMENT_L_NUM",
+				TO_BIGINT(:LV_ORG_PREFIX || RIGHT("ORG_ID_R",9)) AS "ELEMENT_R_NUM"
+				FROM :lt_disjoint_element_rel 
+				WHERE "ORG_ID_L" <> "ORG_ID_R"
+			)
+		)
+	)
+WHERE "REL_KEY" <> 'SELF_ORG_REL'
+  AND "ROW_NUM_PARTITION" = 1
+;
+   
+   ET_ELEMENT = 
+   SELECT 
+   DISTINCT "ELEMENT_NUM", "ELEMENT" 
+   FROM (
+   SELECT 
+   "ELEMENT_L_NUM" AS "ELEMENT_NUM", 
+   'O' || LPAD("ELEMENT_L_NUM", 9, '0') AS "ELEMENT" FROM :ET_ELEMENT_REL
+   UNION
+   SELECT 
+   "ELEMENT_R_NUM" AS "ELEMENT_NUM", 
+   'O' || LPAD("ELEMENT_R_NUM", 9, '0') AS "ELEMENT" FROM :ET_ELEMENT_REL
+   )
+   ;
+
+END
