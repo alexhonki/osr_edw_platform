@@ -26,9 +26,48 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 	IV_GRP_DATE 	=> :LV_GRP_DATE,
 	IV_GRAPH_ID		=> :IV_GRAPH_ID,
 	IV_REL_TYPE     => 'DR',
-	ET_REL			=> LT_REL
+	ET_REL			=> LT_graph_rel
 )
 ;
+
+	IF :IV_MATCH_PERSON = 'Y' THEN
+	    LT_REL = 
+		SELECT
+		"L"."CHILD_ID" AS "CHILD_ID",
+	    CASE 
+	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
+	    ELSE "L"."PARENT_ID"
+	    END AS "PARENT_ID",
+	    "INTEREST_PCT"
+	    FROM
+	    :LT_graph_rel AS "L" 
+	    LEFT OUTER JOIN 
+	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE,'') AS "R" 
+	    ON "L"."PARENT_ID" = "R"."ID"
+	    ;
+	    
+	    LT_REL = 
+	    SELECT 
+	    "CHILD_ID",
+	    "PARENT_ID",
+	    SUM("INTEREST_PCT") AS "INTEREST_PCT"
+	    FROM :LT_REL
+	    GROUP BY 
+	    "CHILD_ID",
+	    "PARENT_ID"
+	    ;
+	    
+	ELSE
+	    LT_REL = 
+		SELECT
+		"CHILD_ID",
+	    "PARENT_ID",
+	    "INTEREST_PCT"
+	    FROM
+	    :LT_graph_rel
+		;
+	    
+	END IF;
 
 -- Dummy result
 ET_CCTRL_ENTITY = 
