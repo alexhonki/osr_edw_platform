@@ -1,8 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY_BGD"(
 	IN	IV_GRP_DATE 			DATE , 
 	IN  IV_GRAPH_ID				NVARCHAR(32),
-	IN IV_ROOT 					NVARCHAR(50), 
-	IN  IV_START_LEVEL          INTEGER DEFAULT 1,
+	IN	IV_MATCH_PERSON			NVARCHAR(1),
 	OUT ET_GROUP				"osr.edw.platform.fra.prt.model::Types.GroupT"
 	)
    LANGUAGE SQLSCRIPT
@@ -13,8 +12,9 @@ BEGIN
 CALL "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY"(
 	IV_GRP_DATE => :IV_GRP_DATE,
 	IV_GRAPH_ID => :IV_GRAPH_ID,
-	IV_ROOT => :IV_ROOT,
-	IV_START_LEVEL => IV_START_LEVEL,
+	IV_ROOT => '',
+	IV_START_LEVEL => 1,
+	IV_MATCH_PERSON => :IV_MATCH_PERSON,
 	ET_SH_TRC => ?,
 	ET_GROUP => ET_GROUP,
 	ET_RBCORG => ?

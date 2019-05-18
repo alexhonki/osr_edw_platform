@@ -3,6 +3,7 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY"(
 	IN  IV_GRAPH_ID				NVARCHAR(32),
 	IN IV_ROOT 					NVARCHAR(50), 
 	IN  IV_START_LEVEL          INTEGER DEFAULT 1,
+	IN	IV_MATCH_PERSON			NVARCHAR(1),
 	OUT ET_SH_TRC				"osr.edw.platform.fra.prt.model::Types.ASIC.HoldingFullTrcT",
 	OUT ET_GROUP				"osr.edw.platform.fra.prt.model::Types.GroupT",
 	OUT	ET_RBCORG   		    "osr.edw.platform.fra.prt.model::Types.ASIC.OrgT"
@@ -37,7 +38,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	IV_GRAPH_ID					=>:IV_GRAPH_ID,
 	 IV_QUERY_LEVEL			    =>10,
 	 IV_ROOT					=>:iv_root,
-	 IV_MATCH_PERSON			=>'Y',
+	 IV_MATCH_PERSON			=>:IV_MATCH_PERSON,
 	 ET_SH_REL					=>lt_sh_rel,
 	 ET_SH_FULL					=>lt_sh_full,
 	 ET_HOLDER                  =>lt_holder
