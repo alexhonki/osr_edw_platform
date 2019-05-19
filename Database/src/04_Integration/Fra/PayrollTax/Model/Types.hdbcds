@@ -21,6 +21,18 @@ context Types {
         GROUP_DESCR : String(255);
         GROUP_TYPE  : String(4);
     };
+    table type GroupSummaryT {
+        GJAHR                : String(4);
+        GRP_DATE             : LocalDate;
+        ORG_ID               : String(10);
+        GROUP_ID             : String(10);
+        ACN                  : String(9);
+        DR_GROUP_MEM         : String(1);
+        SH_GROUP_MEM         : String(1);
+        INTERSTATE_GROUP_MEM : String(1);
+        CCTRL_GROUP_MEM      : String(1);
+        RBC_GROUP_MEM        : String(1);
+    };
     table type DisjointElementT {
         ELEMENT_NUM : Integer64;
         ELEMENT     : String(32);
