@@ -42,7 +42,7 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 	    FROM
 	    :LT_graph_rel AS "L" 
 	    LEFT OUTER JOIN 
-	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
 	    ON "L"."PARENT_ID" = "R"."ID"
 	    ;
 	    

@@ -61,7 +61,7 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 	    FROM :lt_asic_sh_fy 
 	    AS "L" 
 	    LEFT OUTER JOIN 
-	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE,'R')  AS "R" 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_GRP_DATE,'R')  AS "R" 
 	    ON "L"."PARENT_ID" = "R"."ID";
 	    
 	    lt_asic_sh = 
@@ -72,11 +72,11 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 	    );
 	    
 			IF :IV_ROOT LIKE '%P%' THEN
-				SELECT COUNT("PGRP_ID") INTO lv_pmatch_found FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE,'R')  WHERE "ID" = :IV_ROOT;
+				SELECT COUNT("PGRP_ID") INTO lv_pmatch_found FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_GRP_DATE,'R')  WHERE "ID" = :IV_ROOT;
 				IF :lv_pmatch_found IS NULL OR :lv_pmatch_found = 0 THEN 
 					lv_root := :iv_root; 
 			 	ELSE
-			 		SELECT "PGRP_ID" INTO lv_root FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE,'R')  WHERE "ID" = :IV_ROOT;
+			 		SELECT "PGRP_ID" INTO lv_root FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_GRP_DATE,'R')  WHERE "ID" = :IV_ROOT;
 				END IF;
 			END IF;
 		    

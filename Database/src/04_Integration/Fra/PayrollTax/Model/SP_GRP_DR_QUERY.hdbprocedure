@@ -41,7 +41,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    FROM
 	    :LT_REL AS "L" 
 	    LEFT OUTER JOIN 
-	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
 	    ON "L"."PARENT_ID" = "R"."ID"
 	    WHERE "L"."REL_TYPE" = 'DR';
 	    
