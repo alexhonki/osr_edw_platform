@@ -1,6 +1,5 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_ELEMENT_N_REL"(
 	IN  IV_GRP_DATE        DATE,
-	IN	IV_MATCH_PERSON	   NVARCHAR(1),
 	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
 	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
 )
@@ -8,6 +7,9 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_ELEMENT_N_REL"(
    SQL SECURITY INVOKER
    READS SQL DATA AS
 BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
 
 DECLARE LV_ORG_PREFIX	NVARCHAR(1); 
 DECLARE LV_PSN_PREFIX	NVARCHAR(1);
@@ -17,10 +19,23 @@ LV_ORG_PREFIX := '0';
 LV_PSN_PREFIX := '1';
 LV_PGP_PREFIX := '2';
 
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+LT_GROUP = 
+SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+WHERE "GRP_DATE" = :LV_GRP_DATE
+;
+
 lt_2bsubsume = 
 SELECT "ORG_ID", "GROUP_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
-WHERE "ORG_ID" IN(
-SELECT "ORG_ID" FROM (SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI")
+WHERE "GRP_DATE" = :LV_GRP_DATE
+  AND "ORG_ID" IN(
+SELECT "ORG_ID" FROM :LT_GROUP
 GROUP BY "ORG_ID" HAVING COUNT(*) > 1
 );
 
@@ -28,10 +43,10 @@ lt_disjoint_element_rel =
 -- members in the same initial group should have relation
 SELECT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
 FROM 
-(SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI") AS "L" 
+:LT_GROUP AS "L" 
 INNER JOIN 
-(SELECT DISTINCT "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI") AS "R"
-ON "L"."GROUP_ID" = "R"."GROUP_ID"
+:LT_GROUP AS "R"
+ON  "L"."GROUP_ID" = "R"."GROUP_ID"
 UNION
 -- members in different initial groups should have relation
 SELECT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
