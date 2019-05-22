@@ -41,7 +41,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    FROM
 	    :LT_REL AS "L" 
 	    LEFT OUTER JOIN 
-	    "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE,'') AS "R" 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
 	    ON "L"."PARENT_ID" = "R"."ID"
 	    WHERE "L"."REL_TYPE" = 'DR';
 	    
@@ -57,16 +57,21 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    
 	END IF;
 	
+	--remove duplicates
+	LT_DR = SELECT DISTINCT "ORG_ID", "GROUP_ID" FROM :LT_DR;
+	
+	LT_DR_GRP = 
+	SELECT "GROUP_ID", COUNT(*) AS "CNT" FROM :LT_DR GROUP BY "GROUP_ID" HAVING COUNT(*) > 1;
+	
 	LT_DR = 
 	SELECT 
 	"L"."ORG_ID", 
 	"L"."GROUP_ID"
 	FROM :LT_DR AS "L"
-	INNER JOIN
-	(
-	SELECT "GROUP_ID", COUNT(*) FROM :LT_DR GROUP BY "GROUP_ID" HAVING COUNT(*) > 1	
-	) AS "R"
-	ON "L"."GROUP_ID" = "R"."GROUP_ID"
+	WHERE EXISTS (
+		SELECT * FROM :LT_DR_GRP AS "R" 
+			WHERE "L"."GROUP_ID" = "R"."GROUP_ID"
+	)
 	;
 	
 	ET_GROUP = 

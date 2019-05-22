@@ -13,8 +13,6 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_QUERY"(
    READS SQL DATA AS
 BEGIN
 
-DECLARE LV_GJAHR NVARCHAR(4);
-DECLARE LV_GRP_DATE DATE;
  	DECLARE lv_start_level integer;
  	DECLARE lv_end_level integer;
  	DECLARE lv_flg integer;
@@ -23,11 +21,11 @@ DECLARE LV_GRP_DATE DATE;
 	DECLARE lv_root varchar(50);
 	
 	
-IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
-	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
-ELSE
-	LV_GRP_DATE := :IV_GRP_DATE;
-END IF;
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_GRP_DATE"(:IV_GRP_DATE).EV_GRP_DATE INTO LV_GRP_DATE
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
@@ -43,7 +41,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	
 -- dummy total result entry to avoid  unassigned situation for the first :lt_total_result UNION :lt_result	
 	lt_total_result = 
-	SELECT 0.00 AS "INTEREST_PCT", 0.00 AS "INTEREST_PCT_IND", 
+	SELECT TO_DECIMAL(0,5,2) AS "INTEREST_PCT", TO_DECIMAL(0,5,2) AS "INTEREST_PCT_IND", 
 	'DUMMY' AS "ORG_ID",'DUMMY' AS "PARENT_ID", 'DUMMY' AS "HOLDER", 'DUMMY' AS "ROOT", 
 	0 AS "FROM_HOLDER_DISTANCE", 'DUMMY' AS "FROM_HOLDER_PATH", 0 AS "FROM_ROOT_DISTANCE", 'DUMMY' AS "FROM_ROOT_PATH"
 	FROM "osr.hana.platform.synonym::SYS.DUMMY";
@@ -132,7 +130,10 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
  	END WHILE; --loop for level
  			
-	lt_total_result = SELECT * FROM :lt_total_result UNION SELECT * FROM :lt_result;
+	lt_total_result = 
+	SELECT * FROM :lt_total_result 
+	UNION 
+	SELECT * FROM :lt_result;
  	
  	lv_round := :lv_round + 1;
  	

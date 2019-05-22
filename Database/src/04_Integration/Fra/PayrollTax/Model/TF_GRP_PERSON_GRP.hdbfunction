@@ -1,0 +1,44 @@
+FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(IV_KEY_DATE DATE, IV_MODE NVARCHAR(1) )
+RETURNS TABLE (
+"ID"			NVARCHAR(10),
+"PERSON_NUM"	NVARCHAR(9),
+"PGRP_ID"       NVARCHAR(10),
+"PGRP_DESCR"    NVARCHAR(1000)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+DECLARE LV_GRP_DATE DATE;
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_GRP_DATE"(:IV_KEY_DATE).EV_GRP_DATE INTO LV_GRP_DATE
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+
+--'R' for read, 'C' for calculate
+IF :IV_MODE = 'R' OR :IV_MODE = '' OR :IV_MODE IS NULL THEN 
+
+RETURN 
+SELECT
+	"ID",
+	"PERSON_NUM",
+	"PGRP_ID",
+	"PGRP_DESCR"
+	FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP"
+	WHERE "GRP_DATE" = :LV_GRP_DATE;
+
+END IF;
+
+IF :IV_MODE = 'C' THEN 
+
+RETURN
+SELECT
+	"ID",
+	"PERSON_NUM",
+	"PGRP_ID",
+	"PGRP_DESCR"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_KEY_DATE,'');
+	
+END IF;
+
+END;

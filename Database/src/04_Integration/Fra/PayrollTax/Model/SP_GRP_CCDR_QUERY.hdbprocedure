@@ -16,12 +16,8 @@ BEGIN
 DECLARE LV_GJAHR NVARCHAR(4);
 DECLARE LV_GRP_DATE DATE;
 
-IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
-	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
-ELSE
-	LV_GRP_DATE := :IV_GRP_DATE;
-END IF;
-
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_GRP_DATE"(:IV_GRP_DATE).EV_GRP_DATE INTO LV_GRP_DATE
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
@@ -30,9 +26,48 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 	IV_GRP_DATE 	=> :LV_GRP_DATE,
 	IV_GRAPH_ID		=> :IV_GRAPH_ID,
 	IV_REL_TYPE     => 'DR',
-	ET_REL			=> LT_REL
+	ET_REL			=> LT_graph_rel
 )
 ;
+
+	IF :IV_MATCH_PERSON = 'Y' THEN
+	    LT_REL = 
+		SELECT
+		"L"."CHILD_ID" AS "CHILD_ID",
+	    CASE 
+	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
+	    ELSE "L"."PARENT_ID"
+	    END AS "PARENT_ID",
+	    "INTEREST_PCT"
+	    FROM
+	    :LT_graph_rel AS "L" 
+	    LEFT OUTER JOIN 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
+	    ON "L"."PARENT_ID" = "R"."ID"
+	    ;
+	    
+	    LT_REL = 
+	    SELECT 
+	    "CHILD_ID",
+	    "PARENT_ID",
+	    SUM("INTEREST_PCT") AS "INTEREST_PCT"
+	    FROM :LT_REL
+	    GROUP BY 
+	    "CHILD_ID",
+	    "PARENT_ID"
+	    ;
+	    
+	ELSE
+	    LT_REL = 
+		SELECT
+		"CHILD_ID",
+	    "PARENT_ID",
+	    "INTEREST_PCT"
+	    FROM
+	    :LT_graph_rel
+		;
+	    
+	END IF;
 
 -- Dummy result
 ET_CCTRL_ENTITY = 
@@ -133,13 +168,13 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 	CALL "osr.edw.platform.fra.prt.model::SP_GRP_CC_PROCESS_PARTITION"('DR', :lt_partition, lt_drcctrl_entity,lt_drcctrl_holder);
 	
 	ET_CCTRL_ENTITY = 
-	SELECT * FROM :lt_cctrl_entity 
+	SELECT * FROM :lt_drcctrl_entity 
 	UNION 
 	SELECT * FROM :ET_CCTRL_ENTITY 
 	WHERE "ORG_ID" <> 'DUMMY';
 	
 	ET_CCTRL_HOLDER = 
-	SELECT * FROM :lt_cctrl_holder 
+	SELECT * FROM :lt_drcctrl_holder 
 	UNION 
 	SELECT * FROM :ET_CCTRL_HOLDER 
 	WHERE "HOLDER" <> 'DUMMY';
@@ -168,6 +203,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 	:LV_GRP_DATE AS "GRP_DATE",
 	"ORG_ID" AS "ORG_ID",
 	CAST(HASH_MD5(TO_BINARY("COMMON_CTRL_ENTITY")) AS NVARCHAR) AS "GROUP_ID",
+	--'' AS "GROUP_ID",
 	"COMMON_CTRL_ENTITY" AS "GROUP_DESCR",
 	'CCDR' AS "GROUP_TYPE"
 	FROM

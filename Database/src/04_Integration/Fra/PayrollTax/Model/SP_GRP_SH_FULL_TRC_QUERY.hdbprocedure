@@ -1,0 +1,506 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY"(
+	IN	IV_GRP_DATE 			DATE , 
+	IN  IV_GRAPH_ID				NVARCHAR(32),
+	IN IV_ROOT 					NVARCHAR(50), 
+	IN  IV_START_LEVEL          INTEGER DEFAULT 1,
+	IN	IV_MATCH_PERSON			NVARCHAR(1),
+	OUT ET_SH_TRC				"osr.edw.platform.fra.prt.model::Types.ASIC.HoldingFullTrcT",
+	OUT ET_GROUP				"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT	ET_RBCORG   		    "osr.edw.platform.fra.prt.model::Types.ASIC.OrgT"
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+ DECLARE lv_max_distance integer;
+ DECLARE lv_distance integer;
+ DECLARE lv_flg integer;
+ DECLARE lv_level integer;
+ DECLARE lv_multiholding_flg integer;
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_GRP_DATE"(:IV_GRP_DATE).EV_GRP_DATE INTO LV_GRP_DATE
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+/**********************************************************************
+	Get Shareholding Tracing Group
+ *********************************************************************/
+ 
+
+	 CALL "osr.edw.platform.fra.prt.model::SP_GRP_SH_QUERY"(
+	 IV_GRP_DATE				=>:LV_GRP_DATE,
+	IV_GRAPH_ID					=>:IV_GRAPH_ID,
+	 IV_QUERY_LEVEL			    =>10,
+	 IV_ROOT					=>:iv_root,
+	 IV_MATCH_PERSON			=>:IV_MATCH_PERSON,
+	 ET_SH_REL					=>lt_sh_rel,
+	 ET_SH_FULL					=>lt_sh_full,
+	 ET_HOLDER                  =>lt_holder
+	 );
+	 
+	 
+	 SELECT max("FROM_ROOT_DISTANCE") INTO lv_max_distance FROM :lt_sh_full;
+	 
+	 IF :iv_start_level<>0 THEN
+	 	lv_distance := iv_start_level;
+	 ELSE
+	 	lv_distance := 1;
+	 END IF;
+	 
+	 lt_total_result = 
+	 SELECT 
+	 'DUMMY' AS "GROUP_ID", 0 AS "GRP_DET_LEVEL", 'DUMMY' AS "ORG_ID", 'DUMMY' AS "PARENT_ID", 'DUMMY' AS "HOLDER", 'DUMMY' AS "ROOT", 
+	 0 AS "FROM_HOLDER_DISTANCE", 'DUMMY' AS "FROM_HOLDER_PATH",
+	 'DUMMY' AS  "GJAHR", TO_DATE('9999-12-31') AS "GRP_DATE", 
+	 0 AS "INTEREST_PCT", 0 AS "INTEREST_PCT_IND", 0 AS "INTEREST_PCT_CAL"
+	 FROM "osr.hana.platform.synonym::SYS.DUMMY";
+	 
+	 lt_total_result_multiholding = 
+	 SELECT 
+	 'DUMMY' AS "GROUP_ID", 0 AS "GRP_DET_LEVEL", 'DUMMY' AS "ORG_ID", 'DUMMY' AS "PARENT_ID", 'DUMMY' AS "HOLDER", 'DUMMY' AS "ROOT", 
+	 0 AS "FROM_HOLDER_DISTANCE", 'DUMMY' AS "FROM_HOLDER_PATH",
+	 'DUMMY' AS  "GJAHR", TO_DATE('9999-12-31') AS "GRP_DATE", 
+	 0 AS "INTEREST_PCT", 0 AS "INTEREST_PCT_IND", 0 AS "INTEREST_PCT_CAL"
+	 FROM "osr.hana.platform.synonym::SYS.DUMMY";
+	 
+	 lt_multiholding_org_all = 
+	 SELECT 
+	 'DUMMY' AS "ORG_ID", 'DUMMY' AS "HOLDER", 'DUMMY' AS "GROUP_ID", 'DUMMY' AS "ROOT", 'DUMMY' AS "GJAHR", TO_DATE('9999-12-31') AS "GRP_DATE" 
+	 FROM "osr.hana.platform.synonym::SYS.DUMMY";
+	
+	
+	 WHILE :lv_distance <=:lv_max_distance
+	 DO 
+	
+	-- determine tracing entities for this round 	
+		lt_sh_full_level = 
+		SELECT DISTINCT 
+		"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+		"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+		"L"."GJAHR", "L"."GRP_DATE", 
+		"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+		FROM :lt_sh_full AS "L"
+		WHERE "L"."FROM_ROOT_DISTANCE" >= :lv_distance
+		  AND NOT EXISTS (
+		  	SELECT * FROM :lt_total_result AS "R"
+		  	WHERE "L"."ORG_ID" = "R"."ORG_ID"
+		  	  AND "L"."PARENT_ID" = "R"."PARENT_ID"
+		  	  --AND "L"."ROOT"    = "R"."ROOT"
+		  )
+		;
+	 
+	-- count how many times one organization is owned by a given holder(multiple times only)
+	 	lt_org_holder_cnt = 
+	  	SELECT "ORG_ID", "HOLDER", "ROOT", "GJAHR", "GRP_DATE", COUNT(*) AS "COUNT"
+	  	FROM :lt_sh_full_level
+	  	GROUP BY "ORG_ID", "HOLDER", "ROOT", "GJAHR", "GRP_DATE"
+	  	HAVING COUNT(*) > 1;
+	  	
+	  	lt_gt1_holder = 
+	  	SELECT 
+	  	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", "L"."FROM_HOLDER_DISTANCE", 
+	  	"L"."FROM_HOLDER_PATH",
+	  	"L"."GJAHR", "L"."GRP_DATE", 
+	  	"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+	  	FROM :lt_sh_full_level AS "L" INNER JOIN :lt_org_holder_cnt AS "R"
+	  	ON  "L"."ORG_ID"   = "R"."ORG_ID"  
+	  	AND "L"."HOLDER"  	= "R"."HOLDER" 
+	  	AND "L"."ROOT" 		= "R"."ROOT" 
+	  	AND "L"."GJAHR" 	= "R"."GJAHR" 
+	  	AND "L"."GRP_DATE" 	= "R"."GRP_DATE";
+	  	
+	  	lt_gt1_direct_holder = 
+	  	SELECT 
+	  	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", "FROM_HOLDER_DISTANCE", 
+	  	"FROM_HOLDER_PATH",
+	  	"GJAHR", "GRP_DATE", 
+	  	"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+	  	FROM :lt_gt1_holder WHERE "ORG_ID" IN
+	  	(SELECT "ORG_ID" FROM :lt_gt1_holder WHERE "FROM_HOLDER_DISTANCE" = 1)
+	  	;
+		
+		
+		lt_gt1_holder_gt50 = 
+		SELECT 
+		"L"."ORG_ID", "L"."HOLDER", "L"."ROOT",
+		"L"."GJAHR", "L"."GRP_DATE", 
+		SUM("L"."INTEREST_PCT_CAL") AS "INTEREST_PCT_CAL"
+		FROM 
+		:lt_gt1_direct_holder AS "L"
+		GROUP BY "ORG_ID", "HOLDER", "ROOT","GJAHR", "GRP_DATE"
+		HAVING SUM("INTEREST_PCT_CAL")>50;
+		  
+		
+	-- query to find absolute holding
+		lv_flg := 0;
+		lv_level := :lv_distance;
+		     
+	-- group ID for the current level
+		IF :lv_distance = 1 THEN 
+			lt_level_group_id = SELECT DISTINCT "ROOT" AS "GROUP_ID", "ROOT" FROM :lt_sh_rel;
+		ELSE 
+			lt_level_group_id = 
+			SELECT "L"."HOLDER" AS "GROUP_ID", "L"."ROOT" FROM :lt_holder AS "L" 
+			WHERE "LEVEL" = :lv_distance 
+			  AND NOT EXISTS 
+			  (
+			  SELECT * FROM :lt_total_result AS "R"
+			  WHERE "L"."HOLDER" = "R"."ORG_ID"
+			  )
+			;
+		END IF;
+	
+	-- initial query for direct child under the holders for the current level 	
+		lt_result =
+	 	SELECT
+	 	"R"."GROUP_ID",
+	 	:lv_distance AS "GRP_DET_LEVEL",
+	 	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+		"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+		"L"."GJAHR", "L"."GRP_DATE", 
+		"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+	 	FROM 
+	 	:lt_sh_full_level AS "L"
+	 	INNER JOIN 
+	 	:lt_level_group_id AS "R"
+	 	ON  "L"."PARENT_ID" = "R"."GROUP_ID"
+	 	AND "L"."ROOT" = "R"."ROOT"
+	 	WHERE "L"."INTEREST_PCT">50
+	 	;
+		 	
+	-- add tracing organizations -->start
+		lt_multiholding_org = 
+		SELECT DISTINCT "L"."ORG_ID","L"."HOLDER", "R"."GROUP_ID", "L"."ROOT", "L"."GJAHR", "L"."GRP_DATE" 
+		FROM 
+		:lt_gt1_holder_gt50 AS "L"
+		INNER JOIN 
+		:lt_level_group_id AS "R"
+	    ON  "L"."HOLDER" = "R"."GROUP_ID"
+	    AND "L"."ROOT"   = "R"."ROOT"
+		;
+		
+		SELECT COUNT(*) INTO lv_multiholding_flg FROM :lt_multiholding_org;
+		IF :lv_multiholding_flg > 0 THEN 
+			lt_multiholding_org_all =
+			SELECT "ORG_ID","HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" 
+			FROM :lt_multiholding_org_all
+			UNION 
+			SELECT "ORG_ID","HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" 
+			FROM :lt_multiholding_org;
+			
+			lt_result_multiholding = 
+		 	SELECT 
+		  	"R"."GROUP_ID",
+		 	:lv_distance AS "GRP_DET_LEVEL",
+		 	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+			"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+			"L"."GJAHR", "L"."GRP_DATE", 
+			"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+		 	FROM :lt_sh_full_level AS "L"
+		 	INNER JOIN
+		 	:lt_multiholding_org AS "R"
+		 	ON  "L"."ORG_ID" = "R"."ORG_ID"
+		 	AND "L"."HOLDER"  = "R"."HOLDER"
+		 	AND "L"."ROOT"    = "R"."ROOT" 	
+		 	;
+		 	
+		 	lt_total_result_multiholding = 
+		 	SELECT  
+		 	"GROUP_ID",
+		 	"GRP_DET_LEVEL",
+		 	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+			"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH",
+			"GJAHR", "GRP_DATE", 
+			"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+			FROM :lt_result_multiholding 
+			UNION 
+			SELECT  
+		 	"GROUP_ID",
+		 	"GRP_DET_LEVEL",
+		 	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+			"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH",
+			"GJAHR", "GRP_DATE", 
+			"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+			FROM :lt_total_result_multiholding;
+		
+		END IF;
+	-- add tracing organizations <--end
+
+	 	
+	 	lt_predecessor = SELECT * FROM :lt_result;
+	 	
+	 	SELECT count(*) INTO lv_flg FROM :lt_result;
+	 	WHILE :lv_flg>0 AND :lv_level < :lv_max_distance
+	 	DO
+	 	
+		 	lv_level := :lv_level + 1;
+		 	
+		-- get successors 
+		 	lt_successor =
+		 	SELECT
+		 	"P"."GROUP_ID",
+		 	:lv_distance AS "GRP_DET_LEVEL",
+		 	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+			"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+			"L"."GJAHR", "L"."GRP_DATE", 
+			"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+		 	FROM 
+		 	:lt_sh_full_level AS "L"
+		 	INNER JOIN 
+		 	:lt_predecessor AS "P"
+		 	ON  "L"."PARENT_ID" = "P"."ORG_ID"
+		 	AND "L"."ROOT" = "P"."ROOT"
+		 	WHERE "L"."INTEREST_PCT">50
+		 	;
+		
+	-- add tracing organizations-->start
+			lt_multiholding_org = 
+			SELECT DISTINCT "L"."ORG_ID","L"."HOLDER", "R"."GROUP_ID", "L"."ROOT", "L"."GJAHR", "L"."GRP_DATE" 
+			FROM 
+			(SELECT DISTINCT * FROM :lt_gt1_holder_gt50) AS "L"
+			INNER JOIN 
+			:lt_predecessor AS "R"
+		    ON  "L"."HOLDER"   = "R"."ORG_ID"
+		    AND "L"."ROOT"     = "R"."ROOT"
+			;
+			SELECT COUNT(*) INTO lv_multiholding_flg FROM :lt_multiholding_org;
+			    IF :lv_multiholding_flg > 0 THEN 
+				lt_multiholding_org_all =
+				SELECT "ORG_ID","HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" 
+				FROM :lt_multiholding_org_all
+				UNION 
+				SELECT "ORG_ID","HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" 
+				FROM :lt_multiholding_org;
+			
+				lt_result_multiholding = 
+			 	SELECT 
+			  	"R"."GROUP_ID",
+			 	:lv_distance AS "GRP_DET_LEVEL",
+			 	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+				"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+				"L"."GJAHR", "L"."GRP_DATE", 
+				"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+			 	FROM :lt_sh_full_level AS "L"
+			 	INNER JOIN
+			 	:lt_multiholding_org AS "R"
+			 	ON  "L"."ORG_ID" = "R"."ORG_ID"
+			 	AND "L"."HOLDER"  = "R"."HOLDER"
+			 	AND "L"."ROOT"    = "R"."ROOT" 	
+			 	;
+			
+			 	lt_total_result_multiholding = 
+			 	SELECT  
+			 	"GROUP_ID",
+			 	"GRP_DET_LEVEL",
+			 	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+				"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH",
+				"GJAHR", "GRP_DATE", 
+				"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+				FROM :lt_result_multiholding 
+				UNION 
+				SELECT  
+			 	"GROUP_ID",
+			 	"GRP_DET_LEVEL",
+			 	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+				"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH",
+				"GJAHR", "GRP_DATE", 
+				"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+				FROM :lt_total_result_multiholding;
+			
+			END IF;
+	-- add tracing organizations <--end
+/**	
+		-- --> cut sub-trees start 	
+		 	lt_successor_le50 =
+		 	SELECT
+		 	"P"."GROUP_ID",
+		 	:lv_distance AS "GRP_DET_LEVEL",
+		 	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+			"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+			"L"."GJAHR", "L"."GRP_DATE", 
+			"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+		 	FROM 
+		 	:lt_sh_full_level AS "L"
+		 	INNER JOIN 
+		 	:lt_predecessor AS "P"
+		 	ON  "L"."PARENT_ID" = "P"."ORG_ID"
+		 	AND "L"."ROOT" = "P"."ROOT"
+		 	WHERE "L"."INTEREST_PCT"<=50
+		 	;
+			
+		 	lt_subtree_org = 
+		 	SELECT DISTINCT "ORG_ID", "PARENT_ID", "ROOT" FROM :lt_sh_full_level  AS "L" 
+		 	WHERE 
+		 	EXISTS (
+		 		SELECT DISTINCT "ORG_ID", "ROOT"  FROM :lt_successor_le50 AS "R"
+		 		WHERE "L"."HOLDER" = "R"."ORG_ID"
+		 		  AND "L"."ROOT"    = "R"."ROOT"
+		 	)
+		 	;
+		 		
+		 	lt_sh_full_level = 
+		 	SELECT 
+		 	"L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+			"L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH",
+			"L"."GJAHR", "L"."GRP_DATE", 
+			"L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL"
+			FROM :lt_sh_full_level  AS "L" 
+			WHERE NOT EXISTS 
+			(
+			SELECT * FROM :lt_subtree_org AS "R"
+		 	WHERE "L"."ORG_ID" = "R"."ORG_ID"
+		 	  AND "L"."PARENT_ID" = "R"."PARENT_ID"
+		      AND "L"."ROOT"    = "R"."ROOT"
+		    )
+		 	;
+		-- <-- cut sub-trees end
+**/		 	
+		-- for successors: SELECT DISTINCT for duplicate paths: e.g. ROOT='ASCP017649287', GJAHR='2012'
+			lt_successor = SELECT DISTINCT * FROM :lt_successor;
+			
+		 	lt_result = SELECT * FROM :lt_successor UNION ALL SELECT * FROM :lt_result;
+		 	
+		 	SELECT count(*) INTO lv_flg FROM :lt_successor;
+		 	
+		 	lt_predecessor = SELECT * FROM :lt_successor;
+	
+	 	END WHILE; --loop for level
+	 			
+		lt_total_result = 
+		SELECT
+		"GROUP_ID","GRP_DET_LEVEL",
+	 	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+		"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH",
+		"GJAHR", "GRP_DATE", 
+		"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+		FROM :lt_total_result
+		UNION 
+		SELECT
+		"GROUP_ID",
+	 	:lv_distance AS "GRP_DET_LEVEL",
+	 	"ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+		"FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH",
+		"GJAHR", "GRP_DATE", 
+		"INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL"
+		FROM :lt_result;
+	 	
+	 	lv_distance := :lv_distance + 1;
+	 	
+		  
+	 END WHILE;
+	 	  
+	 	  lt_trc_org_all = 
+		  SELECT DISTINCT "ORG_ID", "HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" 
+		  FROM :lt_total_result_multiholding 
+		  WHERE "ROOT"<>'DUMMY'
+		    AND "FROM_HOLDER_DISTANCE" = 1 
+		    AND "INTEREST_PCT"<50
+		  ;
+		    
+	      lt_multiholding_org_all = 
+	      SELECT DISTINCT "ORG_ID", "HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" 
+		  FROM :lt_multiholding_org_all 
+		  WHERE "ROOT"<>'DUMMY'
+		  ;
+		  
+		  lt_output = 
+	 	  SELECT "INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL", "ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+		  "FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH", "GROUP_ID", "GRP_DET_LEVEL", "GJAHR", "GRP_DATE" 
+		  FROM :lt_total_result WHERE "ROOT"<>'DUMMY'
+		  UNION
+		  SELECT "INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL", "ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+		  "FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH", "GROUP_ID", "GRP_DET_LEVEL", "GJAHR", "GRP_DATE" 
+		  FROM :lt_total_result_multiholding WHERE "ROOT"<>'DUMMY'
+		  ;
+		    
+	 	  lt_sh_trc = 
+	 	  SELECT 
+		  "L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL", 
+		  "L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+		  "L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH", 
+		  CASE WHEN "R1"."HOLDER" IS NULL THEN 'N' ELSE 'Y' END AS "HAS_MULTI_HOLDING",
+		  CASE WHEN "R2"."HOLDER" IS NULL THEN 'N' ELSE 'Y' END AS "HAS_TRC",
+		  "L"."GROUP_ID", "L"."GRP_DET_LEVEL", 
+		  "L"."GJAHR", "L"."GRP_DATE" 
+		  FROM 
+		  (
+	 	  SELECT "INTEREST_PCT", "INTEREST_PCT_IND", "INTEREST_PCT_CAL", "ORG_ID", "PARENT_ID", "HOLDER", "ROOT", 
+		  "FROM_HOLDER_DISTANCE", "FROM_HOLDER_PATH", "GROUP_ID", "GRP_DET_LEVEL", "GJAHR", "GRP_DATE" 
+		  FROM :lt_output 
+		  ) AS "L"
+		  LEFT OUTER JOIN 
+		  (SELECT DISTINCT "ORG_ID", "HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" FROM :lt_multiholding_org_all) AS "R1"
+		  ON  "L"."ORG_ID"   = "R1"."ORG_ID"
+		  AND "L"."HOLDER"    = "R1"."HOLDER"
+		  AND "L"."GROUP_ID"  = "R1"."GROUP_ID"
+		  AND "L"."ROOT"      = "R1"."ROOT"
+		  AND "L"."GJAHR"  = "R1"."GJAHR"
+		  AND "L"."GRP_DATE"  = "R1"."GRP_DATE"
+		  LEFT OUTER JOIN 
+		  (SELECT DISTINCT "ORG_ID", "HOLDER", "GROUP_ID", "ROOT", "GJAHR", "GRP_DATE" FROM :lt_trc_org_all) AS "R2"
+		  ON  "L"."ORG_ID"   = "R2"."ORG_ID"
+		  AND "L"."HOLDER"    = "R2"."HOLDER"
+		  AND "L"."GROUP_ID"  = "R2"."GROUP_ID"
+		  AND "L"."ROOT"      = "R2"."ROOT"
+		  AND "L"."GJAHR"  = "R2"."GJAHR"
+		  AND "L"."GRP_DATE"  = "R2"."GRP_DATE"
+		  ;  
+		  
+		  lt_sh_trc_cnt = 
+		  SELECT "GROUP_ID", "GRP_DET_LEVEL", "ROOT", "GJAHR", "GRP_DATE", COUNT(*) AS "GRP_MEM_CNT" FROM :lt_sh_trc
+		  WHERE "GROUP_ID" LIKE 'ASCP%'
+		  GROUP BY "GROUP_ID", "GRP_DET_LEVEL", "ROOT", "GJAHR", "GRP_DATE"
+		  HAVING COUNT(*) = 1
+		  ;
+		  
+		  et_sh_trc = 
+		  SELECT 
+		  "L"."INTEREST_PCT", "L"."INTEREST_PCT_IND", "L"."INTEREST_PCT_CAL", 
+		  "L"."ORG_ID", "L"."PARENT_ID", "L"."HOLDER", "L"."ROOT", 
+		  "L"."FROM_HOLDER_DISTANCE", "L"."FROM_HOLDER_PATH", 
+		  "L"."HAS_MULTI_HOLDING",
+		  "L"."HAS_TRC",
+		  "L"."GROUP_ID", "L"."GRP_DET_LEVEL", 
+		  "L"."GJAHR", "L"."GRP_DATE" 
+		  FROM :lt_sh_trc AS "L"
+		  WHERE NOT EXISTS 
+		  (
+		  	SELECT * FROM :lt_sh_trc_cnt AS "R"
+		  	WHERE "L"."GROUP_ID"      = "R"."GROUP_ID"
+		  	  AND "L"."GRP_DET_LEVEL" = "R"."GRP_DET_LEVEL"
+		      AND "L"."ROOT"          = "R"."ROOT"
+		      AND "L"."GJAHR"      = "R"."GJAHR"
+		      AND "L"."GRP_DATE"      = "R"."GRP_DATE"
+		  )
+		  ;
+
+	 
+	 lt_group = 
+	SELECT DISTINCT "GJAHR", "GRP_DATE", "ORG_ID", "GROUP_ID" FROM :et_sh_trc
+	UNION
+	SELECT "GJAHR", "GRP_DATE", LEFT("GROUP_ID",10) AS "ORG_ID", "GROUP_ID" FROM :et_sh_trc WHERE "GROUP_ID" LIKE 'O%';
+
+et_group = 
+SELECT 
+"L"."GJAHR", 
+"L"."GRP_DATE", 
+LEFT("L"."ORG_ID",10) AS "ORG_ID", 
+CAST(HASH_MD5(TO_BINARY("L"."GROUP_ID")) AS NVARCHAR) AS "GROUP_ID", 
+LEFT("L"."GROUP_ID",255) AS "GROUP_DESCR",
+'SH' AS "GROUP_TYPE"
+FROM 
+:lt_group AS "L"
+INNER JOIN 
+(SELECT "GROUP_ID" FROM :lt_group GROUP BY "GROUP_ID" HAVING COUNT(*) > 1) AS "R"
+ON "L"."GROUP_ID" =  "R"."GROUP_ID"
+; 
+
+et_rbcorg = SELECT "GJAHR", "GRP_DATE", "ORG_ID" FROM :et_group WHERE "GROUP_ID" LIKE 'O%';
+	
+END

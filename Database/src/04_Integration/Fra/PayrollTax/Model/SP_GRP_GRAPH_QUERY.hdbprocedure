@@ -11,41 +11,127 @@ BEGIN
 
 IF :IV_GRAPH_ID IS NULL OR :IV_GRAPH_ID = '' THEN
 
-   LT_REL = 
-   SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
-   FROM 
-   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, '')
-   UNION
-   SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
-   FROM 
-   "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
-   UNION
-   SELECT  "ID" AS "CHILD_ID",  LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
-   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
-   ;
-  
+    IF :IV_REL_TYPE = 'SH' THEN 
+    
+    	ET_REL = 
+    	SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
+		FROM "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, 'ORD')
+    	;
+    
+    END IF;
+    
+    IF :IV_REL_TYPE = 'DR' THEN
+    
+    	ET_REL = 
+    	SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
+		FROM 
+		"osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
+		;
+		
+	END IF;
+    
+    IF :IV_REL_TYPE = 'IS' THEN
+    
+    	ET_REL = 
+	   SELECT  "ID" AS "CHILD_ID",  LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
+	   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
+    	;
+    	
+    END IF;
+    
+    IF :IV_REL_TYPE = '' OR  :IV_REL_TYPE IS NULL THEN
+    
+	   ET_REL = 
+	   SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
+	   FROM 
+	   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, 'ORD')
+	   UNION
+	   SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
+	   FROM 
+	   "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
+	   UNION
+	   SELECT  "ID" AS "CHILD_ID",  LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
+	   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
+	   ;
+	   
+	END IF;
+	
 ELSE
 
-   LT_REL = 
-   SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
-   FROM 
-   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, '')
-   UNION
-   SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
-   FROM 
-   "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
-   UNION
-   SELECT  "ID" AS "CHILD_ID", LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
-   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
-   ;
-   
+    IF :IV_REL_TYPE = 'SH' THEN 
+    
+    	ET_REL = 
+    	SELECT "REL_DATA"."CHILD_ID", "REL_DATA"."PARENT_ID", 'SH' AS "REL_TYPE", "REL_DATA"."INTEREST_PCT" 
+		FROM "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, 'ORD') AS "REL_DATA"
+		WHERE EXISTS (
+			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) AS "GRAPH"
+			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VERTEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
+			   --OR "REL_DATA"."PARENT_ID" = "GRAPH"."GRAPH_VERTEX_ID"
+		)
+    	;
+    
+    END IF;
+    
+    IF :IV_REL_TYPE = 'DR' THEN
+    
+    	ET_REL = 
+    	SELECT "REL_DATA"."CHILD_ID", "REL_DATA"."PARENT_ID", 'DR' AS "REL_TYPE", "REL_DATA"."INTEREST_PCT" 
+		FROM 
+		"osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE) AS "REL_DATA"
+		WHERE EXISTS (
+			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) AS "GRAPH"
+			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VERTEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
+			   --OR "REL_DATA"."PARENT_ID" = "GRAPH"."GRAPH_VERTEX_ID"
+		)
+		;
+		
+	END IF;
+    
+    IF :IV_REL_TYPE = 'IS' THEN
+    
+    	ET_REL = 
+		SELECT  "REL_DATA"."ID" AS "CHILD_ID",  LEFT("REL_DATA"."STATE_CODE",3) || '_' || "REL_DATA"."STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
+		FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE) AS "REL_DATA"
+		WHERE EXISTS (
+			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) AS "GRAPH"
+			WHERE "REL_DATA"."ID" = "GRAPH"."GRAPH_VERTEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
+			   --OR (LEFT("REL_DATA"."STATE_CODE",3) || '_' || "REL_DATA"."STATE_GROUP_ID") = "GRAPH"."GRAPH_VERTEX_ID"
+		)
+    	;
+    	
+    END IF;
+    
+    IF :IV_REL_TYPE = '' OR  :IV_REL_TYPE IS NULL THEN
+    
+	   LT_REL = 
+	   SELECT "CHILD_ID", "PARENT_ID", 'SH' AS "REL_TYPE", "INTEREST_PCT" 
+	   FROM 
+	   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, 'ORD')
+	   UNION
+	   SELECT "CHILD_ID", "PARENT_ID", 'DR' AS "REL_TYPE", "INTEREST_PCT" 
+	   FROM 
+	   "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
+	   UNION
+	   SELECT  "ID" AS "CHILD_ID",  LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
+	   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
+	   ;
+	   
+    	ET_REL = 
+		SELECT  "REL_DATA"."CHILD_ID",  "REL_DATA"."PARENT_ID", "REL_DATA"."REL_TYPE", "REL_DATA"."INTEREST_PCT" 
+		FROM :LT_REL AS "REL_DATA"
+		WHERE EXISTS (
+			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) AS "GRAPH"
+			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VERTEX_ID"
+			  AND "GRAPH"."GRAPH_ID" = :IV_GRAPH_ID
+			   --OR "REL_DATA"."PARENT_ID" = "GRAPH"."GRAPH_VERTEX_ID"
+		)
+    	;	   
+	   
+	END IF;
+	
 END IF;
 
-IF :IV_REL_TYPE IS NULL OR :IV_REL_TYPE = '' THEN
-	ET_REL = SELECT "CHILD_ID", "PARENT_ID", "REL_TYPE", "INTEREST_PCT" FROM :LT_REL;
-ELSE
-	ET_REL = SELECT "CHILD_ID", "PARENT_ID", "REL_TYPE", "INTEREST_PCT" FROM :LT_REL
-	WHERE "REL_TYPE" = :IV_REL_TYPE;
-END IF;
-   
 END

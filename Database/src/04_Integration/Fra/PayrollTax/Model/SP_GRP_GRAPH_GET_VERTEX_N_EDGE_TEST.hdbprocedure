@@ -1,4 +1,4 @@
-PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VETEX_N_EDGE"(
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VERTEX_N_EDGE_TEST"(
 	IN  IV_GRP_DATE        DATE,
 	IN	IV_MATCH_PERSON	   NVARCHAR(1),
 	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
@@ -13,9 +13,71 @@ DECLARE LV_ORG_PREFIX	NVARCHAR(1);
 DECLARE LV_PSN_PREFIX	NVARCHAR(1);
 DECLARE LV_PGP_PREFIX	NVARCHAR(1);
 
-LV_ORG_PREFIX := '1';
-LV_PSN_PREFIX := '2';
-LV_PGP_PREFIX := '0';
+
+LV_ORG_PREFIX := '0';
+LV_PSN_PREFIX := '1';
+LV_PGP_PREFIX := '2';
+
+LT_SH = 
+SELECT
+'000000011' AS "ORG_NUMBER",
+'O000000010' AS "PARENT_ID",
+'O000000011' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'000000012'AS "ORG_NUMBER",
+'O000000010' AS "PARENT_ID",
+'O000000012' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'000000010' AS "ORG_NUMBER",
+'O000000020' AS "PARENT_ID",
+'O000000010' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION 
+SELECT
+'000000020' AS "ORG_NUMBER",
+'P000000001' AS "PARENT_ID",
+'O000000020' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
+
+LT_DR = 
+SELECT
+'000000031' AS "ORG_NUMBER",
+'000000002' AS "PERSON_NUM",
+'O000000031' AS "CHILD_ID",
+'P000000002' AS "PARENT_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'000000032' AS "ORG_NUMBER",
+'000000002' AS "PERSON_NUM",
+'O000000032' AS "CHILD_ID",
+'P000000002' AS "PARENT_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'000000032' AS "ORG_NUMBER",
+'000000003' AS "PERSON_NUMBER",
+'O000000032' AS "CHILD_ID",
+'P000000003' AS "PARENT_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
+
+LT_PG = 
+SELECT
+'P000000002' AS "ID",
+'C000000001' AS "PGRP_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'P000000003' AS "ID",
+'C000000001' AS "PGRP_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
 
    LT_ELEMENT_REL = 
 -- shareholding relation
@@ -28,7 +90,7 @@ LV_PGP_PREFIX := '0';
    "CHILD_ID",
    "PARENT_ID"
    FROM 
-   "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:IV_GRP_DATE, 'ORD')
+   :LT_SH
    UNION
 -- director relation 
    SELECT 
@@ -37,7 +99,7 @@ LV_PGP_PREFIX := '0';
     "CHILD_ID",
     "PARENT_ID"
    FROM 
-   "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
+   :LT_DR
    ;
    
    IF :IV_MATCH_PERSON = 'Y' THEN
@@ -56,8 +118,8 @@ LV_PGP_PREFIX := '0';
     "ID" AS "CHILD_ID",
     "PGRP_ID" AS "PARENT_ID"
    FROM
-	"osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE, '')
-   ;
+	:LT_PG
+	;
    END IF;
    
    ET_ELEMENT = 

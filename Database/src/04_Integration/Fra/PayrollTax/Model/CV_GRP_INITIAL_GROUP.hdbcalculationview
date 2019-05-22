@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_INITIAL_GROUP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_GRP_INITIAL_GROUP"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTGRPI">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTGRPI</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.apps.acs.synonym::SAPACS.PRTGRPI">
+  <attributes>
+    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GRP_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GRP_DATE"/>
+    </attribute>
+    <attribute id="ORG_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_ID"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="ORG_ID"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="GROUP_TYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_TYPE"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GROUP_TYPE"/>
+    </attribute>
+    <attribute id="GROUP_DESCR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_DESCR"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GROUP_DESCR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

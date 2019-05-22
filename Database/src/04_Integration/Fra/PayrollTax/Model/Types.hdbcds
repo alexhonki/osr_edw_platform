@@ -21,6 +21,19 @@ context Types {
         GROUP_DESCR : String(255);
         GROUP_TYPE  : String(4);
     };
+    table type GroupSummaryT {
+        GJAHR                : String(4);
+        GRP_DATE             : LocalDate;
+        ORG_ID               : String(10);
+        GROUP_ID             : String(10);
+        ACN                  : String(9);
+        DR_GROUP_MEM         : String(1);
+        SH_GROUP_MEM         : String(1);
+        INTERSTATE_GROUP_MEM : String(1);
+        CCTRL_GROUP_MEM      : String(1);
+        RBC_GROUP_MEM        : String(1);
+        MEM_REL_BODY_CORP    : String(1);
+    };
     table type DisjointElementT {
         ELEMENT_NUM : Integer64;
         ELEMENT     : String(32);
@@ -56,7 +69,7 @@ context Types {
         };
         table type CCtrlPartitionT {
             PAR_MEM_CNT  : Integer64;
-            INTEREST_PCT : Double;
+            INTEREST_PCT : Decimal(5, 2);
             ORG_ID       : String(10);
             HOLDER       : String(255);
             ROW_NUM_W    : Integer64;
@@ -67,7 +80,7 @@ context Types {
             COMMON_CTRL_ENTITY   : String(255);
             CCTRL_ENTITY_CNT     : Integer;
             MAX_CCTRL_ENTITY_CNT : Integer;
-            INTEREST_PCT         : Double;
+            INTEREST_PCT         : Decimal(5, 2);
             INTEREST_PCT_DESCR   : String(100);
         };
         table type CCtrlEntityHolderT {
@@ -84,14 +97,14 @@ context Types {
             HLDG_START_DT  : LocalDate;
             HOLDING_END_DT : LocalDate;
             BENEF_FLAG     : String(1);
-            INTEREST_PCT   : Double;
-            HLDG_COUNT     : Double;
-            HLDG_COUNT_TOT : Double;
+            INTEREST_PCT   : Decimal(5, 2);
+            HLDG_COUNT     : Decimal(5, 2);
+            HLDG_COUNT_TOT : Decimal(5, 2);
         };
         table type ShareHoldingRelT {
-            INTEREST_PCT     : Double;
-            INTEREST_PCT_IND : Double;
-            INTEREST_PCT_CAL : Double;
+            INTEREST_PCT     : Decimal(5, 2);
+            INTEREST_PCT_IND : Decimal(5, 2);
+            INTEREST_PCT_CAL : Decimal(5, 2);
             ORG_ID           : String(10);
             PARENT_ID        : String(255);
             ROOT             : String(255);
@@ -103,15 +116,15 @@ context Types {
         table type DirectorRelT {
             ORG_ID       : String(10);
             DIRECTOR     : String(16);
-            INTEREST_PCT : Double;
+            INTEREST_PCT : Decimal(5, 2);
             DR_COUNT     : Integer;
             GJAHR        : String(4);
             GRP_DATE     : LocalDate;
         };
         table type HoldingFullT {
-            INTEREST_PCT         : Double;
-            INTEREST_PCT_IND     : Double;
-            INTEREST_PCT_CAL     : Double;
+            INTEREST_PCT         : Decimal(5, 2);
+            INTEREST_PCT_IND     : Decimal(5, 2);
+            INTEREST_PCT_CAL     : Decimal(5, 2);
             ORG_ID               : String(10);
             PARENT_ID            : String(255);
             HOLDER               : String(255);
@@ -131,9 +144,9 @@ context Types {
             GRP_DATE : LocalDate;
         };
         table type HoldingFullTrcT {
-            INTEREST_PCT         : Double;
-            INTEREST_PCT_IND     : Double;
-            INTEREST_PCT_CAL     : Double;
+            INTEREST_PCT         : Decimal(5, 2);
+            INTEREST_PCT_IND     : Decimal(5, 2);
+            INTEREST_PCT_CAL     : Decimal(5, 2);
             ORG_ID               : String(10);
             PARENT_ID            : String(255);
             HOLDER               : String(255);
@@ -148,11 +161,10 @@ context Types {
             GRP_DATE             : LocalDate;
         };
         table type PersonGroupT {
-            PERSON_ID        : String(10);
-            PGRP_KEY         : String(16);
-            PGRP_RULE        : String(10);
-            PERSON_FULL_NAME : String(255);
-            PERSON_NAME      : String(255);
+            "ID"         : String(10);
+            "PERSON_NUM" : String(9);
+            "PGRP_ID"    : String(10);
+            "PGRP_DESCR" : String(1000);
         };
         table type OrgNumT {
             GJAHR       : String(4);

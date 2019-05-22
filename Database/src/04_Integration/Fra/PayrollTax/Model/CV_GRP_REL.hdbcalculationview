@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_REL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Group get relationships"/>
+<localVariables>
+  <variable id="IP_GRP_DATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="DATE" mandatory="false" defaultExpressionLanguage="SQL">
+      <valueDomain type="Date"/>
+      <selection multiLine="false" type="Single"/>
+      <defaultRange/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.model::TF_GRP_REL">
+    <targetVariable name="IV_GRP_DATE" resourceUri="osr.edw.platform.fra.prt.model::TF_GRP_REL"/>
+    <localVariable>IP_GRP_DATE</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.model::TF_GRP_REL" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_REL</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="CHILD_ID">
+        <descriptions defaultDescription="CHILD_ID"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_ID">
+        <descriptions defaultDescription="PARENT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="REL_TYPE">
+        <descriptions defaultDescription="REL_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="INTEREST_PCT">
+        <descriptions defaultDescription="INTEREST_PCT"/>
+      </viewAttribute>
+      <viewAttribute id="REL_END_DATE">
+        <descriptions defaultDescription="REL_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="BENEF_FLAG">
+        <descriptions defaultDescription="BENEF_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="REL_START_DATE">
+        <descriptions defaultDescription="REL_START_DATE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.platform.fra.prt.model::TF_GRP_REL">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHILD_ID" source="CHILD_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_ID" source="PARENT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REL_TYPE" source="REL_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INTEREST_PCT" source="INTEREST_PCT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REL_END_DATE" source="REL_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BENEF_FLAG" source="BENEF_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REL_START_DATE" source="REL_START_DATE"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="CHILD_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHILD_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHILD_ID"/>
+    </attribute>
+    <attribute id="PARENT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARENT_ID"/>
+    </attribute>
+    <attribute id="REL_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REL_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REL_TYPE"/>
+    </attribute>
+    <attribute id="REL_START_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REL_START_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REL_START_DATE"/>
+    </attribute>
+    <attribute id="REL_END_DATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REL_END_DATE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="REL_END_DATE"/>
+    </attribute>
+    <attribute id="BENEF_FLAG" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BENEF_FLAG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BENEF_FLAG"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="INTEREST_PCT" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="INTEREST_PCT"/>
+      <measureMapping columnObjectName="Projection_1" columnName="INTEREST_PCT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

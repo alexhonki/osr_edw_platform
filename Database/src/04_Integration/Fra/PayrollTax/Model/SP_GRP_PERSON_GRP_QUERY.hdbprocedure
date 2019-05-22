@@ -1,0 +1,26 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_PERSON_GRP_QUERY"(
+	IN	IV_GRP_DATE 		DATE ,
+	OUT ET_PERSON_GRP		"osr.edw.platform.fra.prt.model::Types.ASIC.PersonGroupT"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   AS
+BEGIN
+
+DECLARE LV_GRP_DATE DATE;
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+ET_PERSON_GRP = 
+SELECT 
+"ID",
+"PERSON_NUM",
+"PGRP_ID",
+"PGRP_DESCR"
+FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:LV_GRP_DATE, '');
+
+END

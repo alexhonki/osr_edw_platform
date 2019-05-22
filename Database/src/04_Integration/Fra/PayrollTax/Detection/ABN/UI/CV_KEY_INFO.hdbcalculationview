@@ -120,6 +120,10 @@
       <viewAttribute id="TPAR_WAGE_GT">
         <descriptions defaultDescription="TPAR_WAGE_GT"/>
       </viewAttribute>
+    
+      <viewAttribute id="TRA_WITH_RANGE">
+        <descriptions defaultDescription="TRA_WITH_RANGE"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -158,6 +162,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="APP_WITH_RANGE" source="APP_WITH_RANGE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="IS_A_TRUST" source="IS_A_TRUST"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TPAR_WAGE_GT" source="TPAR_WAGE_GT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="TRA_WITH_RANGE" source="TRA_WITH_RANGE"/>
     </input></calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
@@ -274,6 +280,11 @@
     <attribute id="TPAR_WAGE_GT" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TPAR_WAGE_GT"/>
       <keyMapping columnObjectName="Projection_1" columnName="TPAR_WAGE_GT"/>
+    </attribute>
+  
+    <attribute id="TRA_WITH_RANGE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRA_WITH_RANGE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TRA_WITH_RANGE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
