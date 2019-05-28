@@ -37,7 +37,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    CASE 
 	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
 	    ELSE "L"."PARENT_ID"
-	    END AS "GROUP_ID"
+	    END AS "DIRECTOR"
 	    FROM
 	    :LT_REL AS "L" 
 	    LEFT OUTER JOIN 
@@ -49,7 +49,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    LT_DR = 
 		SELECT
 		"CHILD_ID" AS "ORG_ID",
-	    "PARENT_ID" AS "GROUP_ID"
+	    "PARENT_ID" AS "DIRECTOR"
 	    FROM
 	    :LT_REL
 		WHERE "REL_TYPE" = 'DR'
@@ -57,23 +57,35 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    
 	END IF;
 	
-	--remove duplicates
-	LT_DR = SELECT DISTINCT "ORG_ID", "GROUP_ID" FROM :LT_DR;
+-- remove duplicates
+	LT_DR = SELECT DISTINCT "ORG_ID", "DIRECTOR" FROM :LT_DR;
 	
-	LT_DR_GRP = 
-	SELECT "GROUP_ID", COUNT(*) AS "CNT" FROM :LT_DR GROUP BY "GROUP_ID" HAVING COUNT(*) > 1;
+-- How many directors for this organisation
+	lt_org_dr_cnt = 
+	SELECT "ORG_ID", COUNT(*) AS "DR_COUNT" FROM :LT_DR GROUP BY "ORG_ID";
 	
-	LT_DR = 
+	lt_dr_rel = 
 	SELECT 
 	"L"."ORG_ID", 
-	"L"."GROUP_ID"
-	FROM :LT_DR AS "L"
-	WHERE EXISTS (
-		SELECT * FROM :LT_DR_GRP AS "R" 
-			WHERE "L"."GROUP_ID" = "R"."GROUP_ID"
-	)
-	;
+	"L"."DIRECTOR", 
+	CASE WHEN "R"."DR_COUNT" <=1000 THEN TO_DOUBLE(100/"R"."DR_COUNT") ELSE 0 END AS "INTEREST_PCT", "R"."DR_COUNT"
+	FROM :LT_DR AS "L" INNER JOIN :lt_org_dr_cnt AS "R"
+	ON "L"."ORG_ID" = "R"."ORG_ID";
 	
+	LT_DR_REL_W_FULL_OWNERSHIP = SELECT * FROM :lt_dr_rel WHERE "DR_COUNT" = 1;
+
+ LT_GROUP = 
+ SELECT 
+ "L"."ORG_ID" AS "ORG_ID",
+ "L"."DIRECTOR" AS "GROUP_ID" 
+ FROM 
+ :LT_DR_REL_W_FULL_OWNERSHIP AS "L"
+ INNER JOIN 
+ (SELECT "DIRECTOR" FROM :LT_DR_REL_W_FULL_OWNERSHIP GROUP BY "DIRECTOR" HAVING COUNT(*) > 1) AS "R"
+ ON "L"."DIRECTOR" =  "R"."DIRECTOR"
+ ; 
+
+
 	ET_GROUP = 
 	SELECT 
 	:LV_GJAHR AS "GJAHR",
@@ -82,6 +94,6 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
 	"GROUP_ID" AS "GROUP_DESCR",
 	'DR' AS "GROUP_TYPE"
-	FROM :LT_DR;
+	FROM :LT_GROUP;
 	
 END

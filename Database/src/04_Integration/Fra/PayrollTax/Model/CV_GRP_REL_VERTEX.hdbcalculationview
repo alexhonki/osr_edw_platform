@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_REL_VERTEX" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" propagateInstantiation="true">
+<descriptions defaultDescription="CV_GRP_REL_VERTEX"/>
+<localVariables>
+  <variable id="IP_GRP_DATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="DATE" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="Single"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_PERSON_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_PERSON_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="NAME"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+  
+    <input node="Join_1" emptyUnionBehavior="NO_ROW">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+    </input>
+  
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Person">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME1">
+        <descriptions defaultDescription="GIVEN_NAME1"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME2">
+        <descriptions defaultDescription="GIVEN_NAME2"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME3">
+        <descriptions defaultDescription="GIVEN_NAME3"/>
+      </viewAttribute>
+      <viewAttribute id="SURNAME">
+        <descriptions defaultDescription="SURNAME"/>
+      </viewAttribute>
+    
+      <viewAttribute id="PERS_START_DT">
+        <descriptions defaultDescription="PERS_START_DT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="NAME" datatype="NVARCHAR" length="200" expressionLanguage="SQL">
+        <formula>IFNULL(&quot;GIVEN_NAME1&quot;,'')  || ' ' || IFNULL(&quot;GIVEN_NAME2&quot;,'')  || ' ' || IFNULL(&quot;GIVEN_NAME3&quot;,'') || ' ' || IFNULL(&quot;SURNAME&quot;,'')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.asic.proxy::TF_PERSON_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME1" source="GIVEN_NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME2" source="GIVEN_NAME2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME3" source="GIVEN_NAME3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SURNAME" source="SURNAME"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DT" source="PERS_START_DT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="ORG_NAME"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$ID$ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ID" source="ID"/>
+    </input>
+    <input node="Projection_Org">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ID" source="ID"/>
+    </input>
+    <joinAttribute name="JOIN$ID$ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_Org" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="ORG_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_START_DT">
+        <descriptions defaultDescription="ORG_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_END_DT">
+        <descriptions defaultDescription="ORG_END_DT"/>
+      </viewAttribute>
+    
+      <viewAttribute id="ORG_STATUS">
+        <descriptions defaultDescription="ORG_STATUS"/>
+      </viewAttribute>
+    
+      <viewAttribute id="REGN_END_DT">
+        <descriptions defaultDescription="REGN_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_START_DT">
+        <descriptions defaultDescription="REGN_START_DT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="ORG_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_START_DT" source="ORG_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_END_DT" source="ORG_END_DT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="ORG_STATUS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
+    </input>
+    <filter>'$$IP_GRP_DATE$$' &gt;= &quot;ORG_START_DT&quot; AND 
+'$$IP_GRP_DATE$$' &lt;= &quot;ORG_END_DT&quot; AND 
+'$$IP_GRP_DATE$$' &gt;= &quot;REGN_START_DT&quot; AND 
+'$$IP_GRP_DATE$$' &lt;= &quot;REGN_END_DT&quot; AND 
+&quot;ORG_STATUS&quot; = 'REGD'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1" ignoreMultipleOutputsForFilter="true">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute aggregationType="max" id="ORG_END_DT">
+        <descriptions defaultDescription="ORG_END_DT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Org">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_END_DT" source="ORG_END_DT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute aggregationType="max" id="PERS_START_DT">
+        <descriptions defaultDescription="PERS_START_DT"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Person">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DT" source="PERS_START_DT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="NAME"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_Person">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+    </input>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+    </input>
+    <joinAttribute name="ID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Union_1">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="Union_1" columnName="ID"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="Union_1" columnName="NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="320.1035045717855" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="320.1035045717855" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_Person" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="347.7775211133805" y="641.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="153.66666607062027" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_Org" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_Org" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="641.9999964237213"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="180.33333273728695" y="516.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="411.333331545194" y="516.9999976158142"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="364.1206476934781" y="370.3333321412404"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_Person" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
