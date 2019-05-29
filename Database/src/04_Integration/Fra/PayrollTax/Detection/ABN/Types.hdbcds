@@ -25,6 +25,7 @@ context Types {
             ATO_ITR_SALARY_WAGES         : Decimal(15, 2);
             WCQ_ACT_WAGES                : Decimal(15, 2);
             WAERS                        : String(5);
+            GROUP_ID                     : String(32);
         };
         table type data_wage_keys {
             ABN             : String(11);
@@ -56,6 +57,7 @@ context Types {
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
+            GROUP_ID        : String(32);
         };
 
         entity param_bp_reg {
@@ -64,11 +66,19 @@ context Types {
             FLAG_NEW_REGISTRATION : String(1);
         };
 
+        table type data_irv {
+            ABN             : String(11);
+            PERIOD_CATEGORY : String(10);
+            PERIOD_KEY      : String(4);
+            GJAHR           : String(4);
+            GROUP_ID        : String(32);
+        };
         table type data_qld_nexus {
             ABN             : String(11);
             PERIOD_CATEGORY : String(10);
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
+            GROUP_ID        : String(32);
         };
         table type param_qld_nexus {
             RUN_MODE              : String(1);
@@ -144,6 +154,7 @@ context Types {
             ASIC_ORG_STATUS      : String(10);
             ASIC_REGD            : String(1);
             SUP_GOV_EXMPT_ANZSIC : String(1);
+            GROUP_ID             : String(32);
         };
         table type param_data_exclusions {
             PT_ID_ROLE_DATE           : hana.VARCHAR(8);
@@ -161,7 +172,7 @@ context Types {
             ID_ROLE                   : String(1);
             PT_CASE_DATE              : String(8);
             PT_CASE                   : String(1);
-            FLAG_EXM_CASE			  : String(1);
+            FLAG_EXM_CASE             : String(1);
             FLAG_ABR_ACNC             : String(1);
             FLAG_ASIC_REGD            : String(1);
             FLAG_SUP_GOV_EXMPT_ANZSIC : String(1);

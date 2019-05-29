@@ -1,6 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectIRV"(
   	IN   it_workset    				"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
-  	OUT  et_data_for_rule    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws"
+  	OUT  et_data_for_rule    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_irv"
 ) 
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -12,7 +12,8 @@ SELECT
 "WS"."ABN" AS "ABN",
 "WS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
 "WS"."PERIOD_KEY" AS "PERIOD_KEY",
-"WS"."GJAHR" AS "GJAHR"
+"WS"."GJAHR" AS "GJAHR",
+'' AS "GROUP_ID"
 FROM 
 :it_workset AS "WS"
 ;
