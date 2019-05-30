@@ -1,166 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_NIND_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_ITR_NIND_WAGES_DETAIL"/>
 <localVariables/>
-<variableMappings>
-  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL" value="NULL">
-    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL"/>
-  </mapping>
-</variableMappings>
+<variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
-    <viewAttributes>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="SALARY_WAGES">
-        <descriptions defaultDescription="SALARY_WAGES"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="SUPER_EXPNS">
-        <descriptions defaultDescription="SUPER_EXPNS"/>
-      </viewAttribute>
-      <viewAttribute id="TOT_SAL_WAGES_SUPER">
-        <descriptions defaultDescription="TOT_SAL_WAGES_SUPER"/>
-      </viewAttribute>
-      <viewAttribute id="CONTRACTORS_PMNTS">
-        <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
-      </viewAttribute>
-      <viewAttribute id="PMNTS_TO_ASSOCS">
-        <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
-      </viewAttribute>
-      <viewAttribute id="WAERS">
-        <descriptions defaultDescription="WAERS"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="INCM_YR">
-        <descriptions defaultDescription="INCM_YR"/>
-      </viewAttribute>
-    
-      <viewAttribute id="TOTAL_WAGES">
-        <descriptions defaultDescription="TOTAL_WAGES"/>
-      </viewAttribute>
-    
-      <viewAttribute id="DB_KEY_DASH">
-        <descriptions defaultDescription="DB_KEY_DASH"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SALARY_WAGES" source="SALARY_WAGES"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SUPER_EXPNS" source="SUPER_EXPNS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TOT_SAL_WAGES_SUPER" source="TOT_SAL_WAGES_SUPER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CONTRACTORS_PMNTS" source="CONTRACTORS_PMNTS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PMNTS_TO_ASSOCS" source="PMNTS_TO_ASSOCS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCM_YR" source="INCM_YR"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="TOTAL_WAGES" source="TOTAL_WAGES"/>
-    
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-    </input></calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_NIND_WAGES_DETAIL">
   <attributes>
     <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="DB_KEY_DASH"/>
     </attribute>
     <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Alert ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="WAERS" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
-    </attribute>
-    <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="ABN"/>
     </attribute>
-    <attribute id="INCM_YR" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Fiscal Year"/>
-      <keyMapping columnObjectName="Projection_1" columnName="INCM_YR"/>
-    </attribute>
-  
-    <attribute id="DB_KEY_DASH" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DB_KEY_DASH"/>
-  
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
-  
-    </attribute>
-    <attribute id="GJAHR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="GJAHR"/>
     </attribute>
-  </attributes>
-  <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="SALARY_WAGES" order="2" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Salary and Wages"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="SALARY_WAGES"/>
-    </measure>
-    <measure id="SUPER_EXPNS" order="4" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Superannuation Expenses"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="SUPER_EXPNS"/>
-    </measure>
-    <measure id="TOT_SAL_WAGES_SUPER" order="5" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Total Salary Wages + Super"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOT_SAL_WAGES_SUPER"/>
-    </measure>
-    <measure id="CONTRACTORS_PMNTS" order="6" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Contractor Payments"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="CONTRACTORS_PMNTS"/>
-    </measure>
   
-    <measure id="TOTAL_WAGES" order="10" semanticType="amount" aggregationType="sum" measureType="amount">
-      <descriptions defaultDescription="Total Wages"/>
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTAL_WAGES"/>
-    </measure>
-  
-    <measure id="PMNTS_TO_ASSOCS" order="13" aggregationType="sum" measureType="amount" semanticType="amount">
+    <attribute id="INCM_YR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCM_YR"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="INCM_YR"/>
+    </attribute>
+    <attribute id="SALARY_WAGES" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SALARY_WAGES"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="SALARY_WAGES"/>
+    </attribute>
+    <attribute id="SUPER_EXPNS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPER_EXPNS"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="SUPER_EXPNS"/>
+    </attribute>
+    <attribute id="TOT_SAL_WAGES_SUPER" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOT_SAL_WAGES_SUPER"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="TOT_SAL_WAGES_SUPER"/>
+    </attribute>
+    <attribute id="CONTRACTORS_PMNTS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONTRACTORS_PMNTS"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="CONTRACTORS_PMNTS"/>
+    </attribute>
+    <attribute id="PMNTS_TO_ASSOCS" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PMNTS_TO_ASSOCS"/>
-  
-      <unitCurrencyAttribute attributeName="WAERS"/>
-      <measureMapping columnObjectName="Projection_1" columnName="PMNTS_TO_ASSOCS"/>
-    </measure>
-  </baseMeasures>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="PMNTS_TO_ASSOCS"/>
+    </attribute>
+    <attribute id="TOTAL_WAGES" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_WAGES"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="TOTAL_WAGES"/>
+    </attribute>
+    <attribute id="WAERS" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_NIND_WAGES_DETAIL" columnName="WAERS"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="78" y="236"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

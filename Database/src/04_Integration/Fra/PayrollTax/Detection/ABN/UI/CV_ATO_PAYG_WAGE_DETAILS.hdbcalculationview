@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_PAYG_WAGE_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_PAYG_WAGE_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_PAYG_WAGE_DETAILS"/>
 <localVariables/>
 <variableMappings>
@@ -15,66 +15,66 @@
 <calculationViews/>
 <logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_WAGE_DETAILS">
   <attributes>
-    <attribute id="DB_KEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
       <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="DB_KEY"/>
     </attribute>
-    <attribute id="WAERS" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="WAERS"/>
-    </attribute>
-    <attribute id="DB_KEY_DASH" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY_DASH"/>
       <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="INCM_YR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INCM_YR"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="INCM_YR"/>
     </attribute>
     <attribute id="BUS_STATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUS_STATE"/>
       <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="BUS_STATE"/>
     </attribute>
-    <attribute id="ALERT_ID" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="ALERT_ID"/>
-    </attribute>
-    <attribute id="INCM_YR" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="INCM_YR"/>
-      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="INCM_YR"/>
-    </attribute>
-    <attribute id="ABN" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="ABN"/>
-    </attribute>
-    <attribute id="GJAHR" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="GJAHR"/>
-    </attribute>
-  </attributes>
-  <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="TOTL_LUMP_AMT" order="1" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="TOTL_LUMP_AMT"/>
-      <measureMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="TOTL_LUMP_AMT"/>
-    </measure>
-    <measure id="TOTL_ALWNC_AMT" order="2" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="TOTL_ALWNC_AMT"/>
-      <measureMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="TOTL_ALWNC_AMT"/>
-    </measure>
-    <measure id="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" order="3" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
-      <measureMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
-    </measure>
-    <measure id="PMT_SMRY_CNT" order="11" aggregationType="sum" measureType="simple">
+    <attribute id="PMT_SMRY_CNT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PMT_SMRY_CNT"/>
-      <measureMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="PMT_SMRY_CNT"/>
-    </measure>
-    <measure id="TOTL_GRS_AMT" order="13" aggregationType="sum" measureType="simple">
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="PMT_SMRY_CNT"/>
+    </attribute>
+  
+    <attribute id="TOTL_GRS_AMT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TOTL_GRS_AMT"/>
-      <measureMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="TOTL_GRS_AMT"/>
-    </measure>
-  </baseMeasures>
+  
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="TOTL_GRS_AMT"/>
+  
+    </attribute>
+  
+    <attribute id="TOTL_ALWNC_AMT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTL_ALWNC_AMT"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="TOTL_ALWNC_AMT"/>
+    </attribute>
+    <attribute id="TOTL_LUMP_AMT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTL_LUMP_AMT"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="TOTL_LUMP_AMT"/>
+    </attribute>
+    <attribute id="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"/>
+    </attribute>
+    <attribute id="WAERS" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_ATO_PAYG_WAGE_DETAILS" columnName="WAERS"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">

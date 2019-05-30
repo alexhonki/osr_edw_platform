@@ -1,135 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_BAS_NIND_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_BAS_NIND_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ATO_BAS_NIND_WAGES_DETAIL"/>
 <localVariables/>
-<variableMappings>
-  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_WAGES_DETAIL" value="NULL">
-    <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_WAGES_DETAIL"/>
-  </mapping>
-</variableMappings>
+<variableMappings/>
 <dataSources>
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_WAGES_DETAIL" type="TABLE_FUNCTION">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_WAGES_DETAIL</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
-    <viewAttributes>
-      <viewAttribute id="DB_KEY">
-        <descriptions defaultDescription="DB_KEY"/>
-      </viewAttribute>
-      <viewAttribute id="DB_KEY_DASH">
-        <descriptions defaultDescription="DB_KEY_DASH"/>
-      </viewAttribute>
-      <viewAttribute id="ALERT_ID">
-        <descriptions defaultDescription="ALERT_ID"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="WAERS">
-        <descriptions defaultDescription="WAERS"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="TOTL_PMT_FOR_WRK_AMT">
-        <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
-      </viewAttribute>
-      <viewAttribute id="PMT_FOR_WRK_IT_WHDG_AMT">
-        <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
-      </viewAttribute>
-      <viewAttribute id="FBT_INST_AMT">
-        <descriptions defaultDescription="FBT_INST_AMT"/>
-      </viewAttribute>
-      <viewAttribute id="TOTALWAGESPLUS9PERSUPER">
-        <descriptions defaultDescription="TOTALWAGESPLUS9PERSUPER"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_WAGES_DETAIL">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR" source="FINANCIAL_YEAR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TOTL_PMT_FOR_WRK_AMT" source="TOTL_PMT_FOR_WRK_AMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PMT_FOR_WRK_IT_WHDG_AMT" source="PMT_FOR_WRK_IT_WHDG_AMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FBT_INST_AMT" source="FBT_INST_AMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TOTALWAGESPLUS9PERSUPER" source="TOTALWAGESPLUS9PERSUPER"/>
-    </input>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_BAS_NIND_WAGES_DETAIL">
   <attributes>
     <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="DB_KEY"/>
     </attribute>
     <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY_DASH"/>
-      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="DB_KEY_DASH"/>
     </attribute>
     <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ALERT_ID"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="ALERT_ID"/>
     </attribute>
     <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ABN"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="ABN"/>
     </attribute>
     <attribute id="WAERS" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="WAERS"/>
     </attribute>
     <attribute id="GJAHR" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="GJAHR"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="GJAHR"/>
     </attribute>
     <attribute id="FINANCIAL_YEAR" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="FINANCIAL_YEAR"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="FINANCIAL_YEAR"/>
+    </attribute>
+    <attribute id="BAS_QTR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BAS_QTR"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="BAS_QTR"/>
+    </attribute>
+    <attribute id="TOTL_PMT_FOR_WRK_AMT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="TOTL_PMT_FOR_WRK_AMT"/>
+    </attribute>
+    <attribute id="PMT_FOR_WRK_IT_WHDG_AMT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="PMT_FOR_WRK_IT_WHDG_AMT"/>
+    </attribute>
+    <attribute id="FBT_INST_AMT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBT_INST_AMT"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="FBT_INST_AMT"/>
+    </attribute>
+    <attribute id="TOTALWAGESPLUS9PERSUPER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTALWAGESPLUS9PERSUPER"/>
+      <keyMapping columnObjectName="TF_ATO_BAS_NIND_WAGES_DETAIL" columnName="TOTALWAGESPLUS9PERSUPER"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="TOTL_PMT_FOR_WRK_AMT" order="8" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="TOTL_PMT_FOR_WRK_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTL_PMT_FOR_WRK_AMT"/>
-    </measure>
-    <measure id="PMT_FOR_WRK_IT_WHDG_AMT" order="9" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="PMT_FOR_WRK_IT_WHDG_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="PMT_FOR_WRK_IT_WHDG_AMT"/>
-    </measure>
-    <measure id="FBT_INST_AMT" order="10" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="FBT_INST_AMT"/>
-      <measureMapping columnObjectName="Projection_1" columnName="FBT_INST_AMT"/>
-    </measure>
-    <measure id="TOTALWAGESPLUS9PERSUPER" order="11" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="TOTALWAGESPLUS9PERSUPER"/>
-      <measureMapping columnObjectName="Projection_1" columnName="TOTALWAGESPLUS9PERSUPER"/>
-    </measure>
-  </baseMeasures>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="94" y="231"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+      <upperLeftCorner x="94" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
