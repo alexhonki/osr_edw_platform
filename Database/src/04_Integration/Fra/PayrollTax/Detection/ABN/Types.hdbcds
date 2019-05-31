@@ -33,6 +33,13 @@ context Types {
             PERIOD_KEY      : String(4);
             GJAHR           : String(4);
         };
+        table type param_grp_exceeding {
+            RUN_MODE         : String(1);
+            THRESHOLD_YEARLY : Decimal(15, 2);
+            FLAG_ATO         : String(1);
+            FLAG_WCQ         : String(1);
+            FLAG_INTERSTATE  : String(1);
+        };
         table type param_approaching {
             RUN_MODE          : String(1);
             ATO_BAS_WAGE_LOW  : Decimal(15, 2);
