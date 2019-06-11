@@ -21,7 +21,13 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"(IN
 			DATE_OF_BIRTH             DAYDATE, 
 			GIVEN_NAME                NVARCHAR(30), 
 			MIDDLE_NAME               NVARCHAR(30), 
-			SURNAME                   NVARCHAR(30)
+			SURNAME                   NVARCHAR(30),
+			QUALIFICATION_LEVEL		  NVARCHAR(60),
+			QUALIFICATION_TITLE		  NVARCHAR(100)	,
+			COMMENCEMENT_STATUS		  INTEGER	,
+			SRTO_NAME				  NVARCHAR(200)	,
+			REG_NUMBER				  NVARCHAR(30)	
+
 		)
 
 
@@ -72,12 +78,15 @@ DESBT_DATA =
                 	TO_DATS("DATE_OF_BIRTH")			AS "DATE_OF_BIRTH", 
                 	"GIVEN_NAME", 
                 	"MIDDLE_NAME", 
-                	"SURNAME"
+                	"SURNAME",
+                	"QUALIFICATION_LEVEL",
+					"QUALIFICATION_TITLE",
+					"COMMENCEMENT_STATUS",
+					"SRTO_NAME",
+                	TO_NVARCHAR("REG_NUMBER")   AS "REG_NUMBER"
 				FROM "osr.edw.staging.md.desbt.synonym::CDS_ORG.DSO.TRAINING.active_data"
 				WHERE	"TRAINING_AGREEMENT_TYPE"	IN ('A', 'T')
 				AND 	"ABN"						IN (SELECT "ABN"     FROM :ALERT_INFO )
---          	AND       TO_DATS("COMMENCEMENT_DATE")    <=  CONCAT((SELECT DISTINCT MAX("GJAHR") FROM :ALERT_INFO ), '0630')
---          	AND TO_DATS("NOMINAL_COMPLETION_DATE")             >=  CONCAT(TO_NVARCHAR(TO_INT((SELECT DISTINCT MIN("GJAHR") FROM :ALERT_INFO ) - 1)), '0701')
 
 
 ;
@@ -104,8 +113,13 @@ RETURN
 					CASE WHEN "NOMINAL_COMPLETION_DATE" IS NOT NULL AND "NOMINAL_COMPLETION_DATE" <> '' THEN TO_DATE("NOMINAL_COMPLETION_DATE") ELSE NULL END AS "NOMINAL_COMPLETION_DATE",
 					CASE WHEN "DATE_OF_BIRTH" IS NOT NULL AND "DATE_OF_BIRTH" <> '' THEN TO_DATE("DATE_OF_BIRTH") ELSE NULL END AS "DATE_OF_BIRTH",               
                     "GIVEN_NAME", 
-                   "MIDDLE_NAME", 
-                   "SURNAME"
+                    "MIDDLE_NAME", 
+                    "SURNAME",
+                	"QUALIFICATION_LEVEL",
+					"QUALIFICATION_TITLE",
+					"COMMENCEMENT_STATUS",
+					"SRTO_NAME",
+                	"REG_NUMBER"
 				FROM
 				(                              
                 	SELECT
@@ -124,12 +138,20 @@ RETURN
                        "B"."DATE_OF_BIRTH", 
                        "B"."GIVEN_NAME", 
                        "B"."MIDDLE_NAME", 
-                       "B"."SURNAME"
+                       "B"."SURNAME",
+                       "B"."QUALIFICATION_LEVEL",
+					   "B"."QUALIFICATION_TITLE",
+					   "B"."COMMENCEMENT_STATUS",
+					   "B"."SRTO_NAME",
+                       "B"."REG_NUMBER"
+
+
 					FROM		:ALERT_INFO 	AS "A"
 					INNER JOIN	:DESBT_DATA 	AS "B"
 					ON			 "A"."ABN"  	= "B"."ABN"
 
 				)
+				ORDER BY "ALERT_ID" ASC , "STATUS_DESC" ASC, "TRAINING_AGREEMENT_TYPE" ASC,"REG_NUMBER" DESC, "COMMENCEMENT_DATE" DESC
 				;
 
 END;      
