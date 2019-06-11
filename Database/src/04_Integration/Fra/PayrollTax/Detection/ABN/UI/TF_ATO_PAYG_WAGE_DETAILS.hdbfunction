@@ -8,8 +8,8 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_PAYG_WAGE_DETAILS"(IN IP_AL
 			GJAHR								NVARCHAR(4)		,
 			BUS_STATE							NVARCHAR(3) 	,			
 			INCM_YR 							NVARCHAR(4)		,
-			PMT_SMRY_CNT						INTEGER			,
-			TOTL_GRS_AMT						DECIMAL(15,2)	,
+			PMT_SMRY_CNT						INTEGER         ,
+			TOTL_GRS_AMT					    DECIMAL(15,2)	,
 			TOTL_LUMP_AMT						DECIMAL(15,2)	,
 			TOTL_ALWNC_AMT						DECIMAL(15,2)	,
 			RPRTBL_EMPLYR_SUPER_CNTRBN_AMT		DECIMAL(15,2)   ,
@@ -21,6 +21,9 @@ BEGIN
     /*****************************
         Write your function logic
     ****************************/
+    
+    
+/*    
  IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN   
  
  RETURN
@@ -87,4 +90,135 @@ BEGIN
 		;
 		
 		END IF;
+		
+*/
+
+
+
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+FISCAL_YR =
+SELECT DISTINCT
+	"FISCAL_YEAR"
+FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR"
+WHERE 
+TO_NVARCHAR("FISCAL_YEAR") 
+BETWEEN 
+	(SELECT DISTINCT MIN("GJAHR") - 8 FROM :ALERT_INFO ) 
+AND 
+	(SELECT DISTINCT MAX("GJAHR")  FROM :ALERT_INFO)
+;
+
+ALERT_INFO_FY =
+SELECT * FROM 
+	(
+	SELECT DISTINCT
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR", 
+			"YR"."FISCAL_YEAR"
+FROM	:ALERT_INFO	AS "ALERT"	,
+	(
+	SELECT DISTINCT
+		"FISCAL_YEAR"
+	FROM :FISCAL_YR
+	) AS "YR"
+	) 
+WHERE "FISCAL_YEAR" BETWEEN "GJAHR" - 7 and "GJAHR"
+
+;
+
+PAYG_DATA =
+SELECT
+	"PAYG"."ABN",
+	"PAYG"."BUS_STATE"								AS "BUS_STATE",	
+	TO_NVARCHAR("PAYG"."INCM_YR")					AS "INCM_YR",
+	SUM("PAYG"."PMT_SMRY_CNT")						AS "PMT_SMRY_CNT",
+	SUM("PAYG"."TOTL_GRS_AMT")						AS "TOTL_GRS_AMT",
+	SUM("PAYG"."TOTL_LUMP_AMT") 					AS "TOTL_LUMP_AMT",
+	SUM("PAYG"."TOTL_ALWNC_AMT")					AS "TOTL_ALWNC_AMT",
+	SUM("PAYG"."RPRTBL_EMPLYR_SUPER_CNTRBN_AMT")    AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"
+FROM
+	"osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"() AS "PAYG"
+WHERE EXISTS
+	(
+		SELECT * FROM :ALERT_INFO_FY AS "ALERT_FY"
+		WHERE "PAYG"."ABN" = "ALERT_FY"."ABN"
+		AND   TO_NVARCHAR("PAYG"."INCM_YR") = "ALERT_FY"."FISCAL_YEAR"
+	)
+GROUP BY "PAYG"."ABN","PAYG"."BUS_STATE","PAYG"."INCM_YR"
+;
+
+RETURN 
+SELECT
+	"DB_KEY",
+	"DB_KEY_DASH",
+	"ALERT_ID",
+	"ABN" AS "ABN",
+	"GJAHR",
+	CASE WHEN "BUS_STATE" IS NULL THEN '-' ELSE "BUS_STATE" END AS "BUS_STATE",
+	TO_NVARCHAR("INCM_YR") AS "INCM_YR",
+	"PMT_SMRY_CNT",
+	"TOTL_GRS_AMT",
+	"TOTL_LUMP_AMT",
+	"TOTL_ALWNC_AMT",
+	"RPRTBL_EMPLYR_SUPER_CNTRBN_AMT",
+	'AUD' AS "WAERS"	
+FROM
+	(
+
+	SELECT 
+		"ALERT"."DB_KEY",
+		"ALERT"."DB_KEY_DASH",
+		"ALERT"."ALERT_ID",
+		"ALERT"."ABN" AS "ABN",
+		TO_NVARCHAR("ALERT"."GJAHR")             AS "GJAHR", 
+		TO_NVARCHAR("ALERT"."FISCAL_YEAR")       AS "INCM_YR",
+		TO_NVARCHAR("DATA"."BUS_STATE")          AS "BUS_STATE",
+		"DATA"."PMT_SMRY_CNT"     AS "PMT_SMRY_CNT",
+		"DATA"."TOTL_GRS_AMT"       AS "TOTL_GRS_AMT",
+		"DATA"."TOTL_LUMP_AMT"      AS "TOTL_LUMP_AMT",
+		"DATA"."TOTL_ALWNC_AMT"     AS "TOTL_ALWNC_AMT",
+		"DATA"."RPRTBL_EMPLYR_SUPER_CNTRBN_AMT" AS "RPRTBL_EMPLYR_SUPER_CNTRBN_AMT",
+		'AUD' AS "WAERS"
+	FROM 
+		:ALERT_INFO_FY  AS "ALERT"
+	LEFT OUTER JOIN
+		:PAYG_DATA		AS "DATA"
+	ON
+		"ALERT"."ABN"         = "DATA"."ABN"
+	AND "ALERT"."FISCAL_YEAR" = "DATA"."INCM_YR"
+)
+ORDER BY "ALERT_ID" ASC,"BUS_STATE" ASC, "INCM_YR" DESC
+;
 END;

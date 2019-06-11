@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_FBT_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_FBT_DETAILS" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_FBT_DETAILS"/>
 <localVariables/>
 <variableMappings>
@@ -19,74 +19,74 @@
       <descriptions defaultDescription="DB_KEY_DASH"/>
       <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="DB_KEY_DASH"/>
     </attribute>
+    <attribute id="DB_KEY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="DB_KEY"/>
+    </attribute>
     <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ALERT_ID"/>
       <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="ALERT_ID"/>
     </attribute>
-    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
       <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="ABN"/>
     </attribute>
-    <attribute id="GJAHR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="GJAHR"/>
     </attribute>
-    <attribute id="WAERS" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="WAERS"/>
-    </attribute>
-    <attribute id="FBT_YEAR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="FBT_YEAR" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBT_YEAR"/>
       <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="FBT_YEAR"/>
     </attribute>
-    <attribute id="DB_KEY" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="DB_KEY"/>
-    </attribute>
-  </attributes>
-  <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="EMPLES_RCVG_FB_CNT" order="2" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="EMPLES_RCVG_FB_CNT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="EMPLES_RCVG_FB_CNT"/>
-    </measure>
-    <measure id="ENTRMNT_TXBL_AMT" order="4" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="ENTRMNT_TXBL_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="ENTRMNT_TXBL_AMT"/>
-    </measure>
-    <measure id="CAR_PARKG_VAL_OF_BNFTS_AMT" order="5" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
-    </measure>
-    <measure id="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" order="7" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
-    </measure>
-    <measure id="TYP1_AGRGT_AMT" order="11" aggregationType="sum" measureType="simple">
+    <attribute id="TYP1_AGRGT_AMT" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TYP1_AGRGT_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="TYP1_AGRGT_AMT"/>
-    </measure>
-    <measure id="TYP2_AGRGT_AMT" order="12" aggregationType="sum" measureType="simple">
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="TYP1_AGRGT_AMT"/>
+    </attribute>
+    <attribute id="TYP2_AGRGT_AMT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TYP2_AGRGT_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="TYP2_AGRGT_AMT"/>
-    </measure>
-    <measure id="AGRGT_NON_EXMT_AMT" order="13" aggregationType="sum" measureType="simple">
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="TYP2_AGRGT_AMT"/>
+    </attribute>
+    <attribute id="AGRGT_NON_EXMT_AMT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AGRGT_NON_EXMT_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="AGRGT_NON_EXMT_AMT"/>
-    </measure>
-    <measure id="FBTABLE_AMT" order="14" aggregationType="sum" measureType="simple">
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="AGRGT_NON_EXMT_AMT"/>
+    </attribute>
+    <attribute id="EMPLES_RCVG_FB_CNT" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMPLES_RCVG_FB_CNT"/>
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="EMPLES_RCVG_FB_CNT"/>
+    </attribute>
+    <attribute id="FBTABLE_AMT" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FBTABLE_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="FBTABLE_AMT"/>
-    </measure>
-    <measure id="TAX_PYBL_AMT" order="16" aggregationType="sum" measureType="simple">
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="FBTABLE_AMT"/>
+    </attribute>
+  
+    <attribute id="TAX_PYBL_AMT" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TAX_PYBL_AMT"/>
-      <measureMapping columnObjectName="TF_FBT_DETAILS" columnName="TAX_PYBL_AMT"/>
-    </measure>
-  </baseMeasures>
+  
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="TAX_PYBL_AMT"/>
+  
+    </attribute>
+  
+    <attribute id="ENTRMNT_TXBL_AMT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENTRMNT_TXBL_AMT"/>
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="ENTRMNT_TXBL_AMT"/>
+    </attribute>
+    <attribute id="CAR_PARKG_VAL_OF_BNFTS_AMT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="CAR_PARKG_VAL_OF_BNFTS_AMT"/>
+    </attribute>
+    <attribute id="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"/>
+    </attribute>
+    <attribute id="WAERS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_FBT_DETAILS" columnName="WAERS"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">

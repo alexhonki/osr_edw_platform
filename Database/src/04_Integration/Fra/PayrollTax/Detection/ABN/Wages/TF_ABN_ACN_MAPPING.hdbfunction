@@ -1,0 +1,84 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING"( )
+RETURNS TABLE (
+	ABN 			NVARCHAR(11),
+	PERIOD_CATEGORY NVARCHAR(10),
+	PERIOD_KEY      NVARCHAR(4),
+	GJAHR			NVARCHAR(4),
+	ACN 			NVARCHAR(9)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+	
+	lt_bas_all = 
+	SELECT
+		LEFT("ATO_BAS"."ABN",11)                                                                		AS  "ABN",
+		CASE WHEN "ATO_BAS"."BAS_QTR" = 'FY' THEN 'PT-A' ELSE 'PT-Q' END								AS  "PERIOD_CATEGORY",
+		CASE WHEN "ATO_BAS"."BAS_QTR" = 'FY' THEN LEFT("ATO_BAS"."FINANCIAL_YEAR",4) 
+		ELSE RIGHT("ATO_BAS"."FINANCIAL_YEAR",2) ||  "ATO_BAS"."BAS_QTR" END							AS  "PERIOD_KEY",
+		LEFT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR"),4)                                     			AS  "GJAHR",
+		ROW_NUMBER() OVER (PARTITION BY "ABN",
+						"ACN",
+						"FINANCIAL_YEAR" ORDER BY "TOTL_PMT_FOR_WRK_AMT" DESC
+						) AS "ROW_NUMBER",
+		LEFT("ACN",9)																					AS "ACN"
+	FROM 
+		"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ATO_BAS"
+	WHERE "ATO_BAS"."ABN" <> 'no ABN'
+	  AND "ACN" <> ''
+	  AND "ACN" IS NOT NULL
+	;
+	
+	lt_bas = 
+	SELECT
+	"ABN",
+	"PERIOD_CATEGORY", 
+	"PERIOD_KEY", 
+	"GJAHR",
+	"ACN"
+	FROM :lt_bas_all
+	WHERE "ROW_NUMBER" = 1
+	;
+	
+
+	lt_itr = 
+    SELECT
+		LEFT("ATO_ITR"."ABN",11)                                                            		AS  "ABN",
+		'PT-A' 																							AS  "PERIOD_CATEGORY",
+		LEFT(TO_NVARCHAR("ATO_ITR"."INCM_YR"),4)                                                 		  AS  "PERIOD_KEY",
+		LEFT(TO_NVARCHAR("ATO_ITR"."INCM_YR"),4)                                                            AS  "GJAHR",
+		LEFT("ACN",9)																					AS "ACN"
+	FROM 
+		"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ATO_ITR"
+	WHERE "ABN" <> 'no ABN'
+	  AND "ACN" <> ''
+	  AND "ACN" IS NOT NULL
+	;
+	
+	RETURN
+	SELECT DISTINCT 
+	"ABN",
+	"PERIOD_CATEGORY", 
+	"PERIOD_KEY", 
+	"GJAHR",
+	"ACN" 
+	FROM (
+		SELECT 
+		"ABN",
+		"PERIOD_CATEGORY", 
+		"PERIOD_KEY", 
+		"GJAHR",
+		"ACN"
+		FROM :lt_bas
+		UNION
+		SELECT 
+		"ABN",
+		"PERIOD_CATEGORY", 
+		"PERIOD_KEY", 
+		"GJAHR",
+		"ACN"
+		FROM :lt_itr
+	)
+	;
+	
+END;

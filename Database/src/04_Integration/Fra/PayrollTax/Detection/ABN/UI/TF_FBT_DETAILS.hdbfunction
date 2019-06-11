@@ -24,6 +24,7 @@ BEGIN
     /*****************************
         Write your function logic
     ****************************/
+/*    
  IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN   
  
  RETURN
@@ -94,4 +95,145 @@ BEGIN
 		;
 
 		END IF;
+*/
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+FISCAL_YR =
+SELECT DISTINCT
+	"FISCAL_YEAR"
+FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR"
+WHERE 
+TO_NVARCHAR("FISCAL_YEAR") 
+BETWEEN 
+	(SELECT DISTINCT MIN("GJAHR") - 8 FROM :ALERT_INFO ) 
+AND 
+	(SELECT DISTINCT MAX("GJAHR")  FROM :ALERT_INFO)
+;
+
+ALERT_INFO_FY =
+SELECT * FROM 
+	(
+	SELECT DISTINCT
+			"ALERT"."DB_KEY",
+			"ALERT"."DB_KEY_DASH",
+			"ALERT"."ALERT_ID",
+			"ALERT"."ABN",
+			"ALERT"."GJAHR", 
+			"YR"."FISCAL_YEAR"
+FROM	:ALERT_INFO	AS "ALERT"	,
+	(
+	SELECT DISTINCT
+		"FISCAL_YEAR"
+	FROM :FISCAL_YR
+	) AS "YR"
+	) 
+WHERE "FISCAL_YEAR" BETWEEN "GJAHR" - 7 and "GJAHR"
+
+;
+
+FBT_DATA = 
+SELECT 
+	"FBT"."ABN",
+	TO_NVARCHAR("FBT"."FBT_YEAR")													AS "FBT_YEAR",
+	SUM("TYP1_AGRGT_AMT")  AS "TYP1_AGRGT_AMT",
+	SUM("TYP2_AGRGT_AMT")  AS "TYP2_AGRGT_AMT",
+	SUM("AGRGT_NON_EXMT_AMT")  AS "AGRGT_NON_EXMT_AMT" ,
+	SUM("FBTABLE_AMT") AS   "FBTABLE_AMT"  ,
+	SUM("TAX_PYBL_AMT") AS "TAX_PYBL_AMT"   ,
+	SUM("EMPLES_RCVG_FB_CNT")  AS "EMPLES_RCVG_FB_CNT"   ,
+	SUM("ENTRMNT_TXBL_AMT")  AS "ENTRMNT_TXBL_AMT"   ,
+	SUM("CAR_PARKG_VAL_OF_BNFTS_AMT")  AS "CAR_PARKG_VAL_OF_BNFTS_AMT"  ,
+	SUM("MEAL_ENTRTNT_VAL_OF_BNFTS_AMT") AS "MEAL_ENTRTNT_VAL_OF_BNFTS_AMT" ,
+	'AUD'																			AS "WAERS"
+FROM "osr.edw.staging.td.ato.proxy::TF_FBT_C"() AS "FBT"
+WHERE EXISTS
+(
+	SELECT * FROM :ALERT_INFO_FY AS "ALERT_FY"
+	WHERE "FBT"."ABN" = "ALERT_FY"."ABN"
+	AND   TO_NVARCHAR("FBT"."FBT_YEAR") = "ALERT_FY"."FISCAL_YEAR"
+)
+GROUP BY 
+	"FBT"."ABN",
+	"FBT"."FBT_YEAR"
+;
+
+RETURN 
+SELECT
+	"DB_KEY",
+	"DB_KEY_DASH",
+	"ALERT_ID",
+	"ABN" AS "ABN",
+	"GJAHR",
+	TO_NVARCHAR("FBT_YEAR") AS "FBT_YEAR",
+	"TYP1_AGRGT_AMT",
+	"TYP2_AGRGT_AMT",
+	"AGRGT_NON_EXMT_AMT",
+	"FBTABLE_AMT",
+	"TAX_PYBL_AMT",
+	"EMPLES_RCVG_FB_CNT",
+	"ENTRMNT_TXBL_AMT",
+	"CAR_PARKG_VAL_OF_BNFTS_AMT",
+	"MEAL_ENTRTNT_VAL_OF_BNFTS_AMT",
+	'AUD' AS "WAERS"	
+FROM
+	(
+
+	SELECT 
+		"ALERT"."DB_KEY",
+		"ALERT"."DB_KEY_DASH",
+		"ALERT"."ALERT_ID",
+		"ALERT"."ABN" AS "ABN",
+		TO_NVARCHAR("ALERT"."GJAHR")            	AS "GJAHR", 
+		TO_NVARCHAR("ALERT"."FISCAL_YEAR")  		AS "FBT_YEAR",
+		"DATA"."TYP1_AGRGT_AMT"        				AS "TYP1_AGRGT_AMT",
+		"DATA"."TYP2_AGRGT_AMT"        				AS "TYP2_AGRGT_AMT",
+		"DATA"."AGRGT_NON_EXMT_AMT"					AS "AGRGT_NON_EXMT_AMT",
+		"DATA"."FBTABLE_AMT"   						AS "FBTABLE_AMT",
+		"DATA"."TAX_PYBL_AMT"						AS "TAX_PYBL_AMT",
+		"DATA"."EMPLES_RCVG_FB_CNT"        			AS "EMPLES_RCVG_FB_CNT",
+		"DATA"."ENTRMNT_TXBL_AMT"  					AS "ENTRMNT_TXBL_AMT",
+		"DATA"."CAR_PARKG_VAL_OF_BNFTS_AMT"			AS "CAR_PARKG_VAL_OF_BNFTS_AMT",
+		"DATA"."MEAL_ENTRTNT_VAL_OF_BNFTS_AMT"      AS "MEAL_ENTRTNT_VAL_OF_BNFTS_AMT",
+		'AUD' AS "WAERS"
+	FROM 
+		:ALERT_INFO_FY  AS "ALERT"
+	LEFT OUTER JOIN
+		:FBT_DATA		AS "DATA"
+	ON
+		"ALERT"."ABN"         = "DATA"."ABN"
+	AND "ALERT"."FISCAL_YEAR" = "DATA"."FBT_YEAR"
+)
+ORDER BY "ALERT_ID" ASC,"FBT_YEAR" DESC
+;
+
+
 END;

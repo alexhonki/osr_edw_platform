@@ -1,467 +1,463 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.propagation.tmr.proxy::CV_CUSTMAIN" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.propagation.md.tmr.proxy::CV_CUSTMAIN" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CV_CUSTMAIN"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.propagation.md.tmr.synonym::CDS_CUSTOMER.CUSTMAIN.active_data">
-    <resourceUri>osr.edw.propagation.md.tmr.synonym::CDS_CUSTOMER.CUSTMAIN.active_data</resourceUri>
+  <DataSource id="osr.edw.propagation.md.tmr.synonym::CDS_CUSTOMER.DSO.CUSTMAIN.active_data">
+    <resourceUri>osr.edw.propagation.md.tmr.synonym::CDS_CUSTOMER.DSO.CUSTMAIN.active_data</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.propagation.md.tmr.synonym::CDS_CUSTOMER.CUSTMAIN.active_data">
+<logicalModel id="osr.edw.propagation.md.tmr.synonym::CDS_CUSTOMER.DSO.CUSTMAIN.active_data">
   <attributes>
     <attribute id="CUSTOMER_REF" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CUSTOMER_REF"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CUSTOMER_REF"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CUSTOMER_REF"/>
     </attribute>
     <attribute id="ERROR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ERROR"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ERROR"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ERROR"/>
     </attribute>
     <attribute id="PARTITION" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTITION"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="PARTITION"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="PARTITION"/>
     </attribute>
     <attribute id="TITLE" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TITLE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="TITLE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="TITLE"/>
     </attribute>
     <attribute id="FIRST_NAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FIRST_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="FIRST_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="FIRST_NAME"/>
     </attribute>
     <attribute id="MIDDLE_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MIDDLE_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MIDDLE_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MIDDLE_NAME"/>
     </attribute>
     <attribute id="FAMILY_ORG_NAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FAMILY_ORG_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="FAMILY_ORG_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="FAMILY_ORG_NAME"/>
     </attribute>
     <attribute id="FLOOR" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FLOOR"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="FLOOR"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="FLOOR"/>
     </attribute>
     <attribute id="UNIT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="UNIT"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="UNIT"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="UNIT"/>
     </attribute>
     <attribute id="BUILDING_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUILDING_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="BUILDING_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="BUILDING_NAME"/>
     </attribute>
     <attribute id="STREET_NO" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STREET_NO"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STREET_NO"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STREET_NO"/>
     </attribute>
     <attribute id="STREET_NAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STREET_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STREET_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STREET_NAME"/>
     </attribute>
     <attribute id="STREET_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STREET_TYPE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STREET_TYPE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STREET_TYPE"/>
     </attribute>
     <attribute id="STREET_SUFFIX" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STREET_SUFFIX"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STREET_SUFFIX"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STREET_SUFFIX"/>
     </attribute>
     <attribute id="SUBURB" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SUBURB"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="SUBURB"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="SUBURB"/>
     </attribute>
     <attribute id="POSTCODE" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POSTCODE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="POSTCODE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="POSTCODE"/>
     </attribute>
     <attribute id="STATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STATE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STATE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STATE"/>
     </attribute>
     <attribute id="COUNTRY" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="COUNTRY"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="COUNTRY"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="COUNTRY"/>
     </attribute>
     <attribute id="DEALER_REF" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DEALER_REF"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="DEALER_REF"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="DEALER_REF"/>
     </attribute>
     <attribute id="ACN" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ACN"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ACN"/>
     </attribute>
     <attribute id="CUSTOMER_TYPE" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CUSTOMER_TYPE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CUSTOMER_TYPE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CUSTOMER_TYPE"/>
     </attribute>
     <attribute id="DATE_OF_BIRTH" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DATE_OF_BIRTH"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="DATE_OF_BIRTH"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="DATE_OF_BIRTH"/>
     </attribute>
-    <attribute id="CURRENT_POSTAL_ADDR_EFf_DT" order="23" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CURRENT_POSTAL_ADDR_EFf_DT"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CURRENT_POSTAL_ADDR_EFf_DT"/>
+    <attribute id="CURRENT_POSTAL_ADDR_EFF_DT" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENT_POSTAL_ADDR_EFF_DT"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CURRENT_POSTAL_ADDR_EFF_DT"/>
     </attribute>
     <attribute id="CONTACT_PHONE_EFFECT_DT" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CONTACT_PHONE_EFFECT_DT"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CONTACT_PHONE_EFFECT_DT"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CONTACT_PHONE_EFFECT_DT"/>
     </attribute>
     <attribute id="CONTACT_PHONE_NO" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CONTACT_PHONE_NO"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CONTACT_PHONE_NO"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CONTACT_PHONE_NO"/>
     </attribute>
     <attribute id="CURRENT_LICENCE" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CURRENT_LICENCE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CURRENT_LICENCE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CURRENT_LICENCE"/>
     </attribute>
     <attribute id="CURRENT_REGISTRATION" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CURRENT_REGISTRATION"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="CURRENT_REGISTRATION"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="CURRENT_REGISTRATION"/>
     </attribute>
     <attribute id="LAST_CONTACT_UPDATE_DT" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LAST_CONTACT_UPDATE_DT"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="LAST_CONTACT_UPDATE_DT"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="LAST_CONTACT_UPDATE_DT"/>
     </attribute>
-    <attribute id="FIELD1" order="29" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FIELD1"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="FIELD1"/>
+    <attribute id="SOURCE_FIELD_VALUE" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="SOURCE_FIELD_VALUE"/>
     </attribute>
     <attribute id="Z_CURR_FLAG" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_CURR_FLAG"/>
     </attribute>
     <attribute id="Z_VALID_FROM" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_VALID_FROM"/>
     </attribute>
     <attribute id="Z_VALID_TO" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_VALID_TO"/>
     </attribute>
     <attribute id="Z_CHANGE_TYPE" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_CHANGE_TYPE"/>
     </attribute>
     <attribute id="Z_CHANGE_TIME" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_CHANGE_TIME"/>
     </attribute>
     <attribute id="Z_SOURCE_SYS" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_SOURCE_SYS"/>
     </attribute>
     <attribute id="Z_RUN_ROW_NO" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_RUN_ROW_NO"/>
     </attribute>
     <attribute id="Z_RUN_SEQ_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
     <attribute id="STD_ADDR_COUNTRY_NAME" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_COUNTRY_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_COUNTRY_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_COUNTRY_NAME"/>
     </attribute>
     <attribute id="STD_ADDR_ADDRESS_DELIVERY" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_ADDRESS_DELIVERY"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_ADDRESS_DELIVERY"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_ADDRESS_DELIVERY"/>
     </attribute>
     <attribute id="STD_ADDR_POSTCODE_FULL" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_POSTCODE_FULL"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_POSTCODE_FULL"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_POSTCODE_FULL"/>
     </attribute>
     <attribute id="STD_PHONE" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_PHONE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_PHONE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_PHONE"/>
     </attribute>
     <attribute id="STD_PERSON_GN" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_PERSON_GN"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_PERSON_GN"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_PERSON_GN"/>
     </attribute>
     <attribute id="STD_PERSON_GN2" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_PERSON_GN2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_PERSON_GN2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_PERSON_GN2"/>
     </attribute>
     <attribute id="STD_PERSON_FN" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_PERSON_FN"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_PERSON_FN"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_PERSON_FN"/>
     </attribute>
     <attribute id="STD_PERSON_GENDER" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_PERSON_GENDER"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_PERSON_GENDER"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_PERSON_GENDER"/>
     </attribute>
     <attribute id="PERSON_EXTRA" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSON_EXTRA"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="PERSON_EXTRA"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="PERSON_EXTRA"/>
     </attribute>
     <attribute id="PERSON_INFO_CODE" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSON_INFO_CODE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="PERSON_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="PERSON_INFO_CODE"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN_STD" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN_STD"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN_STD2" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN_STD2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD2"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN_STD3" order="51" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN_STD3"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD3"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD3"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN_STD4" order="52" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN_STD4"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD4"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD4"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN_STD5" order="53" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN_STD5"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD5"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD5"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN_STD6" order="54" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN_STD6"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD6"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN_STD6"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2_STD" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2_STD"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2_STD2" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2_STD2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD2"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2_STD3" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2_STD3"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD3"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD3"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2_STD4" order="59" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2_STD4"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD4"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD4"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2_STD5" order="60" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2_STD5"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD5"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD5"/>
     </attribute>
     <attribute id="MATCH_PERSON_GN2_STD6" order="61" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_GN2_STD6"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD6"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_GN2_STD6"/>
     </attribute>
     <attribute id="MATCH_PERSON_FN" order="62" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_FN"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_FN"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_FN"/>
     </attribute>
     <attribute id="MATCH_PERSON_FN_STD" order="63" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_FN_STD"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_FN_STD"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_FN_STD"/>
     </attribute>
     <attribute id="MATCH_PERSON_MATPOST" order="64" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_MATPOST"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_MATPOST"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_MATPOST"/>
     </attribute>
     <attribute id="MATCH_PERSON_MATPOST_STD" order="65" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON_MATPOST_STD"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON_MATPOST_STD"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON_MATPOST_STD"/>
     </attribute>
     <attribute id="MATCH_PERSON" order="66" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PERSON"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PERSON"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PERSON"/>
     </attribute>
     <attribute id="STD_ADDR_COUNTRY_2CHAR" order="67" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_COUNTRY_2CHAR"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_COUNTRY_2CHAR"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_COUNTRY_2CHAR"/>
     </attribute>
     <attribute id="STD_ADDR_LOCALITY" order="68" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_LOCALITY"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_LOCALITY"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_LOCALITY"/>
     </attribute>
     <attribute id="STD_ADDR_REGION" order="69" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_REGION"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_REGION"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_REGION"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_ADDRESS" order="70" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_ADDRESS"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_ADDRESS"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_ADDRESS"/>
     </attribute>
     <attribute id="STD_ADDR_BUILDING_NAME" order="71" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_BUILDING_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_BUILDING_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_BUILDING_NAME"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_NAME_FULL" order="72" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_NAME_FULL"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_NAME_FULL"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_NAME_FULL"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_TYPE" order="73" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_TYPE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_TYPE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_TYPE"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_PREFIX" order="74" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_PREFIX"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_PREFIX"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_PREFIX"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_POSTFIX" order="75" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_POSTFIX"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_POSTFIX"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_POSTFIX"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_NUMBER" order="76" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_NUMBER"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_NUMBER"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_NUMBER"/>
     </attribute>
     <attribute id="ADDR_INFO_CODE" order="77" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_INFO_CODE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_INFO_CODE"/>
     </attribute>
     <attribute id="ADDR_ASMT_INFO" order="78" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_ASMT_INFO"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_ASMT_INFO"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_ASMT_INFO"/>
     </attribute>
     <attribute id="ADDR_ASMT_TYPE" order="79" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_ASMT_TYPE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_ASMT_TYPE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_ASMT_TYPE"/>
     </attribute>
     <attribute id="ADDR_ASMT_LEVEL" order="80" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_ASMT_LEVEL"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_ASMT_LEVEL"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_ASMT_LEVEL"/>
     </attribute>
     <attribute id="MATCH_ADDR_COUNTRY" order="81" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_COUNTRY"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_COUNTRY"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_COUNTRY"/>
     </attribute>
     <attribute id="MATCH_ADDR_POSTCODE1" order="82" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_POSTCODE1"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_POSTCODE1"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_POSTCODE1"/>
     </attribute>
     <attribute id="MATCH_ADDR_REGION" order="83" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_REGION"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_REGION"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_REGION"/>
     </attribute>
     <attribute id="MATCH_ADDR_LOCALITY" order="84" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_LOCALITY"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_LOCALITY"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_LOCALITY"/>
     </attribute>
     <attribute id="MATCH_ADDR_LOCALITY2" order="85" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_LOCALITY2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_LOCALITY2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_LOCALITY2"/>
     </attribute>
     <attribute id="MATCH_ADDR_BUILDING" order="86" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_BUILDING"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_BUILDING"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_BUILDING"/>
     </attribute>
     <attribute id="MATCH_ADDR_PRIM_NAME" order="87" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_PRIM_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_NAME"/>
     </attribute>
     <attribute id="MATCH_ADDR_PRIM_NAME2" order="88" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_PRIM_NAME2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_NAME2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_NAME2"/>
     </attribute>
     <attribute id="MATCH_ADDR_PRIM_TYPE" order="89" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_PRIM_TYPE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_TYPE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_TYPE"/>
     </attribute>
     <attribute id="MATCH_ADDR_PRIM_DIR" order="90" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_PRIM_DIR"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_DIR"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_DIR"/>
     </attribute>
     <attribute id="MATCH_ADDR_PRIM_NUMBER" order="91" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_PRIM_NUMBER"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_NUMBER"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_PRIM_NUMBER"/>
     </attribute>
     <attribute id="MATCH_ADDR_BLOCK" order="92" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_BLOCK"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_BLOCK"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_BLOCK"/>
     </attribute>
     <attribute id="MATCH_ADDR_STAIRWELL" order="93" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_STAIRWELL"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_STAIRWELL"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_STAIRWELL"/>
     </attribute>
     <attribute id="MATCH_ADDR_WING" order="94" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_WING"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_WING"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_WING"/>
     </attribute>
     <attribute id="MATCH_ADDR_FLOOR" order="95" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_FLOOR"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_FLOOR"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_FLOOR"/>
     </attribute>
     <attribute id="MATCH_ADDR_UNIT" order="96" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_ADDR_UNIT"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_ADDR_UNIT"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_ADDR_UNIT"/>
     </attribute>
     <attribute id="ADDR_SCRIPT_CODE" order="97" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_SCRIPT_CODE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_SCRIPT_CODE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_SCRIPT_CODE"/>
     </attribute>
     <attribute id="PHONE_EXTRA" order="98" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PHONE_EXTRA"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="PHONE_EXTRA"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="PHONE_EXTRA"/>
     </attribute>
     <attribute id="PHONE_INFO_CODE" order="99" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PHONE_INFO_CODE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="PHONE_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="PHONE_INFO_CODE"/>
     </attribute>
     <attribute id="MATCH_PHONE" order="100" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MATCH_PHONE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="MATCH_PHONE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="MATCH_PHONE"/>
     </attribute>
     <attribute id="STD_ADDR_PRIM_NAME" order="101" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_PRIM_NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_PRIM_NAME"/>
     </attribute>
     <attribute id="STD_ADDR_POSTCODE1" order="102" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_POSTCODE1"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_POSTCODE1"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_POSTCODE1"/>
     </attribute>
     <attribute id="STD_ADDR_POSTCODE2" order="103" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STD_ADDR_POSTCODE2"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="STD_ADDR_POSTCODE2"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="STD_ADDR_POSTCODE2"/>
     </attribute>
     <attribute id="PATH" order="104" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PATH"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="PATH"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="PATH"/>
     </attribute>
     <attribute id="NAME" order="105" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="NAME"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="NAME"/>
     </attribute>
-    <attribute id="ROWNUMBER" order="106" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ROWNUMBER"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ROWNUMBER"/>
-    </attribute>
-    <attribute id="ADDR_LATITUDE" order="107" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ADDR_LATITUDE" order="106" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_LATITUDE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_LATITUDE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_LATITUDE"/>
     </attribute>
-    <attribute id="ADDR_LONGITUDE" order="108" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ADDR_LONGITUDE" order="107" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDR_LONGITUDE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="ADDR_LONGITUDE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="ADDR_LONGITUDE"/>
     </attribute>
-    <attribute id="GEO_SIDE_OF_STREET" order="109" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GEO_SIDE_OF_STREET" order="108" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GEO_SIDE_OF_STREET"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="GEO_SIDE_OF_STREET"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="GEO_SIDE_OF_STREET"/>
     </attribute>
-    <attribute id="GEO_INFO_CODE" order="110" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GEO_INFO_CODE" order="109" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GEO_INFO_CODE"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="GEO_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="GEO_INFO_CODE"/>
     </attribute>
-    <attribute id="GEO_ASMT_LEVEL" order="111" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GEO_ASMT_LEVEL" order="110" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GEO_ASMT_LEVEL"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="GEO_ASMT_LEVEL"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="GEO_ASMT_LEVEL"/>
     </attribute>
-    <attribute id="Cleanse_TABLE_ID" order="112" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Cleanse_TABLE_ID" order="111" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Cleanse_TABLE_ID"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Cleanse_TABLE_ID"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Cleanse_TABLE_ID"/>
     </attribute>
-    <attribute id="Cleanse_ROW_ID" order="113" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Cleanse_ROW_ID" order="112" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Cleanse_ROW_ID"/>
-      <keyMapping columnObjectName="CDS_CUSTOMER.CUSTMAIN.active_data" columnName="Cleanse_ROW_ID"/>
+      <keyMapping columnObjectName="CDS_CUSTOMER.DSO.CUSTMAIN.active_data" columnName="Cleanse_ROW_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

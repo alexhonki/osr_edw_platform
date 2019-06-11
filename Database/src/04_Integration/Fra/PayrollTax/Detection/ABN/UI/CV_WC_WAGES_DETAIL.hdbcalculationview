@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_WAGES_DETAIL" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_WC_WAGES_DETAIL"/>
 <localVariables>
   <variable id="IP_ALERT_ID" parameter="true">
@@ -44,38 +44,35 @@
       <descriptions defaultDescription="GJAHR"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="GJAHR"/>
     </attribute>
-    <attribute id="WAERS" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="WAERS"/>
-    </attribute>
-    <attribute id="POLICY_NO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="POLICY_NO" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POLICY_NO"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="POLICY_NO"/>
     </attribute>
-    <attribute id="ASSESSMENT_YEAR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ASSESSMENT_YEAR" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ASSESSMENT_YEAR"/>
       <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ASSESSMENT_YEAR"/>
     </attribute>
-  </attributes>
-  <calculatedAttributes/>
-  <baseMeasures>
-    <measure id="TOTAL_WAGES" order="6" aggregationType="sum" measureType="simple">
-      <descriptions defaultDescription="TOTAL_WAGES"/>
-      <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="TOTAL_WAGES"/>
-    </measure>
-    <measure id="ACT_WAGES" order="10" aggregationType="sum" measureType="simple">
+  
+    <attribute id="ACT_WAGES" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACT_WAGES"/>
-      <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_WAGES"/>
-    </measure>
-    <measure id="ACT_APPR_WAGES" order="11" aggregationType="sum" measureType="simple">
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_WAGES"/>
+    </attribute>
+    <attribute id="ACT_APPR_WAGES" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACT_APPR_WAGES"/>
-      <measureMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_APPR_WAGES"/>
-    </measure>
-  </baseMeasures>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="ACT_APPR_WAGES"/>
+    </attribute>
+    <attribute id="TOTAL_WAGES" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOTAL_WAGES"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="TOTAL_WAGES"/>
+    </attribute>
+    <attribute id="WAERS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_WC_WAGES_DETAIL" columnName="WAERS"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
   <calculatedMeasures/>
-  <restrictedMeasures/>
-  <localDimensions/>
-</logicalModel>
+  <restrictedMeasures/></logicalModel>
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">

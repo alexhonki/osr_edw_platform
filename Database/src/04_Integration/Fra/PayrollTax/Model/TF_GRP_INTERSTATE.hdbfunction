@@ -32,7 +32,7 @@ SELECT
 	:LV_GRP_DATE AS "GRP_DATE",
 	"STATE_CODE",
 	"STATE_GROUP_ID",
-	'O' || LTRIM("ACN",9) AS "ID",
+	'O' || LPAD("ACN",9,'0') AS "ID",
 	"ACN" 				  AS "ORG_NUMBER",
 	"ABN",
 	"ACN",

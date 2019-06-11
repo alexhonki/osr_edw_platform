@@ -1,0 +1,34 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"(
+)
+RETURNS TABLE (
+ABN								NVARCHAR(11),
+PERIOD_CATEGORY					NVARCHAR(10),
+PERIOD_KEY						NVARCHAR(4),
+GJAHR							NVARCHAR(4),
+WAERS							NVARCHAR(5),
+STATE_CODE						NVARCHAR(3),
+CLIENT_STATE_WAGES				DECIMAL(15,2),
+CLIENT_INTERSTATE_WAGES			DECIMAL(15,2),
+CLIENT_AUST_WAGES				DECIMAL(15,2)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+RETURN
+	SELECT
+		LEFT("WAGES"."ABN",11)                                                                			AS  "ABN",
+		'PT-A'																							AS  "PERIOD_CATEGORY",
+		TO_NVARCHAR("WAGES"."FIN_YEAR")																	AS  "PERIOD_KEY",
+		TO_NVARCHAR("WAGES"."FIN_YEAR")				                                     				AS  "GJAHR",
+		'AUD  ' 																						AS "WAERS",
+		"STATE_CODE"																					AS	"STATE_CODE",
+		"WAGES"."CLIENT_STATE_WAGES"                                                            		AS  "CLIENT_STATE_WAGES",
+		"WAGES"."CLIENT_INTERSTATE_WAGES"                                                            	AS  "CLIENT_INTERSTATE_WAGES",
+		"WAGES"."CLIENT_STATE_WAGES" + "WAGES"."CLIENT_INTERSTATE_WAGES"                                AS  "CLIENT_AUST_WAGES"
+	FROM 
+		"osr.edw.staging.td.osrstate.proxy::TF_IJR_PRT_ANNL_C"() AS "WAGES"
+	WHERE "WAGES"."ABN" <> ''
+	;
+
+END;

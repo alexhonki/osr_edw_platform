@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.tmr.proxy::CV_VEHICLES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_VEHICLES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.tmr.synonym::CDS_VEHICLES.TAB.VEHICLES">
+    <resourceUri>osr.edw.source.md.tmr.synonym::CDS_VEHICLES.TAB.VEHICLES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.tmr.synonym::CDS_VEHICLES.TAB.VEHICLES">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="VEHICLE_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VEHICLE_ID"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="VEHICLE_ID"/>
+    </attribute>
+    <attribute id="SERIAL_NUMBER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SERIAL_NUMBER"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="SERIAL_NUMBER"/>
+    </attribute>
+    <attribute id="SN_INDICATOR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SN_INDICATOR"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="SN_INDICATOR"/>
+    </attribute>
+    <attribute id="MAKE_CODE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAKE_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="MAKE_CODE"/>
+    </attribute>
+    <attribute id="MAKE_DESC" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAKE_DESC"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="MAKE_DESC"/>
+    </attribute>
+    <attribute id="MODEL_CODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODEL_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="MODEL_CODE"/>
+    </attribute>
+    <attribute id="MODEL_DESC" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MODEL_DESC"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="MODEL_DESC"/>
+    </attribute>
+    <attribute id="BADGE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BADGE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="BADGE"/>
+    </attribute>
+    <attribute id="PRIMARY_COLOUR_CODE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRIMARY_COLOUR_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="PRIMARY_COLOUR_CODE"/>
+    </attribute>
+    <attribute id="SEC_COLOUR_CODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEC_COLOUR_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="SEC_COLOUR_CODE"/>
+    </attribute>
+    <attribute id="COMPLIANCE_PLATE_YR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLIANCE_PLATE_YR"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="COMPLIANCE_PLATE_YR"/>
+    </attribute>
+    <attribute id="COMPLIANCE_PLATE_MONTH" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLIANCE_PLATE_MONTH"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="COMPLIANCE_PLATE_MONTH"/>
+    </attribute>
+    <attribute id="BODY_SHAPE_CODE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BODY_SHAPE_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="BODY_SHAPE_CODE"/>
+    </attribute>
+    <attribute id="BODY_SHAPE_DESC" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BODY_SHAPE_DESC"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="BODY_SHAPE_DESC"/>
+    </attribute>
+    <attribute id="ENGINE_NUM" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENGINE_NUM"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="ENGINE_NUM"/>
+    </attribute>
+    <attribute id="CYLINDER_INDICATOR" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CYLINDER_INDICATOR"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="CYLINDER_INDICATOR"/>
+    </attribute>
+    <attribute id="NO_CYLINDERS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NO_CYLINDERS"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="NO_CYLINDERS"/>
+    </attribute>
+    <attribute id="FUEL_TYPE_CODE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FUEL_TYPE_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="FUEL_TYPE_CODE"/>
+    </attribute>
+    <attribute id="SEATING_CAPACITY" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEATING_CAPACITY"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="SEATING_CAPACITY"/>
+    </attribute>
+    <attribute id="COMPLIANCE_CONDITION_CODE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLIANCE_CONDITION_CODE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="COMPLIANCE_CONDITION_CODE"/>
+    </attribute>
+    <attribute id="COMBINED_MASS" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMBINED_MASS"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="COMBINED_MASS"/>
+    </attribute>
+    <attribute id="GROSS_MASS" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROSS_MASS"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="GROSS_MASS"/>
+    </attribute>
+    <attribute id="TARE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TARE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="TARE"/>
+    </attribute>
+    <attribute id="VEHICLE_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VEHICLE_TYPE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="VEHICLE_TYPE"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="SOURCE_FIELD_VALUE"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+<attribute id="Z_SOURCE_SYS" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_VEHICLES.TAB.VEHICLES" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
