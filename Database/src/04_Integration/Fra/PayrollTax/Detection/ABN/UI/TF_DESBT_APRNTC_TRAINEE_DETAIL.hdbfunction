@@ -11,6 +11,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"(IN
 			STATUS_DESC               NVARCHAR(30), 
 --			COMMENCEMENT_DATE         NVARCHAR(8), 
 --			TERMINATION_DATE          NVARCHAR(8), 
+			COMMYEAR                  NVARCHAR(4),
 			COMMENCEMENT_DATE         DAYDATE, 
 			TERMINATION_DATE          DAYDATE, 
 			CONTRACT_MODE             NVARCHAR(12), 
@@ -24,7 +25,8 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_DESBT_APRNTC_TRAINEE_DETAIL"(IN
 			SURNAME                   NVARCHAR(30),
 			QUALIFICATION_LEVEL		  NVARCHAR(60),
 			QUALIFICATION_TITLE		  NVARCHAR(100)	,
-			COMMENCEMENT_STATUS		  INTEGER	,
+			COMMENCEMENT_STATUS		  NVARCHAR(2)	,
+			COMMENCEMENT_STATUS_DESC  NVARCHAR(60),
 			SRTO_NAME				  NVARCHAR(200)	,
 			REG_NUMBER				  NVARCHAR(30)	
 
@@ -70,6 +72,7 @@ DESBT_DATA =
                 	"TRAINEE_ID", 
             		"TRAINING_AGREEMENT_TYPE", 
                 	"STATUS_DESC", 
+                	TO_NVARCHAR("COMMYEAR") AS "COMMYEAR",
                 	TO_DATS("COMMENCEMENT_DATE")		AS "COMMENCEMENT_DATE", 
                 	TO_DATS("TERMINATION_DATE") 		AS "TERMINATION_DATE", 
                 	"CONTRACT_MODE", 
@@ -81,7 +84,9 @@ DESBT_DATA =
                 	"SURNAME",
                 	"QUALIFICATION_LEVEL",
 					"QUALIFICATION_TITLE",
-					"COMMENCEMENT_STATUS",
+					TO_NVARCHAR("COMMENCEMENT_STATUS") as "COMMENCEMENT_STATUS",
+					CASE WHEN "COMMENCEMENT_STATUS" = 1 then 'First Attend'   ELSE 
+					CASE WHEN "COMMENCEMENT_STATUS" = 2 then 'Recommencement' ELSE TO_NVARCHAR("COMMENCEMENT_STATUS") END END AS  "COMMENCEMENT_STATUS_DESC",
 					"SRTO_NAME",
                 	TO_NVARCHAR("REG_NUMBER")   AS "REG_NUMBER"
 				FROM "osr.edw.staging.md.desbt.synonym::CDS_ORG.DSO.TRAINING.active_data"
@@ -104,6 +109,7 @@ RETURN
                    "STATUS_DESC", 
    --              "COMMENCEMENT_DATE", 
    --              "TERMINATION_DATE", 
+				   "COMMYEAR",
 				   CASE WHEN "COMMENCEMENT_DATE" IS NOT NULL AND "COMMENCEMENT_DATE" <> '' THEN TO_DATE("COMMENCEMENT_DATE") ELSE NULL END AS "COMMENCEMENT_DATE",
 				   CASE WHEN "TERMINATION_DATE" IS NOT NULL AND "TERMINATION_DATE" <> '' THEN TO_DATE("TERMINATION_DATE") ELSE NULL END AS "TERMINATION_DATE",
                    "CONTRACT_MODE", 
@@ -118,6 +124,7 @@ RETURN
                 	"QUALIFICATION_LEVEL",
 					"QUALIFICATION_TITLE",
 					"COMMENCEMENT_STATUS",
+					"COMMENCEMENT_STATUS_DESC",
 					"SRTO_NAME",
                 	"REG_NUMBER"
 				FROM
@@ -130,6 +137,7 @@ RETURN
                        "B"."TRAINEE_ID", 
                        "B"."TRAINING_AGREEMENT_TYPE", 
                        "B"."STATUS_DESC", 
+                       "B"."COMMYEAR",
                        "B"."COMMENCEMENT_DATE", 
                        "B"."TERMINATION_DATE", 
                        "B"."CONTRACT_MODE", 
@@ -142,6 +150,7 @@ RETURN
                        "B"."QUALIFICATION_LEVEL",
 					   "B"."QUALIFICATION_TITLE",
 					   "B"."COMMENCEMENT_STATUS",
+					   "B"."COMMENCEMENT_STATUS_DESC",
 					   "B"."SRTO_NAME",
                        "B"."REG_NUMBER"
 
