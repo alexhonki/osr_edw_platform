@@ -34,49 +34,24 @@
     <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews>
-  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
-    <viewAttributes>
-      <viewAttribute id="PGRP_DESCR">
-        <descriptions defaultDescription="PGRP_DESCR"/>
-      </viewAttribute>
-      <viewAttribute id="ID">
-        <descriptions defaultDescription="ID"/>
-      </viewAttribute>
-      <viewAttribute id="PERSON_NUM">
-        <descriptions defaultDescription="PERSON_NUM"/>
-      </viewAttribute>
-      <viewAttribute id="PGRP_ID">
-        <descriptions defaultDescription="PGRP_ID"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP">
-      <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_DESCR" source="PGRP_DESCR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PGRP_ID" source="PGRP_ID"/>
-    </input>
-  </calculationView>
-</calculationViews>
-<logicalModel id="Projection_1">
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP">
   <attributes>
     <attribute id="PGRP_DESCR" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PGRP_DESCR"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PGRP_DESCR"/>
+      <keyMapping columnObjectName="TF_GRP_PERSON_GRP" columnName="PGRP_DESCR"/>
     </attribute>
     <attribute id="ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="ID"/>
+      <keyMapping columnObjectName="TF_GRP_PERSON_GRP" columnName="ID"/>
     </attribute>
     <attribute id="PERSON_NUM" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSON_NUM"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PERSON_NUM"/>
+      <keyMapping columnObjectName="TF_GRP_PERSON_GRP" columnName="PERSON_NUM"/>
     </attribute>
     <attribute id="PGRP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PGRP_ID"/>
-      <keyMapping columnObjectName="Projection_1" columnName="PGRP_ID"/>
+      <keyMapping columnObjectName="TF_GRP_PERSON_GRP" columnName="PGRP_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -90,12 +65,6 @@
       <upperLeftCorner x="92" y="112"/>
     
       <rectangleSize width="160"/>
-    </shape>
-  
-    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="217"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
