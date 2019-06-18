@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_MEASURE_NAME_TEXT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_MEASURE_NAME_TEXT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_MEASURE_NAME_TEXT" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_MEASURE_NAME_TEXT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_MEASURE_NAME_TEXT">
+  <attributes>
+    <attribute id="SOURCE1" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE1"/>
+      <keyMapping columnObjectName="TF_MEASURE_NAME_TEXT" columnName="SOURCE1"/>
+    </attribute>
+  
+    <attribute id="MEASURE_NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEASURE_NAME"/>
+      <keyMapping columnObjectName="TF_MEASURE_NAME_TEXT" columnName="MEASURE_NAME"/>
+    </attribute>
+    <attribute id="MEASURE_TEXT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEASURE_TEXT"/>
+      <keyMapping columnObjectName="TF_MEASURE_NAME_TEXT" columnName="MEASURE_TEXT"/>
+    </attribute>
+    <attribute id="MEASURE_SORT_ORDER" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEASURE_SORT_ORDER"/>
+      <keyMapping columnObjectName="TF_MEASURE_NAME_TEXT" columnName="MEASURE_SORT_ORDER"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
