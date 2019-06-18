@@ -6,6 +6,8 @@ DB_KEY_DASH				NVARCHAR(36),
 ALERT_ID				NVARCHAR(20),
 ABN						NVARCHAR(20),
 GJAHR					NVARCHAR(4),
+BPARTNER                NVARCHAR(11),
+GROUP_ID                NVARCHAR(32),
 ALERT_CREA_YEAR         NVARCHAR(4)
 )
        LANGUAGE SQLSCRIPT 
@@ -46,6 +48,8 @@ SELECT
     "A"."ALERT_ID",
     "A"."ABN" ,
     "A"."GJAHR",
+    "A"."BPARTNER",
+    "A"."GROUP_ID",
     "B"."ALERT_CREA_YEAR"
 FROM 
 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "A"
@@ -63,6 +67,8 @@ SELECT
     "ALERT_ID",
     "ABN" ,
     "GJAHR",
+    "BPARTNER",
+    "GROUP_ID",
     "ALERT_CREA_YEAR"
 FROM :ALERT_INFO_YEAR
 ;
