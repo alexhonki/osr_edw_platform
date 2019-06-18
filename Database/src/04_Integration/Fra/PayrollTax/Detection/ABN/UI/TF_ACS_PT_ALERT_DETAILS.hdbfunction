@@ -1,0 +1,70 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS"()
+RETURNS TABLE
+(
+DB_KEY					VARBINARY(16),
+DB_KEY_DASH				NVARCHAR(36),
+ALERT_ID				NVARCHAR(20),
+ABN						NVARCHAR(20),
+GJAHR					NVARCHAR(4),
+ALERT_CREA_YEAR         NVARCHAR(4)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+ALERT_CREA_TIME = 
+SELECT 	
+	"ALERT_ID", 
+	MAX("ALERT_CREA_YEAR") AS "ALERT_CREA_YEAR"
+FROM
+(
+SELECT DISTINCT 
+	"ALERT_ROOT"."ALERT_ID",
+	TO_DATS(TO_NVARCHAR(LEFT("ALERT_ROOT"."CREA_DATE_TIME",8))) AS "ALERT_CREA_DATE",
+	"CAL"."FISCAL_YEAR" AS "ALERT_CREA_YEAR"
+FROM 
+	"osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT_ROOT"
+INNER JOIN
+	"osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CAL"
+ON
+	TO_DATS(TO_NVARCHAR(LEFT("ALERT_ROOT"."CREA_DATE_TIME",8))) = TO_DATS("CAL"."DATE")
+WHERE 
+	"ALERT_ROOT"."INVEST_OBJ_TYPE" = 'PT_ABN_FY'
+AND "ALERT_ROOT"."ALERT_ID" IN (SELECT DISTINCT "ALERT_ID" FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"())
+AND "CAL"."CALENDAR_VARIANT" = 'Z6'
+) 
+GROUP BY "ALERT_ID"
+;
+
+ALERT_INFO_YEAR =
+SELECT
+    "A"."DB_KEY",
+    "A"."DB_KEY_DASH",
+    "A"."ALERT_ID",
+    "A"."ABN" ,
+    "A"."GJAHR",
+    "B"."ALERT_CREA_YEAR"
+FROM 
+"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "A"
+INNER JOIN
+:ALERT_CREA_TIME AS "B"
+ON
+"A"."ALERT_ID" = "B"."ALERT_ID"
+
+;
+
+RETURN 
+SELECT
+    "DB_KEY",
+    "DB_KEY_DASH",
+    "ALERT_ID",
+    "ABN" ,
+    "GJAHR",
+    "ALERT_CREA_YEAR"
+FROM :ALERT_INFO_YEAR
+;
+    
+END;

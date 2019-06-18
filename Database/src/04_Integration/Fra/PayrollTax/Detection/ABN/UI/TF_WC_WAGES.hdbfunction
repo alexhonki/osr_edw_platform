@@ -11,6 +11,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(IN IP_ALERT_ID NVARCH
 		ALERT_ID			NVARCHAR(20),
 		ABN					NVARCHAR(20),
 		GJAHR			 	NVARCHAR(4),
+		FIN_YEAR			NVARCHAR(4),
 		WAERS				NVARCHAR(5),
 		ACT_WAGES			DECIMAL(15,2),
 		ACT_APPR_WAGES  	DECIMAL(15,2),
@@ -22,11 +23,82 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(IN IP_ALERT_ID NVARCH
 
 BEGIN 
 
-	IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
-		lt_alert = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"();
-	ELSE
-		lt_alert = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() WHERE "ALERT_ID" = :IP_ALERT_ID;
-	END IF;
+IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
+
+ALERT_INFO =
+                SELECT
+                    "DB_KEY",
+                    "DB_KEY_DASH",
+                    "ALERT_ID",
+                    "ABN" ,
+                    "GJAHR"
+                FROM 
+                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+;
+
+ELSE
+
+ALERT_INFO =
+                SELECT
+                                "DB_KEY",
+                                "DB_KEY_DASH",
+                                "ALERT_ID",
+                                "ABN" ,
+                                "GJAHR"
+                FROM 
+                                "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
+                WHERE 
+                                "ALERT_ID" = :IP_ALERT_ID
+;
+
+END IF;
+
+
+ALERT_CREA_TIME =
+
+SELECT * FROM
+(
+SELECT DISTINCT 
+	"ALERT_ROOT"."ALERT_ID",
+	TO_DATS(TO_NVARCHAR(LEFT("ALERT_ROOT"."CREA_DATE_TIME",8))) AS "ALERT_CREA_DATE",
+	"CAL"."FISCAL_YEAR" AS "ALERT_CREA_YEAR"
+FROM 
+	"osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT" AS "ALERT_ROOT"
+INNER JOIN
+	"osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CAL"
+ON
+	TO_DATS(TO_NVARCHAR(LEFT("ALERT_ROOT"."CREA_DATE_TIME",8))) = TO_DATS("CAL"."DATE")
+WHERE 
+	"ALERT_ROOT"."INVEST_OBJ_TYPE" = 'PT_ABN_FY'
+AND "ALERT_ROOT"."ALERT_ID" IN (SELECT DISTINCT "ALERT_ID" FROM :ALERT_INFO)
+AND "CAL"."CALENDAR_VARIANT" = 'Z6'
+)
+;
+
+ALERT_INFO_YEAR =
+SELECT
+    "A"."DB_KEY",
+    "A"."DB_KEY_DASH",
+    "A"."ALERT_ID",
+    "A"."ABN" ,
+    "A"."GJAHR",
+    "B"."ALERT_CREA_YEAR"
+FROM 
+:ALERT_INFO AS "A"
+INNER JOIN
+:ALERT_CREA_TIME AS "B"
+ON
+"A"."ALERT_ID" = "B"."ALERT_ID"
+;
+
+POLICY_DET =
+SELECT DISTINCT
+"ABN",
+"POLICY_NO"
+FROM 
+"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"()
+WHERE "ABN" IN ( SELECT "ABN" FROM :ALERT_INFO )
+;
 
 	lt_wages =
 	SELECT 
@@ -34,20 +106,22 @@ BEGIN
 		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
 		"ALERT"."ABN"																			AS "ABN",
 		"ALERT"."GJAHR"																			AS "GJAHR",
+		TO_NVARCHAR(TO_INT("ALERT"."ALERT_CREA_YEAR") - :IP_FY_ADJUSTMENT)                      AS "FIN_YEAR",
 		SUM("WAGES"."ACT_WAGES")																AS "ACT_WAGES",
 		SUM("WAGES"."ACT_APPR_WAGES")															AS "ACT_APPR_WAGES"
 	FROM 
 	"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"()	AS "WAGES",
-	"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"() AS "DETAILS",
-	:lt_alert AS "ALERT"
+	:POLICY_DET AS "DETAILS",
+	:ALERT_INFO_YEAR AS "ALERT"
 	WHERE "WAGES"."POLICY_NO" =	"DETAILS"."POLICY_NO"
 	  AND "ALERT"."ABN" = "DETAILS"."ABN"
-	  AND  TO_NVARCHAR("WAGES"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+	  AND  TO_NVARCHAR("WAGES"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."ALERT_CREA_YEAR") - :IP_FY_ADJUSTMENT)
 	GROUP BY	
 	"ALERT"."DB_KEY",
 	"ALERT"."ALERT_ID",
 	"ALERT"."ABN",
-    "ALERT"."GJAHR"
+    "ALERT"."GJAHR",
+    "ALERT"."ALERT_CREA_YEAR"
 	;
 
 lt_emp_cnt = 
@@ -56,19 +130,21 @@ lt_emp_cnt =
 		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
 		"ALERT"."ABN"																			AS "ABN",
 		"ALERT"."GJAHR"					  														AS "GJAHR",
+		TO_NVARCHAR(TO_INT("ALERT"."ALERT_CREA_YEAR") - :IP_FY_ADJUSTMENT)                      AS "FIN_YEAR",
 		SUM("EMP_CNT"."CNT_EMPLOYEE")															AS "CNT_EMP"
 	FROM		 
 	"osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"( )												AS "EMP_CNT"
 	INNER JOIN 
-	:lt_alert												 									AS "ALERT"
+	:ALERT_INFO_YEAR												 									AS "ALERT"
 	ON   "ALERT"."ABN" = "EMP_CNT"."ABN"
-	AND  TO_NVARCHAR("EMP_CNT"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR") - :IP_FY_ADJUSTMENT)
+	AND  TO_NVARCHAR("EMP_CNT"."INCM_YR") = TO_NVARCHAR(TO_INT("ALERT"."ALERT_CREA_YEAR") - :IP_FY_ADJUSTMENT)
 	WHERE	"EMP_CNT"."RSDNL_STATE_CD"		= 'QLD'
 	GROUP BY	
 	"ALERT"."DB_KEY",
 	"ALERT"."ALERT_ID",
 	"ALERT"."ABN",
-    "ALERT"."GJAHR"
+    "ALERT"."GJAHR",
+    "ALERT"."ALERT_CREA_YEAR"
 	;
 
 lt_union = 
@@ -77,6 +153,7 @@ lt_union =
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
+	"FIN_YEAR",
 	'AUD  ' AS "WAERS",
 	"ACT_WAGES",
 	"ACT_APPR_WAGES",
@@ -88,6 +165,7 @@ lt_union =
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
+	"FIN_YEAR",
 	'AUD  ' AS "WAERS",
 	0 AS "ACT_WAGES",
 	0 AS "ACT_APPR_WAGES",
@@ -101,6 +179,7 @@ lt_union =
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
+	"FIN_YEAR",
 	"WAERS",
 	SUM("ACT_WAGES") AS "ACT_WAGES",
 	SUM("ACT_APPR_WAGES") AS "ACT_APPR_WAGES",
@@ -111,6 +190,7 @@ lt_union =
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
+	"FIN_YEAR",
 	"WAERS"
 	;
 
