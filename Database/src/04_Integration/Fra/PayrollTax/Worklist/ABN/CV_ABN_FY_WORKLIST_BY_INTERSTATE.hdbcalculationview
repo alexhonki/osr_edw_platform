@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.wl.abn::CV_ABN_FY_WORKLIST_BY_INTERSTATE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_FY_WORKLIST_BY_INTERSTATE"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_BY_INTERSTATE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_BY_INTERSTATE</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_BY_INTERSTATE">
+  <attributes>
+    <attribute id="DATE_CANCELLED" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_CANCELLED"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="DATE_CANCELLED"/>
+    </attribute>
+    <attribute id="STATE_CODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATE_CODE"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="STATE_CODE"/>
+    </attribute>
+    <attribute id="STATE_GROUP_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATE_GROUP_ID"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="STATE_GROUP_ID"/>
+    </attribute>
+    <attribute id="DATE_GROUP_JOINED" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_GROUP_JOINED"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="DATE_GROUP_JOINED"/>
+    </attribute>
+    <attribute id="ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="ABN"/>
+    </attribute>
+    <attribute id="DATE_GROUP_LEFT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_GROUP_LEFT"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="DATE_GROUP_LEFT"/>
+    </attribute>
+    <attribute id="ACN" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="ACN"/>
+    </attribute>
+    <attribute id="DATE_REGISTERED" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_REGISTERED"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="DATE_REGISTERED"/>
+    </attribute>
+    <attribute id="GJAHR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GRP_DATE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="GRP_DATE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
