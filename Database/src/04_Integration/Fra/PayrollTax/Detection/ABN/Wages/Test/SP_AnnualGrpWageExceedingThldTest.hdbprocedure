@@ -48,7 +48,7 @@ IF :iv_group_id IS NOT NULL OR :iv_group_id <> '' THEN
 lt_out_for_rule = SELECT * FROM :lt_out_for_rule WHERE "GROUP_ID" = :iv_group_id;
 END IF;
 
-CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpWageExceedingThld"(
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualGrpWageExceedingThld"(
 :lt_out_for_rule,
 :lt_param,
 et_result,
