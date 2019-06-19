@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.tmr.proxy::CV_TRANSACTIONS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TRANSACTIONS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.td.tmr.synonym::CDS_TRANSACTIONS.TAB.TRANSACTIONS">
+    <resourceUri>osr.edw.source.td.tmr.synonym::CDS_TRANSACTIONS.TAB.TRANSACTIONS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.td.tmr.synonym::CDS_TRANSACTIONS.TAB.TRANSACTIONS">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="REG_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REG_ID"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="REG_ID"/>
+    </attribute>
+    <attribute id="ACTION_CODE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION_CODE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="ACTION_CODE"/>
+    </attribute>
+    <attribute id="ACTION_DATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION_DATE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="ACTION_DATE"/>
+    </attribute>
+    <attribute id="STAMP_DUTY_PAID" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAMP_DUTY_PAID"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="STAMP_DUTY_PAID"/>
+    </attribute>
+    <attribute id="STAMP_DUTY_EXEMPTION_RSN_CD" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAMP_DUTY_EXEMPTION_RSN_CD"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="STAMP_DUTY_EXEMPTION_RSN_CD"/>
+    </attribute>
+    <attribute id="ODOMETER_READING" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ODOMETER_READING"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="ODOMETER_READING"/>
+    </attribute>
+    <attribute id="MARKET_VALUE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MARKET_VALUE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="MARKET_VALUE"/>
+    </attribute>
+    <attribute id="PLATE_NUMBER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLATE_NUMBER"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PLATE_NUMBER"/>
+    </attribute>
+    <attribute id="COB_ID" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COB_ID"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="COB_ID"/>
+    </attribute>
+    <attribute id="PREVIOUSLY_REGISTERED_FLAG" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PREVIOUSLY_REGISTERED_FLAG"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PREVIOUSLY_REGISTERED_FLAG"/>
+    </attribute>
+    <attribute id="PURPOSE_OF_USE_CODE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PURPOSE_OF_USE_CODE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PURPOSE_OF_USE_CODE"/>
+    </attribute>
+    <attribute id="REG_CATEGORY_CODE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REG_CATEGORY_CODE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="REG_CATEGORY_CODE"/>
+    </attribute>
+    <attribute id="CONCESSION_CATEGORY_CODE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONCESSION_CATEGORY_CODE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="CONCESSION_CATEGORY_CODE"/>
+    </attribute>
+    <attribute id="PRIMARY_BUYER_CRN" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRIMARY_BUYER_CRN"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PRIMARY_BUYER_CRN"/>
+    </attribute>
+    <attribute id="SCND_BUYER_CRN" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SCND_BUYER_CRN"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="SCND_BUYER_CRN"/>
+    </attribute>
+    <attribute id="SCND_BUYER_ROLE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SCND_BUYER_ROLE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="SCND_BUYER_ROLE"/>
+    </attribute>
+    <attribute id="PRIM_SELLER_CRN" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRIM_SELLER_CRN"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="PRIM_SELLER_CRN"/>
+    </attribute>
+    <attribute id="SCND_SELLER_CRN" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SCND_SELLER_CRN"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="SCND_SELLER_CRN"/>
+    </attribute>
+    <attribute id="SCND_SELLER_ROLE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SCND_SELLER_ROLE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="SCND_SELLER_ROLE"/>
+    </attribute>
+    <attribute id="ACTION" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="ACTION"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="CDS_TRANSACTIONS.TAB.TRANSACTIONS" columnName="SOURCE_FIELD_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
