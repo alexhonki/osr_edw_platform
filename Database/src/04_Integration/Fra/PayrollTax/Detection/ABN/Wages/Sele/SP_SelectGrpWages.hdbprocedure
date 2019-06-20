@@ -9,27 +9,34 @@ BEGIN
 
    et_data_for_rule =
    SELECT
-   "WAGES"."ABN",
-   "WAGES"."PERIOD_CATEGORY",
-   "WAGES"."PERIOD_KEY",
-   "WAGES"."GJAHR",
-   0 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-   0 AS "ATO_ITR_SALARY_WAGES",
-   0 AS "WCQ_ACT_WAGES",
+   "WS"."ABN",
+   "WS"."PERIOD_CATEGORY",
+   "WS"."PERIOD_KEY",
+   "WS"."GJAHR",
+   "WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT" AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+   "WAGES"."ATO_ITR_SALARY_WAGES" AS "ATO_ITR_SALARY_WAGES",
+   "WAGES"."WCQ_ACT_WAGES" AS "WCQ_ACT_WAGES",
    'AUD  ' AS "WAERS",
    CASE 
    WHEN "GRP"."GROUP_ID" IS NULL 
    THEN '' 
    ELSE "GRP"."GROUP_ID" 
    END AS "GROUP_ID"
-   FROM :it_workset AS "WAGES"
+   FROM 
+   :it_workset AS "WS"
+   INNER JOIN 
+   "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) AS "WAGES"
+   ON  "WS"."ABN" = "WAGES"."ABN"
+   AND "WS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+   AND "WS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+   AND "WS"."GJAHR" = "WAGES"."GJAHR"
    INNER JOIN
    "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING"() AS "MAP"
-   ON  "WAGES"."ABN" = "MAP"."ABN"
-   AND "WAGES"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
-   AND "WAGES"."PERIOD_KEY" = "MAP"."PERIOD_KEY"
-   AND "WAGES"."GJAHR" = "MAP"."GJAHR"
-   LEFT OUTER JOIN
+   ON  "WS"."ABN" = "MAP"."ABN"
+   AND "WS"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
+   AND "WS"."PERIOD_KEY" = "MAP"."PERIOD_KEY"
+   AND "WS"."GJAHR" = "MAP"."GJAHR"
+   INNER JOIN
    "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
    ON "MAP"."ACN" = "GRP"."ACN"
    AND "MAP"."GJAHR" = "GRP"."GJAHR"
