@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.wl.abn::CV_ABN_FY_WORKLIST_BY_INTERSTATE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.wl.abn::CV_ABN_FY_WORKLIST_BY_INTERSTATE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ABN_FY_WORKLIST_BY_INTERSTATE"/>
 <localVariables/>
 <variableMappings/>
@@ -59,9 +59,46 @@
       <descriptions defaultDescription="BPARTNER"/>
       <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="BPARTNER"/>
     </attribute>
+    <attribute id="CLIENT_NAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT_NAME"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="CLIENT_NAME"/>
+    </attribute>
+    <attribute id="ANZSIC_CODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ANZSIC_CODE"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="ANZSIC_CODE"/>
+    </attribute>
+    <attribute id="AUDIT_FLAG" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AUDIT_FLAG"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="AUDIT_FLAG"/>
+    </attribute>
+    <attribute id="TOP_1000_FLAG" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOP_1000_FLAG"/>
+      <keyMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="TOP_1000_FLAG"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
-  <baseMeasures/>
+  <baseMeasures>
+    <measure id="GROUP_STATE_WAGES" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GROUP_STATE_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="GROUP_STATE_WAGES"/>
+    </measure>
+    <measure id="CLIENT_STATE_WAGES" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CLIENT_STATE_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="CLIENT_STATE_WAGES"/>
+    </measure>
+    <measure id="GROUP_INTERSTATE_WAGES" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="GROUP_INTERSTATE_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="GROUP_INTERSTATE_WAGES"/>
+    </measure>
+    <measure id="CLIENT_INTERSTATE_WAGES" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CLIENT_INTERSTATE_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="CLIENT_INTERSTATE_WAGES"/>
+    </measure>
+    <measure id="NO_OF_MONTHS_EMP" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NO_OF_MONTHS_EMP"/>
+      <measureMapping columnObjectName="TF_ABN_FY_WORKLIST_BY_INTERSTATE" columnName="NO_OF_MONTHS_EMP"/>
+    </measure>
+  </baseMeasures>
   <calculatedMeasures/>
   <restrictedMeasures/>
 </logicalModel>
