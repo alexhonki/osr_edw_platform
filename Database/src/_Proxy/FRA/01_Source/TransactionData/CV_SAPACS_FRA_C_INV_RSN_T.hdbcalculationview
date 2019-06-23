@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.fra.proxy::CV_SAPACS_FRA_C_INV_RSN_T" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_SAPACS_FRA_C_INV_RSN_T"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.FRA_C_INV_RSN_T">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.FRA_C_INV_RSN_T</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.apps.acs.synonym::SAPACS.FRA_C_INV_RSN_T">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="SAPACS.FRA_C_INV_RSN_T" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="LANGUAGE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANGUAGE"/>
+      <keyMapping columnObjectName="SAPACS.FRA_C_INV_RSN_T" columnName="LANGUAGE"/>
+    </attribute>
+    <attribute id="INVESTIGATION_REASON" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INVESTIGATION_REASON"/>
+      <keyMapping columnObjectName="SAPACS.FRA_C_INV_RSN_T" columnName="INVESTIGATION_REASON"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="SAPACS.FRA_C_INV_RSN_T" columnName="DESCRIPTION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
