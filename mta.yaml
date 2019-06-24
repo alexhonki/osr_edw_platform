@@ -81,6 +81,11 @@ modules:
           service: '~{OSR-EDW-SOURCE-DESBT-grantor-service}'
       - name: acs-ext-access-grantor
       - name: edw-ext-access-grantor
+      - name: OSR-EDW-SOURCE-DATA-INFO-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-DATA-INFO-grantor
+          service: '~{OSR-EDW-SOURCE-DATA-INFO-grantor-service}'
 resources:
   - name: OSR-EDW-SOURCE-RMS-grantor
     properties:
@@ -142,7 +147,6 @@ resources:
     parameters:
       service-name: OSR_EDW_SOURCE_DESBT-deploy
     type: org.cloudfoundry.existing-service
-    
   - name: OSR_EDW_PLATFORM-dws
     properties:
       dwf-edw-client-name: '${service-name}'
@@ -157,3 +161,10 @@ resources:
   - name: edw-ext-access-grantor
     type: org.cloudfoundry.existing-service
     description: edw-ext-access-grantor
+  - name: OSR-EDW-SOURCE-DATA-INFO-grantor
+    type: org.cloudfoundry.existing-service
+    description: Grantor for OSR EDW Source Data Info for external metadata
+    parameters:
+      service-name: OSR_EDW_SOURCE_DATA_INFO-deploy
+    properties:
+      OSR-EDW-SOURCE-DATA-INFO-grantor-service: '${service-name}'
