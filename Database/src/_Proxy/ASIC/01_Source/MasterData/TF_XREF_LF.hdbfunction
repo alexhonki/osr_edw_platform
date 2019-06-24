@@ -29,18 +29,18 @@ FUNCTION "osr.edw.source.md.asic.proxy::TF_XREF_LF"( )
 	"Z_RUN_ROW_NO" 	INTEGER,
 	"Z_RUN_SEQ_ID" 	INTEGER
        )
-       LANGUAGE SQLSCRIPT 
-       SQL SECURITY INVOKER AS 
-BEGIN 
+       LANGUAGE SQLSCRIPT
+       SQL SECURITY INVOKER AS
+BEGIN
 
-    lt_meta = 
+    lt_meta =
     SELECT TOP 1 "META_FILE_NAME"
-    FROM 
+    FROM
     "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ASIC')
-	WHERE "TYPE" = 'XREF'
+	WHERE "TABLE_NAME" = 'XREF'
 	ORDER BY "META_FILE_NAME" DESC
 	;
-	
+
     RETURN
     SELECT
     "PATH",
