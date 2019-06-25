@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.asic.proxy::CV_PERSON_CLEANSE_NAMES" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PERSON_CLEANSE_NAMES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data">
+    <resourceUri>osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.propagation.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data">
+    <resourceUri>osr.edw.propagation.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="PATH">
+        <descriptions defaultDescription="PATH"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ERROR">
+        <descriptions defaultDescription="ERROR"/>
+      </viewAttribute>
+      <viewAttribute id="PARTITION">
+        <descriptions defaultDescription="PARTITION"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_NUM">
+        <descriptions defaultDescription="PERSON_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME1">
+        <descriptions defaultDescription="GIVEN_NAME1"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME2">
+        <descriptions defaultDescription="GIVEN_NAME2"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME3">
+        <descriptions defaultDescription="GIVEN_NAME3"/>
+      </viewAttribute>
+      <viewAttribute id="SURNAME">
+        <descriptions defaultDescription="SURNAME"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_COUNTRY">
+        <descriptions defaultDescription="BIRTH_COUNTRY"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_DT">
+        <descriptions defaultDescription="BIRTH_DT"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_LOCALITY">
+        <descriptions defaultDescription="BIRTH_LOCALITY"/>
+      </viewAttribute>
+      <viewAttribute id="DEFAULT_ADDRESS_NUM">
+        <descriptions defaultDescription="DEFAULT_ADDRESS_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="PERS_START_DT">
+        <descriptions defaultDescription="PERS_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="REC_START_DT">
+        <descriptions defaultDescription="REC_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="REC_END_DT">
+        <descriptions defaultDescription="REC_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_STATE">
+        <descriptions defaultDescription="BIRTH_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_COUNTRY_CODE">
+        <descriptions defaultDescription="BIRTH_COUNTRY_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_DATE">
+        <descriptions defaultDescription="BIRTH_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="PERS_START_DATE">
+        <descriptions defaultDescription="PERS_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="REC_START_DATE">
+        <descriptions defaultDescription="REC_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="REC_END_DATE">
+        <descriptions defaultDescription="REC_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="SOURCE_FIELD_VALUE">
+        <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="STD_PERSON_GN">
+        <descriptions defaultDescription="STD_PERSON_GN"/>
+      </viewAttribute>
+      <viewAttribute id="STD_PERSON_FN_FULL">
+        <descriptions defaultDescription="STD_PERSON_FN_FULL"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_INFO_CODE">
+        <descriptions defaultDescription="PERSON_INFO_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN">
+        <descriptions defaultDescription="MATCH_PERSON_GN"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD2">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD2"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD3">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD3"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD4">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD4"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD5">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD5"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD6">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD6"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2">
+        <descriptions defaultDescription="MATCH_PERSON_GN2"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD2">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD2"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD3">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD3"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD4">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD4"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD5">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD5"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD6">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD6"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_FN">
+        <descriptions defaultDescription="MATCH_PERSON_FN"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_FN_STD">
+        <descriptions defaultDescription="MATCH_PERSON_FN_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_MATPOST">
+        <descriptions defaultDescription="MATCH_PERSON_MATPOST"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_MATPOST_STD">
+        <descriptions defaultDescription="MATCH_PERSON_MATPOST_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON">
+        <descriptions defaultDescription="MATCH_PERSON"/>
+      </viewAttribute>
+      <viewAttribute id="CLEANSE_TABLE_ID">
+        <descriptions defaultDescription="CLEANSE_TABLE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CLEANSE_ROW_ID">
+        <descriptions defaultDescription="CLEANSE_ROW_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME23">
+        <descriptions defaultDescription="GIVEN_NAME23"/>
+      </viewAttribute>
+      <viewAttribute id="STD_PERSON_GN2">
+        <descriptions defaultDescription="STD_PERSON_GN2"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.propagation.md.asic.synonym::CDS_ASIC.DSO.PERSON.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PATH" source="PATH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERROR" source="ERROR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTITION" source="PARTITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME1" source="GIVEN_NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME2" source="GIVEN_NAME2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME3" source="GIVEN_NAME3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SURNAME" source="SURNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_COUNTRY" source="BIRTH_COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_DT" source="BIRTH_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_LOCALITY" source="BIRTH_LOCALITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEFAULT_ADDRESS_NUM" source="DEFAULT_ADDRESS_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DT" source="PERS_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_START_DT" source="REC_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_END_DT" source="REC_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_STATE" source="BIRTH_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_COUNTRY_CODE" source="BIRTH_COUNTRY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_DATE" source="BIRTH_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DATE" source="PERS_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_START_DATE" source="REC_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_END_DATE" source="REC_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_FIELD_VALUE" source="SOURCE_FIELD_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_PERSON_GN" source="STD_PERSON_GN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_PERSON_FN_FULL" source="STD_PERSON_FN_FULL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_INFO_CODE" source="PERSON_INFO_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN" source="MATCH_PERSON_GN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD" source="MATCH_PERSON_GN_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD2" source="MATCH_PERSON_GN_STD2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD3" source="MATCH_PERSON_GN_STD3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD4" source="MATCH_PERSON_GN_STD4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD5" source="MATCH_PERSON_GN_STD5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD6" source="MATCH_PERSON_GN_STD6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2" source="MATCH_PERSON_GN2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD" source="MATCH_PERSON_GN2_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD2" source="MATCH_PERSON_GN2_STD2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD3" source="MATCH_PERSON_GN2_STD3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD4" source="MATCH_PERSON_GN2_STD4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD5" source="MATCH_PERSON_GN2_STD5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD6" source="MATCH_PERSON_GN2_STD6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_FN" source="MATCH_PERSON_FN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_FN_STD" source="MATCH_PERSON_FN_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_MATPOST" source="MATCH_PERSON_MATPOST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_MATPOST_STD" source="MATCH_PERSON_MATPOST_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON" source="MATCH_PERSON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLEANSE_TABLE_ID" source="CLEANSE_TABLE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLEANSE_ROW_ID" source="CLEANSE_ROW_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME23" source="GIVEN_NAME23"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_PERSON_GN2" source="STD_PERSON_GN2"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PATH">
+        <descriptions defaultDescription="PATH"/>
+      </viewAttribute>
+      <viewAttribute id="NAME">
+        <descriptions defaultDescription="NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ERROR">
+        <descriptions defaultDescription="ERROR"/>
+      </viewAttribute>
+      <viewAttribute id="PARTITION">
+        <descriptions defaultDescription="PARTITION"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_NUM">
+        <descriptions defaultDescription="PERSON_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME1">
+        <descriptions defaultDescription="GIVEN_NAME1"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME2">
+        <descriptions defaultDescription="GIVEN_NAME2"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME3">
+        <descriptions defaultDescription="GIVEN_NAME3"/>
+      </viewAttribute>
+      <viewAttribute id="SURNAME">
+        <descriptions defaultDescription="SURNAME"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_COUNTRY">
+        <descriptions defaultDescription="BIRTH_COUNTRY"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_DT">
+        <descriptions defaultDescription="BIRTH_DT"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_LOCALITY">
+        <descriptions defaultDescription="BIRTH_LOCALITY"/>
+      </viewAttribute>
+      <viewAttribute id="DEFAULT_ADDRESS_NUM">
+        <descriptions defaultDescription="DEFAULT_ADDRESS_NUM"/>
+      </viewAttribute>
+      <viewAttribute id="PERS_START_DT">
+        <descriptions defaultDescription="PERS_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="REC_START_DT">
+        <descriptions defaultDescription="REC_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="REC_END_DT">
+        <descriptions defaultDescription="REC_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_STATE">
+        <descriptions defaultDescription="BIRTH_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_COUNTRY_CODE">
+        <descriptions defaultDescription="BIRTH_COUNTRY_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTH_DATE">
+        <descriptions defaultDescription="BIRTH_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="PERS_START_DATE">
+        <descriptions defaultDescription="PERS_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="REC_START_DATE">
+        <descriptions defaultDescription="REC_START_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="REC_END_DATE">
+        <descriptions defaultDescription="REC_END_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="SOURCE_FIELD_VALUE">
+        <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="STD_PERSON_GN">
+        <descriptions defaultDescription="STD_PERSON_GN"/>
+      </viewAttribute>
+      <viewAttribute id="STD_PERSON_FN_FULL">
+        <descriptions defaultDescription="STD_PERSON_FN_FULL"/>
+      </viewAttribute>
+      <viewAttribute id="PERSON_INFO_CODE">
+        <descriptions defaultDescription="PERSON_INFO_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN">
+        <descriptions defaultDescription="MATCH_PERSON_GN"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD2">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD2"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD3">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD3"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD4">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD4"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD5">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD5"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN_STD6">
+        <descriptions defaultDescription="MATCH_PERSON_GN_STD6"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2">
+        <descriptions defaultDescription="MATCH_PERSON_GN2"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD2">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD2"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD3">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD3"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD4">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD4"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD5">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD5"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_GN2_STD6">
+        <descriptions defaultDescription="MATCH_PERSON_GN2_STD6"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_FN">
+        <descriptions defaultDescription="MATCH_PERSON_FN"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_FN_STD">
+        <descriptions defaultDescription="MATCH_PERSON_FN_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_MATPOST">
+        <descriptions defaultDescription="MATCH_PERSON_MATPOST"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON_MATPOST_STD">
+        <descriptions defaultDescription="MATCH_PERSON_MATPOST_STD"/>
+      </viewAttribute>
+      <viewAttribute id="MATCH_PERSON">
+        <descriptions defaultDescription="MATCH_PERSON"/>
+      </viewAttribute>
+      <viewAttribute id="CLEANSE_TABLE_ID">
+        <descriptions defaultDescription="CLEANSE_TABLE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="CLEANSE_ROW_ID">
+        <descriptions defaultDescription="CLEANSE_ROW_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GIVEN_NAME23">
+        <descriptions defaultDescription="GIVEN_NAME23"/>
+      </viewAttribute>
+      <viewAttribute id="STD_PERSON_GN2">
+        <descriptions defaultDescription="STD_PERSON_GN2"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$Z_RUN_SEQ_ID$Z_RUN_SEQ_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$Z_RUN_SEQ_ID$Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PATH" source="PATH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERROR" source="ERROR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTITION" source="PARTITION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_NUM" source="PERSON_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME1" source="GIVEN_NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME2" source="GIVEN_NAME2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME3" source="GIVEN_NAME3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SURNAME" source="SURNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_COUNTRY" source="BIRTH_COUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_DT" source="BIRTH_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_LOCALITY" source="BIRTH_LOCALITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEFAULT_ADDRESS_NUM" source="DEFAULT_ADDRESS_NUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DT" source="PERS_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_START_DT" source="REC_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_END_DT" source="REC_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_STATE" source="BIRTH_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_COUNTRY_CODE" source="BIRTH_COUNTRY_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTH_DATE" source="BIRTH_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERS_START_DATE" source="PERS_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_START_DATE" source="REC_START_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REC_END_DATE" source="REC_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE_FIELD_VALUE" source="SOURCE_FIELD_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_PERSON_GN" source="STD_PERSON_GN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_PERSON_FN_FULL" source="STD_PERSON_FN_FULL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSON_INFO_CODE" source="PERSON_INFO_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN" source="MATCH_PERSON_GN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD" source="MATCH_PERSON_GN_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD2" source="MATCH_PERSON_GN_STD2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD3" source="MATCH_PERSON_GN_STD3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD4" source="MATCH_PERSON_GN_STD4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD5" source="MATCH_PERSON_GN_STD5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN_STD6" source="MATCH_PERSON_GN_STD6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2" source="MATCH_PERSON_GN2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD" source="MATCH_PERSON_GN2_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD2" source="MATCH_PERSON_GN2_STD2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD3" source="MATCH_PERSON_GN2_STD3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD4" source="MATCH_PERSON_GN2_STD4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD5" source="MATCH_PERSON_GN2_STD5"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_GN2_STD6" source="MATCH_PERSON_GN2_STD6"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_FN" source="MATCH_PERSON_FN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_FN_STD" source="MATCH_PERSON_FN_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_MATPOST" source="MATCH_PERSON_MATPOST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON_MATPOST_STD" source="MATCH_PERSON_MATPOST_STD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATCH_PERSON" source="MATCH_PERSON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLEANSE_TABLE_ID" source="CLEANSE_TABLE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLEANSE_ROW_ID" source="CLEANSE_ROW_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GIVEN_NAME23" source="GIVEN_NAME23"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STD_PERSON_GN2" source="STD_PERSON_GN2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$Z_RUN_SEQ_ID$Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+    </input>
+    <joinAttribute name="JOIN$Z_RUN_SEQ_ID$Z_RUN_SEQ_ID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="Join_1" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="Join_1" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="Join_1" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="PERSON_NUM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_NUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="PERSON_NUM"/>
+    </attribute>
+    <attribute id="GIVEN_NAME1" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME1"/>
+      <keyMapping columnObjectName="Join_1" columnName="GIVEN_NAME1"/>
+    </attribute>
+    <attribute id="GIVEN_NAME2" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME2"/>
+      <keyMapping columnObjectName="Join_1" columnName="GIVEN_NAME2"/>
+    </attribute>
+    <attribute id="GIVEN_NAME3" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME3"/>
+      <keyMapping columnObjectName="Join_1" columnName="GIVEN_NAME3"/>
+    </attribute>
+    <attribute id="SURNAME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SURNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="SURNAME"/>
+    </attribute>
+    <attribute id="BIRTH_COUNTRY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_COUNTRY"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTH_COUNTRY"/>
+    </attribute>
+    <attribute id="BIRTH_DT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_DT"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTH_DT"/>
+    </attribute>
+    <attribute id="BIRTH_LOCALITY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_LOCALITY"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTH_LOCALITY"/>
+    </attribute>
+    <attribute id="DEFAULT_ADDRESS_NUM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFAULT_ADDRESS_NUM"/>
+      <keyMapping columnObjectName="Join_1" columnName="DEFAULT_ADDRESS_NUM"/>
+    </attribute>
+    <attribute id="PERS_START_DT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERS_START_DT"/>
+      <keyMapping columnObjectName="Join_1" columnName="PERS_START_DT"/>
+    </attribute>
+    <attribute id="REC_START_DT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REC_START_DT"/>
+      <keyMapping columnObjectName="Join_1" columnName="REC_START_DT"/>
+    </attribute>
+    <attribute id="REC_END_DT" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REC_END_DT"/>
+      <keyMapping columnObjectName="Join_1" columnName="REC_END_DT"/>
+    </attribute>
+    <attribute id="ABN" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_1" columnName="ABN"/>
+    </attribute>
+    <attribute id="BIRTH_STATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_STATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTH_STATE"/>
+    </attribute>
+    <attribute id="BIRTH_COUNTRY_CODE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_COUNTRY_CODE"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTH_COUNTRY_CODE"/>
+    </attribute>
+    <attribute id="BIRTH_DATE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTH_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="BIRTH_DATE"/>
+    </attribute>
+    <attribute id="PERS_START_DATE" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERS_START_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="PERS_START_DATE"/>
+    </attribute>
+    <attribute id="REC_START_DATE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REC_START_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="REC_START_DATE"/>
+    </attribute>
+    <attribute id="REC_END_DATE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REC_END_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="REC_END_DATE"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="Join_1" columnName="SOURCE_FIELD_VALUE"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="STD_PERSON_GN" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_PERSON_GN"/>
+      <keyMapping columnObjectName="Join_1" columnName="STD_PERSON_GN"/>
+    </attribute>
+    <attribute id="STD_PERSON_FN_FULL" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_PERSON_FN_FULL"/>
+      <keyMapping columnObjectName="Join_1" columnName="STD_PERSON_FN_FULL"/>
+    </attribute>
+    <attribute id="PERSON_INFO_CODE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_INFO_CODE"/>
+      <keyMapping columnObjectName="Join_1" columnName="PERSON_INFO_CODE"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN_STD" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN_STD"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN_STD"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN_STD2" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN_STD2"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN_STD2"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN_STD3" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN_STD3"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN_STD3"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN_STD4" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN_STD4"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN_STD4"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN_STD5" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN_STD5"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN_STD5"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN_STD6" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN_STD6"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN_STD6"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2_STD" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2_STD"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2_STD"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2_STD2" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2_STD2"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2_STD2"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2_STD3" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2_STD3"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2_STD3"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2_STD4" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2_STD4"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2_STD4"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2_STD5" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2_STD5"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2_STD5"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_GN2_STD6" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_GN2_STD6"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_GN2_STD6"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_FN" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_FN"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_FN"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_FN_STD" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_FN_STD"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_FN_STD"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_MATPOST" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_MATPOST"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_MATPOST"/>
+    </attribute>
+    <attribute id="MATCH_PERSON_MATPOST_STD" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON_MATPOST_STD"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON_MATPOST_STD"/>
+    </attribute>
+    <attribute id="MATCH_PERSON" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PERSON"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATCH_PERSON"/>
+    </attribute>
+    <attribute id="CLEANSE_TABLE_ID" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLEANSE_TABLE_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CLEANSE_TABLE_ID"/>
+    </attribute>
+    <attribute id="CLEANSE_ROW_ID" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLEANSE_ROW_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="CLEANSE_ROW_ID"/>
+    </attribute>
+    <attribute id="GIVEN_NAME23" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GIVEN_NAME23"/>
+      <keyMapping columnObjectName="Join_1" columnName="GIVEN_NAME23"/>
+    </attribute>
+    <attribute id="STD_PERSON_GN2" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_PERSON_GN2"/>
+      <keyMapping columnObjectName="Join_1" columnName="STD_PERSON_GN2"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="376.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="296" y="-37"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
