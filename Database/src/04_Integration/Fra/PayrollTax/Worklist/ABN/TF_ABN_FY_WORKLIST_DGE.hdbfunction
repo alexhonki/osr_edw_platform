@@ -1,0 +1,101 @@
+FUNCTION "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE"( )
+     RETURNS TABLE
+(
+ 
+
+	 CLIENT                     NVARCHAR(3),
+     GROUP_BP_NO                NVARCHAR(10),
+     DGE_BP_NO                  NVARCHAR(10),
+     DGE_BP_NAME                NVARCHAR(150),
+     PERIODKEY                  NVARCHAR(4),
+     STARTDT                    NVARCHAR(8),
+     ENDDT                      NVARCHAR(8),
+     EXPEPTION_TYPE             NVARCHAR(10),
+     DGE_FBN                    NVARCHAR(12),
+     DGE_GM_QLD                 DECIMAL(15,2),
+     TOT_GRP_RTN_QLD            DECIMAL(15,2),
+     QLD_DIFF                   DECIMAL(15,2),
+     QLD_FLAG                   NVARCHAR(1),  
+     DGE_GM_INT                 DECIMAL(15,2),   
+     TOT_GRP_RTN_INT            DECIMAL(15,2),
+     INT_DIFF                   DECIMAL(15,2),
+     INT_FLAG                   NVARCHAR(1),  
+     WAERS                      NVARCHAR(5),  
+     NAME_CO                    NVARCHAR(40),
+     BUILDING                   NVARCHAR(20),
+     FLOOR_NO                   NVARCHAR(10),
+     ROOMNUMBER                 NVARCHAR(10),
+     HOUSE_NUM1                 NVARCHAR(10),
+     HOUSE_NUM2                 NVARCHAR(10),
+     STREET                     NVARCHAR(60),
+     STR_SUPPL1                 NVARCHAR(40),
+     CITY1                      NVARCHAR(40),
+     CITY2                      NVARCHAR(40),
+     REGION                     NVARCHAR(3),
+     COUNTRY                    NVARCHAR(3),
+     POST_CODE1                 NVARCHAR(10),  
+     EMAIL                      NVARCHAR(256)
+
+    
+) 
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+    
+DECLARE FY NVARCHAR(4) DEFAULT TO_NVARCHAR(LEFT(TO_DATS(CURRENT_DATE),4));    
+
+OUT_PUT =
+
+SELECT * FROM "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY" (:FY)
+UNION
+SELECT * FROM "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY" (TO_NVARCHAR(TO_INT(:FY) -  1))
+UNION
+SELECT * FROM "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY" (TO_NVARCHAR(TO_INT(:FY) -  2))
+UNION
+SELECT * FROM "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY" (TO_NVARCHAR(TO_INT(:FY) -  3))
+UNION
+SELECT * FROM "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY" (TO_NVARCHAR(TO_INT(:FY) -  4))
+
+;
+
+RETURN
+SELECT 
+     CLIENT,
+     GROUP_BP_NO,
+     DGE_BP_NO,
+     DGE_BP_NAME,
+	 PERIODKEY    ,
+     STARTDT       ,
+     ENDDT,
+     EXPEPTION_TYPE,
+     DGE_FBN,
+     DGE_GM_QLD,
+     TOT_GRP_RTN_QLD,
+     QLD_DIFF,
+     QLD_FLAG,
+     DGE_GM_INT,
+     TOT_GRP_RTN_INT,
+     INT_DIFF,
+     INT_FLAG,
+     'AUD' AS WAERS,
+     NAME_CO,
+     BUILDING,
+     FLOOR_NO,
+     ROOMNUMBER,
+     HOUSE_NUM1,
+     HOUSE_NUM2,
+     STREET,
+     STR_SUPPL1,
+     CITY1,
+     CITY2,
+     REGION,
+     COUNTRY,
+     POST_CODE1,
+     EMAIL  
+     FROM :OUT_PUT;
+     
+END;

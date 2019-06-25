@@ -1,0 +1,702 @@
+FUNCTION "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY"( IN IP_FY NVARCHAR(4))
+      RETURNS TABLE
+(
+ 
+
+	 CLIENT                     NVARCHAR(3),
+     GROUP_BP_NO                NVARCHAR(10),
+     DGE_BP_NO                  NVARCHAR(10),
+     DGE_BP_NAME                NVARCHAR(150),
+     PERIODKEY                  NVARCHAR(4),
+     STARTDT                    NVARCHAR(8),
+     ENDDT                      NVARCHAR(8),
+     EXPEPTION_TYPE             NVARCHAR(10),
+     DGE_FBN                    NVARCHAR(12),
+     DGE_GM_QLD                 DECIMAL(15,2),
+     TOT_GRP_RTN_QLD            DECIMAL(15,2),
+     QLD_DIFF                   DECIMAL(15,2),
+     QLD_FLAG                   NVARCHAR(1),  
+     DGE_GM_INT                 DECIMAL(15,2),   
+     TOT_GRP_RTN_INT            DECIMAL(15,2),
+     INT_DIFF                   DECIMAL(15,2),
+     INT_FLAG                   NVARCHAR(1),  
+     WAERS                      NVARCHAR(5),  
+     NAME_CO                    NVARCHAR(40),
+     BUILDING                   NVARCHAR(20),
+     FLOOR_NO                   NVARCHAR(10),
+     ROOMNUMBER                 NVARCHAR(10),
+     HOUSE_NUM1                 NVARCHAR(10),
+     HOUSE_NUM2                 NVARCHAR(10),
+     STREET                     NVARCHAR(60),
+     STR_SUPPL1                 NVARCHAR(40),
+     CITY1                      NVARCHAR(40),
+     CITY2                      NVARCHAR(40),
+     REGION                     NVARCHAR(3),
+     COUNTRY                    NVARCHAR(3),
+     POST_CODE1                 NVARCHAR(10),  
+     EMAIL                      NVARCHAR(256)
+
+    
+) 
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+
+
+--DECLARE COUNTER INTEGER ;
+--DECLARE GROUP_COUNT INTEGER DEFAULT 2;
+DECLARE sdate DATE;
+DECLARE edate DATE;
+DECLARE PERIODKEY NVARCHAR(4);
+
+FY_DATES =
+SELECT DISTINCT
+	"FISCAL_YEAR",
+	CASE WHEN "FISCAL_YEAR" <> '' THEN "FISCAL_YEAR" ELSE ''END AS  "PERIOD_KEY",
+	CASE WHEN "FISCAL_YEAR" <> '' THEN TO_NVARCHAR(TO_DATS(MIN(DATE_SQL))) ELSE '' END AS "ST_DATE",
+	CASE WHEN "FISCAL_YEAR" <> '' THEN TO_NVARCHAR(TO_DATS(MAX(DATE_SQL))) ELSE '' END AS "EN_DATE",
+	ROW_NUMBER() OVER (ORDER BY "FISCAL_YEAR" ASC) AS "ROW_NUM"
+FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR"
+WHERE "CALENDAR_VARIANT" = 'Z6'
+AND TO_NVARCHAR("FISCAL_YEAR") = :IP_FY
+GROUP BY "FISCAL_YEAR"
+;
+
+
+
+SELECT DISTINCT "ST_DATE"    INTO sdate     FROM :FY_DATES ;
+SELECT DISTINCT "EN_DATE"    INTO edate     FROM :FY_DATES ;
+SELECT DISTINCT "PERIOD_KEY" INTO PERIODKEY FROM :FY_DATES ;
+
+BP_SELECTION_1 =
+SELECT
+DISTINCT PARTNER1
+ FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data"
+ WHERE DATE_FROM   <= :edate
+  AND DATE_TO      >= :sdate
+  AND RELTYP IN ('ZDGE')
+  AND PARTNER1  IN (  SELECT "PARTNER1" FROM
+                            (
+                                SELECT PARTNER1, MAX( DATE_TO ) OVER (PARTITION BY PARTNER1) AS MAX_DATE_TO
+                                 FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
+                                    WHERE DATE_FROM <= :edate
+                                     AND DATE_TO >= :sdate
+                                     AND RELTYP IN ('ZDGE','ZGRM', 'ZIGM')
+                                     GROUP BY PARTNER1, DATE_TO
+                            )WHERE MAX_DATE_TO <= :edate
+                       GROUP BY PARTNER1 
+  	
+  );
+  
+-- Below Logic will give all the groups, except groups who's DGE lodged a final return in the selected period key
+
+BP_SELECTION_2 =
+
+SELECT
+DISTINCT PARTNER1
+FROM  "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
+WHERE DATE_FROM    <= :edate
+  AND  DATE_TO      >= :sdate
+  AND  RELTYP IN ('ZDGE')
+  AND  PARTNER1 NOT IN
+
+  (
+        SELECT DISTINCT PARTNER1 FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
+            WHERE DATE_FROM    <= :edate
+             AND  DATE_TO      >= :sdate
+             AND  RELTYP IN ('ZDGE')
+             AND  PARTNER2 IN
+                       (
+                           SELECT DISTINCT TAXPAYER FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data"
+                           WHERE APPLY_FROM <= :edate
+                           AND   APPLY_TO   >= :sdate
+                           AND   FBSTA      =  'IP014'
+                           AND   FBTYP      =  'ZPF2'
+                        )
+    );
+  
+
+
+-- Give all the BP's involved in a group and Excludes the floating group.
+BP_LIST =
+SELECT DISTINCT
+ CLIENT,
+ GROUP_NO,
+ PARTNER,
+ RELTYP,
+ DATE_FROM,
+ DATE_TO
+  FROM
+(
+    SELECT
+    CLIENT     AS CLIENT,
+    PARTNER1   AS GROUP_NO,
+    PARTNER2   AS PARTNER,
+    RELTYP     AS RELTYP,
+    DATE_FROM  AS DATE_FROM,
+    DATE_TO    AS DATE_TO
+    FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
+    WHERE RELTYP IN ( 'ZDGE', 'ZGRM', 'ZIGM')
+    AND DATE_FROM <=  edate
+    AND DATE_TO   >=  sdate
+    AND PARTNER1 IN (
+                      SELECT PARTNER1 FROM :BP_SELECTION_1
+                        UNION
+                      SELECT PARTNER1 FROM :BP_SELECTION_2
+                   )
+)   WHERE GROUP_NO  NOT IN ('0001015163' )
+;
+  
+ 
+---- END of PTX Group required----------
+
+----Start of Form Data for the above PTX groups----
+
+-- Get the Required Annual and Final returns form bundle numbers for the above BP's (:BP_LIST)
+
+FB_NUM =
+
+SELECT DISTINCT 
+	MANDT,
+	CASE_GUID,
+	FBNUM,
+	FBSTA,
+	REVENUE_TYPE,
+	TAXPAYER,
+	PERIOD_KEY,
+	APPLY_FROM,
+	APPLY_TO,
+	FBTYP,
+	TO_DATS(LEFT(AETSP,8)) AS CREATED_ON, 
+	TO_DATS(LEFT(ERTSP,8)) AS CHANGED_ON,
+	TRANSACTION_TYPE,
+	ZZREASSESSED 
+FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data"
+                                    WHERE APPLY_FROM <= :edate
+                                    AND   APPLY_TO   >= :sdate
+                                    AND   FBSTA      =  'IP014'
+                                    AND   FBTYP      IN  ( 'ZPA2', 'ZPF2')
+                                    AND   TAXPAYER IN ( SELECT DISTINCT PARTNER FROM :BP_LIST );
+
+
+-- Add Group BP No. to the FBH  Data.
+
+
+FBH_GBP =
+SELECT
+     FBH.MANDT AS CLIENT,
+     FBH.CASE_GUID,
+     FBH.FBNUM,
+     FBH.FBSTA,
+     FBH.REVENUE_TYPE,
+     FBH.TAXPAYER AS BP,
+     FBH.PERIOD_KEY,
+     FBH.APPLY_FROM,
+     FBH.APPLY_TO,
+     FBH.FBTYP,
+     FBH.CREATED_ON,
+     FBH.CHANGED_ON,
+     FBH.TRANSACTION_TYPE,
+     FBH.ZZREASSESSED,
+     REL.GROUP_NO,
+     REL.PARTNER
+FROM
+    :FB_NUM  AS FBH   LEFT OUTER JOIN
+    (SELECT DISTINCT GROUP_NO, PARTNER FROM :BP_LIST) AS REL   ON
+    FBH.TAXPAYER = REL.PARTNER
+
+
+; 
+ 
+ 
+ 
+--Doing this because the CDS view (ZBWV_3PYA_001 and ZBWV_0IDP_001) which were built for BW extractors not supported in test system (RT3)
+--Get form Data
+
+PYA_MAX =
+ SELECT
+     OBJECT_ID,
+     MAX( VERSION )  AS MAX_VERSION
+ FROM "osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1003PYA00000000.active_data"
+ WHERE BUNDLE_ID IN (SELECT DISTINCT CASE_GUID FROM :FB_NUM)
+ GROUP BY OBJECT_ID
+;
+
+ 
+PYA_DATA =
+
+SELECT
+     PYA.RECORD_ID,
+     PYA.PARENT_ID,
+     PYA.OBJECT_ID,
+     PYA.BUNDLE_ID,
+     PYA.VERSION,
+     PYA.A_TOT_QLD_GM,
+     PYA.A_TOT_INT_GM,
+     PYA.C_TOT_GRP_AUST_WAGES,
+     PYA.C_DEDUCTION_ALLOWED,
+     PYA.C_TOT_QLD_TXBLE_WAGES,
+     PYA.A_TOT_INT_WAGE
+FROM
+"osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1003PYA00000000.active_data" AS PYA INNER JOIN
+:PYA_MAX AS PYA_MAX ON
+PYA.OBJECT_ID = PYA_MAX.OBJECT_ID AND
+PYA.VERSION   = PYA_MAX.MAX_VERSION
+
+;
+
+IDP_MAX =
+ SELECT
+     OBJECT_ID,
+     MAX( VERSION )  AS MAX_VERSION
+ FROM 
+ "osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1000IDP00000000.active_data"
+ WHERE BUNDLE_ID IN (SELECT DISTINCT CASE_GUID FROM :FB_NUM)
+ GROUP BY OBJECT_ID
+
+
+;
+IDP_DATA =
+SELECT
+     IDP.RECORD_ID,
+     IDP.PARENT_ID,
+     IDP.OBJECT_ID,
+     IDP.BUNDLE_ID,
+     IDP.VERSION,
+     IDP.C_BP,
+     IDP.C_BPNAME,
+     IDP.C_FBN,
+     IDP.C_GRP_STATUS,
+     IDP.C_ABN,
+     IDP.C_START_DATE,
+     IDP.C_END_DATE,
+     IDP.C_LODGE_DATE,
+     IDP.C_DUE_DATE,
+     IDP.C_ASSESS_DATE,
+     IDP.A_YOUR_REF,
+     IDP.A_ILODGE_DATE,
+     IDP.A_REASS_REASON,
+     IDP.A_REASS_COMMENT,
+     IDP.C_SENDER_ID
+FROM
+ "osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1000IDP00000000.active_data" AS IDP INNER JOIN
+:IDP_MAX AS IDP_MAX ON
+IDP.OBJECT_ID = IDP_MAX.OBJECT_ID AND
+IDP.VERSION   = IDP_MAX.MAX_VERSION
+;
+
+
+--End of Get Form Data
+
+-- Merge Form Bundle, IDP and PYA Form Data.
+
+IDP_PYA_DATA =
+SELECT *
+FROM
+(
+SELECT
+     FBH.CLIENT,
+     FBH.GROUP_NO,
+     FBH.FBNUM,
+     FBH.FBSTA,
+     FBH.BP,
+     FBH.CREATED_ON,
+     FBH.CHANGED_ON,
+     FBH.TRANSACTION_TYPE,
+     FBH.ZZREASSESSED,
+     FBH.FBTYP,
+     PYA.A_TOT_QLD_GM,
+     PYA.A_TOT_INT_GM,
+     PYA.C_TOT_GRP_AUST_WAGES,
+     PYA.C_DEDUCTION_ALLOWED,
+     PYA.C_TOT_QLD_TXBLE_WAGES,
+     PYA.A_TOT_INT_WAGE,
+     IDP.C_BP,
+     IDP.C_BPNAME,
+     IDP.C_FBN,
+     IDP.C_GRP_STATUS,
+     IDP.C_ABN,
+     IDP.C_START_DATE,
+     IDP.C_END_DATE,
+     IDP.C_LODGE_DATE,
+     IDP.C_DUE_DATE,
+     IDP.C_ASSESS_DATE,
+     IDP.A_YOUR_REF,
+     IDP.A_ILODGE_DATE,
+     IDP.A_REASS_REASON,
+     IDP.A_REASS_COMMENT,
+     IDP.C_SENDER_ID
+FROM :FBH_GBP AS FBH
+     LEFT OUTER JOIN :PYA_DATA AS PYA ON FBH.CASE_GUID = PYA.BUNDLE_ID
+     LEFT OUTER JOIN :IDP_DATA AS IDP ON FBH.CASE_GUID = IDP.BUNDLE_ID
+)
+
+
+;
+
+----END Merge Form Data ----
+-------Start of DGE Logic--------------*
+
+--Take DGE data from the above where the Deductions >= 1
+-- Note: By Logic there will be no DGE with ZPF2, have excluded Groups who's DGE's (:BP_SELECTION_2)lodged a Final in the selected year.
+
+
+DGE_INFO =
+SELECT DISTINCT
+     CLIENT,
+     GROUP_NO,
+     BP,
+     C_BPNAME AS BPNAME,
+     FBNUM
+FROM  :IDP_PYA_DATA
+WHERE C_GRP_STATUS = 'DGE'
+AND   C_DEDUCTION_ALLOWED >= 1
+AND   FBTYP IN ( 'ZPA2')
+;
+
+DGE_DATA =
+SELECT
+     GROUP_NO,
+     SUM(A_TOT_QLD_GM) AS TOT_QLD_GM,
+     SUM(A_TOT_INT_GM) AS TOT_INT_GM,
+     SUM(C_TOT_GRP_AUST_WAGES) AS TOT_GRP_AUST_WAGES,
+     SUM( C_DEDUCTION_ALLOWED) AS DEDUCTION_ALLOWED
+FROM :IDP_PYA_DATA
+WHERE C_GRP_STATUS = 'DGE'
+AND C_DEDUCTION_ALLOWED >= 1
+--AND FBTYP IN ( 'ZPA2', 'ZPF2')
+GROUP BY
+     GROUP_NO
+;
+
+-- Take the all the DGE and all its GM data from Froms.
+
+GM_DATA =
+ SELECT
+     GROUP_NO,
+     SUM(C_TOT_QLD_TXBLE_WAGES) AS TOT_QLD_TXBLE_WAGES,
+     SUM( A_TOT_INT_WAGE)       AS TOT_INT_WAGE
+FROM :IDP_PYA_DATA
+WHERE GROUP_NO IN (SELECT    DISTINCT GROUP_NO      FROM :DGE_DATA)
+--AND FBTYP IN ( 'ZPA2', 'ZPF2')
+GROUP BY
+    GROUP_NO
+;
+
+--Calculate the diffrence
+CAL_DIFF =
+SELECT *
+FROM
+(
+SELECT
+     CLIENT,
+     GROUP_NO,
+     BP,
+     BPNAME,
+     FBNUM,
+     TOT_QLD_GM,
+     TOT_INT_GM,
+     TOT_GRP_AUST_WAGES,
+     DEDUCTION_ALLOWED,
+     TOT_QLD_TXBLE_WAGES,
+     TOT_INT_WAGE,
+     (TOT_QLD_TXBLE_WAGES - TOT_QLD_GM) AS QLD_DIFF,
+     (TOT_INT_WAGE - TOT_INT_GM) AS INT_DIFF,
+     CASE WHEN (TOT_QLD_TXBLE_WAGES - TOT_QLD_GM ) > 1000 THEN 'X' ELSE '' END AS QLD_FLAG,
+     CASE WHEN (TOT_INT_WAGE > TOT_INT_GM ) AND ( TOT_INT_WAGE - TOT_INT_GM ) >= 1000 THEN 'X' ELSE '' END AS INT_FLAG
+FROM
+    (
+         SELECT
+            DGE_INFO.CLIENT,
+            DGE_INFO.GROUP_NO,
+            DGE_INFO.BP,
+            DGE_INFO.BPNAME,
+            DGE_INFO.FBNUM,
+            DGE.TOT_QLD_GM,
+            DGE.TOT_INT_GM,
+            DGE.TOT_GRP_AUST_WAGES,
+            DGE.DEDUCTION_ALLOWED,
+            GM.TOT_QLD_TXBLE_WAGES,
+            GM.TOT_INT_WAGE
+        FROM
+            :DGE_INFO AS DGE_INFO
+            LEFT OUTER JOIN :DGE_DATA AS DGE ON DGE_INFO.GROUP_NO = DGE.GROUP_NO
+            LEFT OUTER JOIN :GM_DATA  AS GM  ON DGE_INFO.GROUP_NO = GM.GROUP_NO
+    )
+
+)
+
+WHERE   QLD_FLAG = 'X'
+OR      INT_FLAG = 'X'
+;
+
+-------END of DGE Logic--------------
+
+---Start of Identifying the Exceptions---*
+
+--   The exceptions will be reported in 2 categories:
+--   Type Self: Self assessment DGE with no Commissioner re/assessment of a GM after the DGE self assessment lodgement date. (denotes that Self assessor, and not OSR has made the oversight)
+--  Type OSR : The rest (may be caused internally by OSR)
+
+
+EXP_DGE =
+SELECT DISTINCT
+     GROUP_NO,
+     BP,
+     C_BPNAME         AS DGE_BPNAME,
+     FBNUM            AS DGE_FBNUM,
+     CHANGED_ON       AS DGE_CHON,
+     C_GRP_STATUS     AS DGE_STATUS,
+     TRANSACTION_TYPE AS DGE_TT,
+     ZZREASSESSED     AS DGE_REASS,
+     A_ILODGE_DATE    AS DGE_LD
+from :IDP_PYA_DATA
+WHERE GROUP_NO IN (SELECT DISTINCT GROUP_NO FROM :CAL_DIFF)
+AND   C_GRP_STATUS = 'DGE'
+AND   FBTYP IN ( 'ZPA2')
+;
+
+EXP_GM =
+SELECT DISTINCT
+     GROUP_NO,
+     BP,
+     C_BPNAME         AS GM_BPNAME,
+     FBNUM            AS GM_FBNUM,
+     CHANGED_ON       AS GM_CHON,
+     C_GRP_STATUS     AS GM_STATUS,
+     TRANSACTION_TYPE AS GM_TT,
+     ZZREASSESSED     AS GM_REASS,
+     A_ILODGE_DATE    AS GM_LD
+from :IDP_PYA_DATA
+WHERE GROUP_NO IN (SELECT DISTINCT GROUP_NO FROM :CAL_DIFF)
+AND   C_GRP_STATUS <> 'DGE'
+AND   FBTYP IN ( 'ZPA2')
+;
+
+--* STEP 1 Join the data DGE to the GM
+--* STEP 2 Compare the Lodgement date, Transaction type and Reassessment with DGE
+--* STEP 3 If any of the GM 40 (i.e. TYPE OSR) else TYPE SELF
+
+DGE_GM_EXP =
+
+SELECT
+GROUP_NO,
+CASE WHEN EXPEPTIONS IN ('10', '20','30') THEN 'TYPE SELF' ELSE 'TYPE OSR' END AS EXPEPTIONS
+FROM
+(
+    SELECT
+         GROUP_NO,
+         MAX(EXPEPTIONS) OVER (PARTITION BY GROUP_NO)AS EXPEPTIONS
+    FROM
+    (
+        SELECT
+           GROUP_NO,
+           CASE WHEN DGE_TT = 'SELF' and GM_TT = 'SELF' AND DGE_LD >= GM_LD   THEN '10' ELSE
+           CASE WHEN DGE_TT = 'SELF' and GM_REASS = ''  AND DGE_LD >= GM_LD   THEN '20' ELSE
+           CASE WHEN DGE_TT = 'SELF' and GM_REASS <> '' AND DGE_LD >= GM_CHON THEN '30' ELSE '40'
+           END END END AS EXPEPTIONS
+        FROM
+
+             (
+                 SELECT
+                    GM.GROUP_NO,
+                    GM.BP,
+                    GM.GM_BPNAME,
+                    GM_FBNUM,
+                    GM.GM_CHON,
+                    GM.GM_STATUS,
+                    GM.GM_TT,
+                    GM.GM_REASS,
+                    GM.GM_LD,
+                    DGE.DGE_BPNAME,
+                    DGE.DGE_FBNUM,
+                    DGE.DGE_CHON,
+                    DGE.DGE_STATUS,
+                    DGE.DGE_TT,
+                    DGE.DGE_REASS,
+                    DGE.DGE_LD
+                 FROM :EXP_GM  AS GM  LEFT OUTER JOIN
+                      :EXP_DGE AS DGE ON
+                      GM.GROUP_NO = DGE.GROUP_NO
+            )
+    )
+   GROUP BY GROUP_NO, EXPEPTIONS
+)
+;
+
+---End of Identifying the Exceptions---*
+
+
+-----Out Put with Exceptions-----*
+TRANS_OUT_PUT =
+
+SELECT
+     A.CLIENT,
+     A.GROUP_NO             AS GROUP_BP_NO,
+     A.BP                   AS DGE_BP_NO,
+     A.BPNAME               AS DGE_BP_NAME,
+     B.EXPEPTIONS           AS EXPEPTION_TYPE,
+     A.FBNUM                AS DGE_FBN,
+     A.TOT_QLD_GM           AS DGE_GM_QLD,
+     A.TOT_QLD_TXBLE_WAGES  AS TOT_GRP_RTN_QLD,
+     A.QLD_DIFF             AS QLD_DIFF,
+     A.QLD_FLAG             AS QLD_FLAG,
+     A.TOT_INT_GM           AS DGE_GM_INT,
+     A.TOT_INT_WAGE         AS TOT_GRP_RTN_INT,
+     A.INT_DIFF             AS INT_DIFF,
+     A.INT_FLAG             AS INT_FLAG
+ FROM
+     :CAL_DIFF   AS A LEFT OUTER JOIN
+     :DGE_GM_EXP AS B ON
+     A.GROUP_NO = B.GROUP_NO
+
+;
+
+
+
+-- Get Current BP PRT Service Address PRT_MAIL and Email address *
+ADDRESS_INFO =
+ SELECT 
+	PARTNER,
+	LEFT(VALID_TO,8) AS VALID_TO, 
+	ADR_KIND, 
+	ADDRNUMBER, 
+	LEFT(VALID_FROM,8) AS VALID_FROM 
+ FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT021FS.active_data"
+        WHERE PARTNER IN (SELECT DISTINCT DGE_BP_NO FROM :TRANS_OUT_PUT) AND ADR_KIND = 'PRT_MAIL'
+        AND  TO_DATS(LEFT(VALID_TO,8)) >= TO_DATS(CURRENT_DATE)   ;
+
+EMAIL_ADDRESS =
+SELECT DISTINCT
+    PARTNER,
+    ADDRNUMBER,
+    CONSNUMBER,
+    EMAIL
+FROM
+(
+SELECT
+     A.PARTNER,
+     A.ADDRNUMBER,
+     EMAIL.SMTP_ADDR AS EMAIL,
+     MAX(EMAIL.CONSNUMBER) AS CONSNUMBER
+FROM :ADDRESS_INFO  AS A
+INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ADR6.active_data" AS EMAIL
+ON A.ADDRNUMBER = EMAIL.ADDRNUMBER
+GROUP BY
+     A.PARTNER,
+     A.ADDRNUMBER,
+     EMAIL.SMTP_ADDR
+     )
+;
+ADDRESS =
+SELECT
+     A.PARTNER,
+     A.ADDRNUMBER,
+     ADDR.NAME_CO,
+     ADDR.BUILDING,
+     ADDR.FLOOR,
+     ADDR.ROOMNUMBER,
+     ADDR.HOUSE_NUM1,
+     ADDR.HOUSE_NUM2,
+     ADDR.STREET,
+     ADDR.STR_SUPPL1,
+     ADDR.CITY1,
+     ADDR.CITY2,
+     ADDR.REGION,
+     ADDR.COUNTRY,
+     ADDR.POST_CODE1,
+     AD_EMAIL.EMAIL AS EMAIL
+FROM :ADDRESS_INFO  AS A
+INNER JOIN "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ADRC.active_data" AS ADDR
+ON A.ADDRNUMBER = ADDR.ADDRNUMBER
+LEFT OUTER JOIN :EMAIL_ADDRESS AS AD_EMAIL
+ON A.ADDRNUMBER = AD_EMAIL.ADDRNUMBER
+
+
+;
+
+OUT_PUT_1 =
+     SELECT
+     A.CLIENT,
+     A.GROUP_BP_NO,
+     A.DGE_BP_NO,
+     A.DGE_BP_NAME,
+--     A.PERIODKEY ,
+     A.EXPEPTION_TYPE,
+     A.DGE_FBN,
+     A.DGE_GM_QLD,
+     A.TOT_GRP_RTN_QLD,
+     A.QLD_DIFF,
+     A.QLD_FLAG,
+     A.DGE_GM_INT,
+     A.TOT_GRP_RTN_INT,
+     A.INT_DIFF,
+     A.INT_FLAG,
+     UPPER(ADDR.NAME_CO)    AS NAME_CO,
+     UPPER(ADDR.BUILDING)   AS BUILDING,
+     UPPER(ADDR.FLOOR)      AS FLOOR_NO,
+     UPPER(ADDR.ROOMNUMBER) AS ROOMNUMBER,
+     UPPER(ADDR.HOUSE_NUM1) AS HOUSE_NUM1,
+     UPPER(ADDR.HOUSE_NUM2) AS HOUSE_NUM2,
+     UPPER(ADDR.STREET)     AS STREET,
+     UPPER(ADDR.STR_SUPPL1) AS STR_SUPPL1,
+     UPPER(ADDR.CITY1)      AS CITY1,
+     UPPER(ADDR.CITY2)      AS CITY2,
+     UPPER(ADDR.REGION)     AS REGION,
+     UPPER(ADDR.COUNTRY)    AS COUNTRY,
+     ADDR.POST_CODE1,
+     UPPER(ADDR.EMAIL)      AS EMAIL
+
+FROM :TRANS_OUT_PUT AS A LEFT OUTER JOIN
+:ADDRESS AS ADDR  ON
+A.DGE_BP_NO = ADDR.PARTNER
+ ;
+ 
+ OUT_PUT = 
+     SELECT
+     A.CLIENT,
+     A.GROUP_BP_NO,
+     A.DGE_BP_NO,
+     A.DGE_BP_NAME,
+	 B.PERIOD_KEY AS PERIODKEY    ,
+     B.ST_DATE AS STARTDT       ,
+     B.EN_DATE AS ENDDT,
+     A.EXPEPTION_TYPE,
+     A.DGE_FBN,
+     TO_DECIMAL(A.DGE_GM_QLD, 15,2) AS DGE_GM_QLD,
+     TO_DECIMAL(A.TOT_GRP_RTN_QLD, 15,2) AS TOT_GRP_RTN_QLD,
+     TO_DECIMAL(A.QLD_DIFF, 15,2) AS QLD_DIFF,
+     A.QLD_FLAG,
+     TO_DECIMAL(A.DGE_GM_INT, 15,2) AS DGE_GM_INT,
+     TO_DECIMAL(A.TOT_GRP_RTN_INT, 15,2) AS TOT_GRP_RTN_INT,
+     TO_DECIMAL(A.INT_DIFF, 15,2) AS INT_DIFF,
+     A.INT_FLAG,
+     'AUD' AS WAERS,
+     A.NAME_CO,
+     A.BUILDING,
+     A.FLOOR_NO,
+     A.ROOMNUMBER,
+     A.HOUSE_NUM1,
+     A.HOUSE_NUM2,
+     A.STREET,
+     A.STR_SUPPL1,
+     A.CITY1,
+     A.CITY2,
+     A.REGION,
+     A.COUNTRY,
+     A.POST_CODE1,
+     A.EMAIL
+     
+FROM   :OUT_PUT_1  AS "A",
+:FY_DATES AS "B"
+;
+--***** END of  Get BP PRT Service Address ******--
+ ------------------------------- 
+
+RETURN
+SELECT  * FROM :OUT_PUT;
+
+END;
