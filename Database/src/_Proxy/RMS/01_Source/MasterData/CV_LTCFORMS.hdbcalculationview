@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_LTCFORMS" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_LTCFORMS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_LAND.TAB.LTCFORMS">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_LAND.TAB.LTCFORMS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.rms.synonym::CDS_LAND.TAB.LTCFORMS">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="MANDT"/>
+    </attribute>
+    <attribute id="RESULT_TYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RESULT_TYPE"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="RESULT_TYPE"/>
+    </attribute>
+    <attribute id="FORMNAME" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORMNAME"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="FORMNAME"/>
+    </attribute>
+    <attribute id="COVERFORM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COVERFORM"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="COVERFORM"/>
+    </attribute>
+    <attribute id="COPYFORM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COPYFORM"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="COPYFORM"/>
+    </attribute>
+    <attribute id="USEVENDORDETAILS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USEVENDORDETAILS"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="USEVENDORDETAILS"/>
+    </attribute>
+    <attribute id="ONLYINVALIDLAND" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ONLYINVALIDLAND"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="ONLYINVALIDLAND"/>
+    </attribute>
+    <attribute id="ONLYRESULTLAND" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ONLYRESULTLAND"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="ONLYRESULTLAND"/>
+    </attribute>
+    <attribute id="DUMMYRESULT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUMMYRESULT"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="DUMMYRESULT"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_LAND.TAB.LTCFORMS" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

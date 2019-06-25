@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_CRMC_PARTNER_FCT" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRMC_PARTNER_FCT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PARTNER_FCT">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PARTNER_FCT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PARTNER_FCT">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="PARTNER_FCT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_FCT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="PARTNER_FCT"/>
+    </attribute>
+    <attribute id="PARTNER_PFT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_PFT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="PARTNER_PFT"/>
+    </attribute>
+    <attribute id="PFT_SUBTYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PFT_SUBTYPE"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="PFT_SUBTYPE"/>
+    </attribute>
+    <attribute id="NO_REFLECTION" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NO_REFLECTION"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="NO_REFLECTION"/>
+    </attribute>
+    <attribute id="RELTYP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELTYP"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="RELTYP"/>
+    </attribute>
+    <attribute id="RELKIND" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELKIND"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="RELKIND"/>
+    </attribute>
+    <attribute id="REGISTRATOR" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGISTRATOR"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="REGISTRATOR"/>
+    </attribute>
+    <attribute id="HIDE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HIDE"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="HIDE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FCT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
