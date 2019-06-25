@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_CRMC_PROC_TYPE_T" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRMC_PROC_TYPE_T"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PROC_TYPE_T">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PROC_TYPE_T</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PROC_TYPE_T">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="PROCESS_TYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS_TYPE"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="PROCESS_TYPE"/>
+    </attribute>
+    <attribute id="LANGU" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANGU"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="LANGU"/>
+    </attribute>
+    <attribute id="P_DESCRIPTION_20" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="P_DESCRIPTION_20"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="P_DESCRIPTION_20"/>
+    </attribute>
+    <attribute id="P_DESCRIPTION" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="P_DESCRIPTION"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="P_DESCRIPTION"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PROC_TYPE_T" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

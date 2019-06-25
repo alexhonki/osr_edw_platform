@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staing.td.crm.proxy::CV_CRMD_LINK" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRMD_LINK"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDLINK.active_data">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="GUID_HI" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_HI"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="GUID_HI"/>
+    </attribute>
+    <attribute id="GUID_SET" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_SET"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="GUID_SET"/>
+    </attribute>
+    <attribute id="OBJTYPE_HI" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJTYPE_HI"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="OBJTYPE_HI"/>
+    </attribute>
+    <attribute id="OBJTYPE_SET" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJTYPE_SET"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="OBJTYPE_SET"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_CRM.DSO.CRMDLINK.active_data" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

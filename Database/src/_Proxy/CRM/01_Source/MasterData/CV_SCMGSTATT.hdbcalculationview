@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_SCMGSTATT" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_SCMGSTATT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.SCMGSTATT">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.SCMGSTATT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.SCMGSTATT">
+  <attributes>
+    <attribute id="LANGU" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANGU"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.SCMGSTATT" columnName="LANGU"/>
+    </attribute>
+    <attribute id="STAT_PARA" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAT_PARA"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.SCMGSTATT" columnName="STAT_PARA"/>
+    </attribute>
+    <attribute id="STAT_PARA_DESCR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAT_PARA_DESCR"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.SCMGSTATT" columnName="STAT_PARA_DESCR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.SCMGSTATT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.SCMGSTATT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
