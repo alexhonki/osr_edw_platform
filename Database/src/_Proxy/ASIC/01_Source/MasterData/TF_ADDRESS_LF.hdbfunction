@@ -28,9 +28,15 @@ FUNCTION "osr.edw.source.md.asic.proxy::TF_ADDRESS_LF"( )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
-    /*****************************
-        Write your function logic
-    ****************************/
+
+    lt_meta = 
+    SELECT TOP 1 "META_FILE_NAME"
+    FROM 
+    "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ASIC')
+	WHERE "TABLE_NAME" = 'ADDRESS'
+	ORDER BY "META_FILE_NAME" DESC
+	;
+    
     RETURN
     SELECT
   "PATH",
@@ -56,6 +62,9 @@ BEGIN
 	"Z_SOURCE_SYS",
 	"Z_RUN_ROW_NO",
 	"Z_RUN_SEQ_ID"
-FROM "osr.edw.source.md.asic.synonym::CDS_ASIC.TAB.ADDRESS"
-where name = (select top 1 name FROM "osr.edw.source.md.asic.synonym::CDS_ASIC.TAB.ADDRESS" order by name desc );
+FROM "osr.edw.source.md.asic.synonym::CDS_ASIC.TAB.ADDRESS" AS "DATA"
+INNER JOIN
+:lt_meta AS "META"
+ON "DATA"."NAME" = "META"."META_FILE_NAME"
+;
 END;
