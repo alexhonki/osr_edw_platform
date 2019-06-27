@@ -7,6 +7,8 @@ FUNCTION "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE"( )
      GROUP_BP_NO                NVARCHAR(10),
      DGE_BP_NO                  NVARCHAR(10),
      DGE_BP_NAME                NVARCHAR(150),
+     ABN                        NVARCHAR(11),
+     GJAHR				        NVARCHAR(4),
      PERIODKEY                  NVARCHAR(4),
      STARTDT                    NVARCHAR(8),
      ENDDT                      NVARCHAR(8),
@@ -34,7 +36,9 @@ FUNCTION "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE"( )
      REGION                     NVARCHAR(3),
      COUNTRY                    NVARCHAR(3),
      POST_CODE1                 NVARCHAR(10),  
-     EMAIL                      NVARCHAR(256)
+     EMAIL                      NVARCHAR(256),
+     ACCESS_GROUP			    NVARCHAR(20)
+
 
     
 ) 
@@ -68,6 +72,8 @@ SELECT
      GROUP_BP_NO,
      DGE_BP_NO,
      DGE_BP_NAME,
+     ABN,
+     GJAHR,
 	 PERIODKEY    ,
      STARTDT       ,
      ENDDT,
@@ -95,7 +101,8 @@ SELECT
      REGION,
      COUNTRY,
      POST_CODE1,
-     EMAIL  
+     EMAIL  ,
+     ACCESS_GROUP
      FROM :OUT_PUT;
      
 END;

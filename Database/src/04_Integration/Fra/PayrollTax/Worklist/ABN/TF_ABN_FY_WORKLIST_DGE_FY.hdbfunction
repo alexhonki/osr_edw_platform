@@ -7,6 +7,8 @@ FUNCTION "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY"( IN IP_FY 
      GROUP_BP_NO                NVARCHAR(10),
      DGE_BP_NO                  NVARCHAR(10),
      DGE_BP_NAME                NVARCHAR(150),
+     ABN                        NVARCHAR(11),
+     GJAHR				        NVARCHAR(4),
      PERIODKEY                  NVARCHAR(4),
      STARTDT                    NVARCHAR(8),
      ENDDT                      NVARCHAR(8),
@@ -34,7 +36,8 @@ FUNCTION "osr.edw.platform.fra.prt.wl.abn::TF_ABN_FY_WORKLIST_DGE_FY"( IN IP_FY 
      REGION                     NVARCHAR(3),
      COUNTRY                    NVARCHAR(3),
      POST_CODE1                 NVARCHAR(10),  
-     EMAIL                      NVARCHAR(256)
+     EMAIL                      NVARCHAR(256),
+     ACCESS_GROUP			    NVARCHAR(20)
 
     
 ) 
@@ -46,8 +49,7 @@ BEGIN
     ****************************/
 
 
---DECLARE COUNTER INTEGER ;
---DECLARE GROUP_COUNT INTEGER DEFAULT 2;
+
 DECLARE sdate DATE;
 DECLARE edate DATE;
 DECLARE PERIODKEY NVARCHAR(4);
@@ -215,7 +217,7 @@ FROM
  
 --Doing this because the CDS view (ZBWV_3PYA_001 and ZBWV_0IDP_001) which were built for BW extractors not supported in test system (RT3)
 --Get form Data
-
+/* 
 PYA_MAX =
  SELECT
      OBJECT_ID,
@@ -225,7 +227,7 @@ PYA_MAX =
  GROUP BY OBJECT_ID
 ;
 
- 
+
 PYA_DATA =
 
 SELECT
@@ -247,7 +249,22 @@ PYA.OBJECT_ID = PYA_MAX.OBJECT_ID AND
 PYA.VERSION   = PYA_MAX.MAX_VERSION
 
 ;
+*/
+PYA_DATA =
+SELECT 
+     CASE_GUID,
+     A_TOT_QLD_GM,
+     A_TOT_INT_GM,
+     C_TOT_GRP_AUST_WAGES,
+     C_DEDUCTION_ALLOWED,
+     C_TOT_QLD_TXBLE_WAGES,
+     A_TOT_INT_WAGE
+FROM
+"osr.edw.staging.rms.forms.tf.proxy::TF_3PYA_M_LV" ( )
+WHERE CASE_GUID IN (SELECT DISTINCT CASE_GUID FROM :FB_NUM)
+;
 
+/*
 IDP_MAX =
  SELECT
      OBJECT_ID,
@@ -256,9 +273,9 @@ IDP_MAX =
  "osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1000IDP00000000.active_data"
  WHERE BUNDLE_ID IN (SELECT DISTINCT CASE_GUID FROM :FB_NUM)
  GROUP BY OBJECT_ID
-
-
 ;
+
+
 IDP_DATA =
 SELECT
      IDP.RECORD_ID,
@@ -287,7 +304,31 @@ FROM
 IDP.OBJECT_ID = IDP_MAX.OBJECT_ID AND
 IDP.VERSION   = IDP_MAX.MAX_VERSION
 ;
-
+*/
+IDP_DATA =
+SELECT
+     CASE_GUID,
+     TAXPAYER AS C_BP,
+--     C_BP,
+     C_BPNAME,
+     FBNUM AS C_FBN,
+--     C_FBN,
+     C_GRP_STATUS,
+     C_ABN,
+  --   C_START_DATE,
+ --    C_END_DATE,
+     APPLY_FROM AS C_START_DATE,
+	 APPLY_TO AS C_END_DATE,
+     C_LODGE_DATE,
+     C_DUE_DATE,
+     C_ASSESS_DATE,
+     A_YOUR_REF,
+     A_ILODGE_DATE,
+     A_REASS_REASON,
+     A_REASS_COMMENT,
+     C_SENDER_ID
+FROM "osr.edw.staging.rms.forms.tf.proxy::TF_0IDP_M_LV"( )
+WHERE CASE_GUID IN (SELECT DISTINCT CASE_GUID FROM :FB_NUM);
 
 --End of Get Form Data
 
@@ -330,8 +371,8 @@ SELECT
      IDP.A_REASS_COMMENT,
      IDP.C_SENDER_ID
 FROM :FBH_GBP AS FBH
-     LEFT OUTER JOIN :PYA_DATA AS PYA ON FBH.CASE_GUID = PYA.BUNDLE_ID
-     LEFT OUTER JOIN :IDP_DATA AS IDP ON FBH.CASE_GUID = IDP.BUNDLE_ID
+     LEFT OUTER JOIN :PYA_DATA AS PYA ON FBH.CASE_GUID = PYA.CASE_GUID
+     LEFT OUTER JOIN :IDP_DATA AS IDP ON FBH.CASE_GUID = IDP.CASE_GUID
 )
 
 
@@ -354,7 +395,7 @@ SELECT DISTINCT
 FROM  :IDP_PYA_DATA
 WHERE C_GRP_STATUS = 'DGE'
 AND   C_DEDUCTION_ALLOWED >= 1
-AND   FBTYP IN ( 'ZPA2')
+AND   FBTYP IN ( 'ZPA2', 'ZPTM')
 ;
 
 DGE_DATA =
@@ -456,7 +497,7 @@ SELECT DISTINCT
 from :IDP_PYA_DATA
 WHERE GROUP_NO IN (SELECT DISTINCT GROUP_NO FROM :CAL_DIFF)
 AND   C_GRP_STATUS = 'DGE'
-AND   FBTYP IN ( 'ZPA2')
+AND   FBTYP IN ( 'ZPA2', 'ZPTM')
 ;
 
 EXP_GM =
@@ -473,7 +514,7 @@ SELECT DISTINCT
 from :IDP_PYA_DATA
 WHERE GROUP_NO IN (SELECT DISTINCT GROUP_NO FROM :CAL_DIFF)
 AND   C_GRP_STATUS <> 'DGE'
-AND   FBTYP IN ( 'ZPA2')
+AND   FBTYP IN ('ZPA2','ZPTM')
 ;
 
 --* STEP 1 Join the data DGE to the GM
@@ -655,12 +696,65 @@ FROM :TRANS_OUT_PUT AS A LEFT OUTER JOIN
 A.DGE_BP_NO = ADDR.PARTNER
  ;
  
+ABN_INFO = 
+SELECT DISTINCT 
+        PARTNER  AS DGE_BP_NO,
+        IDNUMBER AS ABN
+    FROM 
+		"osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT0ID.active_data" 
+ 	WHERE "TYPE" = 'ZABN'
+ 	AND "PARTNER" IN (SELECT DISTINCT DGE_BP_NO FROM :TRANS_OUT_PUT)
+;
+ 
+ PRE_OUT_PUT = 
+     SELECT
+     A.CLIENT,
+     A.GROUP_BP_NO,
+     A.DGE_BP_NO,
+     A.DGE_BP_NAME,
+	 B.ABN,
+	 A.EXPEPTION_TYPE,
+     A.DGE_FBN,
+     TO_DECIMAL(A.DGE_GM_QLD, 15,2) AS DGE_GM_QLD,
+     TO_DECIMAL(A.TOT_GRP_RTN_QLD, 15,2) AS TOT_GRP_RTN_QLD,
+     TO_DECIMAL(A.QLD_DIFF, 15,2) AS QLD_DIFF,
+     A.QLD_FLAG,
+     TO_DECIMAL(A.DGE_GM_INT, 15,2) AS DGE_GM_INT,
+     TO_DECIMAL(A.TOT_GRP_RTN_INT, 15,2) AS TOT_GRP_RTN_INT,
+     TO_DECIMAL(A.INT_DIFF, 15,2) AS INT_DIFF,
+     A.INT_FLAG,
+     'AUD' AS WAERS,
+     A.NAME_CO,
+     A.BUILDING,
+     A.FLOOR_NO,
+     A.ROOMNUMBER,
+     A.HOUSE_NUM1,
+     A.HOUSE_NUM2,
+     A.STREET,
+     A.STR_SUPPL1,
+     A.CITY1,
+     A.CITY2,
+     A.REGION,
+     A.COUNTRY,
+     A.POST_CODE1,
+     A.EMAIL
+     
+FROM   
+	:OUT_PUT_1  AS A
+LEFT OUTER JOIN
+	:ABN_INFO AS B
+ON 
+	 A.DGE_BP_NO =  B.DGE_BP_NO
+;
+
  OUT_PUT = 
      SELECT
      A.CLIENT,
      A.GROUP_BP_NO,
      A.DGE_BP_NO,
      A.DGE_BP_NAME,
+     A.ABN,
+     B.PERIOD_KEY AS GJAHR,
 	 B.PERIOD_KEY AS PERIODKEY    ,
      B.ST_DATE AS STARTDT       ,
      B.EN_DATE AS ENDDT,
@@ -688,9 +782,9 @@ A.DGE_BP_NO = ADDR.PARTNER
      A.REGION,
      A.COUNTRY,
      A.POST_CODE1,
-     A.EMAIL
-     
-FROM   :OUT_PUT_1  AS "A",
+     A.EMAIL,
+     'PRT' AS ACCESS_GROUP
+FROM   :PRE_OUT_PUT  AS "A",
 :FY_DATES AS "B"
 ;
 --***** END of  Get BP PRT Service Address ******--
