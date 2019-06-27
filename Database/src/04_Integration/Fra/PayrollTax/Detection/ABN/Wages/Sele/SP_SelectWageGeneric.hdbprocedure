@@ -1,4 +1,4 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectGrpWages"(
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
 	IN  it_workset    		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT et_data_for_rule	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage"
 ) 
@@ -16,7 +16,7 @@ BEGIN
    "WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT" AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
    "WAGES"."ATO_ITR_SALARY_WAGES" AS "ATO_ITR_SALARY_WAGES",
    "WAGES"."WCQ_ACT_WAGES" AS "WCQ_ACT_WAGES",
-   'AUD  ' AS "WAERS",
+   TO_NVARCHAR('AUD') AS "WAERS",
    CASE 
    WHEN "GRP"."GROUP_ID" IS NULL 
    THEN ''
@@ -36,10 +36,10 @@ BEGIN
    AND "WS"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
    AND "WS"."PERIOD_KEY" = "MAP"."PERIOD_KEY"
    AND "WS"."GJAHR" = "MAP"."GJAHR"
-   INNER JOIN
+   LEFT OUTER JOIN
    "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
    ON "MAP"."ACN" = "GRP"."ACN"
    AND "MAP"."GJAHR" = "GRP"."GJAHR"
    ;
-
+   
 END

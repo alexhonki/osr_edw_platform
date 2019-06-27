@@ -1,0 +1,61 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_UnifiedWageExceedingThld"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding_u",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_SCENARIO NVARCHAR(10);
+
+SELECT 
+"SCENARIO"
+INTO 
+LV_SCENARIO
+FROM :PARAMETERS LIMIT 1;
+
+IF  LEFT(:LV_SCENARIO,4) = 'PRT1' THEN 
+
+	lt_parameters_grp = 
+	SELECT 
+	"RUN_MODE",
+	"THRESHOLD_YEARLY",
+	"FLAG_ATO",
+	"FLAG_WCQ",
+	"FLAG_INTERSTATE"
+	FROM :PARAMETERS LIMIT 1;
+		
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualGrpWageExceedingThld"(
+		IT_DATA_FOR_RULE => :it_data_for_rule,
+		PARAMETERS => :lt_parameters_grp,
+		ET_RESULT => et_result,
+		ET_TEXT => et_text
+	)
+	;
+
+END IF;
+
+IF LEFT(:LV_SCENARIO,4) = 'PRT2' THEN 
+
+	lt_parameters_reg = 
+	SELECT 
+	"RUN_MODE",
+	"THRESHOLD_YEARLY",
+    "FLAG_ATO",
+    "FLAG_WCQ"
+	FROM :PARAMETERS LIMIT 1;
+	
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"(
+		IT_DATA_FOR_RULE => :it_data_for_rule,
+		PARAMETERS => :lt_parameters_reg,
+		ET_RESULT => et_result,
+		ET_TEXT => et_text
+	)
+	;
+END IF;
+
+END

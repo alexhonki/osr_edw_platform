@@ -1,0 +1,53 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GenericWageExceedingThld"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding_g",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE lv_position INTEGER;
+
+DECLARE lv_param_str NVARCHAR(1000);
+DECLARE lv_mode NVARCHAR(1);  
+DECLARE lv_scenario NVARCHAR(20);
+DECLARE lv_thld_yearly Decimal(15,2) ;
+DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
+
+
+SELECT 
+"RUN_MODE",
+SUBSTRING_REGEXPR( '&$' IN "GENERIC_PARAMETERS" FROM LOCATE("GENERIC_PARAMETERS", 'THRESHOLD_YEARLY', 0,1)) AS "THRESHOLD_YEARLY"
+INTO 
+lv_mode,
+lv_thld_yearly
+FROM :PARAMETERS LIMIT 1;
+
+
+	lt_parameters = 
+	SELECT 
+	:lv_mode AS "RUN_MODE",
+	:lv_scenario AS "SCENARIO",
+	:lv_thld_yearly AS "THRESHOLD_YEARLY",
+	:lx_ato AS "FLAG_ATO",
+	:lx_wcq AS "FLAG_WCQ",
+	:lx_interstate AS "FLAG_INTERSTATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY";
+		
+		
+		CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_UnifiedWageExceedingThld"(
+	IT_DATA_FOR_RULE => :it_data_FOR_RULe,
+	PARAMETERS => :lt_parameters,
+	ET_RESULT => et_result,
+	ET_TEXT => et_text
+);
+
+
+
+END
