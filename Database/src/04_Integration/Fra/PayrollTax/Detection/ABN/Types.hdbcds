@@ -51,6 +51,23 @@ context Types {
             FLAG_ATO         : String(1);
             FLAG_WCQ         : String(1);
         };
+        table type param_exceeding_g {
+            RUN_MODE           : String(1);
+            GENERIC_PARAMETER1 : String(60);
+            GENERIC_PARAMETER2 : String(60);
+            GENERIC_PARAMETER3 : String(60);
+            GENERIC_PARAMETER4 : String(60);
+            GENERIC_PARAMETER5 : String(60);
+            GENERIC_PARAMETER6 : String(60);
+        };
+        table type param_exceeding_u {
+            RUN_MODE         : String(1);
+            SCENARIO         : String(10);
+            THRESHOLD_YEARLY : Decimal(15, 2);
+            FLAG_ATO         : String(1);
+            FLAG_WCQ         : String(1);
+            FLAG_INTERSTATE  : String(1);
+        };
         table type param_rank_estimated_tax {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);

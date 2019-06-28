@@ -1,0 +1,50 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
+	IN iv_str	NVARCHAR(360),
+	IN iv_param NVARCHAR(60),
+	OUT ev_param_value NVARCHAR(40)
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+DECLARE lv_pointer INTEGER;
+DECLARE lv_value_pointer INTEGER;
+DECLARE lv_end_pointer INTEGER;
+DECLARE lv_i INTEGER;
+
+DECLARE lv_line_length INTEGER;
+DECLARE lv_str NVARCHAR(360);
+
+
+lv_str := ltrim(rtrim(:iv_str));
+
+lv_pointer := 0;
+lv_value_pointer := 0;
+lv_end_pointer := 0;
+lv_i := 0;
+
+SELECT LOCATE (:lv_str, :IV_PARAM, 0) INTO lv_pointer FROM "osr.hana.platform.synonym::SYS.DUMMY";
+SELECT LENGTH(:lv_str) INTO lv_line_length FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+-- find = for parameter = parameter_value
+WHILE (:lv_i <= :lv_line_length - :lv_pointer + 1 AND :lv_value_pointer = 0 ) DO
+	IF SUBSTRING (:lv_str, :lv_pointer + :lv_i, 1) = '=' THEN
+		lv_value_pointer := :lv_pointer + :lv_i + 1;
+	ELSE
+		lv_i := :lv_i + 1;
+	END IF;
+END WHILE;
+
+lv_i := 0;
+WHILE (:lv_i <= :lv_line_length - :lv_value_pointer + 1 AND :lv_end_pointer = 0 ) DO
+	IF SUBSTRING (:lv_str, :lv_value_pointer + :lv_i, 1) = '&' THEN
+		lv_end_pointer := :lv_value_pointer + :lv_i + 1;
+	ELSE
+		lv_i := :lv_i + 1;
+	END IF;
+END WHILE;
+
+SELECT ltrim(rtrim(SUBSTRING(:lv_str, :lv_value_pointer, :lv_i))) INTO ev_param_value FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+END
