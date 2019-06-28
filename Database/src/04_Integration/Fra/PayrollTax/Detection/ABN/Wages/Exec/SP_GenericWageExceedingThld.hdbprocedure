@@ -12,7 +12,13 @@ BEGIN
 
 DECLARE lv_position INTEGER;
 
-DECLARE lv_param_str NVARCHAR(1000);
+DECLARE lv_param1 NVARCHAR(60);
+DECLARE lv_param2 NVARCHAR(60);
+DECLARE lv_param3 NVARCHAR(60);
+DECLARE lv_param4 NVARCHAR(60);
+DECLARE lv_param5 NVARCHAR(60);
+DECLARE lv_param6 NVARCHAR(60);
+DECLARE lv_param_str NVARCHAR(360);
 DECLARE lv_mode NVARCHAR(1);  
 DECLARE lv_scenario NVARCHAR(20);
 DECLARE lv_thld_yearly Decimal(15,2) ;
@@ -23,12 +29,61 @@ DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
 
 SELECT 
 "RUN_MODE",
-SUBSTRING_REGEXPR( '&$' IN "GENERIC_PARAMETERS" FROM LOCATE("GENERIC_PARAMETERS", 'THRESHOLD_YEARLY', 0,1)) AS "THRESHOLD_YEARLY"
+"GENERIC_PARAMETER1",
+"GENERIC_PARAMETER2",
+"GENERIC_PARAMETER3",
+"GENERIC_PARAMETER4",
+"GENERIC_PARAMETER5",
+"GENERIC_PARAMETER6"
 INTO 
 lv_mode,
-lv_thld_yearly
+lv_param1,
+lv_param2,
+lv_param3,
+lv_param4,
+lv_param5,
+lv_param6
 FROM :PARAMETERS LIMIT 1;
 
+SELECT 
+LTRIM(RTRIM(:lv_param1)) || '&' ||
+LTRIM(RTRIM(:lv_param2)) || '&' ||
+LTRIM(RTRIM(:lv_param3)) || '&' ||
+LTRIM(RTRIM(:lv_param4)) || '&' ||
+LTRIM(RTRIM(:lv_param5)) || '&' ||
+LTRIM(RTRIM(:lv_param6))
+INTO lv_param_str
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+	IV_STR => :lv_param_str,
+	IV_PARAM => 'SCENARIO',
+	EV_PARAM_VALUE => lv_scenario
+);
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+	IV_STR => :lv_param_str,
+	IV_PARAM => 'THRESHOLD_YEARLY',
+	EV_PARAM_VALUE => lv_thld_yearly
+);
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+	IV_STR => :lv_param_str,
+	IV_PARAM => 'FLAG_ATO',
+	EV_PARAM_VALUE => lx_ato
+);
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+	IV_STR => :lv_param_str,
+	IV_PARAM => 'FLAG_WCQ',
+	EV_PARAM_VALUE => lx_wcq
+);
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+	IV_STR => :lv_param_str,
+	IV_PARAM => 'FLAG_INTERSTATE',
+	EV_PARAM_VALUE => lx_interstate
+);
 
 	lt_parameters = 
 	SELECT 
