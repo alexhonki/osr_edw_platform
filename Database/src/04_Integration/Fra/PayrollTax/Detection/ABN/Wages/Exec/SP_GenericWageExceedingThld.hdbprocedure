@@ -55,31 +55,31 @@ LTRIM(RTRIM(:lv_param6))
 INTO lv_param_str
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
-CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	IV_STR => :lv_param_str,
 	IV_PARAM => 'SCENARIO',
 	EV_PARAM_VALUE => lv_scenario
 );
 
-CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	IV_STR => :lv_param_str,
 	IV_PARAM => 'THRESHOLD_YEARLY',
 	EV_PARAM_VALUE => lv_thld_yearly
 );
 
-CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	IV_STR => :lv_param_str,
 	IV_PARAM => 'FLAG_ATO',
 	EV_PARAM_VALUE => lx_ato
 );
 
-CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	IV_STR => :lv_param_str,
 	IV_PARAM => 'FLAG_WCQ',
 	EV_PARAM_VALUE => lx_wcq
 );
 
-CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParamValue"(
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	IV_STR => :lv_param_str,
 	IV_PARAM => 'FLAG_INTERSTATE',
 	EV_PARAM_VALUE => lx_interstate
