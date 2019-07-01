@@ -1,0 +1,344 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpBPRegistration"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_grp_bp_reg",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE lv_mode NVARCHAR(1);  
+
+DECLARE lx_reinstatement NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_new_registration NVARCHAR(1) DEFAULT 'N';
+DECLARE lv_reinstatement_cnt Integer DEFAULT 0;
+DECLARE lv_new_registration_cnt Integer DEFAULT 0;
+
+SELECT
+"RUN_MODE",
+"FLAG_REINSTATEMENT",
+"FLAG_NEW_REGISTRATION"
+INTO 
+lv_mode,
+lx_reinstatement,
+lx_new_registration
+FROM :PARAMETERS LIMIT 1;
+
+IF lx_new_registration = 'Y' THEN 
+lt_new_registration_result = 
+SELECT 
+"WS"."ABN",
+"WS"."PERIOD_CATEGORY",
+"WS"."PERIOD_KEY",
+"WS"."GJAHR"
+FROM 
+:it_data_for_rule AS "WS"
+WHERE NOT EXISTS (
+	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
+		WHERE "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+		  AND "BP_ABN"."GRP_STATUS" <> 'NEP'
+)
+;
+
+SELECT COUNT(*) INTO lv_new_registration_cnt FROM :lt_new_registration_result;
+
+IF :lv_new_registration_cnt > 0 THEN 
+lt_new_registration_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT'       AS "MSGID",
+'003'                   AS "MSGNO",
+"ABN"           		AS "MSGV1",
+''						AS "MSGV2",
+''						AS "MSGV3",
+''                      AS "MSGV4",
+''              		AS "MSGV1_FC",
+''      				AS "MSGV2_FC",
+''		                AS "MSGV3_FC",
+''                      AS "MSGV4_FC"
+FROM 
+:lt_new_registration_result;
+END IF;
+
+END IF;
+
+IF lx_reinstatement = 'Y' THEN 
+lt_reinstatment = 
+SELECT 
+"WS"."ABN",
+"WS"."PERIOD_CATEGORY",
+"WS"."PERIOD_KEY",
+"WS"."GJAHR",
+"BP_ABN"."BPARTNER" AS "BPARTNER",
+"BP_ABN"."PRT_LIAB_DATE",
+"BP_ABN"."VALID_FROM",
+"BP_ABN"."VALID_TO",
+--"BP_REG"."ONLINE_FILLING_COMM",
+"FY"."START_DATE",
+"FY"."END_DATE"
+FROM 
+:it_data_for_rule AS "WS"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::CV_FY_KEY_DATES" "FY"
+ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
+ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+WHERE "FY"."END_DATE" > "BP_ABN"."VALID_DATE_FROM"
+  AND "BP_ABN"."GRP_STATUS" <> 'NEP'
+;
+
+lt_reinstatment_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"PRT_LIAB_DATE",
+"VALID_TO",
+"BPARTNER"
+FROM :lt_reinstatment
+WHERE "PRT_LIAB_DATE" > "END_DATE"
+  AND "VALID_TO" > "END_DATE"
+UNION
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"PRT_LIAB_DATE",
+"VALID_TO",
+"BPARTNER"
+FROM :lt_reinstatment
+WHERE "PRT_LIAB_DATE" < "START_DATE"
+  AND "VALID_TO" < "START_DATE"
+;
+
+SELECT COUNT(*) INTO lv_reinstatement_cnt FROM :lt_reinstatment;
+
+ 
+IF :lv_reinstatement_cnt > 0 THEN 
+
+lt_reinstatment_text =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT'       AS "MSGID",
+'002'                   AS "MSGNO",
+RIGHT("PRT_LIAB_DATE",2) || '/' || RIGHT(LEFT("PRT_LIAB_DATE",6),2) || '/' || LEFT("PRT_LIAB_DATE",4) AS "MSGV1",
+RIGHT("VALID_TO",2) || '/' || RIGHT(LEFT("VALID_TO",6),2) || '/' || LEFT("VALID_TO",4) AS "MSGV2",
+"BPARTNER"				AS "MSGV3",
+''                      AS "MSGV4",
+'PRT_LIAB_DATE'         AS "MSGV1_FC",
+'VALID_TO'      		AS "MSGV2_FC",
+'BPARTNER'		        AS "MSGV3_FC",
+''                      AS "MSGV4_FC"
+FROM 
+(
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"PRT_LIAB_DATE",
+"VALID_TO",
+"BPARTNER",
+ROW_NUMBER() OVER (
+PARTITION BY "ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR", 
+"BPARTNER"
+ORDER BY "PRT_LIAB_DATE" DESC
+) 
+AS "ROW_NUM"
+FROM
+:lt_reinstatment_result
+)
+WHERE "ROW_NUM" = 1;
+END IF;
+
+END IF;
+
+
+
+
+IF  :lv_reinstatement_cnt > 0 
+AND :lv_new_registration_cnt > 0 THEN
+
+lt_result =
+SELECT 
+DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_reinstatment_result
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_new_registration_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_reinstatment_text
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_new_registration_text
+;
+
+END IF;
+
+
+IF  :lv_reinstatement_cnt > 0 
+AND :lv_new_registration_cnt = 0 THEN
+
+lt_result =
+SELECT 
+DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_reinstatment_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_reinstatment_text
+;
+
+END IF;
+
+IF  :lv_reinstatement_cnt = 0 
+AND :lv_new_registration_cnt > 0 THEN
+
+lt_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_new_registration_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_new_registration_text
+;
+
+END IF;
+
+IF :lv_mode = 'S' THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result
+;
+
+END IF;
+
+IF :lv_mode = 'R' THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result
+;
+
+END IF;
+
+
+
+END
