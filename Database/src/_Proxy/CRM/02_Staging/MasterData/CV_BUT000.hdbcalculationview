@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.crm.proxy::CV_BUT000" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_BUT000"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.crm.proxy::CV_BUT000" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_BUT000.hdbcalculationview"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
@@ -8,400 +8,805 @@
     <resourceUri>osr.edw.staging.md.crm.synonym::CDS_BP.DSO.BUT000.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.md.crm.synonym::CDS_BP.DSO.BUT000.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER">
+        <descriptions defaultDescription="PARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="TYPE">
+        <descriptions defaultDescription="TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="BPKIND">
+        <descriptions defaultDescription="BPKIND"/>
+      </viewAttribute>
+      <viewAttribute id="BU_GROUP">
+        <descriptions defaultDescription="BU_GROUP"/>
+      </viewAttribute>
+      <viewAttribute id="BPEXT">
+        <descriptions defaultDescription="BPEXT"/>
+      </viewAttribute>
+      <viewAttribute id="BU_SORT1">
+        <descriptions defaultDescription="BU_SORT1"/>
+      </viewAttribute>
+      <viewAttribute id="BU_SORT2">
+        <descriptions defaultDescription="BU_SORT2"/>
+      </viewAttribute>
+      <viewAttribute id="SOURCE">
+        <descriptions defaultDescription="SOURCE"/>
+      </viewAttribute>
+      <viewAttribute id="TITLE">
+        <descriptions defaultDescription="TITLE"/>
+      </viewAttribute>
+      <viewAttribute id="XDELE">
+        <descriptions defaultDescription="XDELE"/>
+      </viewAttribute>
+      <viewAttribute id="XBLCK">
+        <descriptions defaultDescription="XBLCK"/>
+      </viewAttribute>
+      <viewAttribute id="AUGRP">
+        <descriptions defaultDescription="AUGRP"/>
+      </viewAttribute>
+      <viewAttribute id="TITLE_LET">
+        <descriptions defaultDescription="TITLE_LET"/>
+      </viewAttribute>
+      <viewAttribute id="BU_LOGSYS">
+        <descriptions defaultDescription="BU_LOGSYS"/>
+      </viewAttribute>
+      <viewAttribute id="CONTACT">
+        <descriptions defaultDescription="CONTACT"/>
+      </viewAttribute>
+      <viewAttribute id="NOT_RELEASED">
+        <descriptions defaultDescription="NOT_RELEASED"/>
+      </viewAttribute>
+      <viewAttribute id="NOT_LG_COMPETENT">
+        <descriptions defaultDescription="NOT_LG_COMPETENT"/>
+      </viewAttribute>
+      <viewAttribute id="PRINT_MODE">
+        <descriptions defaultDescription="PRINT_MODE"/>
+      </viewAttribute>
+      <viewAttribute id="BP_EEW_DUMMY">
+        <descriptions defaultDescription="BP_EEW_DUMMY"/>
+      </viewAttribute>
+      <viewAttribute id="ZZCPIDNUMBER">
+        <descriptions defaultDescription="ZZCPIDNUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="ZZFINANCALST">
+        <descriptions defaultDescription="ZZFINANCALST"/>
+      </viewAttribute>
+      <viewAttribute id="ZZELMREFERAN">
+        <descriptions defaultDescription="ZZELMREFERAN"/>
+      </viewAttribute>
+      <viewAttribute id="ZZSALMATISUS">
+        <descriptions defaultDescription="ZZSALMATISUS"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG1">
+        <descriptions defaultDescription="NAME_ORG1"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG2">
+        <descriptions defaultDescription="NAME_ORG2"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG3">
+        <descriptions defaultDescription="NAME_ORG3"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_ORG4">
+        <descriptions defaultDescription="NAME_ORG4"/>
+      </viewAttribute>
+      <viewAttribute id="LEGAL_ENTY">
+        <descriptions defaultDescription="LEGAL_ENTY"/>
+      </viewAttribute>
+      <viewAttribute id="IND_SECTOR">
+        <descriptions defaultDescription="IND_SECTOR"/>
+      </viewAttribute>
+      <viewAttribute id="LEGAL_ORG">
+        <descriptions defaultDescription="LEGAL_ORG"/>
+      </viewAttribute>
+      <viewAttribute id="FOUND_DAT">
+        <descriptions defaultDescription="FOUND_DAT"/>
+      </viewAttribute>
+      <viewAttribute id="LIQUID_DAT">
+        <descriptions defaultDescription="LIQUID_DAT"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATION_1">
+        <descriptions defaultDescription="LOCATION_1"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATION_2">
+        <descriptions defaultDescription="LOCATION_2"/>
+      </viewAttribute>
+      <viewAttribute id="LOCATION_3">
+        <descriptions defaultDescription="LOCATION_3"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LAST">
+        <descriptions defaultDescription="NAME_LAST"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_FIRST">
+        <descriptions defaultDescription="NAME_FIRST"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LST2">
+        <descriptions defaultDescription="NAME_LST2"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_LAST2">
+        <descriptions defaultDescription="NAME_LAST2"/>
+      </viewAttribute>
+      <viewAttribute id="NAMEMIDDLE">
+        <descriptions defaultDescription="NAMEMIDDLE"/>
+      </viewAttribute>
+      <viewAttribute id="TITLE_ACA1">
+        <descriptions defaultDescription="TITLE_ACA1"/>
+      </viewAttribute>
+      <viewAttribute id="TITLE_ACA2">
+        <descriptions defaultDescription="TITLE_ACA2"/>
+      </viewAttribute>
+      <viewAttribute id="TITLE_ROYL">
+        <descriptions defaultDescription="TITLE_ROYL"/>
+      </viewAttribute>
+      <viewAttribute id="PREFIX1">
+        <descriptions defaultDescription="PREFIX1"/>
+      </viewAttribute>
+      <viewAttribute id="PREFIX2">
+        <descriptions defaultDescription="PREFIX2"/>
+      </viewAttribute>
+      <viewAttribute id="NAME1_TEXT">
+        <descriptions defaultDescription="NAME1_TEXT"/>
+      </viewAttribute>
+      <viewAttribute id="NICKNAME">
+        <descriptions defaultDescription="NICKNAME"/>
+      </viewAttribute>
+      <viewAttribute id="INITIALS">
+        <descriptions defaultDescription="INITIALS"/>
+      </viewAttribute>
+      <viewAttribute id="NAMEFORMAT">
+        <descriptions defaultDescription="NAMEFORMAT"/>
+      </viewAttribute>
+      <viewAttribute id="NAMCOUNTRY">
+        <descriptions defaultDescription="NAMCOUNTRY"/>
+      </viewAttribute>
+      <viewAttribute id="LANGU_CORR">
+        <descriptions defaultDescription="LANGU_CORR"/>
+      </viewAttribute>
+      <viewAttribute id="XSEXM">
+        <descriptions defaultDescription="XSEXM"/>
+      </viewAttribute>
+      <viewAttribute id="XSEXF">
+        <descriptions defaultDescription="XSEXF"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTHPL">
+        <descriptions defaultDescription="BIRTHPL"/>
+      </viewAttribute>
+      <viewAttribute id="MARST">
+        <descriptions defaultDescription="MARST"/>
+      </viewAttribute>
+      <viewAttribute id="EMPLO">
+        <descriptions defaultDescription="EMPLO"/>
+      </viewAttribute>
+      <viewAttribute id="JOBGR">
+        <descriptions defaultDescription="JOBGR"/>
+      </viewAttribute>
+      <viewAttribute id="NATIO">
+        <descriptions defaultDescription="NATIO"/>
+      </viewAttribute>
+      <viewAttribute id="CNTAX">
+        <descriptions defaultDescription="CNTAX"/>
+      </viewAttribute>
+      <viewAttribute id="CNDSC">
+        <descriptions defaultDescription="CNDSC"/>
+      </viewAttribute>
+      <viewAttribute id="PERSNUMBER">
+        <descriptions defaultDescription="PERSNUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="XSEXU">
+        <descriptions defaultDescription="XSEXU"/>
+      </viewAttribute>
+      <viewAttribute id="XUBNAME">
+        <descriptions defaultDescription="XUBNAME"/>
+      </viewAttribute>
+      <viewAttribute id="BU_LANGU">
+        <descriptions defaultDescription="BU_LANGU"/>
+      </viewAttribute>
+      <viewAttribute id="BIRTHDT">
+        <descriptions defaultDescription="BIRTHDT"/>
+      </viewAttribute>
+      <viewAttribute id="DEATHDT">
+        <descriptions defaultDescription="DEATHDT"/>
+      </viewAttribute>
+      <viewAttribute id="PERNO">
+        <descriptions defaultDescription="PERNO"/>
+      </viewAttribute>
+      <viewAttribute id="CHILDREN">
+        <descriptions defaultDescription="CHILDREN"/>
+      </viewAttribute>
+      <viewAttribute id="MEM_HOUSE">
+        <descriptions defaultDescription="MEM_HOUSE"/>
+      </viewAttribute>
+      <viewAttribute id="PARTGRPTYP">
+        <descriptions defaultDescription="PARTGRPTYP"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_GRP1">
+        <descriptions defaultDescription="NAME_GRP1"/>
+      </viewAttribute>
+      <viewAttribute id="NAME_GRP2">
+        <descriptions defaultDescription="NAME_GRP2"/>
+      </viewAttribute>
+      <viewAttribute id="MC_NAME1">
+        <descriptions defaultDescription="MC_NAME1"/>
+      </viewAttribute>
+      <viewAttribute id="MC_NAME2">
+        <descriptions defaultDescription="MC_NAME2"/>
+      </viewAttribute>
+      <viewAttribute id="CRUSR">
+        <descriptions defaultDescription="CRUSR"/>
+      </viewAttribute>
+      <viewAttribute id="CRDAT">
+        <descriptions defaultDescription="CRDAT"/>
+      </viewAttribute>
+      <viewAttribute id="CRTIM">
+        <descriptions defaultDescription="CRTIM"/>
+      </viewAttribute>
+      <viewAttribute id="CHUSR">
+        <descriptions defaultDescription="CHUSR"/>
+      </viewAttribute>
+      <viewAttribute id="CHDAT">
+        <descriptions defaultDescription="CHDAT"/>
+      </viewAttribute>
+      <viewAttribute id="CHTIM">
+        <descriptions defaultDescription="CHTIM"/>
+      </viewAttribute>
+      <viewAttribute id="PARTNER_GUID">
+        <descriptions defaultDescription="PARTNER_GUID"/>
+      </viewAttribute>
+      <viewAttribute id="ADDRCOMM">
+        <descriptions defaultDescription="ADDRCOMM"/>
+      </viewAttribute>
+      <viewAttribute id="TD_SWITCH">
+        <descriptions defaultDescription="TD_SWITCH"/>
+      </viewAttribute>
+      <viewAttribute id="IS_ORG_CENTRE">
+        <descriptions defaultDescription="IS_ORG_CENTRE"/>
+      </viewAttribute>
+      <viewAttribute id="DB_KEY">
+        <descriptions defaultDescription="DB_KEY"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_FROM">
+        <descriptions defaultDescription="VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_TO">
+        <descriptions defaultDescription="VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="XPCPT">
+        <descriptions defaultDescription="XPCPT"/>
+      </viewAttribute>
+      <viewAttribute id="NATPERS">
+        <descriptions defaultDescription="NATPERS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_ZZELMREFERAN" datatype="NVARCHAR" length="28" expressionLanguage="SQL">
+        <formula>TRIM(&quot;ZZELMREFERAN&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.crm.synonym::CDS_BP.DSO.BUT000.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER" source="PARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPKIND" source="BPKIND"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BU_GROUP" source="BU_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPEXT" source="BPEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BU_SORT1" source="BU_SORT1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BU_SORT2" source="BU_SORT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SOURCE" source="SOURCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TITLE" source="TITLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XDELE" source="XDELE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XBLCK" source="XBLCK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AUGRP" source="AUGRP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_LET" source="TITLE_LET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BU_LOGSYS" source="BU_LOGSYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CONTACT" source="CONTACT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOT_RELEASED" source="NOT_RELEASED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOT_LG_COMPETENT" source="NOT_LG_COMPETENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRINT_MODE" source="PRINT_MODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BP_EEW_DUMMY" source="BP_EEW_DUMMY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZCPIDNUMBER" source="ZZCPIDNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZFINANCALST" source="ZZFINANCALST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZELMREFERAN" source="ZZELMREFERAN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZSALMATISUS" source="ZZSALMATISUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG1" source="NAME_ORG1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG2" source="NAME_ORG2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG3" source="NAME_ORG3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_ORG4" source="NAME_ORG4"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEGAL_ENTY" source="LEGAL_ENTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IND_SECTOR" source="IND_SECTOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LEGAL_ORG" source="LEGAL_ORG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FOUND_DAT" source="FOUND_DAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LIQUID_DAT" source="LIQUID_DAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_1" source="LOCATION_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_2" source="LOCATION_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LOCATION_3" source="LOCATION_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST" source="NAME_LAST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_FIRST" source="NAME_FIRST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LST2" source="NAME_LST2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_LAST2" source="NAME_LAST2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAMEMIDDLE" source="NAMEMIDDLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_ACA1" source="TITLE_ACA1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_ACA2" source="TITLE_ACA2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TITLE_ROYL" source="TITLE_ROYL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREFIX1" source="PREFIX1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PREFIX2" source="PREFIX2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1_TEXT" source="NAME1_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NICKNAME" source="NICKNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INITIALS" source="INITIALS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAMEFORMAT" source="NAMEFORMAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAMCOUNTRY" source="NAMCOUNTRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LANGU_CORR" source="LANGU_CORR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XSEXM" source="XSEXM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XSEXF" source="XSEXF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHPL" source="BIRTHPL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MARST" source="MARST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EMPLO" source="EMPLO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOBGR" source="JOBGR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NATIO" source="NATIO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNTAX" source="CNTAX"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNDSC" source="CNDSC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSNUMBER" source="PERSNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XSEXU" source="XSEXU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XUBNAME" source="XUBNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BU_LANGU" source="BU_LANGU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BIRTHDT" source="BIRTHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEATHDT" source="DEATHDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNO" source="PERNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHILDREN" source="CHILDREN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEM_HOUSE" source="MEM_HOUSE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTGRPTYP" source="PARTGRPTYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_GRP1" source="NAME_GRP1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME_GRP2" source="NAME_GRP2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MC_NAME1" source="MC_NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MC_NAME2" source="MC_NAME2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CRUSR" source="CRUSR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CRDAT" source="CRDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CRTIM" source="CRTIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHUSR" source="CHUSR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHDAT" source="CHDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHTIM" source="CHTIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARTNER_GUID" source="PARTNER_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ADDRCOMM" source="ADDRCOMM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TD_SWITCH" source="TD_SWITCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IS_ORG_CENTRE" source="IS_ORG_CENTRE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XPCPT" source="XPCPT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NATPERS" source="NATPERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
   <attributes>
     <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CLIENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CLIENT"/>
     </attribute>
     <attribute id="PARTNER" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTNER"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PARTNER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARTNER"/>
     </attribute>
     <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
     <attribute id="TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TYPE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TYPE"/>
     </attribute>
     <attribute id="BPKIND" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPKIND"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BPKIND"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BPKIND"/>
     </attribute>
     <attribute id="BU_GROUP" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BU_GROUP"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BU_GROUP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BU_GROUP"/>
     </attribute>
     <attribute id="BPEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPEXT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BPEXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BPEXT"/>
     </attribute>
     <attribute id="BU_SORT1" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BU_SORT1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BU_SORT1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BU_SORT1"/>
     </attribute>
     <attribute id="BU_SORT2" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BU_SORT2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BU_SORT2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BU_SORT2"/>
     </attribute>
     <attribute id="SOURCE" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SOURCE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="SOURCE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SOURCE"/>
     </attribute>
     <attribute id="TITLE" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TITLE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TITLE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TITLE"/>
     </attribute>
     <attribute id="XDELE" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XDELE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XDELE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XDELE"/>
     </attribute>
     <attribute id="XBLCK" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XBLCK"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XBLCK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XBLCK"/>
     </attribute>
     <attribute id="AUGRP" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AUGRP"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="AUGRP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="AUGRP"/>
     </attribute>
     <attribute id="TITLE_LET" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TITLE_LET"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TITLE_LET"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TITLE_LET"/>
     </attribute>
     <attribute id="BU_LOGSYS" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BU_LOGSYS"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BU_LOGSYS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BU_LOGSYS"/>
     </attribute>
     <attribute id="CONTACT" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CONTACT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CONTACT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CONTACT"/>
     </attribute>
     <attribute id="NOT_RELEASED" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOT_RELEASED"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NOT_RELEASED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NOT_RELEASED"/>
     </attribute>
     <attribute id="NOT_LG_COMPETENT" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOT_LG_COMPETENT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NOT_LG_COMPETENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NOT_LG_COMPETENT"/>
     </attribute>
     <attribute id="PRINT_MODE" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PRINT_MODE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PRINT_MODE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRINT_MODE"/>
     </attribute>
     <attribute id="BP_EEW_DUMMY" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BP_EEW_DUMMY"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BP_EEW_DUMMY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BP_EEW_DUMMY"/>
     </attribute>
     <attribute id="ZZCPIDNUMBER" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ZZCPIDNUMBER"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="ZZCPIDNUMBER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ZZCPIDNUMBER"/>
     </attribute>
     <attribute id="ZZFINANCALST" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ZZFINANCALST"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="ZZFINANCALST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ZZFINANCALST"/>
     </attribute>
     <attribute id="ZZELMREFERAN" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ZZELMREFERAN"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="ZZELMREFERAN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_ZZELMREFERAN"/>
     </attribute>
     <attribute id="ZZSALMATISUS" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ZZSALMATISUS"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="ZZSALMATISUS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ZZSALMATISUS"/>
     </attribute>
     <attribute id="NAME_ORG1" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_ORG1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_ORG1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_ORG1"/>
     </attribute>
     <attribute id="NAME_ORG2" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_ORG2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_ORG2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_ORG2"/>
     </attribute>
     <attribute id="NAME_ORG3" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_ORG3"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_ORG3"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_ORG3"/>
     </attribute>
     <attribute id="NAME_ORG4" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_ORG4"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_ORG4"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_ORG4"/>
     </attribute>
     <attribute id="LEGAL_ENTY" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LEGAL_ENTY"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LEGAL_ENTY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LEGAL_ENTY"/>
     </attribute>
     <attribute id="IND_SECTOR" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IND_SECTOR"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="IND_SECTOR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="IND_SECTOR"/>
     </attribute>
     <attribute id="LEGAL_ORG" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LEGAL_ORG"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LEGAL_ORG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LEGAL_ORG"/>
     </attribute>
     <attribute id="FOUND_DAT" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FOUND_DAT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="FOUND_DAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FOUND_DAT"/>
     </attribute>
     <attribute id="LIQUID_DAT" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LIQUID_DAT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LIQUID_DAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LIQUID_DAT"/>
     </attribute>
     <attribute id="LOCATION_1" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCATION_1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LOCATION_1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LOCATION_1"/>
     </attribute>
     <attribute id="LOCATION_2" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCATION_2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LOCATION_2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LOCATION_2"/>
     </attribute>
     <attribute id="LOCATION_3" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LOCATION_3"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LOCATION_3"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LOCATION_3"/>
     </attribute>
     <attribute id="NAME_LAST" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_LAST"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_LAST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_LAST"/>
     </attribute>
     <attribute id="NAME_FIRST" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_FIRST"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_FIRST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_FIRST"/>
     </attribute>
     <attribute id="NAME_LST2" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_LST2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_LST2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_LST2"/>
     </attribute>
     <attribute id="NAME_LAST2" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_LAST2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_LAST2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_LAST2"/>
     </attribute>
     <attribute id="NAMEMIDDLE" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAMEMIDDLE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAMEMIDDLE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAMEMIDDLE"/>
     </attribute>
     <attribute id="TITLE_ACA1" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TITLE_ACA1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TITLE_ACA1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TITLE_ACA1"/>
     </attribute>
     <attribute id="TITLE_ACA2" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TITLE_ACA2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TITLE_ACA2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TITLE_ACA2"/>
     </attribute>
     <attribute id="TITLE_ROYL" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TITLE_ROYL"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TITLE_ROYL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TITLE_ROYL"/>
     </attribute>
     <attribute id="PREFIX1" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PREFIX1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PREFIX1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PREFIX1"/>
     </attribute>
     <attribute id="PREFIX2" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PREFIX2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PREFIX2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PREFIX2"/>
     </attribute>
     <attribute id="NAME1_TEXT" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME1_TEXT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME1_TEXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME1_TEXT"/>
     </attribute>
     <attribute id="NICKNAME" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NICKNAME"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NICKNAME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NICKNAME"/>
     </attribute>
     <attribute id="INITIALS" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INITIALS"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="INITIALS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INITIALS"/>
     </attribute>
     <attribute id="NAMEFORMAT" order="51" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAMEFORMAT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAMEFORMAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAMEFORMAT"/>
     </attribute>
     <attribute id="NAMCOUNTRY" order="52" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAMCOUNTRY"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAMCOUNTRY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAMCOUNTRY"/>
     </attribute>
     <attribute id="LANGU_CORR" order="53" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LANGU_CORR"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="LANGU_CORR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LANGU_CORR"/>
     </attribute>
     <attribute id="XSEXM" order="54" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XSEXM"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XSEXM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XSEXM"/>
     </attribute>
     <attribute id="XSEXF" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XSEXF"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XSEXF"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XSEXF"/>
     </attribute>
     <attribute id="BIRTHPL" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BIRTHPL"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BIRTHPL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BIRTHPL"/>
     </attribute>
     <attribute id="MARST" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MARST"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="MARST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MARST"/>
     </attribute>
     <attribute id="EMPLO" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="EMPLO"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="EMPLO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="EMPLO"/>
     </attribute>
     <attribute id="JOBGR" order="59" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="JOBGR"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="JOBGR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="JOBGR"/>
     </attribute>
     <attribute id="NATIO" order="60" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NATIO"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NATIO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NATIO"/>
     </attribute>
     <attribute id="CNTAX" order="61" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CNTAX"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CNTAX"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CNTAX"/>
     </attribute>
     <attribute id="CNDSC" order="62" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CNDSC"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CNDSC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CNDSC"/>
     </attribute>
     <attribute id="PERSNUMBER" order="63" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSNUMBER"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PERSNUMBER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PERSNUMBER"/>
     </attribute>
     <attribute id="XSEXU" order="64" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XSEXU"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XSEXU"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XSEXU"/>
     </attribute>
     <attribute id="XUBNAME" order="65" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XUBNAME"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XUBNAME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XUBNAME"/>
     </attribute>
     <attribute id="BU_LANGU" order="66" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BU_LANGU"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BU_LANGU"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BU_LANGU"/>
     </attribute>
     <attribute id="BIRTHDT" order="67" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BIRTHDT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="BIRTHDT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BIRTHDT"/>
     </attribute>
     <attribute id="DEATHDT" order="68" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DEATHDT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="DEATHDT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DEATHDT"/>
     </attribute>
     <attribute id="PERNO" order="69" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERNO"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PERNO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PERNO"/>
     </attribute>
     <attribute id="CHILDREN" order="70" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CHILDREN"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CHILDREN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHILDREN"/>
     </attribute>
     <attribute id="MEM_HOUSE" order="71" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEM_HOUSE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="MEM_HOUSE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MEM_HOUSE"/>
     </attribute>
     <attribute id="PARTGRPTYP" order="72" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTGRPTYP"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PARTGRPTYP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARTGRPTYP"/>
     </attribute>
     <attribute id="NAME_GRP1" order="73" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_GRP1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_GRP1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_GRP1"/>
     </attribute>
     <attribute id="NAME_GRP2" order="74" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NAME_GRP2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NAME_GRP2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME_GRP2"/>
     </attribute>
     <attribute id="MC_NAME1" order="75" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MC_NAME1"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="MC_NAME1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MC_NAME1"/>
     </attribute>
     <attribute id="MC_NAME2" order="76" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MC_NAME2"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="MC_NAME2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MC_NAME2"/>
     </attribute>
     <attribute id="CRUSR" order="77" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CRUSR"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CRUSR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CRUSR"/>
     </attribute>
     <attribute id="CRDAT" order="78" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CRDAT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CRDAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CRDAT"/>
     </attribute>
     <attribute id="CRTIM" order="79" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CRTIM"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CRTIM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CRTIM"/>
     </attribute>
     <attribute id="CHUSR" order="80" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CHUSR"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CHUSR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHUSR"/>
     </attribute>
     <attribute id="CHDAT" order="81" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CHDAT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CHDAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHDAT"/>
     </attribute>
     <attribute id="CHTIM" order="82" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CHTIM"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="CHTIM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHTIM"/>
     </attribute>
     <attribute id="PARTNER_GUID" order="83" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARTNER_GUID"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="PARTNER_GUID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARTNER_GUID"/>
     </attribute>
     <attribute id="ADDRCOMM" order="84" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ADDRCOMM"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="ADDRCOMM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ADDRCOMM"/>
     </attribute>
     <attribute id="TD_SWITCH" order="85" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TD_SWITCH"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="TD_SWITCH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TD_SWITCH"/>
     </attribute>
     <attribute id="IS_ORG_CENTRE" order="86" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS_ORG_CENTRE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="IS_ORG_CENTRE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="IS_ORG_CENTRE"/>
     </attribute>
     <attribute id="DB_KEY" order="87" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DB_KEY"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="DB_KEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="DB_KEY"/>
     </attribute>
     <attribute id="VALID_FROM" order="88" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_FROM"/>
     </attribute>
     <attribute id="VALID_TO" order="89" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_TO"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_TO"/>
     </attribute>
     <attribute id="XPCPT" order="90" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XPCPT"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="XPCPT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XPCPT"/>
     </attribute>
     <attribute id="NATPERS" order="91" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NATPERS"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="NATPERS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NATPERS"/>
     </attribute>
     <attribute id="Z_CURR_FLAG" order="92" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CURR_FLAG"/>
     </attribute>
     <attribute id="Z_VALID_FROM" order="93" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_VALID_FROM"/>
     </attribute>
     <attribute id="Z_VALID_TO" order="94" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_VALID_TO"/>
     </attribute>
     <attribute id="Z_CHANGE_TYPE" order="95" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TYPE"/>
     </attribute>
     <attribute id="Z_CHANGE_TIME" order="96" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
     </attribute>
     <attribute id="Z_SOURCE_SYS" order="97" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
     </attribute>
     <attribute id="Z_RUN_ROW_NO" order="98" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_BP.DSO.BUT000.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_ROW_NO"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -413,6 +818,11 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="196"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
