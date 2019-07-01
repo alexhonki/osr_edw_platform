@@ -1,139 +1,389 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_ORGANISATION_C"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data">
-    <resourceUri>osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data</resourceUri>
+  <DataSource id="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.md.asic.proxy::CV_ORG_TYPE">
+    <resourceUri>osr.edw.source.md.asic.proxy::CV_ORG_TYPE</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.md.asic.proxy::CV_ORG_STATUS">
+    <resourceUri>osr.edw.source.md.asic.proxy::CV_ORG_STATUS</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.source.md.asic.proxy::CV_ORG_CLASS">
+    <resourceUri>osr.edw.source.md.asic.proxy::CV_ORG_CLASS</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.ORGANISATION.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PLACE_OF_INCORP">
+        <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      </viewAttribute>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_END_DT">
+        <descriptions defaultDescription="REGN_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NUMBER">
+        <descriptions defaultDescription="ORG_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_START_DT">
+        <descriptions defaultDescription="REGN_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME">
+        <descriptions defaultDescription="ORG_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME_START_DT">
+        <descriptions defaultDescription="ORG_NAME_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE">
+        <descriptions defaultDescription="ORG_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_CLASS">
+        <descriptions defaultDescription="ORG_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_STATUS">
+        <descriptions defaultDescription="ORG_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_START_DT">
+        <descriptions defaultDescription="ORG_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_SUB_CLASS">
+        <descriptions defaultDescription="ORG_SUB_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_END_DT">
+        <descriptions defaultDescription="ORG_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="DEREGISTRATION_CODE">
+        <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLACE_OF_INCORP" source="PLACE_OF_INCORP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME" source="ORG_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME_START_DT" source="ORG_NAME_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE" source="ORG_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_CLASS" source="ORG_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="ORG_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_START_DT" source="ORG_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_SUB_CLASS" source="ORG_SUB_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_END_DT" source="ORG_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEREGISTRATION_CODE" source="DEREGISTRATION_CODE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PLACE_OF_INCORP">
+        <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_END_DT">
+        <descriptions defaultDescription="REGN_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NUMBER">
+        <descriptions defaultDescription="ORG_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_START_DT">
+        <descriptions defaultDescription="REGN_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME">
+        <descriptions defaultDescription="ORG_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME_START_DT">
+        <descriptions defaultDescription="ORG_NAME_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE">
+        <descriptions defaultDescription="ORG_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_CLASS">
+        <descriptions defaultDescription="ORG_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_STATUS">
+        <descriptions defaultDescription="ORG_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_START_DT">
+        <descriptions defaultDescription="ORG_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_SUB_CLASS">
+        <descriptions defaultDescription="ORG_SUB_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_END_DT">
+        <descriptions defaultDescription="ORG_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="DEREGISTRATION_CODE">
+        <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE_DESCR">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLACE_OF_INCORP" source="PLACE_OF_INCORP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME" source="ORG_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME_START_DT" source="ORG_NAME_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE" source="ORG_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_CLASS" source="ORG_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="ORG_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_START_DT" source="ORG_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_SUB_CLASS" source="ORG_SUB_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_END_DT" source="ORG_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEREGISTRATION_CODE" source="DEREGISTRATION_CODE"/>
+    </input>
+    <input node="osr.edw.source.md.asic.proxy::CV_ORG_TYPE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE_DESCR" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE" source="TYPE"/>
+    </input>
+    <joinAttribute name="ORG_TYPE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PLACE_OF_INCORP">
+        <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_END_DT">
+        <descriptions defaultDescription="REGN_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NUMBER">
+        <descriptions defaultDescription="ORG_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_START_DT">
+        <descriptions defaultDescription="REGN_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME">
+        <descriptions defaultDescription="ORG_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME_START_DT">
+        <descriptions defaultDescription="ORG_NAME_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE">
+        <descriptions defaultDescription="ORG_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_CLASS">
+        <descriptions defaultDescription="ORG_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_STATUS">
+        <descriptions defaultDescription="ORG_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_START_DT">
+        <descriptions defaultDescription="ORG_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_SUB_CLASS">
+        <descriptions defaultDescription="ORG_SUB_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_END_DT">
+        <descriptions defaultDescription="ORG_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="DEREGISTRATION_CODE">
+        <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE_DESCR">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_STATUS_DESCR">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLACE_OF_INCORP" source="PLACE_OF_INCORP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME" source="ORG_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME_START_DT" source="ORG_NAME_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE" source="ORG_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_CLASS" source="ORG_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="ORG_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_START_DT" source="ORG_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_SUB_CLASS" source="ORG_SUB_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_END_DT" source="ORG_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEREGISTRATION_CODE" source="DEREGISTRATION_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE_DESCR" source="ORG_TYPE_DESCR"/>
+    </input>
+    <input node="osr.edw.source.md.asic.proxy::CV_ORG_STATUS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS_DESCR" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="STATUS"/>
+    </input>
+    <joinAttribute name="ORG_STATUS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="PLACE_OF_INCORP">
+        <descriptions defaultDescription="PLACE_OF_INCORP"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_END_DT">
+        <descriptions defaultDescription="REGN_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NUMBER">
+        <descriptions defaultDescription="ORG_NUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="REGN_START_DT">
+        <descriptions defaultDescription="REGN_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME">
+        <descriptions defaultDescription="ORG_NAME"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_NAME_START_DT">
+        <descriptions defaultDescription="ORG_NAME_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE">
+        <descriptions defaultDescription="ORG_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="ABN">
+        <descriptions defaultDescription="ABN"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_CLASS">
+        <descriptions defaultDescription="ORG_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_STATUS">
+        <descriptions defaultDescription="ORG_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_START_DT">
+        <descriptions defaultDescription="ORG_START_DT"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_SUB_CLASS">
+        <descriptions defaultDescription="ORG_SUB_CLASS"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_END_DT">
+        <descriptions defaultDescription="ORG_END_DT"/>
+      </viewAttribute>
+      <viewAttribute id="DEREGISTRATION_CODE">
+        <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_TYPE_DESCR">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_STATUS_DESCR">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_CLASS_DESCR">
+        <descriptions defaultDescription="DESCRIPTION"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLACE_OF_INCORP" source="PLACE_OF_INCORP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_END_DT" source="REGN_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NUMBER" source="ORG_NUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REGN_START_DT" source="REGN_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME" source="ORG_NAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_NAME_START_DT" source="ORG_NAME_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE" source="ORG_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_CLASS" source="ORG_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="ORG_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_START_DT" source="ORG_START_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_SUB_CLASS" source="ORG_SUB_CLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_END_DT" source="ORG_END_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEREGISTRATION_CODE" source="DEREGISTRATION_CODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_TYPE_DESCR" source="ORG_TYPE_DESCR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS_DESCR" source="ORG_STATUS_DESCR"/>
+    </input>
+    <input node="osr.edw.source.md.asic.proxy::CV_ORG_CLASS">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_CLASS_DESCR" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_STATUS" source="CLASS"/>
+    </input>
+    <joinAttribute name="ORG_STATUS"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_3">
   <attributes>
-    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PATH"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="PATH"/>
-    </attribute>
-    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="NAME"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="NAME"/>
-    </attribute>
-    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ERROR"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ERROR"/>
-    </attribute>
-    <attribute id="PARTITION" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PARTITION"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="PARTITION"/>
-    </attribute>
-    <attribute id="ORG_NUMBER" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_NUMBER"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NUMBER"/>
-    </attribute>
-    <attribute id="ORG_NAME" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_NAME"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NAME"/>
-    </attribute>
-    <attribute id="ORG_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_TYPE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_TYPE"/>
-    </attribute>
-    <attribute id="ORG_STATUS" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_STATUS"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_STATUS"/>
-    </attribute>
-    <attribute id="ORG_END_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_END_DT"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_END_DT"/>
-    </attribute>
-    <attribute id="ORG_CLASS" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_CLASS"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_CLASS"/>
-    </attribute>
-    <attribute id="ORG_SUB_CLASS" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_SUB_CLASS"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_SUB_CLASS"/>
-    </attribute>
-    <attribute id="REGN_END_DT" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REGN_END_DT"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="REGN_END_DT"/>
-    </attribute>
-    <attribute id="REGN_START_DT" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REGN_START_DT"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="REGN_START_DT"/>
-    </attribute>
-    <attribute id="ORG_NAME_START_DT" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_NAME_START_DT"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NAME_START_DT"/>
-    </attribute>
-    <attribute id="ABN" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ABN"/>
-    </attribute>
-    <attribute id="ORG_START_DT" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_START_DT"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_START_DT"/>
-    </attribute>
-    <attribute id="ORG_START_DATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_START_DATE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_START_DATE"/>
-    </attribute>
-    <attribute id="DEREGISTRATION_CODE" order="18" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DEREGISTRATION_CODE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="DEREGISTRATION_CODE"/>
-    </attribute>
-    <attribute id="PLACE_OF_INCORP" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="PLACE_OF_INCORP" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PLACE_OF_INCORP"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="PLACE_OF_INCORP"/>
+      <keyMapping columnObjectName="Join_3" columnName="PLACE_OF_INCORP"/>
     </attribute>
-    <attribute id="ORG_END_DATE" order="20" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_END_DATE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_END_DATE"/>
+    <attribute id="REGN_END_DT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_END_DT"/>
+      <keyMapping columnObjectName="Join_3" columnName="REGN_END_DT"/>
     </attribute>
-    <attribute id="ORG_NAME_START_DATE" order="21" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_NAME_START_DATE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="ORG_NAME_START_DATE"/>
+    <attribute id="ORG_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NUMBER"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_NUMBER"/>
     </attribute>
-    <attribute id="REGN_END_DATE" order="22" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REGN_END_DATE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="REGN_END_DATE"/>
+    <attribute id="REGN_START_DT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGN_START_DT"/>
+      <keyMapping columnObjectName="Join_3" columnName="REGN_START_DT"/>
     </attribute>
-    <attribute id="REGN_START_DATE" order="23" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REGN_START_DATE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="REGN_START_DATE"/>
+    <attribute id="ORG_NAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NAME"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_NAME"/>
     </attribute>
-    <attribute id="Z_CURR_FLAG" order="24" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_CURR_FLAG"/>
+    <attribute id="ORG_NAME_START_DT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_NAME_START_DT"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_NAME_START_DT"/>
     </attribute>
-    <attribute id="Z_VALID_FROM" order="25" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_VALID_FROM"/>
+    <attribute id="ORG_TYPE" order="7" descriptionColumnName="ORG_TYPE_DESCR" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_TYPE"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_TYPE"/>
     </attribute>
-    <attribute id="Z_VALID_TO" order="26" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_VALID_TO"/>
+    <attribute id="ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_3" columnName="ABN"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="27" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_CHANGE_TYPE"/>
+    <attribute id="ORG_CLASS" order="9" descriptionColumnName="ORG_CLASS_DESCR" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_CLASS"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_CLASS"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="28" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_CHANGE_TIME"/>
+    <attribute id="ORG_STATUS" order="10" descriptionColumnName="ORG_STATUS_DESCR" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_STATUS"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_STATUS"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="29" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_SOURCE_SYS"/>
+    <attribute id="ORG_START_DT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_START_DT"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_START_DT"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="30" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_RUN_ROW_NO"/>
+    <attribute id="ORG_SUB_CLASS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_SUB_CLASS"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_SUB_CLASS"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="31" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_ASIC.DSO.ORGANISATION.active_data" columnName="Z_RUN_SEQ_ID"/>
+    <attribute id="ORG_END_DT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_END_DT"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_END_DT"/>
+    </attribute>
+    <attribute id="DEREGISTRATION_CODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEREGISTRATION_CODE"/>
+      <keyMapping columnObjectName="Join_3" columnName="DEREGISTRATION_CODE"/>
+    </attribute>
+    <attribute id="ORG_TYPE_DESCR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_TYPE_DESCR"/>
+    </attribute>
+    <attribute id="ORG_STATUS_DESCR" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_STATUS_DESCR"/>
+    </attribute>
+    <attribute id="ORG_CLASS_DESCR" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="Join_3" columnName="ORG_CLASS_DESCR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -144,7 +394,50 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="637"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="497"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.source.md.asic.proxy::CV_ORG_TYPE" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="357"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.source.md.asic.proxy::CV_ORG_STATUS" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="osr.edw.source.md.asic.proxy::CV_ORG_CLASS" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="250"/>
     </shape>
   </shapes>
 </layout>
