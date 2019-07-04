@@ -1,0 +1,191 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_GRP_EXCLUSIONS"(IN IP_GJAHR 	NVARCHAR(4) )
+RETURNS TABLE
+(
+		GROUP_ID		NVARCHAR(32),
+		ABN			    NVARCHAR(11)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+DECLARE sdate DATE;
+DECLARE edate DATE;
+
+
+FY_DATES =
+SELECT DISTINCT
+	"FISCAL_YEAR",
+	CASE WHEN "FISCAL_YEAR" <> '' THEN TO_NVARCHAR(TO_DATS(MIN(DATE_SQL))) ELSE '' END AS "ST_DATE",
+	CASE WHEN "FISCAL_YEAR" <> '' THEN TO_NVARCHAR(TO_DATS(MAX(DATE_SQL))) ELSE '' END AS "EN_DATE"
+FROM "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR"
+WHERE "CALENDAR_VARIANT" = 'Z6'
+AND TO_NVARCHAR("FISCAL_YEAR") = :IP_GJAHR
+GROUP BY "FISCAL_YEAR"
+;
+
+
+SELECT DISTINCT "ST_DATE"    INTO sdate     FROM :FY_DATES ;
+SELECT DISTINCT "EN_DATE"    INTO edate     FROM :FY_DATES ;
+
+
+
+
+GRP_DATA =     
+SELECT DISTINCT
+	"GROUP_ID",
+	"ABN",
+	"GJAHR" AS "GJAHR"
+FROM
+	"osr.edw.platform.fra.prt.model::CV_GRP_GROUP_SUMMARY"
+WHERE 
+	"GJAHR" = :IP_GJAHR 
+
+;
+ -------------------------------
+ABN_EXMPT_ORG =
+SELECT DISTINCT "ABN"
+FROM
+(
+
+SELECT DISTINCT 
+	"ATO"."ABN" AS "ABN"
+FROM "osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "ATO",
+	:GRP_DATA AS "GRP_DATA"
+WHERE 
+	"ATO"."ABN" = "GRP_DATA"."ABN" 
+AND    
+	"ATO"."ANZSIC_CD" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
+AND
+	TO_NVARCHAR("ATO"."FINANCIAL_YEAR") = "GRP_DATA"."GJAHR"
+
+UNION
+
+SELECT DISTINCT 
+	"ABR"."ABN" AS "ABN"
+FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "ABR",
+	:GRP_DATA AS "GRP_DATA"
+WHERE 
+	"ABR"."ABN" = "GRP_DATA"."ABN" 
+AND    
+	"ABR"."MN_INDY_CLSN" IN ('47200','60100','62100','75100','75200','75300','75400','75510','75520','76000','77110','77130','77140','77200','80100','80210','80220','80230','80240','81020','84010','84020','85910','89100','89210','89220','95400')
+
+
+)	;
+
+-----------------------------------
+-------------------------ABR Fund  and ACNC---------------------------
+ABR_AGENCY =
+SELECT DISTINCT
+	"ABN",
+	"PID",
+	"ENT_TYP_CD",
+	"ACN",
+	"SPRSN_IND"
+FROM 
+	"osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C"
+ WHERE 
+"ABN" IN (SELECT DISTINCT "ABN" FROM  :GRP_DATA )	
+--AND SPRSN_IND <> 'Y'
+;
+
+ABR_FUND_ACNC_ABN =
+
+SELECT DISTINCT 
+	"ABN" 
+FROM
+
+(
+SELECT  DISTINCT
+	"ABN"
+FROM
+
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID",
+	 "FUND"."PRIMARY_ID"         AS  "FUND_PID",
+	 "FUND"."FUND_NAME"          AS  "FUND_NAME" ,
+	 "FUND"."FUND_TYPE"          AS  "FUND_TYPE",
+	 "FUND"."REGISTRATION_DATE"  AS  "FUND_REG_DT",
+	 "FUND"."CANCELLATION_DATE"  AS  "FUND_CAN_DT"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.proxy::CV_FUNDS_C" AS "FUND"
+ON 
+	"AGENCY"."PID" = "FUND"."PRIMARY_ID"
+)	
+
+UNION	
+
+SELECT DISTINCT 
+	"ABN"
+FROM
+(
+SELECT
+	 "AGENCY"."ABN"              AS  "ABN", 	
+     "AGENCY"."PID"              AS  "PID"
+FROM
+	:ABR_AGENCY AS "AGENCY" 
+INNER JOIN
+	"osr.edw.staging.md.abr.proxy::CV_ACNC" AS "ACNC"
+ON 
+	"AGENCY"."PID" = "ACNC"."PID"
+)
+)
+;	
+
+-------------------------------------------------------------
+
+-- ASIC Org Status 
+ASIC_STATUS = 
+SELECT DISTINCT "ABN" FROM
+(
+SELECT DISTINCT "ABN", "ORG_STATUS" FROM
+(
+SELECT
+	 "ASIC"."ABN",
+	"ASIC"."DEREGISTRATION_CODE",
+	"ASIC"."ORG_NUMBER",
+	"ASIC"."ORG_CLASS",
+	"ASIC"."ORG_END_DT",
+	"ASIC"."ORG_START_DT",
+	"ASIC"."ORG_END_DT",
+	"ASIC"."ORG_STATUS",
+	RANK() OVER (PARTITION BY "ASIC"."ABN" ORDER BY "ASIC"."ABN", "ASIC"."ORG_END_DT" DESC, "ASIC"."ORG_START_DT" DESC) AS "RANK_1"
+FROM 
+	"osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" AS "ASIC",
+	:GRP_DATA  AS "GRP_DATA"
+WHERE  
+	"ASIC"."ABN" = "GRP_DATA"."ABN"
+) WHERE "RANK_1" = '1'
+) WHERE "ORG_STATUS" NOT IN ('REGD','')
+
+;
+
+
+RETURN
+SELECT  	
+	"GROUP_ID",
+	"ABN"
+ 
+FROM :GRP_DATA
+WHERE "ABN" NOT IN
+
+(
+	SELECT DISTINCT "ABN" FROM
+	(
+		
+		SELECT DISTINCT "ABN" FROM :ASIC_STATUS
+		UNION
+		SELECT DISTINCT "ABN" FROM :ABR_FUND_ACNC_ABN
+		UNION
+		SELECT DISTINCT "ABN" FROM :ABN_EXMPT_ORG
+	
+	)
+)	
+;
+    
+END;
