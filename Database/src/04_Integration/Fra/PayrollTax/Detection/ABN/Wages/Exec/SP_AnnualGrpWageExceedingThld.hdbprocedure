@@ -12,10 +12,12 @@ BEGIN
 
 DECLARE lv_mode NVARCHAR(1);  
 
+DECLARE lv_gjahr NVARCHAR(4);
 DECLARE lv_thld_yearly Decimal(15,2) ;
 DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
+
 
 SELECT 
 "RUN_MODE",
@@ -31,6 +33,19 @@ lx_wcq,
 lx_interstate
 FROM :PARAMETERS LIMIT 1;
 
+SELECT TOP 1 "GJAHR" INTO LV_GJAHR FROM :it_data_for_rule;
+
+lt_data_for_rule = 
+SELECT *
+FROM :it_data_for_rule AS "DATA"
+WHERE EXISTS (
+	SELECT * FROM 
+	"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_GRP_EXCLUSIONS"(:LV_GJAHR) AS "EXCLUSION"
+	WHERE "DATA"."GROUP_ID" = "EXCLUSION"."GROUP_ID"
+	  AND  "DATA"."ABN" = "EXCLUSION"."ABN"
+)
+;
+
 lt_wages = 
 SELECT
 DISTINCT
@@ -40,8 +55,13 @@ DISTINCT
 "GJAHR",
 TO_NVARCHAR('AUD') AS "WAERS",
 0 AS "WAGE"
-FROM :it_data_for_rule
+FROM :lt_data_for_rule
 ;
+
+
+
+
+
 
 -- ATO BAS Data   	
  IF lx_ato = 'Y' THEN
@@ -64,7 +84,7 @@ FROM :it_data_for_rule
  	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
  	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
  	INNER JOIN
- 	:it_data_for_rule AS "KEYS"
+ 	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
 	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
 	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
@@ -87,7 +107,7 @@ FROM :it_data_for_rule
  	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "WAGE"
  	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES" AS "WAGES"
  	INNER JOIN
- 	:it_data_for_rule AS "KEYS"
+ 	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
 	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
 	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
@@ -116,7 +136,7 @@ FROM :it_data_for_rule
  	SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
  	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
  	INNER JOIN
- 	:it_data_for_rule AS "KEYS"
+ 	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
 	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
 	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
@@ -171,7 +191,7 @@ FROM :it_data_for_rule
  	MAX("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
  	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"() AS "WAGES"
  	INNER JOIN
- 	:it_data_for_rule AS "KEYS"
+ 	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
 	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
 	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
