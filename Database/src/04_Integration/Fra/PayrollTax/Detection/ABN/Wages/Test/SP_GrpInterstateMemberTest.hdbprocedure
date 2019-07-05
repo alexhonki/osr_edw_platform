@@ -1,0 +1,52 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpInterstateMemberTest" (
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+IF :iv_abn = '' THEN 
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
+;
+
+ELSE
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
+  AND "ABN" = :iv_abn
+;
+END IF;
+
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
+:lt_workset,
+lt_out_for_rule );
+
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpInterstateMember"(
+:lt_out_for_rule,
+et_result,
+et_text );
+ 
+END;
