@@ -29,7 +29,7 @@ IF  LEFT(:LV_SCENARIO,4) = 'PRT1' THEN
 	"FLAG_INTERSTATE"
 	FROM :PARAMETERS LIMIT 1;
 		
-	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_AnnualGrpWageExceedingThld"(
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpAnnualWageExceedingThld"(
 		IT_DATA_FOR_RULE => :it_data_for_rule,
 		PARAMETERS => :lt_parameters_grp,
 		ET_RESULT => et_result,
