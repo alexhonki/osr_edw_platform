@@ -1,0 +1,58 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpInterstateMember"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+et_result =
+SELECT 
+DISTINCT
+"DATA"."ABN",
+"DATA"."PERIOD_CATEGORY",
+"DATA"."PERIOD_KEY",
+"DATA"."GJAHR",
+100 AS "DETECTION_RESULT"
+FROM 
+:it_data_for_rule AS "DATA",
+"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY",
+"osr.edw.staging.td.osrstate.proxy::TF_IJR_PRT_ANNL_C"()  AS "GRP"
+WHERE "DATA"."GJAHR"			= "FY"."FISCAL_YEAR"
+  AND "DATA"."GJAHR"			= "GRP"."FIN_YEAR" 
+  AND "DATA"."ABN"				= "GRP"."ABN"
+  AND "GRP"."DATE_REGISTERED"	<=	"FY"."END_DATE_SQL"
+  AND "GRP"."DATE_CANCELLED"	>=	"FY"."END_DATE_SQL"	
+  AND "GRP"."DATE_GROUP_JOINED"	<=	"FY"."END_DATE_SQL"
+  AND "GRP"."DATE_GROUP_LEFT"	>=	"FY"."END_DATE_SQL"	
+  AND "GRP"."STATE_GROUP_ID"    <> ''
+  AND "GRP"."STATE_GROUP_ID"    IS NOT NULL
+  AND "GRP"."ABN"               <> ''
+  AND "GRP"."ABN"			    IS NOT NULL
+  ;
+
+et_text =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'' AS "MSGID",
+'' AS "MSGNO",
+'' AS "MSGV1",
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:et_text
+;
+
+END

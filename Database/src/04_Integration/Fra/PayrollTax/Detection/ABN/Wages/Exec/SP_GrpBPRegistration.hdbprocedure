@@ -14,17 +14,20 @@ DECLARE lv_mode NVARCHAR(1);
 
 DECLARE lx_reinstatement NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_new_registration NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_registered NVARCHAR(1) DEFAULT 'N';
 DECLARE lv_reinstatement_cnt Integer DEFAULT 0;
 DECLARE lv_new_registration_cnt Integer DEFAULT 0;
 
 SELECT
 "RUN_MODE",
 "FLAG_REINSTATEMENT",
-"FLAG_NEW_REGISTRATION"
+"FLAG_NEW_REGISTRATION",
+"FLAG_REGISTERED"
 INTO 
 lv_mode,
 lx_reinstatement,
-lx_new_registration
+lx_new_registration,
+lx_registered
 FROM :PARAMETERS LIMIT 1;
 
 IF lx_new_registration = 'Y' THEN 
