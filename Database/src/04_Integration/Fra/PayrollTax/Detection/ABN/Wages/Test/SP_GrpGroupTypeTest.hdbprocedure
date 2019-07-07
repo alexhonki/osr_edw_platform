@@ -1,0 +1,68 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpTypeTest" (
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	IN iv_run_mode          NVARCHAR(1),
+	IN ix_rbc				NVARCHAR(1),
+	IN ix_sh				NVARCHAR(1),
+	IN ix_dr				NVARCHAR(1),
+	IN ix_ccdr				NVARCHAR(1),
+	IN ix_ccsh				NVARCHAR(1),
+	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+IF :iv_abn = '' THEN 
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
+;
+
+ELSE
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
+  AND "ABN" = :iv_abn
+;
+END IF;
+
+lt_parameters = 
+SELECT
+:iv_run_mode AS "RUN_MODE",
+:ix_rbc AS "FLAG_RBC",
+:IX_SH AS "FLAG_SH",
+:IX_DR AS "FLAG_DR",
+:IX_CCSH AS "FLAG_CCSH",
+:IX_CCDR AS "FLAG_CCDR"
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
+:lt_workset,
+lt_out_for_rule );
+
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpGroupType"(
+:lt_out_for_rule,
+:lt_parameters,
+et_result,
+et_text );
+ 
+END;

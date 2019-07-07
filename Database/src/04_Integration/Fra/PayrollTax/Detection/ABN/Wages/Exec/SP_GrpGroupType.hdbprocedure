@@ -1,4 +1,4 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpType"( 
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpGroupType"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_grp_type",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
@@ -52,10 +52,10 @@ ON  "DATA"."ABN" = "GRP"."ABN"
 AND "DATA"."GJAHR" = "GRP"."GJAHR"
 AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
 WHERE "GRP"."DR_GROUP_MEM" = :lx_dr
-  AND "GRP"."DR_GROUP_MEM" = :lx_dr
-  AND "GRP"."DR_GROUP_MEM" = :lx_dr
-  AND "GRP"."DR_GROUP_MEM" = :lx_dr
-  AND "GRP"."DR_GROUP_MEM" = :lx_dr
+  AND "GRP"."SH_GROUP_MEM" = :lx_sh
+  AND "GRP"."RBC_GROUP_MEM" = :lx_rbc
+  AND "GRP"."CCDR_GROUP_MEM" = :lx_ccdr
+  AND "GRP"."CCSH_GROUP_MEM" = :lx_ccsh
 ;
 
 et_text =
