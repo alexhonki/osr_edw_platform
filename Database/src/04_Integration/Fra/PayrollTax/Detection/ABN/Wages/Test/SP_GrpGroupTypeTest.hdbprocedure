@@ -7,6 +7,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpTypeTest" (
 	IN ix_dr				NVARCHAR(1),
 	IN ix_ccdr				NVARCHAR(1),
 	IN ix_ccsh				NVARCHAR(1),
+	IN ix_is				NVARCHAR(1),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
@@ -52,7 +53,8 @@ SELECT
 :IX_SH AS "FLAG_SH",
 :IX_DR AS "FLAG_DR",
 :IX_CCSH AS "FLAG_CCSH",
-:IX_CCDR AS "FLAG_CCDR"
+:IX_CCDR AS "FLAG_CCDR",
+:IX_IS   AS "FLAG_IS"
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
