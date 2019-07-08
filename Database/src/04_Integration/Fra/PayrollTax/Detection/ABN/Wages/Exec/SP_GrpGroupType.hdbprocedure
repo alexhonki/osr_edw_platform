@@ -17,6 +17,7 @@ DECLARE lx_sh NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_dr NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ccsh NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ccdr NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_is NVARCHAR(1) DEFAULT 'N';
 
 SELECT
 "RUN_MODE",
@@ -24,14 +25,16 @@ SELECT
 "FLAG_SH",
 "FLAG_DR",
 "FLAG_CCSH",
-"FLAG_CCDR"
+"FLAG_CCDR",
+"FLAG_IS"
 INTO 
 lv_mode,
 lx_rbc,
 lx_sh,
 lx_dr,
 lx_ccsh,
-lx_ccdr
+lx_ccdr,
+lx_is
 FROM :PARAMETERS LIMIT 1;
 
 et_result =
@@ -56,6 +59,7 @@ WHERE "GRP"."DR_GROUP_MEM" = :lx_dr
   AND "GRP"."RBC_GROUP_MEM" = :lx_rbc
   AND "GRP"."CCDR_GROUP_MEM" = :lx_ccdr
   AND "GRP"."CCSH_GROUP_MEM" = :lx_ccsh
+  AND "GRP"."INTERSTATE_GROUP_MEM" = :lx_is
 ;
 
 et_text =
