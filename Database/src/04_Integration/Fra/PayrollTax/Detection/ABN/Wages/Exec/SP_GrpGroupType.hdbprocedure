@@ -54,12 +54,12 @@ INNER JOIN
 ON  "DATA"."ABN" = "GRP"."ABN"
 AND "DATA"."GJAHR" = "GRP"."GJAHR"
 AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
-WHERE "GRP"."DR_GROUP_MEM" = :lx_dr
-  AND "GRP"."SH_GROUP_MEM" = :lx_sh
-  AND "GRP"."RBC_GROUP_MEM" = :lx_rbc
-  AND "GRP"."CCDR_GROUP_MEM" = :lx_ccdr
-  AND "GRP"."CCSH_GROUP_MEM" = :lx_ccsh
-  AND "GRP"."INTERSTATE_GROUP_MEM" = :lx_is
+WHERE (("GRP"."DR_GROUP_MEM" = :lx_dr			AND :lx_dr = 'Y' )		OR :lx_dr = 'N') 
+  AND (("GRP"."SH_GROUP_MEM" = :lx_sh			AND :lx_sh = 'Y' )		OR :lx_sh = 'N')
+  AND (("GRP"."RBC_GROUP_MEM" = :lx_rbc			AND :lx_rbc = 'Y' )		OR :lx_rbc = 'N')
+  AND (("GRP"."CCDR_GROUP_MEM" = :lx_ccdr		AND :lx_ccdr = 'Y' )	OR :lx_ccdr = 'N')
+  AND (("GRP"."CCSH_GROUP_MEM" = :lx_ccsh		AND :lx_ccsh = 'Y' )	OR :lx_ccsh = 'N')
+  AND (("GRP"."INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )		OR :lx_is = 'N')
 ;
 
 et_text =
