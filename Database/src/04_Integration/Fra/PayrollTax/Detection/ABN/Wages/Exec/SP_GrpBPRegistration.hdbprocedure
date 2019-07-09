@@ -17,6 +17,8 @@ DECLARE lx_new_registration NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_registered NVARCHAR(1) DEFAULT 'N';
 DECLARE lv_reinstatement_cnt Integer DEFAULT 0;
 DECLARE lv_new_registration_cnt Integer DEFAULT 0;
+DECLARE lv_registered_cnt Integer DEFAULT 0;
+DECLARE lv_cnt Integer DEFAULT 0;
 
 SELECT
 "RUN_MODE",
@@ -29,6 +31,55 @@ lx_reinstatement,
 lx_new_registration,
 lx_registered
 FROM :PARAMETERS LIMIT 1;
+
+IF lx_registered = 'Y' THEN 
+
+lt_registered_result = 
+SELECT 
+"WS"."ABN" AS "ABN",
+"WS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+"WS"."PERIOD_KEY" AS "PERIOD_KEY",
+"WS"."GJAHR" AS "GJAHR",
+"BP_ABN"."BPARTNER" AS "BPARTNER"
+FROM 
+:it_data_for_rule AS "WS"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"() AS "FY"
+ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
+INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
+ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
+WHERE "BP_ABN"."GRP_STATUS" = 'NG'
+  AND "FY"."END_DATE" >= "BP_ABN"."PRT_LIAB_DATE"
+  AND "FY"."END_DATE" >= "BP_ABN"."VALID_FROM"
+  AND "FY"."END_DATE" <= "BP_ABN"."VALID_TO"
+  AND "WS"."GROUP_ID" <> ''
+;
+
+SELECT COUNT(*) INTO lv_registered_cnt FROM :lt_registered_result;
+
+IF :lv_registered_cnt > 0 THEN 
+lt_registered_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT'       AS "MSGID",
+'023'                   AS "MSGNO",
+"ABN"           		AS "MSGV1",
+LTRIM("BPARTNER")		AS "MSGV2",
+"GJAHR"					AS "MSGV3",
+''                      AS "MSGV4",
+'ABN'              		AS "MSGV1_FC",
+'BPARTNER'  			AS "MSGV2_FC",
+'GJAHR'	                AS "MSGV3_FC",
+''                      AS "MSGV4_FC"
+FROM 
+:lt_registered_result;
+END IF;
+
+END IF;
 
 IF lx_new_registration = 'Y' THEN 
 lt_new_registration_result = 
@@ -62,8 +113,8 @@ SELECT
 ''						AS "MSGV2",
 ''						AS "MSGV3",
 ''                      AS "MSGV4",
-''              		AS "MSGV1_FC",
-''      				AS "MSGV2_FC",
+'ABN'              		AS "MSGV1_FC",
+''			      		AS "MSGV2_FC",
 ''		                AS "MSGV3_FC",
 ''                      AS "MSGV4_FC"
 FROM 
@@ -311,6 +362,107 @@ SELECT
 FROM 
 :lt_new_registration_text
 ;
+
+END IF;
+
+IF :lv_registered_cnt > 0 THEN 
+SELECT COUNT(*) INTO lv_cnt FROM :lt_result;
+
+IF :lv_cnt > 0 THEN
+lt_result =
+SELECT 
+DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_reinstatment_result
+UNION
+SELECT 
+DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result
+;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_registered_text
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:et_text
+;
+
+ELSE
+
+lt_result =
+SELECT 
+DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_reinstatment_result;
+
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_registered_text
+;
+
+END IF;
 
 END IF;
 
