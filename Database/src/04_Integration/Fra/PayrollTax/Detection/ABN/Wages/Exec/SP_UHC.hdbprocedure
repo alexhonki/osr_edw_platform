@@ -19,7 +19,7 @@ SELECT
 "DATA"."GJAHR",
 100 AS "DETECTION_RESULT"
 FROM 
-:it_data_for_rule AS "DATA" 
+:it_data_for_rule AS "DATA" --cj
 INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING"( ) AS "MAP"
 ON  "DATA"."ABN" ="MAP"."ABN" 
