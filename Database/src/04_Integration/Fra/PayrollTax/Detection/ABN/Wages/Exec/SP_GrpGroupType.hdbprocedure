@@ -18,6 +18,7 @@ DECLARE lx_dr NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ccsh NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ccdr NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_is NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_tr NVARCHAR(1) DEFAULT 'N';
 
 SELECT
 "RUN_MODE",
@@ -26,7 +27,8 @@ SELECT
 "FLAG_DR",
 "FLAG_CCSH",
 "FLAG_CCDR",
-"FLAG_IS"
+"FLAG_IS",
+"FLAG_TR"
 INTO 
 lv_mode,
 lx_rbc,
@@ -34,7 +36,8 @@ lx_sh,
 lx_dr,
 lx_ccsh,
 lx_ccdr,
-lx_is
+lx_is,
+lx_tr
 FROM :PARAMETERS LIMIT 1;
 
 et_result =
