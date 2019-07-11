@@ -21,7 +21,7 @@ SELECT
 FROM 
 :it_data_for_rule AS "DATA" 
 INNER JOIN
-"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING"( ) AS "MAP"
+"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING_BY_ATO"( ) AS "MAP"
 ON  "DATA"."ABN" ="MAP"."ABN" 
 AND "DATA"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
 AND "DATA"."PERIOD_KEY" = "MAP"."PERIOD_KEY"
