@@ -102,20 +102,20 @@ context Types {
             THRESHOLD_YEARLY : Decimal(15, 2);
         };
 
-        entity param_bp_reg {
+        table type param_bp_reg {
             RUN_MODE              : String(1);
             FLAG_REINSTATEMENT    : String(1);
             FLAG_NEW_REGISTRATION : String(1);
         };
 
-        entity param_grp_bp_reg {
+        table type param_grp_bp_reg {
             RUN_MODE              : String(1);
             FLAG_REINSTATEMENT    : String(1);
             FLAG_NEW_REGISTRATION : String(1);
             FLAG_REGISTERED       : String(1);
         };
 
-        entity param_bp_reg_u {
+        table type param_bp_reg_u {
             RUN_MODE              : String(1);
             SCENARIO              : String(10);
             FLAG_REINSTATEMENT    : String(1);
