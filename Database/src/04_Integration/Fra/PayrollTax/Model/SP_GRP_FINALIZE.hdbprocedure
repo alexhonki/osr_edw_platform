@@ -125,7 +125,11 @@ DISTINCT
  "L"."ORG_ID" AS "ORG_ID", 
  "L"."GROUP_ID" AS "GROUP_ID",
  RIGHT("L"."ORG_ID",9) AS "ACN",
- "MAP"."ABN" AS "ABN",
+ CASE 
+ WHEN "MAP"."ABN" IS NULL 
+ THEN '' 
+ ELSE "MAP"."ABN"
+ END AS "ABN",
  "R"."DR_GROUP_MEM",
  "R"."SH_GROUP_MEM",
  "R"."INTERSTATE_GROUP_MEM",
@@ -142,7 +146,7 @@ DISTINCT
  ON  "L"."GJAHR" = "R"."GJAHR"
  AND "L"."GRP_DATE" = "R"."GRP_DATE"
  AND "L"."ORG_ID" = "R"."ORG_ID"
- INNER JOIN 
+ LEFT OUTER JOIN
  "osr.edw.platform.fra.prt.model::TF_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
  ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
  ;
