@@ -146,14 +146,16 @@ ON
 
 -------------------------------------------------------------
 ------------------------- ASIC Org Status -------------------
-ASIC_STATUS = 
 
-SELECT DISTINCT "ABN", "ORG_STATUS" FROM
+--------6Monthly file------
+ASIC_6MONTHLY =
+
+SELECT DISTINCT "ABN", "ORG_STATUS", '2' AS "RANK_2" FROM
 (
 SELECT
 	 "ASIC"."ABN",
 	"ASIC"."DEREGISTRATION_CODE",
-	"ASIC"."ORG_NUMBER",
+	"ASIC"."ORG_NUMBER" ,
 	"ASIC"."ORG_CLASS",
 	"ASIC"."ORG_END_DT",
 	"ASIC"."ORG_START_DT",
@@ -166,7 +168,41 @@ FROM
 WHERE  
 	"ASIC"."ABN" = "DET_ABN"."ABN"
 ) WHERE "RANK_1" = '1'
+;
 
+-- Monhtly Status---
+ASIC_MONTHLY =
+SELECT "ABN", "ORG_STATUS", 	'1' AS "RANK_2" FROM
+(
+SELECT 
+	"ASIC"."ABN",
+	"ASIC"."ACN",
+	"ASIC"."ORG_STATUS"
+FROM "osr.edw.staging.md.asic.synonym::CDS_ASIC.DSO.COMPANY_REGISTER.active_data" AS "ASIC",
+	:LT_WORKSET  AS "DET_ABN"
+WHERE  
+	"ASIC"."ABN" = "DET_ABN"."ABN"
+)
+;
+
+---Giving priorty to monthly file and then to 6 monthly file
+ASIC_STATUS =
+SELECT * FROM
+(
+SELECT 
+	"ABN",
+	"ORG_STATUS",
+	RANK() OVER (PARTITION BY "ABN" ORDER BY "ABN", "RANK_2" ASC) AS "RANK_1"
+FROM	
+(
+	SELECT * FROM :ASIC_6MONTHLY
+	UNION
+	SELECT * FROM :ASIC_MONTHLY
+	
+)	
+ORDER BY "ABN"
+)
+WHERE "RANK_1" = '1'
 ;
 -------------------------------------------------------------
 -----------------Exempt Industry Codes-----------------------
