@@ -21,7 +21,8 @@ DECLARE lv_param6 NVARCHAR(60);
 DECLARE lv_param_str NVARCHAR(360);
 DECLARE lv_mode NVARCHAR(1);  
 DECLARE lv_scenario NVARCHAR(20);
-DECLARE lv_thld_yearly Decimal(15,2) ;
+DECLARE lv_thld_yearly Decimal(15,2);
+DECLARE lx_exclusion NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
@@ -69,6 +70,12 @@ CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	IV_STR => :lv_param_str,
+	IV_PARAM => 'FLAG_EXCLUSION',
+	EV_PARAM_VALUE => lx_exclusion
+);
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
+	IV_STR => :lv_param_str,
 	IV_PARAM => 'FLAG_ATO',
 	EV_PARAM_VALUE => lx_ato
 );
@@ -90,6 +97,7 @@ CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GetParameterValue"(
 	:lv_mode AS "RUN_MODE",
 	:lv_scenario AS "SCENARIO",
 	:lv_thld_yearly AS "THRESHOLD_YEARLY",
+	:lx_exclusion AS "FLAG_EXCLUSION",
 	:lx_ato AS "FLAG_ATO",
 	:lx_wcq AS "FLAG_WCQ",
 	:lx_interstate AS "FLAG_INTERSTATE"

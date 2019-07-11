@@ -14,6 +14,7 @@ DECLARE lv_mode NVARCHAR(1);
 
 DECLARE lv_gjahr NVARCHAR(4);
 DECLARE lv_thld_yearly Decimal(15,2) ;
+DECLARE lx_exclusion NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
@@ -22,18 +23,23 @@ DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
 SELECT 
 "RUN_MODE",
 "THRESHOLD_YEARLY",
+"FLAG_EXCLUSION",
 "FLAG_ATO",
 "FLAG_WCQ",
 "FLAG_INTERSTATE"
 INTO 
 lv_mode,
 lv_thld_yearly,
+lx_exclusion,
 lx_ato,
 lx_wcq,
 lx_interstate
 FROM :PARAMETERS LIMIT 1;
 
+IF :lx_exclusion = 'Y' THEN
 SELECT TOP 1 "GJAHR" INTO LV_GJAHR FROM :it_data_for_rule;
+
+lt_gjahr = SELECT DISTINCT "GJAHR"  FROM :it_data_for_rule;
 
 lt_data_for_rule = 
 SELECT *
@@ -44,7 +50,18 @@ WHERE EXISTS (
 	WHERE "DATA"."GROUP_ID" = "EXCLUSION"."GROUP_ID"
 	  AND  "DATA"."ABN" = "EXCLUSION"."ABN"
 )
+AND "GROUP_ID" <> ''
 ;
+
+ELSE
+
+lt_data_for_rule = 
+SELECT *
+FROM :it_data_for_rule AS "DATA"
+WHERE "GROUP_ID" <> ''
+;
+
+END IF;
 
 lt_wages = 
 SELECT

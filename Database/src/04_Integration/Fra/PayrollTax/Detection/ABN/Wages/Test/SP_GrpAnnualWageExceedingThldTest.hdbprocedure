@@ -3,6 +3,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpAnnualWageExceeding
 	IN iv_gjahr				NVARCHAR(4),
 	IN lv_run_mode			NVARCHAR(1),
 	IN lv_thld_yearly		Decimal(15,2),
+	in lx_exclusion			NVARCHAR(1),
 	IN lx_ato				NVARCHAR(1),
 	IN lx_wcq				NVARCHAR(1),
 	IN lx_interstate		NVARCHAR(1),
@@ -35,6 +36,7 @@ SELECT
 TOP 1
 :lv_run_mode    AS "RUN_MODE",
 :lv_thld_yearly AS "THRESHOLD_YEARLY",
+:lx_exclusion	AS "FLAG_EXCLUSION",
 :lx_ato 		AS "FLAG_ATO",
 :lx_wcq			AS "FLAG_WCQ",
 :lx_interstate	AS "FLAG_INTERSTATE" 
