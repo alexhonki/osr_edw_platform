@@ -31,7 +31,7 @@ BEGIN
    AND "WS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
    AND "WS"."GJAHR" = "WAGES"."GJAHR"
    INNER JOIN
-   "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING"() AS "MAP"
+   "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING_BY_ATO"() AS "MAP"
    ON  "WS"."ABN" = "MAP"."ABN"
    AND "WS"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
    AND "WS"."PERIOD_KEY" = "MAP"."PERIOD_KEY"

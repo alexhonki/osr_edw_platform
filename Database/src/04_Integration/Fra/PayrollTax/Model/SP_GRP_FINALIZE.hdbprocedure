@@ -147,7 +147,7 @@ DISTINCT
  AND "L"."GRP_DATE" = "R"."GRP_DATE"
  AND "L"."ORG_ID" = "R"."ORG_ID"
  LEFT OUTER JOIN
- "osr.edw.platform.fra.prt.model::TF_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
+ "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING_BY_ABR"(:IV_GRP_DATE) AS "MAP"
  ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
  ;
 
