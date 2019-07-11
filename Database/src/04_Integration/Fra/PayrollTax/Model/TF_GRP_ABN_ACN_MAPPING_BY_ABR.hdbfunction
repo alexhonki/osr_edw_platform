@@ -1,0 +1,39 @@
+FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING_BY_ABR"(IN IV_GRP_DATE DATE )
+RETURNS TABLE (
+	GRP_DATE		DATE,
+	ACN 			NVARCHAR(9),
+	ABN 			NVARCHAR(11)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+/*
+ABN ACN mapping for grouping model is taken from the ABR organisation
+*/
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+	RETURN
+	SELECT
+	:LV_GRP_DATE AS "GRP_DATE",
+	"ACN",
+	"ABN"
+	FROM "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()
+	WHERE "ABN_REGN_DT"  <= :LV_GRP_DATE
+	  AND "ABN_CANCN_DT" >= :LV_GRP_DATE
+	  AND "SPRSN_IND" <> 'Y'
+	  AND "ACN" <> '';
+	
+END;

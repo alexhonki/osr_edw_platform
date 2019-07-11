@@ -354,7 +354,7 @@ SELECT
 "GRP_RESULT"."RISK_AMOUNT" AS "RISK_AMOUNT",
 "GRP_RESULT"."CURRENCY" AS "CURRENCY"
 FROM
-"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING"() AS "MAP"
+"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING_BY_ATO"() AS "MAP"
 INNER JOIN
 "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
 ON	"MAP"."ACN" = "GRP"."ACN"
