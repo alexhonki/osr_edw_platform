@@ -10,10 +10,18 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpAnnualWageExceedingTh
    READS SQL DATA AS
 BEGIN
 
-DECLARE lv_mode NVARCHAR(1);  
+DECLARE CURSOR C_GJAHR FOR 
+	 SELECT DISTINCT "GJAHR"  FROM :it_data_for_rule;
+	
+	
 
+DECLARE lv_cnt integer;
+
+
+DECLARE lv_mode NVARCHAR(1);  
 DECLARE lv_gjahr NVARCHAR(4);
 DECLARE lv_thld_yearly Decimal(15,2) ;
+DECLARE lx_exclusion NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_ato NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_wcq NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
@@ -22,21 +30,62 @@ DECLARE lx_interstate NVARCHAR(1) DEFAULT 'N';
 SELECT 
 "RUN_MODE",
 "THRESHOLD_YEARLY",
+"FLAG_EXCLUSION",
 "FLAG_ATO",
 "FLAG_WCQ",
 "FLAG_INTERSTATE"
 INTO 
 lv_mode,
 lv_thld_yearly,
+lx_exclusion,
 lx_ato,
 lx_wcq,
 lx_interstate
 FROM :PARAMETERS LIMIT 1;
 
-SELECT TOP 1 "GJAHR" INTO LV_GJAHR FROM :it_data_for_rule;
+IF :LX_EXCLUSION = 'Y' THEN 
+lt_data_for_rule = 
+   SELECT
+   'DUMMY' AS "ABN",
+   '' AS "PERIOD_CATEGORY",
+   '' AS "PERIOD_KEY",
+   '' AS "GJAHR",
+   0 AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+   0 AS "ATO_ITR_SALARY_WAGES",
+   0 AS "WCQ_ACT_WAGES",
+   TO_NVARCHAR('AUD') AS "WAERS",
+   'DUMMY' AS "GROUP_ID"
+   FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+
+	
+FOR C_ROW AS C_GJAHR DO
+
+LV_GJAHR := C_ROW.GJAHR;
 
 lt_data_for_rule = 
-SELECT *
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+"ATO_ITR_SALARY_WAGES",
+"WCQ_ACT_WAGES",
+"WAERS",
+"GROUP_ID"
+FROM :lt_data_for_rule
+UNION
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+"ATO_ITR_SALARY_WAGES",
+"WCQ_ACT_WAGES",
+"WAERS",
+"GROUP_ID"
 FROM :it_data_for_rule AS "DATA"
 WHERE EXISTS (
 	SELECT * FROM 
@@ -44,7 +93,44 @@ WHERE EXISTS (
 	WHERE "DATA"."GROUP_ID" = "EXCLUSION"."GROUP_ID"
 	  AND  "DATA"."ABN" = "EXCLUSION"."ABN"
 )
+AND "DATA"."GROUP_ID" <> ''
 ;
+
+END FOR;
+
+lt_data_for_rule = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+"ATO_ITR_SALARY_WAGES",
+"WCQ_ACT_WAGES",
+"WAERS",
+"GROUP_ID"
+FROM :lt_data_for_rule
+WHERE "GROUP_ID" <> 'DUMMY';
+
+ELSE
+lt_data_for_rule = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
+"ATO_ITR_SALARY_WAGES",
+"WCQ_ACT_WAGES",
+"WAERS",
+"GROUP_ID"
+FROM :it_data_for_rule
+WHERE "GROUP_ID" <> ''
+;
+
+END IF;
+
+
 
 lt_wages = 
 SELECT

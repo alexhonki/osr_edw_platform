@@ -61,13 +61,7 @@ context Types {
             RUN_MODE         : String(1);
             SCENARIO         : String(10);
             THRESHOLD_YEARLY : Decimal(15, 2);
-            FLAG_ATO         : String(1);
-            FLAG_WCQ         : String(1);
-            FLAG_INTERSTATE  : String(1);
-        };
-        table type param_grp_exceeding {
-            RUN_MODE         : String(1);
-            THRESHOLD_YEARLY : Decimal(15, 2);
+            FLAG_EXCLUSION   : String(1);
             FLAG_ATO         : String(1);
             FLAG_WCQ         : String(1);
             FLAG_INTERSTATE  : String(1);
@@ -88,6 +82,14 @@ context Types {
             FLAG_ATO         : String(1);
             FLAG_WCQ         : String(1);
         };
+        table type param_grp_exceeding {
+            RUN_MODE         : String(1);
+            THRESHOLD_YEARLY : Decimal(15, 2);
+            FLAG_EXCLUSION   : String(1);
+            FLAG_ATO         : String(1);
+            FLAG_WCQ         : String(1);
+            FLAG_INTERSTATE  : String(1);
+        };
         table type param_approaching {
             RUN_MODE          : String(1);
             ATO_BAS_WAGE_LOW  : Decimal(15, 2);
@@ -101,20 +103,17 @@ context Types {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);
         };
-
         table type param_bp_reg {
             RUN_MODE              : String(1);
             FLAG_REINSTATEMENT    : String(1);
             FLAG_NEW_REGISTRATION : String(1);
         };
-
         table type param_grp_bp_reg {
             RUN_MODE              : String(1);
             FLAG_REINSTATEMENT    : String(1);
             FLAG_NEW_REGISTRATION : String(1);
             FLAG_REGISTERED       : String(1);
         };
-
         table type param_bp_reg_u {
             RUN_MODE              : String(1);
             SCENARIO              : String(10);
@@ -122,7 +121,6 @@ context Types {
             FLAG_NEW_REGISTRATION : String(1);
             FLAG_REGISTERED       : String(1);
         };
-
         table type param_qld_nexus {
             RUN_MODE              : String(1);
             GJAHR_ADJUSTMENT      : String(4);
