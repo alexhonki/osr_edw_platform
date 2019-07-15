@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING_BY_ABR"(IN IV_GRP_DATE DATE )
+FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(IN IV_GRP_DATE DATE )
 RETURNS TABLE (
 	GRP_DATE		DATE,
 	ACN 			NVARCHAR(9),
@@ -9,7 +9,7 @@ SQL SECURITY INVOKER AS
 BEGIN 
 
 /*
-ABN ACN mapping for grouping model is taken from the ABR organisation
+ABN ACN mapping for grouping model is taken from the ABR agency and ASIC organisation
 */
 
 DECLARE LV_GJAHR NVARCHAR(4);
@@ -26,14 +26,23 @@ SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJA
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 	RETURN
-	SELECT
-	:LV_GRP_DATE AS "GRP_DATE",
+	SELECT DISTINCT 
+	"GRP_DATE",
 	"ACN",
 	"ABN"
-	FROM "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()
-	WHERE "ABN_REGN_DT"  <= :LV_GRP_DATE
-	  AND "ABN_CANCN_DT" >= :LV_GRP_DATE
-	  AND "SPRSN_IND" <> 'Y'
-	  AND "ACN" <> '';
+	FROM (
+	SELECT
+	"KEY_DATE" AS "GRP_DATE",
+	"ACN",
+	"ABN"
+	FROM "osr.edw.staging.md.abr.proxy::TF_ABN_ACN_MAPPING"(:LV_GRP_DATE)
+	UNION
+	SELECT
+	"KEY_DATE" AS "GRP_DATE",
+	"ACN",
+	"ABN"
+	FROM "osr.edw.staging.md.asic.proxy::TF_ABN_ACN_MAPPING"(:LV_GRP_DATE)
+	)
+	;
 	
 END;
