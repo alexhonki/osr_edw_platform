@@ -34,6 +34,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	WHERE "ABN_REGN_DT"  <= :LV_KEY_DATE
 	  AND "ABN_CANCN_DT" >= :LV_KEY_DATE
 	  AND "SPRSN_IND" <> 'Y'
-	  AND "ACN" <> '';
+	  AND "ACN" <> ''
+	  AND "ACN" <> '000000000';
 	
 END;
