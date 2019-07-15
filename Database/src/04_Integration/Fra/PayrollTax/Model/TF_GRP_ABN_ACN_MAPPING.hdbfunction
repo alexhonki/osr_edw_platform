@@ -36,21 +36,23 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	"GRP_DATE",
 	"ACN",
 	"ABN",
-	RANK() OVER (PARTITION BY "GRP_DATE","ACN" ORDER BY "PREFERENCE_RANK" ASC) AS "RANK"
+	RANK() OVER (PARTITION BY "GRP_DATE","ACN" ORDER BY "PREFERENCE_RANK", "SEQ_NO" ASC) AS "RANK"
 	FROM (
 	SELECT
+	"SEQ_NO",
 	"KEY_DATE" AS "GRP_DATE",
 	"ACN",
 	"ABN",
 	1 AS "PREFERENCE_RANK"
-	FROM "osr.edw.staging.md.abr.proxy::TF_ABN_ACN_MAPPING"(:LV_GRP_DATE)
+	FROM "osr.edw.staging.md.abr.proxy::TF_GET_ABN_BY_ACN"(:LV_GRP_DATE)
 	UNION
 	SELECT
+	"SEQ_NO",
 	"KEY_DATE" AS "GRP_DATE",
 	"ACN",
 	"ABN",
 	2 AS "PREFERENCE_RANK"
-	FROM "osr.edw.staging.md.asic.proxy::TF_ABN_ACN_MAPPING"(:LV_GRP_DATE)
+	FROM "osr.edw.staging.md.asic.proxy::TF_GET_ABN_BY_ACN"(:LV_GRP_DATE)
 	)
 	)
 	WHERE "RANK" = 1
