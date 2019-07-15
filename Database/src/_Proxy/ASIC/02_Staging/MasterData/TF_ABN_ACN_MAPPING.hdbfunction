@@ -9,7 +9,7 @@ SQL SECURITY INVOKER AS
 BEGIN 
 
 /*
-ABN ACN mapping for grouping model is taken from the ABR organisation
+ABN ACN mapping is taken from the ASIC organisation
 */
 
 DECLARE LV_GJAHR NVARCHAR(4);
@@ -33,6 +33,8 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	FROM "osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C"()
 	WHERE "REGN_START_DT"  <= :LV_KEY_DATE
 	  AND "REGN_END_DT" >= :LV_KEY_DATE
+	  AND "ORG_START_DT"  <= :LV_KEY_DATE
+	  AND "ORG_END_DT" >= :LV_KEY_DATE
 	  AND "ABN" <> ''
 	  AND "ABN" <> '00000000000';
 	  
