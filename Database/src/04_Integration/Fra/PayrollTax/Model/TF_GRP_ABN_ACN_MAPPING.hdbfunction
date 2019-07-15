@@ -26,23 +26,34 @@ SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJA
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 	RETURN
-	SELECT DISTINCT 
+	SELECT
 	"GRP_DATE",
 	"ACN",
 	"ABN"
+	FROM 
+	(
+	SELECT 
+	"GRP_DATE",
+	"ACN",
+	"ABN",
+	RANK() OVER (PARTITION BY "GRP_DATE","ACN" ORDER BY "PREFERENCE_RANK" ASC) AS "RANK"
 	FROM (
 	SELECT
 	"KEY_DATE" AS "GRP_DATE",
 	"ACN",
-	"ABN"
+	"ABN",
+	1 AS "PREFERENCE_RANK"
 	FROM "osr.edw.staging.md.abr.proxy::TF_ABN_ACN_MAPPING"(:LV_GRP_DATE)
 	UNION
 	SELECT
 	"KEY_DATE" AS "GRP_DATE",
 	"ACN",
-	"ABN"
+	"ABN",
+	2 AS "PREFERENCE_RANK"
 	FROM "osr.edw.staging.md.asic.proxy::TF_ABN_ACN_MAPPING"(:LV_GRP_DATE)
 	)
+	)
+	WHERE "RANK" = 1
 	;
 	
 END;
