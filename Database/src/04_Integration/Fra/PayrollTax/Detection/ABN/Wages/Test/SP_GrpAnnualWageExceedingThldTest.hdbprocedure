@@ -42,7 +42,7 @@ TOP 1
 :lx_interstate	AS "FLAG_INTERSTATE" 
 FROM  :lt_workset;
 
-CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectGrpWages"(
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
 :lt_workset,
 lt_out_for_rule );
 
