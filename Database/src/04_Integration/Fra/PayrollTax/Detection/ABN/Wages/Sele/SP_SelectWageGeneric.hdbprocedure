@@ -9,6 +9,7 @@ BEGIN
 
    et_data_for_rule =
    SELECT
+   DISTINCT
    "WS"."ABN",
    "WS"."PERIOD_CATEGORY",
    "WS"."PERIOD_KEY",
@@ -27,16 +28,16 @@ BEGIN
    END AS "GROUP_ID"
    FROM 
    :it_workset AS "WS"
-   LEFT OUTER JOIN
-   "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
-   ON "WS"."ABN" = "GRP"."ABN"
-   AND "WS"."GJAHR" = "GRP"."GJAHR"
-   LEFT OUTER JOIN
+   INNER JOIN
    "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) AS "WAGES"
    ON  "WS"."ABN" = "WAGES"."ABN"
    AND "WS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
    AND "WS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
    AND "WS"."GJAHR" = "WAGES"."GJAHR"
+   LEFT OUTER JOIN
+   "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
+   ON "WS"."ABN" = "GRP"."ABN"
+   AND "WS"."GJAHR" = "GRP"."GJAHR"
    ;
    
 END
