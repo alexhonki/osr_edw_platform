@@ -34,7 +34,7 @@ SELECT
 "WAGES"."GJAHR" AS "GJAHR",
 "WAGES"."WAERS" AS "WAERS",
 SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
-FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
+FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ATO_BAS_WAGES"() AS "WAGES"
 WHERE "PERIOD_CATEGORY" = 'PT-A'
   AND EXISTS (
 	SELECT * FROM :it_data_for_rule AS "KEYS"

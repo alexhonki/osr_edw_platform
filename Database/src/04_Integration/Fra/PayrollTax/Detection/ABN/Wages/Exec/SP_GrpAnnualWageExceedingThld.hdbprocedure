@@ -168,7 +168,7 @@ FROM :lt_data_for_rule
  	"KEYS"."GJAHR" AS "GJAHR",
  	"WAGES"."WAERS" AS "WAERS",
  	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ATO_BAS_WAGES"() AS "WAGES"
  	INNER JOIN
  	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
@@ -191,7 +191,7 @@ FROM :lt_data_for_rule
  	"KEYS"."GJAHR" AS "GJAHR",
  	"WAGES"."WAERS" AS "WAERS",
  	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "WAGE"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES" AS "WAGES"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ATO_ITR_WAGES"() AS "WAGES"
  	INNER JOIN
  	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
@@ -220,7 +220,7 @@ FROM :lt_data_for_rule
  	"KEYS"."GJAHR" AS "GJAHR",
  	"WAGES"."WAERS" AS "WAERS",
  	SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WAGES"
  	INNER JOIN
  	:lt_data_for_rule AS "KEYS"
  	ON "KEYS"."ABN" = "WAGES"."ABN"
