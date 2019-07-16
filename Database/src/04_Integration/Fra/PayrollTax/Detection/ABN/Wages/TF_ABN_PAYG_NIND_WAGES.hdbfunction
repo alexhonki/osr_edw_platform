@@ -27,6 +27,7 @@ SELECT
 	"TOTL_ALWNC_AMT",
 	"PMT_SMRY_CNT"
 FROM "osr.edw.staging.td.ato.proxy::TF_PAYG_NIND_C"()
+WHERE "ABN" <> 'no ABN'
 ;
 
 

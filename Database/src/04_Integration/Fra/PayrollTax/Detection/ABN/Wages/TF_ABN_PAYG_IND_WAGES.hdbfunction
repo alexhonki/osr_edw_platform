@@ -35,6 +35,7 @@ SELECT
 	"LSPE_AMT",
 	"RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"
 FROM "osr.edw.staging.td.ato.proxy::TF_PAYG_IND_C"()
+WHERE "ABN" <> 'no ABN'
 ;
 
 

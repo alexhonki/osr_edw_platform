@@ -156,7 +156,7 @@ SELECT
 	"ASIC"."ORG_STATUS",
 	RANK() OVER (PARTITION BY "ASIC"."ABN" ORDER BY "ASIC"."ABN", "ASIC"."ORG_END_DT" DESC, "ASIC"."ORG_START_DT" DESC) AS "RANK_1"
 FROM 
-	"osr.edw.staging.md.asic.proxy::CV_ORGANISATION_C" AS "ASIC",
+	"osr.edw.staging.md.asic.proxy::TF_ORGANISATION_C"() AS "ASIC",
 	:GRP_DATA  AS "GRP_DATA"
 WHERE  
 	"ASIC"."ABN" = "GRP_DATA"."ABN"
