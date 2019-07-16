@@ -21,7 +21,8 @@ BEGIN
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
 		"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ATO_ITR"
-	WHERE "ABN" <> 'no ABN'
+	WHERE "ABN" <> 'no ABN' 
+	  AND "ABN" <> 'invalid ABN'
 	;
 
 END;
