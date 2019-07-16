@@ -40,6 +40,7 @@ FROM
 	:it_data_for_rule
 WHERE 
 	"GROUP_ID" <> ''
+AND "PERIOD_CATEGORY" = 'PT-A'	
 ;
 
 lt_wages1 = 
@@ -76,6 +77,7 @@ FROM
    ON "MAP"."ACN" = "GRP"."ACN"
    AND "MAP"."GJAHR" = "GRP"."GJAHR"
    WHERE  "GRP"."GROUP_ID" IN (SELECT DISTINCT "GROUP_ID" FROM :lt_data1 )
+   AND    "WS"."PERIOD_CATEGORY"  = 'PT-A'
 ) 
 ;
 
