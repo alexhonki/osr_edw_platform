@@ -23,6 +23,8 @@ BEGIN
 		'AUD  '                                                                                         AS  "WAERS"
 	FROM 
 		"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ATO_BAS"
-	WHERE "ATO_BAS"."ABN" <> 'no ABN';
+	WHERE "ABN" <> 'no ABN' 
+	  AND "ABN" <> 'invalid ABN'
+	;
 
 END;
