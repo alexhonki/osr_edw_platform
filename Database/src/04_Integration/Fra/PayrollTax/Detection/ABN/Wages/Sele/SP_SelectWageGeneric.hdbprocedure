@@ -27,16 +27,10 @@ BEGIN
    END AS "GROUP_ID"
    FROM 
    :it_workset AS "WS"
-   INNER JOIN
-   "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING_BY_ATO"() AS "MAP"
-   ON  "WS"."ABN" = "MAP"."ABN"
-   AND "WS"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
-   AND "WS"."PERIOD_KEY" = "MAP"."PERIOD_KEY"
-   AND "WS"."GJAHR" = "MAP"."GJAHR"
    LEFT OUTER JOIN
    "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
-   ON "MAP"."ACN" = "GRP"."ACN"
-   AND "MAP"."GJAHR" = "GRP"."GJAHR"
+   ON "WS"."ABN" = "GRP"."ABN"
+   AND "WS"."GJAHR" = "GRP"."GJAHR"
    LEFT OUTER JOIN
    "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) AS "WAGES"
    ON  "WS"."ABN" = "WAGES"."ABN"
