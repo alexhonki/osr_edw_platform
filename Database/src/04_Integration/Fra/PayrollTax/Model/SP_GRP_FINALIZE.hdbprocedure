@@ -1,6 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_FINALIZE"(
 	IN	IV_GRP_DATE 			DATE ,
-	OUT ET_GROUP_SUMMARY		"osr.edw.platform.fra.prt.model::Types.GroupSummaryT"
+	OUT ET_GROUP_SUMMARY		"osr.edw.platform.fra.prt.model::Types.GroupSummaryT",
+	OUT ET_GROUP_ID			    "osr.edw.platform.fra.prt.model::Types.GroupIDT"
 	)
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -110,12 +111,61 @@ WHERE "GROUP_TYPE" = 'SH'
 lt_group = 
 SELECT 
 "GJAHR",
-"GRP_DATE",
+TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
 "ELEMENT" AS "ORG_ID", 
-"PARENT_ELEMENT" AS "GROUP_ID"
+"PARENT_ELEMENT" AS "GROUP_ID_DS"
 FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
 WHERE LEFT("ELEMENT",1) = 'O'
+  AND "GRP_DATE" = :LV_GRP_DATE
 ;
+
+lt_group_id =
+SELECT
+"GJAHR",
+"GRP_DATE",
+CAST(HASH_MD5(TO_BINARY("GROUP_DESCR")) AS NVARCHAR) AS "GROUP_ID", 
+"GROUP_DESCR",
+"GROUP_ID_DS"
+FROM (
+SELECT 
+"GJAHR",
+"GRP_DATE",
+"GROUP_ID_DS",
+STRING_AGG("ORG_ID", '|' ORDER BY "ORG_ID" ASC) AS "GROUP_DESCR"
+FROM
+:lt_group
+GROUP BY 
+"GJAHR",
+"GRP_DATE",
+"GROUP_ID_DS"
+)
+;
+
+et_group_id = 
+SELECT 
+"GJAHR",
+"GRP_DATE",
+"GROUP_ID", 
+"GROUP_DESCR"
+FROM :lt_group_id
+;
+
+
+lt_group_w_group_id = 
+SELECT 
+"GROUP"."GJAHR" AS "GJAHR",
+"GROUP"."GRP_DATE" AS "GRP_DATE",
+"GROUP"."ORG_ID" AS "ORG_ID",
+"GROUP_ID"."GROUP_ID" AS "GROUP_ID"
+FROM 
+:lt_group AS "GROUP"
+INNER JOIN 
+:lt_group_id AS "GROUP_ID"
+ON  "GROUP"."GJAHR" = "GROUP_ID"."GJAHR"
+AND "GROUP"."GRP_DATE" = "GROUP_ID"."GRP_DATE"
+AND "GROUP"."GROUP_ID_DS" = "GROUP_ID"."GROUP_ID_DS"
+;
+
 
 ET_GROUP_SUMMARY = 
 SELECT 
@@ -140,7 +190,7 @@ DISTINCT
  "R"."RBC_GROUP_MEM",
 'N' AS "MEM_REL_BODY_CORP"
  FROM 
-:lt_group  AS "L"
+:lt_group_w_group_id  AS "L"
  INNER JOIN
  :lt_org_detail AS "R"
  ON  "L"."GJAHR" = "R"."GJAHR"
