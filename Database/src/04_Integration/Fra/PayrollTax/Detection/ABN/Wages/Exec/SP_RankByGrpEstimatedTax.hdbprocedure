@@ -28,8 +28,7 @@ lv_mode,
 lv_thld_yearly
 FROM :PARAMETERS LIMIT 1;
 
-
-lt_data1 = 
+lt_data = 
 SELECT DISTINCT
 	"ABN",
 	"PERIOD_CATEGORY",
@@ -43,42 +42,19 @@ WHERE
 AND "PERIOD_CATEGORY" = 'PT-A'	
 ;
 
+/*
 lt_wages1 = 
 SELECT DISTINCT
 	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
+	'PT-A'	AS "PERIOD_CATEGORY", -- Can join with the lt_data1 to get Period Cat.
+	"GJAHR" AS "PERIOD_KEY",      -- Can join with the lt_data1 to get Period Key.
+	"GJAHR" AS "GJAHR",
 	"GROUP_ID",
 	TO_NVARCHAR('AUD  ') AS "WAERS",
 	0 AS "WAGE"
 FROM 
-(
-   SELECT
-   "WS"."ABN",
-   "WS"."PERIOD_CATEGORY",
-   "WS"."PERIOD_KEY",
-   "WS"."GJAHR",
-   CASE 
-   WHEN "GRP"."GROUP_ID" IS NULL 
-   THEN ''
-   ELSE "GRP"."GROUP_ID" 
-   END AS "GROUP_ID"
-   FROM 
-   "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS" AS "WS"
-    INNER JOIN
-   "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ACN_MAPPING_BY_ATO"() AS "MAP"
-   ON  "WS"."ABN" = "MAP"."ABN"
-   AND "WS"."PERIOD_CATEGORY" = "MAP"."PERIOD_CATEGORY"
-   AND "WS"."PERIOD_KEY" = "MAP"."PERIOD_KEY"
-   AND "WS"."GJAHR" = "MAP"."GJAHR"
-   LEFT OUTER JOIN
-   "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
-   ON "MAP"."ACN" = "GRP"."ACN"
-   AND "MAP"."GJAHR" = "GRP"."GJAHR"
-   WHERE  "GRP"."GROUP_ID" IN (SELECT DISTINCT "GROUP_ID" FROM :lt_data1 )
-   AND    "WS"."PERIOD_CATEGORY"  = 'PT-A'
-) 
+	"osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"()
+WHERE 		"GROUP_ID" IN (SELECT DISTINCT 	"GROUP_ID" FROM :lt_data1)
 ;
 
 lt_data = 
@@ -90,186 +66,109 @@ SELECT DISTINCT
 	"GROUP_ID"
 FROM 
 :lt_wages1 ;
+*/
 
-lt_wages = 
-SELECT DISTINCT
+----------------ATO BAS------------
+ATO_BAS =
+
+SELECT
+	"WAGES"."ABN"                         AS "ABN",
+	TO_NVARCHAR("WAGES"."FINANCIAL_YEAR") AS "GJAHR",
+	TO_NVARCHAR('AUD')				  	  AS "WAERS",
+	SUM("WAGES"."TOTL_PMT_FOR_WRK_AMT")	  AS "WAGE"
+FROM 	
+	"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "WAGES"
+WHERE    "WAGES"."BAS_QTR" = 'FY'
+AND EXISTS
+			(
+			SELECT * FROM :lt_data AS "KEYS"
+			WHERE "KEYS"."ABN"   = "WAGES"."ABN"
+			AND  "KEYS"."GJAHR"  = TO_NVARCHAR("WAGES"."FINANCIAL_YEAR")
+			)
+GROUP BY "WAGES"."ABN","WAGES"."FINANCIAL_YEAR"
+;
+-----------ITR--------------------
+ATO_ITR =
+SELECT
+	"WAGES"."ABN"                         AS "ABN",
+	TO_NVARCHAR("WAGES"."INCM_YR")		  AS "GJAHR",
+	TO_NVARCHAR('AUD')				  	  AS "WAERS",
+	SUM("WAGES"."SALARY_WAGES") + SUM("WAGES"."SUPER_EXPNS")  AS "WAGE"
+FROM 	
+	"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "WAGES"
+WHERE  EXISTS
+			(
+			SELECT * FROM :lt_data AS "KEYS"
+				WHERE "KEYS"."ABN" = "WAGES"."ABN"
+				  AND "KEYS"."GJAHR" = TO_NVARCHAR("WAGES"."INCM_YR") 
+	
+			)
+GROUP BY "WAGES"."ABN","WAGES"."INCM_YR"
+;
+
+------WCQ-----------
+QLD_WCQ = 
+
+SELECT 
 	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
 	"GJAHR",
---	"GROUP_ID",
-	TO_NVARCHAR('AUD  ') AS "WAERS",
-	0 AS "WAGE"
-FROM 
-:lt_wages1 ;
--- ATO BAS Data   	
-
- 	lt_wages = 
- 	SELECT 
- 	"ABN",
- 	"PERIOD_CATEGORY",
- 	"PERIOD_KEY",
- 	"GJAHR",
- 	"WAERS",
- 	"WAGE"
- 	FROM :lt_wages
- 	UNION
- 	SELECT 
- 	"WAGES"."ABN" AS "ABN",
- 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
- 	"WAGES"."GJAHR" AS "GJAHR",
- 	"WAGES"."WAERS" AS "WAERS",
- 	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
- 	WHERE "PERIOD_CATEGORY" = 'PT-A'
- 	  AND EXISTS (
- 		SELECT * FROM :lt_data AS "KEYS"
- 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
- 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
- 		  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
- 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
- 	  )
- 	GROUP BY 
- 	"WAGES"."ABN",
- 	"WAGES"."PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY",
- 	"WAGES"."GJAHR",
- 	"WAGES"."WAERS"
- 
- 	;
- 	
- 	lt_wages = 
- 	SELECT 
- 	"ABN",
- 	"PERIOD_CATEGORY",
- 	"PERIOD_KEY",
- 	"GJAHR",
- 	"WAERS",
- 	"WAGE"
- 	FROM :lt_wages
- 	UNION
+	"WAERS",
+	SUM("WAGE") AS "WAGE"
+FROM
+(
 	SELECT 
  	"WAGES"."ABN" AS "ABN",
- 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
  	"WAGES"."GJAHR" AS "GJAHR",
- 	"WAGES"."WAERS" AS "WAERS",
- 	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "WAGE"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES" AS "WAGES"
- 	WHERE "PERIOD_CATEGORY" = 'PT-A'
- 	  AND EXISTS (
- 		SELECT * FROM :lt_data AS "KEYS"
- 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
- 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
- 		  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
- 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
- 	  )
- 	GROUP BY 
- 	"WAGES"."ABN",
- 	"WAGES"."PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY",
- 	"WAGES"."GJAHR",
- 	"WAGES"."WAERS"
- 	
- ;
- 
- 	lt_wcq = 
-	SELECT 
- 	"WAGES"."ABN" AS "ABN",
- 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
- 	"WAGES"."GJAHR" AS "GJAHR",
- 	"WAGES"."WAERS" AS "WAERS",
+ 	TO_NVARCHAR('AUD') AS "WAERS",
  	SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
  	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
  	WHERE "PERIOD_CATEGORY" = 'PT-A'
- 	  AND EXISTS (
+ 	AND EXISTS (
  		SELECT * FROM :lt_data AS "KEYS"
  		WHERE "KEYS"."ABN" = "WAGES"."ABN"
  		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
- 		  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
  		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
  	  )
  	GROUP BY 
  	"WAGES"."ABN",
- 	"WAGES"."PERIOD_CATEGORY",
- 	"WAGES"."PERIOD_KEY",
- 	"WAGES"."GJAHR",
- 	"WAGES"."WAERS"
+ 	"WAGES"."GJAHR"
+)
+GROUP BY 
+	"ABN",
+	"GJAHR",
+	"WAERS"
  ;
- 
-  	lt_wages = 
- 	SELECT 
- 	"ABN",
- 	"PERIOD_CATEGORY",
- 	"PERIOD_KEY",
- 	"GJAHR",
- 	"WAERS",
- 	"WAGE"
- 	FROM :lt_wages
- 	UNION
- 	SELECT 
- 	"ABN",
- 	"PERIOD_CATEGORY",
- 	"PERIOD_KEY",
- 	"GJAHR",
- 	"WAERS",
- 	"WAGE"
- 	FROM
-	:lt_wcq
- 	;
- -------------MAX Wage----------	
- lt_wages =  
+ 	
+
+-----------MAX Wages--------
+lt_wages = 
+
 SELECT 
 "ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
 "GJAHR",
 "WAERS",
 MAX("WAGE") AS "WAGE"
-FROM :lt_wages
+FROM
+(
+SELECT * FROM :QLD_WCQ
+UNION
+SELECT * FROM :ATO_ITR
+UNION
+SELECT * FROM :ATO_BAS
+)
 GROUP BY 
 "ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
 "GJAHR",
 "WAERS"
 ;	
+
+	
 -------------------------
-
-
-lt_wcq_for_tax = 
-SELECT 
-"WAGES"."ABN" AS "ABN",
-"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
-"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
-"WAGES"."GJAHR" AS "GJAHR",
-"WAGES"."WAERS" AS "WAERS",
-SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
-FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
-WHERE "PERIOD_CATEGORY" = 'PT-A'
-  AND EXISTS (
-	SELECT * FROM :lt_wages AS "KEYS"
-	WHERE "KEYS"."ABN" = "WAGES"."ABN"
-	  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
-	  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
-	  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
-  )
-GROUP BY 
-"WAGES"."ABN",
-"WAGES"."PERIOD_CATEGORY",
-"WAGES"."PERIOD_KEY",
-"WAGES"."GJAHR",
-"WAGES"."WAERS"
-;
 
 
 lt_wage_for_tax = 
 SELECT 
 "ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
 "GJAHR",
 "WAERS",
 SUM("WAGE") AS "WAGE",
@@ -279,8 +178,6 @@ FROM
 (
 	SELECT 
 	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
 	"GJAHR",
 	"WAERS",
 	"WAGE", 
@@ -289,18 +186,14 @@ FROM
 	UNION
 	SELECT 
 	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
 	"GJAHR",
 	"WAERS",
 	0 AS "WAGE", 
 	"WAGE" AS "WCQ_ACT_WAGES"
-	FROM :lt_wcq_for_tax
+	FROM :QLD_WCQ
 )
 GROUP BY 
 "ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
 "GJAHR",
 "WAERS"
 ;
@@ -324,8 +217,8 @@ FROM
 SELECT 
 "WAGE"."ABN",
 "GRP"."GROUP_ID",
-"WAGE"."PERIOD_CATEGORY",
-"WAGE"."PERIOD_KEY",
+"GRP"."PERIOD_CATEGORY",
+"GRP"."PERIOD_KEY",
 "WAGE"."GJAHR",
 "WAGE"."WAERS",
 SUM("WAGE"."WAGE") AS "WAGE",
@@ -336,21 +229,18 @@ LEFT OUTER JOIN
 	:lt_data AS "GRP"
 ON
 	"WAGE"."ABN" = "GRP"."ABN" 
-AND	"WAGE"."PERIOD_CATEGORY" = "GRP"."PERIOD_CATEGORY" 
-AND	"WAGE"."PERIOD_KEY" = "GRP"."PERIOD_KEY" 
 AND	"WAGE"."GJAHR" =  "GRP"."GJAHR"
 GROUP BY 
 "WAGE"."ABN",
 "GRP"."GROUP_ID",
-"WAGE"."PERIOD_CATEGORY",
-"WAGE"."PERIOD_KEY",
+"GRP"."PERIOD_CATEGORY",
+"GRP"."PERIOD_KEY",
 "WAGE"."GJAHR",
 "WAGE"."WAERS"
 )
 )
 WHERE "GRP_WAGE" >= :lv_thld_yearly
 ;
-
 
  
     
@@ -396,7 +286,7 @@ INNER JOIN
 ON  "W"."GJAHR" = "RATE"."GJAHR"
 AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 )
-WHERE "ABN" IN ( SELECT DISTINCT "ABN" FROM :lt_data1)
+
 ;
 
     
