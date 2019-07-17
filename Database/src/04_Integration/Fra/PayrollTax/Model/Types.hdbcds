@@ -21,6 +21,12 @@ context Types {
         GROUP_DESCR : String(255);
         GROUP_TYPE  : String(4);
     };
+    table type GroupIDT {
+        GJAHR       : String(4);
+        GRP_DATE    : LocalDate;
+        GROUP_ID    : String(32);
+        GROUP_DESCR : String(5000);
+    };
     table type GroupSummaryT {
         GJAHR                : String(4);
         GRP_DATE             : LocalDate;

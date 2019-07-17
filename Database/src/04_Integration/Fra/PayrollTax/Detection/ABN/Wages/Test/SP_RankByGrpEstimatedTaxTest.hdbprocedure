@@ -61,6 +61,7 @@ IF :iv_abn = '?' THEN
    ELSE 
    
    lt_abn =
+   
    SELECT DISTINCT "ABN" FROM 	"osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() WHERE "GROUP_ID" IN 
    (SELECT DISTINCT "GROUP_ID" FROM "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() WHERE "ABN" = :iv_abn and "GJAHR" = :iv_gjahr)
     and "GJAHR" = :iv_gjahr
@@ -74,7 +75,7 @@ IF :iv_abn = '?' THEN
 			"GJAHR"
 		FROM
 		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
-		WHERE "ABN"     IN (SELECT DISTINCT "ABN" FROM :lt_abn)
+		WHERE "ABN"     IN (SELECT DISTINCT "ABN" FROM :lt_abn WHERE "ABN" <> '')
 		AND   "GJAHR"   = :iv_gjahr 
 		AND "PERIOD_CATEGORY" = 'PT-A'
 		;
