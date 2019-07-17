@@ -19,6 +19,7 @@ DECLARE lv_mode NVARCHAR(1);
 DECLARE lv_thld_yearly Decimal(15,2) ;
 DECLARE lv_max_rating Decimal(3,2);
 DECLARE lv_rfr_max_low Decimal(15,2);
+DECLARE lv_gjahr NVARCHAR(4);
 
 SELECT 
 "RUN_MODE",
@@ -28,19 +29,41 @@ lv_mode,
 lv_thld_yearly
 FROM :PARAMETERS LIMIT 1;
 
+
+SELECT DISTINCT "GJAHR" INTO lv_gjahr  FROM :it_data_for_rule;
+
 lt_data = 
 SELECT DISTINCT
-	"ABN",
-	"PERIOD_CATEGORY",
-	"PERIOD_KEY",
-	"GJAHR",
-	"GROUP_ID"
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"GROUP_ID"
+FROM
+(
+SELECT DISTINCT
+	"DATA"."ABN",
+	"DATA"."PERIOD_CATEGORY",
+	"DATA"."PERIOD_KEY",
+	"DATA"."GJAHR",
+	"DATA"."GROUP_ID"
 FROM 
-	:it_data_for_rule
+	:it_data_for_rule AS "DATA"
 WHERE 
-	"GROUP_ID" <> ''
+	"DATA"."PERIOD_CATEGORY" = 'PT-A'
+AND 
+EXISTS 
+(
+	SELECT * FROM 
+	"osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_GRP_EXCLUSIONS"(:LV_GJAHR) AS "EXCLUSION"
+	WHERE "DATA"."GROUP_ID" = "EXCLUSION"."GROUP_ID"
+	  AND  "DATA"."ABN" = "EXCLUSION"."ABN" )
+)
+WHERE	"GROUP_ID" <> ''
 AND "PERIOD_CATEGORY" = 'PT-A'	
 ;
+
+
 
 /*
 lt_wages1 = 
