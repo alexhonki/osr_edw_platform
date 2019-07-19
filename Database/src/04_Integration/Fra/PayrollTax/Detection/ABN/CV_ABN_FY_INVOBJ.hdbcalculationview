@@ -132,6 +132,12 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
       <calculatedViewAttribute id="BPARTNER" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
         <formula>NULL</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="GROUP_KEY" datatype="NVARCHAR" length="40" expressionLanguage="SQL">
+    
+        <formula>NULL</formula>
+    
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
     <input node="Projection_ABR">
@@ -253,7 +259,16 @@ AND &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
   
     <attribute id="MN_BUS_SBRB_STT_PC" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_BUS_SBRB_STT_PC"/>
+  
       <keyMapping columnObjectName="Join_1" columnName="MN_BUS_SBRB_STT_PC"/>
+  
+    </attribute>
+  
+    <attribute id="GROUP_KEY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_KEY"/>
+  
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_KEY"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
