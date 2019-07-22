@@ -1,39 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_INITIAL_GROUP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_GRP_INITIAL_GROUP"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_INITIAL_GROUP" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Payroll Tax Initial Groups"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
   <DataSource id="osr.apps.acs.synonym::SAPACS.PRTGRPI">
     <resourceUri>osr.apps.acs.synonym::SAPACS.PRTGRPI</resourceUri>
   </DataSource>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTGRPID">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTGRPID</resourceUri>
+  </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.apps.acs.synonym::SAPACS.PRTGRPI">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="GRP_DATE">
+        <descriptions defaultDescription="GRP_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_ID">
+        <descriptions defaultDescription="ORG_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_TYPE">
+        <descriptions defaultDescription="GROUP_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_UNAME">
+        <descriptions defaultDescription="CREA_UNAME"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_DATE_TIME">
+        <descriptions defaultDescription="CREA_DATE_TIME"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.apps.acs.synonym::SAPACS.PRTGRPI">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_ID" source="ORG_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_TYPE" source="GROUP_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="GRP_DATE">
+        <descriptions defaultDescription="GRP_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="ORG_ID">
+        <descriptions defaultDescription="ORG_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_TYPE">
+        <descriptions defaultDescription="GROUP_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_UNAME">
+        <descriptions defaultDescription="CREA_UNAME"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_DATE_TIME">
+        <descriptions defaultDescription="CREA_DATE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_DESCR">
+        <descriptions defaultDescription="GROUP_DESCR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_ID" source="ORG_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_TYPE" source="GROUP_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_DESCR" source="GROUP_DESCR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+    </input>
+    <joinAttribute name="MANDT"/>
+    <joinAttribute name="GJAHR"/>
+    <joinAttribute name="GRP_DATE"/>
+    <joinAttribute name="GROUP_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="GRP_DATE">
+        <descriptions defaultDescription="GRP_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_TYPE">
+        <descriptions defaultDescription="GROUP_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_DESCR">
+        <descriptions defaultDescription="GROUP_DESCR"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_UNAME">
+        <descriptions defaultDescription="CREA_UNAME"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_DATE_TIME">
+        <descriptions defaultDescription="CREA_DATE_TIME"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.apps.acs.synonym::SAPACS.PRTGRPID">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_TYPE" source="GROUP_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_DESCR" source="GROUP_DESCR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
   <attributes>
-    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GJAHR"/>
+      <keyMapping columnObjectName="Join_1" columnName="GJAHR"/>
     </attribute>
-    <attribute id="GRP_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GRP_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GRP_DATE"/>
-      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GRP_DATE"/>
+      <keyMapping columnObjectName="Join_1" columnName="GRP_DATE"/>
     </attribute>
-    <attribute id="ORG_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ORG_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ORG_ID"/>
-      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="ORG_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="ORG_ID"/>
     </attribute>
-    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GROUP_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GROUP_ID"/>
-      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GROUP_ID"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_ID"/>
     </attribute>
-    <attribute id="GROUP_TYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GROUP_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GROUP_TYPE"/>
-      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GROUP_TYPE"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_TYPE"/>
     </attribute>
-    <attribute id="GROUP_DESCR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CREA_UNAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_UNAME"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREA_UNAME"/>
+    </attribute>
+    <attribute id="CREA_DATE_TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_DATE_TIME"/>
+      <keyMapping columnObjectName="Join_1" columnName="CREA_DATE_TIME"/>
+    </attribute>
+    <attribute id="GROUP_DESCR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GROUP_DESCR"/>
-      <keyMapping columnObjectName="SAPACS.PRTGRPI" columnName="GROUP_DESCR"/>
+      <keyMapping columnObjectName="Join_1" columnName="GROUP_DESCR"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -44,7 +194,31 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="518" y="14"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.00000000000006" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>

@@ -55,7 +55,7 @@ WHERE "GROUP_TYPE" = 'TR'
 
 lt_rbc_grp_mem = 
 SELECT "ORG_ID" 
-FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+FROM "osr.edw.platform.fra.prt.model::CV_GRP_INITIAL_GROUP"
 WHERE "GROUP_TYPE" = 'SH'
   AND "GRP_DATE" = :LV_GRP_DATE
   AND "GROUP_DESCR" LIKE 'O%'
