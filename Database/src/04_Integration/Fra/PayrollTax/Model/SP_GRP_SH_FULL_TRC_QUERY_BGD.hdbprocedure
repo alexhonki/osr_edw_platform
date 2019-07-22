@@ -2,7 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY_BGD"(
 	IN	IV_GRP_DATE 			DATE , 
 	IN  IV_GRAPH_ID				NVARCHAR(32),
 	IN	IV_MATCH_PERSON			NVARCHAR(1),
-	OUT ET_GROUP				"osr.edw.platform.fra.prt.model::Types.GroupT"
+	OUT ET_GROUP				"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP_ID				"osr.edw.platform.fra.prt.model::Types.GroupIDT"
 	)
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -17,6 +18,7 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY"(
 	IV_MATCH_PERSON => :IV_MATCH_PERSON,
 	ET_SH_TRC => ?,
 	ET_GROUP => ET_GROUP,
+	ET_GROUP_ID	=> ET_GROUP_ID,
 	ET_RBCORG => ?
 )
 ;

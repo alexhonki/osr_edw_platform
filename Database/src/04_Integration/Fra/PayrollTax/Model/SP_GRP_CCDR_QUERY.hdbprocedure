@@ -6,7 +6,8 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_CCDR_QUERY"(
 	OUT ET_CCTRL_ENTITY   	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
 	OUT ET_CCTRL_INIT_GRP 	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityT",
 	OUT ET_CCTRL_HOLDER    	"osr.edw.platform.fra.prt.model::Types.ASIC.CCtrlEntityHolderT",
-	OUT ET_GROUP			"osr.edw.platform.fra.prt.model::Types.GroupT"
+	OUT ET_GROUP			"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP_ID			"osr.edw.platform.fra.prt.model::Types.GroupIDT"
 	)
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -204,10 +205,22 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 	"ORG_ID" AS "ORG_ID",
 	CAST(HASH_MD5(TO_BINARY("COMMON_CTRL_ENTITY")) AS NVARCHAR) AS "GROUP_ID",
 	--'' AS "GROUP_ID",
-	"COMMON_CTRL_ENTITY" AS "GROUP_DESCR",
+	--"COMMON_CTRL_ENTITY" AS "GROUP_DESCR",
 	'CCDR' AS "GROUP_TYPE"
 	FROM
 	:et_cctrl_init_grp
 	;
 	    
+	ET_GROUP_ID = 
+	SELECT 
+	DISTINCT
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	CAST(HASH_MD5(TO_BINARY("COMMON_CTRL_ENTITY")) AS NVARCHAR) AS "GROUP_ID",
+	'CCDR' AS "GROUP_TYPE",
+	LEFT("COMMON_CTRL_ENTITY",1333) AS "GROUP_DESCR"
+	FROM
+	:et_cctrl_init_grp
+	;
+	
 END

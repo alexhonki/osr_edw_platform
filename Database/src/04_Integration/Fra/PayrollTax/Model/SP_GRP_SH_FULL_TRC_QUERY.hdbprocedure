@@ -6,6 +6,7 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_SH_FULL_TRC_QUERY"(
 	IN	IV_MATCH_PERSON			NVARCHAR(1),
 	OUT ET_SH_TRC				"osr.edw.platform.fra.prt.model::Types.ASIC.HoldingFullTrcT",
 	OUT ET_GROUP				"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP_ID			    "osr.edw.platform.fra.prt.model::Types.GroupIDT",
 	OUT	ET_RBCORG   		    "osr.edw.platform.fra.prt.model::Types.ASIC.OrgT"
 	)
    LANGUAGE SQLSCRIPT
@@ -486,19 +487,42 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	UNION
 	SELECT "GJAHR", "GRP_DATE", LEFT("GROUP_ID",10) AS "ORG_ID", "GROUP_ID" FROM :et_sh_trc WHERE "GROUP_ID" LIKE 'O%';
 
-et_group = 
+lt_group_out = 
 SELECT 
 "L"."GJAHR", 
 "L"."GRP_DATE", 
 LEFT("L"."ORG_ID",10) AS "ORG_ID", 
 CAST(HASH_MD5(TO_BINARY("L"."GROUP_ID")) AS NVARCHAR) AS "GROUP_ID", 
-LEFT("L"."GROUP_ID",255) AS "GROUP_DESCR",
+"L"."GROUP_ID" AS "GROUP_DESCR",
 'SH' AS "GROUP_TYPE"
 FROM 
 :lt_group AS "L"
 INNER JOIN 
 (SELECT "GROUP_ID" FROM :lt_group GROUP BY "GROUP_ID" HAVING COUNT(*) > 1) AS "R"
 ON "L"."GROUP_ID" =  "R"."GROUP_ID"
+; 
+
+et_group = 
+SELECT 
+"GJAHR", 
+"GRP_DATE", 
+"ORG_ID", 
+"GROUP_ID", 
+"GROUP_TYPE"
+FROM 
+:lt_group_out
+;
+
+et_group_id = 
+SELECT 
+DISTINCT 
+"GJAHR", 
+"GRP_DATE",  
+"GROUP_ID", 
+"GROUP_TYPE",
+LEFT("GROUP_DESCR",1333) AS "GROUP_DESCR"
+FROM 
+:lt_group_out
 ; 
 
 et_rbcorg = SELECT "GJAHR", "GRP_DATE", "ORG_ID" FROM :et_group WHERE "GROUP_ID" LIKE 'O%';

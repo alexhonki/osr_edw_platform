@@ -3,7 +3,8 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_CCSH_QUERY_BGD"(
 	IN  IV_GRAPH_ID			NVARCHAR(32),
 	IN	IV_MATCH_PERSON		NVARCHAR(1),
 	IN  IV_MAX_MEM_CNT  	INTEGER DEFAULT 2,
-	OUT ET_GROUP			"osr.edw.platform.fra.prt.model::Types.GroupT"
+	OUT ET_GROUP			"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP_ID			"osr.edw.platform.fra.prt.model::Types.GroupIDT"
 	)
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -18,7 +19,8 @@ CALL "osr.edw.platform.fra.prt.model::SP_GRP_CCSH_QUERY"(
 	ET_CCTRL_ENTITY => ?,
 	ET_CCTRL_INIT_GRP => ?,
 	ET_CCTRL_HOLDER => ?,
-	ET_GROUP => ET_GROUP
+	ET_GROUP => ET_GROUP,
+	ET_GROUP_ID => ET_GROUP_ID
 );
 	    
 	    
