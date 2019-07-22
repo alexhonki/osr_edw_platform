@@ -11,13 +11,13 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_UHC"
    
 BEGIN
 
-et_result = 
-SELECT 
+lt_result = 
+SELECT DISTINCT
 "DATA"."ABN",
 "DATA"."PERIOD_CATEGORY",
 "DATA"."PERIOD_KEY",
 "DATA"."GJAHR",
-100 AS "DETECTION_RESULT"
+"MAP"."ACN" AS "ACN"
 FROM 
 :it_data_for_rule AS "DATA" 
 INNER JOIN
@@ -30,7 +30,7 @@ INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY"
 ON "DATA"."GJAHR" = "FY"."FISCAL_YEAR"
 WHERE EXISTS (
-	SELECT * FROM  "osr.edw.staging.md.asic.proxy::TF_XREF_C"( ) AS "XREF"
+	SELECT 1 FROM  "osr.edw.staging.md.asic.proxy::TF_XREF_C"( ) AS "XREF"
 	WHERE ("MAP"."ACN" = RIGHT("XREF"."OWNER_SOURCE_ID",9) OR "MAP"."ACN" = RIGHT("XREF"."MEMBER_SOURCE_ID",9))
 	  AND "FY"."END_DATE_SQL" >= "XREF"."ROLE_START_DT"
 	  AND "FY"."END_DATE_SQL" <= "XREF"."XREF_END_DT"
@@ -40,24 +40,34 @@ WHERE EXISTS (
 )
 ;
 
+et_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_result;
+
+
 et_text = 
 	SELECT 
 		"ABN",
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		''	AS "TEXT",
-		''	AS "MSGID",
-		''	AS "MSGNO",
-		''			AS "MSGV1",
-		'' 				AS "MSGV2",
+		''					AS "TEXT",
+		'/OSRQLD/FRA_PRT'	AS "MSGID",
+		'024'				AS "MSGNO",
+		CONCAT('O' , "ACN")	AS "MSGV1",
+		'' 					AS "MSGV2",
 		''					AS "MSGV3",
 		''					AS "MSGV4",
 		''					AS "MSGV1_FC",
 		''					AS "MSGV2_FC",
 		''					AS "MSGV3_FC",
 		''					AS "MSGV4_FC"
-	FROM  :et_result
+	FROM  :lt_result
 	;
 	
 END	
