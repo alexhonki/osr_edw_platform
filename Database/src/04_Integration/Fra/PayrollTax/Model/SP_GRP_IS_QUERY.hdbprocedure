@@ -1,7 +1,8 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_IS_QUERY"(
 	IN	IV_GRP_DATE 	DATE ,
 	IN  IV_GRAPH_ID		NVARCHAR(32),
-	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT"
+	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP_ID		"osr.edw.platform.fra.prt.model::Types.GroupIDT"
 	)
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -32,10 +33,22 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	:LV_GRP_DATE AS "GRP_DATE",
 	"CHILD_ID" AS "ORG_ID",
 	CAST(HASH_MD5(TO_BINARY("PARENT_ID")) AS NVARCHAR) AS "GROUP_ID",
-	"PARENT_ID" AS "GROUP_DESCR",
+	--"PARENT_ID" AS "GROUP_DESCR",
 	'IS' AS "GROUP_TYPE"
 	FROM
 	:LT_REL
 	;
+	
+	ET_GROUP_ID = 
+	SELECT 
+	DISTINCT
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	CAST(HASH_MD5(TO_BINARY("PARENT_ID")) AS NVARCHAR) AS "GROUP_ID",
+	'IS' AS "GROUP_TYPE",
+	"PARENT_ID" AS "GROUP_DESCR"
+	FROM
+	:LT_REL
+	;	
 	    
 END
