@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_DFACTS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_DFACTS" applyPrivilegeType="NONE" dataCategory="DEFAULT" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_DFACTS"/>
 <localVariables/>
 <variableMappings/>
@@ -8,88 +8,187 @@
     <resourceUri>osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="OBART">
+        <descriptions defaultDescription="OBART"/>
+      </viewAttribute>
+      <viewAttribute id="OBJID">
+        <descriptions defaultDescription="OBJID"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_TYPE_SEQ">
+        <descriptions defaultDescription="FACT_TYPE_SEQ"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_TYPE_REP">
+        <descriptions defaultDescription="FACT_TYPE_REP"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_CAT_SEQ">
+        <descriptions defaultDescription="FACT_CAT_SEQ"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_CAT_REP">
+        <descriptions defaultDescription="FACT_CAT_REP"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_TO">
+        <descriptions defaultDescription="VALID_TO"/>
+      </viewAttribute>
+      <viewAttribute id="VALID_FROM">
+        <descriptions defaultDescription="VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_SET">
+        <descriptions defaultDescription="FACT_SET"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_TYPE">
+        <descriptions defaultDescription="FACT_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="FACT_CATEGORY">
+        <descriptions defaultDescription="FACT_CATEGORY"/>
+      </viewAttribute>
+      <viewAttribute id="VALUE_GENERIC">
+        <descriptions defaultDescription="VALUE_GENERIC"/>
+      </viewAttribute>
+      <viewAttribute id="QUAL_GENERIC">
+        <descriptions defaultDescription="QUAL_GENERIC"/>
+      </viewAttribute>
+      <viewAttribute id="OBJNR">
+        <descriptions defaultDescription="OBJNR"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_VALID_FROM" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;VALID_FROM&quot;=0 or &quot;VALID_FROM&quot; LIKE '99%' or &quot;VALID_FROM&quot; LIKE '10%' THEN TO_TIMESTAMP('19000101000000') ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALID_FROM&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_VALID_TO" datatype="TIMESTAMP" expressionLanguage="SQL">
+    
+        <formula>CASE WHEN &quot;VALID_TO&quot;=0 or &quot;VALID_TO&quot; LIKE '99%' or &quot;VALID_TO&quot; LIKE '10%' THEN TO_TIMESTAMP('99991231000000') ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALID_TO&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTS.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBART" source="OBART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_TYPE_SEQ" source="FACT_TYPE_SEQ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_TYPE_REP" source="FACT_TYPE_REP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_CAT_SEQ" source="FACT_CAT_SEQ"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_CAT_REP" source="FACT_CAT_REP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_SET" source="FACT_SET"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_TYPE" source="FACT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_CATEGORY" source="FACT_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_GENERIC" source="VALUE_GENERIC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUAL_GENERIC" source="QUAL_GENERIC"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OBJNR" source="OBJNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
   <attributes>
     <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="CLIENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CLIENT"/>
     </attribute>
     <attribute id="OBART" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBART"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="OBART"/>
+      <keyMapping columnObjectName="Projection_1" columnName="OBART"/>
     </attribute>
     <attribute id="OBJID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBJID"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="OBJID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="OBJID"/>
     </attribute>
     <attribute id="FACT_TYPE_SEQ" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_TYPE_SEQ"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_TYPE_SEQ"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_TYPE_SEQ"/>
     </attribute>
     <attribute id="FACT_TYPE_REP" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_TYPE_REP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_TYPE_REP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_TYPE_REP"/>
     </attribute>
     <attribute id="FACT_CAT_SEQ" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_CAT_SEQ"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_CAT_SEQ"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_CAT_SEQ"/>
     </attribute>
     <attribute id="FACT_CAT_REP" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_CAT_REP"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_CAT_REP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_CAT_REP"/>
     </attribute>
     <attribute id="VALID_TO" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_TO"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_VALID_TO"/>
     </attribute>
     <attribute id="VALID_FROM" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_VALID_FROM"/>
     </attribute>
     <attribute id="FACT_SET" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_SET"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_SET"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_SET"/>
     </attribute>
     <attribute id="FACT_TYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_TYPE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_TYPE"/>
     </attribute>
     <attribute id="FACT_CATEGORY" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FACT_CATEGORY"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="FACT_CATEGORY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FACT_CATEGORY"/>
     </attribute>
     <attribute id="VALUE_GENERIC" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALUE_GENERIC"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="VALUE_GENERIC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALUE_GENERIC"/>
     </attribute>
     <attribute id="QUAL_GENERIC" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="QUAL_GENERIC"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="QUAL_GENERIC"/>
+      <keyMapping columnObjectName="Projection_1" columnName="QUAL_GENERIC"/>
     </attribute>
     <attribute id="OBJNR" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBJNR"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="OBJNR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="OBJNR"/>
     </attribute>
     <attribute id="Z_CHANGE_TYPE" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TYPE"/>
     </attribute>
     <attribute id="Z_CHANGE_TIME" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
     </attribute>
     <attribute id="Z_SOURCE_SYS" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
     </attribute>
     <attribute id="Z_RUN_ROW_NO" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_ROW_NO"/>
     </attribute>
     <attribute id="Z_RUN_SEQ_ID" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_PSCD.DSO.DFACTS.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -101,6 +200,11 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="95" y="193"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
