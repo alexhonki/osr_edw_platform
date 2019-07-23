@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.fra.proxy::CV_PRT_GROUP_ID" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PRT_GROUP_ID"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTGRPID">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTGRPID</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.apps.acs.synonym::SAPACS.PRTGRPID">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="MANDT"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GRP_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="GRP_DATE"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="GROUP_TYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_TYPE"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="GROUP_TYPE"/>
+    </attribute>
+    <attribute id="GROUP_DESCR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_DESCR"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="GROUP_DESCR"/>
+    </attribute>
+    <attribute id="CREA_UNAME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_UNAME"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="CREA_UNAME"/>
+    </attribute>
+    <attribute id="CREA_DATE_TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_DATE_TIME"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPID" columnName="CREA_DATE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
