@@ -40,6 +40,8 @@ lx_is,
 lx_tr
 FROM :PARAMETERS LIMIT 1;
 
+
+/*
 et_result =
 SELECT 
 "DATA"."ABN",
@@ -64,6 +66,35 @@ WHERE (("GRP"."DR_GROUP_MEM" = :lx_dr			AND :lx_dr = 'Y' )		OR :lx_dr = 'N')
   AND (("GRP"."CCSH_GROUP_MEM" = :lx_ccsh		AND :lx_ccsh = 'Y' )	OR :lx_ccsh = 'N')
   AND (("GRP"."INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )		OR :lx_is = 'N')
 ;
+*/
+
+IF :lv_mode = 'S' THEN
+et_result =
+SELECT 
+"DATA"."ABN",
+"DATA"."PERIOD_CATEGORY",
+"DATA"."PERIOD_KEY",
+"DATA"."GJAHR",
+100 AS "DETECTION_RESULT"
+FROM 
+:it_data_for_rule AS "DATA"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY"
+ON "DATA"."GJAHR" = "FY"."FISCAL_YEAR"
+INNER JOIN
+"osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
+ON  "DATA"."ABN" = "GRP"."ABN"
+AND "DATA"."GJAHR" = "GRP"."GJAHR"
+AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
+WHERE ("GRP"."DR_GROUP_MEM" = :lx_dr		AND :lx_dr = 'Y' )
+  OR ("GRP"."SH_GROUP_MEM" = :lx_sh			AND :lx_sh = 'Y' )
+  OR ("GRP"."RBC_GROUP_MEM" = :lx_rbc		AND :lx_rbc = 'Y' )
+  OR ("GRP"."CCDR_GROUP_MEM" = :lx_ccdr		AND :lx_ccdr = 'Y' )
+  OR ("GRP"."CCSH_GROUP_MEM" = :lx_ccsh		AND :lx_ccsh = 'Y' )
+  OR ("GRP"."INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )
+  OR ("GRP"."TR_GROUP_MEM" = :lx_tr			AND :lx_tr = 'Y' )
+;
+
 
 et_text =
 SELECT 
@@ -85,5 +116,133 @@ SELECT
 FROM 
 :et_result
 ;
+
+END IF;
+
+IF :lv_mode = 'R' THEN
+lt_data_grp_summary = 
+SELECT 
+"DATA"."ABN",
+"DATA"."PERIOD_CATEGORY",
+"DATA"."PERIOD_KEY",
+"DATA"."GJAHR",
+"GRP"."TR_GROUP_MEM",
+"GRP"."CCDR_GROUP_MEM",
+"GRP"."CCSH_GROUP_MEM",
+"GRP"."DR_GROUP_MEM",
+"GRP"."SH_GROUP_MEM",
+"GRP"."RBC_GROUP_MEM",
+"GRP"."INTERSTATE_GROUP_MEM"
+FROM 
+:it_data_for_rule AS "DATA"
+INNER JOIN
+"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY"
+ON "DATA"."GJAHR" = "FY"."FISCAL_YEAR"
+INNER JOIN
+"osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
+ON  "DATA"."ABN" = "GRP"."ABN"
+AND "DATA"."GJAHR" = "GRP"."GJAHR"
+AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
+;
+
+et_result =
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+MAX("DETECTION_RESULT") AS "DETECTION_RESULT"
+FROM (
+-- 20
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+20 AS "DETECTION_RESULT"
+FROM :lt_data_grp_summary
+WHERE ("TR_GROUP_MEM" = :lx_tr	AND :lx_tr = 'Y' )
+UNION
+--40
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+40 AS "DETECTION_RESULT"
+FROM :lt_data_grp_summary
+WHERE ("CCDR_GROUP_MEM" = :lx_ccdr	AND :lx_ccdr = 'Y' )
+   OR ("CCSH_GROUP_MEM" = :lx_ccsh	AND :lx_ccsh = 'Y' )
+UNION
+--60
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+60 AS "DETECTION_RESULT"
+FROM :lt_data_grp_summary
+WHERE ("DR_GROUP_MEM" = :lx_dr	AND :lx_dr = 'Y' )
+   OR ("SH_GROUP_MEM" = :lx_sh	AND :lx_sh = 'Y' )
+UNION
+--80
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+80 AS "DETECTION_RESULT"
+FROM :lt_data_grp_summary
+WHERE ("RBC_GROUP_MEM" = :lx_rbc	AND :lx_rbc = 'Y' )
+UNION
+--100
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_data_grp_summary
+WHERE ("INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )
+)
+GROUP BY 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+;
+   
+et_text =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT' AS "MSGID",
+'025' AS "MSGNO",
+"ABN" AS "MSGV1",
+CASE 
+WHEN "DETECTION_RESULT" = 20 THEN 'Trust'
+WHEN "DETECTION_RESULT" = 40 THEN 'Common Control Shareholder or Director'
+WHEN "DETECTION_RESULT" = 60 THEN 'Majority Shareholder or Director'
+WHEN "DETECTION_RESULT" = 80 THEN 'RBC'
+WHEN "DETECTION_RESULT" = 100 THEN 'Interstate'
+ELSE ''
+END
+AS "MSGV2",
+"PERIOD_KEY" AS "MSGV3",
+TO_INT("DETECTION_RESULT"/20) AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+:et_result
+;
+
+END IF;
+
+
 
 END
