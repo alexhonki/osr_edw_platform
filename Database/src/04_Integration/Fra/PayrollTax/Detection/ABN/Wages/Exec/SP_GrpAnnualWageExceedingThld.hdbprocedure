@@ -407,27 +407,28 @@ FROM :lt_data_for_rule
  	
  END IF;
  
- IF lx_wcq = 'Y' THEN
- 
-	lt_wcq = 
- 	SELECT 
- 	"KEYS"."ABN" AS "ABN",
- 	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
- 	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
- 	"KEYS"."GJAHR" AS "GJAHR",
- 	"WAGES"."WAERS" AS "WAERS",
-	"KEYS"."GROUP_ID" AS "GROUP_ID",
- 	"WAGES"."WCQ_ACT_WAGES" AS "WCQ_ACT_WAGES"
- 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WAGES"
- 	INNER JOIN
- 	:lt_data_for_rule AS "KEYS"
- 	ON "KEYS"."ABN" = "WAGES"."ABN"
-	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
-	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
-	AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
- 	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
- 	; 	
+--workcover wage is always needed for estimated tax calculation 
+ lt_wcq = 
+ SELECT 
+ "KEYS"."ABN" AS "ABN",
+ "KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+ "KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+ "KEYS"."GJAHR" AS "GJAHR",
+ "WAGES"."WAERS" AS "WAERS",
+"KEYS"."GROUP_ID" AS "GROUP_ID",
+ "WAGES"."WCQ_ACT_WAGES" AS "WCQ_ACT_WAGES"
+ FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WAGES"
+ INNER JOIN
+ :lt_data_for_rule AS "KEYS"
+ ON "KEYS"."ABN" = "WAGES"."ABN"
+AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ ; 	
  	
+ IF lx_wcq = 'Y' THEN
+
  	lt_do_wage = 
  	SELECT 
  	"ABN",
@@ -465,7 +466,7 @@ FROM :lt_data_for_rule
  	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
  	"KEYS"."GJAHR" AS "GJAHR",
  	"WAGES"."WAERS" AS "WAERS",
- 	SUM("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
+ 	MAX("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
  	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"() AS "WAGES"
  	INNER JOIN
  	:lt_data_for_rule AS "KEYS"
