@@ -107,7 +107,7 @@ ON
 			"DATA"."SALARY_WAGES"														AS "SALARY_WAGES",
 			"DATA"."SUPER_EXPNS"														AS "SUPER_EXPNS",
 			"DATA"."SALARY_WAGES" + "DATA"."SUPER_EXPNS"								AS "TOTAL_WAGES",
-			'AUD  ' AS "WAERS"	
+			'AUD' AS "WAERS"	
 		FROM		:ALERT_INFO_YEAR				AS "ALERT"
 		INNER JOIN	"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() 	AS "DATA"
 		ON  		"ALERT"."ABN" = "DATA"."ABN"

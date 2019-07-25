@@ -20,7 +20,7 @@ BEGIN
 		ELSE RIGHT("ATO_BAS"."FINANCIAL_YEAR",2) ||  "ATO_BAS"."BAS_QTR" END							AS  "PERIOD_KEY",
 		LEFT(TO_NVARCHAR("ATO_BAS"."FINANCIAL_YEAR"),4)                                     			AS  "GJAHR",
 		"ATO_BAS"."TOTL_PMT_FOR_WRK_AMT"                                                            	AS  "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-		'AUD  '                                                                                         AS  "WAERS"
+		'AUD'                                                                                       	AS  "WAERS"
 	FROM 
 		"osr.edw.staging.td.ato.proxy::TF_BASNIND_C"() AS "ATO_BAS"
 	WHERE "ABN" <> 'no ABN' 

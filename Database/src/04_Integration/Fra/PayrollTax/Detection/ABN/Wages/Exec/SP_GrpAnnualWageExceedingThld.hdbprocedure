@@ -132,8 +132,7 @@ WHERE "GROUP_ID" <> ''
 
 END IF;
 
-
-
+/*
 lt_wages = 
 SELECT
 DISTINCT
@@ -334,6 +333,210 @@ GROUP BY
 "WAERS"
 HAVING MAX("WAGE") >= :lv_thld_yearly
 ;
+*/
+
+
+lt_wages = 
+SELECT
+"ABN"
+"GROUP_ID",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+TO_NVARCHAR('AUD') AS "WAERS",
+0 AS "WAGE"
+FROM :lt_data_for_rule
+;
+
+
+
+
+
+
+-- ATO BAS Data   	
+ IF lx_ato = 'Y' THEN
+ 	lt_wages = 
+ 	SELECT 
+ 	"GROUP_ID",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM :lt_wages
+ 	UNION
+ 	SELECT 
+ 	"KEYS"."GROUP_ID" AS "GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+ 	"KEYS"."GJAHR" AS "GJAHR",
+ 	"WAGES"."WAERS" AS "WAERS",
+ 	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ATO_BAS_WAGES"() AS "WAGES"
+ 	INNER JOIN
+ 	:lt_data_for_rule AS "KEYS"
+ 	ON "KEYS"."ABN" = "WAGES"."ABN"
+	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+	AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+ 	"KEYS"."GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY",
+ 	"KEYS"."GJAHR",
+ 	"WAGES"."WAERS"
+ 	HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly
+ 	UNION
+ 	SELECT 
+ 	"KEYS"."GROUP_ID" AS "GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+ 	"KEYS"."GJAHR" AS "GJAHR",
+ 	"WAGES"."WAERS" AS "WAERS",
+ 	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_ATO_ITR_WAGES"() AS "WAGES"
+ 	INNER JOIN
+ 	:lt_data_for_rule AS "KEYS"
+ 	ON "KEYS"."ABN" = "WAGES"."ABN"
+	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+	AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+ 	"KEYS"."GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY",
+ 	"KEYS"."GJAHR",
+ 	"WAGES"."WAERS"
+ 	HAVING SUM("WAGES"."ATO_ITR_SALARY_WAGES")  >= :lv_thld_yearly 	
+ 	;
+ 	
+ END IF;
+ 
+ IF lx_wcq = 'Y' THEN
+ 
+	lt_wcq = 
+ 	SELECT 
+ 	"KEYS"."GROUP_ID" AS "GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+ 	"KEYS"."GJAHR" AS "GJAHR",
+ 	"WAGES"."WAERS" AS "WAERS",
+ 	SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WAGES"
+ 	INNER JOIN
+ 	:lt_data_for_rule AS "KEYS"
+ 	ON "KEYS"."ABN" = "WAGES"."ABN"
+	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+	AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+ 	"KEYS"."GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY",
+ 	"KEYS"."GJAHR",
+ 	"WAGES"."WAERS"
+ 	; 	
+ 	
+ 	lt_wages = 
+ 	SELECT 
+ 	"GROUP_ID",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM :lt_wages
+ 	UNION
+ 	SELECT 
+ 	"GROUP_ID",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	SUM("WCQ_ACT_WAGES") AS "WAGE"
+ 	FROM
+	:lt_wcq
+	GROUP BY
+	"GROUP_ID",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS"
+	HAVING SUM("WCQ_ACT_WAGES")  >= :lv_thld_yearly 	
+ 	;
+ END IF;
+ 	
+ IF lx_interstate = 'Y' THEN
+ 
+	lt_interstate = 
+ 	SELECT 
+ 	"KEYS"."GROUP_ID" AS "GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+ 	"KEYS"."GJAHR" AS "GJAHR",
+ 	"WAGES"."WAERS" AS "WAERS",
+ 	MAX("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"() AS "WAGES"
+ 	INNER JOIN
+ 	:lt_data_for_rule AS "KEYS"
+ 	ON "KEYS"."ABN" = "WAGES"."ABN"
+	AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+	AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+	AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+ 	"KEYS"."GROUP_ID",
+ 	"KEYS"."PERIOD_CATEGORY",
+ 	"KEYS"."PERIOD_KEY",
+ 	"KEYS"."GJAHR",
+ 	"WAGES"."WAERS"
+ 	HAVING MAX("WAGES"."CLIENT_AUST_WAGES")  >= :lv_thld_yearly 	
+ 	; 	
+ 	
+ 	lt_wages = 
+ 	SELECT 
+ 	"GROUP_ID",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM :lt_wages
+ 	UNION
+ 	SELECT 
+ 	"GROUP_ID",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM
+	:lt_interstate
+ 	;
+ END IF;
+ 	
+
+lt_wages =  
+SELECT 
+"GROUP_ID",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS",
+MAX("WAGE") AS "WAGE"
+FROM :lt_wages
+GROUP BY 
+"GROUP_ID",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS"
+HAVING MAX("WAGE") >= :lv_thld_yearly
+;
+
 
 lt_wcq_for_tax = 
 SELECT 
