@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn::CV_GRP_ALERT_SUMMARY" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Group Alert Summary"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID">
+        <descriptions defaultDescription="ALERT_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INVEST_OBJ_TYPE">
+        <descriptions defaultDescription="INVEST_OBJ_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="INVEST_OBJ_ID">
+        <descriptions defaultDescription="INVEST_OBJ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="INVEST_OBJ_ID2">
+        <descriptions defaultDescription="INVEST_OBJ_ID2"/>
+      </viewAttribute>
+      <viewAttribute id="INV_OBJ_ADD_ID2">
+        <descriptions defaultDescription="INV_OBJ_ADD_ID2"/>
+      </viewAttribute>
+      <viewAttribute id="CURRENCY">
+        <descriptions defaultDescription="CURRENCY"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_SCORE">
+        <descriptions defaultDescription="RISK_SCORE"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_VALUE">
+        <descriptions defaultDescription="RISK_VALUE"/>
+      </viewAttribute>
+      <viewAttribute id="ACCESS_GROUP">
+        <descriptions defaultDescription="ACCESS_GROUP"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="GRP_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
+        <formula>RIGHT(&quot;INV_OBJ_ADD_ID2&quot;,8)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="GROUP_ID" datatype="NVARCHAR" length="32" expressionLanguage="SQL">
+        <formula>LEFT(&quot;INV_OBJ_ADD_ID2&quot;,32)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>LEFT(&quot;INVEST_OBJ_ID2&quot;,4)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INVEST_OBJ_TYPE" source="INVEST_OBJ_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INVEST_OBJ_ID" source="INVEST_OBJ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INVEST_OBJ_ID2" source="INVEST_OBJ_ID2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INV_OBJ_ADD_ID2" source="INV_OBJ_ADD_ID2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_SCORE" source="RISK_SCORE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_VALUE" source="RISK_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCESS_GROUP" source="ACCESS_GROUP"/>
+    </input>
+  
+    <filter>LEFT(&quot;INVEST_OBJ_TYPE&quot;,4) = 'PRT1' AND &quot;INV_OBJ_ADD_ID2&quot; &lt;&gt; ''</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="ACCESS_GROUP">
+        <descriptions defaultDescription="ACCESS_GROUP"/>
+      </viewAttribute>
+      <viewAttribute id="GRP_DATE">
+        <descriptions defaultDescription="GRP_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="GROUP_ID">
+        <descriptions defaultDescription="GROUP_ID"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_SCORE" aggregationType="avg">
+        <descriptions defaultDescription="RISK_SCORE"/>
+      </viewAttribute>
+      <viewAttribute id="RISK_VALUE" aggregationType="sum">
+        <descriptions defaultDescription="RISK_VALUE"/>
+      </viewAttribute>
+    
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_VALUE" source="RISK_VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCESS_GROUP" source="ACCESS_GROUP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RISK_SCORE" source="RISK_SCORE"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GRP_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="GRP_DATE"/>
+    </attribute>
+    <attribute id="ACCESS_GROUP" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACCESS_GROUP"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="ACCESS_GROUP"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GROUP_ID"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="GROUP_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="RISK_SCORE" order="5" aggregationType="avg" measureType="simple">
+      <descriptions defaultDescription="RISK_SCORE"/>
+      <measureMapping columnObjectName="Aggregation_1" columnName="RISK_SCORE"/>
+    </measure>
+    <measure id="RISK_VALUE" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RISK_VALUE"/>
+      <measureMapping columnObjectName="Aggregation_1" columnName="RISK_VALUE"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="322"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
