@@ -38,6 +38,10 @@
       <viewAttribute id="ACCESS_GROUP">
         <descriptions defaultDescription="ACCESS_GROUP"/>
       </viewAttribute>
+    
+      <viewAttribute id="INVEST_REASON">
+        <descriptions defaultDescription="INVEST_REASON"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="GRP_DATE" datatype="NVARCHAR" length="8" expressionLanguage="SQL">
@@ -48,7 +52,9 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+    
         <formula>LEFT(&quot;INVEST_OBJ_ID2&quot;,4)</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <restrictedViewAttributes/>
@@ -62,9 +68,10 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RISK_SCORE" source="RISK_SCORE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RISK_VALUE" source="RISK_VALUE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACCESS_GROUP" source="ACCESS_GROUP"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="INVEST_REASON" source="INVEST_REASON"/>
     </input>
-  
-    <filter>LEFT(&quot;INVEST_OBJ_TYPE&quot;,4) = 'PRT1' AND &quot;INV_OBJ_ADD_ID2&quot; &lt;&gt; ''</filter>
+    <filter>LEFT(&quot;INVEST_REASON&quot;,4) = 'PRT1' AND &quot;INV_OBJ_ADD_ID2&quot; &lt;&gt; '' AND &quot;INVEST_OBJ_TYPE&quot; = 'PT_ABN_FY'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
     <viewAttributes>
