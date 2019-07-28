@@ -94,6 +94,10 @@
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="GJAHR"/>
       </viewAttribute>
+    
+      <viewAttribute id="CURRENCY">
+        <descriptions defaultDescription="CURRENCY"/>
+      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
@@ -105,6 +109,8 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="RISK_SCORE" source="RISK_SCORE"/>
     
       <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CURRENCY" source="CURRENCY"/>
     </input>
   </calculationView>
 </calculationViews>
@@ -126,6 +132,11 @@
       <descriptions defaultDescription="GROUP_ID"/>
       <keyMapping columnObjectName="Aggregation_1" columnName="GROUP_ID"/>
     </attribute>
+  
+    <attribute id="CURRENCY" order="7" semanticType="currencyCode" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENCY"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="CURRENCY"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
@@ -133,8 +144,9 @@
       <descriptions defaultDescription="RISK_SCORE"/>
       <measureMapping columnObjectName="Aggregation_1" columnName="RISK_SCORE"/>
     </measure>
-    <measure id="RISK_VALUE" order="6" aggregationType="sum" measureType="simple">
+    <measure id="RISK_VALUE" order="6" aggregationType="sum" measureType="amount" semanticType="amount">
       <descriptions defaultDescription="RISK_VALUE"/>
+      <unitCurrencyAttribute attributeName="CURRENCY"/>
       <measureMapping columnObjectName="Aggregation_1" columnName="RISK_VALUE"/>
     </measure>
   </baseMeasures>
