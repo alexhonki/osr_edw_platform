@@ -162,6 +162,28 @@ GROUP BY
 	"WAERS"
  ;
  	
+------Interstate Wages--------------
+
+	OSR_SATE = 
+ 	SELECT 
+ 	"WAGES"."ABN" AS "ABN",
+	"WAGES"."GJAHR" AS "GJAHR",
+	TO_NVARCHAR('AUD') AS "WAERS",
+ 	MAX("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"() AS "WAGES"
+ 	WHERE EXISTS (
+ 		SELECT * FROM :lt_data AS "KEYS"
+ 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	  )
+ 	AND "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+ 	"WAGES"."ABN",
+	"WAGES"."GJAHR"
+ 	; 	
+
+-----------------------
 
 -----------MAX Wages--------
 lt_wages = 
@@ -178,13 +200,18 @@ UNION
 SELECT * FROM :ATO_ITR
 UNION
 SELECT * FROM :ATO_BAS
+UNION
+SELECT * FROM :OSR_SATE
 )
 GROUP BY 
 "ABN",
 "GJAHR",
 "WAERS"
 ;	
+-----------------RMS PT Returns----------
 
+
+----------------------------------------
 	
 -------------------------
 
