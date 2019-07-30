@@ -664,19 +664,19 @@ AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
  ; 	
  	
  	
-et_result = 
+lt_pre_result = 
 	SELECT
 		"ABN",
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		100 AS "DETECTION_RESULT",
+		"CURRENCY",
 		CASE 
 			WHEN SUM("RISK_AMOUNT") < 0 
 				THEN 0 
 					ELSE SUM("RISK_AMOUNT") 
 		END AS "RISK_AMOUNT",
-		"CURRENCY"
+		SUM("WAGE") AS "WAGE"
 	FROM
 	(	SELECT
 		"DATA"."ABN" AS "ABN",
@@ -688,6 +688,7 @@ et_result =
 				THEN  "DATA"."WCQ_ACT_WAGES"/"GRP_RESULT"."WCQ_ACT_WAGES"*"GRP_RESULT"."RISK_AMOUNT" 
 					ELSE 0
 		END AS "RISK_AMOUNT",
+		"GRP_RESULT"."WAGE" AS "WAGE",
 		"GRP_RESULT"."CURRENCY" AS "CURRENCY"
 		FROM :lt_data_for_rule AS "DATA"
 		INNER JOIN :lt_grp_result AS "GRP_RESULT"
@@ -702,6 +703,7 @@ et_result =
 			"PERIOD_KEY",
 			"GJAHR",
 			"RISK_AMOUNT",
+			0 AS "WAGE",
 			"CURRENCY"
 		FROM :lt_rms_wages AS "RMS_WAGES"
 	)
@@ -713,6 +715,19 @@ et_result =
 		"CURRENCY"
 ; 
 
+et_result = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT",
+"RISK_AMOUNT",
+"CURRENCY"
+FROM 
+:lt_pre_result;
+
+
 et_text = 
 SELECT 
 "ABN",
@@ -722,7 +737,7 @@ SELECT
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT' AS "MSGID",
 '006' AS "MSGNO",
-TO_DECIMAL("RISK_AMOUNT",15,2) AS "MSGV1",
+TO_DECIMAL("WAGE",15,2) AS "MSGV1",
 TO_DECIMAL(:lv_thld_yearly,15,2) AS "MSGV2",
 "PERIOD_KEY" AS "MSGV3",
 "CURRENCY" AS "MSGV4",
@@ -731,7 +746,7 @@ TO_DECIMAL(:lv_thld_yearly,15,2) AS "MSGV2",
 'PERIOD_KEY' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:et_result
+:lt_pre_result
 ;
 
 
