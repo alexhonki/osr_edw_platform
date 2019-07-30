@@ -137,6 +137,7 @@ SELECT
 	"GJAHR",
 	"WAERS",
 	SUM("WAGE") AS "WAGE"
+
 FROM
 (
 	SELECT 
@@ -162,7 +163,73 @@ GROUP BY
 	"WAERS"
  ;
  	
+------Interstate Wages--------------
 
+	OSR_SATE = 
+ 	SELECT 
+ 	"WAGES"."ABN" AS "ABN",
+	"WAGES"."GJAHR" AS "GJAHR",
+	TO_NVARCHAR('AUD') AS "WAERS",
+ 	MAX("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"() AS "WAGES"
+ 	WHERE EXISTS (
+ 		SELECT * FROM :lt_data AS "KEYS"
+ 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	  )
+ 	AND "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+ 	"WAGES"."ABN",
+	"WAGES"."GJAHR"
+ 	; 	
+
+-----------------------
+
+-----------------RMS PT Returns----------
+RMS_WAGES =
+SELECT 
+"ABN",
+"GJAHR",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+TO_NVARCHAR('AUD') AS "WAERS",
+SUM("C_TAX_AMOUNT") AS "C_TAX_AMOUNT",
+SUM("C_BASE_TAX") AS "C_BASE_TAX",
+SUM("C_PAY_TAX_AMOUNT") AS "C_PAY_TAX_AMOUNT"
+FROM
+(
+SELECT
+	"WAGES"."ABN",
+	"WAGES"."GJAHR",
+	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
+	SUM("WAGES"."C_TAX_AMOUNT") AS "C_TAX_AMOUNT",
+	SUM("WAGES"."C_BASE_TAX") AS "C_BASE_TAX",
+	SUM("WAGES"."C_PAY_TAX_AMOUNT") AS "C_PAY_TAX_AMOUNT"
+FROM 
+	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
+INNER JOIN 	
+	:lt_data AS "KEYS"
+ ON
+			  "KEYS"."ABN" = "WAGES"."ABN"
+-- 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+
+GROUP BY 
+			"WAGES"."ABN",
+			"WAGES"."GJAHR",
+			"KEYS"."PERIOD_CATEGORY",
+			"KEYS"."PERIOD_KEY"
+)			
+GROUP BY 
+			"ABN",
+			"GJAHR",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY"	;
+
+----------------------------------------
+	
 -----------MAX Wages--------
 lt_wages = 
 
@@ -178,14 +245,14 @@ UNION
 SELECT * FROM :ATO_ITR
 UNION
 SELECT * FROM :ATO_BAS
+UNION
+SELECT * FROM :OSR_SATE
 )
 GROUP BY 
 "ABN",
 "GJAHR",
 "WAERS"
 ;	
-
-	
 -------------------------
 
 
@@ -214,6 +281,7 @@ FROM
 	0 AS "WAGE", 
 	"WAGE" AS "WCQ_ACT_WAGES"
 	FROM :QLD_WCQ
+
 )
 GROUP BY 
 "ABN",
@@ -311,7 +379,64 @@ AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 )
 
 ;
+-------------Minus RMS Tax Amount--------
 
+lt_estimated_tax  =
+
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT",
+CASE WHEN ("RISK_AMOUNT" - "RMS_PTAX_AMT") > 0  THEN   ("RISK_AMOUNT" - "RMS_PTAX_AMT") ELSE 0 END  AS "RISK_AMOUNT",
+--"RISK_AMOUNT" AS "RISKAMOUNT"
+"CURRENCY"
+FROM
+(
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"CURRENCY",
+SUM("DETECTION_RESULT") AS "DETECTION_RESULT",
+SUM("RISK_AMOUNT")      AS "RISK_AMOUNT",
+SUM("RMS_PTAX_AMT")     AS "RMS_PTAX_AMT"
+FROM
+(
+SELECT	
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"CURRENCY",
+"DETECTION_RESULT",
+"RISK_AMOUNT",
+0					    AS "RMS_PTAX_AMT"	
+FROM 	:lt_estimated_tax 
+UNION
+SELECT	
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"WAERS" AS "CURRENCY",
+0						AS "DETECTION_RESULT",
+0       				AS "RISK_AMOUNT",
+"C_BASE_TAX"	        AS "RMS_PTAX_AMT"
+FROM 	:RMS_WAGES 
+	
+)
+GROUP BY
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"CURRENCY"
+)
+;
+-----------------------------------------
     
     
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";

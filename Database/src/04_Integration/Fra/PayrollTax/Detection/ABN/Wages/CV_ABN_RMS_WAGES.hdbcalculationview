@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABN_RMS_WAGES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_RMS_WAGES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_RMS_WAGES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_RMS_WAGES">
+  <attributes>
+    <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="ABN"/>
+    </attribute>
+    <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="PERIOD_CATEGORY"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="GJAHR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="BPARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="WAERS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="WAERS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="A_GROSS_SAL_WAGE" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_GROSS_SAL_WAGE"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_GROSS_SAL_WAGE"/>
+    </measure>
+    <measure id="A_ALLOWANCE" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ALLOWANCE"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_ALLOWANCE"/>
+    </measure>
+    <measure id="A_BONUS" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_BONUS"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_BONUS"/>
+    </measure>
+    <measure id="A_COMMISSION" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_COMMISSION"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_COMMISSION"/>
+    </measure>
+    <measure id="A_DIRECTOR_FEE" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_DIRECTOR_FEE"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_DIRECTOR_FEE"/>
+    </measure>
+    <measure id="A_EMPL_SUP_CONTRIB" order="12" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_EMPL_SUP_CONTRIB"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_EMPL_SUP_CONTRIB"/>
+    </measure>
+    <measure id="A_FRINGE_BENEFIT" order="13" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_FRINGE_BENEFIT"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_FRINGE_BENEFIT"/>
+    </measure>
+    <measure id="A_ELIG_TERM_PMT" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ELIG_TERM_PMT"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_ELIG_TERM_PMT"/>
+    </measure>
+    <measure id="A_CONTRACTORS" order="15" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_CONTRACTORS"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_CONTRACTORS"/>
+    </measure>
+    <measure id="A_SHARE_SCHEMES" order="16" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_SHARE_SCHEMES"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_SHARE_SCHEMES"/>
+    </measure>
+    <measure id="A_APPRENT_PMT" order="17" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_APPRENT_PMT"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_APPRENT_PMT"/>
+    </measure>
+    <measure id="A_TRAINEES_PMT" order="18" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TRAINEES_PMT"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_TRAINEES_PMT"/>
+    </measure>
+    <measure id="A_OTH_NON_TAX_WAGE" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_OTH_NON_TAX_WAGE"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_OTH_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="C_TOT_QLD_NON_TAX_WAGE" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_QLD_NON_TAX_WAGE"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_TOT_QLD_NON_TAX_WAGE"/>
+    </measure>
+    <measure id="A_TOT_INT_WAGE" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_TOT_INT_WAGE"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="A_TOT_INT_WAGE"/>
+    </measure>
+  
+    <measure id="C_TOT_GRP_AUST_WAGES" order="22" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_GRP_AUST_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_TOT_GRP_AUST_WAGES"/>
+    </measure>
+    <measure id="C_TOT_QLD_TXBLE_WAGES" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOT_QLD_TXBLE_WAGES"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_TOT_QLD_TXBLE_WAGES"/>
+    </measure>
+    <measure id="C_DEDUCTION_ALLOWED" order="24" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_DEDUCTION_ALLOWED"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_DEDUCTION_ALLOWED"/>
+    </measure>
+    <measure id="C_TAX_AMOUNT" order="25" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_TAX_AMOUNT"/>
+    </measure>
+    <measure id="C_BASE_TAX" order="26" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_BASE_TAX"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_BASE_TAX"/>
+    </measure>
+    <measure id="C_REBATE_CALC" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_REBATE_CALC"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_REBATE_CALC"/>
+    </measure>
+    <measure id="C_PAY_TAX_AMOUNT" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAY_TAX_AMOUNT"/>
+      <measureMapping columnObjectName="TF_ABN_RMS_WAGES" columnName="C_PAY_TAX_AMOUNT"/>
+    </measure></baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
