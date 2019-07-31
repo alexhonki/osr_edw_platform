@@ -91,7 +91,6 @@ FROM
 WHERE NOT EXISTS (
 	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
 		WHERE "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
-		  AND "BP_ABN"."GRP_STATUS" <> 'NEP'
 )
 ;
 
@@ -143,8 +142,6 @@ ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
 INNER JOIN
 "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
 ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
-WHERE "FY"."END_DATE" > "BP_ABN"."VALID_DATE_FROM"
-  AND "BP_ABN"."GRP_STATUS" <> 'NEP'
 ;
 
 lt_reinstatment_result = 
