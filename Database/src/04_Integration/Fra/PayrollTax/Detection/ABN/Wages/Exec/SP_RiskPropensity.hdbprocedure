@@ -44,10 +44,10 @@ lt_rating =
 			"DATA"."GJAHR"										   AS "GJAHR",
 			CASE WHEN (
 					(SELECT SUM("CNT_ABN") FROM :lt_alert_root WHERE "ABN" = "ALERT_ROOT"."ABN" AND "GJAHR" < "ALERT_ROOT"."GJAHR" ) <> 1 )  
-						AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*5/5 ELSE
-						CASE WHEN ("ALERT_ROOT"."CNT_ABN"   =  1 )  AND ("DATA"."GJAHR" = "ALERT_ROOT"."GJAHR")	 THEN	100*2/5 ELSE
-			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   <> 1 )  AND ("DATA"."GJAHR" = "ALERT_ROOT"."GJAHR")	 THEN	100*3/5 ELSE 
-			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 1 )   AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*4/5 ELSE 0
+						AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*5/5 ELSE -- previous years, more than one found
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   =  1 )  AND ("DATA"."GJAHR" = "ALERT_ROOT"."GJAHR")	 THEN	100*2/5 ELSE --1 in the same year
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 1 )   AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*3/5 ELSE 
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   <> 1 )  AND ("DATA"."GJAHR" = "ALERT_ROOT"."GJAHR")	 THEN	100*4/5 ELSE 0 
 			END END END END AS "DETECTION_RESULT"
 		FROM :it_data_for_rule					AS "DATA"
 		INNER JOIN :lt_alert_root               AS "ALERT_ROOT"
