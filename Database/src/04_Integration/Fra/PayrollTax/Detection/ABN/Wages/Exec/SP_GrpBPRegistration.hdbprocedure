@@ -51,7 +51,6 @@ ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
   AND "FY"."END_DATE" >= "BP_ABN"."PRT_LIAB_DATE"
   AND "FY"."END_DATE" >= "BP_ABN"."VALID_FROM"
   AND "FY"."END_DATE" <= "BP_ABN"."VALID_TO"
-  AND "WS"."GROUP_ID" <> ''
 ;
 
 SELECT COUNT(*) INTO lv_registered_cnt FROM :lt_registered_result;
