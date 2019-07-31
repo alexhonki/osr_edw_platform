@@ -48,7 +48,6 @@ INNER JOIN
 ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
 INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
 ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
-WHERE "BP_ABN"."GRP_STATUS" = 'NG'
   AND "FY"."END_DATE" >= "BP_ABN"."PRT_LIAB_DATE"
   AND "FY"."END_DATE" >= "BP_ABN"."VALID_FROM"
   AND "FY"."END_DATE" <= "BP_ABN"."VALID_TO"
