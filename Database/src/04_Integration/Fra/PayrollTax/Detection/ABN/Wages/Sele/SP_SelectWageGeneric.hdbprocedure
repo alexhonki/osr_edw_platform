@@ -8,7 +8,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
 BEGIN
 
    et_data_for_rule =
-   SELECT
+   SELECT DISTINCT
    "WS"."ABN",
    "WS"."PERIOD_CATEGORY",
    "WS"."PERIOD_KEY",
@@ -27,7 +27,7 @@ BEGIN
    END AS "GROUP_ID"
    FROM 
    :it_workset AS "WS"
-   INNER JOIN
+   LEFT OUTER JOIN
    "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) AS "WAGES"
    ON  "WS"."ABN" = "WAGES"."ABN"
    AND "WS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
