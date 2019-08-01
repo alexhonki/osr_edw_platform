@@ -59,7 +59,7 @@ LV_PGP_PREFIX := '2';
     "ID" AS "CHILD_ID",
     "PGRP_ID" AS "PARENT_ID"
    FROM
-	"osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE, '')
+	"osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_GRP_DATE, '', 1)
    ;
    END IF;
    
