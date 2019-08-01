@@ -44,13 +44,13 @@ SELECT
 FROM 
 :it_data_for_rule AS "WS"
 INNER JOIN
-"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"() AS "FY"
+"osr.edw.platform.fra.prt.dt.abn::CV_FY_KEY_DATES" AS "FY"
 ON "WS"."GJAHR" = "FY"."FISCAL_YEAR"
 INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_PRT_BP_ABN"() as "BP_ABN"
 ON "WS"."ABN" = LEFT("BP_ABN"."ABN",11)
-  AND "FY"."END_DATE" >= "BP_ABN"."PRT_LIAB_DATE"
-  AND "FY"."END_DATE" >= "BP_ABN"."VALID_FROM"
-  AND "FY"."END_DATE" <= "BP_ABN"."VALID_TO"
+  AND  TO_NVARCHAR("BP_ABN"."PRT_LIAB_DATE") <=  TO_NVARCHAR("FY"."END_DATE")
+--  AND "FY"."END_DATE" >= "BP_ABN"."VALID_FROM"
+  AND  TO_NVARCHAR("BP_ABN"."VALID_TO") >=  TO_NVARCHAR("FY"."START_DATE") 
 ;
 
 SELECT COUNT(*) INTO lv_registered_cnt FROM :lt_registered_result;
