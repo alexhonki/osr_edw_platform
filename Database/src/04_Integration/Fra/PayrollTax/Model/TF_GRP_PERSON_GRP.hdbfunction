@@ -37,7 +37,7 @@ SELECT
 	"PERSON_NUM",
 	"PGRP_ID",
 	"PGRP_DESCR"
-	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_KEY_DATE,'');
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP"(:IV_KEY_DATE,'',1);
 	
 END IF;
 

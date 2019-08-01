@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP_BDAY"(IV_KEY_DATE DATE)
+FUNCTION "osr.edw.staging.md.asic.proxy::TF_PERSON_GRP_BDAY"(IV_KEY_DATE DATE, IV_TYPE INTEGER)
 RETURNS TABLE (
 "ID"			NVARCHAR(10),
 "PERSON_NUM"	NVARCHAR(9),
@@ -27,7 +27,7 @@ END IF;
  	SELECT 
 	"NAME",
 	"BIRTH"
-	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE)
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE, :IV_TYPE)
 	WHERE "PERS_START_DT" <= :LV_KEY_DATE
 	  AND "BIRTH_DT" <> TO_DATE('1900-01-01')
 	  AND "BIRTH_COUNTRY_CODE" <> ''
@@ -46,7 +46,7 @@ END IF;
 	"PERSON"."NAME" AS "NAME", 
 	"PERSON"."BIRTH" AS "BIRTH",
 	STRING_AGG("PERSON"."PERSON_NUM",'|' ORDER BY "PERSON"."PERSON_NUM" ASC) AS "PGRP_DESCR"
-	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE) AS "PERSON"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE, :IV_TYPE) AS "PERSON"
 	INNER JOIN
 	:lt_bday_duplicate AS "DUP"
 	ON  "PERSON"."NAME" = "DUP"."NAME"
@@ -62,7 +62,7 @@ END IF;
 	'C' || LEFT("DUP"."PGRP_DESCR",9) AS "PGRP_ID",
 	"DUP"."PGRP_DESCR" AS "PGRP_DESCR",
 	'BDAY' AS "PGRP_RULE"
-	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE) AS "PERSON"
+	FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE, :IV_TYPE) AS "PERSON"
 	INNER JOIN
 	:lt_pgrp_key AS "DUP"
 	ON  "PERSON"."NAME" = "DUP"."NAME"
