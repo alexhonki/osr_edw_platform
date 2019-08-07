@@ -65,14 +65,55 @@ ALERT_INFO =
 
 END IF;   
 
+--======================
+
+ACN_DATA =
+SELECT DISTINCT
+	"ALERT"."ABN",
+	"BUT0ID"."PARTNER"
+FROM 
+    "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+LEFT OUTER JOIN
+    "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY"
+    		ON "ALERT"."ABN" = "AGENCY"."ABN"
+LEFT OUTER JOIN    		
+	"osr.edw.staging.md.rms.proxy::CV_BUT0ID" AS "BUT0ID"
+			ON	"AGENCY"."ACN" = "BUT0ID"."IDNUMBER"
+	
+WHERE 	 
+	"BUT0ID"."TYPE" IN ('ZACN') 
+AND "BUT0ID"."PARTNER" NOT IN 
+		(
+	 	SELECT 	DISTINCT "PARTNER" FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT000.active_data"
+		WHERE "BU_GROUP" IN ('OLGR') OR "AUGRP"  IN ('ZOFT') OR "XDELE" = 'X'
+		)
+AND "BUT0ID"."VALID_DATE_TO" >= 	TO_NVARCHAR((TO_INT("ALERT"."GJAHR") - 1) || '0701')	
+;	
+
+--======================
+
 ALERT_BP =
+SELECT DISTINCT
+"ABN",
+"PARTNER"
+FROM
+(
 	SELECT DISTINCT 
         "ABN",
         "BPARTNER" AS "PARTNER"
     FROM 
 		:ALERT_INFO
     WHERE 
-    	"BPARTNER" <> ''	
+    	"BPARTNER" <> ''
+    UNION
+    	SELECT DISTINCT 
+        "ABN",
+        "PARTNER" AS "PARTNER"
+    FROM 
+		:ACN_DATA
+    WHERE 
+    	"PARTNER" <> ''
+)
 ;
 
 TRUST_TRUSTEE_REL =
