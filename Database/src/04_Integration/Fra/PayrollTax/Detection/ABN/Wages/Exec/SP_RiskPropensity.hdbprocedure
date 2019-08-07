@@ -66,25 +66,53 @@ et_result =
 		"DETECTION_RESULT"
 	FROM :lt_rating
 	;
-
+	
+	
 et_text = 
 	SELECT 
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
+		"RATING"."ABN",
+		"RATING"."PERIOD_CATEGORY",
+		"RATING"."PERIOD_KEY",
+		"RATING"."GJAHR",
 		''					AS "TEXT",
 		'/OSRQLD/FRA_PRT'	AS "MSGID",
-		'018'				AS "MSGNO",
-		"GJAHR" 			AS "MSGV1",
-		'1' 				AS "MSGV2",
+		--'018'				AS "MSGNO",
+		'028'				AS "MSGNO",
+		--"RATING"."GJAHR" 	AS "MSGV1",
+		CASE 
+			WHEN ("DETECTION_RESULT" = 100 OR "DETECTION_RESULT" = 60)
+				THEN (	SELECT SUM("CNT_ABN")
+						FROM :lt_alert_root AS "ALERT_ROOT" 
+						WHERE "ALERT_ROOT"."ABN" = "RATING"."ABN"
+							AND  "ALERT_ROOT"."GJAHR" < "RATING"."GJAHR"  )
+					ELSE 
+					CASE 
+						WHEN ("DETECTION_RESULT" = 80 OR "DETECTION_RESULT" = 40) 
+							THEN (	SELECT SUM("CNT_ABN")
+									FROM :lt_alert_root AS "ALERT_ROOT" 
+									WHERE "ALERT_ROOT"."ABN" = "RATING"."ABN"
+										AND  "ALERT_ROOT"."GJAHR" = "RATING"."GJAHR"  )
+							ELSE 0
+					END
+		END AS "MSGV1",		
+		
+		
+		CASE 
+			WHEN ("DETECTION_RESULT" = 100 OR "DETECTION_RESULT" = 60)
+				THEN 'previous' 
+					ELSE 
+					CASE 
+						WHEN ("DETECTION_RESULT" = 80 OR "DETECTION_RESULT" = 40) 
+							THEN 'same'
+								ELSE 'previous or same'
+					END
+		END AS "MSGV2",
 		''					AS "MSGV3",
 		''					AS "MSGV4",
 		''					AS "MSGV1_FC",
 		''					AS "MSGV2_FC",
 		''					AS "MSGV3_FC",
 		''					AS "MSGV4_FC"
-	FROM  :lt_rating
+	FROM  :lt_rating as "RATING"
 	;
-	
 END	

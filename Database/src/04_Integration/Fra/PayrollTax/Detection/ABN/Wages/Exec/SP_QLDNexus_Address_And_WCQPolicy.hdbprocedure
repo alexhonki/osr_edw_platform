@@ -192,13 +192,65 @@ FROM
 
 END IF;
 
+
+lt_text = 
+SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		SUM("FLAG_ADD") AS "FLAG_ADD",
+		SUM("FLAG_POL") AS "FLAG_POL"
+		FROM (
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		1 AS "FLAG_ADD",
+		0 AS "FLAG_POL"
+		FROM :lt_address
+		WHERE "FLAG_ADDR" = :lx_flag_qld_address
+		UNION
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		0 AS "FLAG_ADD",
+		1 AS "FLAG_POL"
+		FROM :lt_policy
+		WHERE "FLAG_POLICY" = :lx_flag_wcq_policy
+		) AS "CONSOLIDATED"
+GROUP BY
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+;
+	
+	
 et_text = 
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-'QLD address/workcover policy is found' AS "TEXT",
+CASE 
+	WHEN "FLAG_ADD" > 0 AND "FLAG_POL" > 0 
+		THEN 'QLD business address and Workcover policy identified' 
+		ELSE 
+			CASE 
+				WHEN "FLAG_ADD" > 0 AND "FLAG_POL" = 0 
+					THEN 'QLD business address idenitfied' 
+					ELSE 
+						CASE 
+							WHEN "FLAG_ADD" = 0 AND "FLAG_POL" > 0 
+								THEN 'Workcover policy identified'
+						END 
+			END 
+END AS "TEXT",
+--'Workcover policy identified' AS "TEXT", 
 '' AS "MSGID",
 '' AS "MSGNO",
 '' AS "MSGV1",
@@ -210,7 +262,8 @@ SELECT
 '' AS "MSGV3_FC",
 '' AS "MSGV4_FC"
 FROM 
-:et_result
+--:et_result
+:lt_text
 ;
 
 END
