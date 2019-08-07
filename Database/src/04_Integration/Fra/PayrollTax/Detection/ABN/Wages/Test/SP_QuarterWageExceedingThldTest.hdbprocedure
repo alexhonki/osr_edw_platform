@@ -15,7 +15,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_QuarterWageExceedingTh
 	READS SQL DATA AS
 BEGIN
 
-IF :iv_abn = '?' THEN 
+IF :iv_abn = '?' OR :iv_abn = '' THEN 
 lt_workset =
 SELECT 
 "ABN",
@@ -56,7 +56,8 @@ CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
 :lt_workset,
 lt_out_for_rule );
 
-CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"(
+--CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_WageExceedingThld"(
+CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QuarterWageExceedingThld"(
 :lt_out_for_rule,
 :lt_param,
 et_result,

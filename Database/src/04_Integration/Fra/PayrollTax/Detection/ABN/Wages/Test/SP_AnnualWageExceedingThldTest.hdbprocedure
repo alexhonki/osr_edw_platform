@@ -16,6 +16,19 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_AnnualWageExceedingThl
 	READS SQL DATA AS
 BEGIN
 
+IF :iv_abn = '' OR :iv_abn = '?' THEN
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "GJAHR" = :iv_gjahr
+  AND "PERIOD_CATEGORY" = 'PT-A'
+;
+ELSE
 
 lt_workset =
 SELECT 
@@ -29,6 +42,7 @@ WHERE "ABN"   = :iv_abn
   AND "GJAHR" = :iv_gjahr
   AND "PERIOD_CATEGORY" = 'PT-A'
 ;
+END IF;
 
 lt_param =
 SELECT

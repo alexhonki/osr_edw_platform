@@ -293,6 +293,7 @@ FROM
 :lt_result
 ;
 
+/*
 et_text = 
 SELECT 
 "ABN",
@@ -313,6 +314,29 @@ TO_DECIMAL(:lv_thld_yearly,15,2) AS "MSGV2",
 FROM 
 :lt_wages
 ;
+*/
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT'			AS "MSGID",
+'033'						AS "MSGNO",
+TO_DECIMAL("WAGE",15,2) 	AS "MSGV1",
+"WAERS" 					AS "MSGV2",
+''							AS "MSGV3",
+''							AS "MSGV4",
+'ATO_BAS_TOTL_PMT_FOR_WRK_AMT'	AS "MSGV1_FC",
+'ATO_BAS_TOTL_PMT_FOR_WRK_AMT'	AS "MSGV2_FC",
+'PERIOD_KEY'				AS "MSGV3_FC",
+''							AS "MSGV4_FC"
+FROM 
+:lt_wage_for_tax
+;
+
+
 
 END IF;
 
@@ -331,6 +355,7 @@ FROM
 :lt_result
 ;
 
+/*
 et_text = 
 SELECT 
 "ABN",
@@ -350,6 +375,27 @@ TO_DECIMAL(:lv_thld_yearly,15,2) AS "MSGV2",
 '' AS "MSGV4_FC"
 FROM 
 :lt_wages
+;
+*/
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT'			AS "MSGID",
+'033'						AS "MSGNO",
+TO_DECIMAL("WAGE",15,2) 	AS "MSGV1",
+"WAERS" 					AS "MSGV2",
+''							AS "MSGV3",
+''							AS "MSGV4",
+'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV1_FC",
+'ATO_BAS_TOTL_PMT_FOR_WRK_AMT' AS "MSGV2_FC",
+'PERIOD_KEY'				AS "MSGV3_FC",
+''							AS "MSGV4_FC"
+FROM 
+:lt_wage_for_tax
 ;
 
 END IF;
