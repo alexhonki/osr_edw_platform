@@ -45,6 +45,7 @@ WHERE NOT EXISTS (
 
 SELECT COUNT(*) INTO lv_new_registration_cnt FROM :lt_new_registration_result;
 
+/* -- removed not required for new rego
 IF :lv_new_registration_cnt > 0 THEN 
 lt_new_registration_text = 
 SELECT 
@@ -66,6 +67,7 @@ SELECT
 FROM 
 :lt_new_registration_result;
 END IF;
+*/ 
 
 END IF;
 
@@ -134,10 +136,14 @@ SELECT
 "GJAHR",
 '' AS "TEXT",
 '/OSRQLD/FRA_PRT'       AS "MSGID",
-'002'                   AS "MSGNO",
-RIGHT("PRT_LIAB_DATE",2) || '/' || RIGHT(LEFT("PRT_LIAB_DATE",6),2) || '/' || LEFT("PRT_LIAB_DATE",4) AS "MSGV1",
-RIGHT("VALID_TO",2) || '/' || RIGHT(LEFT("VALID_TO",6),2) || '/' || LEFT("VALID_TO",4) AS "MSGV2",
-"BPARTNER"				AS "MSGV3",
+--'002'                   AS "MSGNO",
+--RIGHT("PRT_LIAB_DATE",2) || '/' || RIGHT(LEFT("PRT_LIAB_DATE",6),2) || '/' || LEFT("PRT_LIAB_DATE",4) AS "MSGV1",
+--RIGHT("VALID_TO",2) || '/' || RIGHT(LEFT("VALID_TO",6),2) || '/' || LEFT("VALID_TO",4) AS "MSGV2",
+--"BPARTNER"				AS "MSGV3",
+'034'                   AS "MSGNO",
+"BPARTNER"				AS "MSGV1",
+RIGHT("PRT_LIAB_DATE",2) || '/' || RIGHT(LEFT("PRT_LIAB_DATE",6),2) || '/' || LEFT("PRT_LIAB_DATE",4)	AS "MSGV2",
+RIGHT("VALID_TO",2) || '/' || RIGHT(LEFT("VALID_TO",6),2) || '/' || LEFT("VALID_TO",4)					AS "MSGV3",
 ''                      AS "MSGV4",
 'PRT_LIAB_DATE'         AS "MSGV1_FC",
 'VALID_TO'      		AS "MSGV2_FC",
@@ -194,7 +200,7 @@ SELECT
 100 AS "DETECTION_RESULT"
 FROM :lt_new_registration_result
 ;
-
+/* -- removed, no text required for new rego
 et_text = 
 SELECT 
 "ABN",
@@ -234,7 +240,7 @@ SELECT
 FROM 
 :lt_new_registration_text
 ;
-
+*/
 END IF;
 
 
@@ -250,6 +256,78 @@ DISTINCT
 "GJAHR",
 100 AS "DETECTION_RESULT"
 FROM :lt_reinstatment_result
+;
+/* -- moved out of this condition as no text required for new rego
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_reinstatment_text
+;
+*/
+END IF;
+
+IF  :lv_reinstatement_cnt = 0 
+AND :lv_new_registration_cnt > 0 THEN
+
+lt_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :lt_new_registration_result
+;
+/* -- removed, no text required for new rego
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"TEXT",
+"MSGID",
+"MSGNO",
+"MSGV1",
+"MSGV2",
+"MSGV3",
+"MSGV4",
+"MSGV1_FC",
+"MSGV2_FC",
+"MSGV3_FC",
+"MSGV4_FC"
+FROM 
+:lt_new_registration_text
+;
+*/
+
+END IF;
+
+IF :lv_mode = 'S' THEN
+
+et_result =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result
 ;
 
 et_text = 
@@ -275,17 +353,16 @@ FROM
 
 END IF;
 
-IF  :lv_reinstatement_cnt = 0 
-AND :lv_new_registration_cnt > 0 THEN
+IF :lv_mode = 'R' THEN
 
-lt_result =
+et_result =
 SELECT 
 "ABN",
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
 "GJAHR",
-100 AS "DETECTION_RESULT"
-FROM :lt_new_registration_result
+"DETECTION_RESULT"
+FROM :lt_result
 ;
 
 et_text = 
@@ -306,35 +383,7 @@ SELECT
 "MSGV3_FC",
 "MSGV4_FC"
 FROM 
-:lt_new_registration_text
-;
-
-END IF;
-
-IF :lv_mode = 'S' THEN
-
-et_result =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-"DETECTION_RESULT"
-FROM :lt_result
-;
-
-END IF;
-
-IF :lv_mode = 'R' THEN
-
-et_result =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-"DETECTION_RESULT"
-FROM :lt_result
+:lt_reinstatment_text
 ;
 
 END IF;
