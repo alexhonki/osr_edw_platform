@@ -95,7 +95,7 @@ WHERE ("GRP"."DR_GROUP_MEM" = :lx_dr		AND :lx_dr = 'Y' )
   OR ("GRP"."TR_GROUP_MEM" = :lx_tr			AND :lx_tr = 'Y' )
 ;
 
-
+/*
 et_text =
 SELECT 
 "ABN",
@@ -116,6 +116,35 @@ SELECT
 FROM 
 :et_result
 ;
+*/
+et_text =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+''								AS "TEXT",
+'/OSRQLD/FRA_PRT'				AS "MSGID",
+'039'							AS "MSGNO",
+CASE 
+	WHEN "DETECTION_RESULT" = 20 THEN 'Trust'
+	WHEN "DETECTION_RESULT" = 40 THEN 'Common Control Shareholder or Director'
+	WHEN "DETECTION_RESULT" = 60 THEN 'Majority Shareholder or Director'
+	WHEN "DETECTION_RESULT" = 80 THEN 'RBC'
+	WHEN "DETECTION_RESULT" = 100 THEN 'Interstate'
+		ELSE ''
+END 							AS "MSGV1",
+''								AS "MSGV2",
+''								AS "MSGV3",
+''								AS "MSGV4",
+''								AS "MSGV1_FC",
+''								AS "MSGV2_FC",
+''								AS "MSGV3_FC",
+''								AS "MSGV4_FC"
+FROM 
+:et_result
+;
+
 
 END IF;
 
@@ -211,7 +240,7 @@ GROUP BY
 "PERIOD_KEY",
 "GJAHR"
 ;
-   
+/*  
 et_text =
 SELECT 
 "ABN",
@@ -240,6 +269,36 @@ TO_INT("DETECTION_RESULT"/20) AS "MSGV4",
 FROM 
 :et_result
 ;
+*/
+
+et_text =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+''								AS "TEXT",
+'/OSRQLD/FRA_PRT'				AS "MSGID",
+'038'							AS "MSGNO",
+CASE 
+	WHEN "DETECTION_RESULT" = 20 THEN 'Trust'
+	WHEN "DETECTION_RESULT" = 40 THEN 'Common Control Shareholder or Director'
+	WHEN "DETECTION_RESULT" = 60 THEN 'Majority Shareholder or Director'
+	WHEN "DETECTION_RESULT" = 80 THEN 'RBC'
+	WHEN "DETECTION_RESULT" = 100 THEN 'Interstate'
+		ELSE ''
+END 							AS "MSGV1",
+TO_INT("DETECTION_RESULT"/20)	AS "MSGV2",
+''								AS "MSGV3",
+''								AS "MSGV4",
+''								AS "MSGV1_FC",
+''								AS "MSGV2_FC",
+''								AS "MSGV3_FC",
+''								AS "MSGV4_FC"
+FROM 
+:et_result
+;
+
 
 END IF;
 
