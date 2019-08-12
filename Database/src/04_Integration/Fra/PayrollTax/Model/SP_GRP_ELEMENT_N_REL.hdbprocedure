@@ -27,26 +27,56 @@ ELSE
 END IF;
 
 LT_GROUP = 
-SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+SELECT  
+"GROUP_TYPE", 
+"GROUP_ID", 
+"ORG_ID" 
+FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
 WHERE "GRP_DATE" = :LV_GRP_DATE
 ;
 
+LT_GROUP_TO_SUBSUME = 
+SELECT "GROUP_TYPE", "GROUP_ID" FROM :LT_GROUP
+GROUP BY "GROUP_TYPE", "GROUP_ID"
+HAVING COUNT(*) > 1
+;
+
 lt_2bsubsume = 
-SELECT "ORG_ID", "GROUP_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
-WHERE "GRP_DATE" = :LV_GRP_DATE
-  AND "ORG_ID" IN(
-SELECT "ORG_ID" FROM :LT_GROUP
-GROUP BY "ORG_ID" HAVING COUNT(*) > 1
-);
+SELECT 
+"GRP_MEM"."GROUP_TYPE" AS "GROUP_TYPE",
+"GRP_MEM"."ORG_ID" AS "ORG_ID",
+"GRP_MEM"."GROUP_ID" AS "GROUP_ID"
+FROM 
+:LT_GROUP AS "GRP_MEM"
+INNER JOIN 
+:LT_GROUP_TO_SUBSUME AS "GRP"
+ON  "GRP_MEM"."GROUP_TYPE" = "GRP"."GROUP_TYPE"
+AND "GRP_MEM"."GROUP_ID" = "GRP"."GROUP_ID"
+;
 
 lt_disjoint_element_rel = 
--- members in the same initial group should have relation
+-- members in the same initial group should have relation, build self connection
+SELECT DISTINCT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
+FROM 
+:lt_2bsubsume AS "L" 
+INNER JOIN 
+:lt_2bsubsume AS "R"
+ON  "L"."GROUP_ID" = "R"."GROUP_ID"
+AND "L"."GROUP_TYPE" = "R"."GROUP_TYPE"
+;
+
+/*
+lt_disjoint_element_rel = 
+SELECT DISTINCT "ORG_ID_L", "ORG_ID_R" FROM 
+(
+-- members in the same initial group should have relation, build self connection
 SELECT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
 FROM 
 :LT_GROUP AS "L" 
 INNER JOIN 
 :LT_GROUP AS "R"
 ON  "L"."GROUP_ID" = "R"."GROUP_ID"
+AND "L"."GROUP_TYPE" = "R"."GROUP_TYPE"
 UNION
 -- members in different initial groups should have relation
 SELECT "L"."ORG_ID" AS "ORG_ID_L", "R"."ORG_ID" AS "ORG_ID_R"
@@ -55,11 +85,12 @@ FROM
 ) 
 AS "L"
 INNER JOIN
-(SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+(SELECT DISTINCT  "GROUP_ID", "ORG_ID" FROM :LT_GROUP
 ) 
 AS "R"
 ON "L"."GROUP_ID" = "R"."GROUP_ID"  
-;
+)
+*/
 
 et_element_rel = 
 SELECT "ELEMENT_L_NUM", "ELEMENT_R_NUM" 
