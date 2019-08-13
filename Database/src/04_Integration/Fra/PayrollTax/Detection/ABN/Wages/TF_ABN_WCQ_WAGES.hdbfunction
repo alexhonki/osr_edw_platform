@@ -12,6 +12,7 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 	
+
 	lt_wcq_wages = 
      SELECT
     	"WCQ_WAGES"."POLICY_NO"								AS "POLICY_NO",
@@ -23,9 +24,16 @@ BEGIN
 		'AUD'                                           	 AS  "WAERS"
 	FROM 
 		"osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"() AS "WCQ_WAGES"
-		INNER JOIN 
-		"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"() AS "WCQ_POLICY"
-		ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_POLICY"."POLICY_NO"
+	INNER JOIN 
+		(
+	SELECT DISTINCT
+		"POLICY_NO",
+		"ABN"
+	FROM
+	"osr.edw.staging.md.wcq.proxy::TF_POLICY_DETAILS_C"()
+		) AS "WCQ_POLICY"
+	ON  "WCQ_WAGES"."POLICY_NO" = "WCQ_POLICY"."POLICY_NO"
+		
 		WHERE "WCQ_POLICY"."ABN" IS NOT NULL
 		  AND "WCQ_POLICY"."ABN" <> ''
 	;
