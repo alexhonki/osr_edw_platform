@@ -2,7 +2,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_QLDNexus_Address_And_WCQ
 (
 	IN IT_DATA_FOR_RULE 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_qld_nexus",
 	IN PARAMETERS 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_qld_nexus_s_default",
-	OUT ET_RESULT 		"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT ET_RESULT 			"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
    LANGUAGE SQLSCRIPT
@@ -210,8 +210,9 @@ SELECT
 		1 AS "FLAG_ADD",
 		0 AS "FLAG_POL"
 		FROM :lt_address
-		WHERE "FLAG_ADDR" = :lx_flag_qld_address
-			AND "DETECTION_RESULT" > 0
+		WHERE --"FLAG_ADDR" = :lx_flag_qld_address
+			--AND "DETECTION_RESULT" > 0
+			"DETECTION_RESULT" > 0
 		UNION
 	SELECT
 		"ABN",
@@ -221,9 +222,18 @@ SELECT
 		0 AS "FLAG_ADD",
 		1 AS "FLAG_POL"
 		FROM :lt_policy
-		WHERE "FLAG_POLICY" = :lx_flag_wcq_policy
-			AND "DETECTION_RESULT" > 0
+		WHERE -- "FLAG_POLICY" = :lx_flag_wcq_policy
+			-- AND "DETECTION_RESULT" > 0
+			"DETECTION_RESULT" > 0
 		) AS "CONSOLIDATED"
+		WHERE EXISTS (
+			SELECT * 
+			FROM :lt_result 
+			where "ABN" = "CONSOLIDATED"."ABN" 
+				AND "PERIOD_CATEGORY" = "PERIOD_CATEGORY" 
+				AND "PERIOD_KEY" = "CONSOLIDATED"."PERIOD_KEY"
+				AND "GJAHR" = "CONSOLIDATED"."GJAHR"
+		)
 GROUP BY
 "ABN",
 "PERIOD_CATEGORY",
