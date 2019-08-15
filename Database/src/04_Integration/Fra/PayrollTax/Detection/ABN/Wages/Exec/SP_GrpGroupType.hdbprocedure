@@ -69,32 +69,53 @@ WHERE (("GRP"."DR_GROUP_MEM" = :lx_dr			AND :lx_dr = 'Y' )		OR :lx_dr = 'N')
 */
 
 IF :lv_mode = 'S' THEN
-et_result =
-SELECT 
-"DATA"."ABN",
-"DATA"."PERIOD_CATEGORY",
-"DATA"."PERIOD_KEY",
-"DATA"."GJAHR",
-100 AS "DETECTION_RESULT"
-FROM 
-:it_data_for_rule AS "DATA"
-INNER JOIN
-"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY"
-ON "DATA"."GJAHR" = "FY"."FISCAL_YEAR"
-INNER JOIN
-"osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
-ON  "DATA"."ABN" = "GRP"."ABN"
-AND "DATA"."GJAHR" = "GRP"."GJAHR"
-AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
-WHERE ("GRP"."DR_GROUP_MEM" = :lx_dr		AND :lx_dr = 'Y' )
-  OR ("GRP"."SH_GROUP_MEM" = :lx_sh			AND :lx_sh = 'Y' )
-  OR ("GRP"."RBC_GROUP_MEM" = :lx_rbc		AND :lx_rbc = 'Y' )
-  OR ("GRP"."CCDR_GROUP_MEM" = :lx_ccdr		AND :lx_ccdr = 'Y' )
-  OR ("GRP"."CCSH_GROUP_MEM" = :lx_ccsh		AND :lx_ccsh = 'Y' )
-  OR ("GRP"."INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )
-  OR ("GRP"."TR_GROUP_MEM" = :lx_tr			AND :lx_tr = 'Y' )
+--et_result = 
+lt_data_grp_summary_S = 
+	SELECT 
+		"DATA"."ABN",
+		"DATA"."PERIOD_CATEGORY",
+		"DATA"."PERIOD_KEY",
+		"DATA"."GJAHR",
+	/* BEGIN INSERT FOR EVAL TEXT CHANGE */
+		--100 AS "DETECTION_RESULT"
+		CASE WHEN "GRP"."DR_GROUP_MEM" = 'Y'			THEN 'Majority Director, '			Else '' END  || 
+		CASE WHEN "GRP"."SH_GROUP_MEM" = 'Y'			THEN 'Majority Shareholder, '		Else '' END  || 
+		CASE WHEN "GRP"."RBC_GROUP_MEM" = 'Y'			THEN 'RBC, '						Else ''	END  ||
+		CASE WHEN "GRP"."CCDR_GROUP_MEM" = 'Y'			THEN 'Common Control Director, '	Else ''	END  || 
+		CASE WHEN "GRP"."CCSH_GROUP_MEM" = 'Y'			THEN 'Common Control Shareholder, ' Else ''	END  || 
+		CASE WHEN "GRP"."INTERSTATE_GROUP_MEM" = 'Y'	THEN 'Interstate Grouping, '		Else ''	END  ||
+		CASE WHEN "GRP"."TR_GROUP_MEM" = 'Y'			THEN 'Trust, '						Else '' END AS "IDENTIFIED_GROUPS"
+	/* END INSERT FOR EVAL TEXT CHANGE */
+	FROM 
+	:it_data_for_rule AS "DATA"
+	INNER JOIN
+	"osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY"
+	ON "DATA"."GJAHR" = "FY"."FISCAL_YEAR"
+	INNER JOIN
+	"osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
+	ON  "DATA"."ABN" = "GRP"."ABN"
+	AND "DATA"."GJAHR" = "GRP"."GJAHR"
+	AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
+	WHERE ("GRP"."DR_GROUP_MEM" = :lx_dr		AND :lx_dr = 'Y' )
+	  OR ("GRP"."SH_GROUP_MEM" = :lx_sh			AND :lx_sh = 'Y' )
+	  OR ("GRP"."RBC_GROUP_MEM" = :lx_rbc		AND :lx_rbc = 'Y' )
+	  OR ("GRP"."CCDR_GROUP_MEM" = :lx_ccdr		AND :lx_ccdr = 'Y' )
+	  OR ("GRP"."CCSH_GROUP_MEM" = :lx_ccsh		AND :lx_ccsh = 'Y' )
+	  OR ("GRP"."INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )
+	  OR ("GRP"."TR_GROUP_MEM" = :lx_tr			AND :lx_tr = 'Y' )	
 ;
 
+/* BEGIN INSERT FOR EVAL TEXT CHANGE */
+
+et_result = 
+SELECT DISTINCT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	100 AS "DETECTION_RESULT"
+FROM :lt_data_grp_summary_S
+;
 /*
 et_text =
 SELECT 
@@ -118,38 +139,31 @@ FROM
 ;
 */
 et_text =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-''								AS "TEXT",
-'/OSRQLD/FRA_PRT'				AS "MSGID",
-'039'							AS "MSGNO",
-CASE 
-	WHEN "DETECTION_RESULT" = 20 THEN 'Trust'
-	WHEN "DETECTION_RESULT" = 40 THEN 'Common Control Shareholder or Director'
-	WHEN "DETECTION_RESULT" = 60 THEN 'Majority Shareholder or Director'
-	WHEN "DETECTION_RESULT" = 80 THEN 'RBC'
-	WHEN "DETECTION_RESULT" = 100 THEN 'Interstate'
-		ELSE ''
-END 							AS "MSGV1",
-''								AS "MSGV2",
-''								AS "MSGV3",
-''								AS "MSGV4",
-''								AS "MSGV1_FC",
-''								AS "MSGV2_FC",
-''								AS "MSGV3_FC",
-''								AS "MSGV4_FC"
-FROM 
-:et_result
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		RTRIM("IDENTIFIED_GROUPS", ', ')	AS "TEXT",
+		''									AS "MSGID",
+		''									AS "MSGNO",
+		''									AS "MSGV1",
+		''									AS "MSGV2",
+		''									AS "MSGV3",
+		''									AS "MSGV4",
+		''									AS "MSGV1_FC",
+		''									AS "MSGV2_FC",
+		''									AS "MSGV3_FC",
+		''									AS "MSGV4_FC"
+	FROM 
+	:lt_data_grp_summary_S
 ;
-
+/* END INSERT FOR EVAL TEXT CHANGE */
 
 END IF;
 
 IF :lv_mode = 'R' THEN
-lt_data_grp_summary = 
+lt_data_grp_summary_R = 
 SELECT 
 "DATA"."ABN",
 "DATA"."PERIOD_CATEGORY",
@@ -162,6 +176,15 @@ SELECT
 "GRP"."SH_GROUP_MEM",
 "GRP"."RBC_GROUP_MEM",
 "GRP"."INTERSTATE_GROUP_MEM"
+/* BEGIN INSERT FOR EVAL TEXT CHANGE */
+, CASE WHEN "GRP"."DR_GROUP_MEM" = 'Y'			THEN 'Majority Director, '			Else '' END  || 
+CASE WHEN "GRP"."SH_GROUP_MEM" = 'Y'			THEN 'Majority Shareholder, '		Else '' END  || 
+CASE WHEN "GRP"."RBC_GROUP_MEM" = 'Y'			THEN 'RBC, '						Else ''	END  ||
+CASE WHEN "GRP"."CCDR_GROUP_MEM" = 'Y'			THEN 'Common Control Director, '	Else ''	END  || 
+CASE WHEN "GRP"."CCSH_GROUP_MEM" = 'Y'			THEN 'Common Control Shareholder, ' Else ''	END  || 
+CASE WHEN "GRP"."INTERSTATE_GROUP_MEM" = 'Y'	THEN 'Interstate Grouping, '		Else ''	END  ||
+CASE WHEN "GRP"."TR_GROUP_MEM" = 'Y'			THEN 'Trust, '						Else '' END AS "IDENTIFIED_GROUPS"
+/*END INSERT FOR EVAL TEXT CHANGE */
 FROM 
 :it_data_for_rule AS "DATA"
 INNER JOIN
@@ -174,72 +197,92 @@ AND "DATA"."GJAHR" = "GRP"."GJAHR"
 AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
 ;
 
-et_result =
+--et_result =
+lt_data_grp_summary_result = 
 SELECT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-MAX("DETECTION_RESULT") AS "DETECTION_RESULT"
-FROM (
--- 20
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-20 AS "DETECTION_RESULT"
-FROM :lt_data_grp_summary
-WHERE ("TR_GROUP_MEM" = :lx_tr	AND :lx_tr = 'Y' )
-UNION
---40
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-40 AS "DETECTION_RESULT"
-FROM :lt_data_grp_summary
-WHERE ("CCDR_GROUP_MEM" = :lx_ccdr	AND :lx_ccdr = 'Y' )
-   OR ("CCSH_GROUP_MEM" = :lx_ccsh	AND :lx_ccsh = 'Y' )
-UNION
---60
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-60 AS "DETECTION_RESULT"
-FROM :lt_data_grp_summary
-WHERE ("DR_GROUP_MEM" = :lx_dr	AND :lx_dr = 'Y' )
-   OR ("SH_GROUP_MEM" = :lx_sh	AND :lx_sh = 'Y' )
-UNION
---80
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-80 AS "DETECTION_RESULT"
-FROM :lt_data_grp_summary
-WHERE ("RBC_GROUP_MEM" = :lx_rbc	AND :lx_rbc = 'Y' )
-UNION
---100
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-100 AS "DETECTION_RESULT"
-FROM :lt_data_grp_summary
-WHERE ("INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )
-)
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"IDENTIFIED_GROUPS",-- added for eval text
+	MAX("DETECTION_RESULT") AS "DETECTION_RESULT"
+FROM ( 
+	-- 20
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"IDENTIFIED_GROUPS",-- added for eval text
+		20 AS "DETECTION_RESULT"
+	FROM :lt_data_grp_summary_R
+	WHERE ("TR_GROUP_MEM" = :lx_tr	AND :lx_tr = 'Y' )
+	UNION
+	--40
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"IDENTIFIED_GROUPS",-- added for eval text
+		40 AS "DETECTION_RESULT"
+	FROM :lt_data_grp_summary_R
+	WHERE ("CCDR_GROUP_MEM" = :lx_ccdr	AND :lx_ccdr = 'Y' )
+	   OR ("CCSH_GROUP_MEM" = :lx_ccsh	AND :lx_ccsh = 'Y' )
+	UNION
+	--60
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"IDENTIFIED_GROUPS",-- added for eval text
+		60 AS "DETECTION_RESULT"
+	FROM :lt_data_grp_summary_R
+	WHERE ("DR_GROUP_MEM" = :lx_dr	AND :lx_dr = 'Y' )
+	   OR ("SH_GROUP_MEM" = :lx_sh	AND :lx_sh = 'Y' )
+	UNION
+	--80
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"IDENTIFIED_GROUPS",-- added for eval text
+		80 AS "DETECTION_RESULT"
+	FROM :lt_data_grp_summary_R
+	WHERE ("RBC_GROUP_MEM" = :lx_rbc	AND :lx_rbc = 'Y' )
+	UNION
+	--100
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"IDENTIFIED_GROUPS",-- added for eval text
+		100 AS "DETECTION_RESULT"
+	FROM :lt_data_grp_summary_R
+	WHERE ("INTERSTATE_GROUP_MEM" = :lx_is	AND :lx_is = 'Y' )
+	)
 GROUP BY 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"IDENTIFIED_GROUPS" -- added for eval text
 ;
+
+/* BEGIN INSERT FOR EVAL TEXT CHANGE */
+et_result =
+SELECT DISTINCT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	"DETECTION_RESULT"
+FROM :lt_data_grp_summary_result
+;
+
 /*  
 et_text =
 SELECT 
@@ -280,14 +323,7 @@ SELECT
 ''								AS "TEXT",
 '/OSRQLD/FRA_PRT'				AS "MSGID",
 '038'							AS "MSGNO",
-CASE 
-	WHEN "DETECTION_RESULT" = 20 THEN 'Trust'
-	WHEN "DETECTION_RESULT" = 40 THEN 'Common Control Shareholder or Director'
-	WHEN "DETECTION_RESULT" = 60 THEN 'Majority Shareholder or Director'
-	WHEN "DETECTION_RESULT" = 80 THEN 'RBC'
-	WHEN "DETECTION_RESULT" = 100 THEN 'Interstate'
-		ELSE ''
-END 							AS "MSGV1",
+RTRIM("IDENTIFIED_GROUPS", ', ') AS "MSGV1",
 TO_INT("DETECTION_RESULT"/20)	AS "MSGV2",
 ''								AS "MSGV3",
 ''								AS "MSGV4",
@@ -296,9 +332,9 @@ TO_INT("DETECTION_RESULT"/20)	AS "MSGV2",
 ''								AS "MSGV3_FC",
 ''								AS "MSGV4_FC"
 FROM 
-:et_result
+:lt_data_grp_summary_result
 ;
-
+/* END INSERT FOR EVAL TEXT CHANGE */
 
 END IF;
 
