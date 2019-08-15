@@ -211,6 +211,7 @@ SELECT
 		0 AS "FLAG_POL"
 		FROM :lt_address
 		WHERE "FLAG_ADDR" = :lx_flag_qld_address
+			AND "DETECTION_RESULT" > 0
 		UNION
 	SELECT
 		"ABN",
@@ -221,6 +222,7 @@ SELECT
 		1 AS "FLAG_POL"
 		FROM :lt_policy
 		WHERE "FLAG_POLICY" = :lx_flag_wcq_policy
+			AND "DETECTION_RESULT" > 0
 		) AS "CONSOLIDATED"
 GROUP BY
 "ABN",
@@ -239,16 +241,11 @@ SELECT
 CASE 
 	WHEN "FLAG_ADD" > 0 AND "FLAG_POL" > 0 
 		THEN 'QLD business address and Workcover policy identified' 
-		ELSE 
-			CASE 
-				WHEN "FLAG_ADD" > 0 AND "FLAG_POL" = 0 
-					THEN 'QLD business address idenitfied' 
-					ELSE 
-						CASE 
-							WHEN "FLAG_ADD" = 0 AND "FLAG_POL" > 0 
-								THEN 'Workcover policy identified'
-						END 
-			END 
+	WHEN "FLAG_ADD" > 0 AND "FLAG_POL" = 0 
+		THEN 'QLD business address idenitfied' 
+	WHEN "FLAG_ADD" = 0 AND "FLAG_POL" > 0 
+		THEN 'Workcover policy identified'
+			ELSE 'No QLD business address or Workcover policy identified'
 END AS "TEXT",
 --'Workcover policy identified' AS "TEXT", 
 '' AS "MSGID",
