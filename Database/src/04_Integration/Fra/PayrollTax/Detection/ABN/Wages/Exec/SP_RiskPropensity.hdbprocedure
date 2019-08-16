@@ -107,7 +107,7 @@ et_text =
 								ELSE 'previous or same'
 					END
 		END AS "MSGV2",
-		"RATING"."GJAHR"	AS "MSGV3",
+		TO_INTEGER("DETECTION_RESULT"/20) AS "MSGV3",
 		''					AS "MSGV4",
 		''					AS "MSGV1_FC",
 		''					AS "MSGV2_FC",
