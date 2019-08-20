@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.rta.proxy::CV_TENANT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="TENANT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.td.rta.synonym::CDS_ORG.TAB.TENANT">
+    <resourceUri>osr.edw.source.td.rta.synonym::CDS_ORG.TAB.TENANT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.td.rta.synonym::CDS_ORG.TAB.TENANT">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="NAME"/>
+    </attribute>
+    <attribute id="ROWNUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ROWNUMBER"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="ROWNUMBER"/>
+    </attribute>
+    <attribute id="ERROR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="ERROR"/>
+    </attribute>
+    <attribute id="PARTITION" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTITION"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="PARTITION"/>
+    </attribute>
+    <attribute id="PROPERTYIDENTIFIER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPERTYIDENTIFIER"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="PROPERTYIDENTIFIER"/>
+    </attribute>
+    <attribute id="BONDCREATEDDATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BONDCREATEDDATE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="BONDCREATEDDATE"/>
+    </attribute>
+    <attribute id="BONDFINALISEDDATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BONDFINALISEDDATE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="BONDFINALISEDDATE"/>
+    </attribute>
+    <attribute id="WEEKLYRENT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WEEKLYRENT"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="WEEKLYRENT"/>
+    </attribute>
+    <attribute id="BEDROOMS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEDROOMS"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="BEDROOMS"/>
+    </attribute>
+    <attribute id="DWELLINGTYPE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DWELLINGTYPE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="DWELLINGTYPE"/>
+    </attribute>
+    <attribute id="DWELLINGTYPECODE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DWELLINGTYPECODE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="DWELLINGTYPECODE"/>
+    </attribute>
+    <attribute id="MANAGEMENTTYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANAGEMENTTYPE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="MANAGEMENTTYPE"/>
+    </attribute>
+    <attribute id="MANAGEMENTTYPECODE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANAGEMENTTYPECODE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="MANAGEMENTTYPECODE"/>
+    </attribute>
+    <attribute id="TENANTFIRSTNAME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTFIRSTNAME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTFIRSTNAME"/>
+    </attribute>
+    <attribute id="TENANTMIDDLENAME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTMIDDLENAME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTMIDDLENAME"/>
+    </attribute>
+    <attribute id="TENANTLASTNAME" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTLASTNAME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTLASTNAME"/>
+    </attribute>
+    <attribute id="TENANTADDRESSLINE1" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTADDRESSLINE1"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTADDRESSLINE1"/>
+    </attribute>
+    <attribute id="TENANTADDRESSLINE2" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTADDRESSLINE2"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTADDRESSLINE2"/>
+    </attribute>
+    <attribute id="TENANTADDRESSLINE3" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTADDRESSLINE3"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTADDRESSLINE3"/>
+    </attribute>
+    <attribute id="TENANTADDRESSLOCALITY" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTADDRESSLOCALITY"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTADDRESSLOCALITY"/>
+    </attribute>
+    <attribute id="TENANTADDRESSPOSTCODE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTADDRESSPOSTCODE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTADDRESSPOSTCODE"/>
+    </attribute>
+    <attribute id="TENANTADDRESSSTATE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTADDRESSSTATE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTADDRESSSTATE"/>
+    </attribute>
+    <attribute id="TENANTDPID" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTDPID"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTDPID"/>
+    </attribute>
+    <attribute id="TENANTGNAF" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANTGNAF"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="TENANTGNAF"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CDS_ORG.TAB.TENANT" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
