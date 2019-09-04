@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.fra.proxy::CV_PRT_GROUP_ALERT_RISK_SCORE_VALUE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PRT_GROUP_ALERT_RISK_SCORE_VALUE"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.td.fra.proxy::TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.source.td.fra.proxy::TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.td.fra.proxy::TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert ID"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="INVEST_OBJ_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Investigation Object Type"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="INVEST_OBJ_TYPE"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GROUP_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Group ID"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="GROUP_ID"/>
+    </attribute>
+    <attribute id="INVEST_REASON" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Investigation Reason"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="INVEST_REASON"/>
+    </attribute>
+    <attribute id="CATEGORY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert Category"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="CATEGORY"/>
+    </attribute>
+    <attribute id="WAERS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="WAERS"/>
+    </attribute>
+    <attribute id="ALERT_RISK_SCORE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert Risk Score"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="ALERT_RISK_SCORE"/>
+    </attribute>
+    <attribute id="ALERT_RISK_VALUE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Alert Risk Value"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="ALERT_RISK_VALUE"/>
+    </attribute>
+    <attribute id="GROUP_AVG_RISK_SCORE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Group Avg Risk Score"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="GROUP_AVG_RISK_SCORE"/>
+    </attribute>
+    <attribute id="GROUP_TOT_RISK_VALUE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Group Total Risk Value"/>
+      <keyMapping columnObjectName="TF_PRT_GROUP_ALERT_RISK_SCORE_VALUE" columnName="GROUP_TOT_RISK_VALUE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
