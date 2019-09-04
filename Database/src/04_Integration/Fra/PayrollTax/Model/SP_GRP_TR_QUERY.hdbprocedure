@@ -1,0 +1,149 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_TR_QUERY"(
+	IN	IV_GRP_DATE 	DATE , 
+	IN  IV_GRAPH_ID		NVARCHAR(32),
+	IN	IV_MATCH_PERSON	NVARCHAR(1),
+	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP_ID		"osr.edw.platform.fra.prt.model::Types.GroupIDT"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+	CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
+		IV_GRP_DATE 	=> :LV_GRP_DATE,
+		IV_GRAPH_ID		=> :IV_GRAPH_ID,
+		IV_REL_TYPE     => 'TR',
+		ET_REL			=> LT_REL
+	)
+	;
+
+	IF :IV_MATCH_PERSON = 'Y' THEN
+	    LT_DR = 
+		SELECT
+		"L"."CHILD_ID" AS "ORG_ID",
+	    CASE 
+	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
+	    ELSE "L"."PARENT_ID"
+	    END AS "DIRECTOR"
+	    FROM
+	    :LT_REL AS "L" 
+	    LEFT OUTER JOIN 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
+	    ON "L"."PARENT_ID" = "R"."ID"
+	    WHERE "L"."REL_TYPE" = 'TR';
+	    
+	ELSE
+	    LT_DR = 
+		SELECT
+		"CHILD_ID" AS "ORG_ID",
+	    "PARENT_ID" AS "DIRECTOR"
+	    FROM
+	    :LT_REL
+		WHERE "REL_TYPE" = 'TR'
+		;
+	    
+	END IF;
+	
+-- remove duplicates
+	LT_DR = SELECT DISTINCT "ORG_ID", "DIRECTOR" FROM :LT_DR;
+	
+-- How many directors for this organisation
+	lt_org_dr_cnt = 
+	SELECT "ORG_ID", COUNT(*) AS "DR_COUNT" FROM :LT_DR GROUP BY "ORG_ID";
+	
+	lt_dr_rel = 
+	SELECT 
+	"L"."ORG_ID", 
+	"L"."DIRECTOR", 
+	CASE WHEN "R"."DR_COUNT" <=1000 THEN TO_DOUBLE(100/"R"."DR_COUNT") ELSE 0 END AS "INTEREST_PCT", "R"."DR_COUNT"
+	FROM :LT_DR AS "L" INNER JOIN :lt_org_dr_cnt AS "R"
+	ON "L"."ORG_ID" = "R"."ORG_ID";
+	
+	LT_DR_REL_W_FULL_OWNERSHIP = SELECT * FROM :lt_dr_rel WHERE "DR_COUNT" = 1;
+
+ LT_GROUP = 
+ SELECT 
+ "L"."ORG_ID" AS "ORG_ID",
+ "L"."DIRECTOR" AS "GROUP_ID" 
+ FROM 
+ :LT_DR_REL_W_FULL_OWNERSHIP AS "L"
+ INNER JOIN 
+ (SELECT "DIRECTOR" FROM :LT_DR_REL_W_FULL_OWNERSHIP GROUP BY "DIRECTOR" HAVING COUNT(*) > 1) AS "R"
+ ON "L"."DIRECTOR" =  "R"."DIRECTOR"
+ ; 
+
+
+	ET_GROUP = 
+	SELECT 
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	"ORG_ID",
+	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
+	--"GROUP_ID" AS "GROUP_DESCR",
+	'TR' AS "GROUP_TYPE"
+	FROM :LT_GROUP;
+	
+
+	ET_GROUP_ID = 
+	SELECT 
+	DISTINCT
+	:LV_GJAHR AS "GJAHR",
+	:LV_GRP_DATE AS "GRP_DATE",
+	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
+	'TR' AS "GROUP_TYPE",
+	LEFT("GROUP_ID",1333) AS "GROUP_DESCR"
+	FROM :LT_GROUP;
+	
+/*
+	ET_GROUP_ID = 
+	SELECT DISTINCT
+		'2018' AS "GJAHR",
+		TO_DATE('2018-06-30') AS "GRP_DATE",
+		CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
+		'TR' AS "GROUP_TYPE",
+		LEFT("TRUST_ABN",1333) AS "GROUP_DESCR"
+	FROM	(
+		   		SELECT 
+					"TRUST"."ABN" AS "TRUST_ABN",
+					"BNFCRY"."PTNR_BNFCRY_ABN" AS "BNFCRY_ABN",
+					"BNFCRY"."RTN_YR" AS "RTN_YR"
+				FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" as "BNFCRY"
+				INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+				ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
+				--	AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR"
+				--WHERE "TRUST"."ABN" IN ('11030453223','73892897788','75578311526','82491321915')
+					--AND "TRUST"."RTN_YR" = '2018'
+			) ;
+			*/
+/*	
+    table type GroupT {
+        GJAHR      : String(4);
+        GRP_DATE   : LocalDate;
+        ORG_ID     : String(10);
+        GROUP_ID   : String(32);
+        GROUP_TYPE : String(4);
+    };
+    table type GroupIDT {
+        GJAHR       : String(4);
+        GRP_DATE    : LocalDate;
+        GROUP_ID    : String(32);
+        GROUP_TYPE  : String(4);
+        GROUP_DESCR : String(1333);
+    };	
+*/	
+	
+END
