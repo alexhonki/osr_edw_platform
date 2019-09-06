@@ -5,6 +5,8 @@ FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
        		"GJAHR"					NVARCHAR(4),
        	--	"ORG_NUMBER"			NVARCHAR(9),
 		--	"PERSON_NUM"			NVARCHAR(9),
+			"START_DT"				DATE,
+			"END_DT"				DATE,
 			"TR_BENFCRY_COUNT"		INTEGER
        )
        LANGUAGE SQLSCRIPT 
@@ -12,6 +14,8 @@ FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
 BEGIN 
 
 DECLARE LV_KEY_DATE DATE;
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
 
 IF :IV_KEY_DATE IS NULL OR :IV_KEY_DATE = TO_DATE('9999-12-31') OR :IV_KEY_DATE = '' THEN 
 	SELECT CURRENT_DATE INTO LV_KEY_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
@@ -19,11 +23,17 @@ ELSE
 	LV_KEY_DATE := :IV_KEY_DATE;
 END IF;
 
+-- use fiscal year start and end dates of the key date to restrict data
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
 lt_rel = 
 	SELECT DISTINCT
 		"PTNR_BNFCRY_ABN"	AS "CHILD_ID",
 		"TRUST"."ABN"		AS "PARENT_ID",
-		"TRUST"."RTN_YR"	AS "GJAHR"
+		"TRUST"."RTN_YR"	AS "GJAHR",
+		TO_DATE(TO_VARCHAR((CAST("TRUST"."RTN_YR" as integer) -1)) || '0701') AS "START_DT",
+		TO_DATE("TRUST"."RTN_YR" || '0630') AS "END_DT"
 	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" as "BNFCRY" 
 	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
@@ -54,12 +64,16 @@ RETURN
 SELECT DISTINCT
 	"REL"."CHILD_ID",
 	"REL"."PARENT_ID",
+	"REL"."GJAHR",
 --	"REL"."ORG_NUMBER",
 --	"REL"."PERSON_NUM",
-	"REL"."GJAHR",
+	"REL"."START_DT",
+	"REL"."END_DT",
 	"CNT"."TR_BENFCRY_COUNT"
 	FROM :lt_rel AS "REL" INNER JOIN :lt_tr_cnt AS "CNT"
 	ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
+	WHERE :IV_KEY_DATE >= "REL"."START_DT"
+	AND  :IV_KEY_DATE <= "REL"."END_DT"
 	;
 
 END;

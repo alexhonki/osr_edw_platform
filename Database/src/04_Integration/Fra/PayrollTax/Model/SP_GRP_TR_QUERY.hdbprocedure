@@ -10,6 +10,9 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_TR_QUERY"(
    READS SQL DATA AS
 BEGIN
 
+-- CAUTION: Unlike all of the other models, Trust model uses the ABN as the GROUP_ID value. 
+-- This is because there is often no ACN for Trust ABNs
+
 DECLARE LV_GJAHR NVARCHAR(4);
 DECLARE LV_GRP_DATE DATE;
 
@@ -19,10 +22,12 @@ ELSE
 	LV_GRP_DATE := :IV_GRP_DATE;
 END IF;
 
-
 SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
+-- Get the parents and children from the SP_GRP_GRAPH_QUERY
+-- SELECT "CHILD_ID", "PARENT_ID", 'TR' AS "REL_TYPE", 100 AS "INTEREST_PCT" 
+-- FROM "osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE)
 	CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 		IV_GRP_DATE 	=> :LV_GRP_DATE,
 		IV_GRAPH_ID		=> :IV_GRAPH_ID,
