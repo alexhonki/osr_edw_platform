@@ -1,6 +1,7 @@
-PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VERTEX_N_EDGE_TEST"(
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_GET_VERTEX_N_EDGE_TEST_GRP"(
 	IN  IV_GRP_DATE        DATE,
 	IN	IV_MATCH_PERSON	   NVARCHAR(1),
+	IN	IV_GRP_TYPE			NVARCHAR(2),
 	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
 	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
 )
@@ -161,7 +162,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 ;
 
 
-
+IF :IV_GRP_TYPE = 'AL' THEN
    LT_ELEMENT_REL = 
 -- shareholding relation
    SELECT 
@@ -193,8 +194,49 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
    FROM 
    :LT_TR
    ;
+END IF;
 
-   IF :IV_MATCH_PERSON = 'Y' THEN
+IF :IV_GRP_TYPE = 'SH' THEN
+
+ LT_ELEMENT_REL = 
+-- shareholding relation
+   SELECT 
+   TO_BIGINT(:LV_ORG_PREFIX || "ORG_NUMBER") AS "ELEMENT_L_NUM", 
+   CASE WHEN LEFT("PARENT_ID",1) = 'O' THEN TO_BIGINT(:LV_ORG_PREFIX || RIGHT("PARENT_ID",9)) 
+   ELSE TO_BIGINT(:LV_PSN_PREFIX || RIGHT("PARENT_ID",9)) 
+   END
+   AS "ELEMENT_R_NUM",
+   "CHILD_ID",
+   "PARENT_ID"
+   FROM 
+   :LT_SH;
+   
+END IF;
+
+IF :IV_GRP_TYPE = 'TR' THEN
+LT_ELEMENT_REL = 
+    SELECT 
+    TO_BIGINT(:LV_ORG_PREFIX || "TRUST_ABN") AS "ELEMENT_L_NUM", 
+    TO_BIGINT(:LV_PSN_PREFIX || "BNFCRY_ABN") AS "ELEMENT_R_NUM",
+    "CHILD_ID",
+    "PARENT_ID"
+   FROM 
+   :LT_TR ;
+END IF;
+
+IF :IV_GRP_TYPE = 'DR' THEN
+LT_ELEMENT_REL = 
+-- director relation 
+   SELECT 
+    TO_BIGINT(:LV_ORG_PREFIX || "ORG_NUMBER") AS "ELEMENT_L_NUM", 
+    TO_BIGINT(:LV_PSN_PREFIX || "PERSON_NUM") AS "ELEMENT_R_NUM",
+    "CHILD_ID",
+    "PARENT_ID"
+   FROM 
+   :LT_DR;
+END IF;
+
+IF :IV_MATCH_PERSON = 'Y' THEN
    LT_ELEMENT_REL = 
 	SELECT 
    "ELEMENT_L_NUM", 
@@ -212,8 +254,8 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
    FROM
 	:LT_PG
 	;
-   END IF;
-   
+END IF;
+
    ET_ELEMENT = 
    SELECT 
    DISTINCT "ELEMENT_NUM", "ELEMENT" 
