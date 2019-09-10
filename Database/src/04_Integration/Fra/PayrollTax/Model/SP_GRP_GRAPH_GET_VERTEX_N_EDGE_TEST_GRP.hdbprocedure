@@ -225,51 +225,74 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 
 
 -- trust variant 4
--- Trust and ABNs are differentiated
-LT_TR3 = 
-SELECT
-'100000001' AS "BNFCRY_ABN", -- Beneficiary
-'T200000001' AS "PARENT_ID", -- Trust 1
-'B100000001' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION
-SELECT
-'100000002' AS "BNFCRY_ABN", -- Beneficiary
-'T200000001' AS "PARENT_ID", -- Trust 1 Link
-'B100000002' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION
-SELECT
-'100000003' AS "BNFCRY_ABN", -- Beneficiary 3
-'T200000001' AS "PARENT_ID", -- Trust 1 Link
-'B100000003' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION
-SELECT
-'100000003' AS "BNFCRY_ABN", -- Beneficiary 3 Link
-'T200000002' AS "PARENT_ID", -- Trust 2
-'B100000003' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION
-SELECT
-'300000006' AS "BNFCRY_ABN", -- Beneficiary 4
-'T200000002' AS "PARENT_ID", -- Trust 2 Link
-'B300000006' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION
-SELECT
-'400000006' AS "BNFCRY_ABN", -- Beneficiary 5 -
-'T200000003' AS "PARENT_ID", -- Trust 3 
-'B400000006' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION
-SELECT
-'500000006' AS "BNFCRY_ABN", -- Beneficiary 5 - link
-'T200000003' AS "PARENT_ID", -- Trust 3 
-'B500000006' AS "CHILD_ID"
-FROM "osr.hana.platform.synonym::SYS.DUMMY"
 
--- Groups should be O200000001 & O200000002 together then O200000003 separately
+LT_TR4 = 
+SELECT
+'11005260748' AS "BNFCRY_ABN", -- Beneficiary
+'34027986606' AS "PARENT_ID", -- Trust 1
+'11005260748' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary
+'34027986606' AS "PARENT_ID", -- Trust 1 Link
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 3
+'43519940525' AS "PARENT_ID", -- Trust 1 Link
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'11005260748' AS "BNFCRY_ABN", -- Beneficiary 3 Link
+'44731838095' AS "PARENT_ID", -- Trust 2
+'11005260748' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 4
+'44731838095' AS "PARENT_ID", -- Trust 2 Link
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 5 -
+'51906323785' AS "PARENT_ID", -- Trust 3 
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 5 - link
+'83949919166' AS "PARENT_ID", -- Trust 3 
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 5 - link
+'90315416448' AS "PARENT_ID", -- Trust 3 
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 5 - link
+'92870705122' AS "PARENT_ID", -- Trust 3 
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'11005260748' AS "BNFCRY_ABN", -- Beneficiary 5 - link
+'93090895569' AS "PARENT_ID", -- Trust 3 
+'11005260748' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'80121017677' AS "BNFCRY_ABN", -- Beneficiary 5 - link
+'93090895569' AS "PARENT_ID", -- Trust 3 
+'80121017677' AS "CHILD_ID"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+-- 8 different trusts but all grouped because of common beneficiary
 
 ;
 
@@ -391,13 +414,26 @@ IF :IV_GRP_TYPE = 'T3' THEN
 LT_ELEMENT_REL = 
    SELECT 
     TO_BIGINT(:LV_ORG_PREFIX || "BNFCRY_ABN") AS "ELEMENT_L_NUM", 
-   CASE WHEN LEFT("PARENT_ID",1) = 'O' THEN TO_BIGINT(:LV_ORG_PREFIX || RIGHT("PARENT_ID",9)) 
-	ELSE TO_BIGINT(:LV_PSN_PREFIX || RIGHT("PARENT_ID",9)) 
+   CASE WHEN LEFT("PARENT_ID",1) = 'O' THEN TO_BIGINT(:LV_ORG_PREFIX || RIGHT("PARENT_ID",10)) 
+	ELSE TO_BIGINT(:LV_PSN_PREFIX || RIGHT("PARENT_ID",10)) 
    END AS "ELEMENT_R_NUM",
    "CHILD_ID",
    "PARENT_ID"
    FROM 
    :LT_TR3
+   ;
+END IF;
+
+-- trust variant 3
+IF :IV_GRP_TYPE = 'T4' THEN
+LT_ELEMENT_REL = 
+   SELECT 
+       TO_BIGINT(:LV_ORG_PREFIX || "BNFCRY_ABN") AS "ELEMENT_L_NUM", 
+   "PARENT_ID" AS "ELEMENT_R_NUM",
+   "CHILD_ID",
+   "PARENT_ID"
+   FROM 
+   :LT_TR4
    ;
 END IF;
 
