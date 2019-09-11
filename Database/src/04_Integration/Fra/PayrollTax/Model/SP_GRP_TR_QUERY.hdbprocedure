@@ -37,7 +37,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	;
 
 	IF :IV_MATCH_PERSON = 'Y' THEN
-
+-- Add logic to match with person here later
 	    
 	ELSE
 	    LT_TR = 
@@ -54,41 +54,14 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 -- remove duplicates
 	LT_TR = SELECT DISTINCT "BNFCRY_ABN", "TRUST_ABN" FROM :LT_TR;
 	
--- How many common beneficiaries for this trust
-	lt_org_tr_cnt = 
-	SELECT "BNFCRY_ABN", COUNT(*) AS "TR_COUNT" FROM :LT_TR GROUP BY "BNFCRY_ABN";
-	
-	LT_TR_rel = 
-	SELECT 
-	"L"."BNFCRY_ABN", 
-	"L"."TRUST_ABN", 
-	CASE WHEN "R"."TR_COUNT" <=1000 THEN TO_DOUBLE(100/"R"."TR_COUNT") ELSE 0 END AS "INTEREST_PCT", "R"."TR_COUNT"
-	FROM :LT_TR AS "L" INNER JOIN :lt_org_tr_cnt AS "R"
-	ON "L"."BNFCRY_ABN" = "R"."BNFCRY_ABN";
-	
-	LT_TR_REL_W_FULL_OWNERSHIP = SELECT * FROM :LT_TR_rel WHERE "TR_COUNT" = 1;
-
- LT_GROUP = 
- SELECT 
- "L"."BNFCRY_ABN",
- "L"."TRUST_ABN"
- FROM 
- :LT_TR_REL_W_FULL_OWNERSHIP AS "L"
- INNER JOIN 
- (SELECT "TRUST_ABN" FROM :LT_TR_REL_W_FULL_OWNERSHIP GROUP BY "TRUST_ABN" HAVING COUNT(*) > 1) AS "R"
- ON "L"."TRUST_ABN" =  "R"."TRUST_ABN"
- ; 
-
-
 	ET_GROUP = 
 	SELECT 
 	:LV_GJAHR AS "GJAHR",
 	:LV_GRP_DATE AS "GRP_DATE",
 	"BNFCRY_ABN" AS "ELEMENT_ID",
 	CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
-	--"GROUP_ID" AS "GROUP_DESCR",
 	'TR' AS "GROUP_TYPE"
-	FROM :LT_GROUP;
+	FROM :LT_TR;
 	
 
 	ET_GROUP_ID = 
@@ -99,7 +72,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
 	'TR' AS "GROUP_TYPE",
 	LEFT("TRUST_ABN",1333) AS "GROUP_DESCR"
-	FROM :LT_GROUP;
+	FROM :LT_TR;
 	
 /*
 	ET_GROUP_ID = 
