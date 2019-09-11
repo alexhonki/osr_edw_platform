@@ -88,10 +88,21 @@ SELECT
 'C000000001' AS "PGRP_ID"
 FROM "osr.hana.platform.synonym::SYS.DUMMY"
 ;
+-- trust variant 0 - with ACN's
+
+LT_TR = 
+SELECT
+"ORG_NUMBER", -- ACN
+"CHILD_ID" AS "BNFCRY_ABN", -- Beneficiary
+"PARENT_ID", -- Trust
+"CHILD_ID"
+FROM "osr.edw.platform.fra.prt.model::TF_TR_REL"('2015-06-30'/*IV_KEY_DATE <DATE>*/)
+WHERE "ORG_NUMBER" > 0 ;
+
 
 -- trust variant 1
 -- Three groups should be formed
-LT_TR = 
+LT_TR1 = 
 SELECT
 '100000001' AS "BNFCRY_ABN", -- Beneficiary
 'O200000001' AS "PARENT_ID", -- Trust
@@ -379,8 +390,23 @@ IF :IV_GRP_TYPE = 'SH' THEN
    
 END IF;
 
--- trust variant 1
+-- trust variant 0
 IF :IV_GRP_TYPE = 'TR' THEN
+LT_ELEMENT_REL = 
+   SELECT 
+    TO_BIGINT(:LV_ORG_PREFIX || "ORG_NUMBER") AS "ELEMENT_L_NUM", 
+   CASE WHEN LEFT("PARENT_ID",1) = 'O' THEN TO_BIGINT(:LV_ORG_PREFIX || RIGHT("PARENT_ID",9)) 
+	ELSE TO_BIGINT(:LV_PSN_PREFIX || RIGHT("PARENT_ID",9)) 
+   END AS "ELEMENT_R_NUM",
+   "CHILD_ID",
+   "PARENT_ID"
+   FROM 
+   :LT_TR
+   ;
+
+end if;
+-- trust variant 1
+IF :IV_GRP_TYPE = 'T1' THEN
 LT_ELEMENT_REL = 
    SELECT 
     TO_BIGINT(:LV_ORG_PREFIX || "BNFCRY_ABN") AS "ELEMENT_L_NUM", 
@@ -390,7 +416,7 @@ LT_ELEMENT_REL =
    "CHILD_ID",
    "PARENT_ID"
    FROM 
-   :LT_TR
+   :LT_TR1
    ;
 END IF;
 

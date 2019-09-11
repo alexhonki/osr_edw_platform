@@ -107,7 +107,7 @@ ELSE
     	ET_REL = 
     	SELECT "REL_DATA"."CHILD_ID", "REL_DATA"."PARENT_ID", 'TR' AS "REL_TYPE", 100 AS "INTEREST_PCT" 
 		FROM 
-		"osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE) AS "REL_DATA"
+		"osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE) AS "REL_DATA"
 		WHERE EXISTS (
 			SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) AS "GRAPH"
 			WHERE "REL_DATA"."CHILD_ID" = "GRAPH"."GRAPH_VERTEX_ID"

@@ -2,7 +2,7 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_TR_QUERY"(
 	IN	IV_GRP_DATE 	DATE , 
 	IN  IV_GRAPH_ID		NVARCHAR(32),
 	IN	IV_MATCH_PERSON	NVARCHAR(1),
-	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT",
+	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT2",
 	OUT ET_GROUP_ID		"osr.edw.platform.fra.prt.model::Types.GroupIDT"
 )
    LANGUAGE SQLSCRIPT
@@ -37,25 +37,13 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	;
 
 	IF :IV_MATCH_PERSON = 'Y' THEN
-	    LT_DR = 
-		SELECT
-		"L"."CHILD_ID" AS "ORG_ID",
-	    CASE 
-	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
-	    ELSE "L"."PARENT_ID"
-	    END AS "DIRECTOR"
-	    FROM
-	    :LT_REL AS "L" 
-	    LEFT OUTER JOIN 
-	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
-	    ON "L"."PARENT_ID" = "R"."ID"
-	    WHERE "L"."REL_TYPE" = 'TR';
+
 	    
 	ELSE
-	    LT_DR = 
+	    LT_TR = 
 		SELECT
-		"CHILD_ID" AS "ORG_ID",
-	    "PARENT_ID" AS "DIRECTOR"
+		"CHILD_ID" AS "BNFCRY_ABN",
+	    "PARENT_ID" AS "TRUST_ABN"
 	    FROM
 	    :LT_REL
 		WHERE "REL_TYPE" = 'TR'
@@ -64,31 +52,31 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	END IF;
 	
 -- remove duplicates
-	LT_DR = SELECT DISTINCT "ORG_ID", "DIRECTOR" FROM :LT_DR;
+	LT_TR = SELECT DISTINCT "BNFCRY_ABN", "TRUST_ABN" FROM :LT_TR;
 	
--- How many directors for this organisation
-	lt_org_dr_cnt = 
-	SELECT "ORG_ID", COUNT(*) AS "DR_COUNT" FROM :LT_DR GROUP BY "ORG_ID";
+-- How many common beneficiaries for this trust
+	lt_org_tr_cnt = 
+	SELECT "BNFCRY_ABN", COUNT(*) AS "TR_COUNT" FROM :LT_TR GROUP BY "BNFCRY_ABN";
 	
-	lt_dr_rel = 
+	LT_TR_rel = 
 	SELECT 
-	"L"."ORG_ID", 
-	"L"."DIRECTOR", 
-	CASE WHEN "R"."DR_COUNT" <=1000 THEN TO_DOUBLE(100/"R"."DR_COUNT") ELSE 0 END AS "INTEREST_PCT", "R"."DR_COUNT"
-	FROM :LT_DR AS "L" INNER JOIN :lt_org_dr_cnt AS "R"
-	ON "L"."ORG_ID" = "R"."ORG_ID";
+	"L"."BNFCRY_ABN", 
+	"L"."TRUST_ABN", 
+	CASE WHEN "R"."TR_COUNT" <=1000 THEN TO_DOUBLE(100/"R"."TR_COUNT") ELSE 0 END AS "INTEREST_PCT", "R"."TR_COUNT"
+	FROM :LT_TR AS "L" INNER JOIN :lt_org_tr_cnt AS "R"
+	ON "L"."BNFCRY_ABN" = "R"."BNFCRY_ABN";
 	
-	LT_DR_REL_W_FULL_OWNERSHIP = SELECT * FROM :lt_dr_rel WHERE "DR_COUNT" = 1;
+	LT_TR_REL_W_FULL_OWNERSHIP = SELECT * FROM :LT_TR_rel WHERE "TR_COUNT" = 1;
 
  LT_GROUP = 
  SELECT 
- "L"."ORG_ID" AS "ORG_ID",
- "L"."DIRECTOR" AS "GROUP_ID" 
+ "L"."BNFCRY_ABN",
+ "L"."TRUST_ABN"
  FROM 
- :LT_DR_REL_W_FULL_OWNERSHIP AS "L"
+ :LT_TR_REL_W_FULL_OWNERSHIP AS "L"
  INNER JOIN 
- (SELECT "DIRECTOR" FROM :LT_DR_REL_W_FULL_OWNERSHIP GROUP BY "DIRECTOR" HAVING COUNT(*) > 1) AS "R"
- ON "L"."DIRECTOR" =  "R"."DIRECTOR"
+ (SELECT "TRUST_ABN" FROM :LT_TR_REL_W_FULL_OWNERSHIP GROUP BY "TRUST_ABN" HAVING COUNT(*) > 1) AS "R"
+ ON "L"."TRUST_ABN" =  "R"."TRUST_ABN"
  ; 
 
 
@@ -96,8 +84,8 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	SELECT 
 	:LV_GJAHR AS "GJAHR",
 	:LV_GRP_DATE AS "GRP_DATE",
-	"ORG_ID",
-	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
+	"BNFCRY_ABN" AS "ELEMENT_ID",
+	CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
 	--"GROUP_ID" AS "GROUP_DESCR",
 	'TR' AS "GROUP_TYPE"
 	FROM :LT_GROUP;
@@ -108,9 +96,9 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	DISTINCT
 	:LV_GJAHR AS "GJAHR",
 	:LV_GRP_DATE AS "GRP_DATE",
-	CAST(HASH_MD5(TO_BINARY("GROUP_ID")) AS NVARCHAR) AS "GROUP_ID",
+	CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
 	'TR' AS "GROUP_TYPE",
-	LEFT("GROUP_ID",1333) AS "GROUP_DESCR"
+	LEFT("TRUST_ABN",1333) AS "GROUP_DESCR"
 	FROM :LT_GROUP;
 	
 /*
@@ -135,10 +123,10 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 			) ;
 			*/
 /*	
-    table type GroupT {
+    table type GroupT2 {
         GJAHR      : String(4);
         GRP_DATE   : LocalDate;
-        ORG_ID     : String(10);
+        ELEMENT_ID : String(32);
         GROUP_ID   : String(32);
         GROUP_TYPE : String(4);
     };

@@ -3,7 +3,7 @@ FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
        		"CHILD_ID"				NVARCHAR(10),
        		"PARENT_ID"				NVARCHAR(10),
        		"GJAHR"					NVARCHAR(4),
-       	--	"ORG_NUMBER"			NVARCHAR(9),
+       		"ORG_NUMBER"			NVARCHAR(9),
 		--	"PERSON_NUM"			NVARCHAR(9),
 			"START_DT"				DATE,
 			"END_DT"				DATE,
@@ -29,6 +29,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 lt_rel = 
 	SELECT DISTINCT
+		"MAP"."ACN"			AS "ORG_NUMBER",
 		"PTNR_BNFCRY_ABN"	AS "CHILD_ID",
 		"TRUST"."ABN"		AS "PARENT_ID",
 		"TRUST"."RTN_YR"	AS "GJAHR",
@@ -38,6 +39,8 @@ lt_rel =
 	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 	--	AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- add this back in later as there is no data in dev for the moment! 
+	left outer join "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_KEY_DATE) as "MAP"
+	on "PTNR_BNFCRY_ABN" = "MAP"."ABN"
 	WHERE "BNFCRY"."PTNR_BNFCRY_ABN" <> 'no ABN'
 		AND "TRUST"."ABN" <> 'invalid ABN'
 		AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
@@ -65,7 +68,7 @@ SELECT DISTINCT
 	"REL"."CHILD_ID",
 	"REL"."PARENT_ID",
 	"REL"."GJAHR",
---	"REL"."ORG_NUMBER",
+	"REL"."ORG_NUMBER",
 --	"REL"."PERSON_NUM",
 	"REL"."START_DT",
 	"REL"."END_DT",

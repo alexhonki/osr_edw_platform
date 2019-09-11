@@ -20,6 +20,15 @@ context Types {
         GROUP_ID   : String(32);
         GROUP_TYPE : String(4);
     };
+
+    table type GroupT2 {
+        GJAHR      : String(4);
+        GRP_DATE   : LocalDate;
+        ELEMENT_ID : String(32); 
+        GROUP_ID   : String(32);
+        GROUP_TYPE : String(4);
+    };
+
     table type GroupIDT {
         GJAHR       : String(4);
         GRP_DATE    : LocalDate;
