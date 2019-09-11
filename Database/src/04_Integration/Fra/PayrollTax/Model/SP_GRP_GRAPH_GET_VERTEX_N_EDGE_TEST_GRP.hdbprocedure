@@ -307,6 +307,14 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 
 ;
 
+-- use actual data
+LT_TR5 = 
+SELECT 
+"CHILD_ID" AS "BNFCRY_ABN", 
+"PARENT_ID",
+"CHILD_ID"
+FROM "osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE);
+
 
 
 -- All groups
@@ -450,7 +458,7 @@ LT_ELEMENT_REL =
    ;
 END IF;
 
--- trust variant 3
+-- trust variant 4
 IF :IV_GRP_TYPE = 'T4' THEN
 LT_ELEMENT_REL = 
    SELECT 
@@ -462,6 +470,20 @@ LT_ELEMENT_REL =
    :LT_TR4
    ;
 END IF;
+
+IF :IV_GRP_TYPE = 'T4' THEN
+LT_ELEMENT_REL = 
+   SELECT 
+       TO_BIGINT(:LV_ORG_PREFIX || "BNFCRY_ABN") AS "ELEMENT_L_NUM", 
+   "PARENT_ID" AS "ELEMENT_R_NUM",
+   "CHILD_ID",
+   "PARENT_ID"
+   FROM 
+   :LT_TR5
+   ;
+END IF;
+
+
 
 -- directors
 IF :IV_GRP_TYPE = 'DR' THEN
