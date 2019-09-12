@@ -78,13 +78,13 @@ lt_data_grp_summary_S =
 		"DATA"."GJAHR",
 	/* BEGIN INSERT FOR EVAL TEXT CHANGE */
 		--100 AS "DETECTION_RESULT"
-		CASE WHEN "GRP"."DR_GROUP_MEM" = 'Y'			THEN 'Majority Director, '			Else '' END  || 
-		CASE WHEN "GRP"."SH_GROUP_MEM" = 'Y'			THEN 'Majority Shareholder, '		Else '' END  || 
-		CASE WHEN "GRP"."RBC_GROUP_MEM" = 'Y'			THEN 'RBC, '						Else ''	END  ||
-		CASE WHEN "GRP"."CCDR_GROUP_MEM" = 'Y'			THEN 'Common Control Director, '	Else ''	END  || 
-		CASE WHEN "GRP"."CCSH_GROUP_MEM" = 'Y'			THEN 'Common Control Shareholder, ' Else ''	END  || 
-		CASE WHEN "GRP"."INTERSTATE_GROUP_MEM" = 'Y'	THEN 'Interstate Grouping, '		Else ''	END  ||
-		CASE WHEN "GRP"."TR_GROUP_MEM" = 'Y'			THEN 'Trust, '						Else '' END AS "IDENTIFIED_GROUPS"
+		CASE WHEN "GRP"."DR_GROUP_MEM" = 'Y'			THEN 'DR, '			Else '' END  || 
+		CASE WHEN "GRP"."SH_GROUP_MEM" = 'Y'			THEN 'SH, '			Else '' END  || 
+		CASE WHEN "GRP"."RBC_GROUP_MEM" = 'Y'			THEN 'RBC, '		Else ''	END  ||
+		CASE WHEN "GRP"."CCDR_GROUP_MEM" = 'Y'			THEN 'CCDR, '		Else ''	END  || 
+		CASE WHEN "GRP"."CCSH_GROUP_MEM" = 'Y'			THEN 'CCSH, '		Else ''	END  || 
+		CASE WHEN "GRP"."INTERSTATE_GROUP_MEM" = 'Y'	THEN 'IS, '			Else ''	END  ||
+		CASE WHEN "GRP"."TR_GROUP_MEM" = 'Y'			THEN 'TR, '			Else '' END AS "IDENTIFIED_GROUPS"
 	/* END INSERT FOR EVAL TEXT CHANGE */
 	FROM 
 	:it_data_for_rule AS "DATA"
@@ -144,7 +144,7 @@ et_text =
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		RTRIM("IDENTIFIED_GROUPS", ', ')	AS "TEXT",
+		LEFT(RTRIM("IDENTIFIED_GROUPS", ', '),50)	AS "TEXT",
 		''									AS "MSGID",
 		''									AS "MSGNO",
 		''									AS "MSGV1",
@@ -177,13 +177,13 @@ SELECT
 "GRP"."RBC_GROUP_MEM",
 "GRP"."INTERSTATE_GROUP_MEM"
 /* BEGIN INSERT FOR EVAL TEXT CHANGE */
-, CASE WHEN "GRP"."DR_GROUP_MEM" = 'Y'			THEN 'Majority Director, '			Else '' END  || 
-CASE WHEN "GRP"."SH_GROUP_MEM" = 'Y'			THEN 'Majority Shareholder, '		Else '' END  || 
-CASE WHEN "GRP"."RBC_GROUP_MEM" = 'Y'			THEN 'RBC, '						Else ''	END  ||
-CASE WHEN "GRP"."CCDR_GROUP_MEM" = 'Y'			THEN 'Common Control Director, '	Else ''	END  || 
-CASE WHEN "GRP"."CCSH_GROUP_MEM" = 'Y'			THEN 'Common Control Shareholder, ' Else ''	END  || 
-CASE WHEN "GRP"."INTERSTATE_GROUP_MEM" = 'Y'	THEN 'Interstate Grouping, '		Else ''	END  ||
-CASE WHEN "GRP"."TR_GROUP_MEM" = 'Y'			THEN 'Trust, '						Else '' END AS "IDENTIFIED_GROUPS"
+, CASE WHEN "GRP"."DR_GROUP_MEM" = 'Y'			THEN 'DR, '			Else '' END  || 
+CASE WHEN "GRP"."SH_GROUP_MEM" = 'Y'			THEN 'SH, '		    Else '' END  || 
+CASE WHEN "GRP"."RBC_GROUP_MEM" = 'Y'			THEN 'RBC, '		Else ''	END  ||
+CASE WHEN "GRP"."CCDR_GROUP_MEM" = 'Y'			THEN 'CCDR, '	    Else ''	END  || 
+CASE WHEN "GRP"."CCSH_GROUP_MEM" = 'Y'			THEN 'CCSH, '		Else ''	END  || 
+CASE WHEN "GRP"."INTERSTATE_GROUP_MEM" = 'Y'	THEN 'IS, '			Else ''	END  ||
+CASE WHEN "GRP"."TR_GROUP_MEM" = 'Y'			THEN 'TR, '			Else '' END AS "IDENTIFIED_GROUPS"
 /*END INSERT FOR EVAL TEXT CHANGE */
 FROM 
 :it_data_for_rule AS "DATA"
@@ -323,7 +323,7 @@ SELECT
 ''								AS "TEXT",
 '/OSRQLD/FRA_PRT'				AS "MSGID",
 '038'							AS "MSGNO",
-RTRIM("IDENTIFIED_GROUPS", ', ') AS "MSGV1",
+LEFT(RTRIM("IDENTIFIED_GROUPS", ', '),50) AS "MSGV1",
 TO_INT("DETECTION_RESULT"/20)	AS "MSGV2",
 ''								AS "MSGV3",
 ''								AS "MSGV4",
