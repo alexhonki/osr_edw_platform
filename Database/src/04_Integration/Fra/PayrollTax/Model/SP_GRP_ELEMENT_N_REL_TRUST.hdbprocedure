@@ -1,6 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_ELEMENT_N_REL_TRUST"(
 	IN  IV_GRP_DATE        DATE,
-	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT",
+	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT2",
 	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
 )
    LANGUAGE SQLSCRIPT
@@ -102,12 +102,22 @@ WHERE "REL_KEY" <> 'SELF_ORG_REL'
    FROM (
    SELECT 
    "ELEMENT_L_NUM" AS "ELEMENT_NUM", 
-   'O' || LPAD("ELEMENT_L_NUM", 11, '0') AS "ELEMENT" FROM :ET_ELEMENT_REL
+   "ELEMENT_L_NUM" AS "ELEMENT" FROM :ET_ELEMENT_REL
    UNION
    SELECT 
    "ELEMENT_R_NUM" AS "ELEMENT_NUM", 
-   'O' || LPAD("ELEMENT_R_NUM", 11, '0') AS "ELEMENT" FROM :ET_ELEMENT_REL
+   "ELEMENT_R_NUM" AS "ELEMENT" FROM :ET_ELEMENT_REL
    )
    ;
+   /*
+       table type DisjointElementT_TR {
+        ELEMENT_NUM : Integer64;
+        ELEMENT     : Integer64;
+    };
+    table type DisjointElementRelT {
+        ELEMENT_L_NUM : Integer64;
+        ELEMENT_R_NUM : Integer64;
+    };
+    */
 
 END
