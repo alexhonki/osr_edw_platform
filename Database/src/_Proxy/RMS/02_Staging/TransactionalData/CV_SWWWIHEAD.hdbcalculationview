@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_SWWWIHEAD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_SWWWIHEAD" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_SWWWIHEAD"/>
 <localVariables/>
 <variableMappings/>
@@ -8,300 +8,445 @@
     <resourceUri>osr.edw.staging.td.rms.synonym::CDS_SWF.DSO.SWWWIHEAD.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_SWF.DSO.SWWWIHEAD.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="CLIENT">
+        <descriptions defaultDescription="CLIENT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_ID">
+        <descriptions defaultDescription="WI_ID"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="WI_TYPE">
+        <descriptions defaultDescription="WI_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CREATOR">
+        <descriptions defaultDescription="WI_CREATOR"/>
+      </viewAttribute>
+      <viewAttribute id="WI_LANG">
+        <descriptions defaultDescription="WI_LANG"/>
+      </viewAttribute>
+      <viewAttribute id="WI_TEXT">
+        <descriptions defaultDescription="WI_TEXT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_RHTEXT">
+        <descriptions defaultDescription="WI_RHTEXT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_STAT">
+        <descriptions defaultDescription="WI_STAT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CD">
+        <descriptions defaultDescription="WI_CD"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CT">
+        <descriptions defaultDescription="WI_CT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_AED">
+        <descriptions defaultDescription="WI_AED"/>
+      </viewAttribute>
+      <viewAttribute id="WI_AAGENT">
+        <descriptions defaultDescription="WI_AAGENT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_AADDR">
+        <descriptions defaultDescription="WI_AADDR"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CRUSER">
+        <descriptions defaultDescription="WI_CRUSER"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CRADDR">
+        <descriptions defaultDescription="WI_CRADDR"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CHCKWI">
+        <descriptions defaultDescription="WI_CHCKWI"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CBFB">
+        <descriptions defaultDescription="WI_CBFB"/>
+      </viewAttribute>
+      <viewAttribute id="WI_RH_TASK">
+        <descriptions defaultDescription="WI_RH_TASK"/>
+      </viewAttribute>
+      <viewAttribute id="WI_PRIO">
+        <descriptions defaultDescription="WI_PRIO"/>
+      </viewAttribute>
+      <viewAttribute id="WI_CONFIRM">
+        <descriptions defaultDescription="WI_CONFIRM"/>
+      </viewAttribute>
+      <viewAttribute id="WI_COMP_EV">
+        <descriptions defaultDescription="WI_COMP_EV"/>
+      </viewAttribute>
+      <viewAttribute id="WI_FORW_BY">
+        <descriptions defaultDescription="WI_FORW_BY"/>
+      </viewAttribute>
+      <viewAttribute id="WI_DISABLE">
+        <descriptions defaultDescription="WI_DISABLE"/>
+      </viewAttribute>
+      <viewAttribute id="WI_REJECT">
+        <descriptions defaultDescription="WI_REJECT"/>
+      </viewAttribute>
+      <viewAttribute id="TCLASS">
+        <descriptions defaultDescription="TCLASS"/>
+      </viewAttribute>
+      <viewAttribute id="NOTE_EXIST">
+        <descriptions defaultDescription="NOTE_EXIST"/>
+      </viewAttribute>
+      <viewAttribute id="NOTIFY">
+        <descriptions defaultDescription="NOTIFY"/>
+      </viewAttribute>
+      <viewAttribute id="RETRY_CNT">
+        <descriptions defaultDescription="RETRY_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="MAX_RETRY">
+        <descriptions defaultDescription="MAX_RETRY"/>
+      </viewAttribute>
+      <viewAttribute id="RC_MODELED">
+        <descriptions defaultDescription="RC_MODELED"/>
+      </viewAttribute>
+      <viewAttribute id="CB_DONE">
+        <descriptions defaultDescription="CB_DONE"/>
+      </viewAttribute>
+      <viewAttribute id="HANDLE">
+        <descriptions defaultDescription="HANDLE"/>
+      </viewAttribute>
+      <viewAttribute id="SYNCCHAIN">
+        <descriptions defaultDescription="SYNCCHAIN"/>
+      </viewAttribute>
+      <viewAttribute id="NO_DEADL">
+        <descriptions defaultDescription="NO_DEADL"/>
+      </viewAttribute>
+      <viewAttribute id="WI_DH_STAT">
+        <descriptions defaultDescription="WI_DH_STAT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_RELEASE">
+        <descriptions defaultDescription="WI_RELEASE"/>
+      </viewAttribute>
+      <viewAttribute id="WLC_DISPL">
+        <descriptions defaultDescription="WLC_DISPL"/>
+      </viewAttribute>
+      <viewAttribute id="WI_RESTLOG">
+        <descriptions defaultDescription="WI_RESTLOG"/>
+      </viewAttribute>
+      <viewAttribute id="REMOTE_ID">
+        <descriptions defaultDescription="REMOTE_ID"/>
+      </viewAttribute>
+      <viewAttribute id="REMOTE_SYS">
+        <descriptions defaultDescription="REMOTE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="STATUS_EVT">
+        <descriptions defaultDescription="STATUS_EVT"/>
+      </viewAttribute>
+      <viewAttribute id="TIMEOUT">
+        <descriptions defaultDescription="TIMEOUT"/>
+      </viewAttribute>
+      <viewAttribute id="WF_TYPE">
+        <descriptions defaultDescription="WF_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="WLC_FLAGS">
+        <descriptions defaultDescription="WLC_FLAGS"/>
+      </viewAttribute>
+      <viewAttribute id="XMLPROT">
+        <descriptions defaultDescription="XMLPROT"/>
+      </viewAttribute>
+      <viewAttribute id="WAIT4CB">
+        <descriptions defaultDescription="WAIT4CB"/>
+      </viewAttribute>
+      <viewAttribute id="TOP_WI_ID">
+        <descriptions defaultDescription="TOP_WI_ID"/>
+      </viewAttribute>
+      <viewAttribute id="DEF_GUID">
+        <descriptions defaultDescription="DEF_GUID"/>
+      </viewAttribute>
+      <viewAttribute id="EXEC_TIME">
+        <descriptions defaultDescription="EXEC_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="NOTE_COUNT">
+        <descriptions defaultDescription="NOTE_COUNT"/>
+      </viewAttribute>
+      <viewAttribute id="PRS_PROFIL">
+        <descriptions defaultDescription="PRS_PROFIL"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_TMP">
+        <descriptions defaultDescription="CREA_TMP"/>
+      </viewAttribute>
+      <viewAttribute id="CHECK_STAT">
+        <descriptions defaultDescription="CHECK_STAT"/>
+      </viewAttribute>
+      <viewAttribute id="BLOCKTYPE">
+        <descriptions defaultDescription="BLOCKTYPE"/>
+      </viewAttribute>
+      <viewAttribute id="PARENT_WI">
+        <descriptions defaultDescription="PARENT_WI"/>
+      </viewAttribute>
+      <viewAttribute id="RNDNUMBER">
+        <descriptions defaultDescription="RNDNUMBER"/>
+      </viewAttribute>
+      <viewAttribute id="WFD_ID">
+        <descriptions defaultDescription="WFD_ID"/>
+      </viewAttribute>
+      <viewAttribute id="WFD_VERSION">
+        <descriptions defaultDescription="WFD_VERSION"/>
+      </viewAttribute>
+      <viewAttribute id="WFD_EXETYP">
+        <descriptions defaultDescription="WFD_EXETYP"/>
+      </viewAttribute>
+      <viewAttribute id="PROCCAT">
+        <descriptions defaultDescription="PROCCAT"/>
+      </viewAttribute>
+      <viewAttribute id="TOP_TASK">
+        <descriptions defaultDescription="TOP_TASK"/>
+      </viewAttribute>
+      <viewAttribute id="AGING_STATE">
+        <descriptions defaultDescription="AGING_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="AGING_TEMPERATURE">
+        <descriptions defaultDescription="AGING_TEMPERATURE"/>
+      </viewAttribute>
+      <viewAttribute id="WLC_FLAGS_EXT">
+        <descriptions defaultDescription="WLC_FLAGS_EXT"/>
+      </viewAttribute>
+      <viewAttribute id="WI_AED_TIMESTAMP">
+        <descriptions defaultDescription="WI_AED_TIMESTAMP"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_WI_CREATOR" datatype="NVARCHAR" length="90" expressionLanguage="SQL">
+        <formula>TRIM(&quot;WI_CREATOR&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_SWF.DSO.SWWWIHEAD.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_ID" source="WI_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_TYPE" source="WI_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CREATOR" source="WI_CREATOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_LANG" source="WI_LANG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_TEXT" source="WI_TEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_RHTEXT" source="WI_RHTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_STAT" source="WI_STAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CD" source="WI_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CT" source="WI_CT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_AED" source="WI_AED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_AAGENT" source="WI_AAGENT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_AADDR" source="WI_AADDR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CRUSER" source="WI_CRUSER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CRADDR" source="WI_CRADDR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CHCKWI" source="WI_CHCKWI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CBFB" source="WI_CBFB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_RH_TASK" source="WI_RH_TASK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_PRIO" source="WI_PRIO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_CONFIRM" source="WI_CONFIRM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_COMP_EV" source="WI_COMP_EV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_FORW_BY" source="WI_FORW_BY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_DISABLE" source="WI_DISABLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_REJECT" source="WI_REJECT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TCLASS" source="TCLASS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTE_EXIST" source="NOTE_EXIST"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTIFY" source="NOTIFY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RETRY_CNT" source="RETRY_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MAX_RETRY" source="MAX_RETRY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RC_MODELED" source="RC_MODELED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CB_DONE" source="CB_DONE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HANDLE" source="HANDLE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SYNCCHAIN" source="SYNCCHAIN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NO_DEADL" source="NO_DEADL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_DH_STAT" source="WI_DH_STAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_RELEASE" source="WI_RELEASE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WLC_DISPL" source="WLC_DISPL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_RESTLOG" source="WI_RESTLOG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REMOTE_ID" source="REMOTE_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="REMOTE_SYS" source="REMOTE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STATUS_EVT" source="STATUS_EVT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TIMEOUT" source="TIMEOUT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WF_TYPE" source="WF_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WLC_FLAGS" source="WLC_FLAGS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XMLPROT" source="XMLPROT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAIT4CB" source="WAIT4CB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOP_WI_ID" source="TOP_WI_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DEF_GUID" source="DEF_GUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXEC_TIME" source="EXEC_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOTE_COUNT" source="NOTE_COUNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRS_PROFIL" source="PRS_PROFIL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_TMP" source="CREA_TMP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHECK_STAT" source="CHECK_STAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLOCKTYPE" source="BLOCKTYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PARENT_WI" source="PARENT_WI"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RNDNUMBER" source="RNDNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WFD_ID" source="WFD_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WFD_VERSION" source="WFD_VERSION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WFD_EXETYP" source="WFD_EXETYP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROCCAT" source="PROCCAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOP_TASK" source="TOP_TASK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGING_STATE" source="AGING_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AGING_TEMPERATURE" source="AGING_TEMPERATURE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WLC_FLAGS_EXT" source="WLC_FLAGS_EXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WI_AED_TIMESTAMP" source="WI_AED_TIMESTAMP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
   <attributes>
-    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CLIENT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="CLIENT"/>
-    </attribute>
-    <attribute id="WI_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WI_ID"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_ID"/>
-    </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_RUN_SEQ_ID"/>
-    </attribute>
-    <attribute id="WI_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WI_TYPE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_TYPE"/>
-    </attribute>
-    <attribute id="WI_CREATOR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="WI_CREATOR" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CREATOR"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CREATOR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_WI_CREATOR"/>
+    </attribute>
+    <attribute id="CLIENT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="WI_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WI_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_ID"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="WI_TYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WI_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_TYPE"/>
     </attribute>
     <attribute id="WI_LANG" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_LANG"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_LANG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_LANG"/>
     </attribute>
     <attribute id="WI_TEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_TEXT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_TEXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_TEXT"/>
     </attribute>
     <attribute id="WI_RHTEXT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_RHTEXT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_RHTEXT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_RHTEXT"/>
     </attribute>
     <attribute id="WI_STAT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_STAT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_STAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_STAT"/>
     </attribute>
     <attribute id="WI_CD" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CD"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CD"/>
     </attribute>
     <attribute id="WI_CT" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CT"/>
     </attribute>
     <attribute id="WI_AED" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_AED"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_AED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_AED"/>
     </attribute>
     <attribute id="WI_AAGENT" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_AAGENT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_AAGENT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_AAGENT"/>
     </attribute>
     <attribute id="WI_AADDR" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_AADDR"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_AADDR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_AADDR"/>
     </attribute>
     <attribute id="WI_CRUSER" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CRUSER"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CRUSER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CRUSER"/>
     </attribute>
     <attribute id="WI_CRADDR" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CRADDR"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CRADDR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CRADDR"/>
     </attribute>
     <attribute id="WI_CHCKWI" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CHCKWI"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CHCKWI"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CHCKWI"/>
     </attribute>
     <attribute id="WI_CBFB" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CBFB"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CBFB"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CBFB"/>
     </attribute>
     <attribute id="WI_RH_TASK" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_RH_TASK"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_RH_TASK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_RH_TASK"/>
     </attribute>
     <attribute id="WI_PRIO" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_PRIO"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_PRIO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_PRIO"/>
     </attribute>
     <attribute id="WI_CONFIRM" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_CONFIRM"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_CONFIRM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_CONFIRM"/>
     </attribute>
     <attribute id="WI_COMP_EV" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_COMP_EV"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_COMP_EV"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_COMP_EV"/>
     </attribute>
     <attribute id="WI_FORW_BY" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_FORW_BY"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_FORW_BY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_FORW_BY"/>
     </attribute>
     <attribute id="WI_DISABLE" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_DISABLE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_DISABLE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_DISABLE"/>
     </attribute>
     <attribute id="WI_REJECT" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WI_REJECT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_REJECT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WI_REJECT"/>
     </attribute>
     <attribute id="TCLASS" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TCLASS"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="TCLASS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TCLASS"/>
     </attribute>
     <attribute id="NOTE_EXIST" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOTE_EXIST"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="NOTE_EXIST"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NOTE_EXIST"/>
     </attribute>
     <attribute id="NOTIFY" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="NOTIFY"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="NOTIFY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NOTIFY"/>
     </attribute>
     <attribute id="RETRY_CNT" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RETRY_CNT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="RETRY_CNT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RETRY_CNT"/>
     </attribute>
     <attribute id="MAX_RETRY" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MAX_RETRY"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="MAX_RETRY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MAX_RETRY"/>
     </attribute>
     <attribute id="RC_MODELED" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RC_MODELED"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="RC_MODELED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RC_MODELED"/>
     </attribute>
     <attribute id="CB_DONE" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CB_DONE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="CB_DONE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CB_DONE"/>
     </attribute>
     <attribute id="HANDLE" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HANDLE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="HANDLE"/>
-    </attribute>
-    <attribute id="SYNCCHAIN" order="34" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="SYNCCHAIN"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="SYNCCHAIN"/>
-    </attribute>
-    <attribute id="NO_DEADL" order="35" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="NO_DEADL"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="NO_DEADL"/>
-    </attribute>
-    <attribute id="WI_DH_STAT" order="36" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WI_DH_STAT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_DH_STAT"/>
-    </attribute>
-    <attribute id="WI_RELEASE" order="37" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WI_RELEASE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_RELEASE"/>
-    </attribute>
-    <attribute id="WLC_DISPL" order="38" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WLC_DISPL"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WLC_DISPL"/>
-    </attribute>
-    <attribute id="WI_RESTLOG" order="39" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WI_RESTLOG"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_RESTLOG"/>
-    </attribute>
-    <attribute id="REMOTE_ID" order="40" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REMOTE_ID"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="REMOTE_ID"/>
-    </attribute>
-    <attribute id="REMOTE_SYS" order="41" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="REMOTE_SYS"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="REMOTE_SYS"/>
-    </attribute>
-    <attribute id="STATUS_EVT" order="42" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="STATUS_EVT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="STATUS_EVT"/>
-    </attribute>
-    <attribute id="TIMEOUT" order="43" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TIMEOUT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="TIMEOUT"/>
-    </attribute>
-    <attribute id="WF_TYPE" order="44" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WF_TYPE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WF_TYPE"/>
-    </attribute>
-    <attribute id="WLC_FLAGS" order="45" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WLC_FLAGS"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WLC_FLAGS"/>
-    </attribute>
-    <attribute id="XMLPROT" order="46" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="XMLPROT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="XMLPROT"/>
-    </attribute>
-    <attribute id="WAIT4CB" order="47" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WAIT4CB"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WAIT4CB"/>
-    </attribute>
-    <attribute id="TOP_WI_ID" order="48" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TOP_WI_ID"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="TOP_WI_ID"/>
-    </attribute>
-    <attribute id="DEF_GUID" order="49" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DEF_GUID"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="DEF_GUID"/>
-    </attribute>
-    <attribute id="EXEC_TIME" order="50" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="EXEC_TIME"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="EXEC_TIME"/>
-    </attribute>
-    <attribute id="NOTE_COUNT" order="51" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="NOTE_COUNT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="NOTE_COUNT"/>
-    </attribute>
-    <attribute id="PRS_PROFIL" order="52" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PRS_PROFIL"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="PRS_PROFIL"/>
-    </attribute>
-    <attribute id="CREA_TMP" order="53" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CREA_TMP"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="CREA_TMP"/>
-    </attribute>
-    <attribute id="CHECK_STAT" order="54" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CHECK_STAT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="CHECK_STAT"/>
-    </attribute>
-    <attribute id="BLOCKTYPE" order="55" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="BLOCKTYPE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="BLOCKTYPE"/>
-    </attribute>
-    <attribute id="PARENT_WI" order="56" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PARENT_WI"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="PARENT_WI"/>
-    </attribute>
-    <attribute id="RNDNUMBER" order="57" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="RNDNUMBER"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="RNDNUMBER"/>
-    </attribute>
-    <attribute id="WFD_ID" order="58" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WFD_ID"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WFD_ID"/>
-    </attribute>
-    <attribute id="WFD_VERSION" order="59" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WFD_VERSION"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WFD_VERSION"/>
-    </attribute>
-    <attribute id="WFD_EXETYP" order="60" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WFD_EXETYP"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WFD_EXETYP"/>
-    </attribute>
-    <attribute id="PROCCAT" order="61" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="PROCCAT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="PROCCAT"/>
-    </attribute>
-    <attribute id="TOP_TASK" order="62" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TOP_TASK"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="TOP_TASK"/>
-    </attribute>
-    <attribute id="AGING_STATE" order="63" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="AGING_STATE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="AGING_STATE"/>
-    </attribute>
-    <attribute id="AGING_TEMPERATURE" order="64" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="AGING_TEMPERATURE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="AGING_TEMPERATURE"/>
-    </attribute>
-    <attribute id="WLC_FLAGS_EXT" order="65" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WLC_FLAGS_EXT"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WLC_FLAGS_EXT"/>
-    </attribute>
-    <attribute id="WI_AED_TIMESTAMP" order="66" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="WI_AED_TIMESTAMP"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="WI_AED_TIMESTAMP"/>
-    </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="67" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_CHANGE_TYPE"/>
-    </attribute>
-    <attribute id="Z_CHANGE_TIME" order="68" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_CHANGE_TIME"/>
-    </attribute>
-    <attribute id="Z_SOURCE_SYS" order="69" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_SOURCE_SYS"/>
-    </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="70" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_RUN_ROW_NO"/>
-    </attribute>
-    <attribute id="Z_CURR_FLAG" order="71" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_CURR_FLAG"/>
-    </attribute>
-    <attribute id="Z_VALID_FROM" order="72" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_VALID_FROM"/>
-    </attribute>
-    <attribute id="Z_VALID_TO" order="73" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_SWF.DSO.SWWWIHEAD.active_data" columnName="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HANDLE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -312,7 +457,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>

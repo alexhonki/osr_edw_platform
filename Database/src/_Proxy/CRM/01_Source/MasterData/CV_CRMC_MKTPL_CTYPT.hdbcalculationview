@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_CRMC_MKTPL_CTYPT" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRMC_MKTPL_CTYPT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_MKTPL_CTYPT">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_MKTPL_CTYPT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_MKTPL_CTYPT">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_MKTPL_CTYPT" columnName="MANDT"/>
+    </attribute>
+    <attribute id="LANGU" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANGU"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_MKTPL_CTYPT" columnName="LANGU"/>
+    </attribute>
+    <attribute id="CAMP_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAMP_TYPE"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_MKTPL_CTYPT" columnName="CAMP_TYPE"/>
+    </attribute>
+    <attribute id="CAMP_TYPETX" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAMP_TYPETX"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_MKTPL_CTYPT" columnName="CAMP_TYPETX"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_MKTPL_CTYPT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_MKTPL_CTYPT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

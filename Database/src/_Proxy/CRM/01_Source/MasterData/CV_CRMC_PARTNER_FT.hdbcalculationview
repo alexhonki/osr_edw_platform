@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_CRMC_PARTNER_FT" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRMC_PARTNER_FT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PARTNER_FT">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PARTNER_FT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CRM.TAB.CRMC_PARTNER_FT">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="PARTNER_FCT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER_FCT"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="PARTNER_FCT"/>
+    </attribute>
+    <attribute id="SPRAS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPRAS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="SPRAS"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="DESCRIPTION"/>
+    </attribute>
+    <attribute id="SHORT_DESC" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SHORT_DESC"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="SHORT_DESC"/>
+    </attribute>
+    <attribute id="REGISTRATOR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGISTRATOR"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="REGISTRATOR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CRM.TAB.CRMC_PARTNER_FT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
