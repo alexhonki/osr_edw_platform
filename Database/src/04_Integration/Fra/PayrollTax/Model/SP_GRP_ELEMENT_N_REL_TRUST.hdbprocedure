@@ -1,0 +1,123 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_ELEMENT_N_REL_TRUST"(
+	IN  IV_GRP_DATE        DATE,
+	OUT ET_ELEMENT         "osr.edw.platform.fra.prt.model::Types.DisjointElementT2",
+	OUT ET_ELEMENT_REL	   "osr.edw.platform.fra.prt.model::Types.DisjointElementRelT"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE LV_GJAHR NVARCHAR(4);
+DECLARE LV_GRP_DATE DATE;
+
+DECLARE LV_ORG_PREFIX	NVARCHAR(1); 
+DECLARE LV_PSN_PREFIX	NVARCHAR(1);
+DECLARE LV_PGP_PREFIX	NVARCHAR(1);
+
+LV_ORG_PREFIX := '0';
+LV_PSN_PREFIX := '1';
+LV_PGP_PREFIX := '2';
+
+
+IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
+	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
+ELSE
+	LV_GRP_DATE := :IV_GRP_DATE;
+END IF;
+
+LT_GROUP = 
+SELECT  
+"GROUP_TYPE", 
+"GROUP_ID", 
+"ELEMENT_ID"  -- replaces ORG_ID
+FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2" -- new table for TRUST grouping 
+WHERE "GRP_DATE" = :LV_GRP_DATE
+;
+
+-- Groups with Common beneficiaries
+LT_GROUP_TO_SUBSUME = 
+SELECT "GROUP_TYPE", "GROUP_ID" FROM :LT_GROUP
+GROUP BY "GROUP_TYPE", "GROUP_ID"
+HAVING COUNT(*) > 1
+;
+
+
+lt_2bsubsume = 
+SELECT 
+"GRP_MEM"."GROUP_TYPE" AS "GROUP_TYPE",
+"GRP_MEM"."ELEMENT_ID" AS "ELEMENT_ID",
+"GRP_MEM"."GROUP_ID" AS "GROUP_ID"
+FROM 
+:LT_GROUP AS "GRP_MEM"
+INNER JOIN 
+:LT_GROUP_TO_SUBSUME AS "GRP"
+ON  "GRP_MEM"."GROUP_TYPE" = "GRP"."GROUP_TYPE"
+AND "GRP_MEM"."GROUP_ID" = "GRP"."GROUP_ID"
+;
+
+lt_disjoint_element_rel = 
+-- members in the same initial group should have relation, build self connection
+SELECT DISTINCT "L"."ELEMENT_ID" AS "ELEMENT_ID_L", "R"."ELEMENT_ID" AS "ELEMENT_ID_R"
+FROM 
+:lt_2bsubsume AS "L" 
+INNER JOIN 
+:lt_2bsubsume AS "R"
+ON  "L"."GROUP_ID" = "R"."GROUP_ID"
+AND "L"."GROUP_TYPE" = "R"."GROUP_TYPE"
+;
+
+et_element_rel = 
+SELECT "ELEMENT_L_NUM", "ELEMENT_R_NUM" 
+FROM
+	(
+	SELECT "REL_KEY", "ELEMENT_L_NUM", "ELEMENT_R_NUM", ROW_NUMBER( ) OVER (PARTITION BY "REL_KEY" ORDER BY "ELEMENT_L_NUM") AS "ROW_NUM_PARTITION"
+	FROM 
+		(
+		SELECT 
+		"ELEMENT_L_NUM", 
+		"ELEMENT_R_NUM", 
+		CASE WHEN "ELEMENT_L_NUM" < "ELEMENT_R_NUM" THEN CONCAT("ELEMENT_L_NUM","ELEMENT_R_NUM") 
+		     WHEN "ELEMENT_L_NUM" > "ELEMENT_R_NUM" THEN CONCAT("ELEMENT_R_NUM","ELEMENT_L_NUM") 
+		     ELSE 'SELF_ORG_REL' END AS "REL_KEY"
+		FROM 
+			(
+				SELECT DISTINCT 
+				"ELEMENT_ID_L", 
+				"ELEMENT_ID_R", 
+				TO_BIGINT(:LV_ORG_PREFIX || RIGHT("ELEMENT_ID_L",11)) AS "ELEMENT_L_NUM",
+				TO_BIGINT(:LV_ORG_PREFIX || RIGHT("ELEMENT_ID_R",11)) AS "ELEMENT_R_NUM"
+				FROM :lt_disjoint_element_rel 
+				WHERE "ELEMENT_ID_L" <> "ELEMENT_ID_R"
+			)
+		)
+	)
+WHERE "REL_KEY" <> 'SELF_ORG_REL'
+  AND "ROW_NUM_PARTITION" = 1
+;
+   
+   ET_ELEMENT = 
+   SELECT 
+   DISTINCT "ELEMENT_NUM", "ELEMENT" 
+   FROM (
+   SELECT 
+   "ELEMENT_L_NUM" AS "ELEMENT_NUM", 
+   "ELEMENT_L_NUM" AS "ELEMENT" FROM :ET_ELEMENT_REL
+   UNION
+   SELECT 
+   "ELEMENT_R_NUM" AS "ELEMENT_NUM", 
+   "ELEMENT_R_NUM" AS "ELEMENT" FROM :ET_ELEMENT_REL
+   )
+   ;
+   /*
+       table type DisjointElementT_TR {
+        ELEMENT_NUM : Integer64;
+        ELEMENT     : Integer64;
+    };
+    table type DisjointElementRelT {
+        ELEMENT_L_NUM : Integer64;
+        ELEMENT_R_NUM : Integer64;
+    };
+    */
+
+END
