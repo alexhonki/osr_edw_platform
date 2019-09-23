@@ -73,6 +73,21 @@ context Types {
         ELEMENT            : String(32);
         PARENT_ELEMENT     : String(32);
     };
+    
+    table type CntrT {
+        GJAHR       		: String(4);
+        PAYER_ABN			: String(11);
+        PAYEE_ABN			: String(11);
+        PAYEE_ENT_TYPE		: String(3);
+        PAYEE_BUS_STATE 	: String(3);
+        PAYEE_TOT_INCM_AMT	: Decimal(15,2);
+        PAYEE_CNTR_PMT		: Decimal(15,2);
+        PAYEE_BUS_INCM_PER	: Decimal(15,2);
+        TOT_EMP_CNT			: Integer;
+        WCQ_ACT_WAGE		: Decimal(15,2);
+        BPARTNER			: String(3);
+        PRT_REG_STATUS		: String(1);
+      };
 
     context ASIC {
         table type OrgDetailT {
@@ -195,5 +210,6 @@ context Types {
             ELEMENT_NUM : Integer;
             ORG_ID      : String(13);
         };
+        
     };
 };
