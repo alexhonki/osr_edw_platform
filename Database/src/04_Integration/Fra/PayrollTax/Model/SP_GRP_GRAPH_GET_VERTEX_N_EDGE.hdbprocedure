@@ -41,6 +41,18 @@ LV_PGP_PREFIX := '2';
    FROM 
    "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
    WHERE "CHILD_ID" <> "PARENT_ID"
+/*
+   UNION
+-- Trust Relation
+  SELECT 
+    "CHILD_ID" AS "ELEMENT_L_NUM", 
+    "PARENT_ID" AS "ELEMENT_R_NUM",
+    "CHILD_ID",
+    "PARENT_ID"
+   FROM 
+   "osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE)
+   WHERE "CHILD_ID" <> "PARENT_ID"
+*/
    ;
    
    IF :IV_MATCH_PERSON = 'Y' THEN

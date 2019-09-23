@@ -1,13 +1,16 @@
 FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
        RETURNS TABLE (
-       		"CHILD_ID"				NVARCHAR(10),
-       		"PARENT_ID"				NVARCHAR(10),
+       		"CHILD_ID"				NVARCHAR(12), --Beneficiary
+       		"PARENT_ID"				NVARCHAR(12), --Trust
+       		"BNFCRY_ABN"			NVARCHAR(12),
+       		"TRUST_ABN"				NVARCHAR(12),
        		"GJAHR"					NVARCHAR(4),
-       		"ORG_NUMBER"			NVARCHAR(9),
-		--	"PERSON_NUM"			NVARCHAR(9),
+       		"ORG_NUMBER"			NVARCHAR(9), --ACN if exists
+			"PERSON_NUM"			NVARCHAR(9), -- If IND / no ABN
 			"START_DT"				DATE,
 			"END_DT"				DATE,
-			"TR_BENFCRY_COUNT"		INTEGER
+			"TR_BENFCRY_COUNT"		INTEGER,
+			"ENT_TYP_CD"			NVARCHAR(3)
        )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
@@ -27,38 +30,102 @@ END IF;
 SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
+lt_pers = 
+	SELECT DISTINCT
+		"B"."PGRP_ID",
+		"A"."GIVEN_NAME1", 
+		"A"."GIVEN_NAME2",  
+		"A"."SURNAME", 
+		"A"."BIRTH_DT"
+		FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"('2015-06-30','R') AS "B"
+		inner join "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"('2015-06-30', 2) AS "A"
+		ON "A"."ID" = "B"."ID"
+		-- REMOVE AFTER TESTING
+		WHERE "A"."GIVEN_NAME1" in ('BEN', 'JOHN', 'ALIDA')
+		AND "A"."GIVEN_NAME2" IN( 'NULL', 'HYLTON', 'CORNELIA') 
+		AND "A"."SURNAME" IN( 'GOLDBERG', 'KINLOCH', 'VAN DER ZWAARD')
+;
+
+lt_ABR = 
+	SELECT DISTINCT
+		"ABN",
+		"ENT_TYP_CD", 
+		"PID",
+		"ACN"
+	FROM "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()
+	WHERE "ABN_REGN_DT"  <= :LV_KEY_DATE
+	  AND "ABN_CANCN_DT" >= :LV_KEY_DATE
+	  AND "SPRSN_IND" <> 'Y'
+	  AND "ACN" <> ''
+	  AND "ACN" <> '000000000'
+;
+
 lt_rel = 
 	SELECT DISTINCT
 		"MAP"."ACN"			AS "ORG_NUMBER",
 		"PTNR_BNFCRY_ABN"	AS "CHILD_ID",
 		"TRUST"."ABN"		AS "PARENT_ID",
 		"TRUST"."RTN_YR"	AS "GJAHR",
+		"PERS"."PGRP_ID"	AS "PERSON_NUM",
+		"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD",
 		TO_DATE(TO_VARCHAR((CAST("TRUST"."RTN_YR" as integer) -1)) || '0701') AS "START_DT",
 		TO_DATE("TRUST"."RTN_YR" || '0630') AS "END_DT"
 	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" as "BNFCRY" 
 	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
+	-- INCLUDE AFTER TESTING
 	--	AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- add this back in later as there is no data in dev for the moment! 
 	left outer join "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_KEY_DATE) as "MAP"
 	on "PTNR_BNFCRY_ABN" = "MAP"."ABN"
-	WHERE "BNFCRY"."PTNR_BNFCRY_ABN" <> 'no ABN'
-		AND "TRUST"."ABN" <> 'invalid ABN'
+	LEFT OUTER JOIN :lt_pers as "PERS"
+	ON "BNFCRY"."PTNR_BNFCRY_FIRST_NM" = "PERS"."GIVEN_NAME1"
+	-- INCLUDE AFTER TESTING
+	--AND "BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM" = "GIVEN_NAME2"
+	--AND "BNFCRY"."PTNR_BNFCRY_SRNM" = "SURNAME"
+	--AND  "BNFCRY"."PTNR_BNFCRY_DOB"  = "BIRTH_DT"
+	LEFT OUTER JOIN :lt_ABR AS "ABR"
+	ON "PTNR_BNFCRY_ABN" = "ABR"."ABN"
+	WHERE "TRUST"."ABN" <> 'invalid ABN'
 		AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
-		-- added for testing
-	AND	"BNFCRY"."PTNR_BNFCRY_ABN" IN (
-	'11797737279'
-	,'14853926895'
-	,'64175894971'
-	,'80830647522'
-	,'27816336576'
-	,'32624288234'
-	,'44372258429'
-	,'27816336576'
-);
+		-- remove records we can't process due to information being withheld by ATO
+		AND ("BNFCRY"."PTNR_BNFCRY_ABN" <> 'no ABN' 
+			OR ("BNFCRY"."PTNR_BNFCRY_ABN" = 'no ABN' AND ("PTNR_BNFCRY_FIRST_NM" is not null AND "PTNR_BNFCRY_FIRST_NM" <> '' AND "BNFCRY"."PTNR_BNFCRY_FIRST_NM" not like '%#%')))
+		-- REMOVE AFTER TESTING
+		AND	"BNFCRY"."PTNR_BNFCRY_ABN" IN (
+		'11797737279'
+		,'14853926895'
+		,'64175894971'
+		,'80830647522'
+		,'27816336576'
+		,'32624288234'
+		,'44372258429'
+		,'27816336576'
+		, 'no ABN'
+		)
+		AND "TRUST"."ABN" IN (
+		'71256622977',
+		'64175894971',
+		'26257558531',
+		'71256622977',
+		'32624288234',
+		'28380160124',
+		'28380160124',
+		'28380160124',
+		'71256622977',
+		'71256622977',
+		'11709639794',
+		'90397942656',
+		'45358248690',
+		'90809049629',
+		'59627509121',
+		'61919873656',
+		'63567691341'
+		)
+	;
 
 lt_tr_cnt = 
-SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" FROM
-(	
+SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" FROM :lt_rel GROUP BY "PARENT_ID", "GJAHR";
+/*(	
 	SELECT DISTINCT
 		"PTNR_BNFCRY_ABN"	AS "CHILD_ID",
 		"TRUST"."ABN"		AS "PARENT_ID",
@@ -71,22 +138,26 @@ SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" FROM
 		AND "TRUST"."ABN" <> 'invalid ABN'
 		AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
 )  GROUP BY "PARENT_ID", "GJAHR";
-
+*/
 
 RETURN 
 SELECT DISTINCT
-	"REL"."CHILD_ID",
-	"REL"."PARENT_ID",
+	CASE WHEN "REL"."CHILD_ID" = 'no ABN' THEN "REL"."PERSON_NUM" ELSE CONCAT('T',"REL"."CHILD_ID")  END AS "CHILD_ID",
+	CONCAT('T',"REL"."PARENT_ID") AS "PARENT_ID",
+	CASE WHEN "REL"."CHILD_ID" <> 'no ABN' THEN "REL"."CHILD_ID" END AS "BNFCRY_ABN",
+	"REL"."PARENT_ID" AS "TRUST_ABN",
 	"REL"."GJAHR",
 	"REL"."ORG_NUMBER",
---	"REL"."PERSON_NUM",
+	"REL"."PERSON_NUM",
 	"REL"."START_DT",
 	"REL"."END_DT",
-	"CNT"."TR_BENFCRY_COUNT"
+	"CNT"."TR_BENFCRY_COUNT",
+	"REL"."ENT_TYP_CD"
 	FROM :lt_rel AS "REL" INNER JOIN :lt_tr_cnt AS "CNT"
 	ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
 	WHERE :IV_KEY_DATE >= "REL"."START_DT"
 	AND  :IV_KEY_DATE <= "REL"."END_DT"
+	AND "CNT"."TR_BENFCRY_COUNT" > 1
 	;
 
 END;

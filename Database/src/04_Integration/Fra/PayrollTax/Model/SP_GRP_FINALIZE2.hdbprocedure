@@ -1,4 +1,4 @@
-PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_FINALIZE"(
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_FINALIZE2"(
 	IN	IV_GRP_DATE 			DATE ,
 	OUT ET_GROUP_SUMMARY		"osr.edw.platform.fra.prt.model::Types.GroupSummaryT",
 	OUT ET_GROUP_ID			    "osr.edw.platform.fra.prt.model::Types.GroupIDT"
@@ -114,6 +114,7 @@ SELECT
 TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
 "ELEMENT" AS "ORG_ID", 
 "PARENT_ELEMENT" AS "GROUP_ID_DS"
+--
 FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
 WHERE LEFT("ELEMENT",1) = 'O'
   AND "GRP_DATE" = :LV_GRP_DATE
