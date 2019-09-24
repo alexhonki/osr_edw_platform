@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_DFKKRP" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_DFKKRP" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_DFKKRP"/>
 <localVariables/>
 <variableMappings/>
@@ -8,284 +8,573 @@
     <resourceUri>osr.edw.staging.td.rms.synonym::CDS_FICA.DSO.DFKKRP.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_FICA.DSO.DFKKRP.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="KEYR1">
+        <descriptions defaultDescription="KEYR1"/>
+      </viewAttribute>
+      <viewAttribute id="POSRA">
+        <descriptions defaultDescription="POSRA"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_SEQ_ID">
+        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      </viewAttribute>
+      <viewAttribute id="SELT1">
+        <descriptions defaultDescription="SELT1"/>
+      </viewAttribute>
+      <viewAttribute id="SELW1">
+        <descriptions defaultDescription="SELW1"/>
+      </viewAttribute>
+      <viewAttribute id="BETRR">
+        <descriptions defaultDescription="BETRR"/>
+      </viewAttribute>
+      <viewAttribute id="BETRH">
+        <descriptions defaultDescription="BETRH"/>
+      </viewAttribute>
+      <viewAttribute id="BETRU">
+        <descriptions defaultDescription="BETRU"/>
+      </viewAttribute>
+      <viewAttribute id="BTRB1">
+        <descriptions defaultDescription="BTRB1"/>
+      </viewAttribute>
+      <viewAttribute id="BTRB2">
+        <descriptions defaultDescription="BTRB2"/>
+      </viewAttribute>
+      <viewAttribute id="BTRV1">
+        <descriptions defaultDescription="BTRV1"/>
+      </viewAttribute>
+      <viewAttribute id="BTRV2">
+        <descriptions defaultDescription="BTRV2"/>
+      </viewAttribute>
+      <viewAttribute id="STBB1">
+        <descriptions defaultDescription="STBB1"/>
+      </viewAttribute>
+      <viewAttribute id="STBB2">
+        <descriptions defaultDescription="STBB2"/>
+      </viewAttribute>
+      <viewAttribute id="STBV1">
+        <descriptions defaultDescription="STBV1"/>
+      </viewAttribute>
+      <viewAttribute id="STBV2">
+        <descriptions defaultDescription="STBV2"/>
+      </viewAttribute>
+      <viewAttribute id="SKZB1">
+        <descriptions defaultDescription="SKZB1"/>
+      </viewAttribute>
+      <viewAttribute id="SKZB2">
+        <descriptions defaultDescription="SKZB2"/>
+      </viewAttribute>
+      <viewAttribute id="SKZV1">
+        <descriptions defaultDescription="SKZV1"/>
+      </viewAttribute>
+      <viewAttribute id="SKZV2">
+        <descriptions defaultDescription="SKZV2"/>
+      </viewAttribute>
+      <viewAttribute id="FIKEY">
+        <descriptions defaultDescription="FIKEY"/>
+      </viewAttribute>
+      <viewAttribute id="RLSKO">
+        <descriptions defaultDescription="RLSKO"/>
+      </viewAttribute>
+      <viewAttribute id="BUKRS">
+        <descriptions defaultDescription="BUKRS"/>
+      </viewAttribute>
+      <viewAttribute id="GSBER">
+        <descriptions defaultDescription="GSBER"/>
+      </viewAttribute>
+      <viewAttribute id="PRCTR">
+        <descriptions defaultDescription="PRCTR"/>
+      </viewAttribute>
+      <viewAttribute id="BLART">
+        <descriptions defaultDescription="BLART"/>
+      </viewAttribute>
+      <viewAttribute id="WAERS">
+        <descriptions defaultDescription="WAERS"/>
+      </viewAttribute>
+      <viewAttribute id="WAERU">
+        <descriptions defaultDescription="WAERU"/>
+      </viewAttribute>
+      <viewAttribute id="KURSF">
+        <descriptions defaultDescription="KURSF"/>
+      </viewAttribute>
+      <viewAttribute id="BUDAT">
+        <descriptions defaultDescription="BUDAT"/>
+      </viewAttribute>
+      <viewAttribute id="BLDAT">
+        <descriptions defaultDescription="BLDAT"/>
+      </viewAttribute>
+      <viewAttribute id="VALUT">
+        <descriptions defaultDescription="VALUT"/>
+      </viewAttribute>
+      <viewAttribute id="XEIPH">
+        <descriptions defaultDescription="XEIPH"/>
+      </viewAttribute>
+      <viewAttribute id="RLGRD">
+        <descriptions defaultDescription="RLGRD"/>
+      </viewAttribute>
+      <viewAttribute id="RLHBK">
+        <descriptions defaultDescription="RLHBK"/>
+      </viewAttribute>
+      <viewAttribute id="AENAM">
+        <descriptions defaultDescription="AENAM"/>
+      </viewAttribute>
+      <viewAttribute id="AEDAT">
+        <descriptions defaultDescription="AEDAT"/>
+      </viewAttribute>
+      <viewAttribute id="AETIM">
+        <descriptions defaultDescription="AETIM"/>
+      </viewAttribute>
+      <viewAttribute id="OPBEL">
+        <descriptions defaultDescription="OPBEL"/>
+      </viewAttribute>
+      <viewAttribute id="RLBEL">
+        <descriptions defaultDescription="RLBEL"/>
+      </viewAttribute>
+      <viewAttribute id="URBEL">
+        <descriptions defaultDescription="URBEL"/>
+      </viewAttribute>
+      <viewAttribute id="TXTVW">
+        <descriptions defaultDescription="TXTVW"/>
+      </viewAttribute>
+      <viewAttribute id="BANKL">
+        <descriptions defaultDescription="BANKL"/>
+      </viewAttribute>
+      <viewAttribute id="BANKK">
+        <descriptions defaultDescription="BANKK"/>
+      </viewAttribute>
+      <viewAttribute id="BANKN">
+        <descriptions defaultDescription="BANKN"/>
+      </viewAttribute>
+      <viewAttribute id="IBAN">
+        <descriptions defaultDescription="IBAN"/>
+      </viewAttribute>
+      <viewAttribute id="HBKID">
+        <descriptions defaultDescription="HBKID"/>
+      </viewAttribute>
+      <viewAttribute id="HKTID">
+        <descriptions defaultDescription="HKTID"/>
+      </viewAttribute>
+      <viewAttribute id="CHECF">
+        <descriptions defaultDescription="CHECF"/>
+      </viewAttribute>
+      <viewAttribute id="XACCEPTCHARGES">
+        <descriptions defaultDescription="XACCEPTCHARGES"/>
+      </viewAttribute>
+      <viewAttribute id="RLMOD">
+        <descriptions defaultDescription="RLMOD"/>
+      </viewAttribute>
+      <viewAttribute id="FLAGS">
+        <descriptions defaultDescription="FLAGS"/>
+      </viewAttribute>
+      <viewAttribute id="XERWR">
+        <descriptions defaultDescription="XERWR"/>
+      </viewAttribute>
+      <viewAttribute id="XKLAE">
+        <descriptions defaultDescription="XKLAE"/>
+      </viewAttribute>
+      <viewAttribute id="KLAEB">
+        <descriptions defaultDescription="KLAEB"/>
+      </viewAttribute>
+      <viewAttribute id="KLAEH">
+        <descriptions defaultDescription="KLAEH"/>
+      </viewAttribute>
+      <viewAttribute id="KLAED">
+        <descriptions defaultDescription="KLAED"/>
+      </viewAttribute>
+      <viewAttribute id="XVOID">
+        <descriptions defaultDescription="XVOID"/>
+      </viewAttribute>
+      <viewAttribute id="SWIFT">
+        <descriptions defaultDescription="SWIFT"/>
+      </viewAttribute>
+      <viewAttribute id="KUKEY">
+        <descriptions defaultDescription="KUKEY"/>
+      </viewAttribute>
+      <viewAttribute id="ESNUM">
+        <descriptions defaultDescription="ESNUM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TYPE">
+        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CHANGE_TIME">
+        <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      </viewAttribute>
+      <viewAttribute id="Z_SOURCE_SYS">
+        <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      </viewAttribute>
+      <viewAttribute id="Z_RUN_ROW_NO">
+        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      </viewAttribute>
+      <viewAttribute id="Z_CURR_FLAG">
+        <descriptions defaultDescription="Z_CURR_FLAG"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_FROM">
+        <descriptions defaultDescription="Z_VALID_FROM"/>
+      </viewAttribute>
+      <viewAttribute id="Z_VALID_TO">
+        <descriptions defaultDescription="Z_VALID_TO"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_FLAGS" datatype="NVARCHAR" length="32" expressionLanguage="SQL">
+        <formula>TRIM(&quot;FLAGS&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_FICA.DSO.DFKKRP.active_data">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KEYR1" source="KEYR1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSRA" source="POSRA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SELT1" source="SELT1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SELW1" source="SELW1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BETRR" source="BETRR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BETRH" source="BETRH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BETRU" source="BETRU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRB1" source="BTRB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRB2" source="BTRB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRV1" source="BTRV1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRV2" source="BTRV2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STBB1" source="STBB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STBB2" source="STBB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STBV1" source="STBV1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STBV2" source="STBV2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SKZB1" source="SKZB1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SKZB2" source="SKZB2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SKZV1" source="SKZV1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SKZV2" source="SKZV2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIKEY" source="FIKEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLSKO" source="RLSKO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GSBER" source="GSBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRCTR" source="PRCTR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLART" source="BLART"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERS" source="WAERS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WAERU" source="WAERU"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KURSF" source="KURSF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUDAT" source="BUDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BLDAT" source="BLDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VALUT" source="VALUT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XEIPH" source="XEIPH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLGRD" source="RLGRD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLHBK" source="RLHBK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AENAM" source="AENAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AEDAT" source="AEDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="AETIM" source="AETIM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OPBEL" source="OPBEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLBEL" source="RLBEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="URBEL" source="URBEL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TXTVW" source="TXTVW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANKL" source="BANKL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANKK" source="BANKK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BANKN" source="BANKN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IBAN" source="IBAN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HBKID" source="HBKID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HKTID" source="HKTID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CHECF" source="CHECF"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XACCEPTCHARGES" source="XACCEPTCHARGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RLMOD" source="RLMOD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FLAGS" source="FLAGS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XERWR" source="XERWR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XKLAE" source="XKLAE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KLAEB" source="KLAEB"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KLAEH" source="KLAEH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KLAED" source="KLAED"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="XVOID" source="XVOID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SWIFT" source="SWIFT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KUKEY" source="KUKEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ESNUM" source="ESNUM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CURR_FLAG" source="Z_CURR_FLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_FROM" source="Z_VALID_FROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Z_VALID_TO" source="Z_VALID_TO"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MANDT"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="MANDT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="MANDT"/>
     </attribute>
     <attribute id="KEYR1" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KEYR1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="KEYR1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KEYR1"/>
     </attribute>
     <attribute id="POSRA" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POSRA"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="POSRA"/>
+      <keyMapping columnObjectName="Projection_1" columnName="POSRA"/>
     </attribute>
     <attribute id="Z_RUN_SEQ_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
     <attribute id="SELT1" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SELT1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SELT1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SELT1"/>
     </attribute>
     <attribute id="SELW1" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SELW1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SELW1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SELW1"/>
     </attribute>
     <attribute id="BETRR" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BETRR"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BETRR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BETRR"/>
     </attribute>
     <attribute id="BETRH" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BETRH"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BETRH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BETRH"/>
     </attribute>
     <attribute id="BETRU" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BETRU"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BETRU"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BETRU"/>
     </attribute>
     <attribute id="BTRB1" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BTRB1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BTRB1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BTRB1"/>
     </attribute>
     <attribute id="BTRB2" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BTRB2"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BTRB2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BTRB2"/>
     </attribute>
     <attribute id="BTRV1" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BTRV1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BTRV1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BTRV1"/>
     </attribute>
     <attribute id="BTRV2" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BTRV2"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BTRV2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BTRV2"/>
     </attribute>
     <attribute id="STBB1" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STBB1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="STBB1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STBB1"/>
     </attribute>
     <attribute id="STBB2" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STBB2"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="STBB2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STBB2"/>
     </attribute>
     <attribute id="STBV1" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STBV1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="STBV1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STBV1"/>
     </attribute>
     <attribute id="STBV2" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="STBV2"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="STBV2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="STBV2"/>
     </attribute>
     <attribute id="SKZB1" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SKZB1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SKZB1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SKZB1"/>
     </attribute>
     <attribute id="SKZB2" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SKZB2"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SKZB2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SKZB2"/>
     </attribute>
     <attribute id="SKZV1" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SKZV1"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SKZV1"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SKZV1"/>
     </attribute>
     <attribute id="SKZV2" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SKZV2"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SKZV2"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SKZV2"/>
     </attribute>
     <attribute id="FIKEY" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FIKEY"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="FIKEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="FIKEY"/>
     </attribute>
     <attribute id="RLSKO" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RLSKO"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="RLSKO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RLSKO"/>
     </attribute>
     <attribute id="BUKRS" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUKRS"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BUKRS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUKRS"/>
     </attribute>
     <attribute id="GSBER" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GSBER"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="GSBER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="GSBER"/>
     </attribute>
     <attribute id="PRCTR" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PRCTR"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="PRCTR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PRCTR"/>
     </attribute>
     <attribute id="BLART" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BLART"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BLART"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BLART"/>
     </attribute>
     <attribute id="WAERS" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="WAERS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
     </attribute>
     <attribute id="WAERU" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERU"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="WAERU"/>
+      <keyMapping columnObjectName="Projection_1" columnName="WAERU"/>
     </attribute>
     <attribute id="KURSF" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KURSF"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="KURSF"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KURSF"/>
     </attribute>
     <attribute id="BUDAT" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUDAT"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BUDAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BUDAT"/>
     </attribute>
     <attribute id="BLDAT" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BLDAT"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BLDAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BLDAT"/>
     </attribute>
     <attribute id="VALUT" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALUT"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="VALUT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALUT"/>
     </attribute>
     <attribute id="XEIPH" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XEIPH"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="XEIPH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XEIPH"/>
     </attribute>
     <attribute id="RLGRD" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RLGRD"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="RLGRD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RLGRD"/>
     </attribute>
     <attribute id="RLHBK" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RLHBK"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="RLHBK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RLHBK"/>
     </attribute>
     <attribute id="AENAM" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AENAM"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="AENAM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="AENAM"/>
     </attribute>
     <attribute id="AEDAT" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AEDAT"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="AEDAT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="AEDAT"/>
     </attribute>
     <attribute id="AETIM" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AETIM"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="AETIM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="AETIM"/>
     </attribute>
     <attribute id="OPBEL" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OPBEL"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="OPBEL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="OPBEL"/>
     </attribute>
     <attribute id="RLBEL" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RLBEL"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="RLBEL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RLBEL"/>
     </attribute>
     <attribute id="URBEL" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="URBEL"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="URBEL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="URBEL"/>
     </attribute>
     <attribute id="TXTVW" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TXTVW"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="TXTVW"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TXTVW"/>
     </attribute>
     <attribute id="BANKL" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BANKL"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BANKL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BANKL"/>
     </attribute>
     <attribute id="BANKK" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BANKK"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BANKK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BANKK"/>
     </attribute>
     <attribute id="BANKN" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BANKN"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="BANKN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BANKN"/>
     </attribute>
     <attribute id="IBAN" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IBAN"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="IBAN"/>
+      <keyMapping columnObjectName="Projection_1" columnName="IBAN"/>
     </attribute>
     <attribute id="HBKID" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HBKID"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="HBKID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HBKID"/>
     </attribute>
     <attribute id="HKTID" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HKTID"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="HKTID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="HKTID"/>
     </attribute>
     <attribute id="CHECF" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CHECF"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="CHECF"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CHECF"/>
     </attribute>
     <attribute id="XACCEPTCHARGES" order="51" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XACCEPTCHARGES"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="XACCEPTCHARGES"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XACCEPTCHARGES"/>
     </attribute>
     <attribute id="RLMOD" order="52" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RLMOD"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="RLMOD"/>
+      <keyMapping columnObjectName="Projection_1" columnName="RLMOD"/>
     </attribute>
-    <attribute id="FLAGS" order="53" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="FLAGS"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="FLAGS"/>
-    </attribute>
-    <attribute id="XERWR" order="54" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="XERWR" order="53" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XERWR"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="XERWR"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XERWR"/>
     </attribute>
-    <attribute id="XKLAE" order="55" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="XKLAE" order="54" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XKLAE"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="XKLAE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XKLAE"/>
     </attribute>
-    <attribute id="KLAEB" order="56" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KLAEB" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KLAEB"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="KLAEB"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KLAEB"/>
     </attribute>
-    <attribute id="KLAEH" order="57" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KLAEH" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KLAEH"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="KLAEH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KLAEH"/>
     </attribute>
-    <attribute id="KLAED" order="58" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KLAED" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KLAED"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="KLAED"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KLAED"/>
     </attribute>
-    <attribute id="XVOID" order="59" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="XVOID" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="XVOID"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="XVOID"/>
+      <keyMapping columnObjectName="Projection_1" columnName="XVOID"/>
     </attribute>
-    <attribute id="SWIFT" order="60" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SWIFT" order="59" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SWIFT"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="SWIFT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="SWIFT"/>
     </attribute>
-    <attribute id="KUKEY" order="61" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="KUKEY" order="60" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KUKEY"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="KUKEY"/>
+      <keyMapping columnObjectName="Projection_1" columnName="KUKEY"/>
     </attribute>
-    <attribute id="ESNUM" order="62" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ESNUM" order="61" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ESNUM"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="ESNUM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="ESNUM"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="63" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TYPE" order="62" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="64" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="63" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CHANGE_TIME"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="65" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_SOURCE_SYS" order="64" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="66" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="65" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_CURR_FLAG" order="67" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CURR_FLAG" order="66" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_CURR_FLAG"/>
     </attribute>
-    <attribute id="Z_VALID_FROM" order="68" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_FROM" order="67" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_VALID_FROM"/>
     </attribute>
-    <attribute id="Z_VALID_TO" order="69" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_TO" order="68" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_FICA.DSO.DFKKRP.active_data" columnName="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="FLAGS" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLAGS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_FLAGS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -297,6 +586,11 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="187"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
