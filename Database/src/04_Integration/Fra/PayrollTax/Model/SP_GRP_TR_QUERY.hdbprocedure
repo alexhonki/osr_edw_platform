@@ -37,9 +37,28 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	;
 
 	IF :IV_MATCH_PERSON = 'Y' THEN
--- Add logic to match with person here later
-	    
+	/*
+	    LT_TR = 
+		SELECT
+		"L"."CHILD_ID" AS "BNFCRY_ABN",
+	    CASE 
+	    WHEN ("R"."PGRP_ID" IS NOT NULL) THEN "R"."PGRP_ID"
+	    ELSE "L"."TRUST_ABN"
+	    END AS "DIRECTOR"
+	    FROM
+	    :LT_REL AS "L" 
+	    LEFT OUTER JOIN 
+	    "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:IV_GRP_DATE,'R') AS "R" 
+	    ON "L"."NAME" = "R"."NAME"
+	    AND "L"."DOB" = "R"."DOB"
+	    WHERE "L"."REL_TYPE" = 'TR';
+	    */
 	ELSE
+	
+-- Do lookup for Director relationships
+-- SELECT * FROM "EDW_PLATFORM"."osr.edw.staging.td.asic.proxy::TF_DR_REL"('2015-06-30'/*IV_KEY_DATE <DATE>*/);	
+
+	
 	    LT_TR = 
 		SELECT
 		"CHILD_ID" AS "BNFCRY_ABN",
@@ -74,28 +93,8 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	LEFT("TRUST_ABN",1333) AS "GROUP_DESCR"
 	FROM :LT_TR;
 	
-/*
-	ET_GROUP_ID = 
-	SELECT DISTINCT
-		'2018' AS "GJAHR",
-		TO_DATE('2018-06-30') AS "GRP_DATE",
-		CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
-		'TR' AS "GROUP_TYPE",
-		LEFT("TRUST_ABN",1333) AS "GROUP_DESCR"
-	FROM	(
-		   		SELECT 
-					"TRUST"."ABN" AS "TRUST_ABN",
-					"BNFCRY"."PTNR_BNFCRY_ABN" AS "BNFCRY_ABN",
-					"BNFCRY"."RTN_YR" AS "RTN_YR"
-				FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" as "BNFCRY"
-				INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
-				ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
-				--	AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR"
-				--WHERE "TRUST"."ABN" IN ('11030453223','73892897788','75578311526','82491321915')
-					--AND "TRUST"."RTN_YR" = '2018'
-			) ;
-			*/
 /*	
+DATA TYPES FOR OUTPUT
     table type GroupT2 {
         GJAHR      : String(4);
         GRP_DATE   : LocalDate;

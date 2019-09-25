@@ -1,0 +1,184 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_TPAR_PAYEE_PRE_CAL_FIELDS"(
+	IN IV_GJAHR		NVARCHAR(4),	-- financial year	
+	IN IV_PEGP_L	DECIMAl(15,2),	-- Payee Gross payments from payer
+	IN IV_PEGP_H	DECIMAl(15,2),
+	IN IV_PEGIP_L	DECIMAl(15,2),	-- Payee Gross Trading income percentage from payer
+	IN IV_PEGIP_H	DECIMAl(15,2),
+	IN IV_PEICP_L	DECIMAl(15,2),	-- Payee ITR Contractor Payments
+	IN IV_PEICP_H	DECIMAl(15,2),
+	IN IV_PEWW_L	DECIMAl(15,2),	-- Payee Work Cover Wages
+	IN IV_PEWW_H	DECIMAl(15,2),
+	IN IV_PEAEC_L	INTEGER,		-- Payee Australian Employee Count
+	IN IV_PEAEC_H	INTEGER, 
+	IN IV_PEET_INC	NVARCHAR(100), -- Included Payee Type (IND, SUP, COY, GOV, PTR or FTP, TRT) separated by '|'
+	IN IV_PEET_EXCL	NVARCHAR(100), -- Excluded Payee Type (IND, SUP, COY, GOV, PTR or FTP, TRT) separated by '|'
+	OUT ET_CNTR_DETAILS		"osr.edw.platform.fra.prt.model::Types.CntrT"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+declare i integer;
+declare splitList nvarchar(4000) array;
+declare splitted string;
+declare removeEmpty char(1) := 'X';
+declare filter_values nvarchar(100);
+declare filter_type integer;
+
+
+IF :IV_PEET_INC <> '' THEN
+filter_values = :IV_PEET_INC;
+filter_type = 1; -- Include
+ELSE 
+filter_values = :IV_PEET_EXCL;
+filter_type = 2; -- Exclude
+end if;
+
+i := 1;
+if right(:filter_values,1) <> '|' then
+   filter_values := :filter_values || '|';
+end if;
+
+while :filter_values <> SUBSTR_AFTER (:filter_values,'|')
+do
+   splitted = SUBSTR_BEFORE (:filter_values,'|');
+   filter_values = SUBSTR_AFTER (:filter_values,'|');
+   if not(removeEmpty = 'X' and splitted = '') then
+     splitList[i] = splitted;
+     i := i+1;
+   end if;
+end while;
+
+fnSplit = UNNEST(:splitList) as (filter_values);
+
+LT_PEEL_FILTER = select filter_values AS "VALS" from :fnSplit;
+
+
+
+	LT_CNTR = 
+	SELECT
+	'12345678901'	AS	"PAYER_ABN",
+	'65489732154'	AS	"PAYEE_ABN",
+	'HI'			AS "PAYEE_ENT_TYPE",
+	'QLD'			AS "PAYEE_BUS_STATE",
+	:IV_PEGIP_H		AS "PAYEE_TOT_INCM_AMT",
+	:IV_PEGP_H		AS "PAYEE_CNTR_PMT",
+	:IV_PEGIP_H		AS "PAYEE_BUS_INCM_PER",
+	:IV_PEAEC_H		AS "TOT_EMP_CNT",
+	:IV_PEWW_H		AS "WCQ_ACT_WAGE",
+	'456'			AS "BPARTNER",
+	'1'				AS "PRT_REG_STATUS"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION
+	SELECT
+	'12345678901'	AS	"PAYER_ABN",
+	'75386942547'	AS	"PAYEE_ABN",
+	'LOW'			AS "PAYEE_ENT_TYPE",
+	'QLD'			AS "PAYEE_BUS_STATE",
+	:IV_PEGIP_L		AS "PAYEE_TOT_INCM_AMT",
+	:IV_PEGP_L		AS "PAYEE_CNTR_PMT",
+	:IV_PEGIP_L		AS "PAYEE_BUS_INCM_PER",
+	:IV_PEAEC_L		AS "TOT_EMP_CNT",
+	:IV_PEWW_L		AS "WCQ_ACT_WAGE",
+	'937826485'			AS "BPARTNER",
+	'1'				AS "PRT_REG_STATUS"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION
+	SELECT
+	'12345678901'	AS	"PAYER_ABN",
+	'98765432101'	AS	"PAYEE_ABN",
+	'IND'			AS "PAYEE_ENT_TYPE",
+	'QLD'			AS "PAYEE_BUS_STATE",
+	333333333		AS "PAYEE_TOT_INCM_AMT",
+	555555555		AS "PAYEE_CNTR_PMT",
+	65				AS "PAYEE_BUS_INCM_PER",
+	1000			AS "TOT_EMP_CNT",
+	999999999		AS "WCQ_ACT_WAGE",
+	'75839204'			AS "BPARTNER",
+	'1'				AS "PRT_REG_STATUS"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION
+	SELECT
+	'12345678901'	AS	"PAYER_ABN",
+	'76543219876'	AS	"PAYEE_ABN",
+	'TRT'			AS "PAYEE_ENT_TYPE",
+	'QLD'			AS "PAYEE_BUS_STATE",
+	77777777		AS "PAYEE_TOT_INCM_AMT",
+	88888888		AS "PAYEE_CNTR_PMT",
+	75				AS "PAYEE_BUS_INCM_PER",
+	2500				AS "TOT_EMP_CNT",
+	2222222222		AS "WCQ_ACT_WAGE",
+	'4561234'			AS "BPARTNER",
+	'1'				AS "PRT_REG_STATUS"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION
+	SELECT
+	'23456789012'	AS	"PAYER_ABN",
+	'87654321098'	AS	"PAYEE_ABN",
+	'SUP'			AS "PAYEE_ENT_TYPE",
+	'QLD'			AS "PAYEE_BUS_STATE",
+	444444444		AS "PAYEE_TOT_INCM_AMT",
+	666666666		AS "PAYEE_CNTR_PMT",
+	30				AS "PAYEE_BUS_INCM_PER",
+	500				AS "TOT_EMP_CNT",
+	888888888		AS "WCQ_ACT_WAGE",
+	'23412345'			AS "BPARTNER",
+	'0'				AS "PRT_REG_STATUS"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	;
+	
+IF :filter_type = 1 then
+	ET_CNTR_DETAILS = 
+	SELECT DISTINCT
+		:IV_GJAHR AS "GJAHR",
+		"PAYER_ABN",
+		"PAYEE_ABN",
+		"PAYEE_ENT_TYPE",
+		"PAYEE_BUS_STATE",
+		"PAYEE_TOT_INCM_AMT",
+		"PAYEE_CNTR_PMT",
+		"PAYEE_BUS_INCM_PER",
+		"TOT_EMP_CNT",
+		"WCQ_ACT_WAGE",
+		"BPARTNER",
+		"PRT_REG_STATUS"
+	FROM :LT_CNTR 
+	WHERE "PAYEE_ENT_TYPE" in (SELECT "VALS" AS "PAYEE_ENT_TYPE" FROM :LT_PEEL_FILTER);
+else
+	ET_CNTR_DETAILS = 
+	SELECT DISTINCT
+		:IV_GJAHR AS "GJAHR",
+		"PAYER_ABN",
+		"PAYEE_ABN",
+		"PAYEE_ENT_TYPE",
+		"PAYEE_BUS_STATE",
+		"PAYEE_TOT_INCM_AMT",
+		"PAYEE_CNTR_PMT",
+		"PAYEE_BUS_INCM_PER",
+		"TOT_EMP_CNT",
+		"WCQ_ACT_WAGE",
+		"BPARTNER",
+		"PRT_REG_STATUS"
+	FROM :LT_CNTR 
+	WHERE "PAYEE_ENT_TYPE" not in (SELECT "VALS" AS "PAYEE_ENT_TYPE" FROM :LT_PEEL_FILTER);
+end if;
+	
+	
+/*	
+DATA TYPES FOR OUTPUT
+	        GJAHR       		: String(4);
+	        PAYER_ABN			: String(11);
+	        PAYEE_ABN			: String(11);
+	        PAYEE_ENT_TYPE		: String(3);
+	        PAYEE_BUS_STATE 	: String(3);
+	        PAYEE_TOT_INCM_AMT	: Decimal(15,2);
+	        PAYEE_CNTR_PMT		: Decimal(15,2);
+	        PAYEE_BUS_INCM_PER	: Decimal(15,2);
+	        TOT_EMP_CNT			: Integer;
+	        WCQ_ACT_WAGE		: Decimal(15,2);
+	        BPARTNER			: String(3);
+	        PRT_REG_STATUS		: String(1);
+*/	
+	
+END

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.crm.proxy::CV_CGPL_TEXT" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CGPL_TEXT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CGPL.TAB.CGPL_TEXT">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CGPL.TAB.CGPL_TEXT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.crm.synonym::CDS_CGPL.TAB.CGPL_TEXT">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="GUID"/>
+    </attribute>
+    <attribute id="LANGU" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANGU"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="LANGU"/>
+    </attribute>
+    <attribute id="TEXT_GUID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEXT_GUID"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="TEXT_GUID"/>
+    </attribute>
+    <attribute id="TEXT1" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEXT1"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="TEXT1"/>
+    </attribute>
+    <attribute id="TEXTU" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEXTU"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="TEXTU"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
