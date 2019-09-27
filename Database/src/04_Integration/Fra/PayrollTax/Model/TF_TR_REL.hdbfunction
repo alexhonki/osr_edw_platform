@@ -66,7 +66,8 @@ lt_rel =
 		"PTNR_BNFCRY_ABN"	AS "CHILD_ID",
 		"TRUST"."ABN"		AS "PARENT_ID",
 		"TRUST"."RTN_YR"	AS "GJAHR",
-		"PERS"."PGRP_ID"	AS "PERSON_NUM",
+	--	"PERS"."PGRP_ID"	AS "PERSON_NUM",
+		CASE WHEN "PERS"."PGRP_ID" = 'C010366943' then 'C011023240' ELSE "PERS"."PGRP_ID" end AS "PERSON_NUM", -- exchange out after testing
 		"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD",
 		TO_DATE(TO_VARCHAR((CAST("TRUST"."RTN_YR" as integer) -1)) || '0701') AS "START_DT",
 		TO_DATE("TRUST"."RTN_YR" || '0630') AS "END_DT"
