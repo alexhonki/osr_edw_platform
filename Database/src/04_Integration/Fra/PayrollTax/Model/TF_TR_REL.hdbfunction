@@ -41,9 +41,9 @@ lt_pers =
 		inner join "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"('2015-06-30', 2) AS "A"
 		ON "A"."ID" = "B"."ID"
 		-- REMOVE AFTER TESTING
-		WHERE "A"."GIVEN_NAME1" in ('BEN', 'JOHN', 'ALIDA')
-		AND "A"."GIVEN_NAME2" IN( 'NULL', 'HYLTON', 'CORNELIA') 
-		AND "A"."SURNAME" IN( 'GOLDBERG', 'KINLOCH', 'VAN DER ZWAARD')
+		WHERE "A"."GIVEN_NAME1" in ('SIMON')
+		AND "A"."GIVEN_NAME2" IN( 'JAMES') 
+		AND "A"."SURNAME" IN( 'JEFFERSON')
 ;
 
 lt_ABR = 
@@ -101,7 +101,7 @@ lt_rel =
 		,'32624288234'
 		,'44372258429'
 		,'27816336576'
-		, 'no ABN'
+	--	, 'no ABN' 
 		,'25071341805' -- BNFCRY has ACN & DR group
 		,'23005115364' -- BNFCRY has ACN
 		,'27005620897' -- DR SH and RBC group
