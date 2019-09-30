@@ -11,7 +11,7 @@ BEGIN
         table type GroupSummaryT2 {
         GJAHR                : String(4);
         GRP_DATE             : LocalDate;
-        ELEMENT_ID           : String(32);
+        ELEMENT_ID           : String(32); -- this is ORG_ID string (10) in the old model
         GROUP_ID             : String(32);
         ACN                  : String(9);
         ABN                  : String(11);
@@ -262,6 +262,7 @@ DISTINCT
  ON RIGHT("L"."ELEMENT_ID",9) = "MAP"."ACN"
  WHERE LEFT("L"."ELEMENT_ID",1) = 'O'
  UNION 
+ -- Trust related groups may not have an ACN but will have an ABN. Add the ACN if it is found here. 
 SELECT 
 DISTINCT
 	"L"."GJAHR", 
