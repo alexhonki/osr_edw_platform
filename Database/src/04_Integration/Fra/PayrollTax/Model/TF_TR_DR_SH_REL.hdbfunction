@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_DR_REL"(IV_KEY_DATE DATE )
+FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_DR_SH_REL"(IV_KEY_DATE DATE )
        RETURNS TABLE (
        		"GROUP_ID"			NVARCHAR(32), --Trust Group
        		"ACN"				NVARCHAR(9), --Controlled Company
@@ -33,10 +33,10 @@ FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2"
 WHERE "GROUP_TYPE" = 'TR'
 AND "GJAHR" = :LV_GJAHR
 --AND LEFT("ELEMENT_ID",1) = 'P' --replace after testing
-AND LEFT("ELEMENT_ID",1) = 'C'
+AND (LEFT("ELEMENT_ID",1) = 'C' OR LEFT("ELEMENT_ID",1) = 'O')
 ;
 -- Get all DR_REL data
-LT_CI = 
+LT_DR_CI = 
 SELECT 
 "t"."GROUP_ID",
 "d"."ORG_NUMBER" AS "ACN",
@@ -46,8 +46,22 @@ INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R')
 ON "t"."ELEMENT_ID" = "B"."PGRP_ID"
 inner join "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:LV_KEY_DATE) as "d"
 on "d"."PARENT_ID" = "B"."ID"
+WHERE LEFT("t"."ELEMENT_ID",1) = 'C' 
 group by "t"."GROUP_ID", "d"."ORG_NUMBER" ;
 
+-- Get all SH_REL data
+
+LT_SH_CI = 
+SELECT 
+"t"."GROUP_ID",
+"d"."ORG_NUMBER" AS "ACN",
+SUM("d"."INTEREST_PCT") as "TOTAL_CI"
+ FROM :LT_TRUST_BNFCRY as "t"
+INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "B"
+ON "t"."ELEMENT_ID" = "B"."PGRP_ID"
+inner join "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:LV_KEY_DATE, 'ORD') as "d"
+on "d"."PARENT_ID" = "B"."ID"
+group by "t"."GROUP_ID", "d"."ORG_NUMBER" ;
 
 
 
@@ -57,7 +71,14 @@ SELECT DISTINCT
 "GROUP_ID",
 "ACN",
 "TOTAL_CI"
-FROM :LT_CI
+FROM :LT_DR_CI
+WHERE "TOTAL_CI" > 50
+UNION 
+SELECT DISTINCT
+"GROUP_ID",
+"ACN",
+"TOTAL_CI"
+FROM :LT_SH_CI
 WHERE "TOTAL_CI" > 50
 ;
 
