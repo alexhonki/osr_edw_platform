@@ -1,8 +1,8 @@
 FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_DR_SH_REL"(IV_KEY_DATE DATE )
        RETURNS TABLE (
-       		"GROUP_ID"			NVARCHAR(32), --Trust Group
-       		"ACN"				NVARCHAR(9), --Controlled Company
-       		"TOTAL_CI"			decimal(15,2) -- Controlling interest %
+       		"GROUP_ID"			NVARCHAR(32),	-- Trust Group
+       		"ACN"				NVARCHAR(9),	-- Controlled Company
+       		"TOTAL_CI"			decimal(15,2)	-- Controlling interest %
        )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
@@ -22,64 +22,64 @@ END IF;
 SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_KEY_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
--- Get all TR_REL data
+-- Get all TR_REL data - only records that have an Org or Person as Beneficiary
+-- Trust ABNS have already been mapped to ACNS (if they exist) in initial TF_TR_REL 
 LT_TRUST_BNFCRY = 
-SELECT 
-	"GJAHR",
-	"GRP_DATE",
-	"ELEMENT_ID", -- Beneficiary
-	"GROUP_ID" -- Hashed Trust
-FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2"
-WHERE "GROUP_TYPE" = 'TR'
-AND "GJAHR" = :LV_GJAHR
---AND LEFT("ELEMENT_ID",1) = 'P' --replace after testing
-AND (LEFT("ELEMENT_ID",1) = 'C' OR LEFT("ELEMENT_ID",1) = 'O')
+	SELECT 
+		"GJAHR",
+		"GRP_DATE",
+		"ELEMENT_ID",	-- Beneficiary
+		"GROUP_ID", 	-- Hashed Trust
+		"PERS"."ID" 	-- Director beneficiary
+	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2" AS "TRUST"
+	INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "PERS"
+	ON "TRUST"."ELEMENT_ID" = "PERS"."PGRP_ID"	
+	WHERE "GROUP_TYPE" = 'TR'
+	AND "GJAHR" = :LV_GJAHR
+	AND (LEFT("ELEMENT_ID",1) = 'C' OR LEFT("ELEMENT_ID",1) = 'O') 
 ;
+
 -- Get all DR_REL data
 LT_DR_CI = 
-SELECT 
-"t"."GROUP_ID",
-"d"."ORG_NUMBER" AS "ACN",
-SUM("d"."INTEREST_PCT") as "TOTAL_CI"
- FROM :LT_TRUST_BNFCRY as "t"
-INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "B"
-ON "t"."ELEMENT_ID" = "B"."PGRP_ID"
-inner join "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:LV_KEY_DATE) as "d"
-on "d"."PARENT_ID" = "B"."ID"
-WHERE LEFT("t"."ELEMENT_ID",1) = 'C' 
-group by "t"."GROUP_ID", "d"."ORG_NUMBER" ;
+	SELECT 
+		"TRUST"."GROUP_ID"			AS "GROUP_ID",	
+		"DR"."ORG_NUMBER"			AS "ACN",
+		SUM("DR"."INTEREST_PCT")	AS "TOTAL_CI"
+	FROM :LT_TRUST_BNFCRY AS "TRUST"
+	INNER JOIN "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:LV_KEY_DATE) AS "DR"
+	ON "DR"."PARENT_ID" = "TRUST"."ID"
+	WHERE LEFT("TRUST"."ELEMENT_ID",1) = 'C' 
+	GROUP BY "TRUST"."GROUP_ID", "DR"."ORG_NUMBER" 
+;
 
 -- Get all SH_REL data
-
 LT_SH_CI = 
-SELECT 
-"t"."GROUP_ID",
-"d"."ORG_NUMBER" AS "ACN",
-SUM("d"."INTEREST_PCT") as "TOTAL_CI"
- FROM :LT_TRUST_BNFCRY as "t"
-INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "B"
-ON "t"."ELEMENT_ID" = "B"."PGRP_ID"
-inner join "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:LV_KEY_DATE, 'ORD') as "d"
-on "d"."PARENT_ID" = "B"."ID"
-group by "t"."GROUP_ID", "d"."ORG_NUMBER" ;
+	SELECT 
+		"TRUST"."GROUP_ID"			AS "GROUP_ID",	
+		"SH"."ORG_NUMBER"			AS "ACN",
+		SUM("SH"."INTEREST_PCT")	AS "TOTAL_CI"
+	FROM :LT_TRUST_BNFCRY AS "TRUST"
+	INNER JOIN "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:LV_KEY_DATE, 'ORD') AS "SH"
+	ON "SH"."PARENT_ID" = "TRUST"."ID"
+	GROUP BY "TRUST"."GROUP_ID", "SH"."ORG_NUMBER" 
+;
 
-
-
-
+-- Combine the two SH and DR sets 
+-- The trust model doesn't care which set they belong to, only that they need to be grouped. 
 RETURN 
-SELECT DISTINCT
-"GROUP_ID",
-"ACN",
-"TOTAL_CI"
-FROM :LT_DR_CI
-WHERE "TOTAL_CI" > 50
-UNION 
-SELECT DISTINCT
-"GROUP_ID",
-"ACN",
-"TOTAL_CI"
-FROM :LT_SH_CI
-WHERE "TOTAL_CI" > 50
+	SELECT DISTINCT
+		"GROUP_ID",
+		"ACN",
+		"TOTAL_CI"
+	FROM :LT_DR_CI
+	WHERE "TOTAL_CI" > 50 -- grouped controlling interest over 50%
+	UNION 
+	SELECT DISTINCT
+		"GROUP_ID",
+		"ACN",
+		"TOTAL_CI"
+	FROM :LT_SH_CI
+	WHERE "TOTAL_CI" > 50 -- grouped controlling interest over 50%
 ;
 
 

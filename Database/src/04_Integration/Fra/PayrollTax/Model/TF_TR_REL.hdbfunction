@@ -1,11 +1,11 @@
 FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
        RETURNS TABLE (
-       		"CHILD_ID"				NVARCHAR(12), --Beneficiary
-       		"PARENT_ID"				NVARCHAR(12), --Trust
+       		"CHILD_ID"				NVARCHAR(12), -- Beneficiary
+       		"PARENT_ID"				NVARCHAR(12), -- Trust
        		"BNFCRY_ABN"			NVARCHAR(12),
        		"TRUST_ABN"				NVARCHAR(12),
        		"GJAHR"					NVARCHAR(4),
-       		"ORG_NUMBER"			NVARCHAR(9), --ACN if exists
+       		"ORG_NUMBER"			NVARCHAR(9), -- ACN if exists
 			"PERSON_NUM"			NVARCHAR(9), -- If IND / no ABN
 			"START_DT"				DATE,
 			"END_DT"				DATE,
@@ -32,14 +32,14 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 lt_pers = 
 	SELECT DISTINCT
-		"B"."PGRP_ID",
-		"A"."GIVEN_NAME1", 
-		"A"."GIVEN_NAME2",  
-		"A"."SURNAME", 
-		"A"."BIRTH_DT"
-		FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"('2015-06-30','R') AS "B"
-		inner join "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"('2015-06-30', 2) AS "A"
-		ON "A"."ID" = "B"."ID"
+		"PGRP"."PGRP_ID",
+		"PERS"."GIVEN_NAME1", 
+		"PERS"."GIVEN_NAME2",  
+		"PERS"."SURNAME", 
+		"PERS"."BIRTH_DT"
+		FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"('2015-06-30','R') AS "PGRP"
+		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"('2015-06-30', 2) AS "PERS"
+		ON "PERS"."ID" = "PGRP"."ID"
 ;
 
 lt_ABR = 
@@ -56,14 +56,14 @@ lt_ABR =
 	  AND "ACN" <> '000000000'
 ;
 
-
+/* INSERT TEST VALUES*/
 lt_test_data = 
 -- ABN that has ACN grouped with other ACN's
 -- ACN's 000621563, 084144481, 055035955
 -- ABN's 43000621563, 67084144481, 71055035955
 -- GroupID = B535D3E8638FC8EBAF9F1BA7BC7A93C7
 SELECT
---'000621563' as "ACN" -- ORG_NUMBER
+-- '000621563' as "ACN" -- ORG_NUMBER
 -- 'P010592631' P000005293, P000102370 directors
 '43000621563' as "PTNR_BNFCRY_ABN", --CHILD_ID
 '71256622977' AS "ABN", -- trust ABN -- PARENT_ID
@@ -153,18 +153,18 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY"
 ;
 
 LT_DATA = 
-SELECT * FROM 
-:lt_test_data 
+SELECT * 
+FROM :lt_test_data 
 UNION
 SELECT 
-"PTNR_BNFCRY_ABN",
-"TRUST"."ABN",
-"TRUST"."RTN_YR",
-"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
-"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
-"BNFCRY"."PTNR_BNFCRY_SRNM",
-"BNFCRY"."PTNR_BNFCRY_DOB"
-FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" as "BNFCRY" 
+	"PTNR_BNFCRY_ABN",
+	"TRUST"."ABN",
+	"TRUST"."RTN_YR",
+	"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
+	"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
+	"BNFCRY"."PTNR_BNFCRY_SRNM",
+	"BNFCRY"."PTNR_BNFCRY_DOB"
+FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
 INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 -- INCLUDE AFTER TESTING
@@ -208,53 +208,55 @@ AND ("BNFCRY"."PTNR_BNFCRY_ABN" <> 'no ABN'
 
 lt_rel = 
 	SELECT DISTINCT
-		"MAP"."ACN"			AS "ORG_NUMBER",
+		"MAP"."ACN"					AS "ORG_NUMBER",
 		"DATA"."PTNR_BNFCRY_ABN"	AS "CHILD_ID",
-		"DATA"."ABN"		AS "PARENT_ID",
-		"DATA"."RTN_YR"	AS "GJAHR",
-		"PERS"."PGRP_ID"	AS "PERSON_NUM",
-		"ABR"."ENT_TYP_CD" AS "ENT_TYP_CD",
+		"DATA"."ABN"				AS "PARENT_ID",
+		"DATA"."RTN_YR"				AS "GJAHR",
+		"PERS"."PGRP_ID"			AS "PERSON_NUM",
+		"ABR"."ENT_TYP_CD"			AS "ENT_TYP_CD",
 		TO_DATE(TO_VARCHAR((CAST("DATA"."RTN_YR" as integer) -1)) || '0701') AS "START_DT",
 		TO_DATE("DATA"."RTN_YR" || '0630') AS "END_DT"
 	FROM :LT_DATA AS "DATA"
-	left outer join "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_KEY_DATE) as "MAP"
-	on "DATA"."PTNR_BNFCRY_ABN" = "MAP"."ABN"
-	LEFT OUTER JOIN :lt_pers as "PERS"
+	LEFT OUTER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_KEY_DATE) AS "MAP"
+	ON "DATA"."PTNR_BNFCRY_ABN" = "MAP"."ABN"
+	LEFT OUTER JOIN :lt_pers AS "PERS"
 	ON "DATA"."PTNR_BNFCRY_FIRST_NM" = "PERS"."GIVEN_NAME1"
-	AND "DATA"."PTNR_BNFCRY_OTHR_GVN_NM" = "GIVEN_NAME2"
-	AND "DATA"."PTNR_BNFCRY_SRNM" = "SURNAME"
-	AND  "DATA"."PTNR_BNFCRY_DOB"  = "BIRTH_DT"
+		AND "DATA"."PTNR_BNFCRY_OTHR_GVN_NM" = "GIVEN_NAME2"
+		AND "DATA"."PTNR_BNFCRY_SRNM" = "SURNAME"
+		AND  "DATA"."PTNR_BNFCRY_DOB"  = "BIRTH_DT"
 	LEFT OUTER JOIN :lt_ABR AS "ABR"
 	ON "DATA"."PTNR_BNFCRY_ABN" = "ABR"."ABN"
-	
-	;
+;
+
 
 lt_tr_cnt = 
 SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" FROM :lt_rel GROUP BY "PARENT_ID", "GJAHR";
 
-
+-- CHILD_ID will display the trust Beneficiary ABN prefixed with a "T"
+-- However if there is an ACN found for the beneficiary, it will display the ACN instead
+-- Or it will display the Person Group ID if the beneficiary is natural person. 
 RETURN 
-SELECT * FROM (
-SELECT DISTINCT
-	CASE WHEN "REL"."CHILD_ID" = 'no ABN' THEN "REL"."PERSON_NUM" 
-			WHEN "REL"."ORG_NUMBER" is not null THEN concat('O', "REL"."ORG_NUMBER") 
-				ELSE CONCAT('T',"REL"."CHILD_ID")  END AS "CHILD_ID",
-	CONCAT('T',"REL"."PARENT_ID") AS "PARENT_ID",
-	CASE WHEN "REL"."CHILD_ID" <> 'no ABN' THEN "REL"."CHILD_ID" END AS "BNFCRY_ABN",
-	"REL"."PARENT_ID" AS "TRUST_ABN",
-	"REL"."GJAHR",
-	"REL"."ORG_NUMBER",
-	"REL"."PERSON_NUM",
-	"REL"."START_DT",
-	"REL"."END_DT",
-	"CNT"."TR_BENFCRY_COUNT",
-	"REL"."ENT_TYP_CD"
-	FROM :lt_rel AS "REL" INNER JOIN :lt_tr_cnt AS "CNT"
-	ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
-	WHERE :IV_KEY_DATE >= "REL"."START_DT"
-	AND  :IV_KEY_DATE <= "REL"."END_DT"
-	AND "CNT"."TR_BENFCRY_COUNT" > 1
-) WHERE "CHILD_ID" is not null
-	;
+	SELECT * FROM (
+		SELECT DISTINCT
+			CASE WHEN "REL"."CHILD_ID" = 'no ABN' THEN "REL"."PERSON_NUM" -- Beneficiary is a Natural person
+					WHEN "REL"."ORG_NUMBER" is not null THEN concat('O', "REL"."ORG_NUMBER") -- Beneficiary has an ACN
+						ELSE CONCAT('T',"REL"."CHILD_ID")  END AS "CHILD_ID", -- Beneficiary is another trust
+			CONCAT('T',"REL"."PARENT_ID") AS "PARENT_ID",
+			CASE WHEN "REL"."CHILD_ID" <> 'no ABN' THEN "REL"."CHILD_ID" END AS "BNFCRY_ABN",
+			"REL"."PARENT_ID" AS "TRUST_ABN",
+			"REL"."GJAHR",
+			"REL"."ORG_NUMBER",
+			"REL"."PERSON_NUM",
+			"REL"."START_DT",
+			"REL"."END_DT",
+			"CNT"."TR_BENFCRY_COUNT",
+			"REL"."ENT_TYP_CD" -- TODO Add logic for individual sole traders
+			FROM :lt_rel AS "REL" INNER JOIN :lt_tr_cnt AS "CNT"
+			ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
+			WHERE :IV_KEY_DATE >= "REL"."START_DT"
+			AND  :IV_KEY_DATE <= "REL"."END_DT"
+			AND "CNT"."TR_BENFCRY_COUNT" > 1
+	) WHERE "CHILD_ID" is not null
+;
 
 END;
