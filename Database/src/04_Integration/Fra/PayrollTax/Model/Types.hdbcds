@@ -53,6 +53,24 @@ context Types {
         RBC_GROUP_MEM        : String(1);
         MEM_REL_BODY_CORP    : String(1);
     };
+        table type GroupSummaryT2 {
+        GJAHR                : String(4);
+        GRP_DATE             : LocalDate;
+        ELEMENT_ID           : String(32);
+        GROUP_ID             : String(32);
+        ACN                  : String(9);
+        ABN                  : String(11);
+        DR_GROUP_MEM         : String(1);
+        SH_GROUP_MEM         : String(1);
+        INTERSTATE_GROUP_MEM : String(1);
+        CCDR_GROUP_MEM       : String(1);
+        CCSH_GROUP_MEM       : String(1);
+        CCTRL_GROUP_MEM      : String(1);
+        TR_GROUP_MEM         : String(1);
+        RBC_GROUP_MEM        : String(1);
+        MEM_REL_BODY_CORP    : String(1);
+    };
+    
     table type DisjointElementT {
         ELEMENT_NUM : Integer64;
         ELEMENT     : String(32);
@@ -87,6 +105,9 @@ context Types {
         WCQ_ACT_WAGE		: Decimal(15,2);
         BPARTNER			: String(10);
         PRT_REG_STATUS		: String(1);
+      };
+    table type EntityTypeCodeT {
+        CODE       		: String(3);
       };
 
     context ASIC {

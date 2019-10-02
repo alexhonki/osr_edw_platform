@@ -1,0 +1,14 @@
+PROCEDURE "osr.edw.platform.fra.prt.model::SP_ENTITY_TYPE_CODE"(
+		OUT ET_CODE		    "osr.edw.platform.fra.prt.model::Types.EntityTypeCodeT"
+	)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   ET_CODE = 
+   SELECT "CODE" FROM "osr.edw.platform.fra.prt.dt.abn.vh::TF_ENTITY_TYPE_CODE"();
+END

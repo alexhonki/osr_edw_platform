@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.fra.proxy::CV_SAPACS_FRA_C_ALERT_CATT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_SAPACS_FRA_C_ALERT_CATT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::FRA_C_ALERT_CATT">
+    <resourceUri>osr.apps.acs.synonym::FRA_C_ALERT_CATT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.apps.acs.synonym::FRA_C_ALERT_CATT">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="FRA_C_ALERT_CATT" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="LANGUAGE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LANGUAGE"/>
+      <keyMapping columnObjectName="FRA_C_ALERT_CATT" columnName="LANGUAGE"/>
+    </attribute>
+    <attribute id="ALERT_CATEGORY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_CATEGORY"/>
+      <keyMapping columnObjectName="FRA_C_ALERT_CATT" columnName="ALERT_CATEGORY"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="FRA_C_ALERT_CATT" columnName="DESCRIPTION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

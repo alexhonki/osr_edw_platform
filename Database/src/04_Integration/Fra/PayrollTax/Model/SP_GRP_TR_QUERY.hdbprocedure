@@ -26,8 +26,6 @@ SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJA
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 -- Get the parents and children from the SP_GRP_GRAPH_QUERY
--- SELECT "CHILD_ID", "PARENT_ID", 'TR' AS "REL_TYPE", 100 AS "INTEREST_PCT" 
--- FROM "osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE)
 	CALL "osr.edw.platform.fra.prt.model::SP_GRP_GRAPH_QUERY"(
 		IV_GRP_DATE 	=> :LV_GRP_DATE,
 		IV_GRAPH_ID		=> :IV_GRAPH_ID,
@@ -36,7 +34,7 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	)
 	;
 
-	IF :IV_MATCH_PERSON = 'Y' THEN
+	IF :IV_MATCH_PERSON = 'Y' THEN -- TODO IS THIS RELEVANT FOR THE TRUST MODEL?
 	/*
 	    LT_TR = 
 		SELECT
@@ -54,61 +52,36 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    WHERE "L"."REL_TYPE" = 'TR';
 	    */
 	ELSE
-	
--- Do lookup for Director relationships
--- SELECT * FROM "EDW_PLATFORM"."osr.edw.staging.td.asic.proxy::TF_DR_REL"('2015-06-30'/*IV_KEY_DATE <DATE>*/);	
-
-	
-	    LT_TR = 
-		SELECT
-		"CHILD_ID" AS "BNFCRY_ABN",
-	    "PARENT_ID" AS "TRUST_ABN"
-	    FROM
-	    :LT_REL
-		WHERE "REL_TYPE" = 'TR'
+		LT_TR = 
+			SELECT
+				"CHILD_ID"	AS "BNFCRY_ABN",
+				"PARENT_ID" AS "TRUST_ABN"
+			FROM :LT_REL
+			WHERE "REL_TYPE" = 'TR'
 		;
-	    
-	END IF;
+END IF;
 	
--- remove duplicates
+--	remove duplicates
 	LT_TR = SELECT DISTINCT "BNFCRY_ABN", "TRUST_ABN" FROM :LT_TR;
 	
 	ET_GROUP = 
-	SELECT 
-	:LV_GJAHR AS "GJAHR",
-	:LV_GRP_DATE AS "GRP_DATE",
-	"BNFCRY_ABN" AS "ELEMENT_ID",
-	CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
-	'TR' AS "GROUP_TYPE"
-	FROM :LT_TR;
+		SELECT 
+			:LV_GJAHR		AS "GJAHR",
+			:LV_GRP_DATE	AS "GRP_DATE",
+			"BNFCRY_ABN"	AS "ELEMENT_ID",
+			CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
+			'TR'			AS "GROUP_TYPE"
+		FROM :LT_TR;
 	
 
 	ET_GROUP_ID = 
-	SELECT 
-	DISTINCT
-	:LV_GJAHR AS "GJAHR",
-	:LV_GRP_DATE AS "GRP_DATE",
-	CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
-	'TR' AS "GROUP_TYPE",
-	LEFT("TRUST_ABN",1333) AS "GROUP_DESCR"
-	FROM :LT_TR;
-	
-/*	
-DATA TYPES FOR OUTPUT
-    table type GroupT2 {
-        GJAHR      : String(4);
-        GRP_DATE   : LocalDate;
-        ELEMENT_ID : String(32);
-        GROUP_ID   : String(32);
-        GROUP_TYPE : String(4);
-    };
-    table type GroupIDT {
-        GJAHR       : String(4);
-        GRP_DATE    : LocalDate;
-        GROUP_ID    : String(32);
-        GROUP_TYPE  : String(4);
-        GROUP_DESCR : String(1333);
-    };	
-*/	
-	
+		SELECT DISTINCT
+			:LV_GJAHR				AS "GJAHR",
+			:LV_GRP_DATE			AS "GRP_DATE",
+			CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
+			'TR'					AS "GROUP_TYPE",
+			LEFT("TRUST_ABN",1333)	AS "GROUP_DESCR"
+		FROM :LT_TR;
+		
+
 END
