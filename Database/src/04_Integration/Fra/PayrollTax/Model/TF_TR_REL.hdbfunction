@@ -41,7 +41,15 @@ lt_pers =
 		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"('2015-06-30', 2) AS "PERS"
 		ON "PERS"."ID" = "PGRP"."ID"
 ;
+/*
+3.	Differentiate between beneficiary types of individuals and non-individuals by matching the [PTNR_BNFCRY_ABN] to ABR data [ABN] to identify [ENTITY_TYPE] whereby:
+o	IND = Individuals, FPT = Family Trust, COY = Company, PTR = Partnership, SUP = Superannuation Fund, TRT = Trust 
+o	If no ABN is present then where [PTNR_BNFCRY_FIRST_NM] is not NULL and [PTNR_BNFCRY_FIRST_SRNM] is not NULL and [PTNR_BNFCRY_DOB] is not NULL then [ENTITY_TYPE] = IND else NOT APPLICABLE
 
+5.	Exclude exempt beneficiaries by matching the ABR Agency [PID] to the ABR ACNC [PID]. 
+Beneficiaries identified as a registered charitable institution will be removed. 
+Note that any non-exempt beneficiaries will be considered for grouping. (To be excluded just before matching.)
+*/
 lt_ABR = 
 	SELECT DISTINCT
 		"ABN",
@@ -51,104 +59,241 @@ lt_ABR =
 	FROM "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()
 	WHERE "ABN_REGN_DT"  <= :LV_KEY_DATE
 	  AND "ABN_CANCN_DT" >= :LV_KEY_DATE
-	  AND "SPRSN_IND" <> 'Y'
-	  AND "ACN" <> ''
-	  AND "ACN" <> '000000000'
+	  --AND "SPRSN_IND" <> 'Y'
+	  --AND "ACN" <> ''
+	  --AND "ACN" <> '000000000'
 ;
 
 /* INSERT TEST VALUES*/
 lt_test_data = 
--- ABN that has ACN grouped with other ACN's
--- ACN's 000621563, 084144481, 055035955
--- ABN's 43000621563, 67084144481, 71055035955
--- GroupID = B535D3E8638FC8EBAF9F1BA7BC7A93C7
+-- BEGIN EXAMPLE 1 - Common Beneficiary Group --
+-- TRUST 1 ABN = '55555555555' 
+-- TRUST 1 BNFCRY = ACN 159072009 / ABN 90159072009 (Director = P018617722/ C018617722 LINDSAY	GRANT	SMITH	1968-02-21	100%)
+-- TRUST 1 BNFCRY = IND ABN '11111111111' J Smith who is not a director of any company
+-- TRUST 2 ABN = '33333333333' 
+-- TRUST 2 BNFCRY = ACN 158960448 / ABN 33158960448 (Director = P018608673 / C018608673 GREGORY	ROBERT	YEO	1962-09-26 100%)
+-- TRUST 2 BNFCRY = IND ABN '11111111111'  J Smith who is not a director of any company
 SELECT
--- '000621563' as "ACN" -- ORG_NUMBER
--- 'P010592631' P000005293, P000102370 directors
-'43000621563' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'71256622977' AS "ABN", -- trust ABN -- PARENT_ID
+'90159072009' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'55555555555' AS "ABN", -- trust ABN -- PARENT_ID
 '2015' as "RTN_YR",
 null AS "PTNR_BNFCRY_FIRST_NM",
 null AS "PTNR_BNFCRY_OTHR_GVN_NM",
 null AS "PTNR_BNFCRY_SRNM",
 null AS "PTNR_BNFCRY_DOB"
 FROM "osr.hana.platform.synonym::SYS.DUMMY"
-UNION 
--- Grouped because of director shareholding
--- ABN = 71605908067, 97605421725
--- ACN = 605908067, 605421725
+UNION
 SELECT
--- '605908067' as "ACN" -- ORG_NUMBER
--- 'P010495527' parent id - ord shareholder
--- 'P013903014' parent id - ord shareholder
-'71605908067' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'71256622977' AS "ABN", -- trust ABN -- PARENT_ID
+'11111111111' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'55555555555' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'J' AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'Smith' AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'11111111111' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'33333333333' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'J' AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'Smith' AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'33158960448' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'33333333333' AS "ABN", -- trust ABN -- PARENT_ID
 '2015' as "RTN_YR",
 null AS "PTNR_BNFCRY_FIRST_NM",
 null AS "PTNR_BNFCRY_OTHR_GVN_NM",
 null AS "PTNR_BNFCRY_SRNM",
 null AS "PTNR_BNFCRY_DOB"
-FROM "osr.hana.platform.synonym::SYS.DUMMY" 
-UNION 
--- Two directors part 1
--- ACN 606791771
--- ABN 66606791771
--- P011117925 50%
--- P030579394 50%
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+-- END EXAMPLE 1 - Common Beneficiary Group --
+
+-- BEGIN EXAMPLE 2 - Common Beneficiary Discretionary Trust as BNFCRY of another trust --
+-- TRUST 3 ABN = '66666666666' 
+-- TRUST 3 BNFCRY = ACN 600980416 / ABN 77600980416 (Director = P018614797/ C018614797 JIAYI	NULL	CAI	1985-04-25	100.00)
+-- TRUST 3 BNFCRY = IND ABN '22222222222' 
+-- TRUST 4 ABN = '77777777777' 
+-- TRUST 4 BNFCRY = TRT ABN '66666666666' 
+-- Trust 4 BNFCRY = IND ABN '77777711111' 
+UNION
 SELECT
-'no ABN' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'28380160124' AS "ABN", -- trust ABN -- PARENT_ID
+'77600980416' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'66666666666' AS "ABN", -- trust ABN -- PARENT_ID
 '2015' as "RTN_YR",
-'MARCUS' AS "PTNR_BNFCRY_FIRST_NM", -- P011117925, C011117925
-'CLIVE' AS "PTNR_BNFCRY_OTHR_GVN_NM",
-'LEONARD' AS "PTNR_BNFCRY_SRNM",
-'1971-09-07'AS "PTNR_BNFCRY_DOB"
-FROM "osr.hana.platform.synonym::SYS.DUMMY" 
-UNION 
--- Two directors part 2
--- ACN 606791771
--- ABN 66606791771
--- P011117925 50%
--- P030579394 50%
+null AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+null AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
 SELECT
-'no ABN' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'28380160124' AS "ABN", -- trust ABN -- PARENT_ID
+'22222222222' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'66666666666' AS "ABN", -- trust ABN -- PARENT_ID
 '2015' as "RTN_YR",
-'WEI' AS "PTNR_BNFCRY_FIRST_NM", -- P030579394, C017533143
+'K' AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'Brown' AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'66666666666' as "PTNR_BNFCRY_ABN", --CHILD_ID is also a trust
+'77777777777' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+null AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+null AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'77777711111' as "PTNR_BNFCRY_ABN", --CHILD_ID - included because we need more than 1 BNFCRY for this Trust
+'77777777777' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'J' AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'White' AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+-- END EXAMPLE 2 - Common Beneficiary Discretionary Trust as BNFCRY of another trust --
+
+-- BEGIN EXAMPLE 3 - Directorship Grouping --
+-- TRUST 5 ABN = '88888888888' 
+-- TRUST 5 BNFCRY = ACN 163551915 / ABN 41163551915 (Director = P018721047/ C018611177 ANDREW	PETER	HUNGERFORD	1982-07-01	100.00)
+-- TRUST 5 BNFCRY = IND ABN '44444444444' / Director of ACN 158959561/ ABN 11158959561 ID P018608528/ C018608528 JIANFENG	NULL	LI	1980-05-04 100%
+UNION
+SELECT
+'41163551915' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'88888888888' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+null AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+null AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'44444444444' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'88888888888' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'JIANFENG' AS "PTNR_BNFCRY_FIRST_NM",
 'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
-'DU' AS "PTNR_BNFCRY_SRNM",
-'1970-01-21'AS "PTNR_BNFCRY_DOB"
-FROM "osr.hana.platform.synonym::SYS.DUMMY" 
+'LI' AS "PTNR_BNFCRY_SRNM",
+'1980-05-04' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+-- END EXAMPLE 3 - Directorship Grouping --
+
+-- BEGIN EXAMPLE 4 - Directorship Grouping combined directors --
+-- TRUST 6 ABN = '99999999999' 
+-- TRUST 6 BNFCRY = IND ABN 11111122222 ACN 606789440 / ABN 88606789440 / Director = P012351884/ C012351884 ERROL	NULL	STEWART	1952-08-02	33.33
+-- TRUST 6 BNFCRY = IND ABN 11111133333 ACN 606789440 / ABN 88606789440 / Director = P001195551/ C001195551 ADRIENNE	NULL	STEWART	1952-07-29	33.33
+-- TRUST 6 BNFCRY = ACN 606385344/ ABN 26606385344 Director P030507046/C018986198	DAVID	GLEN	JONES	1970-04-07	33.33 
+
+UNION
+SELECT
+'11111122222' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999999999' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'ERROL' AS "PTNR_BNFCRY_FIRST_NM",
+'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'STEWART' AS "PTNR_BNFCRY_SRNM",
+'1952-08-02' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'11111133333' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999999999' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'ADRIENNE' AS "PTNR_BNFCRY_FIRST_NM",
+'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'STEWART' AS "PTNR_BNFCRY_SRNM",
+'1952-07-29' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'26606385344' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999999999' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+null AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+null AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+-- END EXAMPLE 4 - Directorship Grouping combined directors --
+
+-- BEGIN EXAMPLE 6 - Shareholding Grouping --
+-- TRUST 7 ABN = '99999911111' 
+-- TRUST 7 BNFCRY =  IND ABN 99999922222 P018000640	606460762	48606460762	C010354093	ANTHONY	NULL	TOUMA	1900-01-01	33.33
+-- TRUST 7 BNFCRY =  IND ABN 99999933333 P014980720	606460762	48606460762	C014980720	LINDA	NULL	TOUMA	1900-01-01	33.33
+-- TRUST 7 BNFCRY =  ACN 606345662 (ABN 29606345662 shareholder P030503810/ C018080336	JASON	KWOK	WONG	1956-03-03	33.33) 
+UNION
+SELECT
+'99999922222' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999911111' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'ANTHONY' AS "PTNR_BNFCRY_FIRST_NM",
+'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'TOUMA' AS "PTNR_BNFCRY_SRNM",
+'1900-01-01' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'99999933333' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999911111' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'LINDA' AS "PTNR_BNFCRY_FIRST_NM",
+'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'TOUMA' AS "PTNR_BNFCRY_SRNM",
+'1900-01-01' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+UNION
+SELECT
+'29606345662' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999911111' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+null AS "PTNR_BNFCRY_FIRST_NM",
+null AS "PTNR_BNFCRY_OTHR_GVN_NM",
+null AS "PTNR_BNFCRY_SRNM",
+null AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
+-- END EXAMPLE 6 - Shareholding Grouping --
+-- BEGIN EXAMPLE 7 - Sole Trader --
+
+
+-- BEGIN EXAMPLE 7 - Sole Trader --
+-- Sole trader will have an ABN but typically no ACN.
+-- We still want to include their ABN in the group
+-- We also want to find any companys that the person has interest in
+-- This is the same for individuals who don't have an ABN
+-- 1. ABN exists but entity is "IND" ABN 88888811111 is a director of ACN 601315468/ ABN 13601315468 C030118268/P030118268	CHI	SU	KIM	1958-06-26	100.00%
+-- 2. 'no ABN' exists person is director of ACN 169096762/ ABN 26169096762	C019438792/P019438792	CAM	ROBERT	REYNOLDS	1982-06-10	100.00
+-- Treat as persons but keep ABN if exists
+UNION
+SELECT
+'8888881111' as "PTNR_BNFCRY_ABN", --CHILD_ID
+'99999944444' AS "ABN", -- trust ABN -- PARENT_ID
+'2015' as "RTN_YR",
+'CHI' AS "PTNR_BNFCRY_FIRST_NM",
+'SU' AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'KIM' AS "PTNR_BNFCRY_SRNM",
+'1958-06-26' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
 UNION
 SELECT
 'no ABN' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'12345678911' AS "ABN", -- trust ABN -- PARENT_ID
+'99999944444' AS "ABN", -- trust ABN -- PARENT_ID
 '2015' as "RTN_YR",
-'ERROL' AS "PTNR_BNFCRY_FIRST_NM", -- P030579394, C017533143
-'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
-'STEWART' AS "PTNR_BNFCRY_SRNM",
-'1952-08-02'AS "PTNR_BNFCRY_DOB"
-FROM "osr.hana.platform.synonym::SYS.DUMMY" 
-UNION 
-SELECT
-'no ABN' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'12345678911' AS "ABN", -- trust ABN -- PARENT_ID
-'2015' as "RTN_YR",
-'ADRIENNE' AS "PTNR_BNFCRY_FIRST_NM", -- P030579394, C017533143
-'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
-'STEWART' AS "PTNR_BNFCRY_SRNM",
-'1952-07-29'AS "PTNR_BNFCRY_DOB"
-FROM "osr.hana.platform.synonym::SYS.DUMMY" 
-UNION 
-SELECT
-'18004920585' as "PTNR_BNFCRY_ABN", --CHILD_ID
-'12345678911' AS "ABN", -- trust ABN -- PARENT_ID
-'2015' as "RTN_YR",
-'BRUNO' AS "PTNR_BNFCRY_FIRST_NM", -- P030579394, C017533143
-'NULL' AS "PTNR_BNFCRY_OTHR_GVN_NM",
-'CALABRO' AS "PTNR_BNFCRY_SRNM",
-'1957-02-15'AS "PTNR_BNFCRY_DOB"
-FROM "osr.hana.platform.synonym::SYS.DUMMY" 
+'CAM' AS "PTNR_BNFCRY_FIRST_NM",
+'ROBERT' AS "PTNR_BNFCRY_OTHR_GVN_NM",
+'REYNOLDS' AS "PTNR_BNFCRY_SRNM",
+'1982-06-10' AS "PTNR_BNFCRY_DOB"
+FROM "osr.hana.platform.synonym::SYS.DUMMY"
 
 ;
 
@@ -172,8 +317,7 @@ ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 WHERE "TRUST"."ABN" <> 'invalid ABN'
 AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
 -- remove records we can't process due to information being withheld by ATO
-AND ("BNFCRY"."PTNR_BNFCRY_ABN" <> 'no ABN' 
-			OR ("BNFCRY"."PTNR_BNFCRY_ABN" = 'no ABN' AND ("PTNR_BNFCRY_FIRST_NM" is not null AND "PTNR_BNFCRY_FIRST_NM" <> '' AND "BNFCRY"."PTNR_BNFCRY_FIRST_NM" not like '%#%')))
+AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
 -- REMOVE AFTER TESTING
 		AND	"BNFCRY"."PTNR_BNFCRY_ABN" IN (
 		'11797737279'
@@ -204,16 +348,25 @@ AND ("BNFCRY"."PTNR_BNFCRY_ABN" <> 'no ABN'
 		'61919873656'
 		)
 ;
-
-
-lt_rel = 
+LT_REL = 
 	SELECT DISTINCT
 		"MAP"."ACN"					AS "ORG_NUMBER",
-		"DATA"."PTNR_BNFCRY_ABN"	AS "CHILD_ID",
+		CASE WHEN "MAP"."ACN" is not null THEN concat('O', "MAP"."ACN") -- Beneficiary has an ACN
+			WHEN "DATA"."PTNR_BNFCRY_ABN" <> 'no ABN' THEN CONCAT('T',"DATA"."PTNR_BNFCRY_ABN") END AS "CHILD_ID", 
+		"DATA"."PTNR_BNFCRY_ABN"	AS "CHILD_NUM",
 		"DATA"."ABN"				AS "PARENT_ID",
 		"DATA"."RTN_YR"				AS "GJAHR",
 		"PERS"."PGRP_ID"			AS "PERSON_NUM",
-		"ABR"."ENT_TYP_CD"			AS "ENT_TYP_CD",
+		CASE 
+			WHEN (	"DATA"."PTNR_BNFCRY_FIRST_NM"		IS NULL AND
+					"DATA"."PTNR_BNFCRY_OTHR_GVN_NM"	IS NULL AND 
+					"DATA"."PTNR_BNFCRY_SRNM"			IS NULL AND  
+					"DATA"."PTNR_BNFCRY_DOB"			IS NULL AND 
+					("DATA"."PTNR_BNFCRY_ABN"			IS NULL OR "DATA"."PTNR_BNFCRY_ABN" = 'no ABN')) OR
+					"DATA"."PTNR_BNFCRY_ABN" = 'no ABN'
+			THEN 'IND' 
+			ELSE "ABR"."ENT_TYP_CD"	
+		END AS "ENT_TYP_CD",
 		TO_DATE(TO_VARCHAR((CAST("DATA"."RTN_YR" as integer) -1)) || '0701') AS "START_DT",
 		TO_DATE("DATA"."RTN_YR" || '0630') AS "END_DT"
 	FROM :LT_DATA AS "DATA"
@@ -228,9 +381,30 @@ lt_rel =
 	ON "DATA"."PTNR_BNFCRY_ABN" = "ABR"."ABN"
 ;
 
+-- Add extra row for the sole traders and directors so we can look up their director / shareholdings
+LT_DR_SH = 
+	SELECT 
+		"ORG_NUMBER",
+		"PERSON_NUM" AS "CHILD_ID", -- for looking up later
+		"CHILD_NUM",
+		"PARENT_ID",
+		"GJAHR",
+		"PERSON_NUM",
+		"ENT_TYP_CD",
+		"START_DT",
+		"END_DT"
+	FROM :LT_REL 
+	--WHERE ("ENT_TYP_CD" = 'IND' AND "CHILD_ID" <> 'no ABN' AND "CHILD_ID" is not null AND "PERSON_NUM" is not null) 
+	--	OR "PERSON_NUM" = 'C030118268'; -- remove this line after testing
+	WHERE "PERSON_NUM" is not null; 
+
+LT_REL = SELECT * FROM :LT_REL UNION SELECT * FROM :LT_DR_SH;
+
 
 lt_tr_cnt = 
-SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" FROM :lt_rel GROUP BY "PARENT_ID", "GJAHR";
+SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" 
+FROM :lt_rel 
+GROUP BY "PARENT_ID", "GJAHR";
 
 -- CHILD_ID will display the trust Beneficiary ABN prefixed with a "T"
 -- However if there is an ACN found for the beneficiary, it will display the ACN instead
@@ -238,11 +412,9 @@ SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" FROM :lt_rel GROUP B
 RETURN 
 	SELECT * FROM (
 		SELECT DISTINCT
-			CASE WHEN "REL"."CHILD_ID" = 'no ABN' THEN "REL"."PERSON_NUM" -- Beneficiary is a Natural person
-					WHEN "REL"."ORG_NUMBER" is not null THEN concat('O', "REL"."ORG_NUMBER") -- Beneficiary has an ACN
-						ELSE CONCAT('T',"REL"."CHILD_ID")  END AS "CHILD_ID", -- Beneficiary is another trust
+			"REL"."CHILD_ID" AS "CHILD_ID", -- Beneficiary is another trust 
 			CONCAT('T',"REL"."PARENT_ID") AS "PARENT_ID",
-			CASE WHEN "REL"."CHILD_ID" <> 'no ABN' THEN "REL"."CHILD_ID" END AS "BNFCRY_ABN",
+			"REL"."CHILD_NUM"  AS "BNFCRY_ABN",
 			"REL"."PARENT_ID" AS "TRUST_ABN",
 			"REL"."GJAHR",
 			"REL"."ORG_NUMBER",
