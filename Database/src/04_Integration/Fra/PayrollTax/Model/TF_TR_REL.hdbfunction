@@ -62,52 +62,22 @@ lt_ABR =
 ;
 
 LT_DATA = 
-SELECT 
-	"PTNR_BNFCRY_ABN",
-	"TRUST"."ABN",
-	"TRUST"."RTN_YR",
-	"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
-	"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
-	"BNFCRY"."PTNR_BNFCRY_SRNM",
-	"BNFCRY"."PTNR_BNFCRY_DOB"
-FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
-INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
-ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
--- INCLUDE AFTER TESTING
---	AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- add this back in later as there is no data in dev for the moment! 
-WHERE "TRUST"."ABN" <> 'invalid ABN'
-AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
--- remove records we can't process due to information being withheld by ATO
-AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
--- REMOVE AFTER TESTING
-		AND	"BNFCRY"."PTNR_BNFCRY_ABN" IN (
-		'11797737279'
-		,'14853926895'
-		,'64175894971'
-		,'80830647522'
-		,'27816336576'
-		,'32624288234'
-		,'44372258429'
-		,'27816336576'
-		)
-		AND "TRUST"."ABN" IN (
-		'71256622977',
-		'64175894971',
-		'26257558531',
-		'71256622977',
-		'32624288234',
-		'28380160124',
-		'28380160124',
-		'28380160124',
-		'71256622977',
-		'71256622977',
-		'11709639794',
-		'90397942656',
-		'45358248690',
-		'90809049629',
-		'59627509121',
-		'61919873656'
-		)
+	SELECT 
+		"PTNR_BNFCRY_ABN",
+		"TRUST"."ABN",
+		"TRUST"."RTN_YR",
+		"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
+		"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
+		"BNFCRY"."PTNR_BNFCRY_SRNM",
+		"BNFCRY"."PTNR_BNFCRY_DOB"
+	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
+	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
+		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- will not return data in dev if this filter applied
+	WHERE "TRUST"."ABN" <> 'invalid ABN'
+	AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
+	-- remove records we can't process due to information being withheld by ATO
+	AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
 ;
 
 LT_REL = 
@@ -138,15 +108,15 @@ LT_REL =
 	LEFT OUTER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_KEY_DATE) AS "MAP"
 	ON "DATA"."PTNR_BNFCRY_ABN" = "MAP"."ABN"
 	LEFT OUTER JOIN :lt_pers AS "PERS"
-	ON "DATA"."PTNR_BNFCRY_FIRST_NM" = "PERS"."GIVEN_NAME1"
-		AND "DATA"."PTNR_BNFCRY_OTHR_GVN_NM" = "GIVEN_NAME2"
-		AND "DATA"."PTNR_BNFCRY_SRNM" = "SURNAME"
-		AND  "DATA"."PTNR_BNFCRY_DOB"  = "BIRTH_DT"
+	ON "DATA"."PTNR_BNFCRY_FIRST_NM"			= "PERS"."GIVEN_NAME1"
+		AND "DATA"."PTNR_BNFCRY_OTHR_GVN_NM"	= "PERS"."GIVEN_NAME2"
+		AND "DATA"."PTNR_BNFCRY_SRNM"			= "PERS"."SURNAME"
+		AND  "DATA"."PTNR_BNFCRY_DOB"			= "PERS"."BIRTH_DT"
 	LEFT OUTER JOIN :lt_ABR AS "ABR"
 	ON "DATA"."PTNR_BNFCRY_ABN" = "ABR"."ABN"
 ;
 
--- Add extra row for the sole traders and directors so we can look up their director / shareholdings
+-- Add extra rows for the sole traders and directors so we can look up their director / shareholdings
 LT_DR_SH = 
 	SELECT 
 		"ORG_NUMBER",
@@ -159,32 +129,36 @@ LT_DR_SH =
 		"START_DT",
 		"END_DT"
 	FROM :LT_REL 
-	--WHERE ("ENT_TYP_CD" = 'IND' AND "CHILD_ID" <> 'no ABN' AND "CHILD_ID" is not null AND "PERSON_NUM" is not null) 
-	--	OR "PERSON_NUM" = 'C030118268'; -- remove this line after testing
 	WHERE "PERSON_NUM" is not null; 
 
 LT_REL = SELECT * FROM :LT_REL UNION SELECT * FROM :LT_DR_SH;
 
 -- Add trust self relationships so they get added to the groups even if they have no other relationships
 LT_REL = 
-SELECT * FROM :LT_REL 
-UNION
-SELECT DISTINCT
-		null as "ORG_NUMBER",
-		CONCAT('T', "PARENT_ID") AS "CHILD_ID", 
-		"CHILD_NUM",
-		"PARENT_ID",
-		"GJAHR",
-		null AS "PERSON_NUM",
-		'TRT' AS "ENT_TYP_CD",
-		"START_DT",
-		"END_DT"
-FROM :LT_REL;
+	SELECT * 
+	FROM :LT_REL 
+	UNION
+	SELECT DISTINCT
+			null as "ORG_NUMBER",
+			CONCAT('T', "PARENT_ID") AS "CHILD_ID", 
+			"CHILD_NUM",
+			"PARENT_ID",
+			"GJAHR",
+			null AS "PERSON_NUM",
+			'TRT' AS "ENT_TYP_CD",
+			"START_DT",
+			"END_DT"
+	FROM :LT_REL;
 
 lt_tr_cnt = 
-SELECT "PARENT_ID", "GJAHR", COUNT(*) AS "TR_BENFCRY_COUNT" 
-FROM :lt_rel 
-GROUP BY "PARENT_ID", "GJAHR";
+	SELECT 
+		"PARENT_ID",
+		"GJAHR", 
+		COUNT(*) AS "TR_BENFCRY_COUNT" 
+	FROM :lt_rel 
+	GROUP BY 
+		"PARENT_ID", 
+		"GJAHR";
 
 -- CHILD_ID will display the trust Beneficiary ABN prefixed with a "T"
 -- However if there is an ACN found for the beneficiary, it will display the ACN instead
@@ -192,7 +166,7 @@ GROUP BY "PARENT_ID", "GJAHR";
 RETURN 
 	SELECT * FROM (
 		SELECT DISTINCT
-			"REL"."CHILD_ID" AS "CHILD_ID", -- Beneficiary is another trust 
+			"REL"."CHILD_ID" AS "CHILD_ID",
 			CONCAT('T',"REL"."PARENT_ID") AS "PARENT_ID",
 			"REL"."CHILD_NUM"  AS "BNFCRY_ABN",
 			"REL"."PARENT_ID" AS "TRUST_ABN",
@@ -202,12 +176,13 @@ RETURN
 			"REL"."START_DT",
 			"REL"."END_DT",
 			"CNT"."TR_BENFCRY_COUNT",
-			"REL"."ENT_TYP_CD" -- TODO Add logic for individual sole traders
-			FROM :lt_rel AS "REL" INNER JOIN :lt_tr_cnt AS "CNT"
+			"REL"."ENT_TYP_CD" 
+			FROM :lt_rel AS "REL" 
+			INNER JOIN :lt_tr_cnt AS "CNT"
 			ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
 			WHERE :IV_KEY_DATE >= "REL"."START_DT"
-			AND  :IV_KEY_DATE <= "REL"."END_DT"
-			AND "CNT"."TR_BENFCRY_COUNT" > 1
+				AND  :IV_KEY_DATE <= "REL"."END_DT"
+				AND "CNT"."TR_BENFCRY_COUNT" > 1
 	) WHERE "CHILD_ID" is not null
 ;
 
