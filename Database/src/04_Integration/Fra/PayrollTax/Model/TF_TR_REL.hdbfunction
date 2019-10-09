@@ -61,6 +61,23 @@ lt_ABR =
 	  AND "ABN_CANCN_DT" >= :LV_KEY_DATE
 ;
 
+LT_CHARITIES = 
+	SELECT DISTINCT 
+		"ABN"
+	FROM
+	(
+		SELECT
+			 "AGENCY"."ABN"              AS  "ABN", 	
+		     "AGENCY"."PID"              AS  "PID"
+		FROM :lt_ABR AS "AGENCY" 
+		INNER JOIN
+			"osr.edw.staging.md.abr.proxy::CV_ACNC" AS "ACNC"
+		ON 
+			"AGENCY"."PID" = "ACNC"."PID"
+	)
+;	
+	
+
 LT_DATA = 
 	SELECT 
 		"PTNR_BNFCRY_ABN",
@@ -78,6 +95,7 @@ LT_DATA =
 	AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
 	-- remove records we can't process due to information being withheld by ATO
 	AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
+	AND "PTNR_BNFCRY_ABN" NOT IN (SELECT "ABN" FROM :LT_CHARITIES) -- exclude charity beneficiaries
 ;
 
 LT_REL = 
