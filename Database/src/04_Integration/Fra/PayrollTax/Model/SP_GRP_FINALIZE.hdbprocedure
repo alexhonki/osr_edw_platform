@@ -47,11 +47,18 @@ FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
 WHERE "GROUP_TYPE" = 'CCSH'
   AND "GRP_DATE" = :LV_GRP_DATE
 UNION
-SELECT "GROUP_ID", "ORG_ID", 0 AS "DR_GROUP_CNT", 0 AS "SH_GROUP_CNT", 0 AS "INTERSTATE_GROUP_CNT", 0 AS "CCTRL_GROUP_CNT", 0 AS "CCDR_GROUP_CNT", 0 AS "CCSH_GROUP_CNT", 1 AS "TR_GROUP_CNT"
-FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
+-- Select only Trust or Org relationships 
+SELECT "GROUP_ID", "ELEMENT_ID" AS "ORG_ID", 0 AS "DR_GROUP_CNT", 0 AS "SH_GROUP_CNT", 0 AS "INTERSTATE_GROUP_CNT", 0 AS "CCTRL_GROUP_CNT", 0 AS "CCDR_GROUP_CNT", 0 AS "CCSH_GROUP_CNT", 1 AS "TR_GROUP_CNT"
+FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2"
 WHERE "GROUP_TYPE" = 'TR'
   AND "GRP_DATE" = :LV_GRP_DATE
+  AND LEFT("ELEMENT_ID",1) = 'T' OR LEFT("ELEMENT_ID",1) = 'O' 
+UNION 
+-- Add in trust director / shareholder org groups through TF_TR_DR_SH_REL
+SELECT  "GROUP_ID", 'O'||"ACN" AS "ORG_ID", 0 AS "DR_GROUP_CNT", 0 AS "SH_GROUP_CNT", 0 AS "INTERSTATE_GROUP_CNT", 0 AS "CCTRL_GROUP_CNT", 0 AS "CCDR_GROUP_CNT", 0 AS "CCSH_GROUP_CNT", 1 AS "TR_GROUP_CNT"
+FROM "osr.edw.platform.fra.prt.model::TF_TR_DR_SH_REL"(:LV_GRP_DATE)
 ;
+
 
 /*
 lt_rbc_grp_mem = 
@@ -164,7 +171,7 @@ FROM (
 	:lt_rbc_grp_mem AS "R"
 	ON "L"."ORG_ID"  = "R"."ORG_ID"
 	;
-	
+/*	
 lt_group = 
 SELECT 
 "GJAHR",
@@ -175,6 +182,37 @@ FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
 WHERE LEFT("ELEMENT",1) = 'O'
   AND "GRP_DATE" = :LV_GRP_DATE
 ;
+*/
+
+-- Combining old and new model can result in different GROUP_ID_DS values
+-- This will cause duplicate key errors in the ABAP code. 
+LT_GROUP = 
+--	From the trust model
+	SELECT 
+		"GJAHR",
+		TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
+		"ELEMENT" AS "ORG_ID", 
+		"PARENT_ELEMENT" AS "GROUP_ID_DS"
+	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPD2"
+	WHERE LEFT("ELEMENT",1) = 'O' OR LEFT("ELEMENT",1) = 'T' 
+	  AND "GRP_DATE" = :LV_GRP_DATE
+	UNION 
+--	From the original model groupings
+	SELECT 
+		"GJAHR",
+		TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
+		"ELEMENT" AS "ORG_ID", 
+		"PARENT_ELEMENT" AS "GROUP_ID_DS"
+	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
+	WHERE LEFT("ELEMENT",1) = 'O'
+	  AND "GRP_DATE" = :LV_GRP_DATE 
+	  AND "ELEMENT" NOT IN (
+		SELECT "ELEMENT" 
+		FROM "osr.apps.acs.synonym::SAPACS.PRTGRPD2" 
+		WHERE "GRP_DATE" = :LV_GRP_DATE 
+	  )
+;
+
 
 lt_group_id =
 SELECT
@@ -224,7 +262,7 @@ AND "GROUP"."GRP_DATE" = "GROUP_ID"."GRP_DATE"
 AND "GROUP"."GROUP_ID_DS" = "GROUP_ID"."GROUP_ID_DS"
 ;
 
-
+/*
 ET_GROUP_SUMMARY = 
 SELECT 
 DISTINCT
@@ -258,5 +296,85 @@ DISTINCT
  "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
  ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
  ;
+ */
+ 
+ 
+ET_GROUP_SUMMARY = 
+	SELECT DISTINCT
+		"GJAHR",
+		"GRP_DATE",
+		"ORG_ID",
+		"GROUP_ID",
+		"ACN",
+		"ABN",
+		"DR_GROUP_MEM",
+		"SH_GROUP_MEM",
+		"INTERSTATE_GROUP_MEM",
+		"CCDR_GROUP_MEM",
+		"CCSH_GROUP_MEM",
+		"CCTRL_GROUP_MEM",
+		"TR_GROUP_MEM",
+		"RBC_GROUP_MEM",
+		'N' AS "MEM_REL_BODY_CORP"
+	FROM (
+		SELECT DISTINCT
+			"L"."GJAHR", 
+			"L"."GRP_DATE", 
+			"L"."ORG_ID" AS "ORG_ID", 
+			"L"."GROUP_ID" AS "GROUP_ID",
+			RIGHT("L"."ORG_ID",9) AS "ACN",
+			CASE WHEN "MAP"."ABN" IS NULL THEN '' ELSE "MAP"."ABN" END AS "ABN",
+			"R"."DR_GROUP_MEM",
+			"R"."SH_GROUP_MEM",
+			"R"."INTERSTATE_GROUP_MEM",
+			"R"."CCDR_GROUP_MEM",
+			"R"."CCSH_GROUP_MEM",
+			"R"."CCTRL_GROUP_MEM",
+			"R"."TR_GROUP_MEM",
+			"R"."RBC_GROUP_MEM",
+			'N' AS "MEM_REL_BODY_CORP"
+		FROM 
+		:LT_GROUP_W_GROUP_ID AS "L"
+		INNER JOIN
+		:LT_ORG_DETAIL AS "R"
+		 ON  "L"."GJAHR" = "R"."GJAHR"
+		 AND "L"."GRP_DATE" = "R"."GRP_DATE"
+		 AND "L"."ORG_ID" = "R"."ORG_ID"
+		LEFT OUTER JOIN
+		"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
+		ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
+		WHERE LEFT("L"."ORG_ID",1) = 'O'
+		UNION 
+-- 		Trust related groups may not have an ACN but will have an ABN. Add the ACN if it is found here.  TODO - check if this is necessary as we have added ACN's in TF_TR_REL
+		SELECT DISTINCT
+			"L"."GJAHR", 
+			"L"."GRP_DATE", 
+			"L"."ORG_ID" AS "ORG_ID", 
+			"L"."GROUP_ID" AS "GROUP_ID",
+			"MAP"."ACN" AS "ACN",
+			RIGHT("L"."ORG_ID",11) AS "ABN",
+			"R"."DR_GROUP_MEM",
+			"R"."SH_GROUP_MEM",
+			"R"."INTERSTATE_GROUP_MEM",
+			"R"."CCDR_GROUP_MEM",
+			"R"."CCSH_GROUP_MEM",
+			"R"."CCTRL_GROUP_MEM",
+			"R"."TR_GROUP_MEM",
+			"R"."RBC_GROUP_MEM",
+			'N' AS "MEM_REL_BODY_CORP"
+		FROM 
+		:LT_GROUP_W_GROUP_ID  AS "L"
+		INNER JOIN
+		:LT_ORG_DETAIL AS "R"
+		ON  "L"."GJAHR" = "R"."GJAHR"
+		AND "L"."GRP_DATE" = "R"."GRP_DATE"
+		AND "L"."ORG_ID" = "R"."ORG_ID"
+		LEFT OUTER JOIN
+		"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
+		ON RIGHT("L"."ORG_ID",11) = "MAP"."ABN"
+		WHERE LEFT("L"."ORG_ID",1) = 'T'
+	)
+;
+
 
 END
