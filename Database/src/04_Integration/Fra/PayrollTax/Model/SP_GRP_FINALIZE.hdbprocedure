@@ -53,13 +53,70 @@ WHERE "GROUP_TYPE" = 'TR'
   AND "GRP_DATE" = :LV_GRP_DATE
 ;
 
+/*
 lt_rbc_grp_mem = 
-SELECT "ORG_ID" 
+SELECT "ORG_ID"  -- child id
 FROM "osr.edw.platform.fra.prt.model::CV_GRP_INITIAL_GROUP"
 WHERE "GROUP_TYPE" = 'SH'
   AND "GRP_DATE" = :LV_GRP_DATE
   AND "GROUP_DESCR" LIKE 'O%'
   ;
+  */
+  
+-- New restriction for RBC to only count if flagged beneficially
+lt_rbc_grp_mem = 
+SELECT DISTINCT "ORG_ID"
+FROM (
+	SELECT 
+		"PARENT_ID",
+		"ORG_ID", 
+		SUM("HLDG_COUNT_BNFCL"),
+		SUM("HLDG_COUNT"),
+		MAX("HLDG_COUNT_TOTAL"),
+		MAX("INTEREST_PCT"),
+		CASE WHEN SUM("HLDG_COUNT_BNFCL") = 0 THEN 0 
+			ELSE SUM("HLDG_COUNT_BNFCL")/MAX("HLDG_COUNT_TOTAL")*100
+		END AS "INTEREST_PCT_BNFCL"
+	FROM (
+		SELECT 
+			"PARENT_ID",
+			"CHILD_ID" AS "ORG_ID", -- child
+			CASE WHEN "BENEF_FLAG" = 'Y' THEN "HLDG_COUNT" ELSE 0 end as "HLDG_COUNT_BNFCL",
+			"BENEF_FLAG",
+			"HLDG_COUNT",
+			"HC"."HLDG_COUNT_TOTAL" AS "HLDG_COUNT_TOTAL",
+			"INTEREST_PCT"
+		FROM "osr.edw.staging.md.asic.proxy::TF_SHAREHOLDING"(:LV_GRP_DATE, 'ORD') AS "SH"
+		-- This join is required because using TF_SHAREHOLDING for the HLDGCOUNT value causes an overflow error
+		LEFT JOIN (
+				SELECT 
+					"ORG_NUMBER",
+					SUM("HLDG_COUNT") AS "HLDG_COUNT_TOTAL"
+					FROM (
+						SELECT
+							"ORG_NUMBER",
+							TO_DECIMAL("HLDG_COUNT") AS "HLDG_COUNT"
+						FROM "osr.edw.staging.md.asic.proxy::TF_HOLDING_C"( )
+						WHERE "REC_START_DT" <= CURRENT_DATE 
+						  AND "REC_END_DT" >= CURRENT_DATE
+						  AND "HLDG_START_DT" <= :LV_GRP_DATE
+						  AND "HOLDING_END_DT" >=  :LV_GRP_DATE
+						  AND LTRIM(RTRIM(UPPER("SHARE_CLASS"))) = 'ORD'
+						  AND "HLDG_COUNT" <> 0
+					)  GROUP BY "ORG_NUMBER"
+			) AS "HC"
+		ON "SH"."ORG_NUMBER" = "HC"."ORG_NUMBER"
+		WHERE "PARENT_ID" IN (
+				SELECT "ORG_ID"
+				FROM "osr.edw.platform.fra.prt.model::CV_GRP_INITIAL_GROUP"
+				WHERE "GROUP_TYPE" = 'SH'
+				  AND "GRP_DATE" = :LV_GRP_DATE
+				  AND "GROUP_DESCR" LIKE 'O%'
+			)
+		)
+	GROUP BY "PARENT_ID", "ORG_ID"
+) WHERE "INTEREST_PCT_BNFCL" > 50
+;
 
 
 	lt_org_detail = 
