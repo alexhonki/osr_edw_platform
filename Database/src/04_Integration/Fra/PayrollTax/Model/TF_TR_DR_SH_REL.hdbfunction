@@ -28,15 +28,15 @@ LT_TRUST_BNFCRY =
 	SELECT 
 		"GJAHR",
 		"GRP_DATE",
-		"ELEMENT_ID",	-- Beneficiary
+		"ORG_ID" AS "ELEMENT_ID",	-- Beneficiary
 		"GROUP_ID", 	-- Hashed Trust
 		"PERS"."ID" 	-- Director beneficiary
-	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2" AS "TRUST"
+	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI" AS "TRUST"
 	INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "PERS"
-	ON "TRUST"."ELEMENT_ID" = "PERS"."PGRP_ID"	
+	ON "TRUST"."ORG_ID" = "PERS"."PGRP_ID"	
 	WHERE "GROUP_TYPE" = 'TR'
 	AND "GJAHR" = :LV_GJAHR
-	AND (LEFT("ELEMENT_ID",1) = 'C' OR LEFT("ELEMENT_ID",1) = 'O') 
+	AND (LEFT("ORG_ID",1) = 'C' OR LEFT("ORG_ID",1) = 'O') 
 ;
 
 -- Get all DR_REL data

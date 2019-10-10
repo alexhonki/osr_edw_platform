@@ -19,6 +19,7 @@ LV_ORG_PREFIX := '0';
 LV_PSN_PREFIX := '1';
 LV_PGP_PREFIX := '2';
 
+
 IF :IV_GRP_DATE IS NULL OR :IV_GRP_DATE = TO_DATE('9999-12-31') OR :IV_GRP_DATE = '' THEN 
 	SELECT CURRENT_DATE INTO LV_GRP_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
 ELSE
@@ -29,9 +30,11 @@ LT_GROUP =
 	SELECT  
 		"GROUP_TYPE", 
 		"GROUP_ID", 
-		"ELEMENT_ID"  -- replaces ORG_ID
-	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2" -- new table for TRUST grouping 
+		"ORG_ID" AS "ELEMENT_ID"  -- replaces ORG_ID
+--	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2" -- new table for TRUST grouping 
+	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI" -- new table for TRUST grouping 
 	WHERE "GRP_DATE" = :LV_GRP_DATE
+	--AND "GROUP_TYPE" = 'TR'
 	UNION 
 	SELECT 
 		'TR' AS "GROUP_TYPE",
