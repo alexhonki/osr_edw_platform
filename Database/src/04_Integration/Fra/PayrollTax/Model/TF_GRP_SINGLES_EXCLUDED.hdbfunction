@@ -1,0 +1,57 @@
+FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_SINGLES_EXCLUDED"( )
+RETURNS TABLE (
+		"GROUP_ID" NVARCHAR(32),
+		"ABN" NVARCHAR(11),
+		"GJAHR" NVARCHAR(4)
+       )
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+-- get all ABN's with any combined wages
+LT_WAGES = 
+	SELECT DISTINCT
+		"ABN", 
+		"GJAHR" 
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) 
+	WHERE 
+	("ATO_BAS_TOTL_PMT_FOR_WRK_AMT" + 
+	"ATO_ITR_SALARY_WAGES" + 
+	"WCQ_ACT_WAGES" + 
+	"ATO_PAYG_NIND_TOTL_GRS_AMT" +
+	"OSR_STATE_WAGES"
+	)
+	> 0 
+	AND "PERIOD_CATEGORY" = 'PT-A'
+;
+
+RETURN
+
+SELECT DISTINCT
+	"GROUP_ID",
+	"ABN",
+	"GJAHR"
+	FROM (
+		SELECT 
+			"GROUP_ID",
+			"GRP_ABN" AS "ABN",
+			"GJAHR",
+			COUNT("WAGES_ABN") OVER (PARTITION BY "GROUP_ID", "GJAHR") as "COUNT_ABN"
+		FROM (
+			SELECT DISTINCT
+				"GRP"."GROUP_ID",
+				"GRP"."GJAHR",
+				"GRP"."ABN" as "GRP_ABN",
+				"WAGES"."ABN" as "WAGES_ABN"
+			FROM "osr.apps.acs.synonym::SAPACS.PRTGRP" as "GRP"
+			LEFT OUTER JOIN :LT_WAGES AS "WAGES"
+			ON "GRP"."ABN" = "WAGES"."ABN"
+				AND "GRP"."GJAHR" = "WAGES"."GJAHR"
+			WHERE "GRP"."ABN" <> ''
+		) GROUP BY "GROUP_ID","GRP_ABN", "GJAHR", "WAGES_ABN" 
+	) WHERE "COUNT_ABN" > 1
+
+
+;
+
+END;

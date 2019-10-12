@@ -666,10 +666,10 @@ AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
  	
 lt_pre_result = 
 	SELECT
-		"ABN",
+		"RESULT_ALL"."ABN" AS "ABN",
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
-		"GJAHR",
+		"RESULT_ALL"."GJAHR" AS "GJAHR",
 		"CURRENCY",
 		CASE 
 			WHEN SUM("RISK_AMOUNT") < 0 
@@ -706,12 +706,22 @@ lt_pre_result =
 			0 AS "WAGE",
 			"CURRENCY"
 		FROM :lt_rms_wages AS "RMS_WAGES"
-	)
+	) AS "RESULT_ALL"
+	--Added for excluding groups with single paying entity
+	INNER JOIN (
+		SELECT DISTINCT 
+			"ABN", 
+			"GJAHR" 
+		FROM "osr.edw.platform.fra.prt.model::TF_GRP_SINGLES_EXCLUDED"() 
+	) AS "INCLUDE"
+	ON "RESULT_ALL"."ABN" = "INCLUDE"."ABN"
+	AND "RESULT_ALL"."GJAHR" = "INCLUDE"."GJAHR"
+	-- End Single Paying Entity exclusion
 	GROUP BY
-		"ABN",
+		"RESULT_ALL"."ABN",
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
-		"GJAHR",
+		"RESULT_ALL"."GJAHR",
 		"CURRENCY"
 ; 
 
