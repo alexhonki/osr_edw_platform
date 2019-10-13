@@ -48,11 +48,11 @@ WHERE "GROUP_TYPE" = 'CCSH'
   AND "GRP_DATE" = :LV_GRP_DATE
 UNION
 -- Select only Trust or Org relationships 
-SELECT "GROUP_ID", "ELEMENT_ID" AS "ORG_ID", 0 AS "DR_GROUP_CNT", 0 AS "SH_GROUP_CNT", 0 AS "INTERSTATE_GROUP_CNT", 0 AS "CCTRL_GROUP_CNT", 0 AS "CCDR_GROUP_CNT", 0 AS "CCSH_GROUP_CNT", 1 AS "TR_GROUP_CNT"
-FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI2"
+SELECT "GROUP_ID", "ORG_ID", 0 AS "DR_GROUP_CNT", 0 AS "SH_GROUP_CNT", 0 AS "INTERSTATE_GROUP_CNT", 0 AS "CCTRL_GROUP_CNT", 0 AS "CCDR_GROUP_CNT", 0 AS "CCSH_GROUP_CNT", 1 AS "TR_GROUP_CNT"
+FROM "osr.apps.acs.synonym::SAPACS.PRTGRPI"
 WHERE "GROUP_TYPE" = 'TR'
   AND "GRP_DATE" = :LV_GRP_DATE
-  AND LEFT("ELEMENT_ID",1) = 'T' OR LEFT("ELEMENT_ID",1) = 'O' 
+  AND (LEFT("ORG_ID",1) = 'T' OR LEFT("ORG_ID",1) = 'O')
 UNION 
 -- Add in trust director / shareholder org groups through TF_TR_DR_SH_REL
 SELECT  "GROUP_ID", 'O'||"ACN" AS "ORG_ID", 0 AS "DR_GROUP_CNT", 0 AS "SH_GROUP_CNT", 0 AS "INTERSTATE_GROUP_CNT", 0 AS "CCTRL_GROUP_CNT", 0 AS "CCDR_GROUP_CNT", 0 AS "CCSH_GROUP_CNT", 1 AS "TR_GROUP_CNT"
@@ -127,7 +127,7 @@ FROM (
 
 
 	lt_org_detail = 
-	SELECT 
+	SELECT DISTINCT
 	:LV_GJAHR AS "GJAHR", 
 	:LV_GRP_DATE AS "GRP_DATE", 
 	"L"."ORG_ID" AS "ORG_ID", 
@@ -184,22 +184,21 @@ WHERE LEFT("ELEMENT",1) = 'O'
 ;
 */
 
--- Combining old and new model can result in different GROUP_ID_DS values
--- This will cause duplicate key errors in the ABAP code. 
 LT_GROUP = 
---	From the trust model
-	SELECT 
+	SELECT DISTINCT
 		"GJAHR",
 		TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
 		"ELEMENT" AS "ORG_ID", 
 		"PARENT_ELEMENT" AS "GROUP_ID_DS"
 	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
-	WHERE LEFT("ELEMENT",1) = 'O' OR LEFT("ELEMENT",1) = 'T' 
+	WHERE (LEFT("ELEMENT",1) = 'O' OR LEFT("ELEMENT",1) = 'T') 
 	  AND "GRP_DATE" = :LV_GRP_DATE
 ;
 
+
+
 lt_group_id =
-SELECT
+SELECT DISTINCT
 "GJAHR",
 "GRP_DATE",
 CAST(HASH_MD5(TO_BINARY("GROUP_DESCR")) AS NVARCHAR) AS "GROUP_ID", 
@@ -221,7 +220,7 @@ GROUP BY
 ;
 
 et_group_id = 
-SELECT 
+SELECT DISTINCT
 "GJAHR",
 "GRP_DATE",
 "GROUP_ID", 
@@ -232,7 +231,7 @@ FROM :lt_group_id
 
 
 lt_group_w_group_id = 
-SELECT 
+SELECT DISTINCT
 "GROUP"."GJAHR" AS "GJAHR",
 "GROUP"."GRP_DATE" AS "GRP_DATE",
 "GROUP"."ORG_ID" AS "ORG_ID",

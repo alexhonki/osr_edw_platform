@@ -1,8 +1,8 @@
 FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_DR_SH_REL"(IV_KEY_DATE DATE )
        RETURNS TABLE (
        		"GROUP_ID"			NVARCHAR(32),	-- Trust Group
-       		"ACN"				NVARCHAR(9),	-- Controlled Company
-       		"TOTAL_CI"			decimal(15,2)	-- Controlling interest %
+       		"ACN"				NVARCHAR(9)	-- Controlled Company
+       		--"TOTAL_CI"			decimal(15,2)	-- Controlling interest %
        )
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
@@ -67,19 +67,24 @@ LT_SH_CI =
 -- Combine the two SH and DR sets 
 -- The trust model doesn't care which set they belong to, only that they need to be grouped. 
 RETURN 
-	SELECT DISTINCT
-		"GROUP_ID",
-		"ACN",
-		"TOTAL_CI"
-	FROM :LT_DR_CI
-	WHERE "TOTAL_CI" > 50 -- grouped controlling interest over 50%
-	UNION 
-	SELECT DISTINCT
-		"GROUP_ID",
-		"ACN",
-		"TOTAL_CI"
-	FROM :LT_SH_CI
-	WHERE "TOTAL_CI" > 50 -- grouped controlling interest over 50%
+SELECT DISTINCT
+	"GROUP_ID",
+	"ACN"
+	FROM (
+		SELECT DISTINCT
+			"GROUP_ID",
+			"ACN",
+			"TOTAL_CI"
+		FROM :LT_DR_CI
+		WHERE "TOTAL_CI" > 50 -- grouped controlling interest over 50%
+		UNION 
+		SELECT DISTINCT
+			"GROUP_ID",
+			"ACN",
+			"TOTAL_CI"
+		FROM :LT_SH_CI
+		WHERE "TOTAL_CI" > 50 -- grouped controlling interest over 50%
+		) 
 ;
 
 
