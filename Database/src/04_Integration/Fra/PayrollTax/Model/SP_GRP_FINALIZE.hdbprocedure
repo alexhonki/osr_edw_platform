@@ -193,26 +193,10 @@ LT_GROUP =
 		TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
 		"ELEMENT" AS "ORG_ID", 
 		"PARENT_ELEMENT" AS "GROUP_ID_DS"
-	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPD2"
+	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
 	WHERE LEFT("ELEMENT",1) = 'O' OR LEFT("ELEMENT",1) = 'T' 
 	  AND "GRP_DATE" = :LV_GRP_DATE
-	UNION 
---	From the original model groupings
-	SELECT 
-		"GJAHR",
-		TO_DATE(LEFT("GRP_DATE",4)|| '-' || RIGHT(LEFT("GRP_DATE",6),2) || '-' || RIGHT("GRP_DATE",2)) AS "GRP_DATE",
-		"ELEMENT" AS "ORG_ID", 
-		"PARENT_ELEMENT" AS "GROUP_ID_DS"
-	FROM "osr.apps.acs.synonym::SAPACS.PRTGRPDS"
-	WHERE LEFT("ELEMENT",1) = 'O'
-	  AND "GRP_DATE" = :LV_GRP_DATE 
-	  AND "ELEMENT" NOT IN (
-		SELECT "ELEMENT" 
-		FROM "osr.apps.acs.synonym::SAPACS.PRTGRPD2" 
-		WHERE "GRP_DATE" = :LV_GRP_DATE 
-	  )
 ;
-
 
 lt_group_id =
 SELECT
