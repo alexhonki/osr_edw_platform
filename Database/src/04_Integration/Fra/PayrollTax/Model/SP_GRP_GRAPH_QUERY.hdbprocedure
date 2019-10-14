@@ -34,7 +34,7 @@ IF :IV_GRAPH_ID IS NULL OR :IV_GRAPH_ID = '' THEN
 	IF :IV_REL_TYPE = 'TR' THEN
     
     	ET_REL = 
-    	SELECT top 100 "CHILD_ID", "PARENT_ID", 'TR' AS "REL_TYPE", 100 AS "INTEREST_PCT" 
+    	SELECT "CHILD_ID", "PARENT_ID", 'TR' AS "REL_TYPE", 100 AS "INTEREST_PCT" 
 		FROM 
 		"osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE)
 		;
