@@ -2,7 +2,7 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_GRP_TR_QUERY"(
 	IN	IV_GRP_DATE 	DATE , 
 	IN  IV_GRAPH_ID		NVARCHAR(32),
 	IN	IV_MATCH_PERSON	NVARCHAR(1),
-	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT2",
+	OUT ET_GROUP		"osr.edw.platform.fra.prt.model::Types.GroupT",
 	OUT ET_GROUP_ID		"osr.edw.platform.fra.prt.model::Types.GroupIDT"
 )
    LANGUAGE SQLSCRIPT
@@ -68,7 +68,7 @@ END IF;
 		SELECT 
 			:LV_GJAHR		AS "GJAHR",
 			:LV_GRP_DATE	AS "GRP_DATE",
-			"BNFCRY_ABN"	AS "ELEMENT_ID",
+			"BNFCRY_ABN"	AS "ORG_ID", -- ELEMENT_ID
 			CAST(HASH_MD5(TO_BINARY("TRUST_ABN")) AS NVARCHAR) AS "GROUP_ID",
 			'TR'			AS "GROUP_TYPE"
 		FROM :LT_TR;
