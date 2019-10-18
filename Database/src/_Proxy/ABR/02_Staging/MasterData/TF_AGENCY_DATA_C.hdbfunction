@@ -124,6 +124,10 @@ WHERE NOT EXISTS (
 )
 ;
 */
+/* 
+-- Removed and replaced with below on 17/10/2019 due to change in file name in source data issue
+-- The below was not necessarily returning all the latest values 
+-- new logic uses the meta data table to find latest values. 
 
 RETURN 
 SELECT
@@ -163,5 +167,100 @@ SELECT
 "DATA"."SPRSN_IND"
 FROM "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" "DATA"
 ;
+*/
 
+-- Get the file names
+-- It is possible that an ABN might not exist in the latest file but is found in older files
+-- Select all loaded files for agency data here
+    lt_meta =
+    SELECT DISTINCT "META_FILE_NAME", "TO_DATE", "FILE_RECEIVED_DATE"
+    FROM
+    "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ABR')
+	WHERE "TABLE_NAME" = 'AGENCY_DATA'
+	AND "HAS_LOADED_IN_EDW" = 'Y'
+	;
+
+RETURN 
+	SELECT 
+		"PID",
+		"ABN",
+		"ENT_TYP_CD",
+		"ORG_NM",
+		"NM_TITL_CD",
+		"PRSN_GVN_NM",
+		"PRSN_OTHR_GVN_NM",
+		"PRSN_FMLY_NM",
+		"NM_SUFX_CD",
+		"ABN_REGN_DT",
+		"ABN_CANCN_DT",
+		"MN_TRDG_NM",
+		"SON_ADDR_LN_1",
+		"SON_ADDR_LN_2",
+		"SON_SBRB",
+		"SON_STT",
+		"SON_PC",
+		"SON_CNTRY_CD",
+		"SON_DPID",
+		"MN_BUS_ADDR_LN_1",
+		"MN_BUS_ADDR_LN_2",
+		"MN_BUS_SBRB",
+		"MN_BUS_STT",
+		"MN_BUS_PC",
+		"MN_BUS_CNTRY_CD",
+		"MN_BUS_DPID",
+		"ENT_EML",
+		"PRTY_ID_BLNK",
+		"GST_REGN_DT",
+		"GST_CANCN_DT",
+		"MN_INDY_CLSN",
+		"MN_INDY_CLSN_DESCN",
+		"ACN",
+		"SPRSN_IND"
+		FROM (
+			SELECT 
+				RANK() OVER (PARTITION BY "DATA"."ABN","META"."META_FILE_NAME"  
+					ORDER BY -- sort to find the latest file for an ABN to get the most recent data for that ABN
+						"META"."TO_DATE" DESC,
+						"META"."FILE_RECEIVED_DATE" DESC) AS "RANK_1", 
+				"ABN",
+				"PID",
+				"ENT_TYP_CD",
+				"ORG_NM",
+				"NM_TITL_CD",
+				"PRSN_GVN_NM",
+				"PRSN_OTHR_GVN_NM",
+				"PRSN_FMLY_NM",
+				"NM_SUFX_CD",
+				"ABN_REGN_DT",
+				"ABN_CANCN_DT",
+				"MN_TRDG_NM",
+				"SON_ADDR_LN_1",
+				"SON_ADDR_LN_2",
+				"SON_SBRB",
+				"SON_STT",
+				"SON_PC",
+				"SON_CNTRY_CD",
+				"SON_DPID",
+				"MN_BUS_ADDR_LN_1",
+				"MN_BUS_ADDR_LN_2",
+				"MN_BUS_SBRB",
+				"MN_BUS_STT",
+				"MN_BUS_PC",
+				"MN_BUS_CNTRY_CD",
+				"MN_BUS_DPID",
+				"ENT_EML",
+				"PRTY_ID_BLNK",
+				"GST_REGN_DT",
+				"GST_CANCN_DT",
+				"MN_INDY_CLSN",
+				"MN_INDY_CLSN_DESCN",
+				"ACN",
+				"SPRSN_IND"
+			FROM "osr.edw.staging.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "DATA"
+			LEFT OUTER JOIN
+			:lt_meta AS "META"
+			ON "DATA"."NAME" = "META"."META_FILE_NAME" 
+		) 
+		WHERE "RANK_1" = 1 -- only get the latest values for an ABN
+;
 END;
