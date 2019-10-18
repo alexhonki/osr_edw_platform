@@ -51,6 +51,14 @@ FROM "osr.hana.platform.synonym::SYS.DUMMY";
 	    AND "L"."DOB" = "R"."DOB"
 	    WHERE "L"."REL_TYPE" = 'TR';
 	    */
+    	LT_TR = 
+			SELECT
+				"CHILD_ID"	AS "BNFCRY_ABN",
+				"PARENT_ID" AS "TRUST_ABN"
+			FROM :LT_REL
+			WHERE "REL_TYPE" = 'TR'
+	;
+		
 	ELSE
 		LT_TR = 
 			SELECT
