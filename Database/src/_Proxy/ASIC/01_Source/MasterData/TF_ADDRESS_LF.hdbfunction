@@ -34,7 +34,7 @@ BEGIN
     FROM 
     "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ASIC')
 	WHERE "TABLE_NAME" = 'ADDRESS' AND "HAS_LOADED_IN_EDW" = 'Y'
-	ORDER BY "TO_DATE", "FILE_RECEIVED_DATE" DESC
+	ORDER BY "TO_DATE" DESC, "FILE_RECEIVED_DATE" DESC
 	
 	;
     
