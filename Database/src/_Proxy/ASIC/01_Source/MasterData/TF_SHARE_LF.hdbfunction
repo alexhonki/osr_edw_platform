@@ -43,7 +43,7 @@ BEGIN
     FROM 
     "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ASIC')
 	WHERE "TABLE_NAME" = 'SHARE'
-	ORDER BY "META_FILE_NAME" DESC
+	ORDER BY "TO_DATE" DESC, "FILE_RECEIVED_DATE" DESC
 	;
 	
     RETURN
