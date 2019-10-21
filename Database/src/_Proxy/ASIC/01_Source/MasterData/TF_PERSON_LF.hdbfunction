@@ -42,7 +42,7 @@ BEGIN
     SELECT TOP 1 "META_FILE_NAME"
     FROM 
     "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ASIC')
-	WHERE "TABLE_NAME" = 'PERSON'
+	WHERE "TABLE_NAME" = 'PERSON' AND "HAS_LOADED_IN_EDW" = 'Y'
 	ORDER BY "TO_DATE" DESC, "FILE_RECEIVED_DATE" DESC
 	;
 	
