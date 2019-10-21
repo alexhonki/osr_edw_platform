@@ -218,7 +218,7 @@ RETURN
 		"SPRSN_IND"
 		FROM (
 			SELECT 
-				RANK() OVER (PARTITION BY "DATA"."ABN","META"."META_FILE_NAME"  
+				RANK() OVER (PARTITION BY "DATA"."ABN" 
 					ORDER BY -- sort to find the latest file for an ABN to get the most recent data for that ABN
 						"META"."TO_DATE" DESC,
 						"META"."FILE_RECEIVED_DATE" DESC) AS "RANK_1", 
