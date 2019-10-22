@@ -93,6 +93,7 @@ LT_DATA =
 		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- will not return data in dev if this filter applied
 	WHERE "TRUST"."ABN" <> 'invalid ABN'
 	AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
+	AND "TRUST"."RTN_YR" = :LV_GJAHR
 	-- remove records we can't process due to information being withheld by ATO
 	AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
 	AND "PTNR_BNFCRY_ABN" NOT IN (SELECT "ABN" FROM :LT_CHARITIES) -- exclude charity beneficiaries
