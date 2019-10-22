@@ -27,7 +27,7 @@ ELSE
 END IF;
 
 -- use fiscal year start and end dates of the key date to restrict data
-SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_GRP_DATE).EV_GJAHR INTO LV_GJAHR
+SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_KEY_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
 
 lt_pers = 
