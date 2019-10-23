@@ -87,7 +87,7 @@ LT_DATA =
 		"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
 		"BNFCRY"."PTNR_BNFCRY_SRNM",
 		"BNFCRY"."PTNR_BNFCRY_DOB",
-		"BNFCRY"."REF_ID"
+		"BNFCRY"."PTNR_BNFCRY_REF_ID"
 	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
 	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
@@ -155,8 +155,8 @@ LT_DR_SH =
 --	Also add extra rows for natural persons matching
 	SELECT 
 		null  AS "ORG_NUMBER",
-		concat('V', TO_VARCHAR("REF_ID")) AS "CHILD_ID", -- only used for grouping trusts by common beneficiaries
-		TO_VARCHAR("REF_ID") AS "CHILD_NUM",
+		concat('V', TO_VARCHAR("PTNR_BNFCRY_REF_ID")) AS "CHILD_ID", -- only used for grouping trusts by common beneficiaries
+		TO_VARCHAR("PTNR_BNFCRY_REF_ID") AS "CHILD_NUM",
 		"ABN" AS "PARENT_ID",
 		"RTN_YR" AS "GJAHR",
 		null AS "PERSON_NUM",
