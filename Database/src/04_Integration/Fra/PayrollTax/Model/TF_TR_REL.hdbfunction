@@ -155,7 +155,7 @@ LT_DR_SH =
 --	Also add extra rows for natural persons matching
 	SELECT 
 		null  AS "ORG_NUMBER",
-		concat('V', TO_VARCHAR("PTNR_BNFCRY_REF_ID")) AS "CHILD_ID", -- only used for grouping trusts by common beneficiaries
+		concat('V', TO_VARCHAR(LEFT("PTNR_BNFCRY_REF_ID",12))) AS "CHILD_ID", -- only used for grouping trusts by common beneficiaries
 		TO_VARCHAR(LEFT("PTNR_BNFCRY_REF_ID",12)) AS "CHILD_NUM",
 		"ABN" AS "PARENT_ID",
 		"RTN_YR" AS "GJAHR",
