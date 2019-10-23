@@ -86,7 +86,8 @@ LT_DATA =
 		"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
 		"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
 		"BNFCRY"."PTNR_BNFCRY_SRNM",
-		"BNFCRY"."PTNR_BNFCRY_DOB"
+		"BNFCRY"."PTNR_BNFCRY_DOB",
+		"BNFCRY"."REF_ID"
 	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
 	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
@@ -136,10 +137,11 @@ LT_REL =
 ;
 
 -- Add extra rows for the sole traders and directors so we can look up their director / shareholdings
+-- Also add extra rows for natural persons who have "no ABN"
 LT_DR_SH = 
 	SELECT 
 		"ORG_NUMBER",
-		"PERSON_NUM" AS "CHILD_ID", -- for looking up later
+		"PERSON_NUM" AS "CHILD_ID", -- for looking up DR or SH relationships later
 		"CHILD_NUM",
 		"PARENT_ID",
 		"GJAHR",
@@ -148,7 +150,24 @@ LT_DR_SH =
 		"START_DT",
 		"END_DT"
 	FROM :LT_REL 
-	WHERE "PERSON_NUM" is not null; 
+	WHERE "PERSON_NUM" is not null
+	UNION 
+--	Also add extra rows for natural persons matching
+	SELECT 
+		null  AS "ORG_NUMBER",
+		concat('V', "REF_ID") AS "CHILD_ID", -- only used for grouping trusts by common beneficiaries
+		"REF_ID" AS "CHILD_NUM",
+		"ABN" AS "PARENT_ID",
+		"RTN_YR" AS "GJAHR",
+		null AS "PERSON_NUM",
+		null AS "ENT_TYP_CD",
+		TO_DATE(TO_VARCHAR((CAST("RTN_YR" as integer) -1)) || '0701') AS "START_DT",
+		TO_DATE("RTN_YR" || '0630') AS "END_DT"
+	FROM :LT_DATA
+	WHERE "PTNR_BNFCRY_FIRST_NM" is not null 
+	AND "PTNR_BNFCRY_SRNM" is not null
+	AND "PTNR_BNFCRY_DOB" is not null;
+	
 
 LT_REL = SELECT * FROM :LT_REL UNION SELECT * FROM :LT_DR_SH;
 
@@ -181,7 +200,9 @@ lt_tr_cnt =
 
 -- CHILD_ID will display the trust Beneficiary ABN prefixed with a "T"
 -- However if there is an ACN found for the beneficiary, it will display the ACN instead
--- Or it will display the Person Group ID if the beneficiary is natural person. 
+-- Or it will display the Person Group ID if the beneficiary is natural person if found in ASIC data
+-- OR it will display the ref Id of the person if not found in ASIC data. 
+
 RETURN 
 	SELECT * FROM (
 		SELECT DISTINCT
