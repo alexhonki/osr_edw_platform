@@ -188,6 +188,7 @@ LT_REL =
 			"END_DT"
 	FROM :LT_REL;
 
+
 lt_tr_cnt = 
 	SELECT 
 		"PARENT_ID",
@@ -197,6 +198,7 @@ lt_tr_cnt =
 	GROUP BY 
 		"PARENT_ID", 
 		"GJAHR";
+
 
 -- CHILD_ID will display the trust Beneficiary ABN prefixed with a "T"
 -- However if there is an ACN found for the beneficiary, it will display the ACN instead
@@ -219,10 +221,10 @@ RETURN
 			"REL"."ENT_TYP_CD" 
 			FROM :lt_rel AS "REL" 
 			INNER JOIN :lt_tr_cnt AS "CNT"
-			ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
+		ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
 			WHERE :IV_KEY_DATE >= "REL"."START_DT"
 				AND  :IV_KEY_DATE <= "REL"."END_DT"
-				AND "CNT"."TR_BENFCRY_COUNT" > 1
+				--AND "CNT"."TR_BENFCRY_COUNT" > 1
 	) WHERE "CHILD_ID" is not null
 ;
 
