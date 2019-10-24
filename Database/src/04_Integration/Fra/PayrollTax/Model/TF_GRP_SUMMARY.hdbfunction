@@ -39,7 +39,7 @@ SELECT
 	"MEM_REL_BODY_CORP"
 FROM 
 "osr.apps.acs.synonym::SAPACS.PRTGRP"
-where "ACN" is not null
+where "ACN" <> ''
 ;
 
 END;
