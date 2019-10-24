@@ -40,7 +40,8 @@ BEGIN
    "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
    ON "MAP"."ACN" = "GRP"."ACN"
    AND "MAP"."GJAHR" = "GRP"."GJAHR"
-   WHERE "WAGES"."GJAHR" IN (SELECT DISTINCT "GJAHR" FROM :it_workset) -- keep for improved performance
+   --WHERE "WAGES"."GJAHR" = '2015'-- IN (SELECT DISTINCT "GJAHR" FROM :it_workset) -- keep for improved performance
+ 
    ;
 
 END
