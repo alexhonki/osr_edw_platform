@@ -13,16 +13,29 @@ LT_WAGES =
 	SELECT DISTINCT
 		"ABN", 
 		"GJAHR" 
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) 
-	WHERE 
-	("ATO_BAS_TOTL_PMT_FOR_WRK_AMT" + 
-	"ATO_ITR_SALARY_WAGES" + 
-	"WCQ_ACT_WAGES" + 
-	"ATO_PAYG_NIND_TOTL_GRS_AMT" +
-	"OSR_STATE_WAGES"
+	FROM (
+		SELECT DISTINCT
+			"ABN", 
+			"GJAHR" 
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"( ) 
+		WHERE 
+		("ATO_BAS_TOTL_PMT_FOR_WRK_AMT" + 
+		"ATO_ITR_SALARY_WAGES" + 
+		"WCQ_ACT_WAGES" + 
+		"ATO_PAYG_NIND_TOTL_GRS_AMT" 
+		--+ "OSR_STATE_WAGES"
+		) > 0 
+		AND "PERIOD_CATEGORY" = 'PT-A'
+		UNION
+	-- Add interstate wages
+		SELECT DISTINCT
+			"ABN",
+			"GJAHR"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"()
+		WHERE  "PERIOD_CATEGORY" = 'PT-A'
+		GROUP BY "ABN",  "GJAHR"--, "WAERS"
+		HAVING MAX("CLIENT_AUST_WAGES") > 0
 	)
-	> 0 
-	AND "PERIOD_CATEGORY" = 'PT-A'
 ;
 
 RETURN
