@@ -280,45 +280,8 @@ DISTINCT
  ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
  ;
  */
- 
- 
-ET_GROUP_SUMMARY = 
-	SELECT DISTINCT
-		"GJAHR",
-		"GRP_DATE",
-		"ORG_ID",
-		"GROUP_ID",
-		"ACN",
-		"ABN",
-		"DR_GROUP_MEM",
-		"SH_GROUP_MEM",
-		"INTERSTATE_GROUP_MEM",
-		"CCDR_GROUP_MEM",
-		"CCSH_GROUP_MEM",
-		"CCTRL_GROUP_MEM",
-		"TR_GROUP_MEM",
-		"RBC_GROUP_MEM",
-		'N' AS "MEM_REL_BODY_CORP"
-	FROM (
-			SELECT DISTINCT
-			"GJAHR",
-			"GRP_DATE",
-			"ORG_ID",
-			"GROUP_ID",
-			"ACN",
-			"ABN",
-			"DR_GROUP_MEM",
-			"SH_GROUP_MEM",
-			"INTERSTATE_GROUP_MEM",
-			"CCDR_GROUP_MEM",
-			"CCSH_GROUP_MEM",
-			"CCTRL_GROUP_MEM",
-			"TR_GROUP_MEM",
-			"RBC_GROUP_MEM",
-			'N' AS "MEM_REL_BODY_CORP",
-			RANK() OVER (PARTITION BY "ABN" ORDER BY  "GROUP_ID", "ACN", "ABN", "ORG_ID", "GJAHR") AS "RANK_ORG"
-		FROM (
-			SELECT DISTINCT
+ LT_ORIGINAL_GROUPS = 
+ SELECT DISTINCT
 				"L"."GJAHR", 
 				"L"."GRP_DATE", 
 				"L"."ORG_ID" AS "ORG_ID", 
@@ -345,8 +308,9 @@ ET_GROUP_SUMMARY =
 			"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
 			ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
 			WHERE LEFT("L"."ORG_ID",1) = 'O'
-			UNION 
-	-- 		Trust related groups may not have an ACN but will have an ABN. Add the ACN if it is found here.  TODO - check if this is necessary as we have added ACN's in TF_TR_REL
+;
+
+LT_TRUST_GROUPS = 
 			SELECT DISTINCT
 				"L"."GJAHR", 
 				"L"."GRP_DATE", 
@@ -374,8 +338,35 @@ ET_GROUP_SUMMARY =
 			"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
 			ON RIGHT("L"."ORG_ID",11) = "MAP"."ABN"
 			WHERE LEFT("L"."ORG_ID",1) = 'T'
+			-- remove duplicated orgs if exist as they will create duplicate alerts for the ABN (one for trust and one for org) 
+			AND RIGHT("L"."ORG_ID",11) NOT IN ( 
+				SELECT "ABN" FROM :LT_ORIGINAL_GROUPS
+			)
+;
+ 
+ET_GROUP_SUMMARY = 
+			SELECT DISTINCT
+			"GJAHR",
+			"GRP_DATE",
+			"ORG_ID",
+			"GROUP_ID",
+			"ACN",
+			"ABN",
+			"DR_GROUP_MEM",
+			"SH_GROUP_MEM",
+			"INTERSTATE_GROUP_MEM",
+			"CCDR_GROUP_MEM",
+			"CCSH_GROUP_MEM",
+			"CCTRL_GROUP_MEM",
+			"TR_GROUP_MEM",
+			"RBC_GROUP_MEM",
+			'N' AS "MEM_REL_BODY_CORP"
+		FROM (
+			SELECT * FROM :LT_ORIGINAL_GROUPS 
+			UNION 
+			SELECT * FROM :LT_TRUST_GROUPS
 		) 
-	) where "RANK_ORG" = 1
+
 ;
 
 
