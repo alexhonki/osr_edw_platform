@@ -300,63 +300,82 @@ ET_GROUP_SUMMARY =
 		"RBC_GROUP_MEM",
 		'N' AS "MEM_REL_BODY_CORP"
 	FROM (
-		SELECT DISTINCT
-			"L"."GJAHR", 
-			"L"."GRP_DATE", 
-			"L"."ORG_ID" AS "ORG_ID", 
-			"L"."GROUP_ID" AS "GROUP_ID",
-			RIGHT("L"."ORG_ID",9) AS "ACN",
-			CASE WHEN "MAP"."ABN" IS NULL THEN '' ELSE "MAP"."ABN" END AS "ABN",
-			"R"."DR_GROUP_MEM",
-			"R"."SH_GROUP_MEM",
-			"R"."INTERSTATE_GROUP_MEM",
-			"R"."CCDR_GROUP_MEM",
-			"R"."CCSH_GROUP_MEM",
-			"R"."CCTRL_GROUP_MEM",
-			"R"."TR_GROUP_MEM",
-			"R"."RBC_GROUP_MEM",
-			'N' AS "MEM_REL_BODY_CORP"
-		FROM 
-		:LT_GROUP_W_GROUP_ID AS "L"
-		INNER JOIN
-		:LT_ORG_DETAIL AS "R"
-		 ON  "L"."GJAHR" = "R"."GJAHR"
-		 AND "L"."GRP_DATE" = "R"."GRP_DATE"
-		 AND "L"."ORG_ID" = "R"."ORG_ID"
-		LEFT OUTER JOIN
-		"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
-		ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
-		WHERE LEFT("L"."ORG_ID",1) = 'O'
-		UNION 
--- 		Trust related groups may not have an ACN but will have an ABN. Add the ACN if it is found here.  TODO - check if this is necessary as we have added ACN's in TF_TR_REL
-		SELECT DISTINCT
-			"L"."GJAHR", 
-			"L"."GRP_DATE", 
-			"L"."ORG_ID" AS "ORG_ID", 
-			"L"."GROUP_ID" AS "GROUP_ID",
-			"MAP"."ACN" AS "ACN",
-			RIGHT("L"."ORG_ID",11) AS "ABN",
-			"R"."DR_GROUP_MEM",
-			"R"."SH_GROUP_MEM",
-			"R"."INTERSTATE_GROUP_MEM",
-			"R"."CCDR_GROUP_MEM",
-			"R"."CCSH_GROUP_MEM",
-			"R"."CCTRL_GROUP_MEM",
-			"R"."TR_GROUP_MEM",
-			"R"."RBC_GROUP_MEM",
-			'N' AS "MEM_REL_BODY_CORP"
-		FROM 
-		:LT_GROUP_W_GROUP_ID  AS "L"
-		INNER JOIN
-		:LT_ORG_DETAIL AS "R"
-		ON  "L"."GJAHR" = "R"."GJAHR"
-		AND "L"."GRP_DATE" = "R"."GRP_DATE"
-		AND "L"."ORG_ID" = "R"."ORG_ID"
-		LEFT OUTER JOIN
-		"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
-		ON RIGHT("L"."ORG_ID",11) = "MAP"."ABN"
-		WHERE LEFT("L"."ORG_ID",1) = 'T'
-	)
+			SELECT DISTINCT
+			"GJAHR",
+			"GRP_DATE",
+			"ORG_ID",
+			"GROUP_ID",
+			"ACN",
+			"ABN",
+			"DR_GROUP_MEM",
+			"SH_GROUP_MEM",
+			"INTERSTATE_GROUP_MEM",
+			"CCDR_GROUP_MEM",
+			"CCSH_GROUP_MEM",
+			"CCTRL_GROUP_MEM",
+			"TR_GROUP_MEM",
+			"RBC_GROUP_MEM",
+			'N' AS "MEM_REL_BODY_CORP",
+			RANK() OVER (PARTITION BY "ABN" ORDER BY  "GROUP_ID", "ACN", "ABN", "ORG_ID", "GJAHR") AS "RANK_ORG"
+		FROM (
+			SELECT DISTINCT
+				"L"."GJAHR", 
+				"L"."GRP_DATE", 
+				"L"."ORG_ID" AS "ORG_ID", 
+				"L"."GROUP_ID" AS "GROUP_ID",
+				RIGHT("L"."ORG_ID",9) AS "ACN",
+				CASE WHEN "MAP"."ABN" IS NULL THEN '' ELSE "MAP"."ABN" END AS "ABN",
+				"R"."DR_GROUP_MEM",
+				"R"."SH_GROUP_MEM",
+				"R"."INTERSTATE_GROUP_MEM",
+				"R"."CCDR_GROUP_MEM",
+				"R"."CCSH_GROUP_MEM",
+				"R"."CCTRL_GROUP_MEM",
+				"R"."TR_GROUP_MEM",
+				"R"."RBC_GROUP_MEM",
+				'N' AS "MEM_REL_BODY_CORP"
+			FROM 
+			:LT_GROUP_W_GROUP_ID AS "L"
+			INNER JOIN
+			:LT_ORG_DETAIL AS "R"
+			 ON  "L"."GJAHR" = "R"."GJAHR"
+			 AND "L"."GRP_DATE" = "R"."GRP_DATE"
+			 AND "L"."ORG_ID" = "R"."ORG_ID"
+			LEFT OUTER JOIN
+			"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
+			ON RIGHT("L"."ORG_ID",9) = "MAP"."ACN"
+			WHERE LEFT("L"."ORG_ID",1) = 'O'
+			UNION 
+	-- 		Trust related groups may not have an ACN but will have an ABN. Add the ACN if it is found here.  TODO - check if this is necessary as we have added ACN's in TF_TR_REL
+			SELECT DISTINCT
+				"L"."GJAHR", 
+				"L"."GRP_DATE", 
+				"L"."ORG_ID" AS "ORG_ID", 
+				"L"."GROUP_ID" AS "GROUP_ID",
+				"MAP"."ACN" AS "ACN",
+				RIGHT("L"."ORG_ID",11) AS "ABN",
+				"R"."DR_GROUP_MEM",
+				"R"."SH_GROUP_MEM",
+				"R"."INTERSTATE_GROUP_MEM",
+				"R"."CCDR_GROUP_MEM",
+				"R"."CCSH_GROUP_MEM",
+				"R"."CCTRL_GROUP_MEM",
+				"R"."TR_GROUP_MEM",
+				"R"."RBC_GROUP_MEM",
+				'N' AS "MEM_REL_BODY_CORP"
+			FROM 
+			:LT_GROUP_W_GROUP_ID  AS "L"
+			INNER JOIN
+			:LT_ORG_DETAIL AS "R"
+			ON  "L"."GJAHR" = "R"."GJAHR"
+			AND "L"."GRP_DATE" = "R"."GRP_DATE"
+			AND "L"."ORG_ID" = "R"."ORG_ID"
+			LEFT OUTER JOIN
+			"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
+			ON RIGHT("L"."ORG_ID",11) = "MAP"."ABN"
+			WHERE LEFT("L"."ORG_ID",1) = 'T'
+		) 
+	) where "RANK_ORG" = 1
 ;
 
 
