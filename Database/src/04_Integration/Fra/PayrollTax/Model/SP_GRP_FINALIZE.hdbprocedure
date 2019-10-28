@@ -338,10 +338,10 @@ LT_TRUST_GROUPS =
 			"osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_GRP_DATE) AS "MAP"
 			ON RIGHT("L"."ORG_ID",11) = "MAP"."ABN"
 			WHERE LEFT("L"."ORG_ID",1) = 'T'
-			-- remove duplicated orgs if exist as they will create duplicate alerts for the ABN (one for trust and one for org) 
-			AND RIGHT("L"."ORG_ID",11) NOT IN ( 
-				SELECT "ABN" FROM :LT_ORIGINAL_GROUPS
-			)
+			-- remove duplicated orgs if exist as they will create duplicate records for the ABN (one for trust and one for org) 
+			--AND RIGHT("L"."ORG_ID",11) NOT IN ( 
+				--SELECT "ABN" FROM :LT_ORIGINAL_GROUPS
+			--)
 ;
  
 ET_GROUP_SUMMARY = 
