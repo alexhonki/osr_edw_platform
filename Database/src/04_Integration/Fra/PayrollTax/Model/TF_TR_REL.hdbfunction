@@ -186,7 +186,25 @@ LT_REL =
 			'TRT' AS "ENT_TYP_CD",
 			"START_DT",
 			"END_DT"
-	FROM :LT_REL;
+	FROM :LT_REL
+	UNION 
+-- Add any ACNs for trusts that also have an ACN
+	SELECT DISTINCT 
+			"MAP"."ACN" as "ORG_NUMBER",
+			CONCAT('O', "MAP"."ACN") AS "CHILD_ID", 
+			"CHILD_NUM",
+			"PARENT_ID",
+			"TRUST_HAS_ACN"."GJAHR" AS "GJAHR",
+			null AS "PERSON_NUM",
+			'TRT' AS "ENT_TYP_CD",
+			"TRUST_HAS_ACN"."START_DT" as "START_DT",
+			"TRUST_HAS_ACN"."END_DT" as "END_DT"
+	FROM :LT_REL AS "TRUST_HAS_ACN"
+	INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_ABN_ACN_MAPPING"(:IV_KEY_DATE) AS "MAP"
+	ON "TRUST_HAS_ACN"."PARENT_ID" = "MAP"."ABN"
+	;
+
+
 
 
 lt_tr_cnt = 
