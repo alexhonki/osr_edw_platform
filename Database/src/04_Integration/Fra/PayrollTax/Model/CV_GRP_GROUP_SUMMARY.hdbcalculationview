@@ -4,22 +4,13 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTGRP">
-    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTGRP</resourceUri>
+  <DataSource id="osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_PRTGRP">
     <viewAttributes>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="GRP_DATE">
-        <descriptions defaultDescription="GRP_DATE"/>
-      </viewAttribute>
-      <viewAttribute id="ORG_ID">
-        <descriptions defaultDescription="ORG_ID"/>
-      </viewAttribute>
       <viewAttribute id="GROUP_ID">
         <descriptions defaultDescription="GROUP_ID"/>
       </viewAttribute>
@@ -35,62 +26,27 @@
       <viewAttribute id="SH_GROUP_MEM">
         <descriptions defaultDescription="SH_GROUP_MEM"/>
       </viewAttribute>
+      <viewAttribute id="CCSH_GROUP_MEM">
+        <descriptions defaultDescription="CCSH_GROUP_MEM"/>
+      </viewAttribute>
       <viewAttribute id="INTERSTATE_GROUP_MEM">
         <descriptions defaultDescription="INTERSTATE_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="CCTRL_GROUP_MEM">
-        <descriptions defaultDescription="CCTRL_GROUP_MEM"/>
       </viewAttribute>
       <viewAttribute id="RBC_GROUP_MEM">
         <descriptions defaultDescription="RBC_GROUP_MEM"/>
       </viewAttribute>
-      <viewAttribute id="MEM_REL_BODY_CORP">
-        <descriptions defaultDescription="MEM_REL_BODY_CORP"/>
-      </viewAttribute>
-      <viewAttribute id="CCDR_GROUP_MEM">
-        <descriptions defaultDescription="CCDR_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="CCSH_GROUP_MEM">
-        <descriptions defaultDescription="CCSH_GROUP_MEM"/>
+      <viewAttribute id="CCTRL_GROUP_MEM">
+        <descriptions defaultDescription="CCTRL_GROUP_MEM"/>
       </viewAttribute>
       <viewAttribute id="TR_GROUP_MEM">
         <descriptions defaultDescription="TR_GROUP_MEM"/>
       </viewAttribute>
-      <viewAttribute id="MANDT">
-        <descriptions defaultDescription="MANDT"/>
+      <viewAttribute id="CCDR_GROUP_MEM">
+        <descriptions defaultDescription="CCDR_GROUP_MEM"/>
       </viewAttribute>
-      <viewAttribute id="CREA_UNAME">
-        <descriptions defaultDescription="CREA_UNAME"/>
+      <viewAttribute id="MEM_REL_BODY_CORP">
+        <descriptions defaultDescription="MEM_REL_BODY_CORP"/>
       </viewAttribute>
-      <viewAttribute id="CREA_DATE_TIME">
-        <descriptions defaultDescription="CREA_DATE_TIME"/>
-      </viewAttribute>
-    </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.apps.acs.synonym::SAPACS.PRTGRP">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_ID" source="ORG_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DR_GROUP_MEM" source="DR_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="SH_GROUP_MEM" source="SH_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INTERSTATE_GROUP_MEM" source="INTERSTATE_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CCTRL_GROUP_MEM" source="CCTRL_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RBC_GROUP_MEM" source="RBC_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MEM_REL_BODY_CORP" source="MEM_REL_BODY_CORP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CCDR_GROUP_MEM" source="CCDR_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CCSH_GROUP_MEM" source="CCSH_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TR_GROUP_MEM" source="TR_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
-    </input>
-  </calculationView>
-  <calculationView xsi:type="Calculation:RankView" id="RANK_DUPLICATES">
-    <viewAttributes>
       <viewAttribute id="GJAHR">
         <descriptions defaultDescription="GJAHR"/>
       </viewAttribute>
@@ -100,159 +56,89 @@
       <viewAttribute id="ORG_ID">
         <descriptions defaultDescription="ORG_ID"/>
       </viewAttribute>
-      <viewAttribute id="GROUP_ID">
-        <descriptions defaultDescription="GROUP_ID"/>
-      </viewAttribute>
-      <viewAttribute id="ACN">
-        <descriptions defaultDescription="ACN"/>
-      </viewAttribute>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="DR_GROUP_MEM">
-        <descriptions defaultDescription="DR_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="SH_GROUP_MEM">
-        <descriptions defaultDescription="SH_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="INTERSTATE_GROUP_MEM">
-        <descriptions defaultDescription="INTERSTATE_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="CCTRL_GROUP_MEM">
-        <descriptions defaultDescription="CCTRL_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="RBC_GROUP_MEM">
-        <descriptions defaultDescription="RBC_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="MEM_REL_BODY_CORP">
-        <descriptions defaultDescription="MEM_REL_BODY_CORP"/>
-      </viewAttribute>
-      <viewAttribute id="CCDR_GROUP_MEM">
-        <descriptions defaultDescription="CCDR_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="CCSH_GROUP_MEM">
-        <descriptions defaultDescription="CCSH_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="TR_GROUP_MEM">
-        <descriptions defaultDescription="TR_GROUP_MEM"/>
-      </viewAttribute>
-      <viewAttribute id="MANDT">
-        <descriptions defaultDescription="MANDT"/>
-      </viewAttribute>
-      <viewAttribute id="CREA_UNAME">
-        <descriptions defaultDescription="CREA_UNAME"/>
-      </viewAttribute>
-      <viewAttribute id="CREA_DATE_TIME">
-        <descriptions defaultDescription="CREA_DATE_TIME"/>
-      </viewAttribute>
     </viewAttributes>
     <calculatedViewAttributes/>
     <restrictedViewAttributes/>
-    <input node="PROJ_PRTGRP">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_ID" source="ORG_ID"/>
+    <input node="osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY">
       <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ACN" source="ACN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DR_GROUP_MEM" source="DR_GROUP_MEM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SH_GROUP_MEM" source="SH_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INTERSTATE_GROUP_MEM" source="INTERSTATE_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CCTRL_GROUP_MEM" source="CCTRL_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RBC_GROUP_MEM" source="RBC_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MEM_REL_BODY_CORP" source="MEM_REL_BODY_CORP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CCDR_GROUP_MEM" source="CCDR_GROUP_MEM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CCSH_GROUP_MEM" source="CCSH_GROUP_MEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="INTERSTATE_GROUP_MEM" source="INTERSTATE_GROUP_MEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RBC_GROUP_MEM" source="RBC_GROUP_MEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CCTRL_GROUP_MEM" source="CCTRL_GROUP_MEM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="TR_GROUP_MEM" source="TR_GROUP_MEM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CCDR_GROUP_MEM" source="CCDR_GROUP_MEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MEM_REL_BODY_CORP" source="MEM_REL_BODY_CORP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GRP_DATE" source="GRP_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORG_ID" source="ORG_ID"/>
     </input>
-    <windowFunction dynamicPartitionAttributes="true">
-      <partitionViewAttributeName>GJAHR</partitionViewAttributeName>
-      <partitionViewAttributeName>GROUP_ID</partitionViewAttributeName>
-      <partitionViewAttributeName>ACN</partitionViewAttributeName>
-      <partitionViewAttributeName>ABN</partitionViewAttributeName>
-      <order byViewAttributeName="ORG_ID" direction="ASC"/>
-      <rankThreshold>
-        <value>1</value>
-      </rankThreshold>
-    </windowFunction>
   </calculationView>
 </calculationViews>
-<logicalModel id="RANK_DUPLICATES">
+<logicalModel id="PROJ_PRTGRP">
   <attributes>
-    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="GJAHR"/>
-    </attribute>
-    <attribute id="GRP_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GRP_DATE"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="GRP_DATE"/>
-    </attribute>
-    <attribute id="ORG_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ORG_ID"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="ORG_ID"/>
-    </attribute>
-    <attribute id="GROUP_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="GROUP_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GROUP_ID"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="GROUP_ID"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="GROUP_ID"/>
     </attribute>
-    <attribute id="ACN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ACN" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ACN"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="ACN"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="ACN"/>
     </attribute>
-    <attribute id="ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="ABN"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="ABN"/>
     </attribute>
-    <attribute id="DR_GROUP_MEM" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="DR_GROUP_MEM" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DR_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="DR_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="DR_GROUP_MEM"/>
     </attribute>
-    <attribute id="SH_GROUP_MEM" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="SH_GROUP_MEM" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SH_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="SH_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="SH_GROUP_MEM"/>
     </attribute>
-    <attribute id="INTERSTATE_GROUP_MEM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="CCSH_GROUP_MEM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CCSH_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="CCSH_GROUP_MEM"/>
+    </attribute>
+    <attribute id="INTERSTATE_GROUP_MEM" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INTERSTATE_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="INTERSTATE_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="INTERSTATE_GROUP_MEM"/>
     </attribute>
-    <attribute id="CCTRL_GROUP_MEM" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CCTRL_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="CCTRL_GROUP_MEM"/>
-    </attribute>
-    <attribute id="RBC_GROUP_MEM" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="RBC_GROUP_MEM" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RBC_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="RBC_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="RBC_GROUP_MEM"/>
+    </attribute>
+    <attribute id="CCTRL_GROUP_MEM" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CCTRL_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="CCTRL_GROUP_MEM"/>
+    </attribute>
+    <attribute id="TR_GROUP_MEM" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TR_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="TR_GROUP_MEM"/>
+    </attribute>
+    <attribute id="CCDR_GROUP_MEM" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CCDR_GROUP_MEM"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="CCDR_GROUP_MEM"/>
     </attribute>
     <attribute id="MEM_REL_BODY_CORP" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MEM_REL_BODY_CORP"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="MEM_REL_BODY_CORP"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="MEM_REL_BODY_CORP"/>
     </attribute>
-    <attribute id="CCDR_GROUP_MEM" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CCDR_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="CCDR_GROUP_MEM"/>
+    <attribute id="GJAHR" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="GJAHR"/>
     </attribute>
-    <attribute id="CCSH_GROUP_MEM" order="14" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CCSH_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="CCSH_GROUP_MEM"/>
+    <attribute id="GRP_DATE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="GRP_DATE"/>
     </attribute>
-    <attribute id="TR_GROUP_MEM" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TR_GROUP_MEM"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="TR_GROUP_MEM"/>
-    </attribute>
-    <attribute id="MANDT" order="16" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="MANDT"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="MANDT"/>
-    </attribute>
-    <attribute id="CREA_UNAME" order="17" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CREA_UNAME"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="CREA_UNAME"/>
-    </attribute>
-    <attribute id="CREA_DATE_TIME" order="18" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CREA_DATE_TIME"/>
-      <keyMapping columnObjectName="RANK_DUPLICATES" columnName="CREA_DATE_TIME"/>
+    <attribute id="ORG_ID" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORG_ID"/>
+      <keyMapping columnObjectName="PROJ_PRTGRP" columnName="ORG_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -263,19 +149,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="93" y="112"/>
+      <upperLeftCorner x="92.00000000000006" y="112"/>
     
       <rectangleSize width="310"/>
     </shape>
   
     <shape expanded="true" modelObjectName="PROJ_PRTGRP" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="341"/>
+      <upperLeftCorner x="97.00000000000006" y="217"/>
       <rectangleSize height="30" width="300"/>
-    </shape>
-    <shape expanded="true" modelObjectName="RANK_DUPLICATES" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="124" y="215"/>
-      <rectangleSize height="30" width="248"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

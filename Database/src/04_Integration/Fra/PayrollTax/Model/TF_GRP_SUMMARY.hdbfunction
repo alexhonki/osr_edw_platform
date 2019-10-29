@@ -20,6 +20,29 @@ FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"( )
        SQL SECURITY INVOKER AS 
 BEGIN 
 
+-- If trust also has an ACN, will result in duplicated records for an ACN/ ABN Combo
+-- Remove these duplicated records.
+LT_CLEAN_DATA = 
+	SELECT 
+		"GJAHR",
+		"GRP_DATE",
+		"ORG_ID",
+		"GROUP_ID",
+		"ACN",
+		"ABN",
+		"DR_GROUP_MEM",
+		"SH_GROUP_MEM",
+		"INTERSTATE_GROUP_MEM",
+		"CCTRL_GROUP_MEM",
+		"CCDR_GROUP_MEM",
+		"CCSH_GROUP_MEM",
+		"RBC_GROUP_MEM",
+		"TR_GROUP_MEM",
+		"MEM_REL_BODY_CORP", 
+		RANK() OVER (PARTITION BY "GJAHR","GROUP_ID", "ACN", "ABN" ORDER BY "GJAHR", "GROUP_ID", "ORG_ID", "ACN", "ABN") AS "RANK_ACN"
+		FROM "osr.apps.acs.synonym::SAPACS.PRTGRP"
+;
+
 RETURN 
 SELECT 
 	"GJAHR",
@@ -37,8 +60,8 @@ SELECT
 	"RBC_GROUP_MEM",
 	"TR_GROUP_MEM",
 	"MEM_REL_BODY_CORP"
-FROM 
-"osr.apps.acs.synonym::SAPACS.PRTGRP"
+FROM :LT_CLEAN_DATA
+WHERE "RANK_ACN" = 1
 --where "ACN" <> ''
 ;
 
