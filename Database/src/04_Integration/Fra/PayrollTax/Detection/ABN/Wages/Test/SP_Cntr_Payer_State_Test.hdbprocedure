@@ -1,0 +1,51 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_Cntr_Payer_State_Test"( 
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+    IF :iv_abn = '?' OR :iv_abn = '' THEN 
+   lt_workset =
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		FROM
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+		WHERE "GJAHR"   = :iv_gjahr 
+		;
+   
+   ELSE 
+   lt_workset =
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		FROM
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+		WHERE "ABN"     = :iv_abn
+		AND   "GJAHR"   = :iv_gjahr 
+		;
+   
+   END IF;
+   
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_Cntr_Payer_State"
+	(
+	:lt_workset, 
+	et_result, 
+	et_text
+	)
+	;
+END

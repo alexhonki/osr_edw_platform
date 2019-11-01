@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.abr.proxy::CV_ABR_PRTCNTR" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ABR_PRTCNTR"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTCNTR">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTCNTR</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_PRTCNTR">
+    <viewAttributes>
+      <viewAttribute id="MANDT">
+        <descriptions defaultDescription="MANDT"/>
+      </viewAttribute>
+      <viewAttribute id="GJAHR">
+        <descriptions defaultDescription="GJAHR"/>
+      </viewAttribute>
+      <viewAttribute id="RUN_DATE">
+        <descriptions defaultDescription="RUN_DATE"/>
+      </viewAttribute>
+      <viewAttribute id="PAYER_ABN">
+        <descriptions defaultDescription="PAYER_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_ABN">
+        <descriptions defaultDescription="PAYEE_ABN"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_ENT_TYPE">
+        <descriptions defaultDescription="PAYEE_ENT_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_BUS_STATE">
+        <descriptions defaultDescription="PAYEE_BUS_STATE"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_TOT_INCM_AMT">
+        <descriptions defaultDescription="PAYEE_TOT_INCM_AMT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_CNTR_PMT">
+        <descriptions defaultDescription="PAYEE_CNTR_PMT"/>
+      </viewAttribute>
+      <viewAttribute id="PAYEE_BUS_INCM_PER">
+        <descriptions defaultDescription="PAYEE_BUS_INCM_PER"/>
+      </viewAttribute>
+      <viewAttribute id="TOT_EMP_CNT">
+        <descriptions defaultDescription="TOT_EMP_CNT"/>
+      </viewAttribute>
+      <viewAttribute id="WCQ_ACT_WAGE">
+        <descriptions defaultDescription="WCQ_ACT_WAGE"/>
+      </viewAttribute>
+      <viewAttribute id="BPARTNER">
+        <descriptions defaultDescription="BPARTNER"/>
+      </viewAttribute>
+      <viewAttribute id="PRT_REG_STATUS">
+        <descriptions defaultDescription="PRT_REG_STATUS"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_UNAME">
+        <descriptions defaultDescription="CREA_UNAME"/>
+      </viewAttribute>
+      <viewAttribute id="CREA_DATE_TIME">
+        <descriptions defaultDescription="CREA_DATE_TIME"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="osr.apps.acs.synonym::SAPACS.PRTCNTR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RUN_DATE" source="RUN_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN" source="PAYER_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ABN" source="PAYEE_ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ENT_TYPE" source="PAYEE_ENT_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_BUS_STATE" source="PAYEE_BUS_STATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_TOT_INCM_AMT" source="PAYEE_TOT_INCM_AMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_CNTR_PMT" source="PAYEE_CNTR_PMT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_BUS_INCM_PER" source="PAYEE_BUS_INCM_PER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TOT_EMP_CNT" source="TOT_EMP_CNT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ACT_WAGE" source="WCQ_ACT_WAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_REG_STATUS" source="PRT_REG_STATUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="PROJ_PRTCNTR">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="MANDT"/>
+    </attribute>
+    <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="RUN_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RUN_DATE"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="RUN_DATE"/>
+    </attribute>
+    <attribute id="PAYER_ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYER_ABN"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYER_ABN"/>
+    </attribute>
+    <attribute id="PAYEE_ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_ABN"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_ABN"/>
+    </attribute>
+    <attribute id="PAYEE_ENT_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_ENT_TYPE"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_ENT_TYPE"/>
+    </attribute>
+    <attribute id="PAYEE_BUS_STATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_BUS_STATE"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_BUS_STATE"/>
+    </attribute>
+    <attribute id="PAYEE_TOT_INCM_AMT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_TOT_INCM_AMT"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_TOT_INCM_AMT"/>
+    </attribute>
+    <attribute id="PAYEE_CNTR_PMT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_CNTR_PMT"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_CNTR_PMT"/>
+    </attribute>
+    <attribute id="PAYEE_BUS_INCM_PER" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_BUS_INCM_PER"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_BUS_INCM_PER"/>
+    </attribute>
+    <attribute id="TOT_EMP_CNT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TOT_EMP_CNT"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="TOT_EMP_CNT"/>
+    </attribute>
+    <attribute id="WCQ_ACT_WAGE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WCQ_ACT_WAGE"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="WCQ_ACT_WAGE"/>
+    </attribute>
+    <attribute id="BPARTNER" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPARTNER"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="BPARTNER"/>
+    </attribute>
+    <attribute id="PRT_REG_STATUS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRT_REG_STATUS"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PRT_REG_STATUS"/>
+    </attribute>
+    <attribute id="CREA_UNAME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_UNAME"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="CREA_UNAME"/>
+    </attribute>
+    <attribute id="CREA_DATE_TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_DATE_TIME"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="CREA_DATE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="PROJ_PRTCNTR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
