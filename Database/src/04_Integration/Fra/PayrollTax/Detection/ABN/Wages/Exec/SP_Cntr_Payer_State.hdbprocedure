@@ -55,27 +55,6 @@ INTO
 --FROM :PARAMETERS LIMIT 1;
 FROM :LT_PARAMETERS LIMIT 1;
 
--- 7 x scenarios for state selection 
--- 1. Only QLD
--- 2. Only NSW
--- 3. Only OTH
--- 4. QLD and NSW
--- 5. QLD and OTH
--- 6. NSW and OTH
--- 7. QLD and NSW and OTH
-
-LT_STATES = 
-	SELECT 
-	CASE WHEN :lx_qld_flag = 'Y' THEN 'QLD' END AS "BUS_STATE"
-	FROM "osr.hana.platform.synonym::SYS.DUMMY"
-	UNION 
-	SELECT CASE WHEN :lx_nsw_flag = 'Y' THEN 'NSW' END AS "BUS_STATE"
-	FROM "osr.hana.platform.synonym::SYS.DUMMY"
-	UNION 
-	SELECT CASE WHEN :lx_oth_flag = 'Y' THEN 'OTH' END AS "BUS_STATE"
-	FROM "osr.hana.platform.synonym::SYS.DUMMY"
-;
-
 LT_PRTCNTR = 
 SELECT 
 	"GJAHR",
@@ -91,11 +70,33 @@ SELECT
 	"WCQ_ACT_WAGE",
 	"BPARTNER",
 	"PRT_REG_STATUS"
-FROM "osr.edw.staging.td.abr.proxy::CV_ABR_PRTCNTR"
+FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR"
 WHERE "RUN_DATE" = :lx_model_run_date;
 
+-- States parameter filters
+-- 3 conditions
+-- 1. QLD = Y / N
+-- 2. NSW = Y / N
+-- 3. OTHER states = Y / N 
+-- Filter by "BUS_STATE" 
+LT_STATES = 
+	SELECT 
+	CASE WHEN :lx_qld_flag = 'Y' THEN 'QLD' END AS "BUS_STATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION 
+	SELECT CASE WHEN :lx_nsw_flag = 'Y' THEN 'NSW' END AS "BUS_STATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION 
+	SELECT CASE WHEN :lx_oth_flag = 'Y' THEN (
+		SELECT DISTINCT "PAYEE_BUS_STATE" FROM :LT_PRTCNTR WHERE "PAYEE_BUS_STATE" <> 'QLD' AND "PAYEE_BUS_STATE" <> 'NSW'
+	) END AS "BUS_STATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
 
-lt_data = 
+
+
+
+LT_DATA = 
 	SELECT 
 		"DATA"."ABN",
 		"DATA"."PERIOD_CATEGORY",
@@ -125,7 +126,7 @@ SELECT DISTINCT
 "PERIOD_KEY",
 "GJAHR",
 100 AS "DETECTION_RESULT"
-FROM :lt_data;
+FROM :LT_DATA;
 
 
 END IF;
@@ -143,7 +144,7 @@ CASE
 	WHEN "STATE" = 'NSW' THEN 3
 		ELSE 0 
 END AS "DETECTION_RESULT"
-FROM :lt_data;
+FROM :LT_DATA;
 
 END IF;
 
