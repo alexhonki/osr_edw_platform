@@ -1,0 +1,180 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_Cntr_Payer_State"
+	( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+    --IN	parameters			"osr.edw.platform.fra.prt.dt.abn::Types. prt_cntr_payer_state",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	)
+	
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+   
+BEGIN
+/*
+Parameter List for execution Procedure:
+
+        table type prt_cntr_payer_state {
+                                    
+            MODEL_RUN_DATE      : String(8);
+			RUN_MODE            : String(1);
+            QLD_FLAG            : String(1); Y/N
+            NSW_FLAG            : String(1); Y/N
+            OTH_FLAG            : String(1); Y/N
+        };
+
+*/
+DECLARE lx_model_run_date date;  
+DECLARE lx_run_mode NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_qld_flag NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_nsw_flag NVARCHAR(1) DEFAULT 'N';
+DECLARE lx_oth_flag NVARCHAR(1) DEFAULT 'N';
+
+-- test data
+LT_PARAMETERS = 
+	SELECT 
+		TO_DATS('2019-09-25') AS "MODEL_RUN_DATE",
+		'S' AS 	"RUN_MODE",
+		'Y' AS "QLD_FLAG",
+		'Y' AS 	"NSW_FLAG",
+		'Y' AS 	"OTH_FLAG"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+SELECT
+	"MODEL_RUN_DATE",
+	"RUN_MODE",
+	"QLD_FLAG",
+	"NSW_FLAG",
+	"OTH_FLAG"
+INTO 
+	lx_model_run_date,
+	lx_run_mode,
+	lx_qld_flag,
+	lx_nsw_flag,
+	lx_oth_flag
+--FROM :PARAMETERS LIMIT 1;
+FROM :LT_PARAMETERS LIMIT 1;
+
+LT_PRTCNTR = 
+SELECT 
+	"GJAHR",
+	"RUN_DATE",
+	"PAYER_ABN",
+	"PAYEE_ABN",
+	"PAYEE_ENT_TYPE",
+	"PAYEE_BUS_STATE",
+	"PAYEE_TOT_INCM_AMT",
+	"PAYEE_CNTR_PMT",
+	"PAYEE_BUS_INCM_PER",
+	"TOT_EMP_CNT",
+	"WCQ_ACT_WAGE",
+	"BPARTNER",
+	"PRT_REG_STATUS"
+FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR"
+WHERE "RUN_DATE" = :lx_model_run_date;
+
+-- States parameter filters
+-- 3 conditions
+-- 1. QLD = Y / N
+-- 2. NSW = Y / N
+-- 3. OTHER states = Y / N 
+-- Filter by "BUS_STATE" 
+LT_STATES = 
+	SELECT 
+	CASE WHEN :lx_qld_flag = 'Y' THEN 'QLD' END AS "BUS_STATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION 
+	SELECT CASE WHEN :lx_nsw_flag = 'Y' THEN 'NSW' END AS "BUS_STATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+	UNION 
+	SELECT CASE WHEN :lx_oth_flag = 'Y' THEN (
+		SELECT DISTINCT "PAYEE_BUS_STATE" FROM :LT_PRTCNTR WHERE "PAYEE_BUS_STATE" <> 'QLD' AND "PAYEE_BUS_STATE" <> 'NSW'
+	) END AS "BUS_STATE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+;
+
+
+
+
+LT_DATA = 
+	SELECT 
+		"DATA"."ABN",
+		"DATA"."PERIOD_CATEGORY",
+		"DATA"."PERIOD_KEY",
+		"DATA"."GJAHR",
+		"PRTCNTR"."PAYEE_BUS_STATE" AS "STATE"
+	FROM :it_data_for_rule AS "DATA"
+	INNER JOIN :LT_PRTCNTR AS "PRTCNTR"
+	ON "DATA"."ABN" = "PRTCNTR"."PAYER_ABN"
+		AND "DATA"."GJAHR" = "PRTCNTR"."GJAHR"
+	INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_FY_END_DATE"( ) AS "FY"
+	ON "DATA"."GJAHR" = "FY"."FISCAL_YEAR"
+	INNER JOIN "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() AS "GRP"
+	ON  "DATA"."ABN" = "GRP"."ABN"
+		AND "DATA"."GJAHR" = "GRP"."GJAHR"
+		AND "FY"."END_DATE_SQL" = "GRP"."GRP_DATE"
+	INNER JOIN :LT_STATES AS "STATES" ON 
+	"PRTCNTR"."PAYEE_BUS_STATE" = "STATES"."BUS_STATE"
+	;
+	
+	
+IF :lx_run_mode = 'S' THEN
+lt_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :LT_DATA;
+
+
+END IF;
+
+IF :lx_run_mode = 'R' THEN
+
+lt_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+CASE 
+	WHEN "STATE" = 'QLD' THEN 5 
+	WHEN "STATE" = 'NSW' THEN 3
+		ELSE 0 
+END AS "DETECTION_RESULT"
+FROM :LT_DATA;
+
+END IF;
+
+et_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result;
+
+et_text = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		''					AS "TEXT",
+		'/OSRQLD/FRA_PRT'	AS "MSGID",
+		'037'				AS "MSGNO",
+		'5'					AS "MSGV1", 
+		'' 					AS "MSGV2",
+		''					AS "MSGV3",
+		''					AS "MSGV4",
+		''					AS "MSGV1_FC",
+		''					AS "MSGV2_FC",
+		''					AS "MSGV3_FC",
+		''					AS "MSGV4_FC"
+	FROM  :lt_result
+	;
+	
+END	

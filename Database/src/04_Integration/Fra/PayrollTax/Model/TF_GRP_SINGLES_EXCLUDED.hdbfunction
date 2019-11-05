@@ -22,10 +22,11 @@ LT_WAGES =
 		("ATO_BAS_TOTL_PMT_FOR_WRK_AMT" + 
 		"ATO_ITR_SALARY_WAGES" + 
 		"WCQ_ACT_WAGES" + 
-		"ATO_PAYG_NIND_TOTL_GRS_AMT" 
-		--+ "OSR_STATE_WAGES"
+		"ATO_PAYG_NIND_TOTL_GRS_AMT" +
+		"OSR_STATE_WAGES"
 		) > 0 
 		AND "PERIOD_CATEGORY" = 'PT-A'
+		/*
 		UNION
 	-- Add interstate wages
 		SELECT DISTINCT
@@ -35,6 +36,7 @@ LT_WAGES =
 		WHERE  "PERIOD_CATEGORY" = 'PT-A'
 		GROUP BY "ABN",  "GJAHR"--, "WAERS"
 		HAVING MAX("CLIENT_AUST_WAGES") > 0
+		*/
 	)
 ;
 
@@ -56,7 +58,7 @@ SELECT DISTINCT
 				"GRP"."GJAHR",
 				"GRP"."ABN" as "GRP_ABN",
 				"WAGES"."ABN" as "WAGES_ABN"
-			FROM "osr.apps.acs.synonym::SAPACS.PRTGRP" as "GRP"
+			FROM "osr.edw.platform.fra.prt.model::TF_GRP_SUMMARY"() as "GRP"
 			LEFT OUTER JOIN :LT_WAGES AS "WAGES"
 			ON "GRP"."ABN" = "WAGES"."ABN"
 				AND "GRP"."GJAHR" = "WAGES"."GJAHR"
