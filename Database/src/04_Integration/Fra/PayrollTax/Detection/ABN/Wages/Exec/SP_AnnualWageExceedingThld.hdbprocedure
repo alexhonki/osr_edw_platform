@@ -115,6 +115,44 @@ FROM :it_data_for_rule
  	;
  END IF;
  
+-- BEGIN Added 06/11/2019 as part of contractor model development 
+ IF lx_ato = 'Y' THEN
+ 	lt_wages = 
+ 	SELECT 
+ 	"ABN",
+ 	"PERIOD_CATEGORY",
+ 	"PERIOD_KEY",
+ 	"GJAHR",
+ 	"WAERS",
+ 	"WAGE"
+ 	FROM :lt_wages
+ 	UNION
+	SELECT 
+ 	"WAGES"."ABN" AS "ABN",
+ 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+ 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+ 	"WAGES"."GJAHR" AS "GJAHR",
+ 	"WAGES"."WAERS" AS "WAERS",
+	SUM("WAGES"."RPRTBL_EMPLYR_SUPER_CNTRBN_AMT") + SUM("WAGES"."TOTL_GRS_AMT") AS "WAGE"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_PAYG_NIND_WAGES"() AS "WAGES"
+ 	WHERE "PERIOD_CATEGORY" = 'PT-A'
+ 	  AND EXISTS (
+ 		SELECT * FROM :it_data_for_rule AS "KEYS"
+ 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 		  AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	  )
+ 	GROUP BY 
+ 	"WAGES"."ABN",
+ 	"WAGES"."PERIOD_CATEGORY",
+ 	"WAGES"."PERIOD_KEY",
+ 	"WAGES"."GJAHR",
+ 	"WAGES"."WAERS"
+ 	HAVING (SUM("WAGES"."RPRTBL_EMPLYR_SUPER_CNTRBN_AMT") + SUM("WAGES"."TOTL_GRS_AMT"))  >= :lv_thld_yearly
+ 	;
+ END IF;
+-- END Added 06/11/2019 as part of contractor model development 
  IF lx_wcq = 'Y' THEN
  
 	lt_wcq = 
