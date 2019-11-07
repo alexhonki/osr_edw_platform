@@ -657,7 +657,8 @@ GROUP BY
 "GJAHR";
 */ -- end commented out 07/11/2019
 
--- BEGIN INSERT 07/11/2019 new logic required for rating 4 evaluation
+-- BEGIN INSERT 07/11/2019 new logic required for rating evaluations
+-- ATO data now includes BAS, ITR and PAYG 
 
 
 LT_RESULT = 
@@ -667,11 +668,8 @@ LT_RESULT =
 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
 	"WAGES"."GJAHR" AS "GJAHR",
 	"WAGES"."WAERS" AS "WAERS",
-	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "ATO_BAS_TOTL_PMT_FOR_WRK_AMT",
-	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "ATO_ITR_SALARY_WAGES",
-	SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
-	CASE	WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  <=	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") <=	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") >	:lv_thld_yearly	THEN (100/:lv_max_rating*1)
-			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") <=	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*2)
+	CASE
+		WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") <=	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*2)
 			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  <=	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*3)
 			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*4)	-- ATO & ITR
 			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  <=	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") >	:lv_thld_yearly	THEN (100/:lv_max_rating*4)	-- ITR & WCQ
