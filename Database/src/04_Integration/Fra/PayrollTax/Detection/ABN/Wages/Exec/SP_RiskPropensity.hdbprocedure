@@ -42,6 +42,8 @@ lt_rating =
 			"DATA"."PERIOD_CATEGORY"							   AS "PERIOD_CATEGORY",
 			"DATA"."PERIOD_KEY" 								   AS "PERIOD_KEY",
 			"DATA"."GJAHR"										   AS "GJAHR",
+-- BEGIN COMMENT - This has been simplified 06/11/2019 to only count the number of unactioned alerts
+/*
 			CASE WHEN (
 					(SELECT SUM("CNT_ABN") FROM :lt_alert_root WHERE "ABN" = "ALERT_ROOT"."ABN" AND "GJAHR" < "ALERT_ROOT"."GJAHR" ) <> 1 )  
 						AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*5/5 ELSE -- previous years, more than one found
@@ -49,6 +51,18 @@ lt_rating =
 			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 1 )   AND ("DATA"."GJAHR" > "ALERT_ROOT"."GJAHR")  THEN	100*3/5 ELSE 
 			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   <> 1 )  AND ("DATA"."GJAHR" = "ALERT_ROOT"."GJAHR")	 THEN	100*4/5 ELSE 0 
 			END END END END AS "DETECTION_RESULT"
+*/
+-- END COMMENT 06/11/2019
+-- BEGIN INSERT - new rule, just count the number of unactioned alerts irrespective of year
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 1 )	THEN	100*1/5 ELSE --1 alert
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 2 )	THEN	100*2/5 ELSE --2 alerts
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 3 )   THEN	100*3/5 ELSE --3 alerts
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   = 4 )  	THEN	100*4/5 ELSE --4 alerts
+			CASE WHEN ("ALERT_ROOT"."CNT_ABN"   > 4 ) 	THEN	100*5/5 	 --5 or more alerts
+			ELSE 0 
+			END END END END END AS "DETECTION_RESULT"
+-- BEND INSERT - new rule, just count the number of unactioned alerts
+
 		FROM :it_data_for_rule					AS "DATA"
 		INNER JOIN :lt_alert_root               AS "ALERT_ROOT"
 			ON  "DATA"."ABN"					= "ALERT_ROOT"."ABN"
@@ -77,8 +91,10 @@ et_text =
 		''					AS "TEXT",
 		'/OSRQLD/FRA_PRT'	AS "MSGID",
 		--'018'				AS "MSGNO",
-		'028'				AS "MSGNO",
+		--'028'				AS "MSGNO",
+		'040'				AS "MSGNO", --06/11/2019
 		--"RATING"."GJAHR" 	AS "MSGV1",
+		/*	
 		CASE 
 			WHEN ("DETECTION_RESULT" = 100 OR "DETECTION_RESULT" = 60)
 				THEN (	SELECT SUM("CNT_ABN")
@@ -96,7 +112,6 @@ et_text =
 					END
 		END AS "MSGV1",		
 		
-		
 		CASE 
 			WHEN ("DETECTION_RESULT" = 100 OR "DETECTION_RESULT" = 60)
 				THEN 'previous' 
@@ -107,7 +122,10 @@ et_text =
 								ELSE 'previous or same'
 					END
 		END AS "MSGV2",
-		TO_INTEGER("DETECTION_RESULT"/20) AS "MSGV3",
+		*/ --06/11/2019
+		(SELECT SUM("CNT_ABN") FROM :lt_alert_root WHERE "ABN" = "RATING"."ABN") AS "MSGV1",
+		TO_INTEGER("DETECTION_RESULT"/20) AS "MSGV2",
+		''					AS "MSGV3",
 		''					AS "MSGV4",
 		''					AS "MSGV1_FC",
 		''					AS "MSGV2_FC",
