@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByCoOwner"
+FUNCTION "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByCoOwner"(IV_COOWNER_COUNT_THLD INTEGER DEFAULT 5)
        RETURNS TABLE 
        (
         TAXYRSTARTDT NVARCHAR(8),
@@ -9,6 +9,32 @@ FUNCTION "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByCoOwner"
        LANGUAGE SQLSCRIPT 
        SQL SECURITY INVOKER AS 
 BEGIN 
+
+-- Non CZ BP only
+lt_pcl_bp = 
+SELECT 
+"PCL_BP"."TAXYRSTARTDT" AS "TAXYRSTARTDT", 
+"PCL_BP"."INTRENOPL" AS "INTRENOPL",
+"PCL_BP"."BPARTNER" AS "BPARTNER"
+FROM 
+"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( ) AS "PCL_BP" 
+WHERE NOT EXISTS (
+	SELECT * FROM "osr.edw.staging.md.rms.proxy::TF_ZBUT0000UZQMZ7"( ) AS "ZBUT0000UZQMZ7"
+		WHERE "PCL_BP"."BPARTNER" = "ZBUT0000UZQMZ7"."PARTNER"
+		  AND "ZBUT0000UZQMZ7"."CODEID" = 'CZ'
+)
+;
+
+
+lt_pcl = 
+SELECT 
+"TAXYRSTARTDT", "INTRENOPL", COUNT(*) AS "OWNER_COUNT"
+FROM :lt_pcl_bp
+GROUP BY "TAXYRSTARTDT", "INTRENOPL"
+HAVING count(*) >= :IV_COOWNER_COUNT_THLD
+;
+
+ 		
   RETURN
  	SELECT
  	"LTPCLCOOWN"."TAXYRSTARTDT",
@@ -18,13 +44,16 @@ BEGIN
  	(
  	SELECT "LTPLRESB"."TAXYRSTARTDT", "LTPLRESB"."INTRENOPL", STRING_AGG("LTPLRESB"."BPARTNER", '|' ORDER BY "LTPLRESB"."BPARTNER" ASC) AS "CO_OWNER"
  		FROM  
- 		"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ 		--"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "LTPLRESB"
+ 		"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( ) AS "LTPLRESB"
 		WHERE EXISTS (
 		SELECT * FROM (
 			SELECT "TAXYRSTARTDT", "INTRENOPL", count("BPARTNER")
-				FROM "osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
+				FROM 
+				--"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data"
+				"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( )
 				GROUP BY "TAXYRSTARTDT", "INTRENOPL"
-				HAVING count("BPARTNER") >= 5
+				HAVING count("BPARTNER") >= :IV_COOWNER_COUNT_THLD
 		) AS "CNT_FILTER"
 		WHERE "LTPLRESB"."TAXYRSTARTDT" = "CNT_FILTER"."TAXYRSTARTDT"
 		  AND "LTPLRESB"."INTRENOPL"	= "CNT_FILTER"."INTRENOPL"
