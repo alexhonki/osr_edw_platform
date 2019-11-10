@@ -19,9 +19,10 @@ BEGIN
 	"PCL_BY_BP"."BPARTNER",
 	"PCL_COOWNER"."CO_OWNER_ID" AS "CO_OWNER_ID"
 	FROM 
-	"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BY_BP"
+	--"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BY_BP"
+	"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( ) AS "PCL_BY_BP"
 	INNER JOIN 
-	"osr.edw.platform.fra.ltx::CV_ParcelCoOwner" AS "PCL_COOWNER"
+	"osr.edw.platform.fra.ltx::TF_ParcelCoOwner"( ) AS "PCL_COOWNER"
 	ON  "PCL_BY_BP"."TAXYRSTARTDT" = "PCL_COOWNER"."TAXYRSTARTDT"
 	AND "PCL_BY_BP"."INTRENOPL" = "PCL_COOWNER"."INTRENOPL"
 	;
