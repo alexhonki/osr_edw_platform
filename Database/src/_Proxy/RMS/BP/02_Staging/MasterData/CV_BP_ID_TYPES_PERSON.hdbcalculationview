@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.bp.proxy::CV_BP_ID_TYPES_PERSON" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="BP ID Types: Person"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.bp.proxy::CV_BP_ID_TYPES">
+    <resourceUri>osr.edw.staging.md.rms.bp.proxy::CV_BP_ID_TYPES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_PERSON" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="ID_TYPE"/>
+      <viewAttribute id="ID_CATEGORY"/>
+      <viewAttribute id="XPERSON"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="BPARTNER_CATEGORY" datatype="NVARCHAR" length="1" expressionLanguage="SQL">
+        <formula>'1'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.md.rms.bp.proxy::CV_BP_ID_TYPES"/>
+    <filter>&quot;XPERSON&quot;='X'</filter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="P_PERSON">
+  <attributes>
+    <attribute id="BPARTNER_CATEGORY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Business Partner Category"/>
+      <keyMapping columnObjectName="P_PERSON" columnName="BPARTNER_CATEGORY"/>
+    </attribute>
+    <attribute id="ID_TYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Identification Type"/>
+      <keyMapping columnObjectName="P_PERSON" columnName="ID_TYPE"/>
+    </attribute>
+    <attribute id="ID_CATEGORY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Identification Category"/>
+      <keyMapping columnObjectName="P_PERSON" columnName="ID_CATEGORY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_PERSON" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="228"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

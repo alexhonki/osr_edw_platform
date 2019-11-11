@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.bp.proxy::CV_BP_ID_TYPES" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_BP_ID_TYPES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.bp.proxy::CV_TB039A">
+    <resourceUri>osr.edw.staging.md.rms.bp.proxy::CV_TB039A</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TB039A">
+    <viewAttributes>
+      <viewAttribute id="ID_TYPE"/>
+      <viewAttribute id="ID_CATEGORY"/>
+      <viewAttribute id="XGROUP"/>
+      <viewAttribute id="XPROPOSE"/>
+      <viewAttribute id="XPERSON"/>
+      <viewAttribute id="XORGANISATION"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.md.rms.bp.proxy::CV_TB039A">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID_TYPE" source="TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID_CATEGORY" source="CATEGORY"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="P_TB039A">
+  <attributes>
+    <attribute id="ID_TYPE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Identification Type"/>
+      <keyMapping columnObjectName="P_TB039A" columnName="ID_TYPE"/>
+    </attribute>
+    <attribute id="ID_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BP Identification Category"/>
+      <keyMapping columnObjectName="P_TB039A" columnName="ID_CATEGORY"/>
+    </attribute>
+    <attribute id="XGROUP" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Indicator: ID Type Relevant for Groups"/>
+      <keyMapping columnObjectName="P_TB039A" columnName="XGROUP"/>
+    </attribute>
+    <attribute id="XPROPOSE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Indicator: Propose ID Type"/>
+      <keyMapping columnObjectName="P_TB039A" columnName="XPROPOSE"/>
+    </attribute>
+    <attribute id="XPERSON" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Indicator: ID Type Relevant for Persons"/>
+      <keyMapping columnObjectName="P_TB039A" columnName="XPERSON"/>
+    </attribute>
+    <attribute id="XORGANISATION" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Indicator: ID Type Relevant for Organizations"/>
+      <keyMapping columnObjectName="P_TB039A" columnName="XORGANISATION"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_TB039A" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>   
