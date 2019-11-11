@@ -1,0 +1,519 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorEstimatedTax"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_rank_contractor_estimated_tax",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE lv_scenario NVARCHAR(10); -- PRT3.1 = TPAR, PRT3.2 = CNTR
+DECLARE lv_mode NVARCHAR(1);  
+DECLARE lv_thld_yearly Decimal(15,2);
+DECLARE lv_max_rating Decimal(3,2);
+DECLARE lv_rfr_max_low Decimal(15,2);
+/*
+    table type param_rank_contractor_estimated_tax {
+        RUN_MODE         : String(1);
+        THRESHOLD_YEARLY : Decimal(15, 2);
+        SCENARIO        : String(10);
+    };
+*/
+        
+SELECT 
+	"RUN_MODE",
+	"THRESHOLD_YEARLY",
+	"SCENARIO" -- PRT3.1 = TPAR, PRT3.2 = CNTR
+INTO 
+	lv_mode,
+	lv_thld_yearly,
+	lv_scenario
+FROM :PARAMETERS LIMIT 1;
+
+lt_wages = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		TO_NVARCHAR('AUD') AS "WAERS",
+		0 AS "WAGE"
+	FROM :it_data_for_rule
+;
+
+-- ATO BAS Data   	
+ lt_bas = 
+ 	SELECT 
+	 	"WAGES"."ABN" AS "ABN",
+	 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+	 	"WAGES"."GJAHR" AS "GJAHR",
+	 	"WAGES"."WAERS" AS "WAERS",
+	 	SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_BAS_WAGES" AS "WAGES"
+ 	INNER JOIN :it_data_for_rule AS "KEYS"
+ 	ON "KEYS"."ABN" = "WAGES"."ABN"
+		AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 		AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+ 		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+	 	"WAGES"."ABN",
+	 	"WAGES"."PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY",
+	 	"WAGES"."GJAHR",
+	 	"WAGES"."WAERS"
+ 	--HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly 
+;
+
+-- ADDED 07/11/2019
+-- ATO PAYG Data   	
+ lt_payg = 
+ 	SELECT 
+	 	"WAGES"."ABN" AS "ABN",
+	 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+	 	"WAGES"."GJAHR" AS "GJAHR",
+	 	"WAGES"."WAERS" AS "WAERS",
+		SUM("TOTL_GRS_AMT")+ SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_PAYG_NIND_WAGES"() AS "WAGES"
+ 	INNER JOIN :it_data_for_rule AS "KEYS"
+ 	ON "KEYS"."ABN" = "WAGES"."ABN"
+		AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+		AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+	 	"WAGES"."ABN",
+	 	"WAGES"."PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY",
+	 	"WAGES"."GJAHR",
+	 	"WAGES"."WAERS"
+ --	HAVING (SUM("TOTL_GRS_AMT")+ SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT")) >= :lv_thld_yearly
+;
+ 
+lt_itr = 
+	 SELECT 
+	 	"WAGES"."ABN" AS "ABN",
+	 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+	 	"WAGES"."GJAHR" AS "GJAHR",
+	 	"WAGES"."WAERS" AS "WAERS",
+	 	SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "WAGE",
+	 	SUM("WAGES"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS"
+	 FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES" AS "WAGES"
+	 INNER JOIN :it_data_for_rule AS "KEYS"
+	 ON "KEYS"."ABN" = "WAGES"."ABN"
+		 AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+		 AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+		 AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+	GROUP BY 
+	 	"WAGES"."ABN",
+	 	"WAGES"."PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY",
+	 	"WAGES"."GJAHR",
+	 	"WAGES"."WAERS"
+	;
+ 	
+-- Interstate Data   	
+ lt_osr = 
+	 	SELECT 
+		 	"WAGES"."ABN" AS "ABN",
+		 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+		 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+		 	"WAGES"."GJAHR" AS "GJAHR",
+		 	"WAGES"."WAERS" AS "WAERS",
+		 	MAX("WAGES"."CLIENT_AUST_WAGES") AS "WAGE"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_OSR_STATE_WAGES"() AS "WAGES"
+		INNER JOIN :it_data_for_rule AS "KEYS"
+		ON "KEYS"."ABN" = "WAGES"."ABN"
+			AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+			AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+			AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+		WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+	 	GROUP BY 
+		 	"WAGES"."ABN",
+		 	"WAGES"."PERIOD_CATEGORY",
+		 	"WAGES"."PERIOD_KEY",
+		 	"WAGES"."GJAHR",
+		 	"WAGES"."WAERS"
+	 	--HAVING MAX("WAGES"."CLIENT_AUST_WAGES")  >= :lv_thld_yearly
+;
+
+lt_wcq = 
+	SELECT 
+	 	"WAGES"."ABN" AS "ABN",
+	 	"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+	 	"WAGES"."GJAHR" AS "GJAHR",
+	 	"WAGES"."WAERS" AS "WAERS",
+	 	SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
+	INNER JOIN :it_data_for_rule AS "KEYS"
+	ON "KEYS"."ABN" = "WAGES"."ABN"
+		AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+		AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+ 	GROUP BY 
+	 	"WAGES"."ABN",
+	 	"WAGES"."PERIOD_CATEGORY",
+	 	"WAGES"."PERIOD_KEY",
+	 	"WAGES"."GJAHR",
+	 	"WAGES"."WAERS"
+;
+
+lt_aust_wide_wages = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"WAERS",
+		MAX("WAGE") AS "WAGE"
+	FROM (
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE"
+		FROM :lt_bas
+		UNION 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE"
+		FROM :lt_payg
+		UNION 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE"
+		FROM :lt_itr
+		UNION
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE"
+		FROM :lt_osr
+		UNION
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE"
+		FROM :lt_wcq
+	)
+	GROUP BY
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"WAERS"
+;
+	
+-- Add the contractor payments to the Australia wide wages
+-- Add Contractor Wages - only required for TPAR scenario
+IF lv_scenario = 'PRT3.1' THEN -- TPAR
+	lt_cntr_wages = 
+		SELECT 
+			"WAGES"."PAYER_ABN" AS "ABN",
+			"WAGES"."GJAHR" AS "GJAHR",
+			SUM("WAGES"."PAYEE_GROSS_PD_AMT") AS "WAGE"
+		FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "WAGES"
+		INNER JOIN :it_data_for_rule AS "KEYS"
+		ON "WAGES"."PAYER_ABN" = "KEYS"."ABN"
+		AND "WAGES"."GJAHR" = "KEYS"."GJAHR" 
+		GROUP BY "WAGES"."PAYER_ABN", "WAGES"."GJAHR"
+	;
+		
+	lt_wages = 
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE"
+		FROM :lt_wages
+		UNION
+		SELECT 
+			"AU_WAGES"."ABN",
+			"AU_WAGES"."PERIOD_CATEGORY",
+			"AU_WAGES"."PERIOD_KEY",
+			"AU_WAGES"."GJAHR",
+			TO_NVARCHAR('AUD') AS "WAERS",
+			"AU_WAGES"."WAGE" + "CNTR"."WAGE" AS "WAGE"
+		FROM :lt_aust_wide_wages AS "AU_WAGES"
+		INNER JOIN :lt_cntr_wages AS "CNTR"
+		ON "AU_WAGES"."ABN" = "CNTR"."ABN"
+			AND "AU_WAGES"."GJAHR" = "CNTR"."GJAHR"
+		WHERE "AU_WAGES"."WAGE" + "CNTR"."WAGE" >= :lv_thld_yearly
+	;
+
+END IF;
+
+IF lv_scenario = 'PRT3.2' THEN -- ITR
+	lt_wages = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"WAERS",
+		"WAGE"
+	FROM :lt_wages
+	UNION
+	SELECT 
+		"AU_WAGES"."ABN",
+		"AU_WAGES"."PERIOD_CATEGORY",
+		"AU_WAGES"."PERIOD_KEY",
+		"AU_WAGES"."GJAHR",
+		TO_NVARCHAR('AUD') AS "WAERS",
+		("WCQ"."WAGE" / "AU_WAGES"."WAGE" * "ITR"."CONTRACTORS_PMNTS") + "AU_WAGES"."WAGE" AS "WAGE"
+	FROM :lt_aust_wide_wages AS "AU_WAGES"
+	INNER JOIN :lt_itr AS "ITR"
+	ON "AU_WAGES"."ABN" = "ITR"."ABN"
+		AND "AU_WAGES"."GJAHR" = "ITR"."GJAHR"
+		AND "AU_WAGES"."PERIOD_KEY" = "ITR"."PERIOD_KEY"
+		AND "AU_WAGES"."PERIOD_CATEGORY" = "ITR"."PERIOD_CATEGORY"
+	INNER JOIN :lt_wcq AS "WCQ"
+	ON "AU_WAGES"."ABN" = "ITR"."ABN"
+		AND "AU_WAGES"."GJAHR" = "ITR"."GJAHR"
+		AND "AU_WAGES"."PERIOD_KEY" = "ITR"."PERIOD_KEY"
+		AND "AU_WAGES"."PERIOD_CATEGORY" = "ITR"."PERIOD_CATEGORY"
+	WHERE ("WCQ"."WAGE" / "AU_WAGES"."WAGE" * "ITR"."CONTRACTORS_PMNTS") + "AU_WAGES"."WAGE" >= :lv_thld_yearly
+	;
+END IF;
+
+lt_wage_for_tax = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"WAERS",
+		SUM("WAGE") AS "WAGE",
+		SUM("WCQ_ACT_WAGES") AS "WCQ_ACT_WAGES"
+	FROM 
+	(
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			"WAGE", 
+			0 AS "WCQ_ACT_WAGES"
+		FROM :lt_wages
+		UNION
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			"WAERS",
+			0 AS "WAGE", 
+			"WAGE" AS "WCQ_ACT_WAGES"
+		FROM :lt_wcq
+	)
+	GROUP BY 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"WAERS"
+	;
+ 	
+lt_estimated_tax = 
+	SELECT 
+		"W"."ABN",
+		"W"."PERIOD_CATEGORY",
+		"W"."PERIOD_KEY",
+		"W"."GJAHR",
+		100 AS "DETECTION_RESULT",
+		CASE WHEN ( "W"."WAGE" >= "THLD"."DEDUCTION_TO") THEN ("W"."WCQ_ACT_WAGES"*("RATE"."PRT_HYRLY_RATE"/100)) -- Higher rate (PRT_HYRLY_RATE) for over deduction threshold 
+			ELSE 
+				CASE WHEN ( "W"."WAGE" <= "THLD"."THRESHOLD" ) THEN 0 --no PRT liability
+					ELSE 
+						CASE WHEN ("W"."WAGE" > "THLD"."THRESHOLD"  AND "W"."WAGE" < "THLD"."DEDUCTION_TO") -- PRT Liable but under deduction threshold so use lower rate (PRT_YRLY_RATE)
+							THEN (( "W"."WCQ_ACT_WAGES" - ("W"."WCQ_ACT_WAGES"/"W"."WAGE")*("THLD"."THRESHOLD"-(("W"."WAGE"-"THLD"."THRESHOLD")/4)))*("RATE"."PRT_YRLY_RATE"/100)) --lower rate 
+								ELSE 0
+						END
+				END
+		END AS "RISK_AMOUNT",
+		"W"."WAERS" AS "CURRENCY"
+	FROM :lt_wage_for_tax AS "W"
+	INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD" AS "THLD"
+	ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
+		AND "W"."GJAHR" = "THLD"."GJAHR"
+	INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
+	ON  "W"."GJAHR" = "RATE"."GJAHR"
+		AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+;
+
+SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
+
+SELECT "LOW" INTO lv_rfr_max_low FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" WHERE "TOP_BAND" = 'X';
+
+
+-----------------RMS PT Returns----------
+RMS_WAGES =
+	SELECT
+		"WAGES"."ABN",
+		"WAGES"."GJAHR",
+		"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
+		SUM("WAGES"."C_BASE_TAX") AS "C_BASE_TAX"
+	FROM 
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
+	INNER JOIN 	
+		:it_data_for_rule AS "KEYS"
+	 ON "KEYS"."ABN" = "WAGES"."ABN"
+		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	GROUP BY 
+		"WAGES"."ABN",
+		"WAGES"."GJAHR",
+		"KEYS"."PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY"
+;
+
+----------------------------------------
+
+lt_pre_result = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		:lv_max_rating AS "RISK_FACTOR_RATING",
+		CASE WHEN ("RISK_AMOUNT" - "RMS_PTAX_AMT") > 0  THEN ("RISK_AMOUNT" - "RMS_PTAX_AMT") ELSE 0 END  AS "RISK_AMOUNT",
+		"CURRENCY" AS "CURRENCY"
+	FROM (
+		SELECT
+			"W"."ABN",
+			"W"."PERIOD_CATEGORY",
+			"W"."PERIOD_KEY",
+			"W"."GJAHR",
+			:lv_max_rating AS "RISK_FACTOR_RATING",
+			"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
+			"W"."CURRENCY" AS "CURRENCY",
+			 0  AS "RMS_PTAX_AMT"
+		FROM :lt_estimated_tax AS "W"
+		WHERE "W"."RISK_AMOUNT" >= :lv_rfr_max_low
+		UNION
+		SELECT
+			"W"."ABN",
+			"W"."PERIOD_CATEGORY",
+			"W"."PERIOD_KEY",
+			"W"."GJAHR",
+			"R"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
+			"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
+			"W"."CURRENCY" AS "CURRENCY",
+			 0  AS "RMS_PTAX_AMT"
+		FROM :lt_estimated_tax AS "W", "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
+		WHERE "W"."RISK_AMOUNT" >= "R"."LOW" 
+		  AND "W"."RISK_AMOUNT" < "R"."HIGH" 
+		  AND "R"."TOP_BAND" <> 'X'
+		UNION
+		SELECT	
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR",
+			0 AS "RISK_FACTOR_RATING",
+			0       				AS "RISK_AMOUNT",		
+			'AUD' AS "CURRENCY",
+			"C_BASE_TAX"	        AS "RMS_PTAX_AMT"
+		FROM 	:RMS_WAGES 
+	)
+;
+
+IF :lv_mode = 'R' THEN
+
+et_result = 
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+	FROM :lt_pre_result
+;
+
+et_text = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		'' AS "TEXT",
+		'/OSRQLD/FRA_PRT' AS "MSGID",
+		--'017' AS "MSGNO",
+		'027' AS "MSGNO",
+		TO_DECIMAL("RISK_AMOUNT",15,2) AS "MSGV1",
+		"CURRENCY" AS "MSGV2",
+		"RISK_FACTOR_RATING" AS "MSGV3",
+		'' AS "MSGV4",
+		'' AS "MSGV1_FC",
+		'WAERS' AS "MSGV2_FC",
+		'' AS "MSGV3_FC",
+		'' AS "MSGV4_FC"
+	FROM :lt_pre_result
+;
+
+END IF;
+
+IF :lv_mode = 'S' THEN
+
+et_result = 
+	SELECT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+	FROM :lt_pre_result
+;
+
+et_text = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		'' AS "TEXT",
+		'/OSRQLD/FRA_PRT' AS "MSGID",
+		--'017' AS "MSGNO",
+		'026' AS "MSGNO",
+		TO_DECIMAL("RISK_AMOUNT",15,2) AS "MSGV1",
+		"CURRENCY" AS "MSGV2",
+		"RISK_FACTOR_RATING" AS "MSGV3",
+		'' AS "MSGV4",
+		'' AS "MSGV1_FC",
+		'WAERS' AS "MSGV2_FC",
+		'' AS "MSGV3_FC",
+		'' AS "MSGV4_FC"
+	FROM :lt_pre_result
+;
+END IF;
+
+
+END

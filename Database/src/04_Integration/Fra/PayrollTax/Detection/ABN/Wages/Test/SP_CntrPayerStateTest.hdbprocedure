@@ -1,4 +1,4 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_Cntr_Payer_State_Test"( 
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_CntrPayerStateTest"( 
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
@@ -41,7 +41,7 @@ BEGIN
    
    END IF;
    
-	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_Cntr_Payer_State"
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorPayerState"
 	(
 	:lt_workset, 
 	et_result, 

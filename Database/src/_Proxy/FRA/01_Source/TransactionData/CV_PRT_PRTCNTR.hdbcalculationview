@@ -11,75 +11,27 @@
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="PROJ_PRTCNTR">
     <viewAttributes>
-      <viewAttribute id="MANDT">
-        <descriptions defaultDescription="MANDT"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="RUN_DATE">
-        <descriptions defaultDescription="RUN_DATE"/>
-      </viewAttribute>
-      <viewAttribute id="PAYER_ABN">
-        <descriptions defaultDescription="PAYER_ABN"/>
-      </viewAttribute>
-      <viewAttribute id="PAYEE_ABN">
-        <descriptions defaultDescription="PAYEE_ABN"/>
-      </viewAttribute>
-      <viewAttribute id="PAYEE_ENT_TYPE">
-        <descriptions defaultDescription="PAYEE_ENT_TYPE"/>
-      </viewAttribute>
-      <viewAttribute id="PAYEE_BUS_STATE">
-        <descriptions defaultDescription="PAYEE_BUS_STATE"/>
-      </viewAttribute>
-      <viewAttribute id="PAYEE_TOT_INCM_AMT">
-        <descriptions defaultDescription="PAYEE_TOT_INCM_AMT"/>
-      </viewAttribute>
-      <viewAttribute id="PAYEE_CNTR_PMT">
-        <descriptions defaultDescription="PAYEE_CNTR_PMT"/>
-      </viewAttribute>
-      <viewAttribute id="PAYEE_BUS_INCM_PER">
-        <descriptions defaultDescription="PAYEE_BUS_INCM_PER"/>
-      </viewAttribute>
-      <viewAttribute id="TOT_EMP_CNT">
-        <descriptions defaultDescription="TOT_EMP_CNT"/>
-      </viewAttribute>
-      <viewAttribute id="WCQ_ACT_WAGE">
-        <descriptions defaultDescription="WCQ_ACT_WAGE"/>
-      </viewAttribute>
-      <viewAttribute id="BPARTNER">
-        <descriptions defaultDescription="BPARTNER"/>
-      </viewAttribute>
-      <viewAttribute id="PRT_REG_STATUS">
-        <descriptions defaultDescription="PRT_REG_STATUS"/>
-      </viewAttribute>
-      <viewAttribute id="CREA_UNAME">
-        <descriptions defaultDescription="CREA_UNAME"/>
-      </viewAttribute>
-      <viewAttribute id="CREA_DATE_TIME">
-        <descriptions defaultDescription="CREA_DATE_TIME"/>
-      </viewAttribute>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="RUN_DATE"/>
+      <viewAttribute id="PAYER_ABN"/>
+      <viewAttribute id="PAYEE_ABN"/>
+      <viewAttribute id="PAYEE_ENT_TYPE"/>
+      <viewAttribute id="PAYEE_BUS_STATE"/>
+      <viewAttribute id="PAYEE_TOT_INCM_AMT"/>
+      <viewAttribute id="PAYEE_CNTR_PMT"/>
+      <viewAttribute id="PAYEE_BUS_INCM_PER"/>
+      <viewAttribute id="TOT_EMP_CNT"/>
+      <viewAttribute id="WCQ_ACT_WAGE"/>
+      <viewAttribute id="BPARTNER"/>
+      <viewAttribute id="PRT_REG_STATUS"/>
+      <viewAttribute id="CREA_UNAME"/>
+      <viewAttribute id="CREA_DATE_TIME"/>
+    
+      <viewAttribute id="PAYEE_GROSS_PD_AMT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.apps.acs.synonym::SAPACS.PRTCNTR">
-      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RUN_DATE" source="RUN_DATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYER_ABN" source="PAYER_ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ABN" source="PAYEE_ABN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_ENT_TYPE" source="PAYEE_ENT_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_BUS_STATE" source="PAYEE_BUS_STATE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_TOT_INCM_AMT" source="PAYEE_TOT_INCM_AMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_CNTR_PMT" source="PAYEE_CNTR_PMT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PAYEE_BUS_INCM_PER" source="PAYEE_BUS_INCM_PER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="TOT_EMP_CNT" source="TOT_EMP_CNT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="WCQ_ACT_WAGE" source="WCQ_ACT_WAGE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PRT_REG_STATUS" source="PRT_REG_STATUS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_UNAME" source="CREA_UNAME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CREA_DATE_TIME" source="CREA_DATE_TIME"/>
-    </input>
+    <input node="osr.apps.acs.synonym::SAPACS.PRTCNTR"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="PROJ_PRTCNTR">
@@ -147,6 +99,11 @@
     <attribute id="CREA_DATE_TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CREA_DATE_TIME"/>
       <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="CREA_DATE_TIME"/>
+    </attribute>
+  
+    <attribute id="PAYEE_GROSS_PD_AMT" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PAYEE_GROSS_PD_AMT"/>
+      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_GROSS_PD_AMT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>

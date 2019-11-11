@@ -669,13 +669,34 @@ LT_RESULT =
 	"WAGES"."GJAHR" AS "GJAHR",
 	"WAGES"."WAERS" AS "WAERS",
 	CASE
-		WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") <=	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*2)
-			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  <=	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*3)
-			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") <= :lv_thld_yearly	THEN (100/:lv_max_rating*4)	-- ATO & ITR
-			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  <=	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") >	:lv_thld_yearly	THEN (100/:lv_max_rating*4)	-- ITR & WCQ
-			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") <=	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") >	:lv_thld_yearly	THEN (100/:lv_max_rating*4)	-- ATO & WCQ
-			WHEN SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 	:lv_thld_yearly	AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >	:lv_thld_yearly	AND SUM("WAGES"."WCQ_ACT_WAGES") >	:lv_thld_yearly	THEN (100/:lv_max_rating*5) -- All
-			ELSE 0
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") >= :lv_thld_yearly AND SUM("OSR_STATE_WAGES") < :lv_thld_yearly
+			AND SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") <	:lv_thld_yearly AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") < :lv_thld_yearly AND SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") <	:lv_thld_yearly  
+				THEN (100/:lv_max_rating*1) -- WCQ > threshold
+				
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") < :lv_thld_yearly AND SUM("OSR_STATE_WAGES") < :lv_thld_yearly
+			AND (SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") >= :lv_thld_yearly OR SUM("WAGES"."ATO_ITR_SALARY_WAGES") >= :lv_thld_yearly OR SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") >= :lv_thld_yearly)
+				THEN (100/:lv_max_rating*2) -- ATO > threshold
+				
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") < :lv_thld_yearly AND SUM("OSR_STATE_WAGES") >= :lv_thld_yearly
+			AND SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") <	:lv_thld_yearly AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") < :lv_thld_yearly AND SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") <	:lv_thld_yearly  
+				THEN (100/:lv_max_rating*3) -- Interstate > threshold	
+				
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") >= :lv_thld_yearly AND SUM("OSR_STATE_WAGES") < :lv_thld_yearly
+			AND (SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") >= :lv_thld_yearly OR SUM("WAGES"."ATO_ITR_SALARY_WAGES") >= :lv_thld_yearly OR SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") >= :lv_thld_yearly)
+				THEN (100/:lv_max_rating*4) -- WCQ AND ATO > threshold
+
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") < :lv_thld_yearly AND SUM("OSR_STATE_WAGES") >= :lv_thld_yearly
+			AND (SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") >= :lv_thld_yearly OR SUM("WAGES"."ATO_ITR_SALARY_WAGES") >= :lv_thld_yearly OR SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") >= :lv_thld_yearly)
+				THEN (100/:lv_max_rating*4) -- Interstate AND ATO > threshold
+				
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") >= :lv_thld_yearly AND SUM("OSR_STATE_WAGES") >= :lv_thld_yearly
+			AND SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") < :lv_thld_yearly AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") < :lv_thld_yearly AND SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") < :lv_thld_yearly
+				THEN (100/:lv_max_rating*4) -- Interstate AND WCQ > threshold
+				
+		WHEN SUM("WAGES"."WCQ_ACT_WAGES") >= :lv_thld_yearly AND SUM("OSR_STATE_WAGES") >= :lv_thld_yearly
+			AND SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") >= :lv_thld_yearly AND SUM("WAGES"."ATO_ITR_SALARY_WAGES") >= :lv_thld_yearly AND SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") >= :lv_thld_yearly  
+				THEN (100/:lv_max_rating*5) -- All are above the threshold		
+		ELSE 0
 	END as "DETECTION_RESULT"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES" AS "WAGES"
 	WHERE EXISTS (
