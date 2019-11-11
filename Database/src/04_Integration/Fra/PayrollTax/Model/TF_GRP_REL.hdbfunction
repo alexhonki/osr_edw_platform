@@ -1,7 +1,7 @@
 FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_REL"(IV_GRP_DATE DATE, IV_GRAPH_ID NVARCHAR(32), IV_REL_TYPE NVARCHAR(6) )
 RETURNS TABLE (
-        "CHILD_ID"     NVARCHAR(10),
-        "PARENT_ID"    NVARCHAR(10),
+        "CHILD_ID"     NVARCHAR(32), -- changed from NVARCHAR(10)
+        "PARENT_ID"    NVARCHAR(32), -- changed from NVARCHAR(10)
         "REL_TYPE"     NVARCHAR(6),
         "REL_START_DATE" DATE, 
         "REL_END_DATE"  DATE,
