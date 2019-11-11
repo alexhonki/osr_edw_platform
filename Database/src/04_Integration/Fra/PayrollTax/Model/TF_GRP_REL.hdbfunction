@@ -35,13 +35,15 @@ SELECT
 FROM 
 "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
 UNION
--- CHILD_ID will display the trust Beneficiary ABN ("T" prefix) 
--- However if there is an ACN ("O" prefix)  found for the beneficiary, it will display the ACN instead
+-- PARENT_ID as CHILD_ID will display the trust Beneficiary ABN ("T" prefix) 
+-- CHILD_ID as PARENT_ID will display any of the following
+-- The ABN of the beneficiary if it exists. This may be a simple ABN or it could be another trust ABN. Both cases the ABN is prefixed with a "T"
+-- If an ACN is found for an ABN it will instead display the ACN ("O" prefix)
 -- Or it will display the Person Group ID ("C" prefix)  if the beneficiary is natural person if found in ASIC data
 -- OR it will display the ref Id ("V" prefix) of the person if not found in ASIC data. 
 SELECT 
-"PARENT_ID" AS "CHILD_ID", 
-"CHILD_ID" AS "PARENT_ID", 
+"PARENT_ID" AS "CHILD_ID", -- will display the Trust ABN
+"CHILD_ID" AS "PARENT_ID", -- can display ACN, ABN, PGRP_ID or REF ID
 'TR' AS "REL_TYPE", 
 "START_DT" AS "REL_START_DATE", 
 "END_DT" AS "REL_END_DATE", 
