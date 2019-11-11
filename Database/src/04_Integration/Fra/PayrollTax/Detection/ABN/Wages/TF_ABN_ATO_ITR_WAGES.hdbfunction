@@ -6,6 +6,7 @@ PERIOD_CATEGORY					NVARCHAR(10),
 PERIOD_KEY						NVARCHAR(4),
 GJAHR							NVARCHAR(4),
 ATO_ITR_SALARY_WAGES			DECIMAL(15,2),
+CONTRACTORS_PMNTS				DECIMAL(15,2),
 WAERS							NVARCHAR(5)
 )
 LANGUAGE SQLSCRIPT 
@@ -13,12 +14,13 @@ SQL SECURITY INVOKER AS
 BEGIN 
 	RETURN
     SELECT
-		LEFT("ATO_ITR"."ABN",11)                                                            		AS  "ABN",
-		'PT-A' 																							AS  "PERIOD_CATEGORY",
-		LEFT(TO_NVARCHAR("ATO_ITR"."INCM_YR"),4)                                                 		  AS  "PERIOD_KEY",
-		LEFT(TO_NVARCHAR("ATO_ITR"."INCM_YR"),4)                                                            AS  "GJAHR",
-		"ATO_ITR"."SALARY_WAGES" + "ATO_ITR"."SUPER_EXPNS"                                          	AS  "ATO_ITR_SALARY_WAGES",
-		'AUD'                                                                                       	AS  "WAERS"
+		LEFT("ATO_ITR"."ABN",11)                            AS  "ABN",
+		'PT-A' 												AS  "PERIOD_CATEGORY",
+		LEFT(TO_NVARCHAR("ATO_ITR"."INCM_YR"),4)            AS  "PERIOD_KEY",
+		LEFT(TO_NVARCHAR("ATO_ITR"."INCM_YR"),4)            AS  "GJAHR",
+		"ATO_ITR"."SALARY_WAGES" + "ATO_ITR"."SUPER_EXPNS"  AS  "ATO_ITR_SALARY_WAGES",
+		"CONTRACTORS_PMNTS"									AS "CONTRACTORS_PMNTS", -- added contractor model 08/11/2019
+		'AUD'                                               AS  "WAERS"
 	FROM 
 		"osr.edw.staging.td.ato.proxy::TF_ITRNIND_C"() AS "ATO_ITR"
 	WHERE "ABN" <> 'no ABN' 
