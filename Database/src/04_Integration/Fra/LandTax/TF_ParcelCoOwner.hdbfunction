@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.ltx::TF_ParcelCoOwner"(IV_COOWNER_COUNT_THLD INTEGER DEFAULT 5)
+FUNCTION "osr.edw.platform.fra.ltx::TF_ParcelCoOwner"()
        RETURNS TABLE 
        (
         TAXYRSTARTDT NVARCHAR(8),
@@ -22,7 +22,7 @@ BEGIN
  	"LTPCLCOOWN"."CO_OWNER",
  	"LTPCLCOOWN"."CO_OWNER_ID"
  	FROM
- 	"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByCoOwner"(:IV_COOWNER_COUNT_THLD)
+ 	"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByCoOwner"(5)
 	 AS "LTPCLCOOWN"
 	INNER JOIN 
 	"osr.edw.staging.md.rms.proxy::CV_VILMPL" AS "PCL"
