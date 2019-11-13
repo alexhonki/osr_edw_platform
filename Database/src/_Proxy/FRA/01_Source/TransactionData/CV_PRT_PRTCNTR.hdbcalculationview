@@ -33,77 +33,108 @@
     <calculatedViewAttributes/>
     <input node="osr.apps.acs.synonym::SAPACS.PRTCNTR"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="RUN_DATE"/>
+      <viewAttribute id="PAYER_ABN"/>
+      <viewAttribute id="PAYEE_ABN"/>
+      <viewAttribute id="PAYEE_ENT_TYPE"/>
+      <viewAttribute id="PAYEE_BUS_STATE"/>
+      <viewAttribute id="PAYEE_TOT_INCM_AMT"/>
+      <viewAttribute id="PAYEE_CNTR_PMT"/>
+      <viewAttribute id="PAYEE_BUS_INCM_PER"/>
+      <viewAttribute id="TOT_EMP_CNT"/>
+      <viewAttribute id="WCQ_ACT_WAGE"/>
+      <viewAttribute id="BPARTNER"/>
+      <viewAttribute id="PRT_REG_STATUS"/>
+      <viewAttribute id="CREA_UNAME"/>
+      <viewAttribute id="CREA_DATE_TIME"/>
+      <viewAttribute id="PAYEE_GROSS_PD_AMT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PROJ_PRTCNTR"/>
+    <windowFunction dynamicPartitionAttributes="false">
+      <partitionViewAttributeName>GJAHR</partitionViewAttributeName>
+      <partitionViewAttributeName>PAYER_ABN</partitionViewAttributeName>
+      <partitionViewAttributeName>PAYEE_ABN</partitionViewAttributeName>
+      <order byViewAttributeName="RUN_DATE" direction="DESC"/>
+      <rankThreshold>
+        <value>1</value>
+      </rankThreshold>
+    </windowFunction>
+  </calculationView>
 </calculationViews>
-<logicalModel id="PROJ_PRTCNTR">
+<logicalModel id="Rank_1">
   <attributes>
     <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MANDT"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="MANDT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="MANDT"/>
     </attribute>
     <attribute id="GJAHR" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="GJAHR"/>
+      <keyMapping columnObjectName="Rank_1" columnName="GJAHR"/>
     </attribute>
     <attribute id="RUN_DATE" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RUN_DATE"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="RUN_DATE"/>
+      <keyMapping columnObjectName="Rank_1" columnName="RUN_DATE"/>
     </attribute>
     <attribute id="PAYER_ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYER_ABN"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYER_ABN"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYER_ABN"/>
     </attribute>
     <attribute id="PAYEE_ABN" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_ABN"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_ABN"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_ABN"/>
     </attribute>
     <attribute id="PAYEE_ENT_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_ENT_TYPE"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_ENT_TYPE"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_ENT_TYPE"/>
     </attribute>
     <attribute id="PAYEE_BUS_STATE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_BUS_STATE"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_BUS_STATE"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_BUS_STATE"/>
     </attribute>
     <attribute id="PAYEE_TOT_INCM_AMT" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_TOT_INCM_AMT"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_TOT_INCM_AMT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_TOT_INCM_AMT"/>
     </attribute>
     <attribute id="PAYEE_CNTR_PMT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_CNTR_PMT"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_CNTR_PMT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_CNTR_PMT"/>
     </attribute>
     <attribute id="PAYEE_BUS_INCM_PER" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_BUS_INCM_PER"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_BUS_INCM_PER"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_BUS_INCM_PER"/>
     </attribute>
     <attribute id="TOT_EMP_CNT" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TOT_EMP_CNT"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="TOT_EMP_CNT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="TOT_EMP_CNT"/>
     </attribute>
     <attribute id="WCQ_ACT_WAGE" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WCQ_ACT_WAGE"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="WCQ_ACT_WAGE"/>
+      <keyMapping columnObjectName="Rank_1" columnName="WCQ_ACT_WAGE"/>
     </attribute>
     <attribute id="BPARTNER" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="BPARTNER"/>
+      <keyMapping columnObjectName="Rank_1" columnName="BPARTNER"/>
     </attribute>
     <attribute id="PRT_REG_STATUS" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PRT_REG_STATUS"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PRT_REG_STATUS"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PRT_REG_STATUS"/>
     </attribute>
     <attribute id="CREA_UNAME" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CREA_UNAME"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="CREA_UNAME"/>
+      <keyMapping columnObjectName="Rank_1" columnName="CREA_UNAME"/>
     </attribute>
     <attribute id="CREA_DATE_TIME" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CREA_DATE_TIME"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="CREA_DATE_TIME"/>
+      <keyMapping columnObjectName="Rank_1" columnName="CREA_DATE_TIME"/>
     </attribute>
-  
     <attribute id="PAYEE_GROSS_PD_AMT" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PAYEE_GROSS_PD_AMT"/>
-      <keyMapping columnObjectName="PROJ_PRTCNTR" columnName="PAYEE_GROSS_PD_AMT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PAYEE_GROSS_PD_AMT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -118,7 +149,12 @@
     </shape>
   
     <shape expanded="true" modelObjectName="PROJ_PRTCNTR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="110" y="222"/>
+      <upperLeftCorner x="110" y="293"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="105" y="188"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
