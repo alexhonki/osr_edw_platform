@@ -1,7 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorPayerState"
 	( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
-    --IN	parameters			"osr.edw.platform.fra.prt.dt.abn::Types. prt_cntr_payer_state",
+    IN	parameters			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_rank_prt_cntr_payer_state",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	)
@@ -11,49 +11,34 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorPayerState"
    READS SQL DATA AS
    
 BEGIN
-/*
-Parameter List for execution Procedure:
 
-        table type prt_cntr_payer_state {
-                                    
-            MODEL_RUN_DATE      : String(8);
-			RUN_MODE            : String(1);
-            QLD_FLAG            : String(1); Y/N
-            NSW_FLAG            : String(1); Y/N
-            OTH_FLAG            : String(1); Y/N
-        };
-
-*/
-DECLARE lx_model_run_date date;  
 DECLARE lx_run_mode NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_qld_flag NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_nsw_flag NVARCHAR(1) DEFAULT 'N';
 DECLARE lx_oth_flag NVARCHAR(1) DEFAULT 'N';
 
--- test data
-LT_PARAMETERS = 
-	SELECT 
-		TO_DATS('2019-09-25') AS "MODEL_RUN_DATE",
-		'S' AS 	"RUN_MODE",
-		'Y' AS "QLD_FLAG",
-		'Y' AS 	"NSW_FLAG",
-		'Y' AS 	"OTH_FLAG"
-	FROM "osr.hana.platform.synonym::SYS.DUMMY";
+/*
+        table type param_rank_prt_cntr_payer_state {
+			RUN_MODE            : String(1);
+            QLD_FLAG            : String(1); 
+            NSW_FLAG            : String(1); 
+            OTH_FLAG            : String(1); 
+        };
+        
+*/
 
 SELECT
-	"MODEL_RUN_DATE",
 	"RUN_MODE",
 	"QLD_FLAG",
 	"NSW_FLAG",
 	"OTH_FLAG"
 INTO 
-	lx_model_run_date,
 	lx_run_mode,
 	lx_qld_flag,
 	lx_nsw_flag,
 	lx_oth_flag
---FROM :PARAMETERS LIMIT 1;
-FROM :LT_PARAMETERS LIMIT 1;
+FROM :parameters LIMIT 1;
+
 
 LT_PRTCNTR = 
 SELECT 
@@ -70,8 +55,8 @@ SELECT
 	"WCQ_ACT_WAGE",
 	"BPARTNER",
 	"PRT_REG_STATUS"
-FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR"
-WHERE "RUN_DATE" = :lx_model_run_date;
+FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR";
+
 
 -- States parameter filters
 -- 3 conditions
@@ -176,5 +161,6 @@ et_text =
 		''					AS "MSGV4_FC"
 	FROM  :lt_result
 	;
-	
+
+
 END	
