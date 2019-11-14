@@ -2,8 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_PRTGroupingStatus"(
 	
 	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	IN PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pt_grp_status",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
-    --OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
 	
 )
@@ -25,9 +25,9 @@ DECLARE lv_grpstatus_gm  NVARCHAR(1) ;
 DECLARE lv_grpstatus_dge NVARCHAR(1) ;
 
 SELECT
-    PT_NG,
-    PT_GM,
-    PT_DGE
+    PT_GRPSTATUS_NG,
+    PT_GRPSTATUS_GM,
+    PT_GRPSTATUS_DGE
 INTO
 	lv_grpstatus_ng,
 	lv_grpstatus_gm,
@@ -189,8 +189,32 @@ AND "D"."FACT_CAT_SEQ" = '11'
 )
 ;
 
-et_result =
+PRE_RESULT =
+SELECT DISTINCT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"PRT_GRP_STATUS"
+FROM
+(
+SELECT DISTINCT
+	"DO"."ABN",
+	"DO"."GJAHR",
+	"DO"."PERIOD_CATEGORY",
+	"DO"."PERIOD_KEY",
+	CASE WHEN "PROC"."PRT_GRP_STATUS" IS NULL THEN 'NG' ELSE TO_NVARCHAR("PROC"."PRT_GRP_STATUS") END AS "PRT_GRP_STATUS"
+FROM
+	:it_data_for_rule AS "DO"
+LEFT OUTER JOIN
+	:PRT_DATA  AS "PROC"
+ON
+	"DO"."ABN" = "PROC"."ABN"
+)
+WHERE "PRT_GRP_STATUS" IN  (SELECT DISTINCT "PRT_GRP" FROM :PRT_GROUPING_STATUS )
+;
 
+et_result =
 SELECT
 "ABN",
 "PERIOD_CATEGORY",
@@ -198,10 +222,29 @@ SELECT
 "GJAHR",
 100 AS "DETECTION_RESULT"
 FROM
-:it_data_for_rule
-WHERE "ABN" IN ( SELECT DISTINCT "ABN" FROM :PRT_DATA WHERE "PRT_GRP_STATUS" IN (SELECT DISTINCT "PRT_GRP" FROM :PRT_GROUPING_STATUS ))
+:PRE_RESULT
 ;
    
    
-   
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT' AS "MSGID",
+'043' AS "MSGNO", 
+LEFT("PRT_GRP_STATUS",50) AS "MSGV1", 
+'' AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+	:PRE_RESULT
+;
+
 END

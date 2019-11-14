@@ -3,8 +3,8 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrEligiblePayer"
 	
 	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
     IN	PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pt_eligiblepayer",
-    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
---    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"	
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"	
 	
 )
    LANGUAGE SQLSCRIPT
@@ -23,8 +23,8 @@ DECLARE lv_rms_ar_cntr  NVARCHAR(1) ;
 DECLARE lv_scenario     NVARCHAR(10);
 
 SELECT
-    "SCENARIO"  	,             
-    "RMS_AR_CNTR"	,				
+    "SCENARIO"    	,             
+    "RMS_AR_CNTR_PMT"	,				
     "AMT_VARIANCE"	,		
     "PER_VARIANCE"	
 INTO   
@@ -193,7 +193,7 @@ TPAR_DATA =
 SELECT 
 	"GJAHR",
 	"PAYER_ABN" AS "ABN",
-	SUM("PAYEE_TOT_INCM_AMT") AS "PAYEE_GROSS_PD_AMT"
+	SUM("PAYEE_GROSS_PD_AMT") AS "PAYEE_GROSS_PD_AMT"
 FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "DATA"
 WHERE EXISTS
 (
@@ -485,6 +485,44 @@ AND "DO"."GJAHR" = "PROC"."GJAHR"
 )
 ;
 
+
+-------------------------------------------------------------------
+et_text = 
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+'' AS "TEXT",
+'/OSRQLD/FRA_PRT' AS "MSGID",
+'043' AS "MSGNO", 
+LEFT("VARIANCE",50) AS "MSGV1", 
+LEFT("VARIANCE_PER",50)  AS "MSGV2",
+'' AS "MSGV3",
+'' AS "MSGV4",
+'' AS "MSGV1_FC",
+'' AS "MSGV2_FC",
+'' AS "MSGV3_FC",
+'' AS "MSGV4_FC"
+FROM 
+(
+	SELECT DISTINCT
+	"DO"."ABN",
+	"DO"."GJAHR",
+	"DO"."PERIOD_CATEGORY",
+	"DO"."PERIOD_KEY",
+	TO_NVARCHAR("PROC"."VARIANCE") AS "VARIANCE",
+	TO_NVARCHAR("PROC"."VARIANCE_PER") AS "VARIANCE_PER"
+FROM
+	:it_data_for_rule AS "DO"
+INNER JOIN
+	:PRE_RESULT AS "PROC"
+ON
+	"DO"."ABN" = "PROC"."ABN"
+AND "DO"."GJAHR" = "PROC"."GJAHR"
+	
+)
+;
 
 
 END
