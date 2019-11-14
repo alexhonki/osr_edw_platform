@@ -1,7 +1,12 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_CntrPayerStateTest"( 
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
+	IN lv_run_mode			NVARCHAR(1),
+	IN lv_qld_flag			NVARCHAR(1),
+	IN lv_nsw_flag			NVARCHAR(1),
+	IN lv_oth_flag			NVARCHAR(1),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_rank_prt_cntr_payer_state",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -10,10 +15,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_CntrPayerStateTest"(
    --DEFAULT SCHEMA <default_schema_name>
    READS SQL DATA AS
 BEGIN
-   /*************************************
-       Write your procedure logic 
-   *************************************/
-   
+
     IF :iv_abn = '?' OR :iv_abn = '' THEN 
    lt_workset =
 		SELECT 
@@ -41,11 +43,23 @@ BEGIN
    
    END IF;
    
+   lt_param =
+		SELECT
+		TOP 1
+		:lv_run_mode    AS "RUN_MODE",
+		:lv_qld_flag	AS "QLD_FLAG",
+		:lv_nsw_flag	AS "NSW_FLAG",
+		:lv_oth_flag	AS "OTH_FLAG"
+		FROM  :lt_workset;
+
+            
 	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorPayerState"
 	(
 	:lt_workset, 
+	:lt_param,
 	et_result, 
 	et_text
 	)
 	;
+
 END
