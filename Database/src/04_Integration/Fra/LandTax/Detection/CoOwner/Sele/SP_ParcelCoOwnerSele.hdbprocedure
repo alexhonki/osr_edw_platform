@@ -35,11 +35,12 @@ BEGIN
  "DATA"."FISCAL_YEAR" AS "FISCAL_YEAR", 
  "DATA"."FY_EDATE" AS "FY_EDATE", 
  "DATA"."TAXYRENDDT" AS "TAXYRENDDT", 
- "BP"."CODEID" AS "CODE_ID"
- FROM :lt_data AS "DATA", "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
- WHERE "DATA"."BPARTNER" = "BP"."PARTNER"
-   AND left("BP"."DATE_TO",8)   >= "DATA"."FY_EDATE"
-   AND left("BP"."DATE_FROM",8) <= "DATA"."FY_EDATE"
- ;  
+ IFNULL("BP"."CODEID",'') AS "CODE_ID"
+ FROM 
+ :lt_data AS "DATA" 
+ LEFT OUTER JOIN 
+ "osr.edw.platform.fra.ltx::CV_BusinessPartnerOwnerType" AS "BP"
+ ON "DATA"."BPARTNER" = "BP"."PARTNER"
+ ;
  
  END;
