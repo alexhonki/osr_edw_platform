@@ -150,9 +150,12 @@ et_text =
 		"GJAHR",
 		''					AS "TEXT",
 		'/OSRQLD/FRA_PRT'	AS "MSGID",
-		'037'				AS "MSGNO",
-		'5'					AS "MSGV1", 
-		'' 					AS "MSGV2",
+		'041'				AS "MSGNO",
+		CASE	WHEN "DETECTION_RESULT" = 5 THEN 'QLD'
+				WHEN "DETECTION_RESULT" = 3 THEN 'NSW'
+				ELSE 'OTH' 
+		END AS "MSGV1", 
+		"DETECTION_RESULT"	AS "MSGV2",
 		''					AS "MSGV3",
 		''					AS "MSGV4",
 		''					AS "MSGV1_FC",
