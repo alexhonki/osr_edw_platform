@@ -104,6 +104,14 @@ context Types {
             THRESHOLD_YEARLY : Decimal(15, 2);
             SCENARIO        : String(10);
         };
+        
+        table type param_rank_prt_cntr_payer_state {
+			RUN_MODE            : String(1);
+            QLD_FLAG            : String(1); 
+            NSW_FLAG            : String(1); 
+            OTH_FLAG            : String(1); 
+        };
+        
         table type param_versus {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);
@@ -242,7 +250,14 @@ context Types {
             PT_GM					  : String(1);
             PT_DGE					  : String(1);
         };
-
+        
+        table type param_pt_eligiblepayer {
+        	SCENARIO                  : String(10);
+            RMS_AR_CNTR				  : String(1);
+            AMT_VARIANCE			  : Decimal(23, 2);
+            PER_VARIANCE			  : Decimal(5, 2);
+        };
+        
         //text
         table type text {
             ABN             : String(11);
