@@ -1,0 +1,490 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrEligiblePayer"
+(
+	
+	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+    IN	PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pt_eligiblepayer",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result"
+--    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"	
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+DECLARE sdate DATE;
+DECLARE edate DATE;
+DECLARE lv_variance     DECIMAL(23,2) ;
+DECLARE lv_percentage   DECIMAL(5,2) ;
+DECLARE lv_rms_ar_cntr  NVARCHAR(1) ;
+DECLARE lv_scenario     NVARCHAR(10);
+
+SELECT
+    "SCENARIO"  	,             
+    "RMS_AR_CNTR"	,				
+    "AMT_VARIANCE"	,		
+    "PER_VARIANCE"	
+INTO   
+	lv_scenario 	,
+	lv_rms_ar_cntr	,
+	lv_variance 	,
+	lv_percentage 
+FROM :PARAMETERS LIMIT 1;
+  
+
+
+----------When RMS Flag = 'Y'----------------
+IF :lv_rms_ar_cntr = 'Y' THEN
+
+RMS_WAGES =
+
+SELECT 
+"ABN",
+"GJAHR",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+SUM("A_CONTRACTORS") AS "A_CONTRACTORS"
+FROM
+(
+SELECT
+	"KEYS"."ABN",
+	"KEYS"."GJAHR",
+	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
+	SUM("WAGES"."A_CONTRACTORS")       AS "A_CONTRACTORS"
+
+FROM 
+	:it_data_for_rule AS "KEYS"
+
+INNER JOIN 	
+	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
+ ON
+			  "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+WHERE "WAGES"."A_CONTRACTORS" > 0
+GROUP BY 
+			"KEYS"."ABN",
+			"KEYS"."GJAHR",
+			"KEYS"."PERIOD_CATEGORY",
+			"KEYS"."PERIOD_KEY"
+)			
+GROUP BY 
+			"ABN",
+			"GJAHR",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY"	
+;			
+END IF;
+
+----------When RMS Flag = 'N'----------------
+IF :lv_rms_ar_cntr = 'N' THEN
+
+RMS_WAGES =
+SELECT 
+"ABN",
+"GJAHR",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+SUM("A_CONTRACTORS") AS "A_CONTRACTORS"
+
+FROM
+(
+SELECT
+	"KEYS"."ABN",
+	"KEYS"."GJAHR",
+	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
+	SUM("WAGES"."A_CONTRACTORS")       AS "A_CONTRACTORS"
+
+FROM 
+	:it_data_for_rule AS "KEYS"
+
+INNER JOIN 	
+	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
+ ON
+			  "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+WHERE "WAGES"."A_CONTRACTORS" = 0
+GROUP BY 
+			"KEYS"."ABN",
+			"KEYS"."GJAHR",
+			"KEYS"."PERIOD_CATEGORY",
+			"KEYS"."PERIOD_KEY"
+)			
+GROUP BY 
+			"ABN",
+			"GJAHR",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY"	
+						
+;
+
+END IF;
+	
+----------When RMS Flag = 'NULL' / BLANK----------------			
+ IF :lv_rms_ar_cntr IS NULL OR :lv_rms_ar_cntr = '?' OR :lv_rms_ar_cntr = 'NULL' OR :lv_rms_ar_cntr = '' THEN
+
+RMS_WAGES =
+SELECT 
+"ABN",
+"GJAHR",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+SUM("A_CONTRACTORS") AS "A_CONTRACTORS"
+FROM
+(
+SELECT
+	"KEYS"."ABN",
+	"KEYS"."GJAHR",
+	"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
+	SUM("WAGES"."A_CONTRACTORS")       AS "A_CONTRACTORS"
+FROM 
+	:it_data_for_rule AS "KEYS"
+
+LEFT OUTER JOIN 	
+	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
+ ON
+			  "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+GROUP BY 
+			"KEYS"."ABN",
+			"KEYS"."GJAHR",
+			"KEYS"."PERIOD_CATEGORY",
+			"KEYS"."PERIOD_KEY"
+)			
+GROUP BY 
+			"ABN",
+			"GJAHR",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY"	
+						
+;
+
+END IF;	
+
+
+-------Take only the data what is required based on RMS Flag = Y/N/NULL-----------
+
+it_data =
+
+SELECT * FROM :it_data_for_rule AS "DO"
+WHERE EXISTS
+(
+	SELECT * FROM :RMS_WAGES AS "RMS_WAGE"
+	WHERE 
+		"DO"."ABN"   = "RMS_WAGE"."ABN"
+	AND "DO"."GJAHR" = "RMS_WAGE"."GJAHR"
+	
+)
+;
+------------------------------------------------------
+
+-----------------TPAR Scenario-------------------
+
+IF lv_scenario = 'PRT3.1' THEN   
+
+--Need to update to PAYEE_GROSS_PD_AMT
+
+TPAR_DATA =
+SELECT 
+	"GJAHR",
+	"PAYER_ABN" AS "ABN",
+	SUM("PAYEE_TOT_INCM_AMT") AS "PAYEE_GROSS_PD_AMT"
+FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "DATA"
+WHERE EXISTS
+(
+	SELECT * FROM :it_data AS "DO"
+	WHERE
+	"DATA"."PAYER_ABN" = "DO"."ABN"
+AND	"DATA"."GJAHR"     = "DO"."GJAHR"
+)
+GROUP BY 
+	"GJAHR",
+	"PAYER_ABN"
+;
+
+PRE_RESULT  =
+SELECT * FROM 
+(
+SELECT 
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+--	 SUM("A_CONTRACTORS") AS "A_CONTRACTORS",
+--	 SUM("PAYEE_GROSS_PD_AMT") AS "PAYEE_GROSS_PD_AMT",
+	 CASE WHEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS")) < 0 THEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS"))  ELSE 0  END AS "VARIANCE",
+	 CASE WHEN SUM("A_CONTRACTORS") > 0 THEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS")) / SUM("A_CONTRACTORS")  ELSE 100  END AS "VARIANCE_PER"
+FROM	 
+(
+SELECT 
+	"IT_DATA"."ABN",
+	"IT_DATA"."GJAHR",
+	"IT_DATA"."PERIOD_CATEGORY",
+	"IT_DATA"."PERIOD_KEY",
+	SUM("RMS_DATA"."A_CONTRACTORS") AS "A_CONTRACTORS",
+	SUM("TPAR_DATA"."PAYEE_GROSS_PD_AMT") AS 	"PAYEE_GROSS_PD_AMT" 
+	
+FROM
+	:it_data AS "IT_DATA" 
+LEFT OUTER JOIN
+	:TPAR_DATA AS "TPAR_DATA"
+	
+ON
+	"IT_DATA"."ABN"   = "TPAR_DATA"."ABN"
+AND "IT_DATA"."GJAHR" = "TPAR_DATA"."GJAHR"
+
+LEFT OUTER JOIN
+	:RMS_WAGES AS "RMS_DATA"
+	
+ON
+	"IT_DATA"."ABN"   = "RMS_DATA"."ABN"
+AND "IT_DATA"."GJAHR" = "RMS_DATA"."GJAHR"
+
+GROUP BY
+	"IT_DATA"."ABN",
+	"IT_DATA"."GJAHR",
+	"IT_DATA"."PERIOD_CATEGORY",
+	"IT_DATA"."PERIOD_KEY"
+)
+GROUP BY
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY"
+
+) 
+WHERE 
+"VARIANCE" >= :lv_variance
+AND "VARIANCE_PER" >= :lv_percentage
+;
+
+END IF;
+
+---------------------END of TPAR Scenario------------------------
+
+
+---------------------Scenario ITR -------------------------------
+IF lv_scenario = 'PRT3.2' THEN   
+
+ 
+
+
+--Get  ITR Data----
+
+ITR_DATA =
+SELECT 
+	"ABN" AS "ABN",
+	"INCM_YR" AS "GJAHR",
+	SUM("CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+	SUM("SALARY_WAGES")      AS "SALARY_WAGES",
+	SUM("SUPER_EXPNS")       AS "SUPER_EXPNS"
+FROM	
+(
+SELECT
+	"DATA"."ABN" AS "ABN",
+	TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) AS "INCM_YR",
+	SUM("DATA"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+	SUM("DATA"."SALARY_WAGES")      AS "SALARY_WAGES",
+	SUM("DATA"."SUPER_EXPNS")       AS "SUPER_EXPNS"
+FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"  -- Non Individual 
+WHERE EXISTS
+(
+	SELECT * FROM :it_data AS "DO"
+	WHERE
+	"DATA"."ABN" = "DO"."ABN"
+	AND TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) = "DO"."GJAHR"
+)
+GROUP BY
+	"DATA"."ABN",
+	"DATA"."INCM_YR"
+
+UNION
+
+SELECT
+	"DATA"."ABN" AS "ABN",
+	TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) AS "INCM_YR",
+	SUM("DATA"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+	SUM("DATA"."SALARY_WAGES")      AS "SALARY_WAGES",
+	SUM("DATA"."SUPER_EXPNS")       AS "SUPER_EXPNS"
+FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRIND.active_data" AS "DATA" -- Individual 
+WHERE EXISTS
+(
+	SELECT * FROM :it_data AS "DO"
+	WHERE
+	"DATA"."ABN" = "DO"."ABN"
+	AND TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) = "DO"."GJAHR"
+)
+
+GROUP BY
+	"DATA"."ABN",
+	"DATA"."INCM_YR"
+)
+GROUP BY
+"ABN" ,
+"INCM_YR"
+;
+
+
+
+------Get Work Cover Data--------
+
+WCQ =
+SELECT 
+	"ABN",
+	"GJAHR",
+	"WAERS",
+	SUM("WAGE") AS "WAGE"
+
+FROM
+(
+	SELECT 
+ 	"WAGES"."ABN" AS "ABN",
+ 	"WAGES"."GJAHR" AS "GJAHR",
+ 	TO_NVARCHAR('AUD') AS "WAERS",
+ 	SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
+ 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
+ 	WHERE "PERIOD_CATEGORY" = 'PT-A'
+ 	AND EXISTS (
+ 		SELECT * FROM :it_data AS "KEYS"
+ 		WHERE "KEYS"."ABN" = "WAGES"."ABN"
+ 		  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+ 		  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+ 	  )
+ 	GROUP BY 
+ 	"WAGES"."ABN",
+ 	"WAGES"."GJAHR"
+)
+GROUP BY 
+	"ABN",
+	"GJAHR",
+	"WAERS"
+ ;
+
+--- Join ITR -- WCQ --RMS and Caluclate the Varience between ITR Contract Payments to RMS Annual Ret Contractos Payments
+
+ITR_WCQ_RMS=
+SELECT 
+	"DO"."ABN",
+	"DO"."GJAHR",
+	"DO"."PERIOD_CATEGORY",
+	"DO"."PERIOD_KEY",
+	SUM("RMS"."A_CONTRACTORS") AS "A_CONTRACTORS",
+	SUM("WCQ"."WAGE") AS "QLD_WAGES",
+	SUM("ITR"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+	SUM("ITR"."SALARY_WAGES") AS "SALARY_WAGES",
+	SUM("ITR"."SUPER_EXPNS") AS "SUPER_EXPNS"
+FROM
+	:it_data AS "DO"
+	
+LEFT OUTER JOIN
+
+--ITR
+	:ITR_DATA AS "ITR"
+ON 
+	"DO"."ABN"   = "ITR"."ABN"
+AND "DO"."GJAHR" = "ITR"."GJAHR"
+
+LEFT OUTER JOIN
+--WCQ
+	:WCQ  AS "WCQ"
+ON 
+	"DO"."ABN"   = "WCQ"."ABN"
+AND "DO"."GJAHR" = "WCQ"."GJAHR"
+
+LEFT OUTER JOIN
+--RMS
+	:RMS_WAGES  AS "RMS"
+ON 
+	"DO"."ABN"   = "RMS"."ABN"
+AND "DO"."GJAHR" = "RMS"."GJAHR"
+
+GROUP BY 
+	"DO"."ABN",
+	"DO"."GJAHR",
+	"DO"."PERIOD_CATEGORY",
+	"DO"."PERIOD_KEY"
+;
+
+PRE_RESULT  =
+SELECT * FROM
+(
+SELECT
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+--	"A_CONTRACTORS",
+--	"QLD_WAGES",
+--	"CONTRACTORS_PMNTS",
+--	"SALARY_WAGES",
+--	"SUPER_EXPNS",
+--	"QLD_CNTR_PMTS",
+	CASE WHEN "QLD_CNTR_PMTS" > 0  THEN TO_DECIMAL(("QLD_CNTR_PMTS" - "A_CONTRACTORS"),15,2) ELSE 0 END AS "VARIANCE",
+	CASE WHEN "QLD_CNTR_PMTS" > 0 AND "A_CONTRACTORS" > 0 THEN TO_DECIMAL((("QLD_CNTR_PMTS" - "A_CONTRACTORS")/"A_CONTRACTORS")*100,3,2) ELSE 
+	CASE WHEN "A_CONTRACTORS" < 0 THEN 100 ELSE 0 END END AS "VARIANCE_PER"
+FROM	
+(
+SELECT 
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"A_CONTRACTORS" AS "A_CONTRACTORS",
+	"QLD_WAGES" AS "QLD_WAGES",
+	"CONTRACTORS_PMNTS" AS "CONTRACTORS_PMNTS",
+	CASE WHEN ("SALARY_WAGES" + "SUPER_EXPNS") <= 0 AND "CONTRACTORS_PMNTS" <= 0 THEN 0 ELSE 
+	CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) >= 1 THEN 1 ELSE
+    CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) > 0 THEN ("QLD_WAGES" / ("SALARY_WAGES" + "SUPER_EXPNS") ) * "CONTRACTORS_PMNTS"  ELSE 0 
+    END END END AS "QLD_CNTR_PMTS"
+
+FROM
+:ITR_WCQ_RMS
+
+)
+)
+WHERE
+"VARIANCE" >= :lv_variance
+AND "VARIANCE_PER" >= :lv_percentage
+;
+
+END IF ;
+
+
+---------------------END of ITR Scenario------------------------
+
+
+
+
+
+ET_RESULT =
+SELECT 
+   "ABN",
+   "PERIOD_CATEGORY",
+   "PERIOD_KEY",
+   "GJAHR",
+   100 AS "DETECTION_RESULT"
+FROM
+(
+SELECT DISTINCT
+	"DO"."ABN",
+	"DO"."GJAHR",
+	"DO"."PERIOD_CATEGORY",
+	"DO"."PERIOD_KEY"
+FROM
+	:it_data_for_rule AS "DO"
+INNER JOIN
+	:PRE_RESULT AS "PROC"
+ON
+	"DO"."ABN" = "PROC"."ABN"
+AND "DO"."GJAHR" = "PROC"."GJAHR"
+)
+;
+
+
+
+END
