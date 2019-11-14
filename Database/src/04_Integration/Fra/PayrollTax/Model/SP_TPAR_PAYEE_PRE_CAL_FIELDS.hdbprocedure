@@ -2,8 +2,8 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_TPAR_PAYEE_PRE_CAL_FIELDS"(
 	IN IV_GJAHR		NVARCHAR(4),	-- financial year	
 	IN IV_PEGP_L	DECIMAl(15,2),	-- Payee Gross payments from payer
 	IN IV_PEGP_H	DECIMAl(15,2),
-	IN IV_PEGIP_L	DECIMAl(15,2),	-- Payee Gross Trading income percentage from payer
-	IN IV_PEGIP_H	DECIMAl(15,2),
+	IN IV_PEGIP	DECIMAl(15,2),	-- Payee Gross Trading income percentage from payer
+--	IN IV_PEGIP_H	DECIMAl(15,2),
 	IN IV_PEICP_L	DECIMAl(15,2),	-- Payee ITR Contractor Payments
 	IN IV_PEICP_H	DECIMAl(15,2),
 	IN IV_PEWW_L	DECIMAl(15,2),	-- Payee Work Cover Wages
@@ -117,7 +117,7 @@ LT_CNTR =
 	"osr.edw.platform.fra.prt.model::TF_TPAR_PAYEE_PRE_CAL_FIELDS"(:IV_GJAHR)
 	WHERE
 		EX_GST_GROSS_PD_AMT 	BETWEEN 	:IV_PEGP_L  	AND   :IV_PEGP_H
-	AND BUS_INCM_PER        	>= 			:IV_PEGIP_L
+	AND BUS_INCM_PER        	>= 			:IV_PEGIP
 	AND CONTRACTORS_PMNTS       BETWEEN     :IV_PEICP_L     AND   :IV_PEICP_H
 	AND WCQ_ACT_WAGES       	BETWEEN 	:IV_PEWW_L  	AND   :IV_PEWW_H
 	AND TOTAL_EMP_CNT       	BETWEEN 	:IV_PEAEC_L 	AND   :IV_PEAEC_H
