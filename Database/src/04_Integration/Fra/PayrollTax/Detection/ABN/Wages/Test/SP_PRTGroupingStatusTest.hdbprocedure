@@ -1,0 +1,91 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_PRTGroupingStatusTest"(
+	
+	IN iv_abn				NVARCHAR(11),
+	IN iv_gjahr				NVARCHAR(4),
+	IN lv_grpstatus_ng		NVARCHAR(1),
+	IN lv_grpstatus_gm		NVARCHAR(1),
+	IN lv_grpstatus_dge		NVARCHAR(1),
+	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+--	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_data_exclusions",
+	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+DECLARE lv_sdate DATE;
+DECLARE lv_edate DATE;
+DECLARE lv_grpstatus_ng  NVARCHAR(1) ;
+DECLARE lv_grpstatus_gm  NVARCHAR(1) ;
+DECLARE lv_grpstatus_dge NVARCHAR(1) ; 
+   
+IF :iv_abn = '?' or :iv_abn = '' THEN 
+
+lt_workset =
+SELECT top  1000 DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+
+WHERE  "GJAHR" = :iv_gjahr
+AND "PERIOD_CATEGORY" = 'PT-A'
+
+;
+
+ELSE
+
+lt_workset =
+SELECT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR"
+FROM
+"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+WHERE "ABN"   = :iv_abn
+  AND "GJAHR" = :iv_gjahr
+;
+
+END IF;
+
+lt_param =   
+SELECT
+TOP 1
+	:lv_grpstatus_ng               AS   "PT_GRPSTATUS_NG",
+	:lv_grpstatus_gm               AS   "PT_GRPSTATUS_GM",
+	:lv_grpstatus_dge              AS   "PT_GRPSTATUS_DGE"
+FROM  :lt_workset
+
+
+;
+
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"
+(
+:lt_workset,
+lt_out_for_rule 
+
+);
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_PRTGroupingStatus"
+(
+:lt_out_for_rule,
+:lt_param,
+et_result ,
+et_text
+);
+
+
+END

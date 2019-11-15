@@ -1,6 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_PRTGroupingStatus"(
 	
-	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
 	IN PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pt_grp_status",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
@@ -18,8 +18,8 @@ BEGIN
    
 --Note   : Check is for the releveant year 
    
-DECLARE sdate DATE;
-DECLARE edate DATE;
+DECLARE lv_sdate DATE;
+DECLARE lv_edate DATE;
 DECLARE lv_grpstatus_ng  NVARCHAR(1) ;
 DECLARE lv_grpstatus_gm  NVARCHAR(1) ;
 DECLARE lv_grpstatus_dge NVARCHAR(1) ;
@@ -50,15 +50,15 @@ SELECT * FROM
 (
 SELECT CASE WHEN :lv_grpstatus_ng = 'Y'  THEN 'NG'  ELSE '' END AS "PRT_GRP" FROM "osr.hana.platform.synonym::SYS.DUMMY"
 UNION 
-SELECT CASE WHEN :lv_grpstatus_gm = 'Y'  THEN 'GM'  ELSE '' END AS "PRT_GRP" FROM "osr.hana.platform.synonym::SYS.DUMMY"
+SELECT CASE WHEN :lv_grpstatus_gm = 'Y'  THEN 'ZGRM'  ELSE '' END AS "PRT_GRP" FROM "osr.hana.platform.synonym::SYS.DUMMY"
 UNION 
-SELECT CASE WHEN :lv_grpstatus_dge = 'Y' THEN 'DGE' ELSE '' END AS "PRT_GRP" FROM "osr.hana.platform.synonym::SYS.DUMMY"
+SELECT CASE WHEN :lv_grpstatus_dge = 'Y' THEN 'ZDGE' ELSE '' END AS "PRT_GRP" FROM "osr.hana.platform.synonym::SYS.DUMMY"
 )
 WHERE "PRT_GRP" <> '';
 
 
-SELECT DISTINCT "ST_DATE"    INTO sdate     FROM :FY_DATES ;
-SELECT DISTINCT "EN_DATE"    INTO edate     FROM :FY_DATES ;
+SELECT DISTINCT "ST_DATE"    INTO lv_sdate     FROM :FY_DATES ;
+SELECT DISTINCT "EN_DATE"    INTO lv_edate     FROM :FY_DATES ;
 
 BUT0ID =
 SELECT DISTINCT
@@ -73,7 +73,8 @@ AND EXISTS (
 )
 ;
 
-
+------------------------------BP Facts --------------------------------------------------
+/*
 RMS_PTX_DATA =
 SELECT DISTINCT
 	"PARTNER",
@@ -150,8 +151,8 @@ FROM
 		WHERE 
 				"E"."FACT_TYPE" = 'ZPRE'
 		AND 	"E"."FACT_CAT_SEQ" = '11'
-		AND     TO_NVARCHAR(LEFT("E"."VALID_FROM",8)) <= TO_NVARCHAR(TO_DATS(:edate))
-		AND     TO_NVARCHAR(LEFT("E"."VALID_TO",8))   >= TO_NVARCHAR(TO_DATS(:sdate))
+		AND     TO_NVARCHAR(LEFT("E"."VALID_FROM",8)) <= TO_NVARCHAR(TO_DATS(:lv_edate))
+		AND     TO_NVARCHAR(LEFT("E"."VALID_TO",8))   >= TO_NVARCHAR(TO_DATS(:lv_sdate))
 		)
 	)
 	WHERE RANK_1 = 1
@@ -213,6 +214,67 @@ ON
 )
 WHERE "PRT_GRP_STATUS" IN  (SELECT DISTINCT "PRT_GRP" FROM :PRT_GROUPING_STATUS )
 ;
+*/
+------------------------------Facts --------------------------------------------------
+
+-----------------BP Relationship Table----------------------
+
+PRT_GRP =
+SELECT DISTINCT 
+"A"."IDNUMBER" AS "ABN",
+"A"."PARTNER",
+"B"."RELTYP" AS "PRT_GRP_STATUS"
+FROM
+:BUT0ID AS "A"
+INNER JOIN
+(
+    SELECT
+    CLIENT     AS CLIENT,
+    PARTNER1   AS GROUP_NO,
+    PARTNER2   AS PARTNER,
+    CASE WHEN RELTYP = 'ZIGM' THEN 'ZGRM' ELSE  RELTYP END AS RELTYP,
+    DATE_FROM  AS DATE_FROM,
+    DATE_TO    AS DATE_TO
+    FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
+    WHERE RELTYP IN ( 'ZDGE', 'ZGRM', 'ZIGM')
+    AND DATE_FROM  <= :lv_edate
+    AND DATE_TO    >= :lv_sdate
+    AND PARTNER2 IN (SELECT DISTINCT "PARTNER" FROM :BUT0ID)
+)  AS "B"
+ON
+"A"."PARTNER" = "B"."PARTNER"
+
+;
+
+PRE_RESULT =
+SELECT DISTINCT 
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"PRT_GRP_STATUS"
+FROM
+(
+SELECT DISTINCT
+	"DO"."ABN",
+	"DO"."GJAHR",
+	"DO"."PERIOD_CATEGORY",
+	"DO"."PERIOD_KEY",
+	CASE WHEN "GRP"."PRT_GRP_STATUS" IS NULL OR "GRP"."PRT_GRP_STATUS" = '' THEN 'NG' ELSE TO_NVARCHAR("GRP"."PRT_GRP_STATUS") END AS "PRT_GRP_STATUS"
+FROM
+	:it_data_for_rule AS "DO"
+LEFT OUTER JOIN
+	:PRT_GRP  AS "GRP"
+ON
+	"DO"."ABN" = "GRP"."ABN"
+)
+WHERE "PRT_GRP_STATUS" IN  (SELECT DISTINCT "PRT_GRP" FROM :PRT_GROUPING_STATUS )
+;
+--------------------BP Rel Table --------------------
+
+
+
+
 
 et_result =
 SELECT
