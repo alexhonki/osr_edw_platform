@@ -112,6 +112,13 @@ context Types {
             OTH_FLAG            : String(1); 
         };
         
+        table type param_cntr_payer_tot_taxable_Payments {
+        RUN_MODE         			: String(1);
+        payer_tot_taxable_Payments 	: Decimal(15, 2);
+		cntr_deduction_per			: Integer;
+        SCENARIO        			: String(10);
+    	};
+        
         table type param_versus {
             RUN_MODE         : String(1);
             THRESHOLD_YEARLY : Decimal(15, 2);
