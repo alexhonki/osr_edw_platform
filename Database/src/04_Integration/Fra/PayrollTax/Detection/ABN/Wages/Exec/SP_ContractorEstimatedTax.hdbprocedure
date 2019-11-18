@@ -66,7 +66,7 @@ lt_wages =
 	 	"WAGES"."PERIOD_KEY",
 	 	"WAGES"."GJAHR",
 	 	"WAGES"."WAERS"
- 	--HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  >= :lv_thld_yearly 
+ 	HAVING SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT")  > 0 
 ;
 
 -- ADDED 07/11/2019
@@ -92,6 +92,7 @@ lt_wages =
 	 	"WAGES"."PERIOD_KEY",
 	 	"WAGES"."GJAHR",
 	 	"WAGES"."WAERS"
+	HAVING (SUM("TOTL_GRS_AMT")+ SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT"))  > 0 
  --	HAVING (SUM("TOTL_GRS_AMT")+ SUM("RPRTBL_EMPLYR_SUPER_CNTRBN_AMT")) >= :lv_thld_yearly
 ;
  
@@ -117,6 +118,7 @@ lt_itr =
 	 	"WAGES"."PERIOD_KEY",
 	 	"WAGES"."GJAHR",
 	 	"WAGES"."WAERS"
+	HAVING (SUM("WAGES"."ATO_ITR_SALARY_WAGES") + SUM("WAGES"."CONTRACTORS_PMNTS")) > 0
 	;
  	
 -- Interstate Data   	
@@ -142,6 +144,7 @@ lt_itr =
 		 	"WAGES"."GJAHR",
 		 	"WAGES"."WAERS"
 	 	--HAVING MAX("WAGES"."CLIENT_AUST_WAGES")  >= :lv_thld_yearly
+	 	HAVING MAX("WAGES"."CLIENT_AUST_WAGES") > 0
 ;
 
 lt_wcq = 
@@ -165,6 +168,7 @@ lt_wcq =
 	 	"WAGES"."PERIOD_KEY",
 	 	"WAGES"."GJAHR",
 	 	"WAGES"."WAERS"
+	HAVING SUM("WAGES"."WCQ_ACT_WAGES") > 0
 ;
 
 lt_aust_wide_wages = 
