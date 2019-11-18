@@ -14,7 +14,7 @@ PROCEDURE "osr.edw.platform.fra.prt.model::SP_TPAR_PAYEE_PRE_CAL_FIELDS"(
 	IN IV_PEBA_INC  NVARCHAR(100), -- Included Payee State (QLD, NSW, VIC, WA, NT, SA, TAS) separated by '|'
 	IN IV_PEBA_EXCL NVARCHAR(100), -- Excluded Payee State (QLD, NSW, VIC, WA, NT, SA, TAS) separated by '|'
 	IN IV_PEPRS		NVARCHAR(1),	-- Status (Y/N)
-	OUT ET_CNTR_DETAILS		"osr.edw.platform.fra.prt.model::Types.CntrT"
+	OUT ET_CNTR_DETAILS		"osr.edw.platform.fra.prt.model::Types.CntrT2"
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -181,7 +181,7 @@ IF :filter_type1 = 1 then
 		"WCQ_ACT_WAGE",
 		"BPARTNER",
 		"PRT_REG_STATUS",
-		"PAYEE_GROSS_PD_AMT"
+		"PAYEE_GROSS_PD_AMT" 
 	FROM :ET_CNTR_DETAILS_ENT
 	WHERE "PAYEE_BUS_STATE" in (SELECT "VALS" AS "PAYEE_BUS_STATE" FROM :LT_PEBA_FILTER);
 else

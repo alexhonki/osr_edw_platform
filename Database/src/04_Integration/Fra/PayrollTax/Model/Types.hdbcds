@@ -20,15 +20,13 @@ context Types {
         GROUP_ID   : String(32);
         GROUP_TYPE : String(4);
     };
-
     table type GroupT2 {
         GJAHR      : String(4);
         GRP_DATE   : LocalDate;
-        ELEMENT_ID : String(32); 
+        ELEMENT_ID : String(32);
         GROUP_ID   : String(32);
         GROUP_TYPE : String(4);
     };
-
     table type GroupIDT {
         GJAHR       : String(4);
         GRP_DATE    : LocalDate;
@@ -53,7 +51,7 @@ context Types {
         RBC_GROUP_MEM        : String(1);
         MEM_REL_BODY_CORP    : String(1);
     };
-        table type GroupSummaryT2 {
+    table type GroupSummaryT2 {
         GJAHR                : String(4);
         GRP_DATE             : LocalDate;
         ELEMENT_ID           : String(32);
@@ -70,7 +68,6 @@ context Types {
         RBC_GROUP_MEM        : String(1);
         MEM_REL_BODY_CORP    : String(1);
     };
-    
     table type DisjointElementT {
         ELEMENT_NUM : Integer64;
         ELEMENT     : String(32);
@@ -91,25 +88,25 @@ context Types {
         ELEMENT            : String(32);
         PARENT_ELEMENT     : String(32);
     };
-    
-    table type CntrT {
-        GJAHR       		: String(4);
-        PAYER_ABN			: String(11);
-        PAYEE_ABN			: String(11);
-        PAYEE_ENT_TYPE		: String(3);
-        PAYEE_BUS_STATE 	: String(3);
-        PAYEE_TOT_INCM_AMT	: Decimal(15,2);
-        PAYEE_CNTR_PMT		: Decimal(15,2);
-        PAYEE_BUS_INCM_PER	: Decimal(15,2);
-        TOT_EMP_CNT			: Integer;
-        WCQ_ACT_WAGE		: Decimal(15,2);
-        BPARTNER			: String(10);
-        PRT_REG_STATUS		: String(1);
-        PAYEE_GROSS_PD_AMT  : Decimal(15,2);
-      };
+
+        table type CntrT2 {
+        GJAHR              : String(4);
+        PAYER_ABN          : String(11);
+        PAYEE_ABN          : String(11);
+        PAYEE_ENT_TYPE     : String(3);
+        PAYEE_BUS_STATE    : String(3);
+        PAYEE_TOT_INCM_AMT : Decimal(15, 2);
+        PAYEE_CNTR_PMT     : Decimal(15, 2);
+        PAYEE_BUS_INCM_PER : Decimal(15, 2);
+        TOT_EMP_CNT        : Integer;
+        WCQ_ACT_WAGE       : Decimal(15, 2);
+        BPARTNER           : String(10);
+        PRT_REG_STATUS     : String(1);
+        PAYEE_GROSS_PD_AMT : Decimal(15, 2);
+    };
     table type EntityTypeCodeT {
-        CODE       		: String(3);
-      };
+        CODE : String(3);
+    };
 
     context ASIC {
         table type OrgDetailT {
@@ -232,6 +229,5 @@ context Types {
             ELEMENT_NUM : Integer;
             ORG_ID      : String(13);
         };
-        
     };
 };
