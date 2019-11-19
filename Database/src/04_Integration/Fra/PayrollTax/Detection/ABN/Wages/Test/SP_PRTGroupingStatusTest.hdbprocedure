@@ -2,9 +2,9 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_PRTGroupingStatusTest"
 	
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
-	IN lv_grpstatus_ng		NVARCHAR(1),
-	IN lv_grpstatus_gm		NVARCHAR(1),
-	IN lv_grpstatus_dge		NVARCHAR(1),
+	IN iv_grpstatus_ng		NVARCHAR(1),
+	IN iv_grpstatus_gm		NVARCHAR(1),
+	IN iv_grpstatus_dge		NVARCHAR(1),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
 --	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_data_exclusions",
@@ -24,9 +24,9 @@ BEGIN
    
 DECLARE lv_sdate DATE;
 DECLARE lv_edate DATE;
-DECLARE lv_grpstatus_ng  NVARCHAR(1) ;
-DECLARE lv_grpstatus_gm  NVARCHAR(1) ;
-DECLARE lv_grpstatus_dge NVARCHAR(1) ; 
+--DECLARE lv_grpstatus_ng  NVARCHAR(1) ;
+--DECLARE lv_grpstatus_gm  NVARCHAR(1) ;
+--DECLARE lv_grpstatus_dge NVARCHAR(1) ; 
    
 IF :iv_abn = '?' or :iv_abn = '' THEN 
 
@@ -63,10 +63,10 @@ END IF;
 lt_param =   
 SELECT
 TOP 1
-	:lv_grpstatus_ng               AS   "PT_GRPSTATUS_NG",
-	:lv_grpstatus_gm               AS   "PT_GRPSTATUS_GM",
-	:lv_grpstatus_dge              AS   "PT_GRPSTATUS_DGE"
-FROM  :lt_workset
+	:iv_grpstatus_ng               AS   "PT_GRPSTATUS_NG",
+	:iv_grpstatus_gm               AS   "PT_GRPSTATUS_GM",
+	:iv_grpstatus_dge              AS   "PT_GRPSTATUS_DGE"
+FROM  "osr.hana.platform.synonym::SYS.DUMMY"
 
 
 ;
