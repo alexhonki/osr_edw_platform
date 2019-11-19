@@ -1,0 +1,163 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorTPARPmtCnt"	( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+    IN	parameters			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pmt_cnt",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	)
+	
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+   
+BEGIN
+/*
+    table type param_pmt_cnt {
+        RUN_MODE         : String(1);
+        TPAR_PMT_CNT	 : Integer;  --Number of Taxable Payments made to Payees
+    };
+*/
+DECLARE lv_max_rating Decimal(3,2);
+DECLARE lv_mode NVARCHAR(1) DEFAULT 'N';
+DECLARE lv_tpar_pmt_cnt INTEGER DEFAULT 0 ;
+
+/*
+-- test data
+LT_PARAMETERS = 
+                SELECT 
+                               'S' AS     "RUN_MODE",
+                               5 AS 	  "TPAR_PMT_CNT"
+               FROM "osr.hana.platform.synonym::SYS.DUMMY";
+*/
+
+SELECT 
+	"RUN_MODE",
+	"TPAR_PMT_CNT"
+INTO 
+	lv_mode,
+	lv_tpar_pmt_cnt
+FROM :parameters LIMIT 1;
+--FROM :LT_PARAMETERS LIMIT 1;
+
+	PRE_RESULT  =
+		SELECT DISTINCT
+		"TPAR"."PAYER_ABN" AS "ABN",
+		"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+		"TPAR"."GJAHR" AS "GJAHR",
+		COUNT(DISTINCT "TPAR"."PAYEE_ABN") AS "CNT"
+		FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "TPAR"
+		INNER JOIN :it_data_for_rule AS "KEYS"
+		ON "TPAR"."PAYER_ABN" = "KEYS"."ABN"
+		AND "TPAR"."GJAHR" = "KEYS"."GJAHR" 
+		GROUP BY 
+		"TPAR"."PAYER_ABN" ,
+		"KEYS"."PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY",
+		"TPAR"."GJAHR"
+		HAVING COUNT(DISTINCT "TPAR"."PAYEE_ABN")  >= :lv_tpar_pmt_cnt
+		;
+		
+IF :lv_mode = 'S' THEN
+
+lt_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 as  "DETECTION_RESULT"
+FROM :PRE_RESULT;
+
+et_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result;
+
+END IF;
+
+IF :lv_mode = 'R' THEN
+
+LT_RFR=
+
+SELECT 0 AS "LOW" ,  1 AS "HIGH",      ''  AS "TOP_BAND", 0 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 1 AS "LOW" ,  2 AS "HIGH" ,     ''  AS "TOP_BAND", 1 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 2 AS "LOW" ,  3 AS "HIGH",      ''  AS "TOP_BAND", 2 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 3 AS "LOW" ,  4 AS "HIGH",      ''  AS "TOP_BAND", 3 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 4 AS "LOW" ,  5 AS "HIGH",	   ''  AS "TOP_BAND", 4 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 5 AS "LOW" ,  100000 AS "HIGH", 'X' AS "TOP_BAND", 5 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT 
+;
+
+SELECT "RISK_FACTOR_RATING" INTO lv_max_rating FROM :LT_RFR  WHERE "TOP_BAND" = 'X';
+
+lt_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+FROM
+(
+SELECT DISTINCT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"R".RISK_FACTOR_RATING,
+100 as  "DETECTION_RESULT"
+FROM :PRE_RESULT AS "W", :LT_RFR AS "R"
+WHERE "W"."CNT" >= "R"."LOW" 
+  AND "W"."CNT" < "R"."HIGH" 
+  AND "R"."TOP_BAND" <> 'X' 
+UNION
+SELECT DISTINCT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"R".RISK_FACTOR_RATING,
+100 as  "DETECTION_RESULT"
+FROM :PRE_RESULT AS "W", :LT_RFR AS "R"
+WHERE "W"."CNT" >= "R"."LOW" 
+  AND "R"."TOP_BAND" = 'X' 
+)
+;
+
+et_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result;
+
+END IF;
+
+
+et_text = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		''					AS "TEXT",
+		'/OSRQLD/FRA_PRT'	AS "MSGID",
+		'037'				AS "MSGNO",
+		'5'					AS "MSGV1", 
+		'' 					AS "MSGV2",
+		''					AS "MSGV3",
+		''					AS "MSGV4",
+		''					AS "MSGV1_FC",
+		''					AS "MSGV2_FC",
+		''					AS "MSGV3_FC",
+		''					AS "MSGV4_FC"
+	FROM  :lt_result
+	;
+
+
+END 
