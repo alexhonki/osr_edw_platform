@@ -26,7 +26,7 @@ BEGIN
    
 DECLARE lv_sdate DATE;
 DECLARE lv_edate DATE;
-DECLARE lv_variance     DECIMAL(23,2) ;
+DECLARE lv_variance     DECIMAL(15,2) ;
 DECLARE lv_percentage   DECIMAL(5,2) ;
 DECLARE lv_rms_ar_cntr  NVARCHAR(1) ;
 DECLARE lv_scenario     NVARCHAR(10);
@@ -69,9 +69,10 @@ SELECT
 TOP 1
 	:iv_scenario                AS   "SCENARIO",
 	:iv_rms_ar_cntr             AS   "RMS_AR_CNTR_PMT",
-	:iv_percentage              AS   "AMT_VARIANCE",
-	:iv_variance				AS	 "PER_VARIANCE"
+	:iv_variance                AS   "PAYER_PMT_VARIANCE",
+	:iv_percentage				AS	 "PAYER_PMT_PER_VARIANCE"
 FROM  "osr.hana.platform.synonym::SYS.DUMMY"
+
 
 ;
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"
