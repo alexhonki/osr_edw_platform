@@ -118,6 +118,11 @@ context Types {
 		cntr_deduction_per			: Integer;
         SCENARIO        			: String(10);
     	};
+    	
+    	table type param_pmt_cnt {
+        RUN_MODE         : String(1);
+        TPAR_PMT_CNT	 : Integer;  
+    	};
         
         table type param_versus {
             RUN_MODE         : String(1);
@@ -263,6 +268,12 @@ context Types {
             RMS_AR_CNTR_PMT			  : String(1);
             AMT_VARIANCE			  : Decimal(23, 2);
             PER_VARIANCE			  : Decimal(5, 2);
+        };
+
+        table type ContractorEstimatedTaxData {
+        	SOURCE	: String(20);
+            ABN     : String(11);
+            WAGE	: Decimal(15, 2);
         };
         
         //text

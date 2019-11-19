@@ -1,0 +1,324 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrPayerTaxablePmts"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_cntr_payer_tot_taxable_Payments",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+BEGIN
+
+DECLARE lv_mode NVARCHAR(1);  
+DECLARE lv_payer_tot_taxable_Payments Decimal(15,2);
+DECLARE lv_cntr_deduction_per INTEGER ;
+DECLARE lv_scenario NVARCHAR(10); -- PRT3.1 = TPAR, PRT3.2 = CNTR
+DECLARE lv_max_rating Decimal(15,2);
+
+
+/*
+  table type param_cntr_payer_tot_taxable_Payments {
+        RUN_MODE         			: String(1);
+        payer_tot_taxable_Payments 	: Decimal(15, 2);
+		cntr_deduction_per			: Integer;
+        SCENARIO        			: String(10);
+    };
+*/
+ 
+SELECT 
+	"RUN_MODE",
+	"payer_tot_taxable_Payments",
+	"cntr_deduction_per",
+	"SCENARIO" -- PRT3.1 = TPAR, PRT3.2 = CNTR
+INTO 
+	lv_mode,
+	lv_payer_tot_taxable_Payments,
+	lv_cntr_deduction_per,
+	lv_scenario
+FROM :PARAMETERS LIMIT 1;
+
+
+IF lv_scenario = 'PRT3.1' THEN -- TPAR
+	lt_data_1 = 
+		SELECT 
+		"WAGES"."PAYER_ABN" AS "ABN",
+		"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY" AS "PERIOD_KEY",
+		"WAGES"."GJAHR" AS "GJAHR",
+        SUM("WAGES"."PAYEE_GROSS_PD_AMT") AS "PAYEE_GROSS_PD_AMT"
+		FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "WAGES"
+		INNER JOIN :it_data_for_rule AS "KEYS"
+		ON "WAGES"."PAYER_ABN" = "KEYS"."ABN"
+		AND "WAGES"."GJAHR" = "KEYS"."GJAHR" 
+		GROUP BY 
+		"WAGES"."PAYER_ABN",
+		"KEYS"."PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY",
+		"WAGES"."GJAHR"
+		HAVING SUM("WAGES"."PAYEE_GROSS_PD_AMT")  >= :lv_payer_tot_taxable_Payments
+	;
+	
+	PRE_RESULT  =
+	 SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"PAYEE_GROSS_PD_AMT"*(100 - :lv_cntr_deduction_per)/100 AS "CONTRACTORS_PMNTS"
+	FROM :lt_data_1
+	;
+	
+END IF;
+
+IF lv_scenario = 'PRT3.2' THEN -- ITR
+
+------Get ITR Data--------	
+LT_ITR =
+SELECT 
+                "ABN" AS "ABN",
+                "INCM_YR" AS "GJAHR",
+                SUM("CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+                SUM("SALARY_WAGES")      AS "SALARY_WAGES",
+                SUM("SUPER_EXPNS")       AS "SUPER_EXPNS"
+FROM   
+(
+SELECT
+                "DATA"."ABN" AS "ABN",
+                TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) AS "INCM_YR",
+                SUM("DATA"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+                SUM("DATA"."SALARY_WAGES")      AS "SALARY_WAGES",
+                SUM("DATA"."SUPER_EXPNS")       AS "SUPER_EXPNS"
+FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"  -- Non Individual 
+WHERE EXISTS
+(
+                SELECT * FROM :it_data_for_rule AS "DO"
+                WHERE
+                "DATA"."ABN" = "DO"."ABN"
+                AND TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) = "DO"."GJAHR"
+)
+GROUP BY
+                "DATA"."ABN",
+                "DATA"."INCM_YR"
+
+UNION
+
+SELECT
+                "DATA"."ABN" AS "ABN",
+                TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) AS "INCM_YR",
+                SUM("DATA"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+                SUM("DATA"."SALARY_WAGES")      AS "SALARY_WAGES",
+                SUM("DATA"."SUPER_EXPNS")       AS "SUPER_EXPNS"
+FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRIND.active_data" AS "DATA" -- Individual 
+WHERE EXISTS
+(
+                SELECT * FROM :it_data_for_rule AS "DO"
+                WHERE
+                "DATA"."ABN" = "DO"."ABN"
+                AND TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) = "DO"."GJAHR"
+)
+
+GROUP BY
+                "DATA"."ABN",
+                "DATA"."INCM_YR"
+)
+GROUP BY
+"ABN" ,
+"INCM_YR"
+;
+
+------Get Work Cover Data--------
+LT_WCQ =
+SELECT 
+                "ABN",
+                "GJAHR",
+                "WAERS",
+                SUM("WAGE") AS "WAGE"
+
+FROM
+(
+                SELECT 
+                "WAGES"."ABN" AS "ABN",
+               "WAGES"."GJAHR" AS "GJAHR",
+               TO_NVARCHAR('AUD') AS "WAERS",
+               SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
+               FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
+               WHERE "PERIOD_CATEGORY" = 'PT-A'
+               AND EXISTS (
+                               SELECT * FROM :it_data_for_rule AS "KEYS"
+                               WHERE "KEYS"."ABN" = "WAGES"."ABN"
+                                 AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+                                 AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+                 )
+               GROUP BY 
+                "WAGES"."ABN",
+               "WAGES"."GJAHR"
+)
+GROUP BY 
+                "ABN",
+                "GJAHR",
+                "WAERS"
+;
+
+--- Join ITR & WCQ to Caluclate the Varience 
+
+LT_ITR_WCQ =
+SELECT 
+                "DO"."ABN",
+                "DO"."GJAHR",
+                "DO"."PERIOD_CATEGORY",
+                "DO"."PERIOD_KEY",
+                SUM("WCQ"."WAGE") AS "QLD_WAGES",
+                SUM("ITR"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
+                SUM("ITR"."SALARY_WAGES") AS "SALARY_WAGES",
+                SUM("ITR"."SUPER_EXPNS") AS "SUPER_EXPNS"
+FROM
+                :it_data_for_rule AS "DO"
+                
+LEFT OUTER JOIN
+
+--ITR
+                :LT_ITR AS "ITR"
+ON 
+                "DO"."ABN"   = "ITR"."ABN"
+AND "DO"."GJAHR" = "ITR"."GJAHR"
+
+LEFT OUTER JOIN
+--WCQ
+                :LT_WCQ  AS "WCQ"
+ON 
+                "DO"."ABN"   = "WCQ"."ABN"
+AND "DO"."GJAHR" = "WCQ"."GJAHR"
+GROUP BY 
+                "DO"."ABN",
+                "DO"."GJAHR",
+                "DO"."PERIOD_CATEGORY",
+                "DO"."PERIOD_KEY"
+;
+
+LT_DATA_2 =
+SELECT 
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"QLD_WAGES" AS "QLD_WAGES",
+	"CONTRACTORS_PMNTS" AS "CONTRACTORS_PMNTS",
+	"SALARY_WAGES" AS "SALARY_WAGES",
+	"SUPER_EXPNS" AS "SUPER_EXPNS",
+	CASE WHEN ("SALARY_WAGES" + "SUPER_EXPNS") <= 0 AND "CONTRACTORS_PMNTS" <= 0 THEN 0 ELSE 
+	CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) >= 1 THEN 1 ELSE
+    CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) > 0 THEN ("QLD_WAGES" / ("SALARY_WAGES" + "SUPER_EXPNS") ) * "CONTRACTORS_PMNTS"  ELSE 0 
+    END END END AS "QLD_CNTR_PMTS"
+FROM
+:LT_ITR_WCQ
+;
+
+PRE_RESULT =
+SELECT 
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+   "QLD_CNTR_PMTS"*(100 - :lv_cntr_deduction_per)/100 AS "CONTRACTORS_PMNTS"
+FROM
+:LT_DATA_2 
+where "QLD_CNTR_PMTS" >= :lv_payer_tot_taxable_Payments
+;
+
+
+END IF;
+
+IF :lv_mode = 'S' THEN
+
+lt_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 AS "DETECTION_RESULT"
+FROM :PRE_RESULT;
+
+END IF;
+
+
+IF :lv_mode = 'R' THEN
+
+LT_RFR=
+
+SELECT 0       AS "LOW" ,  1       AS "HIGH",      ''  AS "TOP_BAND", 0 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 1       AS "LOW" ,  200000  AS "HIGH" ,     ''  AS "TOP_BAND", 1 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 200000  AS "LOW" ,  400000  AS "HIGH",      ''  AS "TOP_BAND", 2 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 400000  AS "LOW" ,  600000  AS "HIGH",      ''  AS "TOP_BAND", 3 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 600000  AS "LOW" ,  1100000 AS "HIGH",	   ''  AS "TOP_BAND", 4 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT UNION
+SELECT 1100000 AS "LOW" ,  1100000 AS "HIGH",      'X' AS "TOP_BAND", 5 AS "RISK_FACTOR_RATING" FROM :PRE_RESULT 
+;
+
+SELECT "RISK_FACTOR_RATING" INTO lv_max_rating FROM :LT_RFR  WHERE "TOP_BAND" = 'X';
+
+lt_result = 
+SELECT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
+FROM
+(
+SELECT DISTINCT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"R".RISK_FACTOR_RATING,
+100 as  "DETECTION_RESULT"
+FROM :PRE_RESULT AS "W", :LT_RFR AS "R"
+WHERE "W"."CONTRACTORS_PMNTS" >= "R"."LOW" 
+  AND "W"."CONTRACTORS_PMNTS" < "R"."HIGH" 
+  AND "R"."TOP_BAND" <> 'X'  
+UNION
+SELECT DISTINCT
+"W"."ABN",
+"W"."PERIOD_CATEGORY",
+"W"."PERIOD_KEY",
+"W"."GJAHR",
+"R".RISK_FACTOR_RATING,
+100 as  "DETECTION_RESULT"
+FROM :PRE_RESULT AS "W", :LT_RFR AS "R"
+WHERE "W"."CONTRACTORS_PMNTS" >= "R"."LOW" 
+   AND "R"."TOP_BAND" = 'X'  
+)
+;
+
+et_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+"DETECTION_RESULT"
+FROM :lt_result;
+
+END IF;	
+
+et_text = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		''					AS "TEXT",
+		'/OSRQLD/FRA_PRT'	AS "MSGID",
+		'037'				AS "MSGNO",
+		'5'					AS "MSGV1", 
+		'' 					AS "MSGV2",
+		''					AS "MSGV3",
+		''					AS "MSGV4",
+		''					AS "MSGV1_FC",
+		''					AS "MSGV2_FC",
+		''					AS "MSGV3_FC",
+		''					AS "MSGV4_FC"
+	FROM  :lt_result
+	;
+END	

@@ -1,6 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorEstimatedTax"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_rank_contractor_estimated_tax",
+    OUT et_data	       		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ContractorEstimatedTaxData",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
@@ -373,7 +374,13 @@ lt_estimated_tax =
 						END
 				END
 		END AS "RISK_AMOUNT",
-		"W"."WAERS" AS "CURRENCY"
+		"W"."WAERS" AS "CURRENCY",
+		"THLD"."THRESHOLD",
+		"THLD"."DEDUCTION_TO",
+		"RATE"."PRT_HYRLY_RATE",
+		"RATE"."PRT_YRLY_RATE",
+		"W"."WAGE",
+		"W"."WCQ_ACT_WAGES"
 	FROM :lt_wage_for_tax AS "W"
 	INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD" AS "THLD"
 	ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
@@ -529,5 +536,67 @@ et_text =
 ;
 END IF;
 
+et_data = 
+	SELECT 
+		'BAS' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_bas
+	UNION 
+	SELECT 
+		'PAYG' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_payg
+	UNION 
+	SELECT 
+		'ITR' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_itr
+	UNION
+	SELECT 
+		'OSR' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_osr
+	UNION
+	SELECT 
+		'WCQ' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wcq
+	UNION
+	SELECT
+		'EST TAX' AS "SOURCE",
+		"ABN",
+		"RISK_AMOUNT"
+	FROM :lt_estimated_tax
+	UNION
+	SELECT	
+		'RMS' AS "SOURCE",
+		"ABN",
+		"C_BASE_TAX" AS "WAGE"
+		FROM :RMS_WAGES 
+	UNION
+	SELECT
+		'ITR' AS "SOURCE",
+		"ABN",
+		"CONTRACTORS_PMNTS" AS "WAGE"
+	FROM  :lt_itr
+	UNION
+	SELECT 
+		'TPAR' AS "SOURCE",
+		"ABN",
+		"CNTR"."WAGE" AS "WAGE"
+	FROM :lt_cntr_wages AS "CNTR" ;
+
+/*
+        table type ContractorEstimatedTaxData {
+        	SOURCE	: String(20);
+            ABN     : String(11);
+            WAGE	: Decimal(15, 2);
+        };
+*/
 
 END
