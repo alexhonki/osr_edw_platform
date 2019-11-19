@@ -269,6 +269,12 @@ context Types {
             AMT_VARIANCE			  : Decimal(23, 2);
             PER_VARIANCE			  : Decimal(5, 2);
         };
+
+        table type ContractorEstimatedTaxData {
+        	SOURCE	: String(20);
+            ABN     : String(11);
+            WAGE	: Decimal(15, 2);
+        };
         
         //text
         table type text {
