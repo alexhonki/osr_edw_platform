@@ -30,11 +30,22 @@ SELECT
 INTO   
 	lv_scenario 	,
 	lv_rms_ar_cntr	,
-	lv_per_variance ,
+	lv_amt_variance  ,
 	lv_per_variance 
 FROM :PARAMETERS LIMIT 1;
   
 
+sel_it_data = 
+Select DISTINCT
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY"
+FROM
+	:it_data_for_rule
+WHERE 
+	"PERIOD_CATEGORY" = 'PT-A'
+;
 
 ----------When RMS Flag = 'Y'----------------
 IF :lv_rms_ar_cntr = 'Y' THEN
@@ -57,7 +68,7 @@ SELECT
 	SUM("WAGES"."A_CONTRACTORS")       AS "A_CONTRACTORS"
 
 FROM 
-	:it_data_for_rule AS "KEYS"
+	:sel_it_data AS "KEYS"
 
 INNER JOIN 	
 	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
@@ -100,7 +111,7 @@ SELECT
 	SUM("WAGES"."A_CONTRACTORS")       AS "A_CONTRACTORS"
 
 FROM 
-	:it_data_for_rule AS "KEYS"
+	:sel_it_data AS "KEYS"
 
 INNER JOIN 	
 	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
@@ -143,7 +154,7 @@ SELECT
 	"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
 	SUM("WAGES"."A_CONTRACTORS")       AS "A_CONTRACTORS"
 FROM 
-	:it_data_for_rule AS "KEYS"
+	:sel_it_data AS "KEYS"
 
 LEFT OUTER JOIN 	
 	"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
@@ -177,7 +188,7 @@ SELECT DISTINCT
 	"PERIOD_CATEGORY",
 	"PERIOD_KEY"
 FROM 
-	:it_data_for_rule AS "DO"
+	:sel_it_data AS "DO"
 WHERE EXISTS
 (
 	SELECT * FROM :RMS_WAGES AS "RMS_WAGE"
@@ -485,7 +496,7 @@ SELECT DISTINCT
 	"DO"."PERIOD_CATEGORY",
 	"DO"."PERIOD_KEY"
 FROM
-	:it_data_for_rule AS "DO"
+	:sel_it_data AS "DO"
 INNER JOIN
 	:PRE_RESULT AS "PROC"
 ON
@@ -523,7 +534,7 @@ FROM
 	TO_NVARCHAR("PROC"."VARIANCE") AS "VARIANCE",
 	TO_NVARCHAR("PROC"."VARIANCE_PER") AS "VARIANCE_PER"
 FROM
-	:it_data_for_rule AS "DO"
+	:sel_it_data AS "DO"
 INNER JOIN
 	:PRE_RESULT AS "PROC"
 ON
