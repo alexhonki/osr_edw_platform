@@ -4,7 +4,6 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ContractorEstimatedTax"(
     OUT et_data	       		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ContractorEstimatedTaxData",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
-	
 )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
@@ -340,14 +339,20 @@ lt_wage_for_tax =
 		FROM :lt_wages
 		UNION
 		SELECT 
-			"ABN",
-			"PERIOD_CATEGORY",
-			"PERIOD_KEY",
-			"GJAHR",
-			"WAERS",
+			"WCQ"."ABN" AS "ABN",
+			"WCQ"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+			"WCQ"."PERIOD_KEY" AS "PERIOD_KEY",
+			"WCQ"."GJAHR" AS "GJAHR",
+			"WCQ"."WAERS" AS "WAERS",
 			0 AS "WAGE", 
-			"WAGE" AS "WCQ_ACT_WAGES"
-		FROM :lt_wcq
+			"WCQ"."WAGE" AS "WCQ_ACT_WAGES"
+		FROM :lt_wcq AS "WCQ"
+		-- Inner join with au wide wages to filter out WCQ ABNs below combined threshold
+		INNER JOIN :lt_aust_wide_wages AS "AU"
+		ON "WCQ"."ABN" = "AU"."ABN"
+			AND "WCQ"."PERIOD_CATEGORY" = "AU"."PERIOD_CATEGORY"
+			AND "WCQ"."PERIOD_KEY" = "AU"."PERIOD_KEY"
+			AND "WCQ"."GJAHR" = "AU"."GJAHR"
 	)
 	GROUP BY 
 		"ABN",
@@ -406,7 +411,7 @@ RMS_WAGES =
 	FROM 
 		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
 	INNER JOIN 	
-		:it_data_for_rule AS "KEYS"
+		:lt_estimated_tax AS "KEYS"
 	 ON "KEYS"."ABN" = "WAGES"."ABN"
 		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
 	GROUP BY 
@@ -420,51 +425,54 @@ RMS_WAGES =
 
 lt_pre_result = 
 	SELECT 
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
+		"EST_TAX" ."ABN",
+		"EST_TAX" ."PERIOD_CATEGORY",
+		"EST_TAX" ."PERIOD_KEY",
+		"EST_TAX" ."GJAHR",
 		:lv_max_rating AS "RISK_FACTOR_RATING",
-		CASE WHEN ("RISK_AMOUNT" - "RMS_PTAX_AMT") > 0  THEN ("RISK_AMOUNT" - "RMS_PTAX_AMT") ELSE 0 END  AS "RISK_AMOUNT",
-		"CURRENCY" AS "CURRENCY"
+		CASE WHEN ("EST_TAX"."RISK_AMOUNT" - "TAX_PAID"."RMS_PTAX_AMT") > 0  THEN ("EST_TAX"."RISK_AMOUNT" - "TAX_PAID"."RMS_PTAX_AMT") ELSE 0 END  AS "RISK_AMOUNT",
+		"EST_TAX"."CURRENCY" AS "CURRENCY"
 	FROM (
-		SELECT
-			"W"."ABN",
-			"W"."PERIOD_CATEGORY",
-			"W"."PERIOD_KEY",
-			"W"."GJAHR",
-			:lv_max_rating AS "RISK_FACTOR_RATING",
-			"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
-			"W"."CURRENCY" AS "CURRENCY",
-			 0  AS "RMS_PTAX_AMT"
-		FROM :lt_estimated_tax AS "W"
-		WHERE "W"."RISK_AMOUNT" >= :lv_rfr_max_low
-		UNION
-		SELECT
-			"W"."ABN",
-			"W"."PERIOD_CATEGORY",
-			"W"."PERIOD_KEY",
-			"W"."GJAHR",
-			"R"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
-			"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
-			"W"."CURRENCY" AS "CURRENCY",
-			 0  AS "RMS_PTAX_AMT"
-		FROM :lt_estimated_tax AS "W", "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
-		WHERE "W"."RISK_AMOUNT" >= "R"."LOW" 
-		  AND "W"."RISK_AMOUNT" < "R"."HIGH" 
-		  AND "R"."TOP_BAND" <> 'X'
-		UNION
+			SELECT
+				"W"."ABN",
+				"W"."PERIOD_CATEGORY",
+				"W"."PERIOD_KEY",
+				"W"."GJAHR",
+				:lv_max_rating AS "RISK_FACTOR_RATING",
+				"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
+				"W"."CURRENCY" AS "CURRENCY",
+				 0  AS "RMS_PTAX_AMT"
+			FROM :lt_estimated_tax AS "W"
+			WHERE "W"."RISK_AMOUNT" >= :lv_rfr_max_low
+			UNION
+			SELECT
+				"W"."ABN",
+				"W"."PERIOD_CATEGORY",
+				"W"."PERIOD_KEY",
+				"W"."GJAHR",
+				"R"."RISK_FACTOR_RATING" AS "RISK_FACTOR_RATING",
+				"W"."RISK_AMOUNT" AS "RISK_AMOUNT",
+				"W"."CURRENCY" AS "CURRENCY",
+				 0  AS "RMS_PTAX_AMT"
+			FROM :lt_estimated_tax AS "W", "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" AS "R"
+			WHERE "W"."RISK_AMOUNT" >= "R"."LOW" 
+			  AND "W"."RISK_AMOUNT" < "R"."HIGH" 
+			  AND "R"."TOP_BAND" <> 'X'
+	) AS "EST_TAX" 
+	LEFT JOIN 
+	(
 		SELECT	
 			"ABN",
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
-			0 AS "RISK_FACTOR_RATING",
-			0       				AS "RISK_AMOUNT",		
-			'AUD' AS "CURRENCY",
-			"C_BASE_TAX"	        AS "RMS_PTAX_AMT"
-		FROM 	:RMS_WAGES 
-	)
+			"C_BASE_TAX" AS "RMS_PTAX_AMT"
+		FROM :RMS_WAGES 
+	) AS "TAX_PAID"
+	ON "EST_TAX"."ABN" = "TAX_PAID"."ABN"
+		AND "EST_TAX"."GJAHR" = "TAX_PAID"."GJAHR"
+		AND "EST_TAX"."PERIOD_CATEGORY" = "TAX_PAID"."PERIOD_CATEGORY"
+		AND "EST_TAX"."PERIOD_KEY" = "TAX_PAID"."PERIOD_KEY"
 ;
 
 IF :lv_mode = 'R' THEN
@@ -574,13 +582,13 @@ et_data =
 	FROM :lt_estimated_tax
 	UNION
 	SELECT	
-		'RMS' AS "SOURCE",
+		'RMS_C_BASE_TAX' AS "SOURCE",
 		"ABN",
 		"C_BASE_TAX" AS "WAGE"
 		FROM :RMS_WAGES 
 	UNION
 	SELECT
-		'ITR' AS "SOURCE",
+		'ITR_CNTR' AS "SOURCE",
 		"ABN",
 		"CONTRACTORS_PMNTS" AS "WAGE"
 	FROM  :lt_itr
