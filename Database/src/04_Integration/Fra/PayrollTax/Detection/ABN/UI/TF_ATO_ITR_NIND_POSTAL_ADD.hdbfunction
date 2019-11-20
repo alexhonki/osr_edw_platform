@@ -45,7 +45,7 @@ FROM "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 INNER JOIN "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"
 ON  "ALERT"."ABN" = "DATA"."ABN"
 AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."INCM_YR")
-WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+--WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
 ;
 
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN

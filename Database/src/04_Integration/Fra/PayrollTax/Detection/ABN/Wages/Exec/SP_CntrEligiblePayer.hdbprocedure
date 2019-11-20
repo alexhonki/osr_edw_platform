@@ -1,7 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrEligiblePayer"
 (
 	
-	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN	PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pt_eligiblepayer",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"	
@@ -17,21 +17,21 @@ BEGIN
    *************************************/
 DECLARE sdate DATE;
 DECLARE edate DATE;
-DECLARE lv_variance     DECIMAL(23,2) ;
-DECLARE lv_percentage   DECIMAL(5,2) ;
-DECLARE lv_rms_ar_cntr  NVARCHAR(1) ;
-DECLARE lv_scenario     NVARCHAR(10);
+DECLARE lv_amt_variance   DECIMAL(15,2) ;
+DECLARE lv_per_variance   DECIMAL(5,2) ;
+DECLARE lv_rms_ar_cntr    NVARCHAR(1) ;
+DECLARE lv_scenario       NVARCHAR(10);
 
 SELECT
     "SCENARIO"    	,             
     "RMS_AR_CNTR_PMT"	,				
-    "AMT_VARIANCE"	,		
-    "PER_VARIANCE"	
+    "PAYER_PMT_VARIANCE",
+    "PAYER_PMT_PER_VARIANCE"
 INTO   
 	lv_scenario 	,
 	lv_rms_ar_cntr	,
-	lv_variance 	,
-	lv_percentage 
+	lv_per_variance ,
+	lv_per_variance 
 FROM :PARAMETERS LIMIT 1;
   
 
@@ -171,7 +171,13 @@ END IF;
 
 it_data =
 
-SELECT * FROM :it_data_for_rule AS "DO"
+SELECT DISTINCT
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY"
+FROM 
+	:it_data_for_rule AS "DO"
 WHERE EXISTS
 (
 	SELECT * FROM :RMS_WAGES AS "RMS_WAGE"
@@ -187,8 +193,8 @@ WHERE EXISTS
 
 IF lv_scenario = 'PRT3.1' THEN   
 
---Need to update to PAYEE_GROSS_PD_AMT
 
+--Get Payer ABN Gross Paid Amount (ex GST) from the Eligible Payee table
 TPAR_DATA =
 SELECT 
 	"GJAHR",
@@ -208,7 +214,14 @@ GROUP BY
 ;
 
 PRE_RESULT  =
-SELECT * FROM 
+SELECT 
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	TO_DECIMAL("VARIANCE", 15,2) AS "VARIANCE",
+	TO_DECIMAL("VARIANCE_PER", 5,2) AS "VARIANCE_PER"
+FROM 
 (
 SELECT 
 	"ABN",
@@ -217,7 +230,7 @@ SELECT
 	"PERIOD_KEY",
 --	 SUM("A_CONTRACTORS") AS "A_CONTRACTORS",
 --	 SUM("PAYEE_GROSS_PD_AMT") AS "PAYEE_GROSS_PD_AMT",
-	 CASE WHEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS")) < 0 THEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS"))  ELSE 0  END AS "VARIANCE",
+	 CASE WHEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS")) > 0 THEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS"))  ELSE 0  END AS "VARIANCE",
 	 CASE WHEN SUM("A_CONTRACTORS") > 0 THEN (SUM("PAYEE_GROSS_PD_AMT") - SUM("A_CONTRACTORS")) / SUM("A_CONTRACTORS")  ELSE 100  END AS "VARIANCE_PER"
 FROM	 
 (
@@ -259,8 +272,8 @@ GROUP BY
 
 ) 
 WHERE 
-"VARIANCE" >= :lv_variance
-AND "VARIANCE_PER" >= :lv_percentage
+"VARIANCE" >= :lv_amt_variance
+AND "VARIANCE_PER" >= :lv_per_variance
 ;
 
 END IF;
@@ -425,7 +438,7 @@ SELECT
 --	"SUPER_EXPNS",
 --	"QLD_CNTR_PMTS",
 	CASE WHEN "QLD_CNTR_PMTS" > 0  THEN TO_DECIMAL(("QLD_CNTR_PMTS" - "A_CONTRACTORS"),15,2) ELSE 0 END AS "VARIANCE",
-	CASE WHEN "QLD_CNTR_PMTS" > 0 AND "A_CONTRACTORS" > 0 THEN TO_DECIMAL((("QLD_CNTR_PMTS" - "A_CONTRACTORS")/"A_CONTRACTORS")*100,3,2) ELSE 
+	CASE WHEN "QLD_CNTR_PMTS" > 0 AND "A_CONTRACTORS" > 0 THEN TO_DECIMAL((("QLD_CNTR_PMTS" - "A_CONTRACTORS")/"A_CONTRACTORS")*100,5,2) ELSE 
 	CASE WHEN "A_CONTRACTORS" < 0 THEN 100 ELSE 0 END END AS "VARIANCE_PER"
 FROM	
 (
@@ -448,18 +461,14 @@ FROM
 )
 )
 WHERE
-"VARIANCE" >= :lv_variance
-AND "VARIANCE_PER" >= :lv_percentage
+"VARIANCE" >= :lv_amt_variance
+AND "VARIANCE_PER" >= :lv_per_variance
 ;
 
 END IF ;
 
 
 ---------------------END of ITR Scenario------------------------
-
-
-
-
 
 ET_RESULT =
 SELECT 
