@@ -18,7 +18,7 @@ BEGIN
 
 IF :iv_abn = '?' THEN 
 lt_workset =
-SELECT 
+SELECT top 1000
 "ABN",
 "PERIOD_CATEGORY",
 "PERIOD_KEY",
