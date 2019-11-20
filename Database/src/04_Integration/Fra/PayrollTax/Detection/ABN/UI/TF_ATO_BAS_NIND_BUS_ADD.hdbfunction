@@ -72,7 +72,7 @@ FROM
 	"osr.edw.staging.td.ato.proxy::CV_BASNIND_C" AS "DATA"
 	ON  "ALERT"."ABN" = "DATA"."ABN"
 	AND "ALERT"."GJAHR" = TO_NVARCHAR("DATA"."FINANCIAL_YEAR")
-	WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
+--	WHERE LEFT(RIGHT("DATA"."NAME",10),2) = 'FY'
 ;
 
 /*
