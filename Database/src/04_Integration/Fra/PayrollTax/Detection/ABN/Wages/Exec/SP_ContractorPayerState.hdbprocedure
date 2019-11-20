@@ -41,10 +41,17 @@ FROM :parameters LIMIT 1;
 
 
 LT_PAYER = 
-	SELECT
-		"ABN"  AS "PAYER_ABN",
-		"MN_BUS_STT" AS "PAYER_STATE"
-	FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA";
+	SELECT DISTINCT 
+		"PAYER_ABN",
+		"PAYER_STATE"
+	FROM (
+		SELECT DISTINCT
+			"ABN"  AS "PAYER_ABN",
+			"MN_BUS_STT" AS "PAYER_STATE",
+			RANK() over (PARTITION BY "ABN" ORDER BY "ABN", "SOURCE_FIELD_VALUE" desc) AS "NEWEST_RECORD"
+		FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA"
+	) 
+	WHERE "NEWEST_RECORD" = 1;
 
 
 -- States parameter filters
