@@ -1,6 +1,6 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrPayerTaxablePmts"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
-    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_cntr_payer_tot_taxable_Payments",
+    IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_cntr_payer_tot_taxable_Payment",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
@@ -12,30 +12,30 @@ BEGIN
 
 DECLARE lv_mode NVARCHAR(1);  
 DECLARE lv_payer_tot_taxable_Payments Decimal(15,2);
-DECLARE lv_cntr_deduction_per INTEGER ;
+DECLARE lv_cntr_deduction_per Decimal(5,2) ;
 DECLARE lv_scenario NVARCHAR(10); -- PRT3.1 = TPAR, PRT3.2 = CNTR
 DECLARE lv_max_rating Decimal(15,2);
 
 
 /*
-  table type param_cntr_payer_tot_taxable_Payments {
+  table type param_cntr_payer_tot_taxable_Payment {
+    	SCENARIO        			: String(10);
         RUN_MODE         			: String(1);
-        payer_tot_taxable_Payments 	: Decimal(15, 2);
-		cntr_deduction_per			: Integer;
-        SCENARIO        			: String(10);
+        PAYER_TOT_TAXABLE_PAYMENTS 	: Decimal(15, 2);
+		CNTR_DEDUCTION_PER			: Decimal(5,2);
     };
 */
  
 SELECT 
-	"RUN_MODE",
-	"payer_tot_taxable_Payments",
-	"cntr_deduction_per",
-	"SCENARIO" -- PRT3.1 = TPAR, PRT3.2 = CNTR
+"SCENARIO", -- PRT3.1 = TPAR, PRT3.2 = CNTR
+"RUN_MODE",
+"PAYER_TOT_TAXABLE_PAYMENTS",
+"CNTR_DEDUCTION_PER"
 INTO 
-	lv_mode,
-	lv_payer_tot_taxable_Payments,
-	lv_cntr_deduction_per,
-	lv_scenario
+lv_scenario,
+lv_mode,
+lv_payer_tot_taxable_Payments,
+lv_cntr_deduction_per
 FROM :PARAMETERS LIMIT 1;
 
 
@@ -65,7 +65,7 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		"PAYEE_GROSS_PD_AMT"*(100 - :lv_cntr_deduction_per)/100 AS "CONTRACTORS_PMNTS"
+		TO_DECIMAL("PAYEE_GROSS_PD_AMT"*(100 - :lv_cntr_deduction_per)/100,15,2) AS "CONTRACTORS_PMNTS"
 	FROM :lt_data_1
 	;
 	
@@ -207,7 +207,7 @@ SELECT
 	"SALARY_WAGES" AS "SALARY_WAGES",
 	"SUPER_EXPNS" AS "SUPER_EXPNS",
 	CASE WHEN ("SALARY_WAGES" + "SUPER_EXPNS") <= 0 AND "CONTRACTORS_PMNTS" <= 0 THEN 0 ELSE 
-	CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) >= 1 THEN 1 ELSE
+	CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) >= 1 THEN "QLD_WAGES" ELSE
     CASE WHEN ("QLD_WAGES" /  ("SALARY_WAGES" + "SUPER_EXPNS") ) > 0 THEN ("QLD_WAGES" / ("SALARY_WAGES" + "SUPER_EXPNS") ) * "CONTRACTORS_PMNTS"  ELSE 0 
     END END END AS "QLD_CNTR_PMTS"
 FROM
@@ -220,7 +220,7 @@ SELECT
 	"PERIOD_CATEGORY",
 	"PERIOD_KEY",
 	"GJAHR",
-   "QLD_CNTR_PMTS"*(100 - :lv_cntr_deduction_per)/100 AS "CONTRACTORS_PMNTS"
+   TO_DECIMAL("QLD_CNTR_PMTS"*(100 - :lv_cntr_deduction_per)/100,15,2) AS "CONTRACTORS_PMNTS"
 FROM
 :LT_DATA_2 
 where "QLD_CNTR_PMTS" >= :lv_payer_tot_taxable_Payments
@@ -310,8 +310,8 @@ et_text =
 		"GJAHR",
 		''					AS "TEXT",
 		'/OSRQLD/FRA_PRT'	AS "MSGID",
-		'037'				AS "MSGNO",
-		'5'					AS "MSGV1", 
+		'046'				AS "MSGNO",
+		TO_NVARCHAR("CONTRACTORS_PMNTS")	AS "MSGV1", 
 		'' 					AS "MSGV2",
 		''					AS "MSGV3",
 		''					AS "MSGV4",
@@ -319,6 +319,6 @@ et_text =
 		''					AS "MSGV2_FC",
 		''					AS "MSGV3_FC",
 		''					AS "MSGV4_FC"
-	FROM  :lt_result
+	FROM  :PRE_RESULT
 	;
 END	

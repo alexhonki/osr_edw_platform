@@ -59,7 +59,7 @@ FROM :parameters LIMIT 1;
 		
 IF :lv_mode = 'S' THEN
 
-lt_result = 
+et_result = 
 SELECT DISTINCT
 "ABN",
 "PERIOD_CATEGORY",
@@ -67,15 +67,6 @@ SELECT DISTINCT
 "GJAHR",
 100 as  "DETECTION_RESULT"
 FROM :PRE_RESULT;
-
-et_result = 
-SELECT DISTINCT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-"DETECTION_RESULT"
-FROM :lt_result;
 
 END IF;
 
@@ -145,18 +136,18 @@ et_text =
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		''					AS "TEXT",
-		'/OSRQLD/FRA_PRT'	AS "MSGID",
-		'037'				AS "MSGNO",
-		'5'					AS "MSGV1", 
-		'' 					AS "MSGV2",
-		''					AS "MSGV3",
-		''					AS "MSGV4",
-		''					AS "MSGV1_FC",
-		''					AS "MSGV2_FC",
-		''					AS "MSGV3_FC",
-		''					AS "MSGV4_FC"
-	FROM  :lt_result
+		''										AS "TEXT",
+		'/OSRQLD/FRA_PRT'						AS "MSGID",
+		'045'									AS "MSGNO",
+		LEFT(TO_NVARCHAR("CNT"),50)				AS "MSGV1", 
+		'' 										AS "MSGV2",
+		''										AS "MSGV3",
+		''										AS "MSGV4",
+		''										AS "MSGV1_FC",
+		''										AS "MSGV2_FC",
+		''										AS "MSGV3_FC",
+		''										AS "MSGV4_FC"
+	FROM  :PRE_RESULT
 	;
 
 
