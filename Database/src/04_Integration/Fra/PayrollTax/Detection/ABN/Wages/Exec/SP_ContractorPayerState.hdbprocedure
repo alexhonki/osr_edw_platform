@@ -67,14 +67,22 @@ LT_STATES =
 	UNION 
 	SELECT CASE WHEN :lx_nsw_flag = 'Y' THEN 'NSW' END AS "BUS_STATE"
 	FROM "osr.hana.platform.synonym::SYS.DUMMY"
-	UNION 
-	SELECT CASE WHEN :lx_oth_flag = 'Y' THEN (
-		SELECT DISTINCT "PAYER_STATE" FROM :LT_PAYER WHERE "PAYER_STATE" <> 'QLD' AND "PAYER_STATE" <> 'NSW'
-	) END AS "BUS_STATE"
-	FROM "osr.hana.platform.synonym::SYS.DUMMY"
 ;
 
+IF :lx_oth_flag = 'Y' THEN
 
+LT_STATES = 
+	SELECT 
+		"BUS_STATE" 
+	FROM :LT_STATES 
+	UNION 
+	SELECT DISTINCT 
+		"PAYER_STATE" AS "BUS_STATE"
+	FROM :LT_PAYER 
+	WHERE "PAYER_STATE" <> 'QLD' 
+		AND "PAYER_STATE" <> 'NSW'
+;
+END IF;
 
 
 LT_DATA = 
