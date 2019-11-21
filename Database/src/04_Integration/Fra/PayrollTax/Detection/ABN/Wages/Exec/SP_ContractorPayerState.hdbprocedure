@@ -81,6 +81,8 @@ LT_STATES =
 	FROM :LT_PAYER 
 	WHERE "PAYER_STATE" <> 'QLD' 
 		AND "PAYER_STATE" <> 'NSW'
+		AND "PAYER_STATE" IS NOT null 
+		AND "PAYER_STATE" <> ''
 ;
 END IF;
 
@@ -104,48 +106,65 @@ LT_DATA =
 	INNER JOIN :LT_STATES AS "STATES" ON 
 	"PAYER"."PAYER_STATE" = "STATES"."BUS_STATE"
 	;
-	
-	
+
+	lt_result = 
+	SELECT DISTINCT
+	"ABN",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY",
+	"GJAHR",
+	CASE 
+		WHEN "STATE" = 'QLD' THEN 5 
+		WHEN "STATE" = 'NSW' THEN 3
+			ELSE 0 
+	END AS "DETECTION_RESULT"
+	FROM :LT_DATA;
+
 IF :lx_run_mode = 'S' THEN
-lt_result = 
-SELECT DISTINCT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-100 AS "DETECTION_RESULT"
-FROM :LT_DATA;
+	et_result = 
+		SELECT DISTINCT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		100 AS "DETECTION_RESULT"
+		FROM :lt_result;
 
-
-END IF;
-
-IF :lx_run_mode = 'R' THEN
-
-lt_result = 
-SELECT DISTINCT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-CASE 
-	WHEN "STATE" = 'QLD' THEN 5 
-	WHEN "STATE" = 'NSW' THEN 3
-		ELSE 0 
-END AS "DETECTION_RESULT"
-FROM :LT_DATA;
-
-END IF;
-
-et_result = 
-SELECT DISTINCT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR",
-"DETECTION_RESULT"
-FROM :lt_result;
-
-et_text = 
+	et_text = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		''					AS "TEXT",
+		'/OSRQLD/FRA_PRT'	AS "MSGID",
+		'044'				AS "MSGNO",
+		CASE	WHEN "DETECTION_RESULT" = 5 THEN 'QLD'
+				WHEN "DETECTION_RESULT" = 3 THEN 'NSW'
+				ELSE 'OTH' 
+		END 				AS "MSGV1", 
+		''					AS "MSGV2",
+		''					AS "MSGV3",
+		''					AS "MSGV4",
+		''					AS "MSGV1_FC",
+		''					AS "MSGV2_FC",
+		''					AS "MSGV3_FC",
+		''					AS "MSGV4_FC"
+	FROM  :lt_result
+	;
+	
+	
+ELSE 
+	et_result = 
+		SELECT DISTINCT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		"DETECTION_RESULT"
+		FROM :lt_result;
+		
+	et_text = 
 	SELECT 
 		"ABN",
 		"PERIOD_CATEGORY",
@@ -167,6 +186,12 @@ et_text =
 		''					AS "MSGV4_FC"
 	FROM  :lt_result
 	;
+	
+	
+END IF; 
+
+
+
 
 
 END	
