@@ -32,35 +32,31 @@ DECLARE lv_rms_ar_cntr  NVARCHAR(1) ;
 DECLARE lv_scenario     NVARCHAR(10);
    
 IF :iv_abn = '?' or :iv_abn = '' THEN 
-
-lt_workset =
-SELECT top  1000 DISTINCT
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
-FROM
-"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
-
-WHERE  "GJAHR" = :iv_gjahr
-AND "PERIOD_CATEGORY" = 'PT-A'
-
-;
+	
+	lt_workset =
+		SELECT top  1000 DISTINCT
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+		WHERE  "GJAHR" = :iv_gjahr
+			AND "PERIOD_CATEGORY" = 'PT-A'
+	;
 
 ELSE
 
-lt_workset =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
-FROM
-"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
-WHERE "ABN"   = :iv_abn
-  AND "GJAHR" = :iv_gjahr
-  AND "PERIOD_CATEGORY" = 'PT-A'
-;
+	lt_workset =
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+		WHERE "ABN"   = :iv_abn
+		  AND "GJAHR" = :iv_gjahr
+		  AND "PERIOD_CATEGORY" = 'PT-A'
+	;
 
 END IF;
 

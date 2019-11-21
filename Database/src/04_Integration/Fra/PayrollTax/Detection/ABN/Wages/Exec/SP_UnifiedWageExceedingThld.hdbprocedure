@@ -59,4 +59,29 @@ IF LEFT(:LV_SCENARIO,4) = 'PRT2' THEN
 	;
 END IF;
 
+IF  LEFT(:LV_SCENARIO,4) = 'PRT3' THEN 
+
+	lt_parameters_cntr = 
+	SELECT 
+	"RUN_MODE",
+	"SCENARIO",
+	"THRESHOLD_YEARLY",
+	"FLAG_EXCLUSION",
+	"FLAG_ATO",
+	"FLAG_WCQ",
+	"FLAG_INTERSTATE"
+	FROM :PARAMETERS LIMIT 1;
+		
+	CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrAnnualWageExceedingThld"(
+		IT_DATA_FOR_RULE => :it_data_for_rule,
+		PARAMETERS => :lt_parameters_cntr,
+		ET_RESULT => et_result,
+		ET_TEXT => et_text
+	)
+	;
+
+END IF;
+
+
+
 END
