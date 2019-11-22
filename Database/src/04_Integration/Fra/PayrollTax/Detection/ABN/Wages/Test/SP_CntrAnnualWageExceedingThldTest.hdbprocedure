@@ -11,6 +11,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_CntrAnnualWageExceedin
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding_u",
 	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+	OUT et_data	       		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ContractorEstimatedTaxData",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -61,6 +62,7 @@ lt_out_for_rule );
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrAnnualWageExceedingThld"(
 :lt_out_for_rule,
 :lt_param,
+et_data,
 et_result,
 et_text );
  
