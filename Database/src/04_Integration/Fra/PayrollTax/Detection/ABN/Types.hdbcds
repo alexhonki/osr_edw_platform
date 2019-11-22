@@ -276,6 +276,18 @@ context Types {
             WAGE	: Decimal(15, 2);
         };
         
+        table type param_exclusion_u_v1 {
+            SCENARIO                  : String(10);
+            PT_ID_ROLE_DATE           : String(8);
+            PT_ROLE                   : String(1);
+            ID_ROLE                   : String(1);
+            PT_CASE_DATE              : String(8);
+            PT_CASE                   : String(1);
+            FLAG_EXM_CASE             : String(1);
+            FLAG_IS_WAGES             : String(1);
+            OTH_EXMPT_INDICATORS	  : String(1);	   
+        };
+        
         //text
         table type text {
             ABN             : String(11);
