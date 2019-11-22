@@ -1,6 +1,7 @@
 PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrAnnualWageExceedingThld"( 
     IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
     IN 	parameters          "osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exceeding_u",
+    OUT et_data	       		"osr.edw.platform.fra.prt.dt.abn::Types.wages.ContractorEstimatedTaxData",
     OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result_w_amnt",
     OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
@@ -333,13 +334,14 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 			ON "AU_WAGES"."ABN" = "CNTR"."ABN"
 				AND "AU_WAGES"."GJAHR" = "CNTR"."GJAHR"
 			WHERE "AU_WAGES"."WAGE" + "CNTR"."WAGE" >= :lv_thld_yearly
-		) WHERE "WAGE"  >= :lv_thld_yearly
+		) 
 		GROUP BY
 			"ABN",
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
 			"WAERS"
+		HAVING MAX("WAGE") >= :lv_thld_yearly
 	;
 
 END IF;
@@ -391,7 +393,7 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 					AND "AU_WAGES"."GJAHR" = "ITR"."GJAHR"
 					AND "AU_WAGES"."PERIOD_KEY" = "ITR"."PERIOD_KEY"
 					AND "AU_WAGES"."PERIOD_CATEGORY" = "ITR"."PERIOD_CATEGORY"	
-			) WHERE "WAGE" >= :lv_thld_yearly
+			) 
 		)
 		GROUP BY
 			"ABN",
@@ -399,6 +401,7 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 			"PERIOD_KEY",
 			"GJAHR",
 			"WAERS"	
+		HAVING MAX("WAGE") >= :lv_thld_yearly
 		;
 END IF;
 
@@ -463,6 +466,7 @@ lt_wage_for_tax =
 		"PERIOD_KEY",
 		"GJAHR",
 		"WAERS"
+
 ;
  	
 lt_result = 
@@ -563,6 +567,40 @@ et_text =
 	;
 
 END IF;
+
+	ET_DATA = 
+	SELECT 
+		'WFT' AS "SOURCE",
+		"ABN",
+		"WCQ_ACT_WAGES" AS "WAGE"
+	FROM :lt_wage_for_tax
+	UNION
+		SELECT 
+		'WCQFT' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wcq_for_tax
+	UNION
+		SELECT 
+		'WCQ' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wcq
+	UNION
+		SELECT 
+		'WAGES' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wages	
+	UNION
+		SELECT 
+		'ITR' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_itr	
+
+
+	;
 
 
 END
