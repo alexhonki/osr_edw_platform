@@ -279,7 +279,7 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 			ON "AU_WAGES"."ABN" = "CNTR"."ABN"
 				AND "AU_WAGES"."GJAHR" = "CNTR"."GJAHR"
 		) 
-	--	WHERE "WAGE" >= :lv_thld_yearly
+		WHERE "WAGE" >= :lv_thld_yearly
 	;
 
 END IF;
@@ -379,7 +379,7 @@ lt_wage_for_tax =
 		"PERIOD_KEY",
 		"GJAHR",
 		"WAERS"
---	HAVING MAX("WAGE") >= :lv_thld_yearly
+	HAVING MAX("WAGE") >= :lv_thld_yearly
 	;
  	
 lt_estimated_tax = 
@@ -413,7 +413,7 @@ lt_estimated_tax =
 	INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
 	ON  "W"."GJAHR" = "RATE"."GJAHR"
 		AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
---	WHERE "W"."WAGE" >= :lv_thld_yearly
+	WHERE "W"."WAGE" >= :lv_thld_yearly
 ;
 
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
