@@ -40,7 +40,7 @@ AS "CALENDAR",
 WHERE "CALENDAR"."DATE" = "TFKPERIOD"."ABRZU"
   AND "TFKPERIOD"."PERSL" = "TFMCA_INCORR_PER"."PERSL"
   AND LEFT("TFMCA_INCORR_PER"."INCOTYP",2) = 'PT'
-  AND "ABR"."ENT_TYP_CD" <> 'IND'
+--  AND "ABR"."ENT_TYP_CD" <> 'IND' -- This needs to be filtered at the Detection Strategy Level
   AND EXISTS (
 	--SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND_BY_FY" AS "ABN_NIND"
 	SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND" AS "ABN_NIND"
