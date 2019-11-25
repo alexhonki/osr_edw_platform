@@ -1,0 +1,107 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_UnifiedExclusionCheckV1"
+(
+	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+	IN PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exclusion_u_v1",
+	OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT ET_TEXT             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	
+)
+
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   READS SQL DATA AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   
+DECLARE LV_SCENARIO NVARCHAR(10);
+
+SELECT 
+"SCENARIO"
+INTO 
+LV_SCENARIO
+FROM :PARAMETERS LIMIT 1;
+
+
+
+
+IF  LEFT(:LV_SCENARIO,4) = 'PRT1' THEN 
+
+	lt_parameters_grp = 
+	SELECT
+		"SCENARIO"             ,
+		"PT_ID_ROLE_DATE"      ,     
+		"PT_ROLE"              ,           
+		"ID_ROLE"              ,           
+		"PT_CASE_DATE"         ,     
+		"PT_CASE"              ,        
+		"FLAG_EXM_CASE"        ,  
+		'N' AS "FLAG_IS_WAGES" ,
+		"OTH_EXMPT_INDICATORS" 
+	FROM :PARAMETERS LIMIT 1;
+	
+	it_data_for_rule = SELECT * FROM :IT_DATA_FOR_RULE WHERE "GROUP_ID" <> '';
+	
+		CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionCheckV1"(
+		IT_DATA_FOR_RULE => :it_data_for_rule,
+		PARAMETERS => :lt_parameters_grp,
+		ET_RESULT => et_result,
+		ET_TEXT => et_text
+		)
+		;
+END IF;
+
+IF  LEFT(:LV_SCENARIO,4) = 'PRT2' THEN 
+
+	lt_parameters_reg = 
+	SELECT
+		"SCENARIO"             ,
+		"PT_ID_ROLE_DATE"      ,     
+		"PT_ROLE"              ,           
+		"ID_ROLE"              ,           
+		"PT_CASE_DATE"         ,     
+		"PT_CASE"              ,        
+		"FLAG_EXM_CASE"        ,  
+		'N' AS "FLAG_IS_WAGES" ,
+		"OTH_EXMPT_INDICATORS" 
+	FROM :PARAMETERS LIMIT 1;
+
+		CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionCheckV1"(
+		IT_DATA_FOR_RULE => :it_data_for_rule,
+		PARAMETERS => :lt_parameters_reg,
+		ET_RESULT => et_result,
+		ET_TEXT => et_text
+		)
+		;	
+
+END IF;   
+
+
+IF  LEFT(:LV_SCENARIO,4) = 'PRT3' THEN 
+
+	lt_parameters_cntr = 
+	SELECT
+		"SCENARIO"             ,
+		"PT_ID_ROLE_DATE"      ,     
+		"PT_ROLE"              ,           
+		"ID_ROLE"              ,           
+		"PT_CASE_DATE"         ,     
+		"PT_CASE"              ,        
+		"FLAG_EXM_CASE"        ,  
+		"FLAG_IS_WAGES" ,
+		"OTH_EXMPT_INDICATORS" 
+	FROM :PARAMETERS LIMIT 1;
+
+		CALL "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionCheckV1"(
+		IT_DATA_FOR_RULE => :it_data_for_rule,
+		PARAMETERS => :lt_parameters_cntr,
+		ET_RESULT => et_result,
+		ET_TEXT => et_text
+		)
+		;	
+
+END IF;   
+
+END

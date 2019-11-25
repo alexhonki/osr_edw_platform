@@ -1,7 +1,7 @@
-PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpExclusionCheck_V1"
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_ExclusionCheckV1"
 (
 	IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
-	IN PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exclusions_u",
+	IN PARAMETERS			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_exclusion_u_v1",
 	OUT ET_RESULT 		    "osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
     OUT ET_TEXT             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 	
@@ -16,64 +16,39 @@ BEGIN
 
 
 DECLARE lv_role_dt                    VARCHAR(8);
---DECLARE lv_pt_role                    NVARCHAR(1) ;
+DECLARE lv_pt_role                    NVARCHAR(1) ;
 DECLARE lv_id_role                    NVARCHAR(1) ;
 DECLARE lv_pt_case_dt                 VARCHAR(8)  ;
 DECLARE lv_pt_case                    NVARCHAR(1) ;
 DECLARE lv_pt_exm_case				  NVARCHAR(1) ;
---DECLARE lv_flag_abr_acnc              NVARCHAR(1) ;
---DECLARE lv_flag_asic_regd             NVARCHAR(1) ;
---DECLARE lv_flag_sup_gov_exmpt_anzsic  NVARCHAR(1) ;
-DECLARE lv_flag_oth_exm_ind			NVARCHAR(1) ;
+DECLARE lv_flag_oth_exm_ind			  NVARCHAR(1) ;
 DECLARE lv_flag_is_wages		 	  NVARCHAR(1) ;
-DECLARE lv_flag_pt_grouping  		  NVARCHAR(1) ;
+
 DECLARE lv_fy                         NVARCHAR(4) ;
 DECLARE lv_sdate                      DATE;
 DECLARE lv_edate                      DATE;
 
-LT_PARAMETERS = 
-SELECT
-    'Test' 				AS SCENARIO,              
-    TO_DATS('2018-06-30') AS "PT_ID_ROLE_DATE",
-    'Y' 				AS "ID_ROLE",
-    'Y' 				AS "PT_GROUPED",
-    TO_DATS('2018-06-30') AS "PT_CASE_DATE",
-    'Y' 				AS "PT_CASE",
-    'Y' 				AS "FLAG_EXM_CASE",
-    'Y' 				AS "FLAG_OTH_EXM_IND",
-    'Y' 				AS "FLAG_IS_WAGES"
-FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
         
 SELECT
-"PT_ID_ROLE_DATE",
---"PT_ROLE", RMS PT  -- removed
-"ID_ROLE",
-"PT_GROUPED",
-"PT_CASE_DATE",
-"PT_CASE", -- rename to payroll Tax exemption Case
-"FLAG_EXM_CASE",
-"FLAG_OTH_EXM_IND", -- Other Exemption Indicators
---"FLAG_ABR_ACNC",  -- replaced by FLAG_OTH_EXM_IND
---"FLAG_ASIC_REGD", -- replaced by FLAG_OTH_EXM_IND
---"FLAG_SUP_GOV_EXMPT_ANZSIC" -- replaced by FLAG_OTH_EXM_IND
-"FLAG_IS_WAGES" -- interstate wages in annual return
+"PT_ID_ROLE_DATE"      ,     
+"PT_ROLE"              ,           
+"ID_ROLE"              ,           
+"PT_CASE_DATE"         ,     
+"PT_CASE"              ,        
+"FLAG_EXM_CASE"        ,  
+"FLAG_IS_WAGES"        ,
+"OTH_EXMPT_INDICATORS" 
 INTO
 lv_role_dt,
---lv_pt_role,
+lv_pt_role,
 lv_id_role,
-lv_flag_pt_grouping,
 lv_pt_case_dt,
 lv_pt_case,
 lv_pt_exm_case,
-lv_flag_oth_exm_ind,
---lv_flag_abr_acnc,
---lv_flag_asic_regd,
---lv_flag_sup_gov_exmpt_anzsic
-lv_flag_is_wages
-
---FROM :PARAMETERS LIMIT 1;
-FROM :LT_PARAMETERS LIMIT 1;
-
+lv_flag_is_wages,
+lv_flag_oth_exm_ind
+FROM :PARAMETERS LIMIT 1;
 
    /*************************************
        Write your procedure logic 
@@ -441,65 +416,18 @@ SELECT DISTINCT
 )
 ;
 
-------------------------PRT Grouping--------------------------
-
-
-PRT_GRP =
-SELECT DISTINCT 
-"PARTNER"
-FROM
-(
-    SELECT
-    CLIENT     AS CLIENT,
-    PARTNER1   AS GROUP_NO,
-    PARTNER2   AS PARTNER,
-    RELTYP     AS RELTYP,
-    DATE_FROM  AS DATE_FROM,
-    DATE_TO    AS DATE_TO
-    FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.BUT050.active_data" 
-    WHERE RELTYP IN ( 'ZDGE', 'ZGRM', 'ZIGM')
-    AND DATE_FROM  <= :lv_edate
-    AND DATE_TO    >= :lv_sdate
-    AND PARTNER2 IN (SELECT DISTINCT "PARTNER" FROM :BP_ABN)
-)    
-;
-
-
-GROUP_DATA =
-SELECT DISTINCT 
-   "S1"."ABN"       AS "ABN",
-   "S1"."PARTNER"   AS "PARTNER",
-   'GRP'            AS "PT_GROUP"
-FROM 
-	:BP_ABN AS "S1" 
-INNER JOIN
-	:PRT_GRP AS "PTR"
-ON  
-	"S1"."PARTNER" = "PTR"."PARTNER";
-	
---------------------------------------------------------------
-
-----------------------------End of RMS Data------------------
-/* which of these fields?
-lv_edate = TO_DATS(CONCAT(:lv_fy,'0630')); 
-lv_sdate = TO_DATS(CONCAT((TO_INT(:lv_fy) - 1 ),'0701'));
-
-DATE_REGISTERED DATE,
-DATE_CANCELLED DATE,
-STATE_GROUP_ID NVARCHAR(25) ,
-DATE_GROUP_JOINED DATE,
-DATE_GROUP_LEFT DATE
-*/
+---Inter State Wages Declared in the Annual Return -------------
 
 IS_WAGES_DATA = 
 	SELECT DISTINCT
-		"WAGES"."ABN"
+		"WAGES"."ABN",
+		SUM("WAGES"."A_TOT_INT_WAGE") AS "A_TOT_INT_WAGE"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_RMS_WAGES"() AS "WAGES"
 	INNER JOIN :LT_WORKSET AS "WS"
-	ON "WAGES"."ABN"					=  "WS"."ABN"
-		AND "WAGES"."GJAHR" 			=  "WS"."GJAHR"
-		AND "WAGES"."PERIOD_CATEGORY"	=  "WS"."PERIOD_CATEGORY"
-		AND "WAGES"."PERIOD_KEY"		=  "WS"."PERIOD_KEY"
+	ON   "WAGES"."ABN"					=  "WS"."ABN"
+	AND  "WAGES"."GJAHR" 			    =  "WS"."GJAHR"
+	GROUP BY "WAGES"."ABN"
+	HAVING SUM("WAGES"."A_TOT_INT_WAGE") > 0
 ;
 		
 
@@ -510,19 +438,13 @@ SELECT DISTINCT
 		"A"."PERIOD_CATEGORY",
 		"A"."PERIOD_KEY",
 		"A"."GJAHR",
--- Begin change 04/11/2019 for contractors		
-		--CASE WHEN :lv_flag_abr_acnc = 'Y'  				AND "A"."ABR_ACNC_FLAG" = 'Y' 			THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
-		--CASE WHEN :lv_flag_asic_regd = 'Y' 				AND "A"."ASIC_REGD" = 'N'    			THEN 'N' ELSE 'Y' END AS "ASIC_REGD",
-		--CASE WHEN :lv_flag_sup_gov_exmpt_anzsic = 'Y' 	AND "A"."SUP_GOV_EXMPT_ANZSIC" = 'Y' 	THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC",
-		CASE WHEN :lv_flag_oth_exm_ind = 'Y'  				AND "A"."ABR_ACNC_FLAG" = 'Y' 			THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
-		CASE WHEN :lv_flag_oth_exm_ind = 'Y' 				AND "A"."ASIC_REGD" = 'N'    			THEN 'N' ELSE 'Y' END AS "ASIC_REGD",
-		CASE WHEN :lv_flag_oth_exm_ind = 'Y' 				AND "A"."SUP_GOV_EXMPT_ANZSIC" = 'Y' 	THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC",
-		--CASE WHEN :lv_pt_role = 'Y' 					AND "B"."PT_ROLE" = 'PT'   				THEN 'Y' ELSE 'N' END AS "PT_ROLE",
--- Begin change 04/11/2019 for contractors
+		CASE WHEN :lv_flag_oth_exm_ind = 'Y'  			AND "A"."ABR_ACNC_FLAG" = 'Y' 			THEN 'Y' ELSE 'N' END AS "ABR_ACNC_FLAG",
+		CASE WHEN :lv_flag_oth_exm_ind = 'Y' 			AND "A"."ASIC_REGD" = 'N'    			THEN 'N' ELSE 'Y' END AS "ASIC_REGD",
+		CASE WHEN :lv_flag_oth_exm_ind = 'Y' 			AND "A"."SUP_GOV_EXMPT_ANZSIC" = 'Y' 	THEN 'Y' ELSE 'N' END AS "SUP_GOV_EXMPT_ANZSIC",
+	    CASE WHEN :lv_pt_role = 'Y' 				    AND "B"."PT_ROLE" = 'PT'   				THEN 'Y' ELSE 'N' END AS "PT_ROLE",
 		CASE WHEN :lv_id_role = 'Y' 					AND "C"."ID_ROLE" = 'ID'   				THEN 'Y' ELSE 'N' END AS "ID_ROLE",
 		CASE WHEN :lv_pt_case = 'Y' 					AND "D"."ABN" IS NOT NULL  				THEN 'Y' ELSE 'N' END AS "PT_CASE",
 		CASE WHEN :lv_pt_exm_case = 'Y'					AND "E"."ABN" IS NOT NULL  				THEN 'Y' ELSE 'N' END AS "FLAG_EXM_CASE",
-		CASE WHEN :lv_flag_pt_grouping = 'Y'            AND "F"."PT_GROUP" = 'GRP'              THEN 'Y' ELSE 'N' END AS "PT_GROUP",
 		CASE WHEN :lv_flag_is_wages = 'Y'           	AND "G"."ABN" IS NOT NULL               THEN 'Y' ELSE 'N' END AS "IS_WAGES"
 FROM 
 		:EXT_DATA AS "A" 
@@ -542,10 +464,6 @@ FROM
 		:PT_EXM_CASE  AS "E" 
 	ON
 		"A"."ABN" = "E"."ABN"	
-    LEFT OUTER JOIN
-		:GROUP_DATA  AS "F" 
-	ON
-		"A"."ABN" = "F"."ABN"		
 	LEFT OUTER JOIN
 		:IS_WAGES_DATA  AS "G" 
 	ON
@@ -563,16 +481,16 @@ SELECT
    100 AS "DETECTION_RESULT"
    FROM :Step2
 WHERE
---	"PT_ROLE"					= 'Y' -- removed for contractors
-	"ID_ROLE"					= 'Y'
+	"PT_ROLE"					= 'Y' 
+OR	"ID_ROLE"					= 'Y'
 OR	"PT_CASE"					= 'Y'
 OR	"ABR_ACNC_FLAG" 			= 'Y'
 OR	"ASIC_REGD"    			    = 'N'
 OR	"SUP_GOV_EXMPT_ANZSIC"      = 'Y'
 OR  "FLAG_EXM_CASE"				= 'Y'
-OR  "PT_GROUP"                  = 'Y'
-OR	"IS_WAGES"					= 'Y' -- added for contractors
-   ;
+OR	"IS_WAGES"					= 'Y' 
+
+;
 ----------------------Text-------------------------
 
 
@@ -588,7 +506,8 @@ SELECT DISTINCT
 		"ABR_ACNC_FLAG",
 		"ASIC_REGD",
 		"SUP_GOV_EXMPT_ANZSIC" ,
-		"PT_ID_CASE"
+		"PT_ID_CASE",
+		"IS_WAGE"
 FROM
 (
 SELECT DISTINCT 
@@ -599,8 +518,8 @@ SELECT DISTINCT
 		"A"."ABR_ACNC_FLAG",
 		"A"."ASIC_REGD",
 		"A"."SUP_GOV_EXMPT_ANZSIC" ,
-		--CASE WHEN ("B"."PT_ROLE" = 'PT' OR 	"C"."ID_ROLE" = 'ID' OR  "D"."ABN" IS NOT NULL OR "E"."ABN" IS NOT NULL) THEN 'Y' ELSE 'N' END AS "PT_ID_CASE"
-		CASE WHEN (	"C"."ID_ROLE" = 'ID' OR  "D"."ABN" IS NOT NULL OR "E"."ABN" IS NOT NULL) THEN 'Y' ELSE 'N' END AS "PT_ID_CASE"
+	     CASE WHEN ("B"."PT_ROLE" = 'PT' OR 	"C"."ID_ROLE" = 'ID' OR  "D"."ABN" IS NOT NULL OR "E"."ABN" IS NOT NULL) THEN 'Y' ELSE 'N' END AS "PT_ID_CASE",
+	 	 CASE WHEN "G"."ABN" IS NOT NULL THEN 'Y' ELSE 'N' END AS "IS_WAGE"
 FROM 
 		:EXT_DATA AS "A" 
 	LEFT OUTER JOIN
@@ -618,7 +537,11 @@ FROM
 	LEFT OUTER JOIN
 		:PT_EXM_CASE  AS "E" 
 	ON
-		"A"."ABN" = "E"."ABN"	
+		"A"."ABN" = "E"."ABN"
+	LEFT OUTER JOIN
+		:IS_WAGES_DATA  AS "G" 
+	ON
+		"A"."ABN" = "G"."ABN"		
 WHERE "A"."ABN" IN ( SELECT DISTINCT "ABN" FROM :ET_RESULT)		
 )	
 ;
@@ -636,7 +559,7 @@ SELECT
 '015' AS "MSGNO",
 CASE WHEN "PT_ID_CASE" = 'Y'           THEN ' :Yes '       ELSE ' :No '       END AS  "MSGV1",
 CASE WHEN ("ASIC_REGD"  = 'Y' OR "SUP_GOV_EXMPT_ANZSIC" = 'Y' OR   "ABR_ACNC_FLAG" = 'Y')   THEN ' :Yes exempt '  ELSE ' :Not exempt ' END AS  "MSGV2",
-''  AS  "MSGV3",
+CASE WHEN "IS_WAGE" = 'Y' THEN 'Yes' ELSE 'No' END AS  "MSGV3",
 ''  AS  "MSGV4",
 '' AS "MSGV1_FC",
 '' AS "MSGV2_FC",
