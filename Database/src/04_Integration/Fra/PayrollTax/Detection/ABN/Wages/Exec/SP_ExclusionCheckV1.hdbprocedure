@@ -63,9 +63,7 @@ SELECT DISTINCT
 	"GROUP_ID"
 FROM
 	:it_data_for_rule
-WHERE 
-	"GROUP_ID" <> ''
-   
+
 ;
 
 SELECT DISTINCT "GJAHR" INTO lv_fy FROM :LT_WORKSET LIMIT 1 ;
