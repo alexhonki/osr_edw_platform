@@ -24,10 +24,11 @@ DECLARE lv_pt_exm_case				  NVARCHAR(1) ;
 DECLARE lv_flag_oth_exm_ind			  NVARCHAR(1) ;
 DECLARE lv_flag_is_wages		 	  NVARCHAR(1) ;
 
+/*
 DECLARE lv_fy                         NVARCHAR(4) ;
 DECLARE lv_sdate                      DATE;
 DECLARE lv_edate                      DATE;
-
+*/
 
         
 SELECT
@@ -66,12 +67,11 @@ FROM
 
 ;
 
+/*
 SELECT DISTINCT "GJAHR" INTO lv_fy FROM :LT_WORKSET LIMIT 1 ;
-
-
 lv_edate = TO_DATS(CONCAT(:lv_fy,'0630')); 
 lv_sdate = TO_DATS(CONCAT((TO_INT(:lv_fy) - 1 ),'0701'));
-
+*/
 
 -------------------------Start Of External Data----------------------
 -------------------------ABR Fund  and ACNC---------------------------
