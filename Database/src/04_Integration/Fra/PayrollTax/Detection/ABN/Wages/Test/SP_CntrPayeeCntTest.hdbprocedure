@@ -6,7 +6,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_CntrPayeeCntTest"(
 --	IN lv_scenario			NVARCHAR(10),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pmt_cnt",
---	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -53,7 +53,14 @@ TOP 1
 --:lv_scenario 	AS "SCENARIO"
 FROM  :lt_workset;
 
+
+/*
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
+:lt_workset,
+lt_out_for_rule );
+*/
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
 :lt_workset,
 lt_out_for_rule );
 
