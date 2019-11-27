@@ -1,0 +1,157 @@
+PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_CntrEligiblePayee"( 
+    IN  it_data_for_rule 	"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
+    IN	parameters			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_pt_eligiblepayee",
+    OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
+    OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
+	)
+	
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   READS SQL DATA AS
+   
+BEGIN
+
+DECLARE lv_payee_grs_pd_amt_l	    DECIMAL(15,2) DEFAULT 0 ;
+DECLARE lv_payee_grs_pd_amt_h       DECIMAL(15,2) DEFAULT 0	; 
+DECLARE lv_payee_itr_incm_per       DECIMAL(5,2)  DEFAULT 0 ;
+DECLARE lv_payee_itr_cntr_pmt_l     DECIMAL(15,2) DEFAULT 0 ;
+DECLARE lv_payee_itr_cntr_pmt_h     DECIMAL(15,2) DEFAULT 0 ;
+DECLARE lv_payee_wcq_wages_l        DECIMAL(15,2) DEFAULT 0 ;
+DECLARE lv_payee_wcq_wages_h        DECIMAL(15,2) DEFAULT 0 ;
+DECLARE lv_payee_emp_cnt_l          INTEGER       DEFAULT 0 ;
+DECLARE lv_payee_emp_cnt_h          INTEGER       DEFAULT 0 ;
+
+DECLARE 	lv_maxgpd_prtcntr       DECIMAL(15,2) DEFAULT 0 ;
+DECLARE 	lv_maxbip_prtcntr       DECIMAL(5,2)  DEFAULT 0 ;
+DECLARE 	lv_maxcnp_prtcntr       DECIMAL(15,2) DEFAULT 0 ;
+DECLARE 	lv_maxwcq_prtcntr       DECIMAL(15,2) DEFAULT 0 ;
+DECLARE 	lv_maxemp_prtcntr       INTEGER		  DEFAULT 0 ;
+DECLARE     lv_fy                   NVARCHAR(4)             ;
+
+
+SELECT DISTINCT "GJAHR" INTO lv_fy FROM :it_data_for_rule  LIMIT 1 ;
+
+SELECT
+	MAX("PAYEE_GROSS_PD_AMT") AS PAYEE_GROSS_PD_AMT,
+	MAX("PAYEE_BUS_INCM_PER") AS PAYEE_BUS_INCM_PER,
+	MAX("PAYEE_CNTR_PMT")     AS PAYEE_CNTR_PMT,
+	MAX("WCQ_ACT_WAGE")       AS WCQ_ACT_WAGE,
+	MAX("TOT_EMP_CNT")        AS TOT_EMP_CNT
+INTO
+	lv_maxgpd_prtcntr,
+	lv_maxbip_prtcntr,
+	lv_maxcnp_prtcntr,
+	lv_maxwcq_prtcntr,
+	lv_maxemp_prtcntr
+FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR"
+WHERE 
+	"GJAHR" = :lv_fy
+;
+
+SELECT 
+   
+	"PAYEE_GRS_PD_AMT_L"    ,  	
+	CASE WHEN "PAYEE_GRS_PD_AMT_H" > 0     THEN "PAYEE_GRS_PD_AMT_H"     ELSE :lv_maxgpd_prtcntr  END "PAYEE_GRS_PD_AMT_H"   ,  	
+	"PAYEE_ITR_INCM_PER"    ,     
+	"PAYEE_ITR_CNTR_PMT_L"  ,   
+	CASE WHEN "PAYEE_ITR_CNTR_PMT_H" > 0   THEN "PAYEE_ITR_CNTR_PMT_H"   ELSE :lv_maxcnp_prtcntr  END "PAYEE_ITR_CNTR_PMT_H" ,  
+	"PAYEE_WCQ_WAGES_L"     ,      
+	CASE WHEN "PAYEE_WCQ_WAGES_H" > 0      THEN "PAYEE_WCQ_WAGES_H"      ELSE :lv_maxwcq_prtcntr  END "PAYEE_WCQ_WAGES_H",      
+	"PAYEE_EMP_CNT_L"       ,        
+	CASE WHEN "PAYEE_EMP_CNT_H" > 0        THEN "PAYEE_EMP_CNT_H"        ELSE :lv_maxemp_prtcntr  END "PAYEE_EMP_CNT_H"          
+INTO 
+
+	lv_payee_grs_pd_amt_l	,
+	lv_payee_grs_pd_amt_h   ,
+	lv_payee_itr_incm_per   ,
+	lv_payee_itr_cntr_pmt_l ,
+	lv_payee_itr_cntr_pmt_h ,
+	lv_payee_wcq_wages_l    ,
+	lv_payee_wcq_wages_h    ,
+	lv_payee_emp_cnt_l      ,
+	lv_payee_emp_cnt_h      
+FROM :parameters LIMIT 1;
+
+
+	PRE_RESULT  =
+	SELECT
+		PAYER_ABN AS ABN,
+		GJAHR,
+		SUM(PAYEE_GROSS_PD_AMT) AS PAYEE_GROSS_PD_AMT,
+--		SUM(PAYEE_BUS_INCM_PER) AS PAYEE_BUS_INCM_PER
+		SUM(PAYEE_CNTR_PMT) AS PAYEE_CNTR_PMT,
+		SUM(WCQ_ACT_WAGE) AS WCQ_ACT_WAGE,
+		SUM(TOT_EMP_CNT) AS TOT_EMP_CNT
+	FROM
+	"osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR"
+	WHERE
+		PAYEE_GROSS_PD_AMT 	BETWEEN 	:lv_payee_grs_pd_amt_l  	AND   :lv_payee_grs_pd_amt_h
+	AND PAYEE_BUS_INCM_PER  	>= 		:lv_payee_itr_incm_per
+	AND PAYEE_CNTR_PMT      BETWEEN     :lv_payee_itr_cntr_pmt_l    AND   :lv_payee_itr_cntr_pmt_h
+	AND WCQ_ACT_WAGE       	BETWEEN 	:lv_payee_wcq_wages_l  		AND   :lv_payee_wcq_wages_h
+	AND TOT_EMP_CNT       	BETWEEN 	:lv_payee_emp_cnt_l 		AND   :lv_payee_emp_cnt_h
+	AND GJAHR = :lv_fy
+	AND PAYER_ABN IN (SELECT DISTINCT "ABN" FROM :it_data_for_rule)
+	GROUP BY
+		PAYER_ABN,
+		GJAHR
+	;
+
+
+
+
+et_result = 
+SELECT DISTINCT
+"ABN",
+"PERIOD_CATEGORY",
+"PERIOD_KEY",
+"GJAHR",
+100 as  "DETECTION_RESULT"
+FROM :it_data_for_rule
+WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PRE_RESULT)
+
+;
+et_text = 
+
+	SELECT
+		"ABN" AS "ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY" AS "PERIOD_KEY",
+		"GJAHR",
+		''									    	AS "TEXT",
+		'/OSRQLD/FRA_PRT'						    AS "MSGID",
+		'047'									    AS "MSGNO",
+		LEFT(TO_NVARCHAR("PAYEE_GROSS_PD_AMT"),50)	AS "MSGV1", 
+		LEFT(TO_NVARCHAR("PAYEE_CNTR_PMT"),50)      AS "MSGV2",
+		LEFT(TO_NVARCHAR("WCQ_ACT_WAGE"),50)	    AS "MSGV3",
+		LEFT(TO_NVARCHAR("TOT_EMP_CNT"),50)  	    AS "MSGV4",
+		''										    AS "MSGV1_FC",
+		''										    AS "MSGV2_FC",
+		''										    AS "MSGV3_FC",
+		''										    AS "MSGV4_FC"
+		
+	FROM
+		(
+	SELECT 
+		"KEY"."ABN" AS "ABN",
+		"KEY"."PERIOD_CATEGORY",
+		"KEY"."PERIOD_KEY" AS "PERIOD_KEY",
+		"KEY"."GJAHR",
+		LEFT(TO_NVARCHAR("WAGE"."PAYEE_GROSS_PD_AMT"),50)  AS "PAYEE_GROSS_PD_AMT", 
+		LEFT(TO_NVARCHAR("WAGE"."PAYEE_CNTR_PMT"),50)      AS "PAYEE_CNTR_PMT",
+		LEFT(TO_NVARCHAR("WAGE"."WCQ_ACT_WAGE"),50)	       AS "WCQ_ACT_WAGE",
+		LEFT(TO_NVARCHAR("WAGE"."TOT_EMP_CNT"),50)  	   AS "TOT_EMP_CNT"
+	FROM  
+	
+		:it_data_for_rule AS "KEY" 
+	INNER JOIN
+		:PRE_RESULT AS "WAGE"
+	ON
+		"KEY"."ABN"   = "WAGE"."ABN"
+	AND "KEY"."GJAHR" = "WAGE"."GJAHR"
+	
+	)	
+	;
+
+
+END 

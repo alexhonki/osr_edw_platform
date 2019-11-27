@@ -7,6 +7,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_CntrPayerTaxablePmtsTe
 	IN lv_cntr_deduction_per				Decimal(5, 2),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_cntr_payer_tot_taxable_Payment",
+	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -54,7 +55,13 @@ TOP 1
 :lv_cntr_deduction_per			AS 	"CNTR_DEDUCTION_PER"		
 FROM  :lt_workset;
 
+/*
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWages"(
+:lt_workset,
+lt_out_for_rule );
+*/
+
+CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
 :lt_workset,
 lt_out_for_rule );
 

@@ -288,6 +288,18 @@ context Types {
             OTH_EXMPT_INDICATORS	  : String(1);	   
         };
         
+        table type param_pt_eligiblepayee {
+            PAYEE_GRS_PD_AMT_L		   : Decimal(15, 2);
+            PAYEE_GRS_PD_AMT_H		   : Decimal(15, 2);
+            PAYEE_ITR_INCM_PER         : Decimal(5, 2);
+            PAYEE_ITR_CNTR_PMT_L       : Decimal(15, 2);
+            PAYEE_ITR_CNTR_PMT_H       : Decimal(15, 2);
+            PAYEE_WCQ_WAGES_L          : Decimal(15, 2);
+            PAYEE_WCQ_WAGES_H          : Decimal(15, 2);
+			PAYEE_EMP_CNT_L            : Integer;
+			PAYEE_EMP_CNT_H            : Integer;	   
+        };        
+        
         //text
         table type text {
             ABN             : String(11);
