@@ -7,6 +7,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpAnnualWageExceeding
 	IN lx_ato				NVARCHAR(1),
 	IN lx_wcq				NVARCHAR(1),
 	IN lx_interstate		NVARCHAR(1),
+	IN iv_use_alerts		NVARCHAR(1),
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_grp_exceeding",
 	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
@@ -18,40 +19,63 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpAnnualWageExceeding
 	READS SQL DATA AS
 BEGIN
 
-
-lt_workset =
-SELECT 
-"ABN",
-"PERIOD_CATEGORY",
-"PERIOD_KEY",
-"GJAHR"
-FROM
-"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
-WHERE "GJAHR" = :iv_gjahr
-  AND "PERIOD_CATEGORY" = 'PT-A'
+IF :iv_use_alerts = 'Y' THEN
+	lt_workset =
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+		WHERE "GJAHR" = :iv_gjahr
+		  AND "PERIOD_CATEGORY" = 'PT-A'
+		  AND "ABN" in (
+		  	SELECT 
+				"INVEST_OBJ_ID" AS "ABN"
+			FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
+			WHERE "INVEST_OBJ_ID2" = :iv_gjahr
+				AND "INVEST_REASON" LIKE 'PRT1%'
+		  )
 ;
+ELSE
+	lt_workset =
+		SELECT 
+			"ABN",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
+		WHERE "GJAHR" = :iv_gjahr
+		  AND "PERIOD_CATEGORY" = 'PT-A'
+;
+END IF;
 
 lt_param =
-SELECT
-TOP 1
-:lv_run_mode    AS "RUN_MODE",
-:lv_thld_yearly AS "THRESHOLD_YEARLY",
-:lx_exclusion	AS "FLAG_EXCLUSION",
-:lx_ato 		AS "FLAG_ATO",
-:lx_wcq			AS "FLAG_WCQ",
-:lx_interstate	AS "FLAG_INTERSTATE" 
-FROM  :lt_workset;
+	SELECT
+		TOP 1
+		:lv_run_mode    AS "RUN_MODE",
+		:lv_thld_yearly AS "THRESHOLD_YEARLY",
+		:lx_exclusion	AS "FLAG_EXCLUSION",
+		:lx_ato 		AS "FLAG_ATO",
+		:lx_wcq			AS "FLAG_WCQ",
+		:lx_interstate	AS "FLAG_INTERSTATE" 
+	FROM  :lt_workset;
 
 CALL "osr.edw.platform.fra.prt.dt.abn.wages.se::SP_SelectWageGeneric"(
 :lt_workset,
 lt_out_for_rule );
 
-IF :iv_group_id IS NOT NULL OR :iv_group_id <> '' THEN 
-lt_out_for_rule = SELECT * FROM :lt_out_for_rule WHERE "GROUP_ID" = :iv_group_id;
+IF :iv_group_id IS  NULL OR :iv_group_id ='' THEN 
+	lt_out_for_rule = 
+		SELECT * 
+		FROM :lt_out_for_rule 
+		WHERE "GJAHR" = :iv_gjahr
+			AND "ABN" is not null;
 ELSE 
-lt_out_for_rule = SELECT * FROM :lt_out_for_rule 
-WHERE "GJAHR" = :iv_gjahr
-AND "ABN" is not null;
+	lt_out_for_rule = 
+		SELECT * 
+		FROM :lt_out_for_rule 
+		WHERE "GROUP_ID" = :iv_group_id;
 END IF;
 
 CALL  "osr.edw.platform.fra.prt.dt.abn.wages.ex::SP_GrpAnnualWageExceedingThld"(
