@@ -8,6 +8,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_GrpAnnualWageExceeding
 	IN lx_wcq				NVARCHAR(1),
 	IN lx_interstate		NVARCHAR(1),
 	IN iv_use_alerts		NVARCHAR(1),
+	IN iv_use_alert_reason	NVARCHAR(10), -- eg 'PRT1'
 	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
 	OUT lt_param			"osr.edw.platform.fra.prt.dt.abn::Types.wages.param_grp_exceeding",
 	OUT lt_out_for_rule		"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_wage",
@@ -34,7 +35,7 @@ IF :iv_use_alerts = 'Y' THEN
 				"INVEST_OBJ_ID" AS "ABN"
 			FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
 			WHERE "INVEST_OBJ_ID2" = :iv_gjahr
-				AND "INVEST_REASON" LIKE 'PRT1%'
+				AND "INVEST_REASON" = :iv_use_alert_reason
 		  )
 ;
 ELSE
