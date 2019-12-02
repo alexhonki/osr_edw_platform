@@ -315,7 +315,7 @@ SELECT
 	SUM("DATA"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
 	SUM("DATA"."SALARY_WAGES")      AS "SALARY_WAGES",
 	SUM("DATA"."SUPER_EXPNS")       AS "SUPER_EXPNS"
-FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRNIND.active_data" AS "DATA"  -- Non Individual 
+FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND" AS "DATA"  -- Non Individual 
 WHERE EXISTS
 (
 	SELECT * FROM :it_data AS "DO"
@@ -335,7 +335,7 @@ SELECT
 	SUM("DATA"."CONTRACTORS_PMNTS") AS "CONTRACTORS_PMNTS",
 	SUM("DATA"."SALARY_WAGES")      AS "SALARY_WAGES",
 	SUM("DATA"."SUPER_EXPNS")       AS "SUPER_EXPNS"
-FROM "osr.edw.staging.td.ato.synonym::CDS_ITR.DSO.ITRIND.active_data" AS "DATA" -- Individual 
+FROM "osr.edw.staging.td.ato.proxy::CV_ITRIND" AS "DATA" -- Individual 
 WHERE EXISTS
 (
 	SELECT * FROM :it_data AS "DO"
