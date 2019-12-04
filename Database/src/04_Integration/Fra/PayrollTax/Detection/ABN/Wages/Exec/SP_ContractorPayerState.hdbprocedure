@@ -61,12 +61,15 @@ LT_PAYER =
 -- 3. OTHER states = Y / N 
 -- Filter by "BUS_STATE" 
 LT_STATES = 
+SELECT * FROM (
 	SELECT 
-	CASE WHEN :lx_qld_flag = 'Y' THEN 'QLD' END AS "BUS_STATE"
+	CASE WHEN :lx_qld_flag = 'Y' THEN 'QLD' ELSE '' END AS "BUS_STATE"
 	FROM "osr.hana.platform.synonym::SYS.DUMMY"
 	UNION 
-	SELECT CASE WHEN :lx_nsw_flag = 'Y' THEN 'NSW' END AS "BUS_STATE"
+	SELECT CASE WHEN :lx_nsw_flag = 'Y' THEN 'NSW' ELSE '' END AS "BUS_STATE"
 	FROM "osr.hana.platform.synonym::SYS.DUMMY"
+) WHERE "BUS_STATE" <> ''
+
 ;
 
 IF :lx_oth_flag = 'Y' THEN
@@ -161,7 +164,7 @@ ELSE
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		"DETECTION_RESULT"
+		"DETECTION_RESULT" * 20 AS "DETECTION_RESULT"
 		FROM :lt_result;
 		
 	et_text = 
