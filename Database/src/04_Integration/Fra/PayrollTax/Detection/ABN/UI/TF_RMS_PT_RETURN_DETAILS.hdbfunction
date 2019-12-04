@@ -1,4 +1,10 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"( IN IP_ALERT_ID NVARCHAR(20))
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"( 
+	IN IP_ALERT_ID NVARCHAR(20),
+	-- added 03/12/2019 for contractor model
+	IN IP_GJAHR 	NVARCHAR(4),
+	IN IP_GJAHR_LB  INTEGER,
+    IN IP_GJAHR_HB  INTEGER
+)
 
 RETURNS TABLE
 (
@@ -41,6 +47,13 @@ BEGIN
     /*****************************
         Write your function logic
     ****************************/
+	-- added 03/12/2019 for contractor model as all years required  
+	LT_GJAHR = 
+	SELECT DISTINCT "GJAHR" AS "GJAHR" FROM "osr.edw.platform.fra.prt.model::TF_FISCAL_CALENDAR"()
+	WHERE "GJAHR" >= TO_NVARCHAR(TO_INT(:IP_GJAHR) + :IP_GJAHR_LB)
+	  AND "GJAHR" <= TO_NVARCHAR(TO_INT(:IP_GJAHR) + :IP_GJAHR_HB)
+;
+
     
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = ''THEN
 
@@ -50,7 +63,8 @@ SELECT
 "ALERT"."DB_KEY_DASH"			AS "DB_KEY_DASH",
 "ALERT"."ALERT_ID"				AS "ALERT_ID",	
 "ALERT"."ABN"					AS "ABN",
-"ALERT"."GJAHR" 				AS "GJAHR",
+--"ALERT"."GJAHR" 				AS "GJAHR", -- removed contractor model 03.12.2019
+"GJAHR_LIST"."GJAHR"			AS "GJAHR", -- added contractor model 03.12.2019
 "DFMCA_RETURN"."TAXPAYER"       AS "BPARTNER",
 "DFMCA_RETURN"."FBNUM"     	    AS "FBNUM",
 "0IDP"."C_START_DATE"			AS "C_START_DATE",
@@ -77,20 +91,21 @@ SELECT
 "3PYA"."A_TRAINEES_PMT"			AS "A_TRAINEES_PMT",	
 "3PYA"."A_OTH_NON_TAX_WAGE"		AS "A_OTH_NON_TAX_WAGE",	
 'AUD' 						AS "WAERS"
-FROM 
-"osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "DFMCA_RETURN"
-INNER JOIN
-"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS "0IDP"
+FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "DFMCA_RETURN"
+INNER JOIN "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS "0IDP"
 ON "DFMCA_RETURN"."CASE_GUID" = "0IDP"."RETURN_ID"
-INNER JOIN
-"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
+INNER JOIN "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
 ON "DFMCA_RETURN"."CASE_GUID" = "3PYA"."RETURN_ID"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
 ON "0IDP"."C_START_DATE" = "CALENDAR"."DATE"
-INNER JOIN
-"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+-- BEGIN Added for contractor model 03.12.2019
+INNER JOIN :LT_GJAHR AS "GJAHR_LIST"
+ON "CALENDAR"."FISCAL_YEAR" = "GJAHR_LIST"."GJAHR"
+-- END Added for contractor model 03.12.2019
+INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 ON "DFMCA_RETURN"."TAXPAYER" = "ALERT"."BPARTNER"
-AND TO_NVARCHAR("CALENDAR"."FISCAL_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+	--AND TO_NVARCHAR("CALENDAR"."FISCAL_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR")) -- removed contractor model 03.12.2019
+	AND TO_NVARCHAR("CALENDAR"."FISCAL_YEAR") = TO_NVARCHAR(TO_INT("GJAHR_LIST"."GJAHR")) -- Added contractor model 03.12.2019
 WHERE "DFMCA_RETURN"."REVENUE_TYPE" = 'PT'
   AND "DFMCA_RETURN"."FBSTA" = 'IP014'
   AND "DFMCA_RETURN"."FBTYP" IN ( 'ZPA2', 'ZPF2', 'ZPTF')
@@ -105,7 +120,8 @@ SELECT
 "ALERT"."DB_KEY_DASH"			AS "DB_KEY_DASH",
 "ALERT"."ALERT_ID"				AS "ALERT_ID",	
 "ALERT"."ABN"					AS "ABN",
-"ALERT"."GJAHR" 				AS "GJAHR",
+--"ALERT"."GJAHR" 				AS "GJAHR", -- removed contractor model 03.12.2019
+"GJAHR_LIST"."GJAHR"			AS "GJAHR", -- added contractor model 03.12.2019
 "DFMCA_RETURN". "TAXPAYER"      AS "BPARTNER",
 "DFMCA_RETURN". "FBNUM"     	AS "FBNUM",
 "0IDP"."C_START_DATE"			AS "C_START_DATE",
@@ -132,20 +148,21 @@ SELECT
 "3PYA"."A_TRAINEES_PMT"		AS "A_TRAINEES_PMT",	
 "3PYA"."A_OTH_NON_TAX_WAGE"	AS "A_OTH_NON_TAX_WAGE",	
 'AUD' 						AS "WAERS"
-FROM 
-"osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "DFMCA_RETURN"
-INNER JOIN
-"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS "0IDP"
+FROM "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS "DFMCA_RETURN"
+INNER JOIN "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS "0IDP"
 ON "DFMCA_RETURN"."CASE_GUID" = "0IDP"."RETURN_ID"
-INNER JOIN
-"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
+INNER JOIN "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3PYA_M_LV"() AS "3PYA"
 ON "DFMCA_RETURN"."CASE_GUID" = "3PYA"."RETURN_ID"
 INNER JOIN "osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR" AS "CALENDAR"
 ON "0IDP"."C_START_DATE" = "CALENDAR"."DATE"
-INNER JOIN
-"osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
+-- BEGIN Added for contractor model 03.12.2019
+INNER JOIN :LT_GJAHR AS "GJAHR_LIST"
+ON "CALENDAR"."FISCAL_YEAR" = "GJAHR_LIST"."GJAHR"
+-- END Added for contractor model 03.12.2019
+INNER JOIN "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"() AS "ALERT"
 ON "DFMCA_RETURN"."TAXPAYER" = "ALERT"."BPARTNER"
-AND TO_NVARCHAR("CALENDAR"."FISCAL_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR"))
+--	AND TO_NVARCHAR("CALENDAR"."FISCAL_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."GJAHR")) -- removed contractor model 03.12.2019
+	AND TO_NVARCHAR("CALENDAR"."FISCAL_YEAR") = TO_NVARCHAR(TO_INT("GJAHR_LIST"."GJAHR")) -- Added contractor model 03.12.2019
 WHERE "DFMCA_RETURN"."REVENUE_TYPE" = 'PT'
   AND "DFMCA_RETURN"."FBSTA" = 'IP014'
   AND "DFMCA_RETURN"."FBTYP" IN ( 'ZPA2', 'ZPF2', 'ZPTF')

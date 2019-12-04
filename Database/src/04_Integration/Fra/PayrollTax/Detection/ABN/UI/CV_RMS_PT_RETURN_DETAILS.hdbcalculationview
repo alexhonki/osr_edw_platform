@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_RMS_PT_RETURN_DETAILS" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_RMS_PT_RETURN_DETAILS"/>
-<localVariables/>
+<localVariables>
+  <variable id="IP_GJAHR" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="4">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_GJAHR_LB" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_GJAHR_HB" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="INTEGER" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_ALERT_ID" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="20">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+</localVariables>
 <variableMappings>
-  <mapping xsi:type="Variable:ConstantVariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS" value="NULL">
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS">
     <targetVariable name="IP_ALERT_ID" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"/>
+    <localVariable>IP_ALERT_ID</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS">
+    <targetVariable name="IP_GJAHR" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"/>
+    <localVariable>IP_GJAHR</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS">
+    <targetVariable name="IP_GJAHR_LB" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"/>
+    <localVariable>IP_GJAHR_LB</localVariable>
+  </mapping>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS">
+    <targetVariable name="IP_GJAHR_HB" resourceUri="osr.edw.platform.fra.prt.dt.abn.ui::TF_RMS_PT_RETURN_DETAILS"/>
+    <localVariable>IP_GJAHR_HB</localVariable>
   </mapping>
 </variableMappings>
 <dataSources>

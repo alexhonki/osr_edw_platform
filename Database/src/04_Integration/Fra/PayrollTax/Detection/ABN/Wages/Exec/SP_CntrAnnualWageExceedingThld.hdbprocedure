@@ -304,14 +304,15 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 		GROUP BY "WAGES"."PAYER_ABN", "WAGES"."GJAHR"
 	;
 		
-	lt_wages = 
+	lt_wages_cntr = 
 		SELECT 
 			"ABN",
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
 			"WAERS",
-			MAX("WAGE") AS "WAGE"
+			MAX("WAGE") AS "WAGE",
+			MAX("CNTR_WAGES") AS "CNTR_WAGES"
 		FROM (	
 			SELECT 
 				"ABN",
@@ -319,7 +320,8 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 				"PERIOD_KEY",
 				"GJAHR",
 				"WAERS",
-				"WAGE"
+				"WAGE",
+				0 AS "CNTR_WAGES"
 			FROM :lt_wages
 			UNION
 			SELECT 
@@ -328,7 +330,8 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 				"AU_WAGES"."PERIOD_KEY",
 				"AU_WAGES"."GJAHR",
 				TO_NVARCHAR('AUD') AS "WAERS",
-				"AU_WAGES"."WAGE" + "CNTR"."WAGE" AS "WAGE"
+				"AU_WAGES"."WAGE" + "CNTR"."WAGE" AS "WAGE",
+				"CNTR"."WAGE" AS "CNTR_WAGES"
 			FROM :lt_wages AS "AU_WAGES"
 			INNER JOIN :lt_cntr_wages AS "CNTR"
 			ON "AU_WAGES"."ABN" = "CNTR"."ABN"
@@ -341,20 +344,21 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 			"PERIOD_KEY",
 			"GJAHR",
 			"WAERS"
-		HAVING MAX("WAGE") >= :lv_thld_yearly
+		HAVING MAX("WAGE") >= :lv_thld_yearly AND MAX("CNTR_WAGES") > 0
 	;
 
 END IF;
 
 IF lv_scenario = 'PRT3.2' THEN -- ITR
-	lt_wages = 
+	lt_wages_cntr = 
 		SELECT 
 			"ABN",
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
 			"GJAHR",
 			"WAERS",
-			MAX("WAGE") AS "WAGE"
+			MAX("WAGE") AS "WAGE",
+			MAX("CNTR_WAGES") AS "CNTR_WAGES"
 		FROM ( 
 			SELECT
 				"ABN",
@@ -362,7 +366,8 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 				"PERIOD_KEY",
 				"GJAHR",
 				"WAERS",
-				"WAGE"
+				"WAGE",
+				0 AS "CNTR_WAGES"
 			FROM :lt_wages
 			UNION
 			SELECT 
@@ -371,7 +376,8 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 				"PERIOD_KEY",
 				"GJAHR",
 				"WAERS",
-				"WAGE"
+				"WAGE",
+				"CNTR_WAGES"
 			FROM (	
 				SELECT 
 					"AU_WAGES"."ABN",
@@ -381,7 +387,8 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 					TO_NVARCHAR('AUD') AS "WAERS",
 					CASE WHEN ("AU_WAGES"."WAGE" * "ITR"."CONTRACTORS_PMNTS") = 0 THEN "AU_WAGES"."WAGE" 
 						ELSE ("WCQ"."WAGE" / "AU_WAGES"."WAGE" * "ITR"."CONTRACTORS_PMNTS") + "AU_WAGES"."WAGE" 
-					END AS "WAGE"
+					END AS "WAGE",
+					"ITR"."CONTRACTORS_PMNTS" AS "CNTR_WAGES"
 				FROM :lt_wages AS "AU_WAGES"
 				INNER JOIN :lt_itr AS "ITR"
 				ON "AU_WAGES"."ABN" = "ITR"."ABN"
@@ -401,7 +408,7 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 			"PERIOD_KEY",
 			"GJAHR",
 			"WAERS"	
-		HAVING MAX("WAGE") >= :lv_thld_yearly
+		HAVING MAX("WAGE") >= :lv_thld_yearly AND MAX("CNTR_WAGES") > 0
 		;
 END IF;
 
@@ -413,9 +420,9 @@ lt_wcq_for_tax =
 		"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
 		"WAGES"."GJAHR" AS "GJAHR",
 		"WAGES"."WAERS" AS "WAERS",
-		SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
+		SUM("WAGES"."WCQ_ACT_WAGES" + "KEYS"."CNTR_WAGES") AS "WAGE"
 	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WAGES"
-	INNER JOIN :lt_wages AS "KEYS"
+	INNER JOIN :lt_wages_cntr AS "KEYS"
 	ON "KEYS"."ABN" = "WAGES"."ABN"
 		AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
 		AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
@@ -448,7 +455,7 @@ lt_wage_for_tax =
 			"WAERS",
 			"WAGE", 
 			0 AS "WCQ_ACT_WAGES"
-		FROM :lt_wages
+		FROM :lt_wages_cntr
 		UNION
 		SELECT 
 			"ABN",
@@ -468,7 +475,31 @@ lt_wage_for_tax =
 		"WAERS"
 
 ;
- 	
+
+-----------------RMS PT Returns----------
+LT_RMS_WAGES =
+	SELECT
+		"WAGES"."ABN",
+		"WAGES"."GJAHR",
+		"KEYS"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY" AS "PERIOD_KEY" ,
+		SUM("WAGES"."C_BASE_TAX") AS "C_BASE_TAX"
+	FROM 
+		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "WAGES"
+	INNER JOIN 	
+		:lt_wages_cntr AS "KEYS"
+	 ON "KEYS"."ABN" = "WAGES"."ABN"
+		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+		AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY" 
+	GROUP BY 
+		"WAGES"."ABN",
+		"WAGES"."GJAHR",
+		"KEYS"."PERIOD_CATEGORY",
+		"KEYS"."PERIOD_KEY"
+	HAVING SUM("WAGES"."C_BASE_TAX") > 0
+;
+----------------------------------------
+
 lt_result = 
 	SELECT 
 		"W"."ABN",
@@ -476,7 +507,7 @@ lt_result =
 		"W"."PERIOD_KEY",
 		"W"."GJAHR",
 		100 AS "DETECTION_RESULT",
-		CASE WHEN ( "W"."WAGE" >= "THLD"."DEDUCTION_TO") THEN ("W"."WCQ_ACT_WAGES"*("RATE"."PRT_HYRLY_RATE"/100)) -- Higher rate (PRT_HYRLY_RATE) for over deduction threshold 
+		CASE WHEN ( "W"."WAGE" >= "THLD"."DEDUCTION_TO") THEN ("W"."WCQ_ACT_WAGES"*("RATE"."PRT_HYRLY_RATE"/100))  -- Higher rate (PRT_HYRLY_RATE) for over deduction threshold 
 			ELSE 
 				CASE WHEN ( "W"."WAGE" <= "THLD"."THRESHOLD" ) THEN 0 --no PRT liability
 					ELSE 
@@ -494,6 +525,23 @@ lt_result =
 	INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
 	ON  "W"."GJAHR" = "RATE"."GJAHR"
 		AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+;
+-- subtract any paid amounts from RMS
+lt_result_rms = 
+	SELECT 
+		"RES"."ABN",
+		"RES"."PERIOD_CATEGORY",
+		"RES"."PERIOD_KEY",
+		"RES"."GJAHR",
+		100 AS "DETECTION_RESULT",
+		CASE WHEN "RMS"."C_BASE_TAX" IS NOT NULL AND ("RES"."RISK_AMOUNT" - "RMS"."C_BASE_TAX") > 0 THEN ("RES"."RISK_AMOUNT" - "RMS"."C_BASE_TAX") 
+		ELSE "RES"."RISK_AMOUNT" END AS "RISK_AMOUNT",
+		"RES"."CURRENCY" AS "CURRENCY"
+	FROM :lt_result AS "RES"
+	LEFT JOIN :LT_RMS_WAGES AS "RMS"
+	ON "RES"."ABN" = "RMS"."ABN"
+		AND "RES"."GJAHR" = "RMS"."GJAHR"
+		AND "RES"."PERIOD_CATEGORY" = "RMS"."PERIOD_CATEGORY"
 	;
 
 IF :lv_mode = 'R' THEN
@@ -507,7 +555,7 @@ et_result =
 		100 AS "DETECTION_RESULT",
 		"RISK_AMOUNT",
 		"CURRENCY" 
-	FROM :lt_result
+	FROM :lt_result_rms
 	;
 
 et_text = 
@@ -543,7 +591,7 @@ et_result =
 		100 AS "DETECTION_RESULT",
 		"RISK_AMOUNT",
 		"CURRENCY" 
-	FROM :lt_result
+	FROM :lt_result_rms
 	;
 
 et_text = 
@@ -597,7 +645,31 @@ END IF;
 		'ITR' AS "SOURCE",
 		"ABN",
 		"WAGE"
-	FROM :lt_itr	
+	FROM :lt_itr
+	UNION 
+		SELECT
+		'CTR_WGE' AS "SOURCE",
+		"ABN",
+		"CNTR_WAGES" AS "WAGE"
+	FROM :lt_wages_cntr	
+	UNION
+	SELECT
+		'RMS' AS "SOURCE",
+		"ABN",
+		"C_BASE_TAX" AS "WAGE"
+	FROM :LT_RMS_WAGES
+	UNION
+	SELECT
+		'RES_RMS' AS "SOURCE",
+		"ABN",
+		"RISK_AMOUNT" AS "WAGE"
+	FROM :lt_result_rms
+	UNION
+	SELECT
+		'RES' AS "SOURCE",
+		"ABN",
+		"RISK_AMOUNT" AS "WAGE"
+	FROM :lt_result
 
 
 	;
