@@ -87,6 +87,10 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 		WHERE "ITR"."CONTRACTORS_PMNTS" > 0 
 ;
 
+-- TEST
+	lt_wages_3_2 = 
+	select * from :lt_wages;
+
 END IF;
 
 --	Create filter list of relevant ABNS
@@ -320,7 +324,9 @@ END IF;
  
  END IF;
  
- 
+-- TEST
+lt_wages_3_2_2 = select * from :lt_wages;
+
 lt_wages =  
 	SELECT 
 		"ABN",
@@ -337,9 +343,10 @@ lt_wages =
 		"PERIOD_KEY",
 		"GJAHR",
 		"WAERS"
-	HAVING MAX("WAGE") >= :lv_thld_yearly AND MAX("CNTR_WAGE") > 0
+	HAVING MAX("CNTR_WAGE") > 0
 ;
-
+-- TEST
+lt_wages_3_2_3 = select * from :lt_wages;
 
 -- Add contractor wages to total au wages 
 -- calculation depending on scenario
@@ -379,9 +386,36 @@ IF lv_scenario = 'PRT3.2' THEN -- ITR
 			AND "AU_WAGES"."PERIOD_CATEGORY" = "WCQ"."PERIOD_CATEGORY"
 		WHERE "AU_WAGES"."WAGE" >= :lv_thld_yearly
 		;
+
+-- TEST
+lt_wages_3_2_4 = select * from :lt_wages;
+
+
 END IF;
-
-
+-- REMOVE AFTER TESTING
+lt_wcq_for_tax_test = 
+	SELECT 
+		"WAGES"."ABN" AS "ABN",
+		"WAGES"."PERIOD_CATEGORY" AS "PERIOD_CATEGORY",
+		"WAGES"."PERIOD_KEY" AS "PERIOD_KEY",
+		"WAGES"."GJAHR" AS "GJAHR",
+		"WAGES"."WAERS" AS "WAERS",
+		SUM("WAGES"."WCQ_ACT_WAGES") AS "WAGE"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WAGES"
+	INNER JOIN :lt_wages AS "KEYS"
+	ON "KEYS"."ABN" = "WAGES"."ABN"
+		AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+		AND "KEYS"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+		AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
+	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+	GROUP BY 
+		"WAGES"."ABN",
+		"WAGES"."PERIOD_CATEGORY",
+		"WAGES"."PERIOD_KEY",
+		"WAGES"."GJAHR",
+		"WAGES"."WAERS"
+		;
+-- REMOVE AFTER TESTING		
 lt_wcq_for_tax = 
 	SELECT 
 		"WAGES"."ABN" AS "ABN",
@@ -521,7 +555,13 @@ et_result =
 		"PERIOD_CATEGORY",
 		"PERIOD_KEY",
 		"GJAHR",
-		100 AS "DETECTION_RESULT",
+		CASE WHEN "RISK_AMOUNT" = 0 THEN 0
+			ELSE CASE WHEN "RISK_AMOUNT" >= 1 AND "RISK_AMOUNT" < 10000 THEN 1
+			ELSE CASE WHEN "RISK_AMOUNT" >= 10000 AND "RISK_AMOUNT" < 20000 THEN 2
+			ELSE CASE WHEN "RISK_AMOUNT" >= 20000 AND "RISK_AMOUNT" < 30000 THEN 3
+			ELSE CASE WHEN "RISK_AMOUNT" >= 30000 AND "RISK_AMOUNT" < 50000 THEN 4
+			ELSE CASE WHEN "RISK_AMOUNT" >= 50000 THEN 5 
+		END END END END END END AS "DETECTION_RESULT",
 		"RISK_AMOUNT",
 		"CURRENCY" 
 	FROM :lt_result_rms
@@ -597,6 +637,13 @@ END IF;
 		"ABN",
 		"WAGE"
 	FROM :lt_wcq_for_tax
+	union
+		SELECT 
+		'lt_wcq_for_tax_test' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wcq_for_tax_test
+	
 	UNION
 		SELECT 
 		'lt_wcq' AS "SOURCE",
@@ -623,13 +670,13 @@ END IF;
 	FROM :lt_wages	
 	UNION
 	SELECT
-		'LT_RMS_WAGES' AS "SOURCE",
+		'C_BASE_TAX' AS "SOURCE",
 		"ABN",
 		"C_BASE_TAX" AS "WAGE"
 	FROM :LT_RMS_WAGES
 	UNION
 	SELECT
-		'lt_result_rms' AS "SOURCE",
+		'lt_result_min_rms' AS "SOURCE",
 		"ABN",
 		"RISK_AMOUNT" AS "WAGE"
 	FROM :lt_result_rms
@@ -639,6 +686,31 @@ END IF;
 		"ABN",
 		"RISK_AMOUNT" AS "WAGE"
 	FROM :lt_result
+	UNION
+	SELECT
+		'lt_wages_3_2' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wages_3_2
+	UNION
+	SELECT
+		'lt_wages_3_2_2' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wages_3_2_2
+	UNION
+	SELECT
+		'lt_wages_3_2_3' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wages_3_2_3
+	UNION
+	SELECT
+		'lt_wages_3_2_4' AS "SOURCE",
+		"ABN",
+		"WAGE"
+	FROM :lt_wages_3_2_4
+	
 ;
 
 END

@@ -35,6 +35,16 @@ SELECT
 FROM 
 "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE)
 UNION
+SELECT 
+"ID" AS "CHILD_ID",  
+LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 
+'IS' AS "REL_TYPE", 
+"DATE_GROUP_JOINED" AS "REL_START_DATE", 
+"DATE_GROUP_LEFT" AS "REL_END_DATE", 
+0 AS "INTEREST_PCT", 
+'' "BENEF_FLAG"
+FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
+UNION
 -- PARENT_ID as CHILD_ID will display the trust Beneficiary ABN ("T" prefix) 
 -- CHILD_ID as PARENT_ID will display any of the following
 -- The ABN of the beneficiary if it exists. This may be a simple ABN or it could be another trust ABN. Both cases the ABN is prefixed with a "T"
