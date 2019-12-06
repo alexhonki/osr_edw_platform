@@ -14,12 +14,12 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_CNTR_TAX_CALCULATION"(IN IV_
 		CNTR_WAGES				DECIMAL(15,2),
 		ITR_CNTR_WAGES			DECIMAL(15,2),
 		MAX_AU					DECIMAL(15,2),  
-		TPAR_WCQ				DECIMAL(15,2),	-- apportioned TPAR WCQ wages (PRT3.1)  
-		TPAR_WAGES				DECIMAL(15,2),	-- apportioned TPAR max AU wages  
+		TPAR_WCQ				DECIMAL(15,2),	-- TPAR WCQ wages (PRT3.1)  
+		TPAR_WAGES				DECIMAL(15,2),	-- TPAR max AU wages  
 		TPAR_EST_TAX			DECIMAL(15,2),	
 		TPAR_EST_TAX_LESS_RMS   DECIMAL(15,2),
 		ITR_WCQ					DECIMAL(15,2),	-- apportioned ITR WCQ wages (PRT3.2)    
-		ITR_WAGES				DECIMAL(15,2),	-- apportioned ITR max AU wages  
+		ITR_WAGES				DECIMAL(15,2),	-- ITR max AU wages  
 		ITR_EST_TAX				DECIMAL(15,2),
 		ITR_EST_TAX_LESS_RMS	DECIMAL(15,2)
 )
@@ -43,7 +43,7 @@ BEGIN
 			"ITR_CNTR_WAGES",
 			"MAX_AU",
 			ROUND(("WCQ"/"MAX_AU"*"ITR_CNTR_WAGES") + "WCQ",2) AS "ITR_WCQ",
-			ROUND(("WCQ"/"MAX_AU"*"ITR_CNTR_WAGES") + "MAX_AU",2) AS "ITR_WAGES",
+			"MAX_AU" + "ITR_CNTR_WAGES" AS "ITR_WAGES",
 			"WCQ" + "CNTR_WAGES" AS "TPAR_WCQ",
 			"MAX_AU" + "CNTR_WAGES" AS "TPAR_WAGES"
 		FROM (
