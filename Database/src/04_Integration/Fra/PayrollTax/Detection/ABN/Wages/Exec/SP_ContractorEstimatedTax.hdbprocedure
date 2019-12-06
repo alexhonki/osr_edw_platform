@@ -159,39 +159,6 @@ et_text =
 
 END IF;
 
-IF :lv_mode = 'S' THEN
-
-et_result = 
-	SELECT
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
-		100*"RISK_FACTOR_RATING"/:lv_max_rating AS "DETECTION_RESULT"
-	FROM :lt_result_new
-;
-
-et_text = 
-	SELECT 
-		"ABN",
-		"PERIOD_CATEGORY",
-		"PERIOD_KEY",
-		"GJAHR",
-		'' AS "TEXT",
-		'/OSRQLD/FRA_PRT' AS "MSGID",
-		'026' AS "MSGNO",
-		TO_DECIMAL("RISK_AMOUNT",15,2) AS "MSGV1",
-		"CURRENCY" AS "MSGV2",
-		"RISK_FACTOR_RATING" AS "MSGV3",
-		'' AS "MSGV4",
-		'' AS "MSGV1_FC",
-		'WAERS' AS "MSGV2_FC",
-		'' AS "MSGV3_FC",
-		'' AS "MSGV4_FC"
-	FROM :lt_result_new
-;
-END IF;
-
 -- for testing output
 et_data = 
 	SELECT 
