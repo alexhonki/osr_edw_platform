@@ -11,70 +11,32 @@
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes>
-      <viewAttribute id="CLIENT">
-        <descriptions defaultDescription="CLIENT"/>
-      </viewAttribute>
-      <viewAttribute id="OBART">
-        <descriptions defaultDescription="OBART"/>
-      </viewAttribute>
-      <viewAttribute id="OBJID">
-        <descriptions defaultDescription="OBJID"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_TYPE_SEQ">
-        <descriptions defaultDescription="FACT_TYPE_SEQ"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_TYPE_REP">
-        <descriptions defaultDescription="FACT_TYPE_REP"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_CAT_SEQ">
-        <descriptions defaultDescription="FACT_CAT_SEQ"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_CAT_REP">
-        <descriptions defaultDescription="FACT_CAT_REP"/>
-      </viewAttribute>
-      <viewAttribute id="VALID_TO">
-        <descriptions defaultDescription="VALID_TO"/>
-      </viewAttribute>
-      <viewAttribute id="VALID_FROM">
-        <descriptions defaultDescription="VALID_FROM"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_SET">
-        <descriptions defaultDescription="FACT_SET"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_TYPE">
-        <descriptions defaultDescription="FACT_TYPE"/>
-      </viewAttribute>
-      <viewAttribute id="FACT_CATEGORY">
-        <descriptions defaultDescription="FACT_CATEGORY"/>
-      </viewAttribute>
-      <viewAttribute id="VALUE_GENERIC">
-        <descriptions defaultDescription="VALUE_GENERIC"/>
-      </viewAttribute>
-      <viewAttribute id="QUAL_GENERIC">
-        <descriptions defaultDescription="QUAL_GENERIC"/>
-      </viewAttribute>
-      <viewAttribute id="OBJNR">
-        <descriptions defaultDescription="OBJNR"/>
-      </viewAttribute>
-      <viewAttribute id="Z_CHANGE_TYPE">
-        <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      </viewAttribute>
-      <viewAttribute id="Z_CHANGE_TIME">
-        <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      </viewAttribute>
-      <viewAttribute id="Z_SOURCE_SYS">
-        <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      </viewAttribute>
-      <viewAttribute id="Z_RUN_ROW_NO">
-        <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      </viewAttribute>
-      <viewAttribute id="Z_RUN_SEQ_ID">
-        <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      </viewAttribute>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="OBART"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="FACT_TYPE_SEQ"/>
+      <viewAttribute id="FACT_TYPE_REP"/>
+      <viewAttribute id="FACT_CAT_SEQ"/>
+      <viewAttribute id="FACT_CAT_REP"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="FACT_SET"/>
+      <viewAttribute id="FACT_TYPE"/>
+      <viewAttribute id="FACT_CATEGORY"/>
+      <viewAttribute id="VALUE_GENERIC"/>
+      <viewAttribute id="QUAL_GENERIC"/>
+      <viewAttribute id="OBJNR"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="CC_VALID_FROM" datatype="TIMESTAMP" expressionLanguage="SQL">
-        <formula>CASE WHEN &quot;VALID_FROM&quot;=0 or &quot;VALID_FROM&quot; LIKE '99%' or &quot;VALID_FROM&quot; LIKE '10%' THEN TO_TIMESTAMP('19000101000000') ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALID_FROM&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+        <formula>CASE WHEN &quot;VALID_FROM&quot;=0 or &quot;VALID_FROM&quot;='99991231235959' THEN TO_TIMESTAMP('19000101000000') 
+WHEN LENGTH (&quot;VALID_FROM&quot;) &lt; '14' THEN TO_TIMESTAMP(CONCAT('100',&quot;VALID_FROM&quot;),'YYYYMMDDHHMISS')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALID_FROM&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="CC_VALID_TO" datatype="TIMESTAMP" expressionLanguage="SQL">
@@ -83,29 +45,7 @@
     
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTSH.active_data">
-      <mapping xsi:type="Calculation:AttributeMapping" target="CLIENT" source="CLIENT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="OBART" source="OBART"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="OBJID" source="OBJID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_TYPE_SEQ" source="FACT_TYPE_SEQ"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_TYPE_REP" source="FACT_TYPE_REP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_CAT_SEQ" source="FACT_CAT_SEQ"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_CAT_REP" source="FACT_CAT_REP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_TO" source="VALID_TO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="VALID_FROM" source="VALID_FROM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_SET" source="FACT_SET"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_TYPE" source="FACT_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FACT_CATEGORY" source="FACT_CATEGORY"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="VALUE_GENERIC" source="VALUE_GENERIC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="QUAL_GENERIC" source="QUAL_GENERIC"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="OBJNR" source="OBJNR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TYPE" source="Z_CHANGE_TYPE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_CHANGE_TIME" source="Z_CHANGE_TIME"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_SOURCE_SYS" source="Z_SOURCE_SYS"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_ROW_NO" source="Z_RUN_ROW_NO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Z_RUN_SEQ_ID" source="Z_RUN_SEQ_ID"/>
-    </input>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFACTSH.active_data"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
