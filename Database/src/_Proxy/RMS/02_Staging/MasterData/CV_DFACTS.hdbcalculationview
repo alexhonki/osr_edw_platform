@@ -34,7 +34,7 @@
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="CC_VALID_FROM" datatype="TIMESTAMP" expressionLanguage="SQL">
-        <formula>CASE WHEN &quot;VALID_FROM&quot;=0 or &quot;VALID_FROM&quot;='99991231235959' THEN TO_TIMESTAMP('99991231235959') 
+        <formula>CASE WHEN &quot;VALID_FROM&quot;=0 or &quot;VALID_FROM&quot;='99991231235959' THEN TO_TIMESTAMP('19000101000000') 
 WHEN LENGTH (&quot;VALID_FROM&quot;) &lt; '14' THEN TO_TIMESTAMP(CONCAT('100',&quot;VALID_FROM&quot;),'YYYYMMDDHHMISS')
 ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALID_FROM&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
       </calculatedViewAttribute>
