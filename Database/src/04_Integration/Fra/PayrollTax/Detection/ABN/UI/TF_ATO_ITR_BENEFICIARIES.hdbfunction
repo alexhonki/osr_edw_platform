@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_BENEFICIARIES"(IV_KEY_DATE DATE )
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_BENEFICIARIES"()
 -- Function to provide Trust / Beneficiary/ Trustee details for the Trust Model
 -- Created 12/11/2019
 RETURNS TABLE 
@@ -42,7 +42,7 @@ BEGIN
 
 DECLARE LV_KEY_DATE DATE;
 DECLARE LV_GJAHR NVARCHAR(4);
-
+/*
 IF :IV_KEY_DATE IS NULL OR :IV_KEY_DATE = TO_DATE('9999-12-31') OR :IV_KEY_DATE = '' THEN 
 	SELECT CURRENT_DATE INTO LV_KEY_DATE FROM "osr.hana.platform.synonym::SYS.DUMMY";
 ELSE
@@ -52,6 +52,37 @@ END IF;
 -- use fiscal year start and end dates of the key date to restrict data
 SELECT "osr.edw.platform.fra.prt.model::TF_GET_FISCAL_YEAR"(:LV_KEY_DATE).EV_GJAHR INTO LV_GJAHR
 FROM "osr.hana.platform.synonym::SYS.DUMMY";
+
+lt_ABR = 
+	SELECT DISTINCT
+		"ABN",
+		"ENT_TYP_CD", 
+		"PID",
+		"ACN"
+	FROM "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"()
+	WHERE "ABN_REGN_DT"  <= :LV_KEY_DATE
+	  AND "ABN_CANCN_DT" >= :LV_KEY_DATE
+;
+
+*/
+
+LT_CHARITIES = 
+	SELECT DISTINCT 
+		"ABN"
+	FROM
+	(
+		SELECT
+			 "AGENCY"."ABN"              AS  "ABN", 	
+		     "AGENCY"."PID"              AS  "PID"
+		FROM "osr.edw.staging.md.abr.proxy::TF_AGENCY_DATA_C"() AS "AGENCY" 
+		INNER JOIN
+			"osr.edw.staging.md.abr.proxy::CV_ACNC" AS "ACNC"
+		ON "AGENCY"."PID" = "ACNC"."PID"
+		WHERE "REGN_DT" >= "ABN_REGN_DT"
+		AND "REGN_DT" <= "ABN_CANCN_DT"
+	)
+		;
+
 
 RETURN
 
@@ -86,18 +117,15 @@ RETURN
 --		"ABR"."PRSN_GVN_NM" 		AS "TRUSTEE_PRSN_GVN_NM",
 --		"ABR"."PRSN_OTHR_GVN_NM"	AS "TRUSTEE_PRSN_OTHR_GVN_NM",
 --		"ABR"."PRSN_FMLY_NM"		AS "TRUSTEE_PRSN_FMLY_NM"
-	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
-	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+	FROM "osr.edw.staging.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
+	INNER JOIN "osr.edw.staging.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" 
---	LEFT JOIN "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA_C" AS "ABR"
---	ON "TRUST"."TRUSTEE_ABN" = "ABR"."ABN"
---		AND :LV_KEY_DATE >= "ABR"."ABN_REGN_DT"
---		AND :LV_KEY_DATE <= "ABR"."ABN_CANCN_DT"
 	WHERE "TRUST"."ABN" <> 'invalid ABN'
 	AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
-	AND TO_VARCHAR("TRUST"."RTN_YR") = :LV_GJAHR
+	--AND TO_VARCHAR("TRUST"."RTN_YR") = TO_VARCHAR(:LV_GJAHR)
 	-- remove records we can't process due to information being withheld by ATO
 	AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
+	AND "PTNR_BNFCRY_ABN" NOT IN (SELECT "ABN" FROM :LT_CHARITIES) -- exclude charity beneficiaries
 	;
 END;

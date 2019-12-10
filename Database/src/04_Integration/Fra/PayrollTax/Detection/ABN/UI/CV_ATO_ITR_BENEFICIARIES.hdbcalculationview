@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_ATO_ITR_BENEFICIARIES" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATO_ITR_BENEFICIARIES"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_BENEFICIARIES" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_BENEFICIARIES</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_BENEFICIARIES">
+  <attributes>
+    <attribute id="PTNR_BNFCRY_DOB" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_DOB"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_DOB"/>
+    </attribute>
+    <attribute id="TRUSTEE_ABN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRUSTEE_ABN"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="TRUSTEE_ABN"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_NON_IDV_NM_L_1" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_NON_IDV_NM_L_1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_NON_IDV_NM_L_1"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_REF_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_REF_ID"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_REF_ID"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_NON_IDV_NM_L_2" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_NON_IDV_NM_L_2"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_NON_IDV_NM_L_2"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_ABN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_ABN"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_ABN"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_ADDR_LN_1" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_ADDR_LN_1"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_ADDR_LN_1"/>
+    </attribute>
+    <attribute id="TRUST_ABN" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRUST_ABN"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="TRUST_ABN"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_ADDR_LN_2" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_ADDR_LN_2"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_ADDR_LN_2"/>
+    </attribute>
+    <attribute id="RTN_YR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RTN_YR"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="RTN_YR"/>
+    </attribute>
+    <attribute id="TRUST_FULL_NM_TXT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRUST_FULL_NM_TXT"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="TRUST_FULL_NM_TXT"/>
+    </attribute>
+    <attribute id="TRUST_REF_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRUST_REF_ID"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="TRUST_REF_ID"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_FIRST_NM" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_FIRST_NM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_FIRST_NM"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_LCLTY_NM" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_LCLTY_NM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_LCLTY_NM"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_OTHR_GVN_NM" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_OTHR_GVN_NM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_OTHR_GVN_NM"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_STATE_CD" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_STATE_CD"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_STATE_CD"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_SRNM" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_SRNM"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_SRNM"/>
+    </attribute>
+    <attribute id="PTNR_BNFCRY_ADDR_PC" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PTNR_BNFCRY_ADDR_PC"/>
+      <keyMapping columnObjectName="TF_ATO_ITR_BENEFICIARIES" columnName="PTNR_BNFCRY_ADDR_PC"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

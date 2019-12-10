@@ -88,8 +88,11 @@ LT_DATA =
 		"BNFCRY"."PTNR_BNFCRY_SRNM",
 		"BNFCRY"."PTNR_BNFCRY_DOB",
 		"BNFCRY"."PTNR_BNFCRY_REF_ID"
-	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
-	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+	--FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
+	--INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+	-- incorrectly used the source layer - replaced with staging layer below 10/12/2019
+	FROM "osr.edw.staging.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
+	INNER JOIN "osr.edw.staging.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- will not return data in dev if this filter applied
 	WHERE "TRUST"."ABN" <> 'invalid ABN'
