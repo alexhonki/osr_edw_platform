@@ -27,6 +27,15 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_CNTR_TAX_CALCULATION"(IN IV_
        SQL SECURITY INVOKER AS 
 BEGIN 
 
+LT_CNTR_WAGES = 
+	SELECT 
+		"PAYER_ABN",
+		"GJAHR",
+		SUM("PAYEE_GROSS_PD_AMT") AS "PAYEE_GROSS_PD_AMT"
+	FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" 
+	GROUP BY "GJAHR", "PAYER_ABN"
+;
+
 	LT_WAGES = 
 		SELECT 
 			"ABN",
@@ -67,7 +76,7 @@ BEGIN
 			ON "WAGES"."ABN" = "ITR"."ABN"
 				AND "WAGES"."PERIOD_CATEGORY" = "ITR"."PERIOD_CATEGORY"
 				AND "WAGES"."GJAHR" = "ITR"."GJAHR"
-			LEFT JOIN "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "CNTR"
+			LEFT JOIN :LT_CNTR_WAGES AS "CNTR"
 			ON "WAGES"."ABN" = "CNTR"."PAYER_ABN"
 				AND "WAGES"."GJAHR" = "CNTR"."GJAHR"
 			LEFT JOIN "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "RMS_PAID"
