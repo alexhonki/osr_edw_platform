@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.pscd.proxy::CV_TFMCA_REVTYPE" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Revenue Types"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_REVTYPE">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_REVTYPE</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TFMCA_REVTYPE">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="ABTYP"/>
+      <viewAttribute id="VKTYP"/>
+      <viewAttribute id="HVORG"/>
+      <viewAttribute id="TVORG"/>
+      <viewAttribute id="FRPER"/>
+      <viewAttribute id="TOPER"/>
+      <viewAttribute id="XADJA"/>
+      <viewAttribute id="DOCTYPE"/>
+      <viewAttribute id="DOCTYPE_SIMBILL"/>
+      <viewAttribute id="WFD_ID"/>
+      <viewAttribute id="VERSION"/>
+      <viewAttribute id="EXETYP"/>
+      <viewAttribute id="BP_ID_TYPE"/>
+      <viewAttribute id="FBTAX"/>
+      <viewAttribute id="XSDGIS"/>
+      <viewAttribute id="XJOINTF"/>
+      <viewAttribute id="FBNUR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_REVTYPE"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="P_TFMCA_REVTYPE">
+  <attributes>
+    <attribute id="ABTYP" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Revenue Type"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="ABTYP"/>
+    </attribute>
+    <attribute id="VKTYP" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contract Account Category"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="VKTYP"/>
+    </attribute>
+    <attribute id="HVORG" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Main Transaction for Line Item"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="HVORG"/>
+    </attribute>
+    <attribute id="TVORG" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Subtransaction for Document Item"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="TVORG"/>
+    </attribute>
+    <attribute id="FRPER" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Lower Period Key"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="FRPER"/>
+    </attribute>
+    <attribute id="TOPER" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Upper Period Key"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="TOPER"/>
+    </attribute>
+    <attribute id="XADJA" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Include All Contract Objects in Adjustments"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="XADJA"/>
+    </attribute>
+    <attribute id="DOCTYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Document Type"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="DOCTYPE"/>
+    </attribute>
+    <attribute id="DOCTYPE_SIMBILL" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Document Type of Simulated Billing Document"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="DOCTYPE_SIMBILL"/>
+    </attribute>
+    <attribute id="WFD_ID" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Number of workflow definition"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="WFD_ID"/>
+    </attribute>
+    <attribute id="VERSION" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Version"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="VERSION"/>
+    </attribute>
+    <attribute id="EXETYP" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Workflow Type"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="EXETYP"/>
+    </attribute>
+    <attribute id="BP_ID_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Identification Type"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="BP_ID_TYPE"/>
+    </attribute>
+    <attribute id="FBTAX" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Indicator for Form-Based Tax"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="FBTAX"/>
+    </attribute>
+    <attribute id="XSDGIS" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Revenue Distribution: One Document per Distribution Destintn"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="XSDGIS"/>
+    </attribute>
+    <attribute id="XJOINTF" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Joint Tax Return Possible for Marriage Partners"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="XJOINTF"/>
+    </attribute>
+    <attribute id="FBNUR" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Number Range for Form Bundle/Tax Return"/>
+      <keyMapping columnObjectName="P_TFMCA_REVTYPE" columnName="FBNUR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_TFMCA_REVTYPE" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
