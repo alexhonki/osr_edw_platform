@@ -1,0 +1,27 @@
+namespace osr.edw.platform;
+
+context SP_UTIL_CDS {
+    context TABLE_TYPE {
+
+		table type SP_UTIL_ROWCOUNTS_VS_META_DATA_OUT {	
+			"NOTES" : String(200);
+			"SERVER" : String(10);
+			"DS" : String(20);
+			"LAYER" : String(20);
+			"TABLE" : String(256);
+			"FILENAME" : String(1024);
+			"ACTUAL_ROWCOUNT" : Integer64;
+			"META_ROWCOUNTS" : Integer64;
+			"ACTUAL_ERRORS" : Integer64;
+			"META_ERRORS" : Integer64;
+			"META_ROW_DIFF" : Integer64;
+			"META_ERROR_DIFF" : Integer64;
+			"SYNONYM_NAME" : String(256);
+			"CONTAINER" : String(200);
+			"META_FILE_NAME" : String(200);
+			"META_EDW_LOADED" : String(1);
+			"META_FROM_DATE" : LocalDate;
+		}
+
+    }
+};

@@ -1,0 +1,457 @@
+PROCEDURE "osr.edw.platform::SP_UTIL_ROWCOUNTS_VS_META_DATA"(
+		  --IN  iv_DS     NVARCHAR(256),
+		   OUT lt_table_rowCOUNTs	"osr.edw.platform::SP_UTIL_CDS.TABLE_TYPE.SP_UTIL_ROWCOUNTS_VS_META_DATA_OUT"
+
+-- This procedure compares synonms in EDW with actual data AND meta table data.
+
+
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+    DECLARE lv_DS NVARCHAR(256); -- not used
+    DECLARE result_sql CLOB;
+    DECLARE iv_DS  NVARCHAR(256); -- not used
+    
+    -- loop vars
+	declare v_count integer;
+	declare v_i integer;
+
+	DECLARE CURSOR c_cursor1  FOR
+	SELECT distinct replace(SCHEMA_NAME,'EDW_', '') AS DS -- Get a list of data sources
+	from (
+	select 
+		schema_name as container,
+		OBJECT_DATABASE, 
+		synonym_name, 
+		object_schema as schema_name , -- need to look at what is the diff between object_schema vs schema_name?
+		object_name as table_name 
+		
+	from "SYNONYMS"  where   schema_name  like 'EDW_%'  ) -- not dev containers
+    where SCHEMA_NAME like 'EDW%' 
+	and  SCHEMA_NAME not in ( 'EDW_RMS' , 'EDW_PLATFORM', 'EDW_CRM' ) --, 'EDW_FRA') -- exclude for now just flat files.
+	and table_name NOT LIKE '%VT_%'
+	and synonym_name like 'osr.edw%' -- this need to exclude for some funny TMR ones.
+	and	( TABLE_NAME LIKE '%source._d%' OR TABLE_NAME LIKE '%.active_data' );  -- only source md or td tables
+	--DROP TABLE #LOCAL_TEMP_ACTUAL_ROWS;
+	--DROP TABLE #LOCAL_TEMP_SQL_COMMAND;
+	--DROP TABLE #LOCAL_TEMP_SQL_TEXT;
+	--DROP TABLE #LOCAL_TEMP_SYNON ;
+	--DROP TABLE #LOCAL_TEMP_TABLE_LIST ;
+    --DROP TABLE #LOCAL_TEMP_META;
+
+    schema_sel = -- select all synonms in EDW.
+    select distinct
+		--    container,
+		--	OBJECT_DATABASE,
+		---	synonym_name, 
+		--	schema_name , 
+		--	table_name ,
+			replace(SCHEMA_NAME,'EDW_', '') as DS --,
+		--	REPLACE_REGEXPR('([^.]+)(.*)' IN substr(table_name   ,9) WITH '\1' OCCURRENCE ALL) AS "LAYER",  
+		--	REPLACE_REGEXPR('.*\.' IN  REPLACE( table_name,'.active_data', '')    WITH '' OCCURRENCE ALL) AS "TABLE_SHORT" --,
+			-- can't do this here!
+		--	REPLACE_REGEXPR('(.*FY)([^.]+)(.*)' IN  "NAME"  WITH '\2' OCCURRENCE ALL) AS "PERIOD",
+		
+		--	CASE WHEN MAX("ERROR") = '' THEN NULL ELSE COUNT("ERROR") END AS "ERRORS", 
+		--	CASE WHEN MAX("ERROR") = '' THEN NULL ELSE COUNT(DISTINCT "ERROR") END AS "ERROR_TYPES" ,
+		--	MAX("Z_VALID_FROM") AS "Z_VALID_FROM" , 
+		--	MAX("Z_VALID_TO") AS "Z_VALID_TO" , 
+		--	MIN("Z_CHANGE_TIME")   AS "Z_CHANGE_TIME"  
+	from (
+		select 
+			schema_name as container,
+			OBJECT_DATABASE, 
+			synonym_name, 
+			object_schema as schema_name , -- need to look at what is the diff between object_schema vs schema_name?
+			object_name as table_name 
+			
+		from "SYNONYMS"  where   schema_name  like 'EDW_%'  ) -- not dev containers
+	    where SCHEMA_NAME like 'EDW%' 
+		and  SCHEMA_NAME not in ( 'EDW_RMS' , 'EDW_PLATFORM', 'EDW_CRM' ) --, 'EDW_FRA') -- exclude for now just flat files.
+		and table_name NOT LIKE '%VT_%'
+		and synonym_name like 'osr.edw%' -- this need to exclude for some funny TMR ones.
+		and	( TABLE_NAME LIKE '%source._d%' OR TABLE_NAME LIKE '%.active_data' );  -- only source md or td tables
+
+	--DROP TABLE #LOCAL_TEMP_META;
+	CREATE LOCAL TEMPORARY TABLE #LOCAL_TEMP_META ( 
+	
+			--"METADATA_ID" VARBINARY(32) CS_RAW NOT NULL,
+			--"CREATED_AT" SECONDDATE CS_SECONDDATE,
+			--"CREATED_BY" NVARCHAR(200),
+			"META_FILE_NAME" NVARCHAR(200) NOT NULL ,
+			--"TIMESTAMP" SECONDDATE CS_SECONDDATE NOT NULL,
+			"SOURCE" NVARCHAR(200),
+			--"RAF_TABLE_NAME" NVARCHAR(200),
+			--"SOURCE_FIELD_VALUE" NVARCHAR(200),
+			"HAS_LOADED_IN_EDW" NVARCHAR(1),
+			--"FREQUENCY" NVARCHAR(200),
+			"ROW_COUNTS" NVARCHAR(200),
+			--"YEAR_TYPE" NVARCHAR(200),
+			--"FILE_RECEIVED_DATE" SECONDDATE CS_SECONDDATE,
+			"FROM_DATE" DATE CS_DAYDATE,
+			--"TO_DATE" DATE CS_DAYDATE,
+			"ERRORS" NVARCHAR(200) ,
+			--"DATA_SET_TYPE" NVARCHAR(200),
+			--"INACTIVE" NVARCHAR(1),
+			--"PERIOD_KEY" NVARCHAR(200),
+			"TABLE_NAME" NVARCHAR(200) --,
+			--"DATA_TYPE" NVARCHAR(200),
+			--"EXTERNAL_FILE_NAME" NVARCHAR(200)
+		);
+
+	OPEN c_cursor1;
+	
+	lv_DS = ''; -- don't want this null
+	FOR cur_row AS c_cursor1 -- for each DS get the meta data - the meta data TF can only do one DS at a time.
+	DO
+	    lv_DS = cur_row.DS;
+		sel2 =  SELECT
+			meta_file_name , source,  
+			"HAS_LOADED_IN_EDW" , 
+			case when row_counts = '' then 0 else row_counts end as row_counts,  
+			from_date,  
+			case when errors= '' then 0 else errors end as errors, 
+			table_name 
+		FROM 
+	    "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource" (placeholder."$$IP_SOURCE$$"=> :lv_DS );
+	    INSERT INTO #LOCAL_TEMP_META SELECT * FROM :sel2;	
+	
+	END FOR;
+	CLOSE c_cursor1;
+	
+	-- Select system catalog data from EDW.
+	create LOCAL TEMPORARY TABLE #LOCAL_TEMP_SYNON 
+	as
+	(
+	select 
+	    container,
+		OBJECT_DATABASE as env,
+		synonym_name, 
+		schema_name , 
+		replace(SCHEMA_NAME,'EDW_', '') as DS,
+		table_name ,
+		REPLACE_REGEXPR('([^.]+)(.*)' IN substr(table_name   ,9) WITH '\1' OCCURRENCE ALL) AS "LAYER",  
+		REPLACE_REGEXPR('.*\.' IN  REPLACE( table_name,'.active_data', '')    WITH '' OCCURRENCE ALL) AS "TABLE_SHORT" --,
+		-- can't do this here!
+	--	REPLACE_REGEXPR('(.*FY)([^.]+)(.*)' IN  "NAME"  WITH '\2' OCCURRENCE ALL) AS "PERIOD",
+	
+	--	CASE WHEN MAX("ERROR") = '' THEN NULL ELSE COUNT("ERROR") END AS "ERRORS", 
+	--	CASE WHEN MAX("ERROR") = '' THEN NULL ELSE COUNT(DISTINCT "ERROR") END AS "ERROR_TYPES" ,
+	--	MAX("Z_VALID_FROM") AS "Z_VALID_FROM" , 
+	--	MAX("Z_VALID_TO") AS "Z_VALID_TO" , 
+	--	MIN("Z_CHANGE_TIME")   AS "Z_CHANGE_TIME"  
+	
+	
+	from (
+		select 
+			schema_name as container,
+			OBJECT_DATABASE, 
+			synonym_name, 
+			object_schema as schema_name , -- need to look at what is the diff between object_schema vs schema_name?
+			object_name as table_name 
+			
+		from "SYNONYMS"  where   schema_name  like 'EDW_%'  ) -- not dev containers
+		where SCHEMA_NAME like 'EDW%' 
+		and  SCHEMA_NAME not in ( 'EDW_RMS' , 'EDW_PLATFORM', 'EDW_CRM' ) --, 'EDW_FRA') -- exclude for now just flat files.
+		and table_name NOT LIKE '%VT_%'
+		and synonym_name like 'osr.edw%' -- this need to exclude for some funny TMR ones.
+		and	( TABLE_NAME LIKE '%source._d%' OR TABLE_NAME LIKE '%.active_data' )  -- only source md or td tables
+	
+	
+	);
+	
+	-- create a list of ACTUAL tables in EDW.  Not used. This assume 1 table in staging and ignores -- code tables will be ignore as they don't have a staging at this point.
+	create LOCAL TEMPORARY TABLE #LOCAL_TEMP_TABLE_LIST  -- not used.
+	as
+	(
+		SELECT 
+			TABLE_SHORT  AS data_table
+		FROM #LOCAL_TEMP_SYNON --schemas 
+		WHERE 
+		 TABLE_NAME LIKE '%staging._d%active_data'   -- get list of staging md or td tables
+	---	AND table_name like '%REGISTER%'
+	);
+--	Select data_table from #LOCAL_TEMP_TABLE_LIST; -- output - for debugging output this.
+
+
+-- create table  for dynamically generated SELECTs rowcounts in each table/file.
+	create LOCAL TEMPORARY TABLE #LOCAL_TEMP_SQL_TEXT
+	as
+	(
+	SELECT 
+	
+		' SELECT ' ||
+--		' ''DATA_TABLE'' as TABLE_TYPE ,'
+		''''  || ENV         ||  '''  AS ENV , ' ||
+        ''''  || CONTAINER   ||  '''  AS CONTAINER , ' ||
+		''''  || DS          ||  '''  AS DS , ' ||
+		''''  || LAYER       ||  '''  AS "LAYER", ' ||
+		''''  || TABLE_SHORT ||  '''  AS "TABLE", ' ||
+		' "NAME" AS "FILENAME" ,' ||
+		' COUNT(*)  AS "ROWCOUNT"  ' || ', ' || 
+
+--		' NOW() AS "STAT_REFRESH_TIME", ' ||
+---		CASE  WHEN SCHEMA_NAME <> 'EDW_TMR' THEN ' MIN("SFV") '  ELSE '''undef''' END  || ' AS "SOURCE_FIELD_VALUE" ,' ||
+		' CASE WHEN MAX("ERROR") = '''' THEN NULL ELSE COUNT("ERROR") END AS "ERRORS" , ' ||
+--		' CASE WHEN MAX("ERROR") = '''' THEN NULL ELSE COUNT(DISTINCT "ERROR") END AS "ERROR_TYPES" , ' ||
+--		''''  || TABLE_NAME || ''' AS "TABLE_NAME", ' ||
+--		''''  || SCHEMA_NAME || ''' AS "SCHEMA_NAME" , ' ||
+		''''  || synonym_name || ''' AS "synonym" ' || --, ' ||
+--		' MAX("Z_VALID_FROM") AS "Z_VALID_FROM" , ' ||
+--		' MAX("Z_VALID_TO") AS "Z_VALID_TO" , ' ||
+--		'''''' || '''''' || '|| MIN("Z_CHANGE_TIME") || ' || '''''' || ''''''  || '  AS "Z_CHANGE_TIME"  ' ||
+		-- || 
+		'FROM '   ||
+--		CASE  WHEN SCHEMA_NAME <> 'EDW_TMR' THEN 
+		
+--		'( Select a.* , case when error is null  then source_field_value end as sfv FROM "' || synonym_name || '"  a )'
+--		else
+		'( Select a.* , Null  as sfv FROM "' || synonym_name || '"  a )'  -- no source field for TMR!
+--		end 
+--		|| '  WHERE "NAME" LIKE ''%_' || TABLE_SHORT || '_%'' 
+		||' GROUP BY  "NAME" ' 
+--		|| CASE  WHEN COUNT(*) over (partition by ENV) = ROW_NUMBER() over (partition by ENV) THEN '' ELSE ' union all ' END  -- if last record don't put union all
+		AS sql_text
+
+	FROM #LOCAL_TEMP_SYNON --schemas  
+--	WHERE TABLE_SHORT  
+--	IN 
+--		( select TABLE_SHORT from #LOCAL_TEMP_TABLE_LIST 	)  -- list of tables of interest
+		--		( select DATA_TABLE from #LOCAL_TEMP_TABLE_LIST 	)  -- list of tables of interest
+
+	);
+--	Select sql_text from #LOCAL_TEMP_SQL_TEXT; -- output - for debugging output this.
+/* 
+-- The below code does not work if table does not exist but syn is created 
+-- Concatenate all individual SQL statement into one SQL statement.  -- this will not work as some syns that exist in platform, are not in local container.
+--	SELECT STRING_AGG(sql_text , ' ' )  AS sql_text INTO result_sql  FROM #LOCAL_TEMP_SQL_TEXT;
+--	
+--	-- Generate rowcounts per file/table/DS. 
+--	result_sql = 'INSERT INTO #LOCAL_TEMP_ACTUAL_ROWS   ( ' ||result_sql ||  ') ' ;  -- this won't work as some syn may not exist in container.
+--	
+--	-- Generate rowcounts per file/table/DS.
+--	EXECUTE IMMEDIATE :result_sql;
+*/	
+
+-- Create temp table for output of dynamic SQL
+	CREATE LOCAL TEMPORARY TABLE #LOCAL_TEMP_ACTUAL_ROWS (  -- need to create as the compilier can't see table if created in dynamic sql.
+	   	"SERVER"	VARCHAR(10) ,
+	   	"CONTAINER"	VARCHAR(200),
+--		"STAT_REFRESH_TIME"	LONGDATE ,
+		"DS"	NVARCHAR(20) , -- OSRSTATE can be 8 long
+    	"LAYER" VARCHAR(20) ,
+		"TABLE" VARCHAR(256),
+--		"PERIOD" VARCHAR(20),
+		"FILENAME"	NVARCHAR(1024) ,
+		"ROWCOUNT"	INTEGER  ,
+		"ERRORS"	INTEGER  ,
+--     	"ERROR_TYPES"	BIGINT  ,
+--      "TABLE_NAME" VARCHAR(256) ,
+--		"SCHEMA_NAME" VARCHAR(256),
+		"SYNONYM" VARCHAR(256) --,
+--		"Z_VALID_FROM" DATE ,
+--		"Z_VALID_TO" DATE  ,
+--		"Z_CHANGE_TIME" LONGDATE  ,
+--		"SOURCE_FIELD_VALUE" NVARCHAR(20)  --,
+	--	"ROW_COUNT"	BIGINT  ,
+	--	"PREVIOUS_ROWCOUNT"	BIGINT  ,
+	--	"ROW_DIFF_WITH_PREVIOUS" BIGINT,
+	--	"GROWTH_PC" DECIMAL(29, 6) ,
+	--	"GROWTH_PC_AVG" DECIMAL(29, 6) ,
+	--	"GROWTH_PC_DIFF_WITH_AVG" DECIMAL(30, 6)
+	);
+
+
+
+	-- run each dynamic select on a table to get row counts per file.
+	select_stmts = SELECT * from  #LOCAL_TEMP_SQL_TEXT;   --each row  contains a  select to run on each file in each table..
+	select count(*) into v_count from :select_stmts;
+	for v_i in 1..v_count do
+		begin  -- start nested block - for error handler.
+	    	declare exit handler for sqlexception
+	    	begin
+--	        	sel_exception = select 'table not exists skip' from dummy;
+	    	end;
+	    	result_sql = :select_stmts.sql_text[v_i] ; -- get select statement.
+			-- Generate rowcounts per file/table/DS. 
+	    	result_sql = 'INSERT INTO #LOCAL_TEMP_ACTUAL_ROWS   ( ' ||result_sql ||  ') ' ;
+	    	-- Generate rowcounts per file/table/DS.
+			EXECUTE IMMEDIATE :result_sql;  -- run rowcounts for table if table does not exist an exception thrown & move to next row.
+		end;  -- end nested block
+	end for;
+	
+	
+-- Clean up tables not used anymore.
+	DROP TABLE #LOCAL_TEMP_SQL_TEXT;
+	DROP TABLE #LOCAL_TEMP_TABLE_LIST ;
+
+-- Join actual table/file rowcounts with meta table for comparison
+--DROP TABLE #LOCAL_TEMP_OUT ;
+	create LOCAL TEMPORARY TABLE #LOCAL_TEMP_OUT 
+	as (
+	Select  
+		a.synonym_name,
+		a.env as server,
+		a.container	 ,
+		a."DS",
+		a.layer,
+		a.table_short as table,
+		
+	
+		b."FILENAME", 
+		b."ROWCOUNT" as "ACTUAL_ROWCOUNT",	
+		b."ERRORS" as "ACTUAL_ERRORS",
+		b."SYNONYM" ,
+	
+		--"METADATA_ID" VARBINARY(32) CS_RAW NOT NULL,
+		--"CREATED_AT" SECONDDATE CS_SECONDDATE,
+		--"CREATED_BY" NVARCHAR(200),
+		c."META_FILE_NAME",
+		--"TIMESTAMP" SECONDDATE CS_SECONDDATE NOT NULL,
+		--"SOURCE" NVARCHAR(200),
+		--"RAF_TABLE_NAME" NVARCHAR(200),
+		--"SOURCE_FIELD_VALUE" NVARCHAR(200),
+	    c."HAS_LOADED_IN_EDW" as "META_EDW_LOADED",
+		--"FREQUENCY" NVARCHAR(200),
+		c."ROW_COUNTS" as "META_ROWCOUNTS" ,
+		--"YEAR_TYPE" NVARCHAR(200),
+		--"FILE_RECEIVED_DATE" SECONDDATE CS_SECONDDATE,
+		c."FROM_DATE" as META_FROM_DATE,
+		--"TO_DATE" DATE CS_DAYDATE,
+		c."ERRORS" as "META_ERRORS" -- , 
+	from  #LOCAL_TEMP_SYNON a left outer join #LOCAL_TEMP_ACTUAL_ROWS b
+	on ( a.synonym_name = b.synonym ) left outer join #LOCAL_TEMP_META c  
+	on (c.meta_file_name = b.filename  )--;--(a.table_short = c.table_name); --
+	--on (a.DS = c.SOURCE and a.table_short = c.table_name)
+	); 
+--	ORDER BY DS, LAYER, TABLE_SHORT, 
+--	b.meta_from_date desc , FILENAME;
+
+    update #LOCAL_TEMP_OUT  -- remove META rowcounts from non source - META only relates to source.
+    set "META_ROWCOUNTS" = NULL, "META_ERRORS" = NULL
+  --  from  #LOCAL_TEMP_OUT
+    where LAYER != 'source';
+    
+ 
+    update #LOCAL_TEMP_OUT a -- Update any records that are in the meta but no data in ACTUAL tables
+    set 
+	    a."META_FILE_NAME" = c."META_FILE_NAME",
+		--"TIMESTAMP" SECONDDATE CS_SECONDDATE NOT NULL,
+		--"SOURCE" NVARCHAR(200),
+		--"RAF_TABLE_NAME" NVARCHAR(200),
+		--"SOURCE_FIELD_VALUE" NVARCHAR(200),
+	    a."META_EDW_LOADED" = c."HAS_LOADED_IN_EDW"   ,
+		--"FREQUENCY" NVARCHAR(200),
+		--"META_ROWCOUNTS" = c."ROW_COUNTS"  "META_ROWCOUNTS" ,
+		--"YEAR_TYPE" NVARCHAR(200),
+		--"FILE_RECEIVED_DATE" SECONDDATE CS_SECONDDATE,
+		a.META_FROM_DATE = c."FROM_DATE"  --,
+		--"TO_DATE" DATE CS_DAYDATE,
+		--"META_ERRORS" = c."ERRORS"  
+	    --a.TABLE = c.TABLE_NAME
+   from  #LOCAL_TEMP_OUT a,   #LOCAL_TEMP_META  c 
+	where (a.DS = c.SOURCE 
+	and   
+	a.table = c.table_name) and a.FILENAME is NULL;
+
+	INSERT INTO #LOCAL_TEMP_OUT -- add record where a record exist in META but not such item in syns. is possible.
+	Select  
+		'' as synonym_name, -- these can't be null due to create select 
+		'' as server,
+		'' as container	 ,
+		'' as "DS",
+		'' as layer,
+		'' as table,
+		
+	
+		NULL as "FILENAME", 
+		NULL  as "ACTUAL_ROWCOUNT",	
+		NULL as "ACTUAL_ERRORS"  ,
+		NULL as "SYNONYM" ,
+	
+		--"METADATA_ID" VARBINARY(32) CS_RAW NOT NULL,
+		--"CREATED_AT" SECONDDATE CS_SECONDDATE,
+		--"CREATED_BY" NVARCHAR(200),
+		c."META_FILE_NAME",
+		--"TIMESTAMP" SECONDDATE CS_SECONDDATE NOT NULL,
+		--"SOURCE" NVARCHAR(200),
+		--"RAF_TABLE_NAME" NVARCHAR(200),
+		--"SOURCE_FIELD_VALUE" NVARCHAR(200),
+	    c."HAS_LOADED_IN_EDW" as "META_EDW_LOADED",
+		--"FREQUENCY" NVARCHAR(200),
+		c."ROW_COUNTS" as "META_ROWCOUNTS" ,
+		--"YEAR_TYPE" NVARCHAR(200),
+		--"FILE_RECEIVED_DATE" SECONDDATE CS_SECONDDATE,
+		c."FROM_DATE" as META_FROM_DATE,
+		--"TO_DATE" DATE CS_DAYDATE,
+		c."ERRORS" as "META_ERRORS" -- , 
+	from  #LOCAL_TEMP_SYNON a  right outer join #LOCAL_TEMP_META c  
+	on (a.DS = c.source and a.table_short = c.table_name  )
+	where a.DS is NULL;
+	
+	
+	
+	--extra metrics 
+	sel_join3 = 
+	select 
+		case when layer = 'source' and META_FILE_NAME is null and FILENAME is not null then 'Missing meta data for this file ' || ifnull(FILENAME,'') || '. ' else ''   end ||
+		case when layer = 'source' and META_FILE_NAME is null and FILENAME is null then 'Warning : Table not visible at platform level yet' || '. ' else ''   end ||
+		case when layer = 'source' and FILENAME is null and synonym_name != '' and META_FILE_NAME is not null then 'Meta data defined but data not loaded. ' else '' end ||
+		case when layer = 'source' and "META_EDW_LOADED" = 'N' and ACTUAL_ROWCOUNT is not null THEN  'Meta Data not marked as loaded. '  else '' end ||
+		case when synonym_name = '' then 'Warning : No synonym for file ' || ifnull(META_FILE_NAME, '') || ' but is in Meta data. ' else ''end ||
+		case when ACTUAL_ROWCOUNT is not null and "META_ROW_DIFF"   != 0 then 'Meta rowcount ' || ifnull("META_ROWCOUNTS",0) || ' mismatches actual row count ' || ifnull("ACTUAL_ROWCOUNT",0) || '. ' else '' end ||
+		case when ACTUAL_ROWCOUNT is not null and "META_ERROR_DIFF" != 0 then 'Meta error count ' || ifnull("META_ERRORS",0) || ' mismatches actual errors ' || ifnull("ACTUAL_ERRORS",0) || '. ' else '' end 
+		as notes,
+		a.* 
+	from (
+		select 
+			case when a.layer = 'source' then ifnull(a.actual_rowcount,0) - ifnull(META_ROWCOUNTS,0)  end  as "META_ROW_DIFF", 
+			case when a.layer = 'source' then ifnull(a.actual_errors,0) - ifnull(META_ERRORS, 0)  end "META_ERROR_DIFF",
+			a.*  	
+	    from #LOCAL_TEMP_OUT a -- :sel_join3 a 
+	    ORDER BY DS, LAYER, TABLE, 
+		meta_from_date desc , FILENAME
+	) a;
+	
+	
+
+    
+    sel4 = SELECT * FROM :sel_join3 order by 1 desc;  --
+
+	lt_table_rowCOUNTs = SELECT 
+			"NOTES" ,
+			"SERVER" ,
+			"DS" ,
+			"LAYER" ,
+			"TABLE" ,
+			"FILENAME" ,
+			"ACTUAL_ROWCOUNT" ,
+			"META_ROWCOUNTS" ,
+			"ACTUAL_ERRORS" ,
+			"META_ERRORS" ,
+			"META_ROW_DIFF" ,
+			"META_ERROR_DIFF" ,
+			"SYNONYM_NAME" ,
+			"CONTAINER"  ,
+			"META_FILE_NAME" ,
+			"META_EDW_LOADED" ,
+			"META_FROM_DATE" 
+		FROM :sel4;	
+		
+    DROP TABLE #LOCAL_TEMP_OUT ;
+	DROP TABLE #LOCAL_TEMP_SYNON ;
+    DROP TABLE #LOCAL_TEMP_ACTUAL_ROWS;
+    DROP TABLE #LOCAL_TEMP_META;
+   
+
+
+
+END
