@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.forms.proxy::CV_9LIA_M_LV" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Form 9LIA | main table | form ver. latest"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.rms.forms.tf.proxy::TF_9LIA_M_LV" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.rms.forms.tf.proxy::TF_9LIA_M_LV</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_TF_9LIA_M_LV">
+    <viewAttributes>
+      <viewAttribute id="STATE_ID"/>
+      <viewAttribute id="A_REFUND_OPTION"/>
+      <viewAttribute id="JOINT_REG_ID"/>
+      <viewAttribute id="DUE_DATE"/>
+      <viewAttribute id="FORM_CASE_GUID"/>
+      <viewAttribute id="C_LEG_ID"/>
+      <viewAttribute id="A_ORIG_FEES"/>
+      <viewAttribute id="A_EMAIL_ADDRESS"/>
+      <viewAttribute id="FBTYP"/>
+      <viewAttribute id="IN_CHANNEL"/>
+      <viewAttribute id="FORM_LOCATOR_NUMBER"/>
+      <viewAttribute id="TAXPAYER"/>
+      <viewAttribute id="KEYDT"/>
+      <viewAttribute id="CURRENT_VERSION"/>
+      <viewAttribute id="A_BK_DET_CORRECT"/>
+      <viewAttribute id="JOINT_REG_TYPE"/>
+      <viewAttribute id="A_DATE_PAID"/>
+      <viewAttribute id="DEFERRAL_DATE"/>
+      <viewAttribute id="FIELDINDEX"/>
+      <viewAttribute id="C_LEG_DESC"/>
+      <viewAttribute id="A_LOW_AMT_PAY"/>
+      <viewAttribute id="A_MOBILE_NO"/>
+      <viewAttribute id="BETRW"/>
+      <viewAttribute id="TAX_PREPARER"/>
+      <viewAttribute id="VERSION"/>
+      <viewAttribute id="JOINT_FILER"/>
+      <viewAttribute id="FBSTA"/>
+      <viewAttribute id="ZZRFR_REQUESTER"/>
+      <viewAttribute id="A_BSB_NEW"/>
+      <viewAttribute id="APPLY_FROM"/>
+      <viewAttribute id="A_ORIG_DUE_DATE"/>
+      <viewAttribute id="REFUND_COMPLETE"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="C_BSB"/>
+      <viewAttribute id="A_FIRST_INSTRUMENT"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="INDPR"/>
+      <viewAttribute id="C_PAYABLE_TXN"/>
+      <viewAttribute id="BU_ID_TYPE"/>
+      <viewAttribute id="FBSTB"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="A_BANK_ACCOUNT_NO_NEW"/>
+      <viewAttribute id="APPLY_TO"/>
+      <viewAttribute id="A_ORIG_AFAD"/>
+      <viewAttribute id="POSTMARK_EXT"/>
+      <viewAttribute id="FORM_CLASS"/>
+      <viewAttribute id="C_BANK_ACCOUNT_NO"/>
+      <viewAttribute id="A_CONT_NAME"/>
+      <viewAttribute id="A_SEC_INSTRUMENT"/>
+      <viewAttribute id="ERNAM"/>
+      <viewAttribute id="KEYPP"/>
+      <viewAttribute id="C_PAY_RECEIVED"/>
+      <viewAttribute id="TAXPAYER_ID"/>
+      <viewAttribute id="C_LEG_ID_1"/>
+      <viewAttribute id="FBUST"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="A_BANK_ACCOUNT_NAME_NEW"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="RECONCILIATION"/>
+      <viewAttribute id="FORM_STATUS"/>
+      <viewAttribute id="C_BANK_ACCOUNT_NAME"/>
+      <viewAttribute id="A_POSTAGE_INC"/>
+      <viewAttribute id="ERTSP"/>
+      <viewAttribute id="ZZREASSESSED"/>
+      <viewAttribute id="C_UTI"/>
+      <viewAttribute id="JOINT_ID_TYPE"/>
+      <viewAttribute id="C_LEG_DESC_1"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="A_BANK_NAME_NEW"/>
+      <viewAttribute id="BEGRU"/>
+      <viewAttribute id="LAST_FILING"/>
+      <viewAttribute id="FORM_STATUS_TS"/>
+      <viewAttribute id="C_BANK_NAME"/>
+      <viewAttribute id="A_POSTAGE_RED"/>
+      <viewAttribute id="AENAM"/>
+      <viewAttribute id="ZZTRANSFERRED"/>
+      <viewAttribute id="C_UTI_TOTAL"/>
+      <viewAttribute id="JOINT_FILER_ID"/>
+      <viewAttribute id="A_CURRENCY"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="A_BANK_BRANCH_NEW"/>
+      <viewAttribute id="CONSOLIDATED_BY"/>
+      <viewAttribute id="AS_FILED_EXT"/>
+      <viewAttribute id="SUPERSEDED_BY"/>
+      <viewAttribute id="C_BANK_BRANCH"/>
+      <viewAttribute id="C_POSTAGE_FEES"/>
+      <viewAttribute id="AETSP"/>
+      <viewAttribute id="ZZCLIENTREF"/>
+      <viewAttribute id="C_PENALTY_TAX"/>
+      <viewAttribute id="ACCOUNT"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="C_NON_COMP_PER"/>
+      <viewAttribute id="A_SOURCE"/>
+      <viewAttribute id="DUPLICATE_TO"/>
+      <viewAttribute id="DATE_SOL"/>
+      <viewAttribute id="SUPERSEDE_TO"/>
+      <viewAttribute id="A_UTI_REMITT"/>
+      <viewAttribute id="C_POSTAGE_TOTAL"/>
+      <viewAttribute id="ZZSENDER"/>
+      <viewAttribute id="C_PENALTY_TOTAL"/>
+      <viewAttribute id="REG_ID"/>
+      <viewAttribute id="FBSTZ"/>
+      <viewAttribute id="RETURN_ID"/>
+      <viewAttribute id="C_UTI_START_DATE"/>
+      <viewAttribute id="A_ORIG_TOT_DUTY"/>
+      <viewAttribute id="FORMPROC"/>
+      <viewAttribute id="BATCH_ID"/>
+      <viewAttribute id="RECEIPT_TS"/>
+      <viewAttribute id="A_UTI_REASON"/>
+      <viewAttribute id="CASE_GUID"/>
+      <viewAttribute id="A_TITLE"/>
+      <viewAttribute id="ZZELNOID"/>
+      <viewAttribute id="C_TOTAL_LIABILITY"/>
+      <viewAttribute id="A_CONT_NO"/>
+      <viewAttribute id="REG_TYPE"/>
+      <viewAttribute id="C_CURRENCY"/>
+      <viewAttribute id="VALIDATION"/>
+      <viewAttribute id="FORM"/>
+      <viewAttribute id="C_NO_OF_UTI_DAYS"/>
+      <viewAttribute id="A_ORIG_UTI"/>
+      <viewAttribute id="C_TOTAL_ORIG"/>
+      <viewAttribute id="X_CONS"/>
+      <viewAttribute id="LOCATOR_NUMBER"/>
+      <viewAttribute id="TEMPLATE_VER"/>
+      <viewAttribute id="A_PT_INCREASE"/>
+      <viewAttribute id="FBNUM"/>
+      <viewAttribute id="A_ORIG_GROSS"/>
+      <viewAttribute id="ZZELNOTXN"/>
+      <viewAttribute id="C_DUE_DATE"/>
+      <viewAttribute id="A_PT_REASON"/>
+      <viewAttribute id="A_CONFIRM"/>
+      <viewAttribute id="JOINT_ACCOUNT"/>
+      <viewAttribute id="A_A_UTI"/>
+      <viewAttribute id="POSTMARK"/>
+      <viewAttribute id="RECEIPT"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="C_DAILY_UTI_AMT"/>
+      <viewAttribute id="A_ORIG_PENALTY"/>
+      <viewAttribute id="C_CONFIRM_DATE"/>
+      <viewAttribute id="X_ESTIMATED"/>
+      <viewAttribute id="TRANSACTION_TYPE"/>
+      <viewAttribute id="FORM_BATCH_ID"/>
+      <viewAttribute id="A_PT_REMITT"/>
+      <viewAttribute id="REVENUE_TYPE"/>
+      <viewAttribute id="A_ORIG_PAID_PAY"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.rms.forms.tf.proxy::TF_9LIA_M_LV"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="P_TF_9LIA_M_LV">
+  <attributes>
+    <attribute id="STATE_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATE_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="STATE_ID"/>
+    </attribute>
+    <attribute id="A_REFUND_OPTION" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REFUND_OPTION"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_REFUND_OPTION"/>
+    </attribute>
+    <attribute id="JOINT_REG_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_REG_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="JOINT_REG_ID"/>
+    </attribute>
+    <attribute id="DUE_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUE_DATE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="DUE_DATE"/>
+    </attribute>
+    <attribute id="FORM_CASE_GUID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CASE_GUID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_CASE_GUID"/>
+    </attribute>
+    <attribute id="C_LEG_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_LEG_ID"/>
+    </attribute>
+    <attribute id="A_EMAIL_ADDRESS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_EMAIL_ADDRESS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_EMAIL_ADDRESS"/>
+    </attribute>
+    <attribute id="FBTYP" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="IN_CHANNEL" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IN_CHANNEL"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="IN_CHANNEL"/>
+    </attribute>
+    <attribute id="FORM_LOCATOR_NUMBER" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="TAXPAYER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXPAYER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="TAXPAYER"/>
+    </attribute>
+    <attribute id="KEYDT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEYDT"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="KEYDT"/>
+    </attribute>
+    <attribute id="CURRENT_VERSION" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENT_VERSION"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="CURRENT_VERSION"/>
+    </attribute>
+    <attribute id="A_BK_DET_CORRECT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BK_DET_CORRECT"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_BK_DET_CORRECT"/>
+    </attribute>
+    <attribute id="JOINT_REG_TYPE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_REG_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="JOINT_REG_TYPE"/>
+    </attribute>
+    <attribute id="A_DATE_PAID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DATE_PAID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_DATE_PAID"/>
+    </attribute>
+    <attribute id="DEFERRAL_DATE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFERRAL_DATE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="DEFERRAL_DATE"/>
+    </attribute>
+    <attribute id="C_LEG_DESC" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_DESC"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_LEG_DESC"/>
+    </attribute>
+    <attribute id="A_MOBILE_NO" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_MOBILE_NO"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_MOBILE_NO"/>
+    </attribute>
+    <attribute id="TAX_PREPARER" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAX_PREPARER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="TAX_PREPARER"/>
+    </attribute>
+    <attribute id="VERSION" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="VERSION"/>
+    </attribute>
+    <attribute id="JOINT_FILER" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_FILER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="JOINT_FILER"/>
+    </attribute>
+    <attribute id="FBSTA" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBSTA"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FBSTA"/>
+    </attribute>
+    <attribute id="ZZRFR_REQUESTER" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZRFR_REQUESTER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZRFR_REQUESTER"/>
+    </attribute>
+    <attribute id="A_BSB_NEW" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BSB_NEW"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_BSB_NEW"/>
+    </attribute>
+    <attribute id="APPLY_FROM" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLY_FROM"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="APPLY_FROM"/>
+    </attribute>
+    <attribute id="A_ORIG_DUE_DATE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_DUE_DATE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_DUE_DATE"/>
+    </attribute>
+    <attribute id="REFUND_COMPLETE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REFUND_COMPLETE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="REFUND_COMPLETE"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="C_BSB" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BSB"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_BSB"/>
+    </attribute>
+    <attribute id="WAERS" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="WAERS"/>
+    </attribute>
+    <attribute id="INDPR" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INDPR"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="INDPR"/>
+    </attribute>
+    <attribute id="BU_ID_TYPE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BU_ID_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="BU_ID_TYPE"/>
+    </attribute>
+    <attribute id="FBSTB" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBSTB"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FBSTB"/>
+    </attribute>
+    <attribute id="A_BANK_ACCOUNT_NO_NEW" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_BANK_ACCOUNT_NO_NEW"/>
+    </attribute>
+    <attribute id="APPLY_TO" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLY_TO"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="APPLY_TO"/>
+    </attribute>
+    <attribute id="POSTMARK_EXT" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTMARK_EXT"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="POSTMARK_EXT"/>
+    </attribute>
+    <attribute id="FORM_CLASS" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_CLASS"/>
+    </attribute>
+    <attribute id="C_BANK_ACCOUNT_NO" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_ACCOUNT_NO"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_BANK_ACCOUNT_NO"/>
+    </attribute>
+    <attribute id="A_CONT_NAME" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONT_NAME"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_CONT_NAME"/>
+    </attribute>
+    <attribute id="ERNAM" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERNAM"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ERNAM"/>
+    </attribute>
+    <attribute id="KEYPP" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KEYPP"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="KEYPP"/>
+    </attribute>
+    <attribute id="TAXPAYER_ID" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXPAYER_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="TAXPAYER_ID"/>
+    </attribute>
+    <attribute id="C_LEG_ID_1" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_ID_1"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_LEG_ID_1"/>
+    </attribute>
+    <attribute id="FBUST" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBUST"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FBUST"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="A_BANK_ACCOUNT_NAME_NEW" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_ACCOUNT_NAME_NEW"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_BANK_ACCOUNT_NAME_NEW"/>
+    </attribute>
+    <attribute id="PERIOD_KEY" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERIOD_KEY"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="PERIOD_KEY"/>
+    </attribute>
+    <attribute id="RECONCILIATION" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECONCILIATION"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="RECONCILIATION"/>
+    </attribute>
+    <attribute id="FORM_STATUS" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_STATUS"/>
+    </attribute>
+    <attribute id="C_BANK_ACCOUNT_NAME" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_ACCOUNT_NAME"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_BANK_ACCOUNT_NAME"/>
+    </attribute>
+    <attribute id="ZZREASSESSED" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZREASSESSED"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZREASSESSED"/>
+    </attribute>
+    <attribute id="JOINT_ID_TYPE" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_ID_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="JOINT_ID_TYPE"/>
+    </attribute>
+    <attribute id="C_LEG_DESC_1" order="67" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LEG_DESC_1"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_LEG_DESC_1"/>
+    </attribute>
+    <attribute id="A_BANK_NAME_NEW" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_NAME_NEW"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_BANK_NAME_NEW"/>
+    </attribute>
+    <attribute id="BEGRU" order="70" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEGRU"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="BEGRU"/>
+    </attribute>
+    <attribute id="LAST_FILING" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAST_FILING"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="LAST_FILING"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_STATUS_TS"/>
+    </attribute>
+    <attribute id="C_BANK_NAME" order="73" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_NAME"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_BANK_NAME"/>
+    </attribute>
+    <attribute id="AENAM" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AENAM"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="AENAM"/>
+    </attribute>
+    <attribute id="ZZTRANSFERRED" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZTRANSFERRED"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZTRANSFERRED"/>
+    </attribute>
+    <attribute id="JOINT_FILER_ID" order="78" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_FILER_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="JOINT_FILER_ID"/>
+    </attribute>
+    <attribute id="A_CURRENCY" order="79" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CURRENCY"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_CURRENCY"/>
+    </attribute>
+    <attribute id="A_BANK_BRANCH_NEW" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_BANK_BRANCH_NEW"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_BANK_BRANCH_NEW"/>
+    </attribute>
+    <attribute id="CONSOLIDATED_BY" order="82" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONSOLIDATED_BY"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="CONSOLIDATED_BY"/>
+    </attribute>
+    <attribute id="AS_FILED_EXT" order="83" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AS_FILED_EXT"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="AS_FILED_EXT"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY" order="84" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="SUPERSEDED_BY"/>
+    </attribute>
+    <attribute id="C_BANK_BRANCH" order="85" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BANK_BRANCH"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_BANK_BRANCH"/>
+    </attribute>
+    <attribute id="ZZCLIENTREF" order="88" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZCLIENTREF"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZCLIENTREF"/>
+    </attribute>
+    <attribute id="ACCOUNT" order="90" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACCOUNT"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ACCOUNT"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="91" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="A_SOURCE" order="93" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SOURCE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_SOURCE"/>
+    </attribute>
+    <attribute id="DUPLICATE_TO" order="94" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUPLICATE_TO"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="DUPLICATE_TO"/>
+    </attribute>
+    <attribute id="DATE_SOL" order="95" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_SOL"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="DATE_SOL"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO" order="96" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="SUPERSEDE_TO"/>
+    </attribute>
+    <attribute id="ZZSENDER" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZSENDER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZSENDER"/>
+    </attribute>
+    <attribute id="REG_ID" order="101" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REG_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="REG_ID"/>
+    </attribute>
+    <attribute id="FBSTZ" order="102" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBSTZ"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FBSTZ"/>
+    </attribute>
+    <attribute id="RETURN_ID" order="103" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="C_UTI_START_DATE" order="104" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_START_DATE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_UTI_START_DATE"/>
+    </attribute>
+    <attribute id="FORMPROC" order="106" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORMPROC"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORMPROC"/>
+    </attribute>
+    <attribute id="BATCH_ID" order="107" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="BATCH_ID"/>
+    </attribute>
+    <attribute id="RECEIPT_TS" order="108" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="RECEIPT_TS"/>
+    </attribute>
+    <attribute id="A_UTI_REASON" order="109" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UTI_REASON"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_UTI_REASON"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="110" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="A_TITLE" order="111" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TITLE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_TITLE"/>
+    </attribute>
+    <attribute id="ZZELNOID" order="112" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZELNOID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZELNOID"/>
+    </attribute>
+    <attribute id="A_CONT_NO" order="114" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONT_NO"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_CONT_NO"/>
+    </attribute>
+    <attribute id="REG_TYPE" order="115" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REG_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="REG_TYPE"/>
+    </attribute>
+    <attribute id="C_CURRENCY" order="116" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CURRENCY"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_CURRENCY"/>
+    </attribute>
+    <attribute id="FORM" order="118" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM"/>
+    </attribute>
+    <attribute id="X_CONS" order="122" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="X_CONS"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="X_CONS"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER" order="123" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER" order="124" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="TEMPLATE_VER"/>
+    </attribute>
+    <attribute id="FBNUM" order="126" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="ZZELNOTXN" order="128" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZZELNOTXN"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ZZELNOTXN"/>
+    </attribute>
+    <attribute id="C_DUE_DATE" order="129" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_DUE_DATE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_DUE_DATE"/>
+    </attribute>
+    <attribute id="A_PT_REASON" order="130" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_PT_REASON"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_PT_REASON"/>
+    </attribute>
+    <attribute id="A_CONFIRM" order="131" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONFIRM"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_CONFIRM"/>
+    </attribute>
+    <attribute id="JOINT_ACCOUNT" order="132" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="JOINT_ACCOUNT"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="JOINT_ACCOUNT"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="136" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="C_CONFIRM_DATE" order="139" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CONFIRM_DATE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_CONFIRM_DATE"/>
+    </attribute>
+    <attribute id="X_ESTIMATED" order="140" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="X_ESTIMATED"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="X_ESTIMATED"/>
+    </attribute>
+    <attribute id="TRANSACTION_TYPE" order="141" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRANSACTION_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="TRANSACTION_TYPE"/>
+    </attribute>
+    <attribute id="FORM_BATCH_ID" order="142" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_BATCH_ID"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FORM_BATCH_ID"/>
+    </attribute>
+    <attribute id="REVENUE_TYPE" order="144" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REVENUE_TYPE"/>
+      <keyMapping columnObjectName="P_TF_9LIA_M_LV" columnName="REVENUE_TYPE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="A_ORIG_FEES" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_FEES"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_FEES"/>
+    </measure>
+    <measure id="FIELDINDEX" order="19" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="FIELDINDEX"/>
+    </measure>
+    <measure id="A_LOW_AMT_PAY" order="21" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_LOW_AMT_PAY"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_LOW_AMT_PAY"/>
+    </measure>
+    <measure id="BETRW" order="23" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="BETRW"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="BETRW"/>
+    </measure>
+    <measure id="A_FIRST_INSTRUMENT" order="35" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_FIRST_INSTRUMENT"/>
+    </measure>
+    <measure id="C_PAYABLE_TXN" order="38" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAYABLE_TXN"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_PAYABLE_TXN"/>
+    </measure>
+    <measure id="Z_RUN_SEQ_ID" order="41" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="Z_RUN_SEQ_ID"/>
+    </measure>
+    <measure id="A_ORIG_AFAD" order="44" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_AFAD"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_AFAD"/>
+    </measure>
+    <measure id="A_SEC_INSTRUMENT" order="49" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_SEC_INSTRUMENT"/>
+    </measure>
+    <measure id="C_PAY_RECEIVED" order="52" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PAY_RECEIVED"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_PAY_RECEIVED"/>
+    </measure>
+    <measure id="A_POSTAGE_INC" order="62" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_POSTAGE_INC"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_POSTAGE_INC"/>
+    </measure>
+    <measure id="ERTSP" order="63" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ERTSP"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="ERTSP"/>
+    </measure>
+    <measure id="C_UTI" order="65" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_UTI"/>
+    </measure>
+    <measure id="Z_CHANGE_TIME" order="68" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="Z_CHANGE_TIME"/>
+    </measure>
+    <measure id="A_POSTAGE_RED" order="74" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_POSTAGE_RED"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_POSTAGE_RED"/>
+    </measure>
+    <measure id="C_UTI_TOTAL" order="77" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_UTI_TOTAL"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_UTI_TOTAL"/>
+    </measure>
+    <measure id="Z_RUN_ROW_NO" order="80" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="Z_RUN_ROW_NO"/>
+    </measure>
+    <measure id="C_POSTAGE_FEES" order="86" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_POSTAGE_FEES"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_POSTAGE_FEES"/>
+    </measure>
+    <measure id="AETSP" order="87" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="AETSP"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="AETSP"/>
+    </measure>
+    <measure id="C_PENALTY_TAX" order="89" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PENALTY_TAX"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_PENALTY_TAX"/>
+    </measure>
+    <measure id="C_NON_COMP_PER" order="92" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_NON_COMP_PER"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_NON_COMP_PER"/>
+    </measure>
+    <measure id="A_UTI_REMITT" order="97" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_UTI_REMITT"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_UTI_REMITT"/>
+    </measure>
+    <measure id="C_POSTAGE_TOTAL" order="98" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_POSTAGE_TOTAL"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_POSTAGE_TOTAL"/>
+    </measure>
+    <measure id="C_PENALTY_TOTAL" order="100" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_PENALTY_TOTAL"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_PENALTY_TOTAL"/>
+    </measure>
+    <measure id="A_ORIG_TOT_DUTY" order="105" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_TOT_DUTY"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_TOT_DUTY"/>
+    </measure>
+    <measure id="C_TOTAL_LIABILITY" order="113" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_TOTAL_LIABILITY"/>
+    </measure>
+    <measure id="VALIDATION" order="117" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="VALIDATION"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="VALIDATION"/>
+    </measure>
+    <measure id="C_NO_OF_UTI_DAYS" order="119" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_NO_OF_UTI_DAYS"/>
+    </measure>
+    <measure id="A_ORIG_UTI" order="120" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_UTI"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_UTI"/>
+    </measure>
+    <measure id="C_TOTAL_ORIG" order="121" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_TOTAL_ORIG"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_TOTAL_ORIG"/>
+    </measure>
+    <measure id="A_PT_INCREASE" order="125" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_PT_INCREASE"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_PT_INCREASE"/>
+    </measure>
+    <measure id="A_ORIG_GROSS" order="127" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_GROSS"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_GROSS"/>
+    </measure>
+    <measure id="A_A_UTI" order="133" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_A_UTI"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_A_UTI"/>
+    </measure>
+    <measure id="POSTMARK" order="134" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="POSTMARK"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="POSTMARK"/>
+    </measure>
+    <measure id="RECEIPT" order="135" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RECEIPT"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="RECEIPT"/>
+    </measure>
+    <measure id="C_DAILY_UTI_AMT" order="137" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_DAILY_UTI_AMT"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="C_DAILY_UTI_AMT"/>
+    </measure>
+    <measure id="A_ORIG_PENALTY" order="138" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_PENALTY"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_PENALTY"/>
+    </measure>
+    <measure id="A_PT_REMITT" order="143" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_PT_REMITT"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_PT_REMITT"/>
+    </measure>
+    <measure id="A_ORIG_PAID_PAY" order="145" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="A_ORIG_PAID_PAY"/>
+      <measureMapping columnObjectName="P_TF_9LIA_M_LV" columnName="A_ORIG_PAID_PAY"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_TF_9LIA_M_LV" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
