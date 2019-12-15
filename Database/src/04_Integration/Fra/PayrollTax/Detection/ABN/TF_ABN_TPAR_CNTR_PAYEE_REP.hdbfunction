@@ -74,16 +74,15 @@ BEGIN
         Write your function logic
     ****************************/
 
-
-
 PAYEE_ABN_ELIGIBLE =
 	SELECT DISTINCT 
 		"PAYER_ABN" AS "PAYER_ABN",
 		"PAYEE_ABN" AS "ABN",
 		"GJAHR"		AS "INCM_YR",
-		'Y' 		AS "FLAG_ELIGIBLE"
+		'X' 		AS "FLAG_ELIGIBLE"
 	FROM  "osr.edw.source.td.fra.proxy::TF_PRT_PRTCNTR_BY_ALERT"(:IP_ALERT_ID)
 ;
+
 
 PAYEE_ABN_ATTR = 
 	SELECT 
@@ -119,6 +118,7 @@ PAYEE_ABN_ALL_LIST =
 		"INCM_YR"
 	FROM :PAYEE_ABN_ATTR
 ;
+
 
 ------------------------WCQ Data-------------------------------
 WCQ_DATA = 
@@ -377,7 +377,7 @@ PRE_OUTPUT =
 		"H"."REF_ID_PAYEE"						,
 		"H"."PAYEE_ABN_STS" 					,
 		"H"."REF_ID_PAYER"						,
-		"H"."PAYER_ABN"							,
+		"H"."PAYER_ABN"							, 
 		"H"."PAYER_ABN_STS"						,
 		"H"."PAYEE_FAMILY_NM"					,
 		"H"."PAYEE_FIRST_GIVEN_NM"				,
@@ -395,7 +395,7 @@ PRE_OUTPUT =
 		"H"."GST_TOTL_AMT"						,
 		"H"."CHECK_CD"  						,
 		
-		"J"."FLAG_ELIGIBLE"
+		CASE WHEN "J"."FLAG_ELIGIBLE" IS NULL THEN '' ELSE "FLAG_ELIGIBLE" END AS "FLAG_ELIGIBLE"
 		
 	FROM :ABN_LIST AS "A"
 	
