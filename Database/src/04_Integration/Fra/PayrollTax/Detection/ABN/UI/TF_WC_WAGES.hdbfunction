@@ -8,6 +8,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(IN IP_ALERT_ID NVARCH
     RETURNS TABLE
 		(
 		DB_KEY				VARBINARY(16),
+		DB_KEY_DASH			NVARCHAR(32),
 		ALERT_ID			NVARCHAR(20),
 		ABN					NVARCHAR(20),
 		GJAHR			 	NVARCHAR(4),
@@ -103,6 +104,7 @@ WHERE "ABN" IN ( SELECT "ABN" FROM :ALERT_INFO )
 	lt_wages =
 	SELECT 
 		"ALERT"."DB_KEY"																		AS "DB_KEY",
+		"ALERT"."DB_KEY_DASH"																	AS "DB_KEY_DASH",
 		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
 		"ALERT"."ABN"																			AS "ABN",
 		"ALERT"."GJAHR"																			AS "GJAHR",
@@ -118,6 +120,7 @@ WHERE "ABN" IN ( SELECT "ABN" FROM :ALERT_INFO )
 	  AND  TO_NVARCHAR("WAGES"."ASSESSMENT_YEAR") = TO_NVARCHAR(TO_INT("ALERT"."ALERT_CREA_YEAR") - :IP_FY_ADJUSTMENT)
 	GROUP BY	
 	"ALERT"."DB_KEY",
+	"ALERT"."DB_KEY_DASH",
 	"ALERT"."ALERT_ID",
 	"ALERT"."ABN",
     "ALERT"."GJAHR",
@@ -127,6 +130,7 @@ WHERE "ABN" IN ( SELECT "ABN" FROM :ALERT_INFO )
 lt_emp_cnt = 
 	SELECT
 		"ALERT"."DB_KEY"																		AS "DB_KEY",
+		"ALERT"."DB_KEY_DASH"																	AS "DB_KEY_DASH",
 		"ALERT"."ALERT_ID"																		AS "ALERT_ID",
 		"ALERT"."ABN"																			AS "ABN",
 		"ALERT"."GJAHR"					  														AS "GJAHR",
@@ -141,6 +145,7 @@ lt_emp_cnt =
 	WHERE	"EMP_CNT"."RSDNL_STATE_CD"		= 'QLD'
 	GROUP BY	
 	"ALERT"."DB_KEY",
+	"ALERT"."DB_KEY_DASH",
 	"ALERT"."ALERT_ID",
 	"ALERT"."ABN",
     "ALERT"."GJAHR",
@@ -150,6 +155,7 @@ lt_emp_cnt =
 lt_union = 
 	SELECT
 	"DB_KEY",
+	"DB_KEY_DASH",
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
@@ -162,6 +168,7 @@ lt_union =
 	UNION
 	SELECT
 	"DB_KEY",
+	"DB_KEY_DASH",
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
@@ -176,6 +183,7 @@ lt_union =
 	RETURN
 	SELECT
 	"DB_KEY",
+	"DB_KEY_DASH",
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
@@ -187,6 +195,7 @@ lt_union =
 	FROM :lt_union
 	GROUP BY 
 	"DB_KEY",
+	"DB_KEY_DASH",
 	"ALERT_ID",
 	"ABN",
 	"GJAHR",
