@@ -7,6 +7,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES_BY_FY"(IN IP_ALERT_ID 
        RETURNS TABLE
     	(
 		DB_KEY					VARBINARY(16),
+		DB_KEY_DASH				NVARCHAR(32),
 		ALERT_ID				NVARCHAR(20),
 		ABN					    NVARCHAR(20),
 		FINANCIAL_YEAR			NVARCHAR(4),	
@@ -23,6 +24,7 @@ lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(:IP
 	RETURN
 		SELECT 
 			"DB_KEY",
+			"DB_KEY_DASH",
 			"ALERT_ID",
 			"ABN",
 			"GJAHR"					AS "FINANCIAL_YEAR",
@@ -33,6 +35,7 @@ lt_data_fy = SELECT * FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(:IP
 		UNION
 		SELECT 
 			"DB_KEY",
+			"DB_KEY_DASH",
 			"ALERT_ID",
 			"ABN",
 			"GJAHR"					AS "FINANCIAL_YEAR",
