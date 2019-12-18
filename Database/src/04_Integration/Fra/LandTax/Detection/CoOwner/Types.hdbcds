@@ -4,10 +4,11 @@ context Types {
 
     // Keys for Detection Object LTPCLBP
     table type WS_LTPCLBP {
-        TAXYRSTARTDT : String(8);
-        INTRENOPL    : String(13);
-        PLNO         : String(20);
-        BPARTNER     : String(10);
+        INTRENOPL  : String(13);
+        PLNO       : String(20);
+        BPARTNER   : String(10);
+        VALID_FROM : String(8);
+        VALID_TO   : String(8);
     };
 
     // Keys for Detection Object LTPCLCOOWN
@@ -57,7 +58,7 @@ context Types {
         COY_COUNT_THRESHOLD   : Integer;
         IND_COUNT_THRESHOLD   : Integer;
     };
-    
+
 
     // Co-Owner Parcl Total Values  	
     table type PCL_TOT_VAL_PARAM {
