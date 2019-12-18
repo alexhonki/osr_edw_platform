@@ -64,6 +64,9 @@ IF :IV_GRAPH_ID IS NULL OR :IV_GRAPH_ID = '' THEN
 	   UNION
 	   SELECT  "ID" AS "CHILD_ID",  LEFT("STATE_CODE",3) || '_' || "STATE_GROUP_ID" AS "PARENT_ID", 'IS' AS "REL_TYPE", 0 AS "INTEREST_PCT" 
 	   FROM "osr.edw.platform.fra.prt.model::TF_GRP_INTERSTATE"(:IV_GRP_DATE)
+	   UNION 
+	   SELECT "CHILD_ID", "PARENT_ID", 'TR' AS "REL_TYPE", 100 AS "INTEREST_PCT" 
+		FROM "osr.edw.platform.fra.prt.model::TF_TR_REL"(:IV_GRP_DATE) -- Added 03/09/2019 czjone for Trust Grouping model	
 	   ;
 	   
 	END IF;
