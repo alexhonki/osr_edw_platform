@@ -5,7 +5,7 @@ RETURNS TABLE
 	"NAME1"				NVARCHAR(200),
 	"NAME2"				NVARCHAR(200),
 	"NAME3" 			NVARCHAR(200),
-	"ADDR_LINE1"		INTEGER,
+	"ADDR_LINE1"		NVARCHAR(200),
 	"ADDR_LINE2" 		NVARCHAR(200),
 	"STREET_NUMBER"		NVARCHAR(200),
 	"STREET_NAME"		NVARCHAR(200),
@@ -23,6 +23,26 @@ BEGIN
 DECLARE LV_KEY_DATE DATE;
 
 LV_KEY_DATE = TO_DATE(TO_NVARCHAR(:IV_GJAHR)||'-06-30'); -- TO_DATS(CONCAT(TO_NVARCHAR(:IV_GJAHR), '-06-30');
+
+/*
+-- insert initial values - will get overwritten if actual values found
+LT_DATA = 
+	SELECT 
+		:IV_ELEMENT_ID AS "ELEMENT_ID", 
+		null as "NAME1",
+		null as "NAME2",
+		null as "NAME3",
+		null as "ADDR_LINE1",
+		null as "ADDR_LINE2",
+		null as "STREET_NUMBER",
+		null as "STREET_NAME",
+		null as "STREET_TYPE",
+		null as "LOCALITY",
+		null as "STATE",
+		null as "COUNTRY",
+		null as "POSTCODE"
+	FROM "osr.hana.platform.synonym::SYS.DUMMY";
+	*/
 
 IF LEFT(:IV_ELEMENT_ID,1) = 'O' THEN
 	
@@ -73,9 +93,9 @@ IF LEFT(:IV_ELEMENT_ID,1) = 'T' THEN
 			"ABR"."MN_BUS_CNTRY_CD" AS "COUNTRY",
 			"ABR"."MN_BUS_PC" AS "POSTCODE"
 		FROM "osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
-		WHERE "ABN_REGN_DT" <= :LV_KEY_DATE
-		AND "ABN_CANCN_DT" >= :LV_KEY_DATE
-		AND "ABR"."ABN" = RIGHT(:IV_ELEMENT_ID,(LENGTH(:IV_ELEMENT_ID)-1))
+		--WHERE "ABN_REGN_DT" <= :LV_KEY_DATE
+		--AND "ABN_CANCN_DT" >= :LV_KEY_DATE
+		WHERE "ABR"."ABN" = RIGHT(:IV_ELEMENT_ID,(LENGTH(:IV_ELEMENT_ID)-1))
 	;
 
 
