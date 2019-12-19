@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.rms.ltx.proxy::CV_OSRQLD_LTCOOWN" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_OSRQLD_LTCOOWN"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCOOWN.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCOOWN.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTCOOWN.active_data">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="MANDT"/>
+    </attribute>
+    <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOPL"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="INTRENOPL"/>
+    </attribute>
+    <attribute id="INTRENOCN" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INTRENOCN"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="INTRENOCN"/>
+    </attribute>
+    <attribute id="RMS_BP_NO" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RMS_BP_NO"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="RMS_BP_NO"/>
+    </attribute>
+    <attribute id="VALIDFROM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALIDFROM"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="VALIDFROM"/>
+    </attribute>
+    <attribute id="PARTY_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTY_TYPE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="PARTY_TYPE"/>
+    </attribute>
+    <attribute id="VALIDTO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VALIDTO"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="VALIDTO"/>
+    </attribute>
+    <attribute id="COOWNERBP" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COOWNERBP"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="COOWNERBP"/>
+    </attribute>
+    <attribute id="OWNERTYPE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OWNERTYPE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="OWNERTYPE"/>
+    </attribute>
+    <attribute id="OWNERFACTOR" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OWNERFACTOR"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="OWNERFACTOR"/>
+    </attribute>
+    <attribute id="BUKRS" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUKRS"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="PLNO" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLNO"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="PLNO"/>
+    </attribute>
+    <attribute id="OBJNRPL" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNRPL"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="OBJNRPL"/>
+    </attribute>
+    <attribute id="RECNNR" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECNNR"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="RECNNR"/>
+    </attribute>
+    <attribute id="OBJNRCN" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJNRCN"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="OBJNRCN"/>
+    </attribute>
+    <attribute id="CHUSER" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHUSER"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="CHUSER"/>
+    </attribute>
+    <attribute id="CHDATE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHDATE"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="CHDATE"/>
+    </attribute>
+    <attribute id="CHTIME" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHTIME"/>
+      <keyMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="CHTIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="OWNERPERCENT" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="OWNERPERCENT"/>
+      <measureMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="OWNERPERCENT"/>
+    </measure>
+    <measure id="OWNERFRACTION" order="11" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="OWNERFRACTION"/>
+      <measureMapping columnObjectName="CDS_LAND.DSO.LTCOOWN.active_data" columnName="OWNERFRACTION"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
