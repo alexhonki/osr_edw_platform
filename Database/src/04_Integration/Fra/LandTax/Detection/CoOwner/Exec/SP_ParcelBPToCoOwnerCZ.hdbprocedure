@@ -1,0 +1,80 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerCZ" (
+	IN  it_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_LTPCLBP",
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_LTPCLBP",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLBP"
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+lt_pcl_czbp = 
+SELECT
+"DATA"."TAXYRSTARTDT", 
+"DATA"."INTRENOPL",
+"DATA"."PLNO",
+"DATA"."VALID_FROM",
+"DATA"."VALID_TO",
+"DATA"."BPARTNER"
+FROM 
+:it_data_for_rule AS "DATA"
+INNER JOIN
+"osr.edw.staging.rms.ltx.proxy::CV_OSRQLD_LTCOOWN" AS "LTCOOWN"
+ON  "DATA"."BPARTNER" = "LTCOOWN"."RMS_BP_NO"
+AND "DATA"."INTRENOPL" = "LTCOOWN"."INTRENOPL"
+WHERE "DATA"."CODE_ID" = 'CZ'
+  AND "LTCOOWN"."PARTY_TYPE" = 'E'
+;
+	
+lt_pcl_bp = 
+SELECT
+"DATA"."TAXYRSTARTDT", 
+"DATA"."INTRENOPL",
+"DATA"."PLNO",
+"DATA"."BPARTNER",
+"DATA"."VALID_FROM",
+"DATA"."VALID_TO",
+"CZBP"."BPARTNER" AS "BPARTNER_CZ"
+FROM 
+:it_data_for_rule AS "DATA"
+INNER JOIN
+:lt_pcl_czbp AS "CZBP"
+ON  "DATA"."TAXYRSTARTDT" = "CZBP"."TAXYRSTARTDT"
+AND "DATA"."INTRENOPL" = "CZBP"."INTRENOPL"
+AND "DATA"."VALID_TO" = "CZBP"."VALID_FROM"
+WHERE "DATA"."CODE_ID" <> 'CZ'
+;
+
+ et_result = 
+ SELECT
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "BPARTNER",
+ 100 AS "DETECTION_RESULT"
+ FROM 
+ :lt_pcl_bp
+ ;
+ 
+ et_text = 
+ SELECT
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "BPARTNER", 
+ 'Parcel ' || "PLNO" || ' is owned by CZ Business Partner ' || LTRIM("BPARTNER_CZ", '0') AS "TEXT",
+ '' AS "MSGID",
+ '' AS "MSGNO",
+ '' AS "MSGV1",
+ '' AS "MSGV2",
+ '' AS "MSGV3",
+ '' AS "MSGV4",
+ '' AS "MSGV1_FC",
+ '' AS "MSGV2_FC",
+ '' AS "MSGV3_FC",
+ '' AS "MSGV4_FC"
+ FROM 
+ :lt_pcl_bp
+ ;
+  
+END;

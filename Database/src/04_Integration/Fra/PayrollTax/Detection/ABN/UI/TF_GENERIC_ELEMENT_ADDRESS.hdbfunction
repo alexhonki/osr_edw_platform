@@ -140,8 +140,8 @@ LT_RESULT =
 		"NAME1",
 		"NAME2",
 		"NAME3",
-		"ADDR_LINE1",
-		"ADDR_LINE2",
+		CASE WHEN "ADDR_LINE1" is null then '' ELSE "ADDR_LINE1"  END AS "ADDR_LINE1" ,
+		CASE WHEN "ADDR_LINE2" is null then '' ELSE "ADDR_LINE2"  END AS "ADDR_LINE2" ,
 		CASE WHEN "STREET_NUMBER" is null then '' ELSE "STREET_NUMBER"  END AS "STREET_NUMBER" ,
 		CASE WHEN "STREET_NAME" is null then '' ELSE "STREET_NAME"  END AS "STREET_NAME" ,
 		CASE WHEN "STREET_TYPE" is null then '' ELSE "STREET_TYPE"  END AS "STREET_TYPE" ,
@@ -178,7 +178,10 @@ SELECT
 	"STATE"		,
 	"COUNTRY"	,
 	"POSTCODE"	,
-	"ADDR_LINE1"||', '||"ADDR_LINE2"||', '||"STREET_NUMBER"||', '||"STREET_NAME"||', '||"STREET_TYPE"||', '||"LOCALITY"||', '||"STATE"||', '||"POSTCODE"||', '||"COUNTRY"  AS "ADDRESS"
+	REPLACE(
+	REPLACE("ADDR_LINE1"||', '||"ADDR_LINE2"||', '||"STREET_NUMBER"||', '||"STREET_NAME"||', '||"STREET_TYPE"||', '||"LOCALITY"||', '||"STATE"||', '||"POSTCODE"||', '||"COUNTRY", ', , ', ', ') , ', , ', ', '
+	) AS "ADDRESS"
+
 FROM :LT_RESULT;
 
 END;
