@@ -133,8 +133,8 @@ HAVING SUM("A_CONTRACTORS") <= 0
 END IF;
 	
 ----------When RMS Flag = 'NULL' / BLANK----------------			
- IF :lv_rms_ar_cntr IS NULL OR :lv_rms_ar_cntr = '?' OR :lv_rms_ar_cntr = 'NULL' OR :lv_rms_ar_cntr = '' THEN
-
+ IF :lv_rms_ar_cntr IS NULL OR :lv_rms_ar_cntr = '?' OR :lv_rms_ar_cntr = 'NULL' OR :lv_rms_ar_cntr = '' OR :lv_rms_ar_cntr = '*' THEN
+--IF :lv_rms_ar_cntr = '*' THEN
 RMS_WAGES =
 SELECT 
 "ABN",
@@ -167,8 +167,8 @@ GROUP BY
 			"PERIOD_KEY"	
 						
 ;
-
 END IF;	
+	
 
 
 -------Take only the data what is required based on RMS Flag = Y/N/NULL-----------
