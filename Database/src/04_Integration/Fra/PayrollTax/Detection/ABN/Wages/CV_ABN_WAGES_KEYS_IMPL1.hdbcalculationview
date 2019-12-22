@@ -266,7 +266,7 @@
     </input>
     <joinAttribute name="ABN"/>
   </calculationView>
-  <calculationView xsi:type="Calculation:JoinView" id="Join_6" cardinality="CN_N" joinType="leftOuter">
+  <calculationView xsi:type="Calculation:JoinView" id="Join_Output" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
       <viewAttribute id="ABN"/>
       <viewAttribute id="PERIOD_CATEGORY"/>
@@ -300,47 +300,47 @@
     <joinAttribute name="IND_CODE_GRP"/>
   </calculationView>
 </calculationViews>
-<logicalModel id="Join_6">
+<logicalModel id="Join_Output">
   <attributes>
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Join_6" columnName="ABN"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ABN"/>
     </attribute>
     <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INCOTYP"/>
-      <keyMapping columnObjectName="Join_6" columnName="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="Join_Output" columnName="PERIOD_CATEGORY"/>
     </attribute>
     <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSL"/>
-      <keyMapping columnObjectName="Join_6" columnName="PERIOD_KEY"/>
+      <keyMapping columnObjectName="Join_Output" columnName="PERIOD_KEY"/>
     </attribute>
     <attribute id="PERIOD_END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABRZO"/>
-      <keyMapping columnObjectName="Join_6" columnName="PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="Join_Output" columnName="PERIOD_END_DATE"/>
     </attribute>
     <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Join_6" columnName="GJAHR"/>
+      <keyMapping columnObjectName="Join_Output" columnName="GJAHR"/>
     </attribute>
     <attribute id="ENTITY_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ENT_TYP_CD"/>
-      <keyMapping columnObjectName="Join_6" columnName="ENTITY_TYPE"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ENTITY_TYPE"/>
     </attribute>
     <attribute id="ANZSIC_CD" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_INDY_CLSN"/>
-      <keyMapping columnObjectName="Join_6" columnName="ANZSIC_CD"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ANZSIC_CD"/>
     </attribute>
     <attribute id="IND_DIVISION" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IND_DIVISION_CODE"/>
-      <keyMapping columnObjectName="Join_6" columnName="IND_DIVISION"/>
+      <keyMapping columnObjectName="Join_Output" columnName="IND_DIVISION"/>
     </attribute>
     <attribute id="ABN_REGN_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN_REGN_DT"/>
-      <keyMapping columnObjectName="Join_6" columnName="ABN_REGN_DT"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ABN_REGN_DT"/>
     </attribute>
     <attribute id="ABN_CANCN_DT" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN_CANCN_DT"/>
-      <keyMapping columnObjectName="Join_6" columnName="ABN_CANCN_DT"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ABN_CANCN_DT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -449,15 +449,15 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
     </shape>
-    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="Join_Output" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="427" y="217"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape modelObjectName="Join_4" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="Join_4" modelObjectNameSpace="Join_Output" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="444" y="99"/>
       <rectangleSize width="356"/>
     </shape>
-    <shape modelObjectName="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP" modelObjectNameSpace="Join_6" modelObjectType="JoinNodeInput">
+    <shape modelObjectName="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP" modelObjectNameSpace="Join_Output" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="144" y="87"/>
       <rectangleSize width="195"/>
     </shape>
