@@ -25,26 +25,19 @@
   <DataSource id="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND">
     <resourceUri>osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND</resourceUri>
   </DataSource>
+  <DataSource id="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_ABR" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="ABR_ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="ENTITY_TYPE">
-        <descriptions defaultDescription="ENT_TYP_CD"/>
-      </viewAttribute>
-      <viewAttribute id="ANZSIC_CD">
-        <descriptions defaultDescription="MN_INDY_CLSN"/>
-      </viewAttribute>
+      <viewAttribute id="ABR_ABN"/>
+      <viewAttribute id="ENTITY_TYPE"/>
+      <viewAttribute id="ANZSIC_CD"/>
     
-      <viewAttribute id="ABR_ABN_REGN_DT">
-        <descriptions defaultDescription="ABN_REGN_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ABR_ABN_CANCN_DT">
-        <descriptions defaultDescription="ABN_CANCN_DT"/>
-      </viewAttribute>
+      <viewAttribute id="ABR_ABN_REGN_DT"/>
+      <viewAttribute id="ABR_ABN_CANCN_DT"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ABN" datatype="NVARCHAR" length="11" expressionLanguage="SQL">
@@ -57,7 +50,6 @@
         <formula>TO_NVARCHAR(&quot;ABR_ABN_CANCN_DT&quot;,'YYYYMMDD')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ENTITY_TYPE" source="ENT_TYP_CD"/>
@@ -70,96 +62,51 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_CALENDAR" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="DATE_SQL">
-        <descriptions defaultDescription="DATE_SQL"/>
-      </viewAttribute>
-      <viewAttribute id="CALENDAR_VARIANT">
-        <descriptions defaultDescription="CALENDAR_VARIANT"/>
-      </viewAttribute>
-      <viewAttribute id="FISCAL_YEAR">
-        <descriptions defaultDescription="FISCAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="DATE">
-        <descriptions defaultDescription="DATE"/>
-      </viewAttribute>
+      <viewAttribute id="DATE_SQL"/>
+      <viewAttribute id="CALENDAR_VARIANT"/>
+      <viewAttribute id="FISCAL_YEAR"/>
+      <viewAttribute id="DATE"/>
     </viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="GJAHR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
         <formula>TO_NVARCHAR(&quot;FISCAL_YEAR&quot;)</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes/>
-    <input node="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DATE_SQL" source="DATE_SQL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="CALENDAR_VARIANT" source="CALENDAR_VARIANT"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FISCAL_YEAR" source="FISCAL_YEAR"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DATE" source="DATE"/>
-    </input>
+    <input node="osr.hana.platform.synonym::_SYS_BI.M_FISCAL_CALENDAR"/>
     <filter>&quot;CALENDAR_VARIANT&quot; = 'Z6' and
 &quot;DATE_SQL&quot; &lt;= CURRENT_DATE</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_INCORR_PER" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="INCOTYP"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="PERSL"/>
-      </viewAttribute>
-      <viewAttribute id="INCORR_FAEDN">
-        <descriptions defaultDescription="INCORR_FAEDN"/>
-      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="INCORR_FAEDN"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.rms.pscd.proxy::CV_TFMCA_INCORR_PER">
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="INCOTYP"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERSL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="INCORR_FAEDN" source="INCORR_FAEDN"/>
-    </input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERSL"/></input>
     <filter>&quot;PERIOD_CATEGORY&quot; = 'PT-A' OR &quot;PERIOD_CATEGORY&quot; = 'PT-Q'</filter>
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_TFKPERIOD">
     <viewAttributes>
-      <viewAttribute id="PERSL">
-        <descriptions defaultDescription="PERSL"/>
-      </viewAttribute>
-      <viewAttribute id="ABRZU">
-        <descriptions defaultDescription="ABRZU"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="ABRZO"/>
-      </viewAttribute>
-      <viewAttribute id="PREDC">
-        <descriptions defaultDescription="PREDC"/>
-      </viewAttribute>
+      <viewAttribute id="PERSL"/>
+      <viewAttribute id="ABRZU"/>
+      <viewAttribute id="PERIOD_END_DATE"/>
+      <viewAttribute id="PREDC"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
     <input node="osr.edw.staging.md.rms.pscd.proxy::CV_TFKPERIOD">
-      <mapping xsi:type="Calculation:AttributeMapping" target="PERSL" source="PERSL"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ABRZU" source="ABRZU"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="ABRZO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="PREDC" source="PREDC"/>
-    </input>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="ABRZO"/></input>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
     <viewAttributes>
-      <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="INCOTYP"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="PERSL"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="ABRZO"/>
-      </viewAttribute>
-      <viewAttribute id="ABRZU">
-        <descriptions defaultDescription="ABRZU"/>
-      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="PERIOD_END_DATE"/>
+      <viewAttribute id="ABRZU"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
     <input node="Projection_INCORR_PER">
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
@@ -173,22 +120,13 @@
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_N" joinType="inner">
     <viewAttributes>
-      <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="INCOTYP"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="PERSL"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="ABRZO"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
+      <viewAttribute id="PERIOD_CATEGORY"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="PERIOD_END_DATE"/>
+      <viewAttribute id="GJAHR"/>
       <viewAttribute hidden="true" id="JOIN$ABRZU$DATE"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
     <input node="Join_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
@@ -203,30 +141,15 @@
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_FY_RANGE" filterExpressionLanguage="SQL">
     <viewAttributes>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="DATE">
-        <descriptions defaultDescription="DATE"/>
-      </viewAttribute>
-      <viewAttribute id="DATE_SQL">
-        <descriptions defaultDescription="DATE_SQL"/>
-      </viewAttribute>
-      <viewAttribute id="CALENDAR_VARIANT">
-        <descriptions defaultDescription="CALENDAR_VARIANT"/>
-      </viewAttribute>
-      <viewAttribute id="FISCAL_YEAR">
-        <descriptions defaultDescription="FISCAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_MIN">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_MAX">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="DATE"/>
+      <viewAttribute id="DATE_SQL"/>
+      <viewAttribute id="CALENDAR_VARIANT"/>
+      <viewAttribute id="FISCAL_YEAR"/>
+      <viewAttribute id="FINANCIAL_YEAR_MIN"/>
+      <viewAttribute id="FINANCIAL_YEAR_MAX"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
     <input node="Projection_CALENDAR">
       <mapping xsi:type="Calculation:AttributeMapping" target="DATE_SQL" source="DATE_SQL"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="CALENDAR_VARIANT" source="CALENDAR_VARIANT"/>
@@ -242,60 +165,27 @@
   </calculationView>
   <calculationView xsi:type="Calculation:ProjectionView" id="Projection_FY_RANGE">
     <viewAttributes>
-      <viewAttribute id="FINANCIAL_YEAR_MIN">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
-      <viewAttribute id="FINANCIAL_YEAR_MAX">
-        <descriptions defaultDescription="FINANCIAL_YEAR"/>
-      </viewAttribute>
+      <viewAttribute id="FINANCIAL_YEAR_MIN"/>
+      <viewAttribute id="FINANCIAL_YEAR_MAX"/>
     
-      <viewAttribute id="GJAHR_MIN">
-        <descriptions defaultDescription="GJAHR_MIN"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR_MAX">
-        <descriptions defaultDescription="GJAHR_MAX"/>
-      </viewAttribute></viewAttributes>
+      <viewAttribute id="GJAHR_MIN"/>
+      <viewAttribute id="GJAHR_MAX"/></viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
-    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE">
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MIN" source="GJAHR_MIN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR_MAX" source="GJAHR_MAX"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MIN" source="FINANCIAL_YEAR_MIN"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="FINANCIAL_YEAR_MAX" source="FINANCIAL_YEAR_MAX"/>
-    </input>
+    <input node="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_FY_RANGE"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_3">
     <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="INCOTYP"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="PERSL"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="ABRZO"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="ENTITY_TYPE">
-        <descriptions defaultDescription="ENT_TYP_CD"/>
-      </viewAttribute>
-      <viewAttribute id="ANZSIC_CD">
-        <descriptions defaultDescription="MN_INDY_CLSN"/>
-      </viewAttribute>
-      <viewAttribute id="ABN_REGN_DT">
-        <descriptions defaultDescription="ABN_REGN_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ABN_CANCN_DT">
-        <descriptions defaultDescription="ABN_CANCN_DT"/>
-      </viewAttribute>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="PERIOD_CATEGORY"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="PERIOD_END_DATE"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="ENTITY_TYPE"/>
+      <viewAttribute id="ANZSIC_CD"/>
+      <viewAttribute id="ABN_REGN_DT"/>
+      <viewAttribute id="ABN_CANCN_DT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
     <input node="Join_5">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ENTITY_TYPE" source="ENTITY_TYPE"/>
@@ -312,40 +202,21 @@
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="CN_N" joinType="leftOuter">
     <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="PARENT_ENTITY_CODE">
-        <descriptions defaultDescription="PARENT_ENTITY_CODE"/>
-      </viewAttribute>
+      <viewAttribute id="ABN"/>
     
-      <viewAttribute id="ANZSIC_CD">
-        <descriptions defaultDescription="MN_INDY_CLSN"/>
-      </viewAttribute>
-      <viewAttribute id="ABN_REGN_DT">
-        <descriptions defaultDescription="ABN_REGN_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ABN_CANCN_DT">
-        <descriptions defaultDescription="ABN_CANCN_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ABR_ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="ORIGIN_ENTITY_TYPE">
-        <descriptions defaultDescription="ENT_TYP_CD"/>
-      </viewAttribute>
-      <viewAttribute id="ABR_ABN_REGN_DT">
-        <descriptions defaultDescription="ABN_REGN_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ABR_ABN_CANCN_DT">
-        <descriptions defaultDescription="ABN_CANCN_DT"/>
-      </viewAttribute></viewAttributes>
+      <viewAttribute id="ANZSIC_CD"/>
+      <viewAttribute id="ABN_REGN_DT"/>
+      <viewAttribute id="ABN_CANCN_DT"/>
+      <viewAttribute id="PARENT_ENTITY_CODE"/>
+      <viewAttribute id="ABR_ABN"/>
+      <viewAttribute id="ORIGIN_ENTITY_TYPE"/>
+      <viewAttribute id="ABR_ABN_REGN_DT"/>
+      <viewAttribute id="ABR_ABN_CANCN_DT"/></viewAttributes>
     <calculatedViewAttributes>
       <calculatedViewAttribute id="ENTITY_TYPE" datatype="NVARCHAR" length="3" expressionLanguage="COLUMN_ENGINE">
         <formula>IF(ISNULL(&quot;PARENT_ENTITY_CODE&quot;),'', leftstr(&quot;PARENT_ENTITY_CODE&quot;,3))</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <restrictedViewAttributes/>
     <input node="Projection_ABR">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABR_ABN" source="ABR_ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ORIGIN_ENTITY_TYPE" source="ENTITY_TYPE"/>
@@ -364,36 +235,21 @@
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_4" cardinality="CN_N" joinType="inner">
     <viewAttributes>
-      <viewAttribute id="ABN">
-        <descriptions defaultDescription="ABN"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_CATEGORY">
-        <descriptions defaultDescription="INCOTYP"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_KEY">
-        <descriptions defaultDescription="PERSL"/>
-      </viewAttribute>
-      <viewAttribute id="PERIOD_END_DATE">
-        <descriptions defaultDescription="ABRZO"/>
-      </viewAttribute>
-      <viewAttribute id="GJAHR">
-        <descriptions defaultDescription="GJAHR"/>
-      </viewAttribute>
-      <viewAttribute id="ENTITY_TYPE">
-        <descriptions defaultDescription="ENT_TYP_CD"/>
-      </viewAttribute>
-      <viewAttribute id="ANZSIC_CD">
-        <descriptions defaultDescription="MN_INDY_CLSN"/>
-      </viewAttribute>
-      <viewAttribute id="ABN_REGN_DT">
-        <descriptions defaultDescription="ABN_REGN_DT"/>
-      </viewAttribute>
-      <viewAttribute id="ABN_CANCN_DT">
-        <descriptions defaultDescription="ABN_CANCN_DT"/>
-      </viewAttribute>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="PERIOD_CATEGORY"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="PERIOD_END_DATE"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="ENTITY_TYPE"/>
+      <viewAttribute id="ANZSIC_CD"/>
+      <viewAttribute id="ABN_REGN_DT"/>
+      <viewAttribute id="ABN_CANCN_DT"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
-    <restrictedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="IND_CODE_GRP" datatype="NVARCHAR" length="13" expressionLanguage="SQL">
+        <formula>LEFT(&quot;ANZSIC_CD&quot;, 3)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <input node="Join_3">
       <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
@@ -410,44 +266,81 @@
     </input>
     <joinAttribute name="ABN"/>
   </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_Output" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="PERIOD_CATEGORY"/>
+      <viewAttribute id="PERIOD_KEY"/>
+      <viewAttribute id="PERIOD_END_DATE"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="ENTITY_TYPE"/>
+      <viewAttribute id="ANZSIC_CD"/>
+      <viewAttribute id="IND_DIVISION"/>
+      <viewAttribute id="ABN_REGN_DT"/>
+      <viewAttribute id="ABN_CANCN_DT"/>
+      <viewAttribute id="IND_CODE_GRP"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_CATEGORY" source="PERIOD_CATEGORY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_KEY" source="PERIOD_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERIOD_END_DATE" source="PERIOD_END_DATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENTITY_TYPE" source="ENTITY_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ANZSIC_CD" source="ANZSIC_CD"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_REGN_DT" source="ABN_REGN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN_CANCN_DT" source="ABN_CANCN_DT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IND_CODE_GRP" source="IND_CODE_GRP"/>
+    </input>
+    <input node="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="IND_DIVISION" source="IND_DIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IND_CODE_GRP" source="IND_CODE_GRP"/>
+    </input>
+    <joinAttribute name="IND_CODE_GRP"/>
+  </calculationView>
 </calculationViews>
-<logicalModel id="Join_4">
+<logicalModel id="Join_Output">
   <attributes>
     <attribute id="ABN" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN"/>
-      <keyMapping columnObjectName="Join_4" columnName="ABN"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ABN"/>
     </attribute>
     <attribute id="PERIOD_CATEGORY" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INCOTYP"/>
-      <keyMapping columnObjectName="Join_4" columnName="PERIOD_CATEGORY"/>
+      <keyMapping columnObjectName="Join_Output" columnName="PERIOD_CATEGORY"/>
     </attribute>
     <attribute id="PERIOD_KEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PERSL"/>
-      <keyMapping columnObjectName="Join_4" columnName="PERIOD_KEY"/>
+      <keyMapping columnObjectName="Join_Output" columnName="PERIOD_KEY"/>
     </attribute>
     <attribute id="PERIOD_END_DATE" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABRZO"/>
-      <keyMapping columnObjectName="Join_4" columnName="PERIOD_END_DATE"/>
+      <keyMapping columnObjectName="Join_Output" columnName="PERIOD_END_DATE"/>
     </attribute>
     <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="GJAHR"/>
-      <keyMapping columnObjectName="Join_4" columnName="GJAHR"/>
+      <keyMapping columnObjectName="Join_Output" columnName="GJAHR"/>
     </attribute>
     <attribute id="ENTITY_TYPE" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ENT_TYP_CD"/>
-      <keyMapping columnObjectName="Join_4" columnName="ENTITY_TYPE"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ENTITY_TYPE"/>
     </attribute>
     <attribute id="ANZSIC_CD" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="MN_INDY_CLSN"/>
-      <keyMapping columnObjectName="Join_4" columnName="ANZSIC_CD"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ANZSIC_CD"/>
     </attribute>
-    <attribute id="ABN_REGN_DT" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="IND_DIVISION" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IND_DIVISION_CODE"/>
+      <keyMapping columnObjectName="Join_Output" columnName="IND_DIVISION"/>
+    </attribute>
+    <attribute id="ABN_REGN_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN_REGN_DT"/>
-      <keyMapping columnObjectName="Join_4" columnName="ABN_REGN_DT"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ABN_REGN_DT"/>
     </attribute>
-    <attribute id="ABN_CANCN_DT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ABN_CANCN_DT" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ABN_CANCN_DT"/>
-      <keyMapping columnObjectName="Join_4" columnName="ABN_CANCN_DT"/>
+      <keyMapping columnObjectName="Join_Output" columnName="ABN_CANCN_DT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -458,29 +351,29 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="697.8649651082364" y="112"/>
+      <upperLeftCorner x="427" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_ABR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="762.1275757899084" y="676.9999964237213"/>
+      <upperLeftCorner x="92" y="816"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_CALENDAR" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="301.99999999999983" y="836.9999952316284"/>
+      <upperLeftCorner x="93" y="976"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_INCORR_PER" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="721.9999999999999" y="836.9999952316284"/>
+      <upperLeftCorner x="513" y="976"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_TFKPERIOD" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.99999999999983" y="836.9999952316284"/>
+      <upperLeftCorner x="723" y="976"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="538.6666666666665" y="676.9999964237213"/>
+      <upperLeftCorner x="535" y="816"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_INCORR_PER" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
@@ -492,7 +385,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="511.9999999999998" y="516.9999976158142"/>
+      <upperLeftCorner x="386" y="656"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
@@ -504,7 +397,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_FY_RANGE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="275.33333333333314" y="676.9999964237213"/>
+      <upperLeftCorner x="312" y="816"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_CALENDAR" modelObjectNameSpace="Join_FY_RANGE" modelObjectType="JoinNodeInput">
@@ -517,11 +410,11 @@
     </shape>
   
     <shape expanded="true" modelObjectName="Projection_FY_RANGE" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999994" y="836.9999952316284"/>
+      <upperLeftCorner x="303" y="976"/>
       <rectangleSize height="30" width="160"/>
     </shape><shape><upperLeftCorner/><rectangleSize/></shape>
     <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="672.6576108244839" y="376.9999988079071"/>
+      <upperLeftCorner x="358" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_5" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
@@ -533,7 +426,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="723.3612509474074" y="516.9999976158142"/>
+      <upperLeftCorner x="92" y="656"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_ABR" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
@@ -545,7 +438,7 @@
       <rectangleSize width="250"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="672.6576108244839" y="236.9999988079071"/>
+      <upperLeftCorner x="358" y="376"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Join_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
@@ -555,6 +448,19 @@
     <shape modelObjectName="osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_NIND" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="250"/>
-    </shape></shapes>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_Output" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="427" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_4" modelObjectNameSpace="Join_Output" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="444" y="99"/>
+      <rectangleSize width="356"/>
+    </shape>
+    <shape modelObjectName="osr.edw.staging.md.ato.proxy::TF_IND_CODE_GRP" modelObjectNameSpace="Join_Output" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="144" y="87"/>
+      <rectangleSize width="195"/>
+    </shape>
+  </shapes>
 </layout>
 </Calculation:scenario>
