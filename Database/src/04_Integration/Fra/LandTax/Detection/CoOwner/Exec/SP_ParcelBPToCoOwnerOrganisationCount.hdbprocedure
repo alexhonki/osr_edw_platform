@@ -50,35 +50,14 @@ SELECT
 "LTPLRESB"."TAXYRSTARTDT", 
 "LTPLRESB"."INTRENOPL", 
 "LTPLRESB"."PLNO",
-"LTPLRESB"."BPARTNER"
+"LTPLRESB"."BPARTNER",
+"CNT_FILTER"."OWNER_COUNT"
 FROM
 :lt_pcl_bp AS "LTPLRESB"
 INNER JOIN 
 :lt_owner_count AS "CNT_FILTER"
 ON  "LTPLRESB"."TAXYRSTARTDT" = "CNT_FILTER"."TAXYRSTARTDT"
 AND "LTPLRESB"."INTRENOPL"	= "CNT_FILTER"."INTRENOPL"
-;
- 
-
-lt_pcl_coowner = 
-SELECT 
-"TAXYRSTARTDT", 
-"INTRENOPL", 
-"PLNO",
-STRING_AGG("BPARTNER", '|' ORDER BY "BPARTNER" ASC) AS "CO_OWNER"
-FROM
-:lt_pcl_bp_result
-GROUP BY "TAXYRSTARTDT", "INTRENOPL", "PLNO"
-;
- 		
-lt_coowner_data = 
-SELECT
-"TAXYRSTARTDT",
-"INTRENOPL", 
-"PLNO",
-LEFT("CO_OWNER",600) AS "CO_OWNER", 
-CAST(HASH_MD5(TO_BINARY("CO_OWNER")) AS NVARCHAR) AS "CO_OWNER_ID"
-FROM :lt_pcl_coowner
 ;
  
  et_result = 
@@ -94,16 +73,16 @@ FROM :lt_pcl_coowner
  
  et_text = 
  SELECT
- "CO_OWNER"."TAXYRSTARTDT",
- "CO_OWNER"."INTRENOPL",
- "CO_OWNER"."PLNO",
- "PCL_BP"."BPARTNER", 
- 'Parcel ' || "CO_OWNER"."PLNO" || ' is owned by BP ' || LTRIM("PCL_BP"."BPARTNER",'0') || ' together with ' || LEFT("CO_OWNER"."CO_OWNER",150) || ' in tax year staring from '  || 
- RIGHT("CO_OWNER"."TAXYRSTARTDT", 2) || 
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "BPARTNER", 
+ 'Parcel ' || "PLNO" || ' is owned by equal or more than ' || "OWNER_COUNT" || ' organisations in tax year staring from '  || 
+ RIGHT("TAXYRSTARTDT", 2) || 
  '/' || 
- SUBSTRING("CO_OWNER"."TAXYRSTARTDT", 5, 2) ||
+ SUBSTRING("TAXYRSTARTDT", 5, 2) ||
  '/' ||
- LEFT("CO_OWNER"."TAXYRSTARTDT", 4) AS "TEXT",
+ LEFT("TAXYRSTARTDT", 4) AS "TEXT",
  '' AS "MSGID",
  '' AS "MSGNO",
  '' AS "MSGV1",
@@ -115,11 +94,7 @@ FROM :lt_pcl_coowner
  '' AS "MSGV3_FC",
  '' AS "MSGV4_FC"
  FROM 
- :lt_coowner_data AS "CO_OWNER"
- INNER JOIN
- :lt_pcl_bp AS "PCL_BP"
- ON  "CO_OWNER"."TAXYRSTARTDT" = "PCL_BP"."TAXYRSTARTDT"
- AND "CO_OWNER"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+ :lt_pcl_bp_result
  ;
   
 END;

@@ -1,0 +1,40 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.test::SP_ParcelBPToCoOwnerOrganisationCountTest" (
+	IN	IV_TAXYRSTARTDT						NVARCHAR(8),
+	IN	IV_PLNO								NVARCHAR(20),
+	IN	IV_ORG_COUNT_THRESHOLD				Integer,
+	OUT ET_RESULT							"osr.edw.platform.fra.ltx.coowner::Types.RESULT_LTPCLBP",
+	OUT ET_TEXT  							"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLBP"
+	)
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+	
+	LT_WORKING_SET = 
+	SELECT
+	"TAXYRSTARTDT",
+    "INTRENOPL",
+    "PLNO",
+    "BPARTNER"
+	FROM "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj"()
+	WHERE "PLNO" = :IV_PLNO
+	  AND "TAXYRSTARTDT" >= :IV_TAXYRSTARTDT
+	;    
+    
+  CALL "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelBPSele"(
+    :LT_WORKING_SET,
+    LT_OUTPUT_READ );
+
+    LT_PARAM_DM =
+      SELECT
+        :IV_ORG_COUNT_THRESHOLD    AS "ORG_COUNT_THRESHOLD"
+    FROM "osr.hana.platform.synonym::SYS.DUMMY";
+    
+  CALL  "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerOrganisationCount"(
+    :LT_OUTPUT_READ,
+    :LT_PARAM_DM,
+    ET_RESULT,
+    ET_TEXT );
+
+ END;
