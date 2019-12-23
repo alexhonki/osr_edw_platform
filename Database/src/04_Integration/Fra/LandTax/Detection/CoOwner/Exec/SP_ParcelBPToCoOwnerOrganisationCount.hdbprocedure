@@ -1,0 +1,100 @@
+PROCEDURE "osr.edw.platform.fra.ltx.coowner.ex::SP_ParcelBPToCoOwnerOrganisationCount" (
+	IN  it_data_for_rule	"osr.edw.platform.fra.ltx.coowner::Types.DATA_LTPCLBP",
+	IN 	parameters	 		"osr.edw.platform.fra.ltx.coowner::Types.PCL_ORG_CNT_PARAM",
+	OUT et_result			"osr.edw.platform.fra.ltx.coowner::Types.RESULT_LTPCLBP",
+	OUT et_text   			"osr.edw.platform.fra.ltx.coowner::Types.TEXT_LTPCLBP"
+) 
+	LANGUAGE SQLSCRIPT
+	SQL SECURITY INVOKER
+	READS SQL DATA AS
+BEGIN
+
+ DECLARE lv_cnt_threshold INTEGER;
+
+ SELECT "ORG_COUNT_THRESHOLD" INTO lv_cnt_threshold FROM :PARAMETERS LIMIT 1;
+
+lt_pcl_bp = 
+SELECT
+"TAXYRSTARTDT", 
+"INTRENOPL",
+"PLNO",
+"BPARTNER", 
+"CODE_ID"
+FROM :it_data_for_rule
+WHERE "CODE_ID" <> 'CZ'
+UNION
+SELECT
+"TAXYRSTARTDT", 
+"INTRENOPL",
+"PLNO",
+"BPARTNER",
+"CODE_ID"
+FROM :it_data_for_rule
+WHERE "CODE_ID" = ''
+;
+
+ --Consolidated owner count info
+ lt_owner_count = 
+ SELECT 
+ "TAXYRSTARTDT", 
+ "INTRENOPL", 
+ COUNT("BPARTNER") AS "OWNER_COUNT"
+ FROM :lt_pcl_bp
+ WHERE "CODE_ID" NOT LIKE 'N%'
+ GROUP BY "TAXYRSTARTDT", "INTRENOPL"
+ HAVING COUNT("BPARTNER")  >= :lv_cnt_threshold
+ ;
+ 
+lt_pcl_bp_result = 
+SELECT 
+"LTPLRESB"."TAXYRSTARTDT", 
+"LTPLRESB"."INTRENOPL", 
+"LTPLRESB"."PLNO",
+"LTPLRESB"."BPARTNER",
+"CNT_FILTER"."OWNER_COUNT"
+FROM
+:lt_pcl_bp AS "LTPLRESB"
+INNER JOIN 
+:lt_owner_count AS "CNT_FILTER"
+ON  "LTPLRESB"."TAXYRSTARTDT" = "CNT_FILTER"."TAXYRSTARTDT"
+AND "LTPLRESB"."INTRENOPL"	= "CNT_FILTER"."INTRENOPL"
+;
+ 
+ et_result = 
+ SELECT
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "BPARTNER",
+ 100 AS "DETECTION_RESULT"
+ FROM 
+ :lt_pcl_bp_result
+ ;
+ 
+ et_text = 
+ SELECT
+ "TAXYRSTARTDT",
+ "INTRENOPL",
+ "PLNO",
+ "BPARTNER", 
+ 'Parcel ' || "PLNO" || ' is owned by equal or more than ' || "OWNER_COUNT" || ' organisations in tax year staring from '  || 
+ RIGHT("TAXYRSTARTDT", 2) || 
+ '/' || 
+ SUBSTRING("TAXYRSTARTDT", 5, 2) ||
+ '/' ||
+ LEFT("TAXYRSTARTDT", 4) AS "TEXT",
+ '' AS "MSGID",
+ '' AS "MSGNO",
+ '' AS "MSGV1",
+ '' AS "MSGV2",
+ '' AS "MSGV3",
+ '' AS "MSGV4",
+ '' AS "MSGV1_FC",
+ '' AS "MSGV2_FC",
+ '' AS "MSGV3_FC",
+ '' AS "MSGV4_FC"
+ FROM 
+ :lt_pcl_bp_result
+ ;
+  
+END;
