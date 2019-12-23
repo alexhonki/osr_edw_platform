@@ -77,7 +77,7 @@ AND "LTPLRESB"."INTRENOPL"	= "CNT_FILTER"."INTRENOPL"
  "INTRENOPL",
  "PLNO",
  "BPARTNER", 
- 'Parcel ' || "PLNO" || ' is owned by equal or more than ' || "OWNER_COUNT" || ' companies in tax year staring from '  || 
+ 'Parcel ' || "PLNO" || ' is owned by ' || "OWNER_COUNT" || ' companies in tax year staring from '  || 
  RIGHT("TAXYRSTARTDT", 2) || 
  '/' || 
  SUBSTRING("TAXYRSTARTDT", 5, 2) ||
