@@ -19,6 +19,7 @@ BEGIN
 	"DATE_FROM",
 	"PERIODEND",
 	"CODEID"
-	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ZBUT0000UZQMZ7.active_data";
+	FROM "osr.edw.staging.md.rms.synonym::CDS_BP.DSO.ZBUT0000UZQMZ7.active_data"
+	WHERE "PERIODBEGIN" <> '00000000';
 
 END;
