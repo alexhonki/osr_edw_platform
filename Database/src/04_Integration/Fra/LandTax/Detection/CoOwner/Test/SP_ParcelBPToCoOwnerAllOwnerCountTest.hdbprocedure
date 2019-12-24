@@ -19,7 +19,7 @@ BEGIN
     "BPARTNER"
 	FROM "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj"()
 	WHERE "PLNO" = :IV_PLNO
-	  AND "TAXYRSTARTDT" >= :IV_TAXYRSTARTDT
+	  AND "TAXYRSTARTDT" = :IV_TAXYRSTARTDT
 	;    
     
   CALL "osr.edw.platform.fra.ltx.coowner.se::SP_ParcelBPSele"(
