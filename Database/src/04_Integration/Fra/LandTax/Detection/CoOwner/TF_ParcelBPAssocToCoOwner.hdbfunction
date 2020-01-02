@@ -5,6 +5,8 @@ FUNCTION "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner.hdbfunctio
 		INTRENOPL	 NVARCHAR(13),
 		PLNO		 NVARCHAR(20),
 		BPARTNER     NVARCHAR(10),
+		VALID_FROM	 NVARCHAR(8),
+		VALID_TO	 NVARCHAR(8),
 		CO_OWNER_ID  NVARCHAR(32)
     	)
        LANGUAGE SQLSCRIPT 
@@ -17,6 +19,8 @@ BEGIN
 	"PCL_BY_BP"."INTRENOPL",
 	"PCL_COOWNER"."PLNO",
 	"PCL_BY_BP"."BPARTNER",
+	"PCL_BY_BP"."VALID_FROM",
+	"PCL_BY_BP"."VALID_TO",
 	"PCL_COOWNER"."CO_OWNER_ID" AS "CO_OWNER_ID"
 	FROM 
 	--"osr.edw.staging.td.rms.synonym::CDS_LAND.DSO.LTPLRESB.active_data" AS "PCL_BY_BP"
