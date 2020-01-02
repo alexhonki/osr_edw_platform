@@ -17,7 +17,7 @@ modules:
     properties:
       API_END_POINT: '${xs-api-url}'
     provides:
-      - name: OSR_EDW_PLATFORM-Backend
+      - name: OSR_EDW_PLATFORM-Backend-API
         properties:
           service_url: '${default-url}'
     build-parameters:
@@ -162,7 +162,7 @@ resources:
       OSR-EDW-SOURCE-RTA-grantor-service: '${service-name}'
     parameters:
       service-name: OSR_EDW_SOURCE_RTA-deploy
-    type: org.cloudfoundry.existing-service  
+    type: org.cloudfoundry.existing-service
   - name: OSR-EDW-SOURCE-BDM-grantor
     properties:
       OSR-EDW-SOURCE-BDM-grantor-service: '${service-name}'
