@@ -19,7 +19,7 @@ BEGIN
     "BPARTNER",
     "VALID_FROM",
     "VALID_TO"
-	FROM "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj"()
+	FROM (SELECT * FROM "osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj"())
 	WHERE "PLNO" = :IV_PLNO
 	  AND "TAXYRSTARTDT" >= :IV_TAXYRSTARTDT
 	;    
