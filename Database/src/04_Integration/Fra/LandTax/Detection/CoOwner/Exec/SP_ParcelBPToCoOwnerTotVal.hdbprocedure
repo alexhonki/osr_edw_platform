@@ -38,6 +38,32 @@ FROM :it_data_for_rule
 WHERE "CODE_ID" = ''
 ;
 
+
+lt_pcl_bp_enrichment = 
+SELECT * FROM (
+SELECT
+"DATA"."TAXYRSTARTDT", 
+"DATA"."INTRENOPL",
+"DATA"."PLNO",
+"DATA"."BPARTNER", 
+"DATA"."CODE_ID",
+"DATA"."VALID_FROM",
+"DATA"."VALID_TO",
+"PCL_BP"."BRUTEIL" AS "BRUTEIL",
+"PCL_BP"."RFAKT" AS "RFAKT",
+ROW_NUMBER() OVER (PARTITION BY "DATA"."TAXYRSTARTDT",  "DATA"."INTRENOPL",  "DATA"."BPARTNER" ORDER BY  "DATA"."BPARTNER" DESC) AS "ROW_NUMBER"
+FROM :lt_pcl_bp AS "DATA"
+INNER JOIN
+"osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( ) AS "PCL_BP"
+ON  "DATA"."TAXYRSTARTDT" = "PCL_BP"."TAXYRSTARTDT"
+AND "DATA"."INTRENOPL" = "PCL_BP"."INTRENOPL"
+AND "DATA"."BPARTNER" = "PCL_BP"."BPARTNER"
+AND "DATA"."VALID_FROM" = "PCL_BP"."VALID_FROM"
+AND "DATA"."VALID_TO" = "PCL_BP"."VALID_TO"
+)
+WHERE "ROW_NUMBER" = 1
+;
+
 lt_pcl_coowner = 
 SELECT 
 "TAXYRSTARTDT", 
@@ -187,7 +213,8 @@ FROM :lt_pcl_coowner
  FROM 
  :lt_result AS "RESULT"
  INNER JOIN
- (SELECT * FROM "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( )) AS "LTPLRESB"
+-- (SELECT * FROM "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( )) AS "LTPLRESB"
+:lt_pcl_bp_enrichment AS "LTPLRESB"
  ON  "RESULT"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT"
  AND "RESULT"."INTRENOPL" = "LTPLRESB"."INTRENOPL"
  ;
@@ -220,9 +247,11 @@ FROM :lt_pcl_coowner
  FROM 
  :lt_result AS "RESULT"
  INNER JOIN
- (SELECT * FROM "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( )) AS "LTPLRESB"
+ --(SELECT * FROM "osr.edw.platform.fra.ltx::TF_ParcelOwnershipByBP"( )) AS "LTPLRESB"
+ :lt_pcl_bp_enrichment AS "LTPLRESB"
  ON  "RESULT"."TAXYRSTARTDT" = "LTPLRESB"."TAXYRSTARTDT"
  AND "RESULT"."INTRENOPL" = "LTPLRESB"."INTRENOPL"
  ;
   
 END;
+

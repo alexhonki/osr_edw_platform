@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_ParcelBPDetObj" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_ParcelBPDetObj" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="Parcel by BP Detection Object"/>
 <localVariables/>
 <variableMappings/>
@@ -8,48 +8,65 @@
     <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="INTRENOPL"/>
+      <viewAttribute id="PLNO"/>
+      <viewAttribute id="VALID_FROM"/>
+      <viewAttribute id="VALID_TO"/>
+      <viewAttribute id="BPARTNER"/>
+      <viewAttribute id="PARISH"/>
+      <viewAttribute id="LGA"/>
+      <viewAttribute id="TENURE"/>
+      <viewAttribute id="LANDUSECODE"/>
+      <viewAttribute id="TAXYRSTARTDT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPDetObj"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
   <attributes>
     <attribute id="INTRENOPL" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INTRENOPL"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="INTRENOPL"/>
+      <keyMapping columnObjectName="Projection_1" columnName="INTRENOPL"/>
     </attribute>
     <attribute id="PLNO" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PLNO"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="PLNO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PLNO"/>
     </attribute>
     <attribute id="VALID_FROM" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_FROM"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="VALID_FROM"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_FROM"/>
     </attribute>
     <attribute id="VALID_TO" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_TO"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="VALID_TO"/>
+      <keyMapping columnObjectName="Projection_1" columnName="VALID_TO"/>
     </attribute>
     <attribute id="BPARTNER" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="BPARTNER"/>
+      <keyMapping columnObjectName="Projection_1" columnName="BPARTNER"/>
     </attribute>
     <attribute id="PARISH" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARISH"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="PARISH"/>
+      <keyMapping columnObjectName="Projection_1" columnName="PARISH"/>
     </attribute>
     <attribute id="LGA" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LGA"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="LGA"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LGA"/>
     </attribute>
     <attribute id="TENURE" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TENURE"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="TENURE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TENURE"/>
     </attribute>
     <attribute id="LANDUSECODE" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LANDUSECODE"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="LANDUSECODE"/>
+      <keyMapping columnObjectName="Projection_1" columnName="LANDUSECODE"/>
     </attribute>
     <attribute id="TAXYRSTARTDT" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TAXYRSTARTDT"/>
-      <keyMapping columnObjectName="TF_ParcelBPDetObj" columnName="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="TAXYRSTARTDT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -61,6 +78,11 @@
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
       <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="39" y="221"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>
