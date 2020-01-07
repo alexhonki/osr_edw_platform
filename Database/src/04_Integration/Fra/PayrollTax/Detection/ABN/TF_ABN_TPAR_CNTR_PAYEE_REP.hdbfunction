@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_CNTR_TPAR_PAYEE_REP" (IN IP_ALERT_ID NVARCHAR(20))
+FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_CNTR_PAYEE_REP" (IN IP_ALERT_ID NVARCHAR(20))
        RETURNS TABLE 
        (
        		"PAYEE_ABN"									NVARCHAR(20)	,
@@ -83,15 +83,23 @@ PAYEE_ABN_ELIGIBLE =
 	FROM  "osr.edw.source.td.fra.proxy::TF_PRT_PRTCNTR_BY_ALERT"(:IP_ALERT_ID)
 ;
 
+ALERT_DETAILS = 
+	SELECT 
+		"ALERT_ID",
+		"INVEST_OBJ_ID" AS "PAYER_ABN",
+		"INVEST_OBJ_ID2" AS "GJAHR"
+	FROM "osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"
+	WHERE "ALERT_ID" = :IP_ALERT_ID
+;
 
 PAYEE_ABN_ATTR = 
 	SELECT 
-		"PAYEE_ABN" AS "ABN",
+		"DATA"."PAYEE_ABN" AS "ABN",
 		"FINANCIAL_YEAR" AS "INCM_YR"		,
 		"PAYEE_ABN_STS" 					,
 		"REF_ID_PAYEE"						,
 		"REF_ID_PAYER"						,
-		"PAYER_ABN"							,
+		"DATA"."PAYER_ABN"					,
 		"PAYER_ABN_STS"						,
 		"PAYEE_FAMILY_NM"					,
 		"PAYEE_FIRST_GIVEN_NM"				,
@@ -108,8 +116,11 @@ PAYEE_ABN_ATTR =
 		"TW_TOTL_AMT"						,
 		"GST_TOTL_AMT"						,
 		"CHECK_CD"       
-	FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"()
-	WHERE "PAYER_ABN" IN (SELECT "PAYER_ABN" FROM :PAYEE_ABN_ELIGIBLE)
+	FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"() AS "DATA"
+	INNER JOIN :ALERT_DETAILS AS "ALERT"
+	ON "DATA"."PAYER_ABN" = "ALERT"."PAYER_ABN"
+	AND "DATA"."FINANCIAL_YEAR" = "ALERT"."GJAHR"
+	
 ;
 
 PAYEE_ABN_ALL_LIST = 
