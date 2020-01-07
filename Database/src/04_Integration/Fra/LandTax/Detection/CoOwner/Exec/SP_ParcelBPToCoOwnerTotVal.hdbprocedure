@@ -229,7 +229,7 @@ FROM :lt_pcl_coowner
  "LTPLRESB"."VALID_TO",
  CHAR(13)|| CHAR(10) ||
  'New estimated tax $' || TO_DECIMAL("ESTIMATED_PLTAX_NEW"*(CASE WHEN "LTPLRESB"."RFAKT" <> 0 THEN "LTPLRESB"."BRUTEIL"/"LTPLRESB"."RFAKT" ELSE 0 END), 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
- 'Estimated tax $' || "ESTIMATED_PLTAX" || '; ' || CHAR(13)|| CHAR(10) ||
+ 'Estimated tax $' || TO_DECIMAL("ESTIMATED_PLTAX"*(CASE WHEN "LTPLRESB"."RFAKT" <> 0 THEN "LTPLRESB"."BRUTEIL"/"LTPLRESB"."RFAKT" ELSE 0 END), 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
  'Additional estmated tax $' || TO_DECIMAL(("ESTIMATED_PLTAX_NEW"-"ESTIMATED_PLTAX")*(CASE WHEN "LTPLRESB"."RFAKT" <> 0 THEN "LTPLRESB"."BRUTEIL"/"LTPLRESB"."RFAKT" ELSE 0 END), 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
  'Ratio to Min. Value ' || TO_DECIMAL("RATIO_TO_MIN_VAL", 15, 2) || '; ' || CHAR(13)|| CHAR(10) ||
  'Band ' || "RATE_BAND" 

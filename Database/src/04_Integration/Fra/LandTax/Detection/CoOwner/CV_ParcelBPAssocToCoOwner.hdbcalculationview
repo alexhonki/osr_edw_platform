@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_ParcelBPAssocToCoOwner" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.ltx.coowner::CV_ParcelBPAssocToCoOwner" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="Parcel BP Association to Co-Owner"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner.hdbfunction" type="TABLE_FUNCTION">
-    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner.hdbfunction</resourceUri>
+  <DataSource id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews/>
-<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner.hdbfunction">
+<logicalModel id="osr.edw.platform.fra.ltx.coowner::TF_ParcelBPAssocToCoOwner">
   <attributes>
     <attribute id="TAXYRSTARTDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TAXYRSTARTDT"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="TAXYRSTARTDT"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="TAXYRSTARTDT"/>
     </attribute>
     <attribute id="INTRENOPL" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INTRENOPL"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="INTRENOPL"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="INTRENOPL"/>
     </attribute>
     <attribute id="PLNO" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PLNO"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="PLNO"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="PLNO"/>
     </attribute>
     <attribute id="BPARTNER" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BPARTNER"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="BPARTNER"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="BPARTNER"/>
     </attribute>
     <attribute id="VALID_FROM" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_FROM"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="VALID_FROM"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="VALID_FROM"/>
     </attribute>
     <attribute id="VALID_TO" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALID_TO"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="VALID_TO"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="VALID_TO"/>
     </attribute>
     <attribute id="CO_OWNER_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CO_OWNER_ID"/>
-      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner.hdbfunction" columnName="CO_OWNER_ID"/>
+      <keyMapping columnObjectName="TF_ParcelBPAssocToCoOwner" columnName="CO_OWNER_ID"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
