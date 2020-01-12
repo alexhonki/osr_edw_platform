@@ -15,6 +15,11 @@ DECLARE lv_thld_yearly Decimal(15,2) ;
 DECLARE lv_max_rating Decimal(3,2);
 DECLARE lv_rfr_max_low Decimal(15,2);
 
+DECLARE lv_gjahr NVARCHAR(4); -- 2020 update
+DECLARE lx_ato NVARCHAR(1) DEFAULT 'Y'; -- 2020 update
+DECLARE lx_wcq NVARCHAR(1) DEFAULT 'Y'; -- 2020 update
+DECLARE lx_interstate NVARCHAR(1) DEFAULT 'Y'; -- 2020 update
+
 SELECT 
 "RUN_MODE",
 "THRESHOLD_YEARLY"
@@ -34,6 +39,9 @@ TO_NVARCHAR('AUD') AS "WAERS",
 FROM :it_data_for_rule
 ;
 
+SELECT top 1 TO_NVARCHAR("GJAHR") into lv_gjahr FROM :it_data_for_rule ;	 -- 2020 update
+
+/*
 -- ATO BAS Data   	
 
  	lt_wages = 
@@ -265,6 +273,29 @@ INNER JOIN
 ON  "W"."GJAHR" = "RATE"."GJAHR"
 AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
 ;
+*/
+--BEGIN INSERT UPDATE FOR NEW WAGE THRESHOLD
+	lt_estimated_tax = 
+		SELECT 		
+			"EST"."ABN",
+			"EST"."PERIOD_CATEGORY",
+			"EST"."PERIOD_KEY",
+			"EST"."GJAHR", 
+			100 AS "DETECTION_RESULT",
+			"EST"."MAX_AU" AS "WAGE",
+			CASE WHEN "EST"."EST_TAX_LESS_RMS" < 0 THEN 0 ELSE "EST"."EST_TAX_LESS_RMS" END AS "RISK_AMOUNT",
+			'AUD' AS "CURRENCY",
+			:lv_max_rating AS "RISK_FACTOR_RATING"
+		FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_TAX_CALCULATION"(:lv_gjahr,:lx_ato, :lx_wcq , :lx_interstate, :lv_thld_yearly, 'N') AS "EST"
+		INNER JOIN :lt_wages as "WAGES"
+		ON "EST"."ABN" = "WAGES"."ABN"
+			AND "EST"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
+			AND "EST"."PERIOD_KEY" = "WAGES"."PERIOD_KEY"
+			AND "EST"."GJAHR" = "WAGES"."GJAHR"
+;
+		
+
+--END INSERT UPDATE FOR NEW WAGE THRESHOLD
 
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
 
@@ -283,7 +314,7 @@ SELECT
 "W"."RISK_AMOUNT" AS "RISK_AMOUNT",
 "W"."CURRENCY" AS "CURRENCY"
 FROM 
-:lt_estimated_tax AS "W"
+:lt_estimated_tax AS "W" 
 WHERE "W"."RISK_AMOUNT" >= :lv_rfr_max_low
 UNION
 SELECT
