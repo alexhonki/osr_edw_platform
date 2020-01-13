@@ -110,6 +110,10 @@
       <viewAttribute id="BU_ID_TYPE"/>
       <viewAttribute id="ZZSENDER"/>
       <viewAttribute id="FORM_LOCATOR_NUMBER"/>
+    
+      <viewAttribute id="C_CALC_RATE"/>
+      <viewAttribute id="A_GROUP_AUS_WAGES"/>
+      <viewAttribute id="A_REGIONAL_EMPLOYER"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="osr.edw.staging.rms.forms.tf.proxy::TF_3PYP_M"/>
@@ -429,6 +433,15 @@
       <descriptions defaultDescription="FORM_LOCATOR_NUMBER"/>
       <keyMapping columnObjectName="P_TF_3PYP_M" columnName="FORM_LOCATOR_NUMBER"/>
     </attribute>
+  
+    <attribute id="A_GROUP_AUS_WAGES" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_GROUP_AUS_WAGES"/>
+      <keyMapping columnObjectName="P_TF_3PYP_M" columnName="A_GROUP_AUS_WAGES"/>
+    </attribute>
+    <attribute id="A_REGIONAL_EMPLOYER" order="100" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REGIONAL_EMPLOYER"/>
+      <keyMapping columnObjectName="P_TF_3PYP_M" columnName="A_REGIONAL_EMPLOYER"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
@@ -507,6 +520,11 @@
     <measure id="ERTSP" order="94" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="ERTSP"/>
       <measureMapping columnObjectName="P_TF_3PYP_M" columnName="ERTSP"/>
+    </measure>
+  
+    <measure id="C_CALC_RATE" order="98" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_CALC_RATE"/>
+      <measureMapping columnObjectName="P_TF_3PYP_M" columnName="C_CALC_RATE"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>

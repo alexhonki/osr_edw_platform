@@ -108,6 +108,10 @@
       <viewAttribute id="REG_TYPE"/>
       <viewAttribute id="AETSP"/>
       <viewAttribute id="RETURN_ID"/>
+    
+      <viewAttribute id="A_REGIONAL_EMPLOYER"/>
+      <viewAttribute id="C_CALC_RATE"/>
+      <viewAttribute id="A_GROUP_AUS_WAGES"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="osr.edw.staging.rms.forms.tf.proxy::TF_3PYP_M_LV"/>
@@ -427,6 +431,15 @@
       <descriptions defaultDescription="RETURN_ID"/>
       <keyMapping columnObjectName="P_TF_3PYP_M_LV" columnName="RETURN_ID"/>
     </attribute>
+  
+    <attribute id="A_REGIONAL_EMPLOYER" order="98" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REGIONAL_EMPLOYER"/>
+      <keyMapping columnObjectName="P_TF_3PYP_M_LV" columnName="A_REGIONAL_EMPLOYER"/>
+    </attribute>
+    <attribute id="A_GROUP_AUS_WAGES" order="100" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_GROUP_AUS_WAGES"/>
+      <keyMapping columnObjectName="P_TF_3PYP_M_LV" columnName="A_GROUP_AUS_WAGES"/>
+    </attribute>
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
@@ -505,6 +518,11 @@
     <measure id="AETSP" order="96" aggregationType="sum" measureType="simple">
       <descriptions defaultDescription="AETSP"/>
       <measureMapping columnObjectName="P_TF_3PYP_M_LV" columnName="AETSP"/>
+    </measure>
+  
+    <measure id="C_CALC_RATE" order="99" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="C_CALC_RATE"/>
+      <measureMapping columnObjectName="P_TF_3PYP_M_LV" columnName="C_CALC_RATE"/>
     </measure>
   </baseMeasures>
   <calculatedMeasures/>
