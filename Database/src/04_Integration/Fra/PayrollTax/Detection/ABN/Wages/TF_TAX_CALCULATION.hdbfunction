@@ -1,0 +1,257 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.wages::TF_TAX_CALCULATION"(IN IV_GJAHR NVARCHAR(4), IN IV_ATO NVARCHAR(1), IN IV_WCQ NVARCHAR(1), IN IV_INTERSTATE NVARCHAR(1),  IN IV_THRESHOLD DECIMAL, IN IV_IS_GROUP NVARCHAR(1))
+       RETURNS TABLE
+(
+        ABN             		NVARCHAR(11),
+        GJAHR           		NVARCHAR(4),
+        PERIOD_CATEGORY 		NVARCHAR(10),
+ 	    PERIOD_KEY      		NVARCHAR(4),
+		BAS						DECIMAL(15,2),
+		ITR						DECIMAL(15,2),
+		WCQ						DECIMAL(15,2),
+		PAYG					DECIMAL(15,2),
+		OSR						DECIMAL(15,2),
+		RMS_PAID				DECIMAL(15,2),
+		MAX_AU					DECIMAL(15,2),  
+		EST_TAX					DECIMAL(15,2),	
+		EST_TAX_LESS_RMS		DECIMAL(15,2)
+)
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+
+IF :IV_IS_GROUP <> 'Y' THEN
+
+	LT_WAGES = 
+		SELECT 
+			"ABN",
+			"GJAHR",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"BAS",
+			"ITR",
+			"WCQ",
+			"PAYG",
+			"OSR",
+			"RMS_PAID",
+			"MAX_AU"
+		FROM (
+			SELECT 
+				"WAGES"."ABN",
+				"WAGES"."GJAHR",
+				"WAGES"."PERIOD_CATEGORY",
+				"WAGES"."PERIOD_KEY",
+				SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "BAS",
+				SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "ITR",
+				SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ",
+				SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") AS "PAYG",
+				SUM("WAGES"."OSR_STATE_WAGES") AS "OSR",
+				CASE WHEN SUM("RMS_PAID"."C_BASE_TAX") IS NULL THEN 0 ELSE SUM("RMS_PAID"."C_BASE_TAX") END AS "RMS_PAID",
+				
+--				Depending on the input parameters, the calc for max au wages might include different data sets
+				CASE WHEN :IV_ATO = 'Y' AND :IV_WCQ = 'N' AND :IV_INTERSTATE = 'N'
+					THEN GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"), SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT"))
+				ELSE CASE WHEN :IV_ATO = 'Y' AND :IV_WCQ = 'Y' AND :IV_INTERSTATE = 'N'
+					THEN GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"),SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT"), SUM("WAGES"."WCQ_ACT_WAGES"))
+				ELSE CASE WHEN :IV_ATO = 'Y' AND :IV_WCQ = 'Y' AND :IV_INTERSTATE = 'Y'
+					THEN GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"),SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT"), SUM("WAGES"."WCQ_ACT_WAGES"), SUM("WAGES"."OSR_STATE_WAGES"))
+				ELSE CASE WHEN :IV_ATO = 'N' AND :IV_WCQ = 'Y' AND :IV_INTERSTATE = 'Y'
+					THEN GREATEST(SUM("WAGES"."WCQ_ACT_WAGES"), SUM("WAGES"."OSR_STATE_WAGES"))
+				ELSE CASE WHEN :IV_ATO = 'N' AND :IV_WCQ = 'N' AND :IV_INTERSTATE = 'Y'
+					THEN GREATEST(SUM("WAGES"."OSR_STATE_WAGES"))
+				ELSE CASE WHEN :IV_ATO = 'N' AND :IV_WCQ = 'N' AND :IV_INTERSTATE = 'N' -- not a valid scenario
+					THEN 0 
+				ELSE GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"),SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."WCQ_ACT_WAGES"), SUM("WAGES"."OSR_STATE_WAGES")) 
+				END END END END END END AS "MAX_AU"
+					
+			FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"() AS "WAGES"
+			LEFT JOIN "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES" AS "ITR"
+			ON "WAGES"."ABN" = "ITR"."ABN"
+				AND "WAGES"."PERIOD_CATEGORY" = "ITR"."PERIOD_CATEGORY"
+				AND "WAGES"."GJAHR" = "ITR"."GJAHR"
+			LEFT JOIN "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "RMS_PAID"
+			ON "WAGES"."ABN" = "RMS_PAID"."ABN"
+				AND "WAGES"."PERIOD_CATEGORY" = "RMS_PAID"."PERIOD_CATEGORY"
+				AND "WAGES"."GJAHR" = "RMS_PAID"."GJAHR"
+			WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+				AND "WAGES"."GJAHR" = :IV_GJAHR
+				AND "WAGES"."WCQ_ACT_WAGES" > 0
+			GROUP BY
+				"WAGES"."ABN",
+				"WAGES"."GJAHR",
+				"WAGES"."PERIOD_CATEGORY",
+				"WAGES"."PERIOD_KEY"
+		)
+		WHERE "MAX_AU" > :iv_threshold;
+		
+
+	LT_CALCS = 
+		SELECT
+			"W"."ABN",
+			"W"."GJAHR",
+			"W"."PERIOD_CATEGORY",
+			"W"."PERIOD_KEY",
+			"W"."BAS",
+			"W"."ITR",
+			"W"."WCQ",
+			"W"."PAYG",
+			"W"."OSR",
+			"W"."RMS_PAID",
+			"W"."MAX_AU",
+			CASE WHEN ( "W"."MAX_AU" >= "THLD"."DEDUCTION_TO") THEN ("W"."WCQ"*("RATE"."PRT_HYRLY_RATE"/100)) -- Higher rate (PRT_HYRLY_RATE) for over deduction threshold 
+			ELSE 
+				CASE WHEN ( "W"."MAX_AU" <= "THLD"."THRESHOLD" ) THEN 0 --no PRT liability
+					ELSE 
+						CASE WHEN ("W"."MAX_AU" > "THLD"."THRESHOLD"  AND "W"."MAX_AU" < "THLD"."DEDUCTION_TO") -- PRT Liable but under deduction threshold so use lower rate (PRT_YRLY_RATE)
+							THEN (( "W"."WCQ" - ("W"."WCQ"/"W"."MAX_AU")*("THLD"."THRESHOLD"-(("W"."MAX_AU"-"THLD"."THRESHOLD")/4)))*("RATE"."PRT_YRLY_RATE"/100)) --lower rate 
+								ELSE 0
+						END
+				END
+		END AS "EST_TAX"
+		FROM :LT_WAGES AS "W"
+		INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD" AS "THLD"
+		ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
+			AND "W"."GJAHR" = "THLD"."GJAHR"
+		INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
+		ON  "W"."GJAHR" = "RATE"."GJAHR"
+			AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+		;
+
+END IF; 
+
+-- For group 
+-- Find the MAX wages for the group
+-- Calculate using the WCQ and RMS for the ABN but using the MAX wages for the group. 
+
+IF :IV_IS_GROUP = 'Y' THEN
+
+LT_GRP_WAGES = 
+	SELECT 
+		"GRP"."GROUP_ID",
+		"WAGES"."ABN",
+		"WAGES"."GJAHR",
+		"WAGES"."PERIOD_CATEGORY",
+		"WAGES"."PERIOD_KEY",
+		SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT") AS "BAS",
+		SUM("WAGES"."ATO_ITR_SALARY_WAGES") AS "ITR",
+		SUM("WAGES"."WCQ_ACT_WAGES") AS "WCQ",
+		SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT") AS "PAYG",
+		SUM("WAGES"."OSR_STATE_WAGES") AS "OSR",
+		CASE WHEN SUM("RMS_PAID"."C_BASE_TAX") IS NULL THEN 0 ELSE SUM("RMS_PAID"."C_BASE_TAX") END AS "RMS_PAID",
+		
+--		Depending on the input parameters, the calc for max au wages might include different data sets
+		CASE WHEN :IV_ATO = 'Y' AND :IV_WCQ = 'N' AND :IV_INTERSTATE = 'N'
+			THEN GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"), SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT"))
+		ELSE CASE WHEN :IV_ATO = 'Y' AND :IV_WCQ = 'Y' AND :IV_INTERSTATE = 'N'
+			THEN GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"),SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT"), SUM("WAGES"."WCQ_ACT_WAGES"))
+		ELSE CASE WHEN :IV_ATO = 'Y' AND :IV_WCQ = 'Y' AND :IV_INTERSTATE = 'Y'
+			THEN GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"),SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."ATO_PAYG_NIND_TOTL_GRS_AMT"), SUM("WAGES"."WCQ_ACT_WAGES"), SUM("WAGES"."OSR_STATE_WAGES"))
+		ELSE CASE WHEN :IV_ATO = 'N' AND :IV_WCQ = 'Y' AND :IV_INTERSTATE = 'Y'
+			THEN GREATEST(SUM("WAGES"."WCQ_ACT_WAGES"), SUM("WAGES"."OSR_STATE_WAGES"))
+		ELSE CASE WHEN :IV_ATO = 'N' AND :IV_WCQ = 'N' AND :IV_INTERSTATE = 'Y'
+			THEN GREATEST(SUM("WAGES"."OSR_STATE_WAGES"))
+		ELSE CASE WHEN :IV_ATO = 'N' AND :IV_WCQ = 'N' AND :IV_INTERSTATE = 'N' -- not a valid scenario
+			THEN 0 
+		ELSE GREATEST(SUM("WAGES"."ATO_BAS_TOTL_PMT_FOR_WRK_AMT"),SUM("WAGES"."ATO_ITR_SALARY_WAGES"), SUM("WAGES"."WCQ_ACT_WAGES"), SUM("WAGES"."OSR_STATE_WAGES")) 
+		END END END END END END AS "MAX_AU"
+			
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WAGES"() AS "WAGES"
+	LEFT JOIN "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_ATO_ITR_WAGES" AS "ITR"
+	ON "WAGES"."ABN" = "ITR"."ABN"
+		AND "WAGES"."PERIOD_CATEGORY" = "ITR"."PERIOD_CATEGORY"
+		AND "WAGES"."GJAHR" = "ITR"."GJAHR"
+	LEFT JOIN "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_RMS_WAGES" AS "RMS_PAID"
+	ON "WAGES"."ABN" = "RMS_PAID"."ABN"
+		AND "WAGES"."PERIOD_CATEGORY" = "RMS_PAID"."PERIOD_CATEGORY"
+		AND "WAGES"."GJAHR" = "RMS_PAID"."GJAHR"
+	INNER JOIN "osr.edw.platform.fra.prt.model::CV_GRP_GROUP_SUMMARY" AS "GRP"
+	ON "WAGES"."ABN" = "GRP"."ABN"
+		AND "WAGES"."GJAHR" = "GRP"."GJAHR"
+	WHERE "WAGES"."PERIOD_CATEGORY" = 'PT-A'
+		AND "WAGES"."GJAHR" = :IV_GJAHR
+	--	AND "WAGES"."WCQ_ACT_WAGES" > 0
+		AND "GRP"."ABN" <> '' 
+		AND "GRP"."ABN" is not null
+	GROUP BY
+		"GRP"."GROUP_ID",
+		"WAGES"."ABN",
+		"WAGES"."GJAHR",
+		"WAGES"."PERIOD_CATEGORY",
+		"WAGES"."PERIOD_KEY"
+; 
+
+	LT_GRP_MAX_WAGES = 
+		SELECT 
+			"GROUP_ID",
+			"GJAHR",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			SUM("MAX_AU") AS "MAX_AU" -- get the max wages of the max wages of all the ABNs in the group
+		FROM :LT_GRP_WAGES
+		GROUP BY 
+			"GROUP_ID",
+			"PERIOD_CATEGORY",
+			"PERIOD_KEY",
+			"GJAHR"
+		HAVING SUM("MAX_AU") >= :iv_threshold -- filter for groups with sum of max AU wages over the threshold
+	;
+
+	LT_CALCS = 
+		SELECT
+		--	"W"."GROUP_ID",
+			"W"."ABN",
+			"W"."GJAHR",
+			"W"."PERIOD_CATEGORY",
+			"W"."PERIOD_KEY",
+			"W"."BAS",
+			"W"."ITR",
+			"W"."WCQ",
+			"W"."PAYG",
+			"W"."OSR",
+			"W"."RMS_PAID",
+			"GRP_WAGES"."MAX_AU",
+			CASE WHEN ( "GRP_WAGES"."MAX_AU" >= "THLD"."DEDUCTION_TO") THEN ("W"."WCQ"*("RATE"."PRT_HYRLY_RATE"/100)) -- Higher rate (PRT_HYRLY_RATE) for over deduction threshold 
+			ELSE 
+				CASE WHEN ( "GRP_WAGES"."MAX_AU" <= "THLD"."THRESHOLD" ) THEN 0 --no PRT liability
+					ELSE 
+						CASE WHEN ("GRP_WAGES"."MAX_AU" > "THLD"."THRESHOLD"  AND "GRP_WAGES"."MAX_AU" < "THLD"."DEDUCTION_TO") -- PRT Liable but under deduction threshold so use lower rate (PRT_YRLY_RATE)
+							THEN (( "W"."WCQ" - ("W"."WCQ"/"GRP_WAGES"."MAX_AU")*("THLD"."THRESHOLD"-(("GRP_WAGES"."MAX_AU"-"THLD"."THRESHOLD")/4)))*("RATE"."PRT_YRLY_RATE"/100)) --lower rate 
+								ELSE 0
+						END
+				END
+		END AS "EST_TAX"
+		FROM :LT_GRP_WAGES AS "W"
+		INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_THRESHOLD" AS "THLD"
+		ON  "W"."PERIOD_CATEGORY" = "THLD"."INCOTYP"
+			AND "W"."GJAHR" = "THLD"."GJAHR"
+		INNER JOIN "osr.edw.staging.md.rms.prt.proxy::CV_PRT_RATE" AS "RATE"
+		ON  "W"."GJAHR" = "RATE"."GJAHR"
+			AND "W"."PERIOD_KEY" = "RATE"."PERIOD_KEY"
+		INNER JOIN :LT_GRP_MAX_WAGES AS "GRP_WAGES" 
+		ON "W"."GROUP_ID" = "GRP_WAGES"."GROUP_ID"
+			AND "W"."GJAHR" = "GRP_WAGES"."GJAHR"
+			AND "W"."PERIOD_CATEGORY" =  "GRP_WAGES"."PERIOD_CATEGORY"
+			AND "W"."PERIOD_KEY" =  "GRP_WAGES"."PERIOD_KEY"
+		;
+		
+END IF;
+
+
+RETURN
+	SELECT 
+		"ABN",
+		"GJAHR",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"BAS",
+		"ITR",
+		"WCQ",
+		"PAYG",
+		"OSR",
+		"RMS_PAID",
+		"MAX_AU",
+		ROUND("EST_TAX",2) AS "EST_TAX",
+		ROUND("EST_TAX",2) - "RMS_PAID" AS "EST_TAX_LESS_RMS"
+	FROM :LT_CALCS
+	;
+
+END;
