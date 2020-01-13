@@ -1,0 +1,48 @@
+FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ATO_ITR_ABR_TRUST_ABNS"( )
+-- Function to verify if an ABN is a trust
+-- Returns a list of ABN's that are found to be a trust either in ATO ITR data or in ABR data
+-- Created 13/01/2019
+RETURNS TABLE 
+(
+	"ABN" 					NVARCHAR(20)
+)
+
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+DECLARE LV_KEY_DATE DATE;
+DECLARE LV_GJAHR NVARCHAR(4);
+
+RETURN
+SELECT DISTINCT "ABN" 
+FROM ( 
+	SELECT DISTINCT
+		"ABN", 
+		"FULL_NM_TXT",
+		"CLNT_TYP" AS "ENT_TYP",
+		'TRUST' AS "SOURCE"
+	FROM "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" 
+	UNION 
+	SELECT
+		"ABN",
+		"ORG_NM" AS "FULL_NM_TXT",
+		"ENT_TYP_CD" AS "ENT_TYP",
+		'ABR' AS "SOURCE"
+	FROM (
+		SELECT DISTINCT
+		"ABN",
+		"ABR"."ENT_TYP_CD",
+		"ORG_NM",
+		"ABN_REGN_DT",
+		"ABN_CANCN_DT",
+		"ACN",
+		"PARENT_ENTITY_CODE"
+	FROM "osr.edw.propagation.md.abr.synonym::CDS_ORG.DSO.AGENCY_DATA.active_data" AS "ABR"
+	INNER JOIN "osr.edw.staging.md.abr.proxy::CV_ENTITY_MAPPING_C" AS "TRT"
+	ON "ABR"."ENT_TYP_CD" = "TRT"."ENTITY_TYPE_CODE"
+	WHERE "TRT"."PARENT_ENTITY_CODE" = 'TRT'
+	)
+) 
+;
+END;
