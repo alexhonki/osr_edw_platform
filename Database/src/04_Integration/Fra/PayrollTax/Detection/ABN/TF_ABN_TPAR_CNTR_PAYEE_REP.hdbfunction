@@ -3,6 +3,10 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_CNTR_PAYEE_REP" (IN IP_AL
        (
        		"PAYEE_ABN"									NVARCHAR(20)	,
 			"INCM_YR"									NVARCHAR(4)		,
+-- AGENCY
+			"ENT_TYP_CD"								NVARCHAR(3)		,
+			"ANZSIC_CODE"								NVARCHAR(5)		,
+			"ANZSIC_DESC"								NVARCHAR(100)	,
 --BAS
 			"GOODS_SRVC_SUPLY_AMT"						DECIMAL(15,2)	,
 			"TOTAL_ACQUISITIONS"						DECIMAL(15,2)	,
@@ -120,8 +124,9 @@ PAYEE_ABN_ATTR =
 	INNER JOIN :ALERT_DETAILS AS "ALERT"
 	ON "DATA"."PAYER_ABN" = "ALERT"."PAYER_ABN"
 	AND "DATA"."FINANCIAL_YEAR" = "ALERT"."GJAHR"
-	
+
 ;
+
 
 PAYEE_ABN_ALL_LIST = 
 	SELECT DISTINCT
@@ -130,6 +135,16 @@ PAYEE_ABN_ALL_LIST =
 	FROM :PAYEE_ABN_ATTR
 ;
 
+------------------------AGENCY Data-------------------------------
+PAYEE_AGENCY = 
+	SELECT DISTINCT 
+		"ABN",
+		"ENT_TYP_CD",
+		"MN_INDY_CLSN" AS "ANZSIC_CODE",
+		"MN_INDY_CLSN_DESCN" AS "ANZSIC_DESC"
+	FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA"
+	WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PAYEE_ABN_ELIGIBLE)
+;
 
 ------------------------WCQ Data-------------------------------
 WCQ_DATA = 
@@ -406,7 +421,11 @@ PRE_OUTPUT =
 		"H"."GST_TOTL_AMT"						,
 		"H"."CHECK_CD"  						,
 		
-		CASE WHEN "J"."FLAG_ELIGIBLE" IS NULL THEN '' ELSE "FLAG_ELIGIBLE" END AS "FLAG_ELIGIBLE"
+		CASE WHEN "J"."FLAG_ELIGIBLE" IS NULL THEN '' ELSE "FLAG_ELIGIBLE" END AS "FLAG_ELIGIBLE",
+		
+		"K"."ENT_TYP_CD",
+		"K"."ANZSIC_CODE",
+		"K"."ANZSIC_DESC"
 		
 	FROM :ABN_LIST AS "A"
 	
@@ -441,12 +460,20 @@ PRE_OUTPUT =
 	LEFT OUTER JOIN :PAYEE_ABN_ELIGIBLE AS "J"
 	ON "A"."ABN" = "J"."ABN"
 		AND "A"."INCM_YR"	=	"J"."INCM_YR"	
+		
+	LEFT OUTER JOIN :PAYEE_AGENCY AS "K"
+	ON "A"."ABN" = "K"."ABN"
+	
 	;
 
 RETURN
 	SELECT 
 		"ABN" AS "PAYEE_ABN"				,
 		"INCM_YR"							,
+		"ENT_TYP_CD"						,
+		"ANZSIC_CODE"						,
+		"ANZSIC_DESC"						,
+		
 		"GOODS_SRVC_SUPLY_AMT"				,
 		"TOTAL_ACQUISITIONS"				,
 		"TOTL_PMT_FOR_WRK_AMT"				,

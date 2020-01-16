@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.crm.proxy::CV_SCAPPTSEG" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_SCAPPTSEG"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.SCAPPTSEG.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.SCAPPTSEG.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="P_SCAPPTSEG">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="APPT_GUID"/>
+      <viewAttribute id="APPL_GUID"/>
+      <viewAttribute id="TST_FROM"/>
+      <viewAttribute id="ZONE_FROM"/>
+      <viewAttribute id="TST_TO"/>
+      <viewAttribute id="ZONE_TO"/>
+      <viewAttribute id="APPT_TYPE"/>
+      <viewAttribute id="TXT_PUB_ID"/>
+      <viewAttribute id="ENTRY_BY"/>
+      <viewAttribute id="ENTRY_TST"/>
+      <viewAttribute id="CHANGE_BY"/>
+      <viewAttribute id="CHANGE_TST"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_TST_FROM_LOCAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>UTCTOLOCAL(TO_TIMESTAMP(&quot;TST_FROM&quot;), &quot;ZONE_FROM&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TST_TO_LOCAL" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>UTCTOLOCAL(TO_TIMESTAMP(&quot;TST_TO&quot;), &quot;ZONE_TO&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.SCAPPTSEG.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="P_SCAPPTSEG">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="APPT_GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPT_GUID"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="APPT_GUID"/>
+    </attribute>
+    <attribute id="APPL_GUID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPL_GUID"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="APPL_GUID"/>
+    </attribute>
+    <attribute id="TST_FROM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TST_FROM"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="TST_FROM"/>
+    </attribute>
+    <attribute id="ZONE_FROM" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZONE_FROM"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="ZONE_FROM"/>
+    </attribute>
+    <attribute id="TST_TO" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TST_TO"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="TST_TO"/>
+    </attribute>
+    <attribute id="ZONE_TO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ZONE_TO"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="ZONE_TO"/>
+    </attribute>
+    <attribute id="APPT_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPT_TYPE"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="APPT_TYPE"/>
+    </attribute>
+    <attribute id="TXT_PUB_ID" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TXT_PUB_ID"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="TXT_PUB_ID"/>
+    </attribute>
+    <attribute id="ENTRY_BY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENTRY_BY"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="ENTRY_BY"/>
+    </attribute>
+    <attribute id="ENTRY_TST" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENTRY_TST"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="ENTRY_TST"/>
+    </attribute>
+    <attribute id="CHANGE_BY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGE_BY"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="CHANGE_BY"/>
+    </attribute>
+    <attribute id="CHANGE_TST" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGE_TST"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="CHANGE_TST"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="P_SCAPPTSEG" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="P_SCAPPTSEG" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

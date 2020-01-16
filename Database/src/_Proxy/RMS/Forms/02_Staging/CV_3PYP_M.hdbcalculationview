@@ -114,6 +114,8 @@
       <viewAttribute id="C_CALC_RATE"/>
       <viewAttribute id="A_GROUP_AUS_WAGES"/>
       <viewAttribute id="A_REGIONAL_EMPLOYER"/>
+    
+      <viewAttribute id="CLIENT"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="osr.edw.staging.rms.forms.tf.proxy::TF_3PYP_M"/>
@@ -436,11 +438,18 @@
   
     <attribute id="A_GROUP_AUS_WAGES" order="99" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_GROUP_AUS_WAGES"/>
+  
       <keyMapping columnObjectName="P_TF_3PYP_M" columnName="A_GROUP_AUS_WAGES"/>
+  
     </attribute>
     <attribute id="A_REGIONAL_EMPLOYER" order="100" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_REGIONAL_EMPLOYER"/>
       <keyMapping columnObjectName="P_TF_3PYP_M" columnName="A_REGIONAL_EMPLOYER"/>
+    </attribute>
+  
+    <attribute id="CLIENT" order="101" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="P_TF_3PYP_M" columnName="CLIENT"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
