@@ -9,6 +9,7 @@ RETURNS TABLE
 	"RTN_YR"						INTEGER,
 	"TRUST_FULL_NM_TXT" 			NVARCHAR(200),
 	"TRUST_REF_ID"					DECIMAL(13,0),
+	"PTNR_BNFCRY_PGRP_ID"       	NVARCHAR(10), -- C ID if person is found in ASIC
 	"PTNR_BNFCRY_FIRST_NM"			NVARCHAR(15),
 	"PTNR_BNFCRY_OTHR_GVN_NM"		NVARCHAR(30),
 	"PTNR_BNFCRY_SRNM"				NVARCHAR(30),
@@ -39,6 +40,7 @@ RETURN
 		"TRUST"."RTN_YR",
 		"TRUST"."FULL_NM_TXT" AS "TRUST_FULL_NM_TXT",
 		"TRUST"."REF_ID" as "TRUST_REF_ID",
+		"ASIC_PERSON"."PGRP_ID"	AS "PTNR_BNFCRY_PGRP_ID",
 		"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
 		"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
 		"BNFCRY"."PTNR_BNFCRY_SRNM",
@@ -52,13 +54,26 @@ RETURN
 		"PTNR_BNFCRY_ADDR_PC",
 		"TRUST"."TRUSTEE_ABN"		AS "TRUSTEE_ABN"
 	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
-	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST" --use source layer as require historical values
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" 
+	LEFT JOIN ( -- add person group Id's
+		SELECT DISTINCT
+			"PGRP"."PGRP_ID",
+			"PERS"."GIVEN_NAME1", 
+			"PERS"."GIVEN_NAME2",  
+			"PERS"."SURNAME", 
+			"PERS"."BIRTH_DT"
+		FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP" AS "PGRP"
+		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
+			ON "PERS"."ID" = "PGRP"."ID"
+	) AS "ASIC_PERSON"
+	ON 	"BNFCRY"."PTNR_BNFCRY_FIRST_NM" = "ASIC_PERSON"."GIVEN_NAME1"
+		AND	"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM" = "ASIC_PERSON"."GIVEN_NAME2"
+		AND	"BNFCRY"."PTNR_BNFCRY_SRNM" = "ASIC_PERSON"."SURNAME"
+		AND	"BNFCRY"."PTNR_BNFCRY_DOB" = "ASIC_PERSON"."BIRTH_DT"
 	WHERE "TRUST"."ABN" <> 'invalid ABN'
-	AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
-	--AND TO_VARCHAR("TRUST"."RTN_YR") = TO_VARCHAR(:LV_GJAHR)
-	-- remove records we can't process due to information being withheld by ATO
-	AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 
+		AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
+		AND "BNFCRY"."PTNR_BNFCRY_REF_ID" <> 0 		-- remove records we can't process due to information being withheld by ATO
 	;
 END;
