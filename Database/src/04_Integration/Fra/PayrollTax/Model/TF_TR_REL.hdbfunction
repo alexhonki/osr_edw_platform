@@ -39,6 +39,10 @@ lt_pers =
 		"PERS"."BIRTH_DT"
 		FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "PGRP"
 		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE, 2) AS "PERS"
+--		17/01/2019
+--		Suggest performance improvement change to remove above and replace with the following
+	--	FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP" AS "PGRP"
+	--	INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
 		ON "PERS"."ID" = "PGRP"."ID"
 ;
 /*

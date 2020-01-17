@@ -1,0 +1,72 @@
+FUNCTION "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_PERSON_MATCH_BLOCK"(IV_GRP_DATE DATE )
+RETURNS TABLE (
+	"GRP_DATE"		   DATE,
+	"GRAPH_VERTEX_ID"  NVARCHAR(10),
+	"GRAPH_ID"		   NVARCHAR(10)
+)
+LANGUAGE SQLSCRIPT 
+SQL SECURITY INVOKER AS 
+BEGIN 
+
+
+lt_vertex_gt2 = 
+SELECT
+"GRP_DATE",
+"GRAPH_ID",
+COUNT(*) 
+FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE)
+GROUP BY 
+"GRP_DATE",
+"GRAPH_ID"
+HAVING COUNT(*) > 2
+;
+
+lt_vertex_p =
+SELECT
+"GRP_DATE", 
+"GRAPH_ID",
+COUNT(*) AS "PERSON_COUNT" FROM 
+(
+SELECT * FROM "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) WHERE LEFT("GRAPH_VERTEX_ID",1) = 'P'
+)
+GROUP BY 
+"GRP_DATE", 
+"GRAPH_ID"
+HAVING COUNT(*) > 1
+;
+
+lt_filter1 = 
+SELECT
+"V"."GRP_DATE",
+"V"."GRAPH_VERTEX_ID",
+"V"."GRAPH_ID"
+FROM 
+"osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_VERTEX"(:IV_GRP_DATE) AS "V"
+INNER JOIN
+:lt_vertex_gt2 AS "VC"
+--ON  "V"."GRP_DATE" = "VC"."GRP_DATE"
+ON "V"."GRAPH_ID" = "VC"."GRAPH_ID"
+;
+
+lt_filter2 = 
+SELECT
+"V"."GRP_DATE",
+"V"."GRAPH_VERTEX_ID",
+"V"."GRAPH_ID"
+FROM :lt_filter1 AS "V"
+INNER JOIN
+:lt_vertex_p AS "VP"
+--ON  "V"."GRP_DATE" = "VP"."GRP_DATE"
+ON "V"."GRAPH_ID" = "VP"."GRAPH_ID"
+;
+
+RETURN 
+SELECT
+"GRP_DATE",
+"GRAPH_VERTEX_ID",
+"GRAPH_ID"
+FROM
+:lt_filter2
+;
+
+END;
