@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_GRAPH_PERSON_MATCH_BLOCK" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_GRP_GRAPH_PERSON_MATCH_BLOCK"/>
+<localVariables>
+  <variable id="IP_GRP_DATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="DATE" mandatory="true">
+      <valueDomain type="Date"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings>
+  <mapping xsi:type="Variable:VariableMapping" dataSource="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_PERSON_MATCH_BLOCK">
+    <targetVariable name="IV_GRP_DATE" resourceUri="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_PERSON_MATCH_BLOCK"/>
+    <localVariable>IP_GRP_DATE</localVariable>
+  </mapping>
+</variableMappings>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_PERSON_MATCH_BLOCK" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_PERSON_MATCH_BLOCK</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_PERSON_MATCH_BLOCK">
+  <attributes>
+    <attribute id="GRP_DATE" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="TF_GRP_GRAPH_PERSON_MATCH_BLOCK" columnName="GRP_DATE"/>
+    </attribute>
+    <attribute id="GRAPH_VERTEX_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRAPH_VERTEX_ID"/>
+      <keyMapping columnObjectName="TF_GRP_GRAPH_PERSON_MATCH_BLOCK" columnName="GRAPH_VERTEX_ID"/>
+    </attribute>
+    <attribute id="GRAPH_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRAPH_ID"/>
+      <keyMapping columnObjectName="TF_GRP_GRAPH_PERSON_MATCH_BLOCK" columnName="GRAPH_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
