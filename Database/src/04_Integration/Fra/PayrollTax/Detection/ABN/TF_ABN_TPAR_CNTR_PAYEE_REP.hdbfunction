@@ -7,6 +7,8 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn::TF_ABN_TPAR_CNTR_PAYEE_REP" (IN IP_AL
 			"ENT_TYP_CD"								NVARCHAR(3)		,
 			"ANZSIC_CODE"								NVARCHAR(5)		,
 			"ANZSIC_DESC"								NVARCHAR(100)	,
+			"MN_BUS_STT"								NVARCHAR(3)		,
+			"MN_BUS_PC"									NVARCHAR(12)	,
 --BAS
 			"GOODS_SRVC_SUPLY_AMT"						DECIMAL(15,2)	,
 			"TOTAL_ACQUISITIONS"						DECIMAL(15,2)	,
@@ -141,9 +143,11 @@ PAYEE_AGENCY =
 		"ABN",
 		"ENT_TYP_CD",
 		"MN_INDY_CLSN" AS "ANZSIC_CODE",
-		"MN_INDY_CLSN_DESCN" AS "ANZSIC_DESC"
+		"MN_INDY_CLSN_DESCN" AS "ANZSIC_DESC",
+		"MN_BUS_STT",
+		"MN_BUS_PC"
 	FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA"
-	WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PAYEE_ABN_ELIGIBLE)
+	WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PAYEE_ABN_ALL_LIST)
 ;
 
 ------------------------WCQ Data-------------------------------
@@ -445,7 +449,9 @@ PRE_OUTPUT =
 		
 		"K"."ENT_TYP_CD",
 		"K"."ANZSIC_CODE",
-		"K"."ANZSIC_DESC"
+		"K"."ANZSIC_DESC",
+		"K"."MN_BUS_STT",
+		"K"."MN_BUS_PC"
 		
 	FROM :ABN_LIST AS "A"
 	
@@ -493,6 +499,8 @@ RETURN
 		"ENT_TYP_CD"						,
 		"ANZSIC_CODE"						,
 		"ANZSIC_DESC"						,
+		"MN_BUS_STT"						,
+		"MN_BUS_PC"							,
 		
 		"GOODS_SRVC_SUPLY_AMT"				,
 		"TOTAL_ACQUISITIONS"				,
