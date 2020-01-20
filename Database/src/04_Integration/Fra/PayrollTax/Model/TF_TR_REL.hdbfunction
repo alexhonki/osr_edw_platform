@@ -46,13 +46,9 @@ lt_pers =
 		ON "PERS"."ID" = "PGRP"."ID"
 ;
 /*
-3.	Differentiate between beneficiary types of individuals and non-individuals by matching the [PTNR_BNFCRY_ABN] to ABR data [ABN] to identify [ENTITY_TYPE] whereby:
+	Differentiate between beneficiary types of individuals and non-individuals by matching the [PTNR_BNFCRY_ABN] to ABR data [ABN] to identify [ENTITY_TYPE] whereby:
 o	IND = Individuals, FPT = Family Trust, COY = Company, PTR = Partnership, SUP = Superannuation Fund, TRT = Trust 
 o	If no ABN is present then where [PTNR_BNFCRY_FIRST_NM] is not NULL and [PTNR_BNFCRY_FIRST_SRNM] is not NULL and [PTNR_BNFCRY_DOB] is not NULL then [ENTITY_TYPE] = IND else NOT APPLICABLE
-
-5.	Exclude exempt beneficiaries by matching the ABR Agency [PID] to the ABR ACNC [PID]. 
-Beneficiaries identified as a registered charitable institution will be removed. 
-Note that any non-exempt beneficiaries will be considered for grouping. (To be excluded just before matching.)
 */
 lt_ABR = 
 	SELECT DISTINCT
@@ -65,6 +61,11 @@ lt_ABR =
 	  AND "ABN_CANCN_DT" >= :LV_KEY_DATE
 ;
 
+/*
+	Exclude exempt beneficiaries by matching the ABR Agency [PID] to the ABR ACNC [PID]. 
+	Beneficiaries identified as a registered charitable institution will be removed. (To be excluded just before matching.)
+	Note that any non-exempt beneficiaries will be considered for grouping. 
+*/
 LT_CHARITIES = 
 	SELECT DISTINCT 
 		"ABN"
@@ -92,10 +93,10 @@ LT_DATA =
 		"BNFCRY"."PTNR_BNFCRY_SRNM",
 		"BNFCRY"."PTNR_BNFCRY_DOB",
 		"BNFCRY"."PTNR_BNFCRY_REF_ID"
-	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
-	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST"
+	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" -- use source layer as historical records required
+	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST" -- use source layer as historical records required
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
-		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" -- will not return data in dev if this filter applied
+		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR"
 	WHERE "TRUST"."ABN" <> 'invalid ABN'
 	AND "TRUST"."TRUST_TYP" IN ('S', 'T', 'I')
 	AND TO_VARCHAR("TRUST"."RTN_YR") = TO_VARCHAR(:LV_GJAHR)
@@ -108,9 +109,9 @@ LT_REL =
 	SELECT DISTINCT
 		"MAP"."ACN"					AS "ORG_NUMBER",
 		CASE	WHEN "MAP"."ACN" is not null 
-					THEN concat('O', "MAP"."ACN") -- BNFCRY has an ACN so use that
-				WHEN "DATA"."PTNR_BNFCRY_ABN" <> 'no ABN' 
-					THEN CONCAT('T',"DATA"."PTNR_BNFCRY_ABN") 
+					THEN concat('O', "MAP"."ACN") -- BNFCRY has an ACN so use that instead of ABN
+				WHEN "DATA"."PTNR_BNFCRY_ABN" <> 'no ABN'  
+					THEN CONCAT('T',"DATA"."PTNR_BNFCRY_ABN") -- Add the "T" prefix to any found ABN's
 		END 						AS "CHILD_ID", 
 		"DATA"."PTNR_BNFCRY_ABN"	AS "CHILD_NUM",
 		"DATA"."ABN"				AS "PARENT_ID",
@@ -123,7 +124,7 @@ LT_REL =
 					"DATA"."PTNR_BNFCRY_DOB"			IS NULL AND 
 					("DATA"."PTNR_BNFCRY_ABN"			IS NULL OR "DATA"."PTNR_BNFCRY_ABN" = 'no ABN')) OR
 					"DATA"."PTNR_BNFCRY_ABN" = 'no ABN'
-				THEN 'IND' 
+				THEN 'IND' -- If no bnfcry peson names/ DOB and no ABN then label as "IND" as there will be no match in ABR data.
 			ELSE "ABR"."ENT_TYP_CD"	
 		END AS "ENT_TYP_CD",
 		TO_DATE(TO_VARCHAR((CAST("DATA"."RTN_YR" as integer) -1)) || '0701') AS "START_DT",
@@ -140,6 +141,7 @@ LT_REL =
 	ON "DATA"."PTNR_BNFCRY_ABN" = "ABR"."ABN"
 ;
 
+-- Trust model requires adding rows for extra relationships not found in normal grouping model
 -- Add extra rows for the sole traders and directors so we can look up their director / shareholdings
 -- Also add extra rows for natural persons who have "no ABN"
 LT_DR_SH = 
@@ -192,7 +194,7 @@ LT_REL =
 			"END_DT"
 	FROM :LT_REL
 	UNION 
--- Add any ACNs for trusts that also have an ACN
+-- Add any ACNs for trusts that also have an ACN (Rare but sometimes happens)
 	SELECT DISTINCT 
 			"MAP"."ACN" as "ORG_NUMBER",
 			CONCAT('O', "MAP"."ACN") AS "CHILD_ID", 
@@ -209,8 +211,7 @@ LT_REL =
 	;
 
 
-
-
+-- Performance improvement suggestion - remove this count as not needed
 lt_tr_cnt = 
 	SELECT 
 		"PARENT_ID",
@@ -242,7 +243,7 @@ RETURN
 			"CNT"."TR_BENFCRY_COUNT",
 			"REL"."ENT_TYP_CD" 
 			FROM :lt_rel AS "REL" 
-			INNER JOIN :lt_tr_cnt AS "CNT"
+			INNER JOIN :lt_tr_cnt AS "CNT" --performance improvement suggestion - remove this as no longer needed
 		ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
 			WHERE :IV_KEY_DATE >= "REL"."START_DT"
 				AND  :IV_KEY_DATE <= "REL"."END_DT"
