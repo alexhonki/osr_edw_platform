@@ -147,7 +147,7 @@ PAYEE_AGENCY =
 		"MN_BUS_STT",
 		"MN_BUS_PC"
 	FROM "osr.edw.staging.md.abr.proxy::CV_AGENCY_DATA"
-	WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PAYEE_ABN_ELIGIBLE)
+	WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PAYEE_ABN_ALL_LIST)
 ;
 
 ------------------------WCQ Data-------------------------------
