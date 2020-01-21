@@ -28,7 +28,7 @@ FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WAGES_VARIANCES"(:IP_ALERT_ID, :IP_
 ;
 
 RETURN
-SELECT 
+/*SELECT 
 "DB_KEY",
 "ALERT_ID",
 "ABN",
@@ -37,7 +37,7 @@ SELECT
 "VAR1" AS "AMOUNT",
 "WAERS"
 FROM :lt_data_fy
-UNION
+UNION */ -- 21/01/2020 This view was very slow
 SELECT 
 "DB_KEY",
 "ALERT_ID",
