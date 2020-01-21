@@ -16,7 +16,7 @@ SQL SECURITY INVOKER AS
 
 BEGIN 
 		lt_union = 
-		SELECT 
+/*		SELECT 
 		"DB_KEY",
 		"ALERT_ID",
 		"ABN",
@@ -29,7 +29,7 @@ BEGIN
 		0 AS "OSR_AUST_WAGES",
 		"WAERS"
 		FROM "osr.edw.platform.fra.prt.dt.abn.ui::TF_WC_WAGES"(:IP_ALERT_ID, :IP_FY_ADJUSTMENT)
-		UNION
+		UNION */
 		SELECT 
 		"DB_KEY",
 		"ALERT_ID",
