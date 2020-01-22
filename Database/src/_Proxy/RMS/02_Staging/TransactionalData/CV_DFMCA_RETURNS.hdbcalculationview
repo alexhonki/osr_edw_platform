@@ -4,8 +4,8 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURN_LOCTIME">
-    <resourceUri>osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURN_LOCTIME</resourceUri>
+  <DataSource id="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME">
+    <resourceUri>osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -87,10 +87,12 @@
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="CC_ERTSP" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+    
         <formula>TO_NVARCHAR(TO_DATE(&quot;ERTSP&quot;),'YYYYMMDDHHMISS')</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURN_LOCTIME"/>
+    <input node="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
