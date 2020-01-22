@@ -9,7 +9,7 @@ FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
 			"PERSON_NUM"			NVARCHAR(9), -- If IND / no ABN
 			"START_DT"				DATE,
 			"END_DT"				DATE,
-		--	"TR_BENFCRY_COUNT"		INTEGER,
+			"TR_BENFCRY_COUNT"		INTEGER,
 			"ENT_TYP_CD"			NVARCHAR(3)
        )
        LANGUAGE SQLSCRIPT 
@@ -37,12 +37,12 @@ lt_pers =
 		"PERS"."GIVEN_NAME2",  
 		"PERS"."SURNAME", 
 		"PERS"."BIRTH_DT"
---		FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "PGRP"
---		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE, 2) AS "PERS"
+		FROM "osr.edw.platform.fra.prt.model::TF_GRP_PERSON_GRP"(:LV_KEY_DATE,'R') AS "PGRP"
+		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_NAME_DUP"(:LV_KEY_DATE, 2) AS "PERS"
 --		17/01/2019
 --		Suggest performance improvement change to remove above and replace with the following
-		FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP" AS "PGRP"
-		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
+--		FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP" AS "PGRP"
+--		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
 		ON "PERS"."ID" = "PGRP"."ID"
 ;
 /*
@@ -212,7 +212,7 @@ LT_REL =
 
 
 -- Performance improvement suggestion - remove this count as not needed
-/*
+
 lt_tr_cnt = 
 	SELECT 
 		"PARENT_ID",
@@ -222,7 +222,7 @@ lt_tr_cnt =
 	GROUP BY 
 		"PARENT_ID", 
 		"GJAHR";
-*/
+
 
 -- CHILD_ID will display the trust Beneficiary ABN prefixed with a "T"
 -- However if there is an ACN found for the beneficiary, it will display the ACN instead
@@ -241,11 +241,11 @@ RETURN
 			"REL"."PERSON_NUM",
 			"REL"."START_DT",
 			"REL"."END_DT",
-		--	"CNT"."TR_BENFCRY_COUNT",
+			"CNT"."TR_BENFCRY_COUNT",
 			"REL"."ENT_TYP_CD" 
 			FROM :lt_rel AS "REL" 
-		--	INNER JOIN :lt_tr_cnt AS "CNT" --performance improvement suggestion - remove this as no longer needed
-		--ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
+			INNER JOIN :lt_tr_cnt AS "CNT" --performance improvement suggestion - remove this as no longer needed
+		ON "REL"."PARENT_ID" = "CNT"."PARENT_ID"
 			WHERE :IV_KEY_DATE >= "REL"."START_DT"
 				AND  :IV_KEY_DATE <= "REL"."END_DT"
 				--AND "CNT"."TR_BENFCRY_COUNT" > 1
