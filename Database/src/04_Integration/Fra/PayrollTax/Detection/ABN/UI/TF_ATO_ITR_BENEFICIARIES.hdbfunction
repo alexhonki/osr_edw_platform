@@ -92,7 +92,7 @@ RETURN
 			"PERS"."GIVEN_NAME2",  
 			"PERS"."SURNAME", 
 			"PERS"."BIRTH_DT"
-		FROM "osr.apps.acs.synonym::SAPACS.PRTPGRP" AS "PGRP"
+		FROM "osr.edw.platform.fra.prt.dt.abn.ui::CV_GRP_PERSON_GROUP_ALL" AS "PGRP" 
 		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
 			ON "PERS"."ID" = "PGRP"."ID"
 	) AS "ASIC_PERSON"
