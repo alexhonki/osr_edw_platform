@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
-<descriptions defaultDescription="CV_DFMCA_RETURNS"/>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DFMCA_RETURNS_LOCTIME"/>
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURN_LOCTIME">
-    <resourceUri>osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURN_LOCTIME</resourceUri>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -82,15 +82,19 @@
       <viewAttribute id="Z_SOURCE_SYS"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="CC_AETSP" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(TO_DATE(&quot;AETSP&quot;),'YYYYMMDDHHMISS')</formula>
+      <calculatedViewAttribute id="CC_AETSP" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;AETSP&quot;=0 THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;AETSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
       </calculatedViewAttribute>
     
-      <calculatedViewAttribute id="CC_ERTSP" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(TO_DATE(&quot;ERTSP&quot;),'YYYYMMDDHHMISS')</formula>
+      <calculatedViewAttribute id="CC_ERTSP" datatype="TIMESTAMP" expressionLanguage="SQL">
+    
+        <formula>CASE WHEN &quot;ERTSP&quot;=0 THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;ERTSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+    
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURN_LOCTIME"/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
@@ -370,7 +374,8 @@
     <attribute id="Z_SOURCE_SYS" order="69" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
-    </attribute></attributes>
+    </attribute>
+  </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
   <calculatedMeasures/>
@@ -379,12 +384,11 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="92" y="112"/>
-    
-      <rectangleSize width="160"/>
+      <upperLeftCorner x="40" y="85"/>
     </shape>
+  
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="141" y="274"/>
+      <upperLeftCorner x="148" y="247"/>
       <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
