@@ -31,9 +31,31 @@ BEGIN
 DECLARE LV_KEY_DATE DATE;
 DECLARE LV_GJAHR NVARCHAR(4);
 
+-- Get the file names
+-- It is possible that an ABN might not exist in the latest file but is found in older files
+-- Select all loaded files for agency data here
+    lt_meta_BNFCRY =
+	SELECT * FROM (
+    	SELECT DISTINCT "META_FILE_NAME", "TO_DATE", "FILE_RECEIVED_DATE", "SOURCE_FIELD_VALUE",  rank() over(partition by "SOURCE_FIELD_VALUE" order by "FILE_RECEIVED_DATE" desc ) as "rank_1"
+    		FROM "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ATO')
+			WHERE "TABLE_NAME" = 'ITRBNFCRY'
+			AND "HAS_LOADED_IN_EDW" = 'Y'
+	) where "rank_1" = 1
+	;
+	
+    lt_meta_TRUSTEE =
+	SELECT * FROM (
+    	SELECT DISTINCT "META_FILE_NAME", "TO_DATE", "FILE_RECEIVED_DATE", "SOURCE_FIELD_VALUE",  rank() over(partition by "SOURCE_FIELD_VALUE" order by "FILE_RECEIVED_DATE" desc ) as "rank_1"
+    		FROM "osr.edw.source.data.info.synonym::CV_MetadataRecordsBySource"(placeholder."$$IP_SOURCE$$"=>'ATO')
+			WHERE "TABLE_NAME" = 'ITRBNFCRY_TTEE'
+			AND "HAS_LOADED_IN_EDW" = 'Y'
+	) where "rank_1" = 1
+	;
+
+
 RETURN
 
-	SELECT 
+	SELECT DISTINCT
 		"BNFCRY"."PTNR_BNFCRY_REF_ID",
 		"PTNR_BNFCRY_ABN",
 		"TRUST"."ABN" AS "TRUST_ABN",
@@ -54,9 +76,15 @@ RETURN
 		"PTNR_BNFCRY_ADDR_PC",
 		"TRUST"."TRUSTEE_ABN"		AS "TRUSTEE_ABN"
 	FROM "osr.edw.source.td.ato.proxy::CV_ITRBNFCRY" AS "BNFCRY" 
+	INNER JOIN :lt_meta_BNFCRY AS "BNFCRY_LF"
+	ON "BNFCRY"."NAME"  = "BNFCRY_LF"."META_FILE_NAME"
+	and substring("BNFCRY"."RTN_YR",3) = substring("BNFCRY_LF"."SOURCE_FIELD_VALUE", 3)
 	INNER JOIN "osr.edw.source.md.ato.proxy::CV_ITRBNFCRY_TTEE" AS "TRUST" --use source layer as require historical values
 	ON  "BNFCRY"."REF_ID" = "TRUST"."REF_ID"
 		AND "BNFCRY"."RTN_YR" = "TRUST"."RTN_YR" 
+	INNER JOIN :lt_meta_TRUSTEE AS "TRUSTEE_LF"
+	ON "TRUST"."NAME"  = "TRUSTEE_LF"."META_FILE_NAME"
+	and substring("TRUST"."RTN_YR",3) = substring("TRUSTEE_LF"."SOURCE_FIELD_VALUE", 3)
 	LEFT JOIN ( -- add person group Id's
 		SELECT DISTINCT
 			"PGRP"."PGRP_ID",
