@@ -4,8 +4,8 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME">
-    <resourceUri>osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME</resourceUri>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data</resourceUri>
   </DataSource>
 </dataSources>
 <calculationViews>
@@ -82,27 +82,62 @@
       <viewAttribute id="Z_SOURCE_SYS"/>
     </viewAttributes>
     <calculatedViewAttributes>
-      <calculatedViewAttribute id="CC_AETSP" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(TO_DATE(&quot;AETSP&quot;),'YYYYMMDDHHMISS')</formula>
+      <calculatedViewAttribute id="CC_AETSP" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;AETSP&quot;=0 THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;AETSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
       </calculatedViewAttribute>
     
-      <calculatedViewAttribute id="CC_ERTSP" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+      <calculatedViewAttribute id="CC_ERTSP" datatype="TIMESTAMP" expressionLanguage="SQL">
     
-        <formula>TO_NVARCHAR(TO_DATE(&quot;ERTSP&quot;),'YYYYMMDDHHMISS')</formula>
+        <formula>CASE WHEN &quot;ERTSP&quot;=0 THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;ERTSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
     
       </calculatedViewAttribute>
     
-      <calculatedViewAttribute id="CC_VALIDATION" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(TO_DATE(&quot;VALIDATION&quot;),'YYYYMMDDHHMISS')</formula>
+      <calculatedViewAttribute id="CC_VALIDATION" datatype="TIMESTAMP" expressionLanguage="SQL">
+    
+        <formula>CASE WHEN &quot;VALIDATION&quot;=0 OR &quot;VALIDATION&quot;='10101000000' THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALIDATION&quot; ,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+    
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="CC_POSTMARK" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(TO_DATE(&quot;POSTMARK&quot;),'YYYYMMDDHHMISS')</formula>
+      <calculatedViewAttribute id="CC_POSTMARK" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;POSTMARK&quot;=0 OR &quot;POSTMARK&quot;='10101000000' THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;POSTMARK&quot; ,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
       </calculatedViewAttribute>
-      <calculatedViewAttribute id="CC_RECEIPT" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(TO_DATE(&quot;RECEIPT&quot;),'YYYYMMDDHHMISS')</formula>
+      <calculatedViewAttribute id="CC_RECEIPT" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;RECEIPT&quot;=0 or LENGTH (&quot;RECEIPT&quot;) &lt; '14' THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;RECEIPT&quot; ,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_AETSP_DEC" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+    
+        <formula>CASE WHEN &quot;CC_AETSP&quot;='19000101000000' THEN '0' 
+ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_AETSP&quot;),'YYYYMMDDHH24MISS') END</formula>
+    
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_ERTSP_DEC" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+    
+        <formula>CASE WHEN &quot;CC_ERTSP&quot;='19000101000000' THEN '0' 
+ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_ERTSP&quot;),'YYYYMMDDHH24MISS') END
+</formula>
+    
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_VALIDATION_DEC" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;CC_VALIDATION&quot;='19000101000000' THEN '0' 
+ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_VALIDATION&quot;),'YYYYMMDDHH24MISS') END
+</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_POSTMARK_DEC" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;CC_POSTMARK&quot;='19000101000000' THEN '0' 
+ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_POSTMARK&quot;),'YYYYMMDDHH24MISS') END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_RECEIPT_DEC" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;CC_RECEIPT&quot;='19000101000000' THEN '0' 
+ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_RECEIPT&quot;),'YYYYMMDDHH24MISS') END</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
-    <input node="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME"/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Projection_1">
@@ -225,7 +260,7 @@
     </attribute>
     <attribute id="ERTSP" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ERTSP"/>
-      <keyMapping columnObjectName="Projection_1" columnName="CC_ERTSP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_ERTSP_DEC"/>
     </attribute>
     <attribute id="AENAM" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AENAM"/>
@@ -233,7 +268,7 @@
     </attribute>
     <attribute id="AETSP" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="AETSP"/>
-      <keyMapping columnObjectName="Projection_1" columnName="CC_AETSP"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_AETSP_DEC"/>
     </attribute>
     <attribute id="KEYDT" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="KEYDT"/>
@@ -257,15 +292,15 @@
     </attribute>
     <attribute id="VALIDATION" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALIDATION"/>
-      <keyMapping columnObjectName="Projection_1" columnName="CC_VALIDATION"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_VALIDATION_DEC"/>
     </attribute>
     <attribute id="POSTMARK" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POSTMARK"/>
-      <keyMapping columnObjectName="Projection_1" columnName="CC_POSTMARK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_POSTMARK_DEC"/>
     </attribute>
     <attribute id="RECEIPT" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECEIPT"/>
-      <keyMapping columnObjectName="Projection_1" columnName="CC_RECEIPT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_RECEIPT_DEC"/>
     </attribute>
     <attribute id="DUE_DATE" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DUE_DATE"/>
@@ -382,7 +417,8 @@
     <attribute id="Z_SOURCE_SYS" order="69" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="Projection_1" columnName="Z_SOURCE_SYS"/>
-    </attribute></attributes>
+    </attribute>
+  </attributes>
   <calculatedAttributes/>
   <baseMeasures/>
   <calculatedMeasures/>
@@ -391,14 +427,12 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="92" y="112"/>
-    
-      <rectangleSize width="160"/>
+      <upperLeftCorner x="40" y="85"/>
     </shape>
+  
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="141" y="274"/>
+      <upperLeftCorner x="148" y="247"/>
       <rectangleSize height="30" width="160"/>
-    </shape>
-  </shapes>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>
