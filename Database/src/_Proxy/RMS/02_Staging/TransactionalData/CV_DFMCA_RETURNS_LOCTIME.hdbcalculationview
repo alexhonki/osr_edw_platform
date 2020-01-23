@@ -93,6 +93,19 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;AETSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</
 ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;ERTSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
     
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_VALIDATION" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;VALIDATION&quot;=0 OR &quot;VALIDATION&quot;='10101000000' THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;VALIDATION&quot; ,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_POSTMARK" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;POSTMARK&quot;=0 OR &quot;POSTMARK&quot;='10101000000' THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;POSTMARK&quot; ,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_RECEIPT" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;RECEIPT&quot;=0 or LENGTH (&quot;RECEIPT&quot;) &lt; '14' THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;RECEIPT&quot; ,'YYYYMMDDHHMISS'),'AUSQLD') END</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data"/>
   </calculationView>
@@ -249,15 +262,15 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;ERTSP&quot;,'YYYYMMDDHHMISS'),'AUSQLD') END</
     </attribute>
     <attribute id="VALIDATION" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALIDATION"/>
-      <keyMapping columnObjectName="Projection_1" columnName="VALIDATION"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_VALIDATION"/>
     </attribute>
     <attribute id="POSTMARK" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POSTMARK"/>
-      <keyMapping columnObjectName="Projection_1" columnName="POSTMARK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_POSTMARK"/>
     </attribute>
     <attribute id="RECEIPT" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECEIPT"/>
-      <keyMapping columnObjectName="Projection_1" columnName="RECEIPT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_RECEIPT"/>
     </attribute>
     <attribute id="DUE_DATE" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DUE_DATE"/>

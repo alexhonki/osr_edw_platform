@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_GRP_PERSON_GROUP_ALL" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_GRP_PERSON_GROUP_ALL"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTPGRP">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTPGRP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.apps.acs.synonym::SAPACS.PRTPGRP">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="SAPACS.PRTPGRP" columnName="ID"/>
+    </attribute>
+    <attribute id="PERSON_NUM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_NUM"/>
+      <keyMapping columnObjectName="SAPACS.PRTPGRP" columnName="PERSON_NUM"/>
+    </attribute>
+    <attribute id="PGRP_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PGRP_ID"/>
+      <keyMapping columnObjectName="SAPACS.PRTPGRP" columnName="PGRP_ID"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

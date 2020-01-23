@@ -91,6 +91,16 @@
         <formula>TO_NVARCHAR(TO_DATE(&quot;ERTSP&quot;),'YYYYMMDDHHMISS')</formula>
     
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_VALIDATION" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(TO_DATE(&quot;VALIDATION&quot;),'YYYYMMDDHHMISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_POSTMARK" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(TO_DATE(&quot;POSTMARK&quot;),'YYYYMMDDHHMISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_RECEIPT" datatype="DECIMAL" length="15" scale="0" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(TO_DATE(&quot;RECEIPT&quot;),'YYYYMMDDHHMISS')</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS_LOCTIME"/>
   </calculationView>
@@ -247,15 +257,15 @@
     </attribute>
     <attribute id="VALIDATION" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VALIDATION"/>
-      <keyMapping columnObjectName="Projection_1" columnName="VALIDATION"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_VALIDATION"/>
     </attribute>
     <attribute id="POSTMARK" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="POSTMARK"/>
-      <keyMapping columnObjectName="Projection_1" columnName="POSTMARK"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_POSTMARK"/>
     </attribute>
     <attribute id="RECEIPT" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECEIPT"/>
-      <keyMapping columnObjectName="Projection_1" columnName="RECEIPT"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_RECEIPT"/>
     </attribute>
     <attribute id="DUE_DATE" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DUE_DATE"/>
