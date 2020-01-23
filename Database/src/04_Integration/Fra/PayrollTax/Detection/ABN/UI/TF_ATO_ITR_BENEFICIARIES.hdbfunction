@@ -9,7 +9,7 @@ RETURNS TABLE
 	"RTN_YR"						INTEGER,
 	"TRUST_FULL_NM_TXT" 			NVARCHAR(200),
 	"TRUST_REF_ID"					DECIMAL(13,0),
-	"PTNR_BNFCRY_PGRP_ID"       	NVARCHAR(10), -- C ID if person is found in ASIC
+	"PTNR_BNFCRY_PGRP_P_ID"       	NVARCHAR(10), -- C ID or P ID if C ID is not found (ie person is not a duplicate person) from ASIC person IDS
 	"PTNR_BNFCRY_FIRST_NM"			NVARCHAR(15),
 	"PTNR_BNFCRY_OTHR_GVN_NM"		NVARCHAR(30),
 	"PTNR_BNFCRY_SRNM"				NVARCHAR(30),
@@ -62,7 +62,7 @@ RETURN
 		"TRUST"."RTN_YR",
 		"TRUST"."FULL_NM_TXT" AS "TRUST_FULL_NM_TXT",
 		"TRUST"."REF_ID" as "TRUST_REF_ID",
-		"ASIC_PERSON"."PGRP_ID"	AS "PTNR_BNFCRY_PGRP_ID",
+		"ASIC_PERSON"."PTNR_BNFCRY_PGRP_P_ID"	AS "PTNR_BNFCRY_PGRP_P_ID",
 		"BNFCRY"."PTNR_BNFCRY_FIRST_NM",
 		"BNFCRY"."PTNR_BNFCRY_OTHR_GVN_NM",
 		"BNFCRY"."PTNR_BNFCRY_SRNM",
@@ -87,13 +87,13 @@ RETURN
 	and substring("TRUST"."RTN_YR",3) = substring("TRUSTEE_LF"."SOURCE_FIELD_VALUE", 3)
 	LEFT JOIN ( -- add person group Id's
 		SELECT DISTINCT
-			"PGRP"."PGRP_ID",
+			CASE WHEN "PGRP"."PGRP_ID" IS NULL THEN "PERS"."ID" ELSE "PGRP"."PGRP_ID" END AS "PTNR_BNFCRY_PGRP_P_ID", --use Cid, but if not found use PID
 			"PERS"."GIVEN_NAME1", 
 			"PERS"."GIVEN_NAME2",  
 			"PERS"."SURNAME", 
 			"PERS"."BIRTH_DT"
-		FROM "osr.edw.platform.fra.prt.dt.abn.ui::CV_GRP_PERSON_GROUP_ALL" AS "PGRP" 
-		INNER JOIN "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
+		FROM "osr.edw.staging.md.asic.proxy::TF_PERSON_C"() AS "PERS"
+		LEFT JOIN "osr.edw.platform.fra.prt.dt.abn.ui::CV_GRP_PERSON_GROUP_ALL" AS "PGRP" 
 			ON "PERS"."ID" = "PGRP"."ID"
 	) AS "ASIC_PERSON"
 	ON 	"BNFCRY"."PTNR_BNFCRY_FIRST_NM" = "ASIC_PERSON"."GIVEN_NAME1"
