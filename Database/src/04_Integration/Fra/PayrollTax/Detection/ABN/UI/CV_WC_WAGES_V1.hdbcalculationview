@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.dt.abn.ui::CV_WC_WAGES_V1" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_WC_WAGES"/>
+<localVariables>
+  <variable id="IP_FY_ADJUSTMENT" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C">
+    <resourceUri>osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C</resourceUri>
+  </DataSource>
+  <DataSource id="osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C</resourceUri>
+  </DataSource>
+  <DataSource id="Projection_1_copy$$$$osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS$$" type="TABLE_FUNCTION">
+    <resourceUri>osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BPARTNER"/>
+      <viewAttribute id="GROUP_ID"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="ALERT_CREA_YEAR"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FIN_YEAR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(TO_INT(&quot;ALERT_CREA_YEAR&quot;) - '$$IP_FY_ADJUSTMENT$$')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="POLICY_NO"/>
+      <viewAttribute id="ABN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.md.wcq.proxy::CV_POLICY_DETAILS_C"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BPARTNER"/>
+      <viewAttribute id="GROUP_ID"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="ALERT_CREA_YEAR"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+      <viewAttribute id="POLICY_NO"/>
+    
+      <viewAttribute id="FIN_YEAR"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BPARTNER" source="BPARTNER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GROUP_ID" source="GROUP_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_CREA_YEAR" source="ALERT_CREA_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="POLICY_NO" source="POLICY_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+    </input>
+    <joinAttribute name="ABN"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="POLICY_NO"/>
+      <viewAttribute id="ASSESSMENT_YEAR"/>
+      <viewAttribute id="ACT_WAGES"/>
+      <viewAttribute id="PROV_WAGES"/>
+      <viewAttribute id="WIC"/>
+    
+      <viewAttribute id="ACT_APPR_WAGES"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.td.wcq.proxy::TF_POLICY_WAGES_C"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="FIN_YEAR"/>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum"/>
+      <viewAttribute id="PROV_WAGES" aggregationType="sum"/>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_4"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="FIN_YEAR"/>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum"/>
+      <viewAttribute id="PROV_WAGES" aggregationType="sum"/>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+      <viewAttribute id="ALERT_CREA_YEAR"/>
+      <viewAttribute id="ASSESSMENT_YEAR"/>
+      <viewAttribute hidden="true" id="JOIN$POLICY_NO$POLICY_NO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_CREA_YEAR" source="ALERT_CREA_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
+    </input>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ASSESSMENT_YEAR" source="ASSESSMENT_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROV_WAGES" source="PROV_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$POLICY_NO$POLICY_NO" source="POLICY_NO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="ASSESSMENT_YEAR"/>
+    </input>
+    <joinAttribute name="JOIN$POLICY_NO$POLICY_NO"/>
+    <joinAttribute name="FIN_YEAR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+    <viewAttributes>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="CNT_EMPLOYEE"/>
+      <viewAttribute id="INCM_YR"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FIN_YEAR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(&quot;INCM_YR&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CNT_EMP" datatype="BIGINT" expressionLanguage="SQL">
+        <formula>TO_BIGINT(&quot;CNT_EMPLOYEE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.ato.proxy::TF_EMP_CNT_C"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+      <viewAttribute id="FIN_YEAR1"/>
+      <viewAttribute id="CNT_EMP" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR1" source="FIN_YEAR"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="FIN_YEAR"/>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+      <viewAttribute id="CNT_EMP" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1_copy">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR"/>
+    </input>
+    <input node="Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMP" source="CNT_EMP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR"/>
+    </input>
+    <joinAttribute name="ABN"/>
+    <joinAttribute name="FIN_YEAR"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="FIN_YEAR"/>
+      <viewAttribute id="ACT_WAGES" aggregationType="sum"/>
+      <viewAttribute id="PROV_WAGES" aggregationType="sum"/>
+      <viewAttribute id="ACT_APPR_WAGES" aggregationType="sum"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+      <viewAttribute id="CNT_EMP" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_WAGES" source="ACT_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROV_WAGES" source="PROV_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACT_APPR_WAGES" source="ACT_APPR_WAGES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY_DASH" source="DB_KEY_DASH"/>
+    </input>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CNT_EMP" source="CNT_EMP"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIN_YEAR" source="FIN_YEAR1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ABN" source="ABN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GJAHR" source="GJAHR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DB_KEY" source="DB_KEY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALERT_ID" source="ALERT_ID"/>
+    </input>
+    <joinAttribute name="FIN_YEAR"/>
+    <joinAttribute name="ABN"/>
+    <joinAttribute name="GJAHR"/>
+    <joinAttribute name="DB_KEY"/>
+    <joinAttribute name="ALERT_ID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1_copy">
+    <viewAttributes>
+      <viewAttribute id="ALERT_ID"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="GJAHR"/>
+      <viewAttribute id="BPARTNER"/>
+      <viewAttribute id="GROUP_ID"/>
+      <viewAttribute id="DB_KEY"/>
+      <viewAttribute id="ALERT_CREA_YEAR"/>
+      <viewAttribute id="DB_KEY_DASH"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="FIN_YEAR" datatype="NVARCHAR" length="4" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(TO_INT(&quot;ALERT_CREA_YEAR&quot;) - '$$IP_FY_ADJUSTMENT$$')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Projection_1_copy$$$$osr.edw.platform.fra.prt.dt.abn.ui::TF_ACS_PT_ALERT_DETAILS$$"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_3">
+  <attributes>
+    <attribute id="DB_KEY" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY"/>
+      <keyMapping columnObjectName="Join_3" columnName="DB_KEY"/>
+    </attribute>
+    <attribute id="DB_KEY_DASH" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DB_KEY_DASH"/>
+      <keyMapping columnObjectName="Join_3" columnName="DB_KEY_DASH"/>
+    </attribute>
+    <attribute id="ALERT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ALERT_ID"/>
+      <keyMapping columnObjectName="Join_3" columnName="ALERT_ID"/>
+    </attribute>
+    <attribute id="ABN" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="Join_3" columnName="ABN"/>
+    </attribute>
+    <attribute id="GJAHR" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="Join_3" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="FIN_YEAR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIN_YEAR"/>
+      <keyMapping columnObjectName="Join_3" columnName="FIN_YEAR"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ACT_WAGES" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_WAGES"/>
+      <measureMapping columnObjectName="Join_3" columnName="ACT_WAGES"/>
+    </measure>
+    <measure id="PROV_WAGES" order="8" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PROV_WAGES"/>
+      <measureMapping columnObjectName="Join_3" columnName="PROV_WAGES"/>
+    </measure>
+    <measure id="ACT_APPR_WAGES" order="9" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ACT_APPR_WAGES"/>
+      <measureMapping columnObjectName="Join_3" columnName="ACT_APPR_WAGES"/>
+    </measure>
+    <measure id="CNT_EMP" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CNT_EMP"/>
+      <measureMapping columnObjectName="Join_3" columnName="CNT_EMP"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="421" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="821"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="821"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="118" y="661"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="72" y="28"/>
+      <rectangleSize width="194"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="365" y="31"/>
+      <rectangleSize width="148"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="390" y="661"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="false" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145" y="389"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="145" y="501"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Join_1" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="197"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_4" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="194"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="859" y="633"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="514" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="684" y="501"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1_copy" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="194"/>
+    </shape>
+    <shape modelObjectName="Projection_4" modelObjectNameSpace="Join_5" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="175"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="421" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="30" y="34"/>
+      <rectangleSize width="190"/>
+    </shape>
+  
+    <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_3" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="369" y="20"/>
+      <rectangleSize width="166.08837890625"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1_copy" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="630" y="633"/>
+      <rectangleSize width="160"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>
