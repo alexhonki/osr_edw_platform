@@ -1,0 +1,22 @@
+FUNCTION "osr.edw.staging.rms.forms.tf.proxy::TF_GET_3DOC_001_07" ( )
+       RETURNS TABLE (
+          CLIENT                	NVARCHAR(3),
+          PARENT_ID             	NVARCHAR(32),
+		  FIELDINDEX				INTEGER
+       )
+     LANGUAGE SQLSCRIPT
+     SQL SECURITY INVOKER AS 
+/**********************************************************************************************
+ ISR scenario 3DOC ver. 001 sub-table TRANSFEREE_TA
+ **********************************************************************************************/ 
+BEGIN 
+RETURN
+SELECT
+CLIENT,
+PARENT_ID,
+(ROW_NUMBER ( ) OVER ( PARTITION BY PARENT_ID) - 1) as FIELDINDEX
+FROM 
+"osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000007.active_data"
+;
+
+END;
