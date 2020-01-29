@@ -89,6 +89,15 @@ END</formula>
       <calculatedViewAttribute id="CC_POSTPROCESS_AT" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
         <formula>TO_NVARCHAR(&quot;CC_POSTPROCESS_AT_TMS&quot;,'YYYYMMDDHHMMSS')</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_HEAD_CHANGED_AT_TMS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;HEAD_CHANGED_AT&quot;=0 THEN TO_TIMESTAMP('19000101000000')
+ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;HEAD_CHANGED_AT&quot;), 'AUSQLD')
+END</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_HEAD_CHANGED_AT" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(&quot;CC_HEAD_CHANGED_AT_TMS&quot;,'YYYYMMDDHHMMSS')</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMDORDERADMH.active_data"/>
   </calculationView>
@@ -157,7 +166,7 @@ END</formula>
     </attribute>
     <attribute id="HEAD_CHANGED_AT" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="HEAD_CHANGED_AT"/>
-      <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="HEAD_CHANGED_AT"/>
+      <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_HEAD_CHANGED_AT"/>
     </attribute>
     <attribute id="ORDERADM_H_DUMMY" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ORDERADM_H_DUMMY"/>
@@ -239,25 +248,30 @@ END</formula>
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="CREATED_AT_TMS" order="37" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CREATED_AT_TMS" order="37" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
       <descriptions defaultDescription="CREATED_AT_TMS"/>
       <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_CREATED_AT_TMS"/>
     </attribute>
-    <attribute id="CHANGED_AT_TMS" order="38" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGED_AT_TMS" order="38" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
       <descriptions defaultDescription="CHANGED_AT_TMS"/>
       <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_CHANGED_AT_TMS"/>
     </attribute>
-    <attribute id="VERIFY_DATE_TMS" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VERIFY_DATE_TMS" order="39" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
       <descriptions defaultDescription="VERIFY_DATE_TMS"/>
       <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_VERIFY_DATE_TMS"/>
     </attribute>
-    <attribute id="CRM_CHANGED_AT_TMS" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CRM_CHANGED_AT_TMS" order="40" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
       <descriptions defaultDescription="CRM_CHANGED_AT_TMS"/>
       <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_CRM_CHANGED_AT_TMS"/>
     </attribute>
-    <attribute id="POSTPROCESS_AT_TMS" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_POSTPROCESS_AT_TMS" order="41" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
       <descriptions defaultDescription="POSTPROCESS_AT_TMS"/>
       <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_POSTPROCESS_AT_TMS"/>
+    </attribute>
+  
+    <attribute id="Z_HEAD_CHANGED_AT_TMS" hidden="true" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC_HEAD_CHANGED_AT_TMS"/>
+      <keyMapping columnObjectName="CRMD_ORDERADM_H" columnName="CC_HEAD_CHANGED_AT_TMS"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
