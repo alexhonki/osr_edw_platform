@@ -1,3 +1,5 @@
+
+
 FUNCTION "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"( )
        RETURNS TABLE
        (
@@ -147,7 +149,7 @@ A_REASS_REASN_A	  AS A_REASS_REASON,
 A_REASS_COMMENT_A AS A_REASS_COMMENT,
 ''                AS C_SENDER_ID
 FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_IPA1_000"( )
-WHERE "FIELDINDEX" < 1
+
 UNION
 -- BRF IPF1 Form Data
  SELECT
@@ -183,7 +185,6 @@ A_F_REASS_RSN_F		AS A_REASS_REASON,
 A_F_REASS_COMMENT_F AS A_REASS_COMMENT,
 ''                  AS C_SENDER_ID
 FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_IPF1_000"( )
-WHERE "FIELDINDEX" < 1
 ;
 
 END;
