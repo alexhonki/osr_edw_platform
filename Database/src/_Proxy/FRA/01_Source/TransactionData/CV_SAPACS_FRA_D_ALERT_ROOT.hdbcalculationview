@@ -92,7 +92,7 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;CREA_DATE_TIME&quot;), 'AUSQLD')
 END</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_CREA_DATE_TIME" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(&quot;CC_CREA_DATE_TIME_TMS&quot;,'YYYYMMDDHHMMSS')</formula>
+        <formula>TO_NVARCHAR(&quot;CC_CREA_DATE_TIME_TMS&quot;,'YYYYMMDDHH24MISS')</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_LCHG_DATE_TIME_TMS" datatype="TIMESTAMP" expressionLanguage="SQL">
         <formula>CASE WHEN &quot;LCHG_DATE_TIME&quot;=0 THEN TO_TIMESTAMP('19000101000000')
@@ -100,17 +100,19 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;LCHG_DATE_TIME&quot;), 'AUSQLD')
 END</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_LCHG_DATE_TIME" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(&quot;CC_LCHG_DATE_TIME_TMS&quot;,'YYYYMMDDHHMMSS')</formula>
+        <formula>TO_NVARCHAR(&quot;CC_LCHG_DATE_TIME_TMS&quot;,'YYYYMMDDHH24MISS')</formula>
       </calculatedViewAttribute>
     
       <calculatedViewAttribute id="CC_DUE_DATE_TMS" datatype="TIMESTAMP" expressionLanguage="SQL">
+    
         <formula>CASE WHEN &quot;DUE_DATE&quot;=0 THEN TO_TIMESTAMP('19000101000000')
 ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;DUE_DATE&quot;), 'AUSQLD')
 END
 </formula>
+    
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_DUE_DATE" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(&quot;CC_DUE_DATE_TMS&quot;,'YYYYMMDDHHMMSS')</formula>
+        <formula>TO_NVARCHAR(&quot;CC_DUE_DATE_TMS&quot;,'YYYYMMDDHH24MISS')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="osr.apps.acs.synonym::SAPACS.FRA_D_ALERT_ROOT"/>
@@ -421,7 +423,9 @@ END
   
     <attribute id="Z_DUE_DATE_TMS" hidden="true" order="76" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CC_DUE_DATE_TMS"/>
+  
       <keyMapping columnObjectName="SAPACS_FRA_D_ALERT_ROOT" columnName="CC_DUE_DATE_TMS"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -431,13 +435,13 @@ END
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="147.1668600701734" y="112"/>
+      <upperLeftCorner x="147" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="SAPACS_FRA_D_ALERT_ROOT" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="91.99999999999997" y="236.9999988079071"/>
+      <upperLeftCorner x="91" y="236"/>
       <rectangleSize height="30" width="263"/>
     </shape>
   </shapes>
