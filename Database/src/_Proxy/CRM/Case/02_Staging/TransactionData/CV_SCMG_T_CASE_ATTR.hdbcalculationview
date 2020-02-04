@@ -50,7 +50,7 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;CREATE_TIME&quot;), 'AUSQLD')
 END</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_CREATE_TIME" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(&quot;CC_CREATE_TIME_LOCAL&quot;,'YYYYMMDDHHMISS')</formula>
+        <formula>TO_NVARCHAR(&quot;CC_CREATE_TIME_LOCAL&quot;,'YYYYMMDDHH24MISS')</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_CHANGE_TIME_LOCAL" datatype="TIMESTAMP" expressionLanguage="SQL">
         <formula>CASE WHEN &quot;CHANGE_TIME&quot;=0 THEN TO_TIMESTAMP('19000101000000')
@@ -58,7 +58,7 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;CHANGE_TIME&quot;), 'AUSQLD')
 END</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_CHANGE_TIME" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(&quot;CC_CHANGE_TIME_LOCAL&quot;,'YYYYMMDDHHMISS')</formula>
+        <formula>TO_NVARCHAR(&quot;CC_CHANGE_TIME_LOCAL&quot;,'YYYYMMDDHH24MISS')</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_CLOSING_TIME_LOCAL" datatype="TIMESTAMP" expressionLanguage="SQL">
         <formula>CASE WHEN &quot;CLOSING_TIME&quot;=0 THEN TO_TIMESTAMP('19000101000000')
@@ -66,7 +66,7 @@ ELSE UTCTOLOCAL(TO_TIMESTAMP(&quot;CLOSING_TIME&quot;), 'AUSQLD')
 END</formula>
       </calculatedViewAttribute>
       <calculatedViewAttribute id="CC_CLOSING_TIME" datatype="NVARCHAR" length="15" expressionLanguage="SQL">
-        <formula>TO_NVARCHAR(&quot;CC_CLOSING_TIME_LOCAL&quot;,'YYYYMMDDHHMISS')</formula>
+        <formula>TO_NVARCHAR(&quot;CC_CLOSING_TIME_LOCAL&quot;,'YYYYMMDDHH24MISS')</formula>
       </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="osr.edw.staging.md.crm.synonym::CDS_CRM.DSO.SCMGTCASEATTR.active_data"/>
