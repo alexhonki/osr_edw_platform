@@ -45,8 +45,6 @@ BEGIN
 /**********************************************************************************************
  ISR scenario 3DOC| scenario ver. all | main table | form ver. all
  **********************************************************************************************/ 
-
-
 RETURN
 SELECT 
 RETURN_ID,
@@ -125,6 +123,45 @@ A_TEE_ACN_OR,
 A_TEE_ARBN_OR,
 A_EE_TEE_CARE_OF_OR
 FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_001_M"( )
+UNION
+SELECT 
+RETURN_ID,
+FORM,
+FORM_NUMBER,
+CASE_GUID,
+FIELDINDEX,
+TIMESTAMP,
+FORM_CLASS,
+FORM_STATUS,
+FORM_STATUS_TS,
+SUPERSEDED_BY,
+SUPERSEDE_TO,
+RECEIPT_TS,
+TEMPLATE_VER,
+BATCH_ID,
+LOCATOR_NUMBER,
+VERSION,
+A_DESC_PROP,
+A_VEHC_INCLUDED,
+C_TOTAL_FHOME_ACQ,
+C_TOTAL_HOME_ACQ,
+C_TOTAL_LAND_ACQ,
+C_TOTAL_OTHER_ACQ,
+C_TOTAL_NOCONC_ACQ,
+C_TOTAL_AQUIRED,
+C_TOTAL_SHARE,
+A_CURRENCY,
+A_GOODWILL,
+A_INTELL_PROP,
+A_PROP_OFF_PLAN,
+A_PROP_IS_NEW,
+A_REAL_PROPERTY_IND,
+A_OR_ENFORCE_RPTR,
+A_EE_ENFORCE_RPTR,
+A_TEE_ACN_OR,
+A_TEE_ARBN_OR,
+A_EE_TEE_CARE_OF_OR
+FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_ITD1_000_M"( )
 ;
 
 END;
