@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.staging.rms.forms.tf.proxy::TF_3DOC_01_LV"( )
+FUNCTION "osr.edw.staging.rms.forms.tf.proxy::TF_3DOC_02"( )
 RETURNS TABLE (
 -- Return
 CASE_GUID NVARCHAR(32),
@@ -81,17 +81,15 @@ TEMPLATE_VER NVARCHAR(1),
 FORM_BATCH_ID NVARCHAR(12),
 FORM_LOCATOR_NUMBER NVARCHAR(16),
 VERSION NVARCHAR(5),
-A_BEN_FIRST_NAME NVARCHAR(50),
-A_BEN_MIDDLE_NAME NVARCHAR(10),
-A_BEN_LAST_NAME NVARCHAR(40),
-A_BEN_DOB NVARCHAR(8),
-C_TEE_NO_BEN INTEGER
+A_INFO_DUE NVARCHAR(8),
+A_INFO_REC_DATE NVARCHAR(8),
+C_INFO_NON_COMP INTEGER
 )
 LANGUAGE SQLSCRIPT 
 SQL SECURITY INVOKER AS 
 BEGIN 
 /**********************************************************************************************
- Form 3DOC | sub table 01 BENEFICIARIES | form ver. latest
+ Form 3DOC | sub table 02 INFORMATION_T | form ver. all
  **********************************************************************************************/ 
 RETURN
 SELECT  
@@ -174,15 +172,13 @@ FORM.TEMPLATE_VER,
 FORM.BATCH_ID AS FORM_BATCH_ID,
 FORM.LOCATOR_NUMBER AS FORM_LOCATOR_NUMBER,
 FORM.VERSION,
-FORM.A_BEN_FIRST_NAME,
-FORM.A_BEN_MIDDLE_NAME,
-FORM.A_BEN_LAST_NAME,
-FORM.A_BEN_DOB,
-FORM.C_TEE_NO_BEN
+FORM.A_INFO_DUE,
+FORM.A_INFO_REC_DATE,
+FORM.C_INFO_NON_COMP
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS DFMCA_RETURN
 INNER JOIN
-"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_01_LV"() AS FORM
+"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_02"() AS FORM
 ON DFMCA_RETURN.CASE_GUID = FORM.RETURN_ID
 ;
 
