@@ -1,4 +1,4 @@
-FUNCTION "osr.edw.staging.rms.forms.tf.proxy::TF_3DOC_05"( )
+FUNCTION "osr.edw.staging.rms.forms.tf.proxy::TF_3DOC_05_LV"( )
 RETURNS TABLE (
 -- Return
 CASE_GUID NVARCHAR(32),
@@ -144,7 +144,7 @@ LANGUAGE SQLSCRIPT
 SQL SECURITY INVOKER AS 
 BEGIN 
 /**********************************************************************************************
- Form 3DOC | sub table 05 TRANSFEREE_TA | form ver. all
+ Form 3DOC | sub table 05 TRANSFEREE_TA | form ver. latest
  **********************************************************************************************/ 
 RETURN
 SELECT  
@@ -288,7 +288,7 @@ FORM.A_EE_NATIONALITY
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS DFMCA_RETURN
 INNER JOIN
-"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_05"() AS FORM
+"osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_05_LV"() AS FORM
 ON DFMCA_RETURN.CASE_GUID = FORM.RETURN_ID
 ;
 
