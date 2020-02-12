@@ -51,6 +51,7 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 		INNER JOIN :it_data_for_rule AS "KEYS"
 		ON "WAGES"."PAYER_ABN" = "KEYS"."ABN"
 		AND "WAGES"."GJAHR" = "KEYS"."GJAHR" 
+		AND "KEYS"."PERIOD_CATEGORY"  = 'PT-A'
 		GROUP BY 
 		"WAGES"."PAYER_ABN",
 		"KEYS"."PERIOD_CATEGORY",
@@ -72,6 +73,23 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 END IF;
 
 IF lv_scenario = 'PRT3.2' THEN -- ITR
+--12/02/2020 in 3.2 ITR Scenario we need to exclude all the ABN's which are part of TPAR data (Payer ABN) 
+--for the Financial year.
+--Exclude the ABN if its avilable as a payer in TPAR data for the financial year.
+it_data_sel =
+SELECT DISTINCT
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY"
+FROM :it_data_for_rule AS "A"
+WHERE NOT EXISTS  (
+	SELECT DISTINCT PAYER_ABN, FINANCIAL_YEAR FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"() AS "TPAR"
+	WHERE 	"A"."GJAHR" = "TPAR"."FINANCIAL_YEAR"
+	AND     "A"."ABN"	= "TPAR"."PAYER_ABN"
+				)	
+AND "A"."PERIOD_CATEGORY" = 'PT-A'				
+;
 
 ------Get ITR Data--------	
 LT_ITR =
@@ -92,7 +110,7 @@ SELECT
 FROM "osr.edw.staging.td.ato.proxy::CV_ITRNIND"  AS "DATA"  -- Non Individual 
 WHERE EXISTS
 (
-                SELECT * FROM :it_data_for_rule AS "DO"
+                SELECT * FROM :it_data_sel AS "DO"
                 WHERE
                 "DATA"."ABN" = "DO"."ABN"
                 AND TO_NVARCHAR(LEFT("DATA"."INCM_YR",4)) = "DO"."GJAHR"
@@ -151,7 +169,7 @@ FROM
                FROM "osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WCQ_WAGES" AS "WAGES"
                WHERE "PERIOD_CATEGORY" = 'PT-A'
                AND EXISTS (
-                               SELECT * FROM :it_data_for_rule AS "KEYS"
+                               SELECT * FROM :it_data_sel AS "KEYS"
                                WHERE "KEYS"."ABN" = "WAGES"."ABN"
                                  AND "KEYS"."PERIOD_CATEGORY" = "WAGES"."PERIOD_CATEGORY"
                                  AND "KEYS"."GJAHR" = "WAGES"."GJAHR"
@@ -190,7 +208,7 @@ SELECT
 				CASE WHEN "ITR"."SALARY_WAGES" IS NULL		OR  "ITR"."SALARY_WAGES" <= 0		THEN  0	ELSE "ITR"."SALARY_WAGES" 		END AS "SALARY_WAGES",
 				CASE WHEN "ITR"."SUPER_EXPNS" IS NULL 		OR  "ITR"."SUPER_EXPNS" <= 0		THEN  0	ELSE "ITR"."SUPER_EXPNS"  		END AS "SUPER_EXPNS"
 FROM
-                :it_data_for_rule AS "DO"
+                :it_data_sel AS "DO"
                 
 INNER JOIN
 

@@ -289,9 +289,22 @@ END IF;
 ---------------------Scenario ITR -------------------------------
 IF lv_scenario = 'PRT3.2' THEN   
 
- 
-
-
+--12/02/2020 in 3.2 ITR Scenario we need to exclude all the ABN's which are part of TPAR data (Payer ABN) 
+--for the Financial year.
+--Exclude the ABN if its avilable as a payer in TPAR data for the financial year.
+it_data =
+SELECT DISTINCT
+	"ABN",
+	"GJAHR",
+	"PERIOD_CATEGORY",
+	"PERIOD_KEY"
+FROM :it_data AS "A"
+WHERE NOT EXISTS  (
+	SELECT DISTINCT PAYER_ABN, FINANCIAL_YEAR FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"() AS "TPAR"
+	WHERE 	"A"."GJAHR" = "TPAR"."FINANCIAL_YEAR"
+	AND     "A"."ABN"	= "TPAR"."PAYER_ABN"
+				)	
+;
 --Get  ITR Data----
 
 ITR_DATA =
