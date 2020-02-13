@@ -44,7 +44,7 @@ SELECT top 1 TO_NVARCHAR("GJAHR") into lv_gjahr FROM :it_data_for_rule ;
 
 SELECT MAX("RISK_FACTOR_RATING") INTO lv_max_rating FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX";
 SELECT "LOW" INTO lv_rfr_max_low FROM "osr.edw.platform.fra.prt.dt.abn.wages.dt::CV_RFR_ESTIMATED_TAX" WHERE "TOP_BAND" = 'X';
-
+/*
 lt_wages_filter = 
 	SELECT 
 		"ABN",
@@ -55,9 +55,37 @@ lt_wages_filter =
 		0 AS "WAGE"
 	FROM :it_data_for_rule
 ;
+*/
 
+it_data =
+ 	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		TO_NVARCHAR('AUD') AS "WAERS",
+		0 AS "WAGE"
+	FROM :it_data_for_rule ;
 
 IF lv_scenario = 'PRT3.1' THEN -- TPAR
+
+-- 13/02/2020 Added filter to take only Eligible Payee, Payer from CV_PRT_PRTCNTR view
+lt_wages_filter = 
+	SELECT 
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		TO_NVARCHAR('AUD') AS "WAERS",
+		0 AS "WAGE"
+	FROM :it_data AS "A"
+WHERE EXISTS  (
+	SELECT DISTINCT PAYER_ABN, GJAHR FROM "osr.edw.source.td.fra.proxy::CV_PRT_PRTCNTR" AS "TPAR"
+	WHERE 	"A"."GJAHR" = "TPAR"."GJAHR"
+	AND     "A"."ABN"	= "TPAR"."PAYER_ABN"
+				)
+;
+
 
 	lt_wages = 
 		SELECT 		
@@ -83,7 +111,25 @@ IF lv_scenario = 'PRT3.1' THEN -- TPAR
 END IF;
 
 IF lv_scenario = 'PRT3.2' THEN -- ITR
-
+--12/02/2020 in 3.2 ITR Scenario we need to exclude all the ABN's which are part of TPAR data (Payer ABN) 
+--for the Financial year.
+--Exclude the ABN if its avilable as a payer in TPAR data for the financial year.
+lt_wages_filter =
+SELECT DISTINCT
+		"ABN",
+		"PERIOD_CATEGORY",
+		"PERIOD_KEY",
+		"GJAHR",
+		TO_NVARCHAR('AUD') AS "WAERS",
+		0 AS "WAGE"
+FROM :it_data AS "A"
+WHERE NOT EXISTS  (
+	SELECT DISTINCT PAYER_ABN, FINANCIAL_YEAR FROM "osr.edw.staging.td.ato.proxy::TF_TPAR_PAYEE_C"() AS "TPAR"
+	WHERE 	"A"."GJAHR" = "TPAR"."FINANCIAL_YEAR"
+	AND     "A"."ABN"	= "TPAR"."PAYER_ABN"
+				)
+			
+;
 	lt_wages = 
 		SELECT 		
 			"EST"."ABN",
