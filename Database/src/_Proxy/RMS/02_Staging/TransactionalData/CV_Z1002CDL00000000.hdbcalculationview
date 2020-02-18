@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1002CDL00000000" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_Z1002CDL00000000"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1002CDL00000000.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1002CDL00000000.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1002CDL00000000">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="BUNDLE_ID"/>
+      <viewAttribute id="VERSION"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="C_LAST_NAME"/>
+      <viewAttribute id="C_FIRST_NAME"/>
+      <viewAttribute id="C_MIDDLE_NAME"/>
+      <viewAttribute id="A_DATEOFBIRTH"/>
+      <viewAttribute id="C_ORG_NAME1"/>
+      <viewAttribute id="C_ORG_NAME2"/>
+      <viewAttribute id="C_ACN"/>
+      <viewAttribute id="C_ABN"/>
+      <viewAttribute id="A_TRUST_OTHER"/>
+      <viewAttribute id="A_APPOINT_MADE"/>
+      <viewAttribute id="C_CARE_OF"/>
+      <viewAttribute id="C_UNITBLDG"/>
+      <viewAttribute id="C_HOUSENO"/>
+      <viewAttribute id="C_STREET"/>
+      <viewAttribute id="C_CITY"/>
+      <viewAttribute id="C_COUNTRY"/>
+      <viewAttribute id="C_REGION"/>
+      <viewAttribute id="C_POSTCODE"/>
+      <viewAttribute id="A_AD_CHANGED"/>
+      <viewAttribute id="A_STREET_POST_IND"/>
+      <viewAttribute id="A_UPD_CARE_OF"/>
+      <viewAttribute id="A_UPD_UNITBLDG"/>
+      <viewAttribute id="A_UPD_HOUSENO"/>
+      <viewAttribute id="A_UPD_STREET"/>
+      <viewAttribute id="A_UPD_POSTAL_NUMBER"/>
+      <viewAttribute id="A_UPD_STREET_TYPE"/>
+      <viewAttribute id="A_UPD_POSTAL_TYPE"/>
+      <viewAttribute id="A_UPD_CITY"/>
+      <viewAttribute id="A_UPD_COUNTRY"/>
+      <viewAttribute id="A_UPD_REGION"/>
+      <viewAttribute id="A_UPD_POSTCODE"/>
+      <viewAttribute id="C_EMAIL_ADDRESS"/>
+      <viewAttribute id="C_COMM_PHONE"/>
+      <viewAttribute id="C_COMM_MOBILE"/>
+      <viewAttribute id="C_ADR_GUID"/>
+      <viewAttribute id="C_ADR_KIND"/>
+      <viewAttribute id="C_ADR_NUM"/>
+      <viewAttribute id="C_IS_BP_DETAIL_UPD"/>
+      <viewAttribute id="A_COMM_CHANGED"/>
+      <viewAttribute id="A_UPD_EMAIL_ADDRESS"/>
+      <viewAttribute id="A_UPD_COMM_PHONE"/>
+      <viewAttribute id="A_UPD_COMM_MOBILE"/>
+      <viewAttribute id="A_TRUST_DOCS"/>
+      <viewAttribute id="A_TRUST_TYPE"/>
+      <viewAttribute id="C_BPTYPE"/>
+      <viewAttribute id="C_ORGTYPE"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_TIMESTAMP_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;TIMESTAMP&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMESTAMP_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_TIMESTAMP_LC&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_DATEOFBIRTH_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_DATEOFBIRTH&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1002CDL00000000.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1002CDL00000000">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="RECORD_ID"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="PARENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="PARENT_ID"/>
+    </attribute>
+    <attribute id="OBJECT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="OBJECT_ID"/>
+    </attribute>
+    <attribute id="BUNDLE_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUNDLE_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="BUNDLE_ID"/>
+    </attribute>
+    <attribute id="VERSION" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="VERSION"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="Z_TIMESTAMP_LC" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMESTAMP_LC"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="CC_TIMESTAMP_LC"/>
+    </attribute>
+    <attribute id="Z_TIMESTAMP_TS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMESTAMP_TS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="CC_TIMESTAMP_TS"/>
+    </attribute>
+    <attribute id="INITIAL_FLAGS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="INITIAL_FLAGS"/>
+    </attribute>
+    <attribute id="C_LAST_NAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LAST_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_LAST_NAME"/>
+    </attribute>
+    <attribute id="C_FIRST_NAME" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_FIRST_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_FIRST_NAME"/>
+    </attribute>
+    <attribute id="C_MIDDLE_NAME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_MIDDLE_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_MIDDLE_NAME"/>
+    </attribute>
+    <attribute id="A_DATEOFBIRTH" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DATEOFBIRTH"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_DATEOFBIRTH"/>
+    </attribute>
+    <attribute id="Z_A_DATEOFBIRTH_TS" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_DATEOFBIRTH_TS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="CC_A_DATEOFBIRTH_TS"/>
+    </attribute>
+    <attribute id="C_ORG_NAME1" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ORG_NAME1"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ORG_NAME1"/>
+    </attribute>
+    <attribute id="C_ORG_NAME2" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ORG_NAME2"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ORG_NAME2"/>
+    </attribute>
+    <attribute id="C_ACN" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ACN"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ACN"/>
+    </attribute>
+    <attribute id="C_ABN" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ABN"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ABN"/>
+    </attribute>
+    <attribute id="A_TRUST_OTHER" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUST_OTHER"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_TRUST_OTHER"/>
+    </attribute>
+    <attribute id="A_APPOINT_MADE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_APPOINT_MADE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_APPOINT_MADE"/>
+    </attribute>
+    <attribute id="C_CARE_OF" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CARE_OF"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_CARE_OF"/>
+    </attribute>
+    <attribute id="C_UNITBLDG" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UNITBLDG"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_UNITBLDG"/>
+    </attribute>
+    <attribute id="C_HOUSENO" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_HOUSENO"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_HOUSENO"/>
+    </attribute>
+    <attribute id="C_STREET" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_STREET"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_STREET"/>
+    </attribute>
+    <attribute id="C_CITY" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CITY"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_CITY"/>
+    </attribute>
+    <attribute id="C_COUNTRY" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_COUNTRY"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_COUNTRY"/>
+    </attribute>
+    <attribute id="C_REGION" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_REGION"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_REGION"/>
+    </attribute>
+    <attribute id="C_POSTCODE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_POSTCODE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_POSTCODE"/>
+    </attribute>
+    <attribute id="A_AD_CHANGED" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AD_CHANGED"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_AD_CHANGED"/>
+    </attribute>
+    <attribute id="A_STREET_POST_IND" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_STREET_POST_IND"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_STREET_POST_IND"/>
+    </attribute>
+    <attribute id="A_UPD_CARE_OF" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_CARE_OF"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_CARE_OF"/>
+    </attribute>
+    <attribute id="A_UPD_UNITBLDG" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_UNITBLDG"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_UNITBLDG"/>
+    </attribute>
+    <attribute id="A_UPD_HOUSENO" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_HOUSENO"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_HOUSENO"/>
+    </attribute>
+    <attribute id="A_UPD_STREET" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_STREET"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_STREET"/>
+    </attribute>
+    <attribute id="A_UPD_POSTAL_NUMBER" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_POSTAL_NUMBER"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_POSTAL_NUMBER"/>
+    </attribute>
+    <attribute id="A_UPD_STREET_TYPE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_STREET_TYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_STREET_TYPE"/>
+    </attribute>
+    <attribute id="A_UPD_POSTAL_TYPE" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_POSTAL_TYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_POSTAL_TYPE"/>
+    </attribute>
+    <attribute id="A_UPD_CITY" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_CITY"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_CITY"/>
+    </attribute>
+    <attribute id="A_UPD_COUNTRY" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_COUNTRY"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_COUNTRY"/>
+    </attribute>
+    <attribute id="A_UPD_REGION" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_REGION"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_REGION"/>
+    </attribute>
+    <attribute id="A_UPD_POSTCODE" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_POSTCODE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_POSTCODE"/>
+    </attribute>
+    <attribute id="C_EMAIL_ADDRESS" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_EMAIL_ADDRESS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_EMAIL_ADDRESS"/>
+    </attribute>
+    <attribute id="C_COMM_PHONE" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_COMM_PHONE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_COMM_PHONE"/>
+    </attribute>
+    <attribute id="C_COMM_MOBILE" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_COMM_MOBILE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_COMM_MOBILE"/>
+    </attribute>
+    <attribute id="C_ADR_GUID" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ADR_GUID"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ADR_GUID"/>
+    </attribute>
+    <attribute id="C_ADR_KIND" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ADR_KIND"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ADR_KIND"/>
+    </attribute>
+    <attribute id="C_ADR_NUM" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ADR_NUM"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ADR_NUM"/>
+    </attribute>
+    <attribute id="C_IS_BP_DETAIL_UPD" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_IS_BP_DETAIL_UPD"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_IS_BP_DETAIL_UPD"/>
+    </attribute>
+    <attribute id="A_COMM_CHANGED" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_COMM_CHANGED"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_COMM_CHANGED"/>
+    </attribute>
+    <attribute id="A_UPD_EMAIL_ADDRESS" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_EMAIL_ADDRESS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_EMAIL_ADDRESS"/>
+    </attribute>
+    <attribute id="A_UPD_COMM_PHONE" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_COMM_PHONE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_COMM_PHONE"/>
+    </attribute>
+    <attribute id="A_UPD_COMM_MOBILE" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UPD_COMM_MOBILE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_UPD_COMM_MOBILE"/>
+    </attribute>
+    <attribute id="A_TRUST_DOCS" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUST_DOCS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_TRUST_DOCS"/>
+    </attribute>
+    <attribute id="A_TRUST_TYPE" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUST_TYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="A_TRUST_TYPE"/>
+    </attribute>
+    <attribute id="C_BPTYPE" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BPTYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_BPTYPE"/>
+    </attribute>
+    <attribute id="C_ORGTYPE" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ORGTYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="C_ORGTYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Z1002CDL00000000" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="110.99999999999997" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1002CDL00000000" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="198"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

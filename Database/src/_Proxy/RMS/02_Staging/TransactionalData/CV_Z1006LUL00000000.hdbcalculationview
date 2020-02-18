@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1006LUL00000000" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_Z1006LUL00000000"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1006LUL00000000.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1006LUL00000000.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1006LUL00000000">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="BUNDLE_ID"/>
+      <viewAttribute id="VERSION"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="A_QUEST_1A"/>
+      <viewAttribute id="A_COMM_OCC_DATE"/>
+      <viewAttribute id="A_QUEST_1B_TEXTBOX"/>
+      <viewAttribute id="A_QUEST_1C"/>
+      <viewAttribute id="A_QUEST_1C_ONE"/>
+      <viewAttribute id="A_QUEST_1C_TWO"/>
+      <viewAttribute id="A_QUEST_1C_THREE"/>
+      <viewAttribute id="A_CEASE_RES_DATE"/>
+      <viewAttribute id="A_REOCCUP_DATE"/>
+      <viewAttribute id="A_QUEST_1C_TEXTBOX"/>
+      <viewAttribute id="A_QUEST_2A"/>
+      <viewAttribute id="A_QUEST_2A_TEXTBOX"/>
+      <viewAttribute id="A_QUEST_2B"/>
+      <viewAttribute id="A_QUEST_2B_TEXTBOX"/>
+      <viewAttribute id="A_QUEST_3A"/>
+      <viewAttribute id="A_QUEST_3A_TEXTBOX"/>
+      <viewAttribute id="A_3B_PROP_PERCENTAGE"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_TIMESTAMP_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;TIMESTAMP&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMESTAMP_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_TIMESTAMP_LC&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_COMM_OCC_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_COMM_OCC_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_CEASE_RES_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_CEASE_RES_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_REOCCUP_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_REOCCUP_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1006LUL00000000.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1006LUL00000000">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="RECORD_ID"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="PARENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="PARENT_ID"/>
+    </attribute>
+    <attribute id="OBJECT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="OBJECT_ID"/>
+    </attribute>
+    <attribute id="BUNDLE_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BUNDLE_ID"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="BUNDLE_ID"/>
+    </attribute>
+    <attribute id="VERSION" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="VERSION"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="Z_TIMESTAMP_LC" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMESTAMP_LC"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="CC_TIMESTAMP_LC"/>
+    </attribute>
+    <attribute id="Z_TIMESTAMP_TS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMESTAMP_TS"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="CC_TIMESTAMP_TS"/>
+    </attribute>
+    <attribute id="INITIAL_FLAGS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="INITIAL_FLAGS"/>
+    </attribute>
+    <attribute id="A_QUEST_1A" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1A"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1A"/>
+    </attribute>
+    <attribute id="A_COMM_OCC_DATE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_COMM_OCC_DATE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_COMM_OCC_DATE"/>
+    </attribute>
+    <attribute id="Z_A_COMM_OCC_DATE_TS" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_COMM_OCC_DATE_TS"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="CC_A_COMM_OCC_DATE_TS"/>
+    </attribute>
+    <attribute id="A_QUEST_1B_TEXTBOX" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1B_TEXTBOX"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1B_TEXTBOX"/>
+    </attribute>
+    <attribute id="A_QUEST_1C" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1C"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1C"/>
+    </attribute>
+    <attribute id="A_QUEST_1C_ONE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1C_ONE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1C_ONE"/>
+    </attribute>
+    <attribute id="A_QUEST_1C_TWO" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1C_TWO"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1C_TWO"/>
+    </attribute>
+    <attribute id="A_QUEST_1C_THREE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1C_THREE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1C_THREE"/>
+    </attribute>
+    <attribute id="A_CEASE_RES_DATE" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CEASE_RES_DATE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_CEASE_RES_DATE"/>
+    </attribute>
+    <attribute id="Z_A_CEASE_RES_DATE_TS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_CEASE_RES_DATE_TS"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="CC_A_CEASE_RES_DATE_TS"/>
+    </attribute>
+    <attribute id="A_REOCCUP_DATE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REOCCUP_DATE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_REOCCUP_DATE"/>
+    </attribute>
+    <attribute id="Z_A_REOCCUP_DATE_TS" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_REOCCUP_DATE_TS"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="CC_A_REOCCUP_DATE_TS"/>
+    </attribute>
+    <attribute id="A_QUEST_1C_TEXTBOX" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_1C_TEXTBOX"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_1C_TEXTBOX"/>
+    </attribute>
+    <attribute id="A_QUEST_2A" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_2A"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_2A"/>
+    </attribute>
+    <attribute id="A_QUEST_2A_TEXTBOX" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_2A_TEXTBOX"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_2A_TEXTBOX"/>
+    </attribute>
+    <attribute id="A_QUEST_2B" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_2B"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_2B"/>
+    </attribute>
+    <attribute id="A_QUEST_2B_TEXTBOX" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_2B_TEXTBOX"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_2B_TEXTBOX"/>
+    </attribute>
+    <attribute id="A_QUEST_3A" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_3A"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_3A"/>
+    </attribute>
+    <attribute id="A_QUEST_3A_TEXTBOX" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_QUEST_3A_TEXTBOX"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_QUEST_3A_TEXTBOX"/>
+    </attribute>
+    <attribute id="A_3B_PROP_PERCENTAGE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_3B_PROP_PERCENTAGE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="A_3B_PROP_PERCENTAGE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Z1006LUL00000000" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="105" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1006LUL00000000" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="186"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
