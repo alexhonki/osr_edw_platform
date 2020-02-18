@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1003DOC00000008" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1003DOC00000008" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_Z1003DOC00000008"/>
 <localVariables/>
 <variableMappings/>
@@ -8,232 +8,310 @@
     <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000008.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000008.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1003DOC00000008">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="A_TRUSTEE_NAME_EE"/>
+      <viewAttribute id="C_TEE_NO_TRUST"/>
+      <viewAttribute id="A_EE_TEE_TYPE"/>
+      <viewAttribute id="A_EE_TEE_AUS_CITIZEN"/>
+      <viewAttribute id="A_EE_TEE_CTRY_TAX_RES"/>
+      <viewAttribute id="A_EE_TEE_PASSPORT_NO"/>
+      <viewAttribute id="A_EE_TEE_PASSPORT_CTRY"/>
+      <viewAttribute id="A_EE_TEE_VISA_NO"/>
+      <viewAttribute id="A_EE_TEE_VISA_EXPIRY_DATE"/>
+      <viewAttribute id="A_EE_TEE_SUBCLASS"/>
+      <viewAttribute id="A_EE_TEE_OSEAS_ENTITY_ID"/>
+      <viewAttribute id="A_EE_TEE_FIRB"/>
+      <viewAttribute id="A_EE_TEE_OTH_ENTITY_ID"/>
+      <viewAttribute id="A_EE_TEE_DRIVER_LIC"/>
+      <viewAttribute id="A_EE_TEE_DRIVER_LIC_STATE"/>
+      <viewAttribute id="A_EE_TEE_AUS_BIRTH_CERT"/>
+      <viewAttribute id="A_TEE_BIRTH_CERT_STATE"/>
+      <viewAttribute id="A_EE_TEE_CITIZEN_CERT_NO"/>
+      <viewAttribute id="A_EE_TEE_CTRY_INCORP"/>
+      <viewAttribute id="A_EE_TEE_OSEAS_ENT_REG_NO"/>
+      <viewAttribute id="A_EE_TEE_ARBN"/>
+      <viewAttribute id="A_EE_TEE_ABN"/>
+      <viewAttribute id="A_EE_TEE_ACN"/>
+      <viewAttribute id="A_EE_TEE_STREET_NO"/>
+      <viewAttribute id="A_EE_TEE_STREET"/>
+      <viewAttribute id="A_EE_TEE_SUBURB"/>
+      <viewAttribute id="A_EE_TEE_PCODE"/>
+      <viewAttribute id="A_EE_TEE_STATE"/>
+      <viewAttribute id="A_EE_TEE_COUNTRY"/>
+      <viewAttribute id="A_EE_TEE_FIRST_NAME"/>
+      <viewAttribute id="A_EE_TEE_MID_NAME"/>
+      <viewAttribute id="A_EE_TEE_LAST_NAME"/>
+      <viewAttribute id="A_EE_TEE_DOB"/>
+      <viewAttribute id="A_EE_TEE_ORG_NAME"/>
+      <viewAttribute id="A_EE_TEE_ORG_NAME2"/>
+      <viewAttribute id="A_EE_TEE_Q_NON_AUS_ENT"/>
+      <viewAttribute id="A_EE_TEE_PHONE_NO"/>
+      <viewAttribute id="A_EE_TEE_MOBILE_NO"/>
+      <viewAttribute id="A_EE_TEE_EMAIL"/>
+      <viewAttribute id="A_EE_TEE_CONTACT"/>
+      <viewAttribute id="A_EE_TEE_NATIONALITY"/>
+      <viewAttribute id="A_EE_TEE_CARE_OF"/>
+      <viewAttribute id="A_EE_TEE_UNIT_OF"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_A_EE_TEE_VISA_EXPIRY_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_EE_TEE_VISA_EXPIRY_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_EE_TEE_DOB_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_EE_TEE_DOB&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000008.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1003DOC00000008">
   <attributes>
     <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="CLIENT"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="CLIENT"/>
     </attribute>
     <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECORD_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="RECORD_ID"/>
     </attribute>
     <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
     <attribute id="PARENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="PARENT_ID"/>
     </attribute>
     <attribute id="OBJECT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBJECT_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="OBJECT_ID"/>
     </attribute>
     <attribute id="INITIAL_FLAGS" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INITIAL_FLAGS"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="INITIAL_FLAGS"/>
     </attribute>
     <attribute id="A_TRUSTEE_NAME_EE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TRUSTEE_NAME_EE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_TRUSTEE_NAME_EE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_TRUSTEE_NAME_EE"/>
     </attribute>
     <attribute id="C_TEE_NO_TRUST" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_TEE_NO_TRUST"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="C_TEE_NO_TRUST"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="C_TEE_NO_TRUST"/>
     </attribute>
     <attribute id="A_EE_TEE_TYPE" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_TYPE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_TYPE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_TYPE"/>
     </attribute>
     <attribute id="A_EE_TEE_AUS_CITIZEN" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_AUS_CITIZEN"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_AUS_CITIZEN"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_AUS_CITIZEN"/>
     </attribute>
     <attribute id="A_EE_TEE_CTRY_TAX_RES" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_CTRY_TAX_RES"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_CTRY_TAX_RES"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_CTRY_TAX_RES"/>
     </attribute>
     <attribute id="A_EE_TEE_PASSPORT_NO" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_PASSPORT_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_PASSPORT_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_PASSPORT_NO"/>
     </attribute>
     <attribute id="A_EE_TEE_PASSPORT_CTRY" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_PASSPORT_CTRY"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_PASSPORT_CTRY"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_PASSPORT_CTRY"/>
     </attribute>
     <attribute id="A_EE_TEE_VISA_NO" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_VISA_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_VISA_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_VISA_NO"/>
     </attribute>
     <attribute id="A_EE_TEE_VISA_EXPIRY_DATE" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_VISA_EXPIRY_DATE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_VISA_EXPIRY_DATE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_VISA_EXPIRY_DATE"/>
     </attribute>
-    <attribute id="A_EE_TEE_SUBCLASS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_A_EE_TEE_VISA_EXPIRY_DATE_TS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_EE_TEE_VISA_EXPIRY_DATE_TS"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="CC_A_EE_TEE_VISA_EXPIRY_DATE_TS"/>
+    </attribute>
+    <attribute id="A_EE_TEE_SUBCLASS" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_SUBCLASS"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_SUBCLASS"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_SUBCLASS"/>
     </attribute>
-    <attribute id="A_EE_TEE_OSEAS_ENTITY_ID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_OSEAS_ENTITY_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_OSEAS_ENTITY_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_OSEAS_ENTITY_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_OSEAS_ENTITY_ID"/>
     </attribute>
-    <attribute id="A_EE_TEE_FIRB" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_FIRB" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_FIRB"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_FIRB"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_FIRB"/>
     </attribute>
-    <attribute id="A_EE_TEE_OTH_ENTITY_ID" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_OTH_ENTITY_ID" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_OTH_ENTITY_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_OTH_ENTITY_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_OTH_ENTITY_ID"/>
     </attribute>
-    <attribute id="A_EE_TEE_DRIVER_LIC" order="20" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_DRIVER_LIC" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_DRIVER_LIC"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_DRIVER_LIC"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_DRIVER_LIC"/>
     </attribute>
-    <attribute id="A_EE_TEE_DRIVER_LIC_STATE" order="21" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_DRIVER_LIC_STATE" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_DRIVER_LIC_STATE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_DRIVER_LIC_STATE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_DRIVER_LIC_STATE"/>
     </attribute>
-    <attribute id="A_EE_TEE_AUS_BIRTH_CERT" order="22" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_AUS_BIRTH_CERT" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_AUS_BIRTH_CERT"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_AUS_BIRTH_CERT"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_AUS_BIRTH_CERT"/>
     </attribute>
-    <attribute id="A_TEE_BIRTH_CERT_STATE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_BIRTH_CERT_STATE" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_BIRTH_CERT_STATE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_TEE_BIRTH_CERT_STATE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_TEE_BIRTH_CERT_STATE"/>
     </attribute>
-    <attribute id="A_EE_TEE_CITIZEN_CERT_NO" order="24" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_CITIZEN_CERT_NO" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_CITIZEN_CERT_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_CITIZEN_CERT_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_CITIZEN_CERT_NO"/>
     </attribute>
-    <attribute id="A_EE_TEE_CTRY_INCORP" order="25" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_CTRY_INCORP" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_CTRY_INCORP"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_CTRY_INCORP"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_CTRY_INCORP"/>
     </attribute>
-    <attribute id="A_EE_TEE_OSEAS_ENT_REG_NO" order="26" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_OSEAS_ENT_REG_NO" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_OSEAS_ENT_REG_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_OSEAS_ENT_REG_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_OSEAS_ENT_REG_NO"/>
     </attribute>
-    <attribute id="A_EE_TEE_ARBN" order="27" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_ARBN" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_ARBN"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_ARBN"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_ARBN"/>
     </attribute>
-    <attribute id="A_EE_TEE_ABN" order="28" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_ABN" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_ABN"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_ABN"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_ABN"/>
     </attribute>
-    <attribute id="A_EE_TEE_ACN" order="29" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_ACN" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_ACN"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_ACN"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_ACN"/>
     </attribute>
-    <attribute id="A_EE_TEE_STREET_NO" order="30" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_STREET_NO" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_STREET_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_STREET_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_STREET_NO"/>
     </attribute>
-    <attribute id="A_EE_TEE_STREET" order="31" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_STREET" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_STREET"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_STREET"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_STREET"/>
     </attribute>
-    <attribute id="A_EE_TEE_SUBURB" order="32" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_SUBURB" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_SUBURB"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_SUBURB"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_SUBURB"/>
     </attribute>
-    <attribute id="A_EE_TEE_PCODE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_PCODE" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_PCODE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_PCODE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_PCODE"/>
     </attribute>
-    <attribute id="A_EE_TEE_STATE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_STATE" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_STATE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_STATE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_STATE"/>
     </attribute>
-    <attribute id="A_EE_TEE_COUNTRY" order="35" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_COUNTRY" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_COUNTRY"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_COUNTRY"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_COUNTRY"/>
     </attribute>
-    <attribute id="A_EE_TEE_FIRST_NAME" order="36" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_FIRST_NAME" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_FIRST_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_FIRST_NAME"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_FIRST_NAME"/>
     </attribute>
-    <attribute id="A_EE_TEE_MID_NAME" order="37" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_MID_NAME" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_MID_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_MID_NAME"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_MID_NAME"/>
     </attribute>
-    <attribute id="A_EE_TEE_LAST_NAME" order="38" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_LAST_NAME" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_LAST_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_LAST_NAME"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_LAST_NAME"/>
     </attribute>
-    <attribute id="A_EE_TEE_DOB" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_DOB" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_DOB"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_DOB"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_DOB"/>
     </attribute>
-    <attribute id="A_EE_TEE_ORG_NAME" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_A_EE_TEE_DOB_TS" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_EE_TEE_DOB_TS"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="CC_A_EE_TEE_DOB_TS"/>
+    </attribute>
+    <attribute id="A_EE_TEE_ORG_NAME" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_ORG_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_ORG_NAME"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_ORG_NAME"/>
     </attribute>
-    <attribute id="A_EE_TEE_ORG_NAME2" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_ORG_NAME2" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_ORG_NAME2"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_ORG_NAME2"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_ORG_NAME2"/>
     </attribute>
-    <attribute id="A_EE_TEE_Q_NON_AUS_ENT" order="42" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_Q_NON_AUS_ENT" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_Q_NON_AUS_ENT"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_Q_NON_AUS_ENT"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_Q_NON_AUS_ENT"/>
     </attribute>
-    <attribute id="A_EE_TEE_PHONE_NO" order="43" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_PHONE_NO" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_PHONE_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_PHONE_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_PHONE_NO"/>
     </attribute>
-    <attribute id="A_EE_TEE_MOBILE_NO" order="44" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_MOBILE_NO" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_MOBILE_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_MOBILE_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_MOBILE_NO"/>
     </attribute>
-    <attribute id="A_EE_TEE_EMAIL" order="45" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_EMAIL" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_EMAIL"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_EMAIL"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_EMAIL"/>
     </attribute>
-    <attribute id="A_EE_TEE_CONTACT" order="46" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_CONTACT" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_CONTACT"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_CONTACT"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_CONTACT"/>
     </attribute>
-    <attribute id="A_EE_TEE_NATIONALITY" order="47" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_NATIONALITY" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_NATIONALITY"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_NATIONALITY"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_NATIONALITY"/>
     </attribute>
-    <attribute id="A_EE_TEE_CARE_OF" order="48" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_CARE_OF" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_CARE_OF"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_CARE_OF"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_CARE_OF"/>
     </attribute>
-    <attribute id="A_EE_TEE_UNIT_OF" order="49" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EE_TEE_UNIT_OF" order="51" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EE_TEE_UNIT_OF"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="A_EE_TEE_UNIT_OF"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="A_EE_TEE_UNIT_OF"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="50" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TYPE" order="52" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="51" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="53" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_CHANGE_TIME"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="52" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_SOURCE_SYS" order="54" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="53" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_CURR_FLAG" order="54" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CURR_FLAG" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_CURR_FLAG"/>
     </attribute>
-    <attribute id="Z_VALID_FROM" order="55" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_FROM" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_VALID_FROM"/>
     </attribute>
-    <attribute id="Z_VALID_TO" order="56" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_TO" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000008.active_data" columnName="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Z1003DOC00000008" columnName="Z_VALID_TO"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -244,7 +322,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="126.15319456619169" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1003DOC00000008" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="236.9999988079071"/>
+      <rectangleSize height="30" width="222"/>
     </shape>
   </shapes>
 </layout>
