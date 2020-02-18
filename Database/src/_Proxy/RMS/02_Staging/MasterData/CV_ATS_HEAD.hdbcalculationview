@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_ATS_HEAD" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATS_HEAD"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.ATSHEAD.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.ATSHEAD.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ATS_HEAD">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="CYCLE_NO"/>
+      <viewAttribute id="DEALING_NO"/>
+      <viewAttribute id="DEALING_TYPE"/>
+      <viewAttribute id="ATS_STATUS"/>
+      <viewAttribute id="DNP"/>
+      <viewAttribute id="REJECT"/>
+      <viewAttribute id="DATE_PROCESS"/>
+      <viewAttribute id="COMPLETE"/>
+      <viewAttribute id="CREATOR"/>
+      <viewAttribute id="CHANGE"/>
+      <viewAttribute id="CHANGE_DAT"/>
+      <viewAttribute id="POSESSION"/>
+      <viewAttribute id="AGREEMENT"/>
+      <viewAttribute id="ATS_DEALING_REF"/>
+      <viewAttribute id="SOURCE_TYPE"/>
+      <viewAttribute id="CALL_TYPE"/>
+      <viewAttribute id="TAXIMPACTTRANSFEREE"/>
+      <viewAttribute id="TAXIMPACTTRANSFEROR"/>
+      <viewAttribute id="NETTAXIMPACT"/>
+      <viewAttribute id="VERSION"/>
+      <viewAttribute id="ORIG_CYCLE_NO"/>
+      <viewAttribute id="ORIG_DEALING_NO"/>
+      <viewAttribute id="ORIG_DATE_PROCESS"/>
+      <viewAttribute id="CONSIDERATION"/>
+      <viewAttribute id="RECOMPLETEDATE"/>
+      <viewAttribute id="REPROCESSDAYS"/>
+      <viewAttribute id="REPROCESSBY"/>
+      <viewAttribute id="COMPLETEDATE"/>
+      <viewAttribute id="COMPLETEBY"/>
+      <viewAttribute id="CHARTDATE"/>
+      <viewAttribute id="MARKCOMPLETED"/>
+      <viewAttribute id="LATESTVERSION"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_DATE_PROCESS_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;DATE_PROCESS&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_CHANGE_DAT_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CHANGE_DAT&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_POSESSION_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;POSESSION&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_AGREEMENT_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;AGREEMENT&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_ORIG_DATE_PROCESS_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;ORIG_DATE_PROCESS&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_RECOMPLETEDATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;RECOMPLETEDATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_COMPLETEDATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;COMPLETEDATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_CHARTDATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CHARTDATE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.ATSHEAD.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="ATS_HEAD">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="MANDT"/>
+    </attribute>
+    <attribute id="CYCLE_NO" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CYCLE_NO"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CYCLE_NO"/>
+    </attribute>
+    <attribute id="DEALING_NO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALING_NO"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="DEALING_NO"/>
+    </attribute>
+    <attribute id="DEALING_TYPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALING_TYPE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="DEALING_TYPE"/>
+    </attribute>
+    <attribute id="ATS_STATUS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATS_STATUS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="ATS_STATUS"/>
+    </attribute>
+    <attribute id="DNP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DNP"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="DNP"/>
+    </attribute>
+    <attribute id="REJECT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REJECT"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="REJECT"/>
+    </attribute>
+    <attribute id="DATE_PROCESS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_PROCESS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="DATE_PROCESS"/>
+    </attribute>
+    <attribute id="Z_DATE_PROCESS_TS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_DATE_PROCESS_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_DATE_PROCESS_TS"/>
+    </attribute>
+    <attribute id="COMPLETE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLETE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="COMPLETE"/>
+    </attribute>
+    <attribute id="CREATOR" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATOR"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CREATOR"/>
+    </attribute>
+    <attribute id="CHANGE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CHANGE"/>
+    </attribute>
+    <attribute id="CHANGE_DAT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGE_DAT"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CHANGE_DAT"/>
+    </attribute>
+    <attribute id="Z_CHANGE_DAT_TS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_DAT_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_CHANGE_DAT_TS"/>
+    </attribute>
+    <attribute id="POSESSION" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSESSION"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="POSESSION"/>
+    </attribute>
+    <attribute id="Z_POSESSION_TS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_POSESSION_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_POSESSION_TS"/>
+    </attribute>
+    <attribute id="AGREEMENT" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AGREEMENT"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="AGREEMENT"/>
+    </attribute>
+    <attribute id="Z_AGREEMENT_TS" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_AGREEMENT_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_AGREEMENT_TS"/>
+    </attribute>
+    <attribute id="ATS_DEALING_REF" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ATS_DEALING_REF"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="ATS_DEALING_REF"/>
+    </attribute>
+    <attribute id="SOURCE_TYPE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_TYPE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="SOURCE_TYPE"/>
+    </attribute>
+    <attribute id="CALL_TYPE" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CALL_TYPE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CALL_TYPE"/>
+    </attribute>
+    <attribute id="TAXIMPACTTRANSFEREE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXIMPACTTRANSFEREE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="TAXIMPACTTRANSFEREE"/>
+    </attribute>
+    <attribute id="TAXIMPACTTRANSFEROR" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXIMPACTTRANSFEROR"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="TAXIMPACTTRANSFEROR"/>
+    </attribute>
+    <attribute id="NETTAXIMPACT" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NETTAXIMPACT"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="NETTAXIMPACT"/>
+    </attribute>
+    <attribute id="VERSION" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VERSION"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="VERSION"/>
+    </attribute>
+    <attribute id="ORIG_CYCLE_NO" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIG_CYCLE_NO"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="ORIG_CYCLE_NO"/>
+    </attribute>
+    <attribute id="ORIG_DEALING_NO" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIG_DEALING_NO"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="ORIG_DEALING_NO"/>
+    </attribute>
+    <attribute id="ORIG_DATE_PROCESS" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIG_DATE_PROCESS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="ORIG_DATE_PROCESS"/>
+    </attribute>
+    <attribute id="Z_ORIG_DATE_PROCESS_TS" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_ORIG_DATE_PROCESS_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_ORIG_DATE_PROCESS_TS"/>
+    </attribute>
+    <attribute id="CONSIDERATION" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONSIDERATION"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CONSIDERATION"/>
+    </attribute>
+    <attribute id="RECOMPLETEDATE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECOMPLETEDATE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="RECOMPLETEDATE"/>
+    </attribute>
+    <attribute id="Z_RECOMPLETEDATE_TS" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RECOMPLETEDATE_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_RECOMPLETEDATE_TS"/>
+    </attribute>
+    <attribute id="REPROCESSDAYS" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REPROCESSDAYS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="REPROCESSDAYS"/>
+    </attribute>
+    <attribute id="REPROCESSBY" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REPROCESSBY"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="REPROCESSBY"/>
+    </attribute>
+    <attribute id="COMPLETEDATE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLETEDATE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="COMPLETEDATE"/>
+    </attribute>
+    <attribute id="Z_COMPLETEDATE_TS" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_COMPLETEDATE_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_COMPLETEDATE_TS"/>
+    </attribute>
+    <attribute id="COMPLETEBY" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLETEBY"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="COMPLETEBY"/>
+    </attribute>
+    <attribute id="CHARTDATE" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHARTDATE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CHARTDATE"/>
+    </attribute>
+    <attribute id="Z_CHARTDATE_TS" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHARTDATE_TS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="CC_CHARTDATE_TS"/>
+    </attribute>
+    <attribute id="MARKCOMPLETED" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MARKCOMPLETED"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="MARKCOMPLETED"/>
+    </attribute>
+    <attribute id="LATESTVERSION" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LATESTVERSION"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="LATESTVERSION"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="ATS_HEAD" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="ATS_HEAD" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
