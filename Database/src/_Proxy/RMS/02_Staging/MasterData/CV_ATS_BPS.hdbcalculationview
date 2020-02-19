@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_ATS_BPS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATS_BPS"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.ATSBPS.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.ATSBPS.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ATS_BPS">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="CYCLENO"/>
+      <viewAttribute id="DEALINGNO"/>
+      <viewAttribute id="DATASOURCE"/>
+      <viewAttribute id="PARTYID"/>
+      <viewAttribute id="LINKEDID"/>
+      <viewAttribute id="BPMATCH"/>
+      <viewAttribute id="TENANCYTYPE"/>
+      <viewAttribute id="NUMERATOR"/>
+      <viewAttribute id="DENOMINATOR"/>
+      <viewAttribute id="PARTNER"/>
+      <viewAttribute id="TITLE"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="NAME2"/>
+      <viewAttribute id="BIRTHDT"/>
+      <viewAttribute id="ACN"/>
+      <viewAttribute id="ABN"/>
+      <viewAttribute id="HOUSENUM2"/>
+      <viewAttribute id="HOUSENUM1"/>
+      <viewAttribute id="NAMECO"/>
+      <viewAttribute id="STREET"/>
+      <viewAttribute id="STRSUPPL1"/>
+      <viewAttribute id="CITY1"/>
+      <viewAttribute id="REGION"/>
+      <viewAttribute id="POSTCODE1"/>
+      <viewAttribute id="POBOX"/>
+      <viewAttribute id="POBOXLOC"/>
+      <viewAttribute id="POSTCODE2"/>
+      <viewAttribute id="COUNTRY"/>
+      <viewAttribute id="OWNERTYPE"/>
+      <viewAttribute id="TAXRATECODE"/>
+      <viewAttribute id="REASONCODE"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_LAND.DSO.ATSBPS.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="ATS_BPS">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="MANDT"/>
+    </attribute>
+    <attribute id="CYCLENO" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CYCLENO"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="CYCLENO"/>
+    </attribute>
+    <attribute id="DEALINGNO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALINGNO"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="DEALINGNO"/>
+    </attribute>
+    <attribute id="DATASOURCE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATASOURCE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="DATASOURCE"/>
+    </attribute>
+    <attribute id="PARTYID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTYID"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="PARTYID"/>
+    </attribute>
+    <attribute id="LINKEDID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LINKEDID"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="LINKEDID"/>
+    </attribute>
+    <attribute id="BPMATCH" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BPMATCH"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="BPMATCH"/>
+    </attribute>
+    <attribute id="TENANCYTYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TENANCYTYPE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="TENANCYTYPE"/>
+    </attribute>
+    <attribute id="NUMERATOR" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NUMERATOR"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="NUMERATOR"/>
+    </attribute>
+    <attribute id="DENOMINATOR" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DENOMINATOR"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="DENOMINATOR"/>
+    </attribute>
+    <attribute id="PARTNER" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTNER"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="PARTNER"/>
+    </attribute>
+    <attribute id="TITLE" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TITLE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="TITLE"/>
+    </attribute>
+    <attribute id="NAME1" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME1"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="NAME1"/>
+    </attribute>
+    <attribute id="NAME2" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME2"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="NAME2"/>
+    </attribute>
+    <attribute id="BIRTHDT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BIRTHDT"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="BIRTHDT"/>
+    </attribute>
+    <attribute id="ACN" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACN"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="ACN"/>
+    </attribute>
+    <attribute id="ABN" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABN"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="ABN"/>
+    </attribute>
+    <attribute id="HOUSENUM2" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HOUSENUM2"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="HOUSENUM2"/>
+    </attribute>
+    <attribute id="HOUSENUM1" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HOUSENUM1"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="HOUSENUM1"/>
+    </attribute>
+    <attribute id="NAMECO" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAMECO"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="NAMECO"/>
+    </attribute>
+    <attribute id="STREET" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STREET"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="STREET"/>
+    </attribute>
+    <attribute id="STRSUPPL1" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STRSUPPL1"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="STRSUPPL1"/>
+    </attribute>
+    <attribute id="CITY1" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CITY1"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="CITY1"/>
+    </attribute>
+    <attribute id="REGION" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REGION"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="REGION"/>
+    </attribute>
+    <attribute id="POSTCODE1" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTCODE1"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="POSTCODE1"/>
+    </attribute>
+    <attribute id="POBOX" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POBOX"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="POBOX"/>
+    </attribute>
+    <attribute id="POBOXLOC" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POBOXLOC"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="POBOXLOC"/>
+    </attribute>
+    <attribute id="POSTCODE2" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POSTCODE2"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="POSTCODE2"/>
+    </attribute>
+    <attribute id="COUNTRY" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COUNTRY"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="COUNTRY"/>
+    </attribute>
+    <attribute id="OWNERTYPE" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OWNERTYPE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="OWNERTYPE"/>
+    </attribute>
+    <attribute id="TAXRATECODE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TAXRATECODE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="TAXRATECODE"/>
+    </attribute>
+    <attribute id="REASONCODE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REASONCODE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="REASONCODE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="ATS_BPS" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="ATS_BPS" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

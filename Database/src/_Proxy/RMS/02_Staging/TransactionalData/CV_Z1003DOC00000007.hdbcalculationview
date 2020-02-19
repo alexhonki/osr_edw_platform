@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1003DOC00000007" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1003DOC00000007" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_Z1003DOC00000007"/>
 <localVariables/>
 <variableMappings/>
@@ -8,172 +8,228 @@
     <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000007.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000007.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1003DOC00000007">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="A_TRUSTEE_NAME_OR"/>
+      <viewAttribute id="C_TEE_NO_TRUST_OR"/>
+      <viewAttribute id="A_TEE_TYPE_OR"/>
+      <viewAttribute id="A_TEE_FIRST_NAME_OR"/>
+      <viewAttribute id="A_TEE_MID_NAME_OR"/>
+      <viewAttribute id="A_TEE_LAST_NAME_OR"/>
+      <viewAttribute id="A_TEE_DOB_OR"/>
+      <viewAttribute id="A_TEE_ORG_NAME_OR"/>
+      <viewAttribute id="A_TEE_ORG_NAME2_OR"/>
+      <viewAttribute id="A_TEE_ABN_OR"/>
+      <viewAttribute id="A_TEE_ACN_N_OR"/>
+      <viewAttribute id="A_TEE_ARBN_N_OR"/>
+      <viewAttribute id="A_TEE_CARE_OF_OR"/>
+      <viewAttribute id="A_TEE_UNIT_OF_OR"/>
+      <viewAttribute id="A_TEE_STREET_NO_OR"/>
+      <viewAttribute id="A_TEE_STREET_OR"/>
+      <viewAttribute id="A_TEE_SUBURB_OR"/>
+      <viewAttribute id="A_TEE_COUNTRY_OR"/>
+      <viewAttribute id="A_TEE_POST_CODE_OR"/>
+      <viewAttribute id="A_TEE_STATE_OR"/>
+      <viewAttribute id="A_TEE_TELEPHONE_OR"/>
+      <viewAttribute id="A_TEE_MOBILE_OR"/>
+      <viewAttribute id="A_TEE_EMAIL_ADD_OR"/>
+      <viewAttribute id="A_TEE_CONTACT_OR"/>
+      <viewAttribute id="A_TEE_Q_NON_AUS_ENT_OR"/>
+      <viewAttribute id="A_TEE_ENFORCE_RPTR_OR"/>
+      <viewAttribute id="C_3DOC_OR_TEE_XFOR_ID"/>
+      <viewAttribute id="C_OR_TEE_RPTR_PROG_IND"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_A_TEE_DOB_OR_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_TEE_DOB_OR&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1003DOC00000007.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1003DOC00000007">
   <attributes>
     <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="CLIENT"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="CLIENT"/>
     </attribute>
     <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECORD_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="RECORD_ID"/>
     </attribute>
     <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
     <attribute id="PARENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="PARENT_ID"/>
     </attribute>
     <attribute id="OBJECT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBJECT_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="OBJECT_ID"/>
     </attribute>
     <attribute id="INITIAL_FLAGS" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INITIAL_FLAGS"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="INITIAL_FLAGS"/>
     </attribute>
     <attribute id="A_TRUSTEE_NAME_OR" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TRUSTEE_NAME_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TRUSTEE_NAME_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TRUSTEE_NAME_OR"/>
     </attribute>
     <attribute id="C_TEE_NO_TRUST_OR" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_TEE_NO_TRUST_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="C_TEE_NO_TRUST_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="C_TEE_NO_TRUST_OR"/>
     </attribute>
     <attribute id="A_TEE_TYPE_OR" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_TYPE_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_TYPE_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_TYPE_OR"/>
     </attribute>
     <attribute id="A_TEE_FIRST_NAME_OR" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_FIRST_NAME_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_FIRST_NAME_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_FIRST_NAME_OR"/>
     </attribute>
     <attribute id="A_TEE_MID_NAME_OR" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_MID_NAME_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_MID_NAME_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_MID_NAME_OR"/>
     </attribute>
     <attribute id="A_TEE_LAST_NAME_OR" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_LAST_NAME_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_LAST_NAME_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_LAST_NAME_OR"/>
     </attribute>
     <attribute id="A_TEE_DOB_OR" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_DOB_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_DOB_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_DOB_OR"/>
     </attribute>
-    <attribute id="A_TEE_ORG_NAME_OR" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_A_TEE_DOB_OR_TS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_TEE_DOB_OR_TS"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="CC_A_TEE_DOB_OR_TS"/>
+    </attribute>
+    <attribute id="A_TEE_ORG_NAME_OR" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_ORG_NAME_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_ORG_NAME_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_ORG_NAME_OR"/>
     </attribute>
-    <attribute id="A_TEE_ORG_NAME2_OR" order="15" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_ORG_NAME2_OR" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_ORG_NAME2_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_ORG_NAME2_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_ORG_NAME2_OR"/>
     </attribute>
-    <attribute id="A_TEE_ABN_OR" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_ABN_OR" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_ABN_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_ABN_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_ABN_OR"/>
     </attribute>
-    <attribute id="A_TEE_ACN_N_OR" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_ACN_N_OR" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_ACN_N_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_ACN_N_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_ACN_N_OR"/>
     </attribute>
-    <attribute id="A_TEE_ARBN_N_OR" order="18" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_ARBN_N_OR" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_ARBN_N_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_ARBN_N_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_ARBN_N_OR"/>
     </attribute>
-    <attribute id="A_TEE_CARE_OF_OR" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_CARE_OF_OR" order="20" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_CARE_OF_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_CARE_OF_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_CARE_OF_OR"/>
     </attribute>
-    <attribute id="A_TEE_UNIT_OF_OR" order="20" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_UNIT_OF_OR" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_UNIT_OF_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_UNIT_OF_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_UNIT_OF_OR"/>
     </attribute>
-    <attribute id="A_TEE_STREET_NO_OR" order="21" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_STREET_NO_OR" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_STREET_NO_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_STREET_NO_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_STREET_NO_OR"/>
     </attribute>
-    <attribute id="A_TEE_STREET_OR" order="22" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_STREET_OR" order="23" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_STREET_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_STREET_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_STREET_OR"/>
     </attribute>
-    <attribute id="A_TEE_SUBURB_OR" order="23" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_SUBURB_OR" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_SUBURB_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_SUBURB_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_SUBURB_OR"/>
     </attribute>
-    <attribute id="A_TEE_COUNTRY_OR" order="24" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_COUNTRY_OR" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_COUNTRY_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_COUNTRY_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_COUNTRY_OR"/>
     </attribute>
-    <attribute id="A_TEE_POST_CODE_OR" order="25" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_POST_CODE_OR" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_POST_CODE_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_POST_CODE_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_POST_CODE_OR"/>
     </attribute>
-    <attribute id="A_TEE_STATE_OR" order="26" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_STATE_OR" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_STATE_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_STATE_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_STATE_OR"/>
     </attribute>
-    <attribute id="A_TEE_TELEPHONE_OR" order="27" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_TELEPHONE_OR" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_TELEPHONE_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_TELEPHONE_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_TELEPHONE_OR"/>
     </attribute>
-    <attribute id="A_TEE_MOBILE_OR" order="28" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_MOBILE_OR" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_MOBILE_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_MOBILE_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_MOBILE_OR"/>
     </attribute>
-    <attribute id="A_TEE_EMAIL_ADD_OR" order="29" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_EMAIL_ADD_OR" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_EMAIL_ADD_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_EMAIL_ADD_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_EMAIL_ADD_OR"/>
     </attribute>
-    <attribute id="A_TEE_CONTACT_OR" order="30" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_CONTACT_OR" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_CONTACT_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_CONTACT_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_CONTACT_OR"/>
     </attribute>
-    <attribute id="A_TEE_Q_NON_AUS_ENT_OR" order="31" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_Q_NON_AUS_ENT_OR" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_Q_NON_AUS_ENT_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_Q_NON_AUS_ENT_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_Q_NON_AUS_ENT_OR"/>
     </attribute>
-    <attribute id="A_TEE_ENFORCE_RPTR_OR" order="32" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TEE_ENFORCE_RPTR_OR" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TEE_ENFORCE_RPTR_OR"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="A_TEE_ENFORCE_RPTR_OR"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="A_TEE_ENFORCE_RPTR_OR"/>
     </attribute>
-    <attribute id="C_3DOC_OR_TEE_XFOR_ID" order="33" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_3DOC_OR_TEE_XFOR_ID" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_3DOC_OR_TEE_XFOR_ID"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="C_3DOC_OR_TEE_XFOR_ID"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="C_3DOC_OR_TEE_XFOR_ID"/>
     </attribute>
-    <attribute id="C_OR_TEE_RPTR_PROG_IND" order="34" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_OR_TEE_RPTR_PROG_IND" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_OR_TEE_RPTR_PROG_IND"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="C_OR_TEE_RPTR_PROG_IND"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="C_OR_TEE_RPTR_PROG_IND"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TYPE" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="36" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_CHANGE_TIME"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="37" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_SOURCE_SYS" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="38" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_CURR_FLAG" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CURR_FLAG" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CURR_FLAG"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_CURR_FLAG"/>
     </attribute>
-    <attribute id="Z_VALID_FROM" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_FROM" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_FROM"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_VALID_FROM"/>
     </attribute>
-    <attribute id="Z_VALID_TO" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_TO" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_TO"/>
-      <keyMapping columnObjectName="CDS_TRM3.DSO.Z1003DOC00000007.active_data" columnName="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Z1003DOC00000007" columnName="Z_VALID_TO"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -184,7 +240,14 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="112.49999999999997" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1003DOC00000007" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="201"/>
     </shape>
   </shapes>
 </layout>

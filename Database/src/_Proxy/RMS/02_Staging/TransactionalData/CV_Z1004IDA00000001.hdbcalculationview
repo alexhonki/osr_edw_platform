@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1004IDA00000001" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_Z1004IDA00000001"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1004IDA00000001.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1004IDA00000001.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1004IDA00000001">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="C_4IDA_XFOR_ID"/>
+      <viewAttribute id="C_4IDA_TFOR_NAME"/>
+      <viewAttribute id="A_4IDA_DOB"/>
+      <viewAttribute id="A_4IDA_AUS_CITIZEN"/>
+      <viewAttribute id="A_4IDA_AUS_DRIVER_LIC"/>
+      <viewAttribute id="A_4IDA_AUS_DRIVER_LIC_STATE"/>
+      <viewAttribute id="A_4IDA_AUS_BIRTH_CERT"/>
+      <viewAttribute id="A_4IDA_AUS_BIRTH_CERT_STATE"/>
+      <viewAttribute id="A_4IDA_AUS_CITIZEN_CERT_NO"/>
+      <viewAttribute id="A_4IDA_PASSPORT_NO"/>
+      <viewAttribute id="A_4IDA_PASSPORT_CTRY"/>
+      <viewAttribute id="A_4IDA_CTRY_TAX_RES"/>
+      <viewAttribute id="A_4IDA_VISA_NO"/>
+      <viewAttribute id="A_4IDA_VISA_EXPIRY"/>
+      <viewAttribute id="A_4IDA_VISA_SUBCLASS"/>
+      <viewAttribute id="A_4IDA_OSEAS_ENTITY_ID"/>
+      <viewAttribute id="A_4IDA_FIRB"/>
+      <viewAttribute id="A_4IDA_OTH_ENTITY_ID"/>
+      <viewAttribute id="A_4IDA_CTRY_INCORP"/>
+      <viewAttribute id="A_4IDA_ABN"/>
+      <viewAttribute id="A_4IDA_ARBN"/>
+      <viewAttribute id="A_4IDA_ACN"/>
+      <viewAttribute id="A_4IDA_OSEAS_ENTITY_REG_NO"/>
+      <viewAttribute id="C_4IDA_LODGE_DATE"/>
+      <viewAttribute id="A_4IDA_DEC_NAME"/>
+      <viewAttribute id="A_4IDA_DEC_PHONE"/>
+      <viewAttribute id="A_4IDA_DEC_MOBILE"/>
+      <viewAttribute id="A_4IDA_DEC_EMAIL"/>
+      <viewAttribute id="A_4IDA_DEC_INDICATOR"/>
+      <viewAttribute id="C_4IDA_RPTR_PROGRESS_IND"/>
+      <viewAttribute id="A_4IDA_NATIONALITY"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_A_4IDA_DOB_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_4IDA_DOB&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_4IDA_VISA_EXPIRY_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_4IDA_VISA_EXPIRY&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_C_4IDA_LODGE_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;C_4IDA_LODGE_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM3.DSO.Z1004IDA00000001.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1004IDA00000001">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="RECORD_ID"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="PARENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="PARENT_ID"/>
+    </attribute>
+    <attribute id="OBJECT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="OBJECT_ID"/>
+    </attribute>
+    <attribute id="INITIAL_FLAGS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="INITIAL_FLAGS"/>
+    </attribute>
+    <attribute id="C_4IDA_XFOR_ID" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_4IDA_XFOR_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="C_4IDA_XFOR_ID"/>
+    </attribute>
+    <attribute id="C_4IDA_TFOR_NAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_4IDA_TFOR_NAME"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="C_4IDA_TFOR_NAME"/>
+    </attribute>
+    <attribute id="A_4IDA_DOB" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_DOB"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_DOB"/>
+    </attribute>
+    <attribute id="Z_A_4IDA_DOB_TS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_4IDA_DOB_TS"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="CC_A_4IDA_DOB_TS"/>
+    </attribute>
+    <attribute id="A_4IDA_AUS_CITIZEN" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_AUS_CITIZEN"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_AUS_CITIZEN"/>
+    </attribute>
+    <attribute id="A_4IDA_AUS_DRIVER_LIC" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_AUS_DRIVER_LIC"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_AUS_DRIVER_LIC"/>
+    </attribute>
+    <attribute id="A_4IDA_AUS_DRIVER_LIC_STATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_AUS_DRIVER_LIC_STATE"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_AUS_DRIVER_LIC_STATE"/>
+    </attribute>
+    <attribute id="A_4IDA_AUS_BIRTH_CERT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_AUS_BIRTH_CERT"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_AUS_BIRTH_CERT"/>
+    </attribute>
+    <attribute id="A_4IDA_AUS_BIRTH_CERT_STATE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_AUS_BIRTH_CERT_STATE"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_AUS_BIRTH_CERT_STATE"/>
+    </attribute>
+    <attribute id="A_4IDA_AUS_CITIZEN_CERT_NO" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_AUS_CITIZEN_CERT_NO"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_AUS_CITIZEN_CERT_NO"/>
+    </attribute>
+    <attribute id="A_4IDA_PASSPORT_NO" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_PASSPORT_NO"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_PASSPORT_NO"/>
+    </attribute>
+    <attribute id="A_4IDA_PASSPORT_CTRY" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_PASSPORT_CTRY"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_PASSPORT_CTRY"/>
+    </attribute>
+    <attribute id="A_4IDA_CTRY_TAX_RES" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_CTRY_TAX_RES"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_CTRY_TAX_RES"/>
+    </attribute>
+    <attribute id="A_4IDA_VISA_NO" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_VISA_NO"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_VISA_NO"/>
+    </attribute>
+    <attribute id="A_4IDA_VISA_EXPIRY" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_VISA_EXPIRY"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_VISA_EXPIRY"/>
+    </attribute>
+    <attribute id="Z_A_4IDA_VISA_EXPIRY_TS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_4IDA_VISA_EXPIRY_TS"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="CC_A_4IDA_VISA_EXPIRY_TS"/>
+    </attribute>
+    <attribute id="A_4IDA_VISA_SUBCLASS" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_VISA_SUBCLASS"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_VISA_SUBCLASS"/>
+    </attribute>
+    <attribute id="A_4IDA_OSEAS_ENTITY_ID" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_OSEAS_ENTITY_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_OSEAS_ENTITY_ID"/>
+    </attribute>
+    <attribute id="A_4IDA_FIRB" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_FIRB"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_FIRB"/>
+    </attribute>
+    <attribute id="A_4IDA_OTH_ENTITY_ID" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_OTH_ENTITY_ID"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_OTH_ENTITY_ID"/>
+    </attribute>
+    <attribute id="A_4IDA_CTRY_INCORP" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_CTRY_INCORP"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_CTRY_INCORP"/>
+    </attribute>
+    <attribute id="A_4IDA_ABN" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_ABN"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_ABN"/>
+    </attribute>
+    <attribute id="A_4IDA_ARBN" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_ARBN"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_ARBN"/>
+    </attribute>
+    <attribute id="A_4IDA_ACN" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_ACN"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_ACN"/>
+    </attribute>
+    <attribute id="A_4IDA_OSEAS_ENTITY_REG_NO" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_OSEAS_ENTITY_REG_NO"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_OSEAS_ENTITY_REG_NO"/>
+    </attribute>
+    <attribute id="C_4IDA_LODGE_DATE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_4IDA_LODGE_DATE"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="C_4IDA_LODGE_DATE"/>
+    </attribute>
+    <attribute id="Z_C_4IDA_LODGE_DATE_TS" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_C_4IDA_LODGE_DATE_TS"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="CC_C_4IDA_LODGE_DATE_TS"/>
+    </attribute>
+    <attribute id="A_4IDA_DEC_NAME" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_DEC_NAME"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_DEC_NAME"/>
+    </attribute>
+    <attribute id="A_4IDA_DEC_PHONE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_DEC_PHONE"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_DEC_PHONE"/>
+    </attribute>
+    <attribute id="A_4IDA_DEC_MOBILE" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_DEC_MOBILE"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_DEC_MOBILE"/>
+    </attribute>
+    <attribute id="A_4IDA_DEC_EMAIL" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_DEC_EMAIL"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_DEC_EMAIL"/>
+    </attribute>
+    <attribute id="A_4IDA_DEC_INDICATOR" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_DEC_INDICATOR"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_DEC_INDICATOR"/>
+    </attribute>
+    <attribute id="C_4IDA_RPTR_PROGRESS_IND" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_4IDA_RPTR_PROGRESS_IND"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="C_4IDA_RPTR_PROGRESS_IND"/>
+    </attribute>
+    <attribute id="A_4IDA_NATIONALITY" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_4IDA_NATIONALITY"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="A_4IDA_NATIONALITY"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Z1004IDA00000001" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="111.5" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1004IDA00000001" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="217"/>
+      <rectangleSize height="30" width="199"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

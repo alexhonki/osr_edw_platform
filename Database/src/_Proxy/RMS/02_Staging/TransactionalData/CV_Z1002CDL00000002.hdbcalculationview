@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1002CDL00000002" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_Z1002CDL00000002"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1002CDL00000002.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1002CDL00000002.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1002CDL00000002">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="A_TRUSTEE_TYPE"/>
+      <viewAttribute id="A_TRUSTEE_LAST_NAME"/>
+      <viewAttribute id="A_TRUSTEE_FIRST_NAME"/>
+      <viewAttribute id="A_TRUSTEE_MIDDLE_NAME"/>
+      <viewAttribute id="A_TRUSTEE_DATEOFBIRTH"/>
+      <viewAttribute id="A_TRUSTEE_ORG_NAME"/>
+      <viewAttribute id="A_TRUSTEE_ACN"/>
+      <viewAttribute id="A_TRUSTEE_ABN"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_A_TRUSTEE_DATEOFBIRTH_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_TRUSTEE_DATEOFBIRTH&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM2.DSO.Z1002CDL00000002.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1002CDL00000002">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="RECORD_ID"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="PARENT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="PARENT_ID"/>
+    </attribute>
+    <attribute id="OBJECT_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="OBJECT_ID"/>
+    </attribute>
+    <attribute id="INITIAL_FLAGS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="INITIAL_FLAGS"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_TYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_TYPE"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_LAST_NAME" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_LAST_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_LAST_NAME"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_FIRST_NAME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_FIRST_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_FIRST_NAME"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_MIDDLE_NAME" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_MIDDLE_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_MIDDLE_NAME"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_DATEOFBIRTH" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_DATEOFBIRTH"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_DATEOFBIRTH"/>
+    </attribute>
+    <attribute id="Z_A_TRUSTEE_DATEOFBIRTH_TS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_A_TRUSTEE_DATEOFBIRTH_TS"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="CC_A_TRUSTEE_DATEOFBIRTH_TS"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_ORG_NAME" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_ORG_NAME"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_ORG_NAME"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_ACN" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_ACN"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_ACN"/>
+    </attribute>
+    <attribute id="A_TRUSTEE_ABN" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRUSTEE_ABN"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="A_TRUSTEE_ABN"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="Z1002CDL00000002" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="120.50000000000001" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1002CDL00000002" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="217"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
