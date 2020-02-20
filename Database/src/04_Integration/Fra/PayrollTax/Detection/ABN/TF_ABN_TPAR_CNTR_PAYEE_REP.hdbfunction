@@ -207,15 +207,13 @@ PAYEE_AGENCY =
 
 ------------------------WCQ Data-------------------------------
 WCQ_DATA = 
-	SELECT DISTINCT
-		"WCQ"."ABN",
-		"WCQ"."GJAHR" AS "INCM_YR",
-		SUM("WCQ"."WCQ_ACT_WAGES") AS "ACT_WAGES"
-	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() AS "WCQ"
-	INNER JOIN :PAYEE_ABN_ALL_LIST AS "ALL"
-	ON "WCQ"."ABN" = "ALL"."ABN"
---	AND "WCQ"."GJAHR" = "ALL"."INCM_YR"
-	GROUP BY "WCQ"."ABN", "WCQ"."GJAHR" 
+	SELECT 
+		"ABN",
+		"GJAHR" AS "INCM_YR",
+		SUM("WCQ_ACT_WAGES") AS "ACT_WAGES"
+	FROM "osr.edw.platform.fra.prt.dt.abn.wages::TF_ABN_WCQ_WAGES"() 
+	WHERE "ABN" IN (SELECT DISTINCT "ABN" FROM :PAYEE_ABN_ALL_LIST)
+	GROUP BY "ABN", "GJAHR" 
 ;
 
 -----------------------END of WCQ Data-------------------------
