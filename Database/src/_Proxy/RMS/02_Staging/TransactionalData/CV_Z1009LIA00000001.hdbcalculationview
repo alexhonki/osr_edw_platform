@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1009LIA00000001" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_Z1009LIA00000001"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000001.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000001.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1009LIA00000001">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="C_UTI_D_FROM"/>
+      <viewAttribute id="C_UTI_D_TO"/>
+      <viewAttribute id="C_UTI_D_BASE_TAX"/>
+      <viewAttribute id="C_UTI_D_DAYS_OVERDUE"/>
+      <viewAttribute id="C_UTI_D_DAILY_UTI"/>
+      <viewAttribute id="C_UTI_D_YEARLY_RATE"/>
+      <viewAttribute id="C_UTI_D_UTI_AMOUNT"/>
+      <viewAttribute id="C_UTI_D_PAYMENT"/>
+      <viewAttribute id="C_UTI_D_ALLOC_FEE"/>
+      <viewAttribute id="C_UTI_D_ALLOC_BASE"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_C_UTI_D_FROM_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;C_UTI_D_FROM&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_C_UTI_D_TO_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;C_UTI_D_TO&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000001.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1009LIA00000001">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="RECORD_ID"/>
+    </attribute>
+    <attribute id="PARENT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="PARENT_ID"/>
+    </attribute>
+    <attribute id="OBJECT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="OBJECT_ID"/>
+    </attribute>
+    <attribute id="INITIAL_FLAGS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="INITIAL_FLAGS"/>
+    </attribute>
+    <attribute id="C_UTI_D_FROM" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_FROM"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_FROM"/>
+    </attribute>
+    <attribute id="C_UTI_D_FROM_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_FROM_TS"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="CC_C_UTI_D_FROM_TS"/>
+    </attribute>
+    <attribute id="C_UTI_D_TO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_TO"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_TO"/>
+    </attribute>
+    <attribute id="C_UTI_D_TO_TS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_TO_TS"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="CC_C_UTI_D_TO_TS"/>
+    </attribute>
+    <attribute id="C_UTI_D_BASE_TAX" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_BASE_TAX"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_BASE_TAX"/>
+    </attribute>
+    <attribute id="C_UTI_D_DAYS_OVERDUE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_DAYS_OVERDUE"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_DAYS_OVERDUE"/>
+    </attribute>
+    <attribute id="C_UTI_D_DAILY_UTI" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_DAILY_UTI"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_DAILY_UTI"/>
+    </attribute>
+    <attribute id="C_UTI_D_YEARLY_RATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_YEARLY_RATE"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_YEARLY_RATE"/>
+    </attribute>
+    <attribute id="C_UTI_D_UTI_AMOUNT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_UTI_AMOUNT"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_UTI_AMOUNT"/>
+    </attribute>
+    <attribute id="C_UTI_D_PAYMENT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_PAYMENT"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_PAYMENT"/>
+    </attribute>
+    <attribute id="C_UTI_D_ALLOC_FEE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_ALLOC_FEE"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_ALLOC_FEE"/>
+    </attribute>
+    <attribute id="C_UTI_D_ALLOC_BASE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_D_ALLOC_BASE"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="C_UTI_D_ALLOC_BASE"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1009LIA00000001" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="117.50000000000003" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1009LIA00000001" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000003" y="217"/>
+      <rectangleSize height="30" width="211"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
