@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.crm.proxy::CV_SCMGPREL_CLNT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_SCMGPREL_CLNT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.SCMGPREL_CLNT.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.SCMGPREL_CLNT.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="SCMGPREL_CLNT">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="POIDID"/>
+      <viewAttribute id="CONTREP"/>
+      <viewAttribute id="SKEY"/>
+      <viewAttribute id="STATE"/>
+      <viewAttribute id="ARCHIVE"/>
+      <viewAttribute id="POIDSTR"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.SCMGPREL_CLNT.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="SCMGPREL_CLNT">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="MANDT"/>
+    </attribute>
+    <attribute id="POIDID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POIDID"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="POIDID"/>
+    </attribute>
+    <attribute id="CONTREP" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONTREP"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="CONTREP"/>
+    </attribute>
+    <attribute id="SKEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SKEY"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="SKEY"/>
+    </attribute>
+    <attribute id="STATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATE"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="STATE"/>
+    </attribute>
+    <attribute id="ARCHIVE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ARCHIVE"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="ARCHIVE"/>
+    </attribute>
+    <attribute id="POIDSTR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POIDSTR"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="POIDSTR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="102.5" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="SCMGPREL_CLNT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="181"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
