@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.crm.proxy::CV_PPFTTRIGG" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_PPFTTRIGG"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.PPFTTRIGG.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.PPFTTRIGG.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="PPFTTRIGG">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="OS_GUID"/>
+      <viewAttribute id="APPLKEY"/>
+      <viewAttribute id="APPL_OID"/>
+      <viewAttribute id="APPL_CLS"/>
+      <viewAttribute id="APPLCTN"/>
+      <viewAttribute id="CONTEXT"/>
+      <viewAttribute id="TTYPE"/>
+      <viewAttribute id="STATUS"/>
+      <viewAttribute id="IS_CHANGED"/>
+      <viewAttribute id="IS_REPEAT"/>
+      <viewAttribute id="IS_INACTIV"/>
+      <viewAttribute id="IS_LOCKED"/>
+      <viewAttribute id="IS_MCREAT"/>
+      <viewAttribute id="MEDIUM_OID"/>
+      <viewAttribute id="MEDIUM_CLS"/>
+      <viewAttribute id="TIMECREATE"/>
+      <viewAttribute id="TIMECHANGE"/>
+      <viewAttribute id="USERCREATE"/>
+      <viewAttribute id="USERCHANGE"/>
+      <viewAttribute id="DISPATCH"/>
+      <viewAttribute id="CHANGEABLE"/>
+      <viewAttribute id="MULTIPLE"/>
+      <viewAttribute id="PARTINDEP"/>
+      <viewAttribute id="EXECDIALOG"/>
+      <viewAttribute id="SORTFIELD1"/>
+      <viewAttribute id="SORTFIELD2"/>
+      <viewAttribute id="SORTFIELD3"/>
+      <viewAttribute id="STARTCOND"/>
+      <viewAttribute id="STARTCONT"/>
+      <viewAttribute id="EXECANDDEL"/>
+      <viewAttribute id="METYPE"/>
+      <viewAttribute id="RELEVANT"/>
+      <viewAttribute id="OPTRULE"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_TIMECREATE_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;TIMECREATE&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMECREATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_TIMECREATE_LC&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMECHANGE_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;TIMECHANGE&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMECHANGE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_TIMECHANGE_LC&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.PPFTTRIGG.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="PPFTTRIGG">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="MANDT"/>
+    </attribute>
+    <attribute id="OS_GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OS_GUID"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="OS_GUID"/>
+    </attribute>
+    <attribute id="APPLKEY" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLKEY"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="APPLKEY"/>
+    </attribute>
+    <attribute id="APPL_OID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPL_OID"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="APPL_OID"/>
+    </attribute>
+    <attribute id="APPL_CLS" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPL_CLS"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="APPL_CLS"/>
+    </attribute>
+    <attribute id="APPLCTN" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPLCTN"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="APPLCTN"/>
+    </attribute>
+    <attribute id="CONTEXT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONTEXT"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="CONTEXT"/>
+    </attribute>
+    <attribute id="TTYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TTYPE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="TTYPE"/>
+    </attribute>
+    <attribute id="STATUS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="STATUS"/>
+    </attribute>
+    <attribute id="IS_CHANGED" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_CHANGED"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="IS_CHANGED"/>
+    </attribute>
+    <attribute id="IS_REPEAT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_REPEAT"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="IS_REPEAT"/>
+    </attribute>
+    <attribute id="IS_INACTIV" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_INACTIV"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="IS_INACTIV"/>
+    </attribute>
+    <attribute id="IS_LOCKED" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_LOCKED"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="IS_LOCKED"/>
+    </attribute>
+    <attribute id="IS_MCREAT" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="IS_MCREAT"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="IS_MCREAT"/>
+    </attribute>
+    <attribute id="MEDIUM_OID" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEDIUM_OID"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="MEDIUM_OID"/>
+    </attribute>
+    <attribute id="MEDIUM_CLS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MEDIUM_CLS"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="MEDIUM_CLS"/>
+    </attribute>
+    <attribute id="TIMECREATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMECREATE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="TIMECREATE"/>
+    </attribute>
+    <attribute id="Z_TIMECREATE_LC" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMECREATE_LC"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="CC_TIMECREATE_LC"/>
+    </attribute>
+    <attribute id="Z_TIMECREATE_TS" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMECREATE_TS"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="CC_TIMECREATE_TS"/>
+    </attribute>
+    <attribute id="TIMECHANGE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMECHANGE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="TIMECHANGE"/>
+    </attribute>
+    <attribute id="Z_TIMECHANGE_LC" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMECHANGE_LC"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="CC_TIMECHANGE_LC"/>
+    </attribute>
+    <attribute id="Z_TIMECHANGE_TS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_TIMECHANGE_TS"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="CC_TIMECHANGE_TS"/>
+    </attribute>
+    <attribute id="USERCREATE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USERCREATE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="USERCREATE"/>
+    </attribute>
+    <attribute id="USERCHANGE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USERCHANGE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="USERCHANGE"/>
+    </attribute>
+    <attribute id="DISPATCH" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DISPATCH"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="DISPATCH"/>
+    </attribute>
+    <attribute id="CHANGEABLE" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHANGEABLE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="CHANGEABLE"/>
+    </attribute>
+    <attribute id="MULTIPLE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MULTIPLE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="MULTIPLE"/>
+    </attribute>
+    <attribute id="PARTINDEP" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTINDEP"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="PARTINDEP"/>
+    </attribute>
+    <attribute id="EXECDIALOG" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXECDIALOG"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="EXECDIALOG"/>
+    </attribute>
+    <attribute id="SORTFIELD1" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SORTFIELD1"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="SORTFIELD1"/>
+    </attribute>
+    <attribute id="SORTFIELD2" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SORTFIELD2"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="SORTFIELD2"/>
+    </attribute>
+    <attribute id="SORTFIELD3" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SORTFIELD3"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="SORTFIELD3"/>
+    </attribute>
+    <attribute id="STARTCOND" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STARTCOND"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="STARTCOND"/>
+    </attribute>
+    <attribute id="STARTCONT" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STARTCONT"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="STARTCONT"/>
+    </attribute>
+    <attribute id="EXECANDDEL" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXECANDDEL"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="EXECANDDEL"/>
+    </attribute>
+    <attribute id="METYPE" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="METYPE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="METYPE"/>
+    </attribute>
+    <attribute id="RELEVANT" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELEVANT"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="RELEVANT"/>
+    </attribute>
+    <attribute id="OPTRULE" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPTRULE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="OPTRULE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="PPFTTRIGG" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="PPFTTRIGG" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

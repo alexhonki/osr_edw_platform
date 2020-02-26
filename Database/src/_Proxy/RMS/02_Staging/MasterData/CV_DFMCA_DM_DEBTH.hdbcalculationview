@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_DFMCA_DM_DEBTH" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DFMCA_DM_DEBTH"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DEBTH.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DEBTH.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DFMCA_DM_DEBTH">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="DEBT_SET"/>
+      <viewAttribute id="DEBTOR"/>
+      <viewAttribute id="CMGRP"/>
+      <viewAttribute id="PROTECTED"/>
+      <viewAttribute id="ORIGINAL_DEBT_SET"/>
+      <viewAttribute id="ORIGINAL_DEBT_SET_PROT"/>
+      <viewAttribute id="DEBT_SET_DATE"/>
+      <viewAttribute id="HWAER"/>
+      <viewAttribute id="OLDEST_DATE"/>
+      <viewAttribute id="NEWEST_DATE"/>
+      <viewAttribute id="CREA_DATE_TIME"/>
+      <viewAttribute id="CREA_UNAME"/>
+      <viewAttribute id="LCHG_DATE_TIME"/>
+      <viewAttribute id="LCHG_UNAME"/>
+      <viewAttribute id="LAUFD"/>
+      <viewAttribute id="LAUFI"/>
+      <viewAttribute id="STRAT"/>
+      <viewAttribute id="STRAT_MANUAL"/>
+      <viewAttribute id="STEP"/>
+      <viewAttribute id="STEP_MANUAL"/>
+      <viewAttribute id="PROPOSAL"/>
+      <viewAttribute id="KATALOGART"/>
+      <viewAttribute id="CODEGRUPPE"/>
+      <viewAttribute id="CODE"/>
+      <viewAttribute id="RC_USER"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_DEBT_SET_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;DEBT_SET_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_OLDEST_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;OLDEST_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_NEWEST_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;NEWEST_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_LAUFD_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;LAUFD&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_CREA_DATE_TIME_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;CREA_DATE_TIME&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_CREA_DATE_TIME_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_CREA_DATE_TIME_LC&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_LCHG_DATE_TIME_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;LCHG_DATE_TIME&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_LCHG_DATE_TIME_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_LCHG_DATE_TIME_LC&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DEBTH.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DFMCA_DM_DEBTH">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="MANDT"/>
+    </attribute>
+    <attribute id="DEBT_SET" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEBT_SET"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="DEBT_SET"/>
+    </attribute>
+    <attribute id="DEBTOR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEBTOR"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="DEBTOR"/>
+    </attribute>
+    <attribute id="CMGRP" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CMGRP"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CMGRP"/>
+    </attribute>
+    <attribute id="PROTECTED" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROTECTED"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="PROTECTED"/>
+    </attribute>
+    <attribute id="ORIGINAL_DEBT_SET" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIGINAL_DEBT_SET"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="ORIGINAL_DEBT_SET"/>
+    </attribute>
+    <attribute id="ORIGINAL_DEBT_SET_PROT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIGINAL_DEBT_SET_PROT"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="ORIGINAL_DEBT_SET_PROT"/>
+    </attribute>
+    <attribute id="DEBT_SET_DATE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEBT_SET_DATE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="DEBT_SET_DATE"/>
+    </attribute>
+    <attribute id="DEBT_SET_DATE_TS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEBT_SET_DATE_TS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_DEBT_SET_DATE_TS"/>
+    </attribute>
+    <attribute id="HWAER" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HWAER"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="HWAER"/>
+    </attribute>
+    <attribute id="OLDEST_DATE" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OLDEST_DATE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="OLDEST_DATE"/>
+    </attribute>
+    <attribute id="Z_OLDEST_DATE_TS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_OLDEST_DATE_TS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_OLDEST_DATE_TS"/>
+    </attribute>
+    <attribute id="NEWEST_DATE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NEWEST_DATE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="NEWEST_DATE"/>
+    </attribute>
+    <attribute id="Z_NEWEST_DATE_TS" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_NEWEST_DATE_TS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_NEWEST_DATE_TS"/>
+    </attribute>
+    <attribute id="CREA_DATE_TIME" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_DATE_TIME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CREA_DATE_TIME"/>
+    </attribute>
+    <attribute id="Z_CREA_DATE_TIME_LC" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CREA_DATE_TIME_LC"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_CREA_DATE_TIME_LC"/>
+    </attribute>
+    <attribute id="Z_CREA_DATE_TIME_TS" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CREA_DATE_TIME_TS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_CREA_DATE_TIME_TS"/>
+    </attribute>
+    <attribute id="CREA_UNAME" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_UNAME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CREA_UNAME"/>
+    </attribute>
+    <attribute id="LCHG_DATE_TIME" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LCHG_DATE_TIME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="LCHG_DATE_TIME"/>
+    </attribute>
+    <attribute id="Z_LCHG_DATE_TIME_LC" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_LCHG_DATE_TIME_LC"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_LCHG_DATE_TIME_LC"/>
+    </attribute>
+    <attribute id="Z_LCHG_DATE_TIME_TS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_LCHG_DATE_TIME_TS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_LCHG_DATE_TIME_TS"/>
+    </attribute>
+    <attribute id="LCHG_UNAME" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LCHG_UNAME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="LCHG_UNAME"/>
+    </attribute>
+    <attribute id="LAUFD" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFD"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="LAUFD"/>
+    </attribute>
+    <attribute id="LAUFD_TS" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFD_TS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CC_LAUFD_TS"/>
+    </attribute>
+    <attribute id="LAUFI" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFI"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="LAUFI"/>
+    </attribute>
+    <attribute id="STRAT" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STRAT"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="STRAT"/>
+    </attribute>
+    <attribute id="STRAT_MANUAL" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STRAT_MANUAL"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="STRAT_MANUAL"/>
+    </attribute>
+    <attribute id="STEP" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STEP"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="STEP"/>
+    </attribute>
+    <attribute id="STEP_MANUAL" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STEP_MANUAL"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="STEP_MANUAL"/>
+    </attribute>
+    <attribute id="PROPOSAL" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROPOSAL"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="PROPOSAL"/>
+    </attribute>
+    <attribute id="KATALOGART" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KATALOGART"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="KATALOGART"/>
+    </attribute>
+    <attribute id="CODEGRUPPE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CODEGRUPPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CODEGRUPPE"/>
+    </attribute>
+    <attribute id="CODE" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CODE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="CODE"/>
+    </attribute>
+    <attribute id="RC_USER" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RC_USER"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="RC_USER"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DEBTH" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="110" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DFMCA_DM_DEBTH" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="196"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
