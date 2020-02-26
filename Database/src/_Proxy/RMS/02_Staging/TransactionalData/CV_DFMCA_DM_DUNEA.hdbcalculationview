@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_DFMCA_DM_DUNEA" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DFMCA_DM_DUNEA"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DUNEA.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DUNEA.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DFMCA_DM_DUNEA">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="LAUFD"/>
+      <viewAttribute id="LAUFI"/>
+      <viewAttribute id="GPART"/>
+      <viewAttribute id="MAZAE"/>
+      <viewAttribute id="DEBT_SET"/>
+      <viewAttribute id="ACTIVITY_SEQ_NO"/>
+      <viewAttribute id="ENF_ACT_TYPE"/>
+      <viewAttribute id="PERSON_RESP"/>
+      <viewAttribute id="INT_STATUS"/>
+      <viewAttribute id="EXT_STATUS"/>
+      <viewAttribute id="PROCESS"/>
+      <viewAttribute id="AUSDT"/>
+      <viewAttribute id="OPBUK"/>
+      <viewAttribute id="STDBK"/>
+      <viewAttribute id="MAHNS"/>
+      <viewAttribute id="WAERS"/>
+      <viewAttribute id="MSALM"/>
+      <viewAttribute id="EA_OBJECT_ID"/>
+      <viewAttribute id="EA_GUID"/>
+      <viewAttribute id="UPDATE_STATUS"/>
+      <viewAttribute id="REUSE"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DUNEA.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DFMCA_DM_DUNEA">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="MANDT"/>
+    </attribute>
+    <attribute id="LAUFD" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFD"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="LAUFD"/>
+    </attribute>
+    <attribute id="LAUFI" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFI"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="LAUFI"/>
+    </attribute>
+    <attribute id="GPART" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GPART"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="GPART"/>
+    </attribute>
+    <attribute id="MAZAE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAZAE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="MAZAE"/>
+    </attribute>
+    <attribute id="DEBT_SET" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEBT_SET"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="DEBT_SET"/>
+    </attribute>
+    <attribute id="ACTIVITY_SEQ_NO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTIVITY_SEQ_NO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="ACTIVITY_SEQ_NO"/>
+    </attribute>
+    <attribute id="ENF_ACT_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENF_ACT_TYPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="ENF_ACT_TYPE"/>
+    </attribute>
+    <attribute id="PERSON_RESP" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERSON_RESP"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="PERSON_RESP"/>
+    </attribute>
+    <attribute id="INT_STATUS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INT_STATUS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="INT_STATUS"/>
+    </attribute>
+    <attribute id="EXT_STATUS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXT_STATUS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="EXT_STATUS"/>
+    </attribute>
+    <attribute id="PROCESS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROCESS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="PROCESS"/>
+    </attribute>
+    <attribute id="AUSDT" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AUSDT"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="AUSDT"/>
+    </attribute>
+    <attribute id="OPBUK" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OPBUK"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="OPBUK"/>
+    </attribute>
+    <attribute id="STDBK" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STDBK"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="STDBK"/>
+    </attribute>
+    <attribute id="MAHNS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAHNS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="MAHNS"/>
+    </attribute>
+    <attribute id="WAERS" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WAERS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="WAERS"/>
+    </attribute>
+    <attribute id="MSALM" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MSALM"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="MSALM"/>
+    </attribute>
+    <attribute id="EA_OBJECT_ID" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EA_OBJECT_ID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="EA_OBJECT_ID"/>
+    </attribute>
+    <attribute id="EA_GUID" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EA_GUID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="EA_GUID"/>
+    </attribute>
+    <attribute id="UPDATE_STATUS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UPDATE_STATUS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="UPDATE_STATUS"/>
+    </attribute>
+    <attribute id="REUSE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REUSE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="REUSE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEA" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="133.31434826555443" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DFMCA_DM_DUNEA" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="236.9999988079071"/>
+      <rectangleSize height="30" width="235"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

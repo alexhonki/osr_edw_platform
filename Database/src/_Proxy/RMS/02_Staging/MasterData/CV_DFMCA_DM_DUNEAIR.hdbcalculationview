@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.md.rms.proxy::CV_DFMCA_DM_DUNEAIR" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_DFMCA_DM_DUNEAIR"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DUNEAIR.active_data">
+    <resourceUri>osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DUNEAIR.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DFMCA_DM_DUNEAIR">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="LAUFD"/>
+      <viewAttribute id="LAUFI"/>
+      <viewAttribute id="GPART"/>
+      <viewAttribute id="MAZAE"/>
+      <viewAttribute id="DEBT_SET"/>
+      <viewAttribute id="ACTIVITY_SEQ_NO"/>
+      <viewAttribute id="SEQ_NO"/>
+      <viewAttribute id="AIR_GUID"/>
+      <viewAttribute id="AIR_PROCESS_TYPE"/>
+      <viewAttribute id="AIR_OBJECT_ID"/>
+      <viewAttribute id="ETT_GUID"/>
+      <viewAttribute id="EAX_GUID"/>
+      <viewAttribute id="EAX_PROCESS_TYPE"/>
+      <viewAttribute id="EAX_OBJECT_ID"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.md.rms.synonym::CDS_PSCD.DSO.DFMCA_DM_DUNEAIR.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DFMCA_DM_DUNEAIR">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="MANDT"/>
+    </attribute>
+    <attribute id="LAUFD" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFD"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="LAUFD"/>
+    </attribute>
+    <attribute id="LAUFI" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LAUFI"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="LAUFI"/>
+    </attribute>
+    <attribute id="GPART" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GPART"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="GPART"/>
+    </attribute>
+    <attribute id="MAZAE" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MAZAE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="MAZAE"/>
+    </attribute>
+    <attribute id="DEBT_SET" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEBT_SET"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="DEBT_SET"/>
+    </attribute>
+    <attribute id="ACTIVITY_SEQ_NO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTIVITY_SEQ_NO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="ACTIVITY_SEQ_NO"/>
+    </attribute>
+    <attribute id="SEQ_NO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEQ_NO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="SEQ_NO"/>
+    </attribute>
+    <attribute id="AIR_GUID" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AIR_GUID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="AIR_GUID"/>
+    </attribute>
+    <attribute id="AIR_PROCESS_TYPE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AIR_PROCESS_TYPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="AIR_PROCESS_TYPE"/>
+    </attribute>
+    <attribute id="AIR_OBJECT_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AIR_OBJECT_ID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="AIR_OBJECT_ID"/>
+    </attribute>
+    <attribute id="ETT_GUID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ETT_GUID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="ETT_GUID"/>
+    </attribute>
+    <attribute id="EAX_GUID" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EAX_GUID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="EAX_GUID"/>
+    </attribute>
+    <attribute id="EAX_PROCESS_TYPE" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EAX_PROCESS_TYPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="EAX_PROCESS_TYPE"/>
+    </attribute>
+    <attribute id="EAX_OBJECT_ID" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EAX_OBJECT_ID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="EAX_OBJECT_ID"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="DFMCA_DM_DUNEAIR" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="108.5" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DFMCA_DM_DUNEAIR" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="193"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

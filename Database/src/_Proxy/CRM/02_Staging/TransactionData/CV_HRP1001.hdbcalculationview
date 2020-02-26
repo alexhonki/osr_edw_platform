@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.crm.proxy::CV_HRP1001" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_HRP1001"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.crm.synonym::CDS_CRM.DSO.HRP1001.active_data">
+    <resourceUri>osr.edw.source.md.crm.synonym::CDS_CRM.DSO.HRP1001.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="HRP1001">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="OTYPE"/>
+      <viewAttribute id="OBJID"/>
+      <viewAttribute id="PLVAR"/>
+      <viewAttribute id="RSIGN"/>
+      <viewAttribute id="RELAT"/>
+      <viewAttribute id="ISTAT"/>
+      <viewAttribute id="PRIOX"/>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="ENDDA"/>
+      <viewAttribute id="VARYF"/>
+      <viewAttribute id="SEQNR"/>
+      <viewAttribute id="INFTY"/>
+      <viewAttribute id="OTJID"/>
+      <viewAttribute id="SUBTY"/>
+      <viewAttribute id="AEDTM"/>
+      <viewAttribute id="UNAME"/>
+      <viewAttribute id="REASN"/>
+      <viewAttribute id="HISTO"/>
+      <viewAttribute id="ITXNR"/>
+      <viewAttribute id="SCLAS"/>
+      <viewAttribute id="SOBID"/>
+      <viewAttribute id="PROZT"/>
+      <viewAttribute id="ADATANR"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_BEGDA_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;BEGDA&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_ENDDA_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;ENDDA&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.source.md.crm.synonym::CDS_CRM.DSO.HRP1001.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="HRP1001">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="HRP1001" columnName="MANDT"/>
+    </attribute>
+    <attribute id="OTYPE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTYPE"/>
+      <keyMapping columnObjectName="HRP1001" columnName="OTYPE"/>
+    </attribute>
+    <attribute id="OBJID" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OBJID"/>
+      <keyMapping columnObjectName="HRP1001" columnName="OBJID"/>
+    </attribute>
+    <attribute id="PLVAR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLVAR"/>
+      <keyMapping columnObjectName="HRP1001" columnName="PLVAR"/>
+    </attribute>
+    <attribute id="RSIGN" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RSIGN"/>
+      <keyMapping columnObjectName="HRP1001" columnName="RSIGN"/>
+    </attribute>
+    <attribute id="RELAT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELAT"/>
+      <keyMapping columnObjectName="HRP1001" columnName="RELAT"/>
+    </attribute>
+    <attribute id="ISTAT" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ISTAT"/>
+      <keyMapping columnObjectName="HRP1001" columnName="ISTAT"/>
+    </attribute>
+    <attribute id="PRIOX" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PRIOX"/>
+      <keyMapping columnObjectName="HRP1001" columnName="PRIOX"/>
+    </attribute>
+    <attribute id="BEGDA" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEGDA"/>
+      <keyMapping columnObjectName="HRP1001" columnName="BEGDA"/>
+    </attribute>
+    <attribute id="Z_BEGDA_TS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_BEGDA_TS"/>
+      <keyMapping columnObjectName="HRP1001" columnName="CC_BEGDA_TS"/>
+    </attribute>
+    <attribute id="ENDDA" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENDDA"/>
+      <keyMapping columnObjectName="HRP1001" columnName="ENDDA"/>
+    </attribute>
+    <attribute id="Z_ENDDA_TS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_ENDDA_TS"/>
+      <keyMapping columnObjectName="HRP1001" columnName="CC_ENDDA_TS"/>
+    </attribute>
+    <attribute id="VARYF" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VARYF"/>
+      <keyMapping columnObjectName="HRP1001" columnName="VARYF"/>
+    </attribute>
+    <attribute id="SEQNR" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEQNR"/>
+      <keyMapping columnObjectName="HRP1001" columnName="SEQNR"/>
+    </attribute>
+    <attribute id="INFTY" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INFTY"/>
+      <keyMapping columnObjectName="HRP1001" columnName="INFTY"/>
+    </attribute>
+    <attribute id="OTJID" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTJID"/>
+      <keyMapping columnObjectName="HRP1001" columnName="OTJID"/>
+    </attribute>
+    <attribute id="SUBTY" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUBTY"/>
+      <keyMapping columnObjectName="HRP1001" columnName="SUBTY"/>
+    </attribute>
+    <attribute id="AEDTM" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AEDTM"/>
+      <keyMapping columnObjectName="HRP1001" columnName="AEDTM"/>
+    </attribute>
+    <attribute id="UNAME" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UNAME"/>
+      <keyMapping columnObjectName="HRP1001" columnName="UNAME"/>
+    </attribute>
+    <attribute id="REASN" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REASN"/>
+      <keyMapping columnObjectName="HRP1001" columnName="REASN"/>
+    </attribute>
+    <attribute id="HISTO" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HISTO"/>
+      <keyMapping columnObjectName="HRP1001" columnName="HISTO"/>
+    </attribute>
+    <attribute id="ITXNR" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ITXNR"/>
+      <keyMapping columnObjectName="HRP1001" columnName="ITXNR"/>
+    </attribute>
+    <attribute id="SCLAS" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SCLAS"/>
+      <keyMapping columnObjectName="HRP1001" columnName="SCLAS"/>
+    </attribute>
+    <attribute id="SOBID" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOBID"/>
+      <keyMapping columnObjectName="HRP1001" columnName="SOBID"/>
+    </attribute>
+    <attribute id="PROZT" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROZT"/>
+      <keyMapping columnObjectName="HRP1001" columnName="PROZT"/>
+    </attribute>
+    <attribute id="ADATANR" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADATANR"/>
+      <keyMapping columnObjectName="HRP1001" columnName="ADATANR"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="HRP1001" columnName="Z_VALID_TO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="HRP1001" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
