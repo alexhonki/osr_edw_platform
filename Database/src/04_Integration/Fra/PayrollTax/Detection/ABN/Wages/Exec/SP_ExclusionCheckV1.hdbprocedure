@@ -23,7 +23,7 @@ DECLARE lv_pt_case                    NVARCHAR(1) ;
 DECLARE lv_pt_exm_case				  NVARCHAR(1) ;
 DECLARE lv_flag_oth_exm_ind			  NVARCHAR(1) ;
 DECLARE lv_flag_is_wages		 	  NVARCHAR(1) ;
-
+DECLARE lv_scenario                   NVARCHAR(10);
 /*
 DECLARE lv_fy                         NVARCHAR(4) ;
 DECLARE lv_sdate                      DATE;
@@ -32,6 +32,7 @@ DECLARE lv_edate                      DATE;
 
         
 SELECT
+"SCENARIO"			   ,
 "PT_ID_ROLE_DATE"      ,     
 "PT_ROLE"              ,           
 "ID_ROLE"              ,           
@@ -41,6 +42,7 @@ SELECT
 "FLAG_IS_WAGES"        ,
 "OTH_EXMPT_INDICATORS" 
 INTO
+lv_scenario,
 lv_role_dt,
 lv_pt_role,
 lv_id_role,
@@ -365,6 +367,11 @@ ON
 ;
 -----------------------------------------------------------------------------------
 ---------------------------PT Case Data/ PT MLT Exmpt Cases-------------------------------------------
+
+
+------------------------
+IF  LEFT(:lv_scenario,4) = 'PRT1' THEN 
+-- 26/02/2020 - Only need ZEXL, ZEXM, ZINV (PRT only), ZIPT Cases Types 
 PT_CASE =
 SELECT DISTINCT "ABN" FROM 
 (
@@ -372,14 +379,62 @@ SELECT
 	"ABN",
 	"PARTNER",
 	"CASE_OUTCOME",
+	"CASE_TYPE",
 	to_dats(LEFT("CREATE_TIME",8)) AS "CREATE_DATE"
 FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
 WHERE "CASE_CATEGORY" IN ('PRT', 'ACST', 'MANU') 
 AND  "CASE_TYPE" NOT IN ('ZILT')
+AND LEFT("CRM_CATEGORY_ID",15) <> 'PRT_APPROACHING'
 AND to_dats(LEFT("CREATE_TIME",8)) >= to_dats(:lv_pt_case_dt) 
 AND "ABN" IN (SELECT DISTINCT "ABN" FROM :LT_WORKSET)
-)
+
+) WHERE "CASE_TYPE" IN ('ZINV', 'ZIPT','ZEXM','ZEXL')
 ;
+END IF;
+------------------------------------------
+IF  LEFT(:lv_scenario,4) = 'PRT2' THEN 
+-- 26/02/2020 - Only need ZEXM, ZINV (PRT only), ZIPT Cases Types 
+PT_CASE =
+SELECT DISTINCT "ABN" FROM 
+(
+SELECT
+	"ABN",
+	"PARTNER",
+	"CASE_OUTCOME",
+	"CASE_TYPE",
+	to_dats(LEFT("CREATE_TIME",8)) AS "CREATE_DATE"
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE "CASE_CATEGORY" IN ('PRT', 'ACST', 'MANU') 
+AND  "CASE_TYPE" NOT IN ('ZILT')
+AND LEFT("CRM_CATEGORY_ID",15) <> 'PRT_APPROACHING'
+AND to_dats(LEFT("CREATE_TIME",8)) >= to_dats(:lv_pt_case_dt) 
+AND "ABN" IN (SELECT DISTINCT "ABN" FROM :LT_WORKSET)
+) WHERE  "CASE_TYPE" IN ('ZINV', 'ZIPT','ZEXM')
+;
+END IF;
+-------------------------------------------
+IF  LEFT(:lv_scenario,4) = 'PRT3' THEN 
+-- 26/02/2020 - Only need ZEXM, ZINV (PRT only), ZIPT Cases Types 
+PT_CASE =
+SELECT DISTINCT "ABN" FROM 
+(
+SELECT
+	"ABN",
+	"PARTNER",
+	"CASE_OUTCOME",
+	"CASE_TYPE",
+	to_dats(LEFT("CREATE_TIME",8)) AS "CREATE_DATE"
+
+FROM "osr.edw.platform.fra.prt.dt.abn::CV_CRM_BP_CASE"
+WHERE "CASE_CATEGORY" IN ('PRT', 'ACST', 'MANU') 
+AND  "CASE_TYPE" NOT IN ('ZILT')
+AND LEFT("CRM_CATEGORY_ID",15) <> 'PRT_APPROACHING'
+AND to_dats(LEFT("CREATE_TIME",8)) >= to_dats(:lv_pt_case_dt) 
+AND "ABN" IN (SELECT DISTINCT "ABN" FROM :LT_WORKSET)
+)  WHERE  "CASE_TYPE" IN ('ZINV', 'ZIPT','ZEXM')
+;
+END IF;
+
 
 
 PT_EXM_CASE =
