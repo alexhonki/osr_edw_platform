@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_3PSCD_TRM_FORM_DATA_6TRN" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_3PSCD_TRM_FORM_DATA_6TRN"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_6TRN.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_6TRN.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DS_3PSCD_TRM_FORM_DATA_6TRN">
+    <viewAttributes>
+      <viewAttribute id="RETURN_ID"/>
+      <viewAttribute id="FORM"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="CASE_GUID"/>
+      <viewAttribute id="FIELDINDEX"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="FORM_CLASS"/>
+      <viewAttribute id="FORM_STATUS"/>
+      <viewAttribute id="FORM_STATUS_TS"/>
+      <viewAttribute id="SUPERSEDED_BY"/>
+      <viewAttribute id="SUPERSEDE_TO"/>
+      <viewAttribute id="RECEIPT_TS"/>
+      <viewAttribute id="TEMPLATE_VER"/>
+      <viewAttribute id="BATCH_ID"/>
+      <viewAttribute id="LOCATOR_NUMBER"/>
+      <viewAttribute id="FBTYP"/>
+      <viewAttribute id="FBNUM"/>
+      <viewAttribute id="RECORDMODE"/>
+      <viewAttribute id="A_AGG_CLAIM_CONC_Q"/>
+      <viewAttribute id="A_CONC_VACANT_Q"/>
+      <viewAttribute id="A_CONSIDERATION"/>
+      <viewAttribute id="A_CONSID_ON_CONC"/>
+      <viewAttribute id="A_CONS_LT_UNENCUM_Q"/>
+      <viewAttribute id="A_CURRENCY"/>
+      <viewAttribute id="A_DUTIABLE_OTHER"/>
+      <viewAttribute id="A_DUTY_ACC_AGG"/>
+      <viewAttribute id="A_DUTY_INCREASE"/>
+      <viewAttribute id="A_DUTY_PREVIOUS"/>
+      <viewAttribute id="A_DUTY_REDUCTION"/>
+      <viewAttribute id="A_EXEMPTION"/>
+      <viewAttribute id="A_EXEMPTION_Q"/>
+      <viewAttribute id="A_EXTENT_OF_GIFT"/>
+      <viewAttribute id="A_FIRST_IN_ARRANGE_Q"/>
+      <viewAttribute id="A_GIFT_Q"/>
+      <viewAttribute id="A_INT_ACQ_FHOME"/>
+      <viewAttribute id="A_INT_ACQ_FHVL"/>
+      <viewAttribute id="A_INT_ACQ_HOME"/>
+      <viewAttribute id="A_INT_ACQ_NOCONC"/>
+      <viewAttribute id="A_NUMB_MORT"/>
+      <viewAttribute id="A_PART_ARRANGE_Q"/>
+      <viewAttribute id="A_PREV_TRANS"/>
+      <viewAttribute id="A_RELATED_Q"/>
+      <viewAttribute id="A_SHARE_INT_ACQ_FHOME"/>
+      <viewAttribute id="A_SHARE_INT_ACQ_FHVL"/>
+      <viewAttribute id="A_SHARE_INT_ACQ_HOME"/>
+      <viewAttribute id="A_SHARE_INT_ACQ_NOCONC"/>
+      <viewAttribute id="A_TOTAL_CONSID"/>
+      <viewAttribute id="A_XTIONS_IN_AGG"/>
+      <viewAttribute id="C_CURRENCY"/>
+      <viewAttribute id="C_DT_PAYABLE_TXN"/>
+      <viewAttribute id="C_TOT_DUTY_PAY"/>
+      <viewAttribute id="C_TOT_DT_PAY_MV"/>
+      <viewAttribute id="C_TOT_OTHER"/>
+      <viewAttribute id="A_DUTY_ACC_AGG_MV"/>
+      <viewAttribute id="A_AFAD_LAND_Q"/>
+      <viewAttribute id="A_AFAD_LAND_VALUE"/>
+      <viewAttribute id="A_AFAD_INT_ACQUIRED"/>
+      <viewAttribute id="A_AFAD_INT_SHARE"/>
+      <viewAttribute id="C_AFAD_TOTAL"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_6TRN.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DS_3PSCD_TRM_FORM_DATA_6TRN">
+  <attributes>
+    <attribute id="RETURN_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="FORM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FORM"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="FIELDINDEX" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FIELDINDEX"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="FORM_CLASS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FORM_CLASS"/>
+    </attribute>
+    <attribute id="FORM_STATUS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FORM_STATUS"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FORM_STATUS_TS"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="SUPERSEDED_BY"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="SUPERSEDE_TO"/>
+    </attribute>
+    <attribute id="RECEIPT_TS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="RECEIPT_TS"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="TEMPLATE_VER"/>
+    </attribute>
+    <attribute id="BATCH_ID" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="BATCH_ID"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="FBTYP" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="FBNUM" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="RECORDMODE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORDMODE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="RECORDMODE"/>
+    </attribute>
+    <attribute id="A_AGG_CLAIM_CONC_Q" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AGG_CLAIM_CONC_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_AGG_CLAIM_CONC_Q"/>
+    </attribute>
+    <attribute id="A_CONC_VACANT_Q" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONC_VACANT_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_CONC_VACANT_Q"/>
+    </attribute>
+    <attribute id="A_CONSIDERATION" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONSIDERATION"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_CONSIDERATION"/>
+    </attribute>
+    <attribute id="A_CONSID_ON_CONC" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONSID_ON_CONC"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_CONSID_ON_CONC"/>
+    </attribute>
+    <attribute id="A_CONS_LT_UNENCUM_Q" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CONS_LT_UNENCUM_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_CONS_LT_UNENCUM_Q"/>
+    </attribute>
+    <attribute id="A_CURRENCY" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CURRENCY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_CURRENCY"/>
+    </attribute>
+    <attribute id="A_DUTIABLE_OTHER" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DUTIABLE_OTHER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_DUTIABLE_OTHER"/>
+    </attribute>
+    <attribute id="A_DUTY_ACC_AGG" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DUTY_ACC_AGG"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_DUTY_ACC_AGG"/>
+    </attribute>
+    <attribute id="A_DUTY_INCREASE" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DUTY_INCREASE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_DUTY_INCREASE"/>
+    </attribute>
+    <attribute id="A_DUTY_PREVIOUS" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DUTY_PREVIOUS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_DUTY_PREVIOUS"/>
+    </attribute>
+    <attribute id="A_DUTY_REDUCTION" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DUTY_REDUCTION"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_DUTY_REDUCTION"/>
+    </attribute>
+    <attribute id="A_EXEMPTION" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_EXEMPTION"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_EXEMPTION"/>
+    </attribute>
+    <attribute id="A_EXEMPTION_Q" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_EXEMPTION_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_EXEMPTION_Q"/>
+    </attribute>
+    <attribute id="A_EXTENT_OF_GIFT" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_EXTENT_OF_GIFT"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_EXTENT_OF_GIFT"/>
+    </attribute>
+    <attribute id="A_FIRST_IN_ARRANGE_Q" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_FIRST_IN_ARRANGE_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_FIRST_IN_ARRANGE_Q"/>
+    </attribute>
+    <attribute id="A_GIFT_Q" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_GIFT_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_GIFT_Q"/>
+    </attribute>
+    <attribute id="A_INT_ACQ_FHOME" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_INT_ACQ_FHOME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_INT_ACQ_FHOME"/>
+    </attribute>
+    <attribute id="A_INT_ACQ_FHVL" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_INT_ACQ_FHVL"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_INT_ACQ_FHVL"/>
+    </attribute>
+    <attribute id="A_INT_ACQ_HOME" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_INT_ACQ_HOME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_INT_ACQ_HOME"/>
+    </attribute>
+    <attribute id="A_INT_ACQ_NOCONC" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_INT_ACQ_NOCONC"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_INT_ACQ_NOCONC"/>
+    </attribute>
+    <attribute id="A_NUMB_MORT" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_NUMB_MORT"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_NUMB_MORT"/>
+    </attribute>
+    <attribute id="A_PART_ARRANGE_Q" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_PART_ARRANGE_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_PART_ARRANGE_Q"/>
+    </attribute>
+    <attribute id="A_PREV_TRANS" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_PREV_TRANS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_PREV_TRANS"/>
+    </attribute>
+    <attribute id="A_RELATED_Q" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_RELATED_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_RELATED_Q"/>
+    </attribute>
+    <attribute id="A_SHARE_INT_ACQ_FHOME" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SHARE_INT_ACQ_FHOME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_SHARE_INT_ACQ_FHOME"/>
+    </attribute>
+    <attribute id="A_SHARE_INT_ACQ_FHVL" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SHARE_INT_ACQ_FHVL"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_SHARE_INT_ACQ_FHVL"/>
+    </attribute>
+    <attribute id="A_SHARE_INT_ACQ_HOME" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SHARE_INT_ACQ_HOME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_SHARE_INT_ACQ_HOME"/>
+    </attribute>
+    <attribute id="A_SHARE_INT_ACQ_NOCONC" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SHARE_INT_ACQ_NOCONC"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_SHARE_INT_ACQ_NOCONC"/>
+    </attribute>
+    <attribute id="A_TOTAL_CONSID" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TOTAL_CONSID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_TOTAL_CONSID"/>
+    </attribute>
+    <attribute id="A_XTIONS_IN_AGG" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_XTIONS_IN_AGG"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_XTIONS_IN_AGG"/>
+    </attribute>
+    <attribute id="C_CURRENCY" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_CURRENCY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="C_CURRENCY"/>
+    </attribute>
+    <attribute id="C_DT_PAYABLE_TXN" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_DT_PAYABLE_TXN"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="C_DT_PAYABLE_TXN"/>
+    </attribute>
+    <attribute id="C_TOT_DUTY_PAY" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_TOT_DUTY_PAY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="C_TOT_DUTY_PAY"/>
+    </attribute>
+    <attribute id="C_TOT_DT_PAY_MV" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_TOT_DT_PAY_MV"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="C_TOT_DT_PAY_MV"/>
+    </attribute>
+    <attribute id="C_TOT_OTHER" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_TOT_OTHER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="C_TOT_OTHER"/>
+    </attribute>
+    <attribute id="A_DUTY_ACC_AGG_MV" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DUTY_ACC_AGG_MV"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_DUTY_ACC_AGG_MV"/>
+    </attribute>
+    <attribute id="A_AFAD_LAND_Q" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AFAD_LAND_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_AFAD_LAND_Q"/>
+    </attribute>
+    <attribute id="A_AFAD_LAND_VALUE" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AFAD_LAND_VALUE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_AFAD_LAND_VALUE"/>
+    </attribute>
+    <attribute id="A_AFAD_INT_ACQUIRED" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AFAD_INT_ACQUIRED"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_AFAD_INT_ACQUIRED"/>
+    </attribute>
+    <attribute id="A_AFAD_INT_SHARE" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AFAD_INT_SHARE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="A_AFAD_INT_SHARE"/>
+    </attribute>
+    <attribute id="C_AFAD_TOTAL" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_AFAD_TOTAL"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="C_AFAD_TOTAL"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="154.1296676518458" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DS_3PSCD_TRM_FORM_DATA_6TRN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="236.9999988079071"/>
+      <rectangleSize height="30" width="276"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

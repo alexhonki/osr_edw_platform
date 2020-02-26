@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_3PSCD_TRM_FORM_DATA_IMV1" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_3PSCD_TRM_FORM_DATA_IMV1"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_IMV1.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_IMV1.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DS_3PSCD_TRM_FORM_DATA_IMV1">
+    <viewAttributes>
+      <viewAttribute id="RETURN_ID"/>
+      <viewAttribute id="FORM"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="CASE_GUID"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="FORM_CLASS"/>
+      <viewAttribute id="FORM_STATUS"/>
+      <viewAttribute id="FORM_STATUS_TS"/>
+      <viewAttribute id="SUPERSEDED_BY"/>
+      <viewAttribute id="SUPERSEDE_TO"/>
+      <viewAttribute id="RECEIPT_TS"/>
+      <viewAttribute id="TEMPLATE_VER"/>
+      <viewAttribute id="BATCH_ID"/>
+      <viewAttribute id="LOCATOR_NUMBER"/>
+      <viewAttribute id="FBTYP"/>
+      <viewAttribute id="FBNUM"/>
+      <viewAttribute id="RECORDMODE"/>
+      <viewAttribute id="A_COMMIS_Q"/>
+      <viewAttribute id="A_CURRENCY"/>
+      <viewAttribute id="A_DEF_Q"/>
+      <viewAttribute id="A_ORIG_FEES"/>
+      <viewAttribute id="A_ORIG_LODGE_DT"/>
+      <viewAttribute id="A_ORIG_PENALTY"/>
+      <viewAttribute id="A_ORIG_TRANS_TY"/>
+      <viewAttribute id="A_ORIG_TXN_NUMB"/>
+      <viewAttribute id="A_ORIG_UTI"/>
+      <viewAttribute id="A_PEN_REMIT_REA"/>
+      <viewAttribute id="A_REASS_TRM_Q"/>
+      <viewAttribute id="A_REASS_REASON"/>
+      <viewAttribute id="A_TXN_NUMBER"/>
+      <viewAttribute id="A_UTI_REMIT_REA"/>
+      <viewAttribute id="C_LODGE_DATE"/>
+      <viewAttribute id="C_TOTAL_PENALTY"/>
+      <viewAttribute id="C_TOTAL_UTI"/>
+      <viewAttribute id="C_VEHICLE_DUTY"/>
+      <viewAttribute id="D_DUTY_INCREASE"/>
+      <viewAttribute id="D_DUTY_REDUCTIO"/>
+      <viewAttribute id="D_PEN_INCREASE"/>
+      <viewAttribute id="D_PEN_REDUCTION"/>
+      <viewAttribute id="D_UTI_REDUCTION"/>
+      <viewAttribute id="A_ORIG_TOT_DUTY"/>
+      <viewAttribute id="A_ILODGE_DATE"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_IMV1.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DS_3PSCD_TRM_FORM_DATA_IMV1">
+  <attributes>
+    <attribute id="RETURN_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="FORM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FORM"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="FORM_CLASS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FORM_CLASS"/>
+    </attribute>
+    <attribute id="FORM_STATUS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FORM_STATUS"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FORM_STATUS_TS"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="SUPERSEDED_BY"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="SUPERSEDE_TO"/>
+    </attribute>
+    <attribute id="RECEIPT_TS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="RECEIPT_TS"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="TEMPLATE_VER"/>
+    </attribute>
+    <attribute id="BATCH_ID" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="BATCH_ID"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="FBTYP" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="FBNUM" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="RECORDMODE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORDMODE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="RECORDMODE"/>
+    </attribute>
+    <attribute id="A_COMMIS_Q" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_COMMIS_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_COMMIS_Q"/>
+    </attribute>
+    <attribute id="A_CURRENCY" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_CURRENCY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_CURRENCY"/>
+    </attribute>
+    <attribute id="A_DEF_Q" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DEF_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_DEF_Q"/>
+    </attribute>
+    <attribute id="A_ORIG_FEES" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_FEES"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_FEES"/>
+    </attribute>
+    <attribute id="A_ORIG_LODGE_DT" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_LODGE_DT"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_LODGE_DT"/>
+    </attribute>
+    <attribute id="A_ORIG_PENALTY" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_PENALTY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_PENALTY"/>
+    </attribute>
+    <attribute id="A_ORIG_TRANS_TY" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_TRANS_TY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_TRANS_TY"/>
+    </attribute>
+    <attribute id="A_ORIG_TXN_NUMB" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_TXN_NUMB"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_TXN_NUMB"/>
+    </attribute>
+    <attribute id="A_ORIG_UTI" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_UTI"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_UTI"/>
+    </attribute>
+    <attribute id="A_PEN_REMIT_REA" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_PEN_REMIT_REA"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_PEN_REMIT_REA"/>
+    </attribute>
+    <attribute id="A_REASS_TRM_Q" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_TRM_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_REASS_TRM_Q"/>
+    </attribute>
+    <attribute id="A_REASS_REASON" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_REASON"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_REASS_REASON"/>
+    </attribute>
+    <attribute id="A_TXN_NUMBER" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TXN_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_TXN_NUMBER"/>
+    </attribute>
+    <attribute id="A_UTI_REMIT_REA" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UTI_REMIT_REA"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_UTI_REMIT_REA"/>
+    </attribute>
+    <attribute id="C_LODGE_DATE" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LODGE_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="C_LODGE_DATE"/>
+    </attribute>
+    <attribute id="C_TOTAL_PENALTY" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_TOTAL_PENALTY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="C_TOTAL_PENALTY"/>
+    </attribute>
+    <attribute id="C_TOTAL_UTI" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_TOTAL_UTI"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="C_TOTAL_UTI"/>
+    </attribute>
+    <attribute id="C_VEHICLE_DUTY" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_VEHICLE_DUTY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="C_VEHICLE_DUTY"/>
+    </attribute>
+    <attribute id="D_DUTY_INCREASE" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="D_DUTY_INCREASE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="D_DUTY_INCREASE"/>
+    </attribute>
+    <attribute id="D_DUTY_REDUCTIO" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="D_DUTY_REDUCTIO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="D_DUTY_REDUCTIO"/>
+    </attribute>
+    <attribute id="D_PEN_INCREASE" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="D_PEN_INCREASE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="D_PEN_INCREASE"/>
+    </attribute>
+    <attribute id="D_PEN_REDUCTION" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="D_PEN_REDUCTION"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="D_PEN_REDUCTION"/>
+    </attribute>
+    <attribute id="D_UTI_REDUCTION" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="D_UTI_REDUCTION"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="D_UTI_REDUCTION"/>
+    </attribute>
+    <attribute id="A_ORIG_TOT_DUTY" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_TOT_DUTY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ORIG_TOT_DUTY"/>
+    </attribute>
+    <attribute id="A_ILODGE_DATE" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ILODGE_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="A_ILODGE_DATE"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="165.91288048236822" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DS_3PSCD_TRM_FORM_DATA_IMV1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="236.9999988079071"/>
+      <rectangleSize height="30" width="298"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_3PSCD_TRM_FORM_DATA_0IDN" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_3PSCD_TRM_FORM_DATA_0IDN"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_0IDN.active_data">
+    <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_0IDN.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="DS_3PSCD_TRM_FORM_DATA_0IDN">
+    <viewAttributes>
+      <viewAttribute id="RETURN_ID"/>
+      <viewAttribute id="FORM"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="CASE_GUID"/>
+      <viewAttribute id="FIELDINDEX"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="FORM_CLASS"/>
+      <viewAttribute id="FORM_STATUS"/>
+      <viewAttribute id="FORM_STATUS_TS"/>
+      <viewAttribute id="SUPERSEDED_BY"/>
+      <viewAttribute id="SUPERSEDE_TO"/>
+      <viewAttribute id="RECEIPT_TS"/>
+      <viewAttribute id="TEMPLATE_VER"/>
+      <viewAttribute id="BATCH_ID"/>
+      <viewAttribute id="LOCATOR_NUMBER"/>
+      <viewAttribute id="FBTYP"/>
+      <viewAttribute id="FBNUM"/>
+      <viewAttribute id="RECORDMODE"/>
+      <viewAttribute id="A_AGREE_Q"/>
+      <viewAttribute id="A_DET_PREV_Q"/>
+      <viewAttribute id="A_DSP_DATE_REASS"/>
+      <viewAttribute id="A_DPROP"/>
+      <viewAttribute id="A_DTYPE"/>
+      <viewAttribute id="A_EVENT_DATE"/>
+      <viewAttribute id="A_ILODGE_DATE"/>
+      <viewAttribute id="A_INS_TYPE"/>
+      <viewAttribute id="A_PREV_PAID"/>
+      <viewAttribute id="A_REASS_COMMENT"/>
+      <viewAttribute id="A_REASS_EVENT"/>
+      <viewAttribute id="A_REASS_REASON"/>
+      <viewAttribute id="A_SEC22_Q"/>
+      <viewAttribute id="A_TCLASS_LR"/>
+      <viewAttribute id="A_TCLASS_TD"/>
+      <viewAttribute id="A_TRANS_DATE"/>
+      <viewAttribute id="A_UNCOND_DATE"/>
+      <viewAttribute id="A_XTIN_PREV_PAID"/>
+      <viewAttribute id="A_YOUR_REF"/>
+      <viewAttribute id="C_ASS_ISSUE_DATE"/>
+      <viewAttribute id="C_BP"/>
+      <viewAttribute id="C_BPNAME"/>
+      <viewAttribute id="C_ELN_ID"/>
+      <viewAttribute id="C_ELN_TXN"/>
+      <viewAttribute id="C_FBN"/>
+      <viewAttribute id="C_LODGE_DATE"/>
+      <viewAttribute id="C_SENDER_ID"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_0IDN.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="DS_3PSCD_TRM_FORM_DATA_0IDN">
+  <attributes>
+    <attribute id="RETURN_ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RETURN_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="RETURN_ID"/>
+    </attribute>
+    <attribute id="FORM" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FORM"/>
+    </attribute>
+    <attribute id="FORM_NUMBER" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FORM_NUMBER"/>
+    </attribute>
+    <attribute id="CASE_GUID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASE_GUID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="CASE_GUID"/>
+    </attribute>
+    <attribute id="FIELDINDEX" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIELDINDEX"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FIELDINDEX"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="FORM_CLASS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_CLASS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FORM_CLASS"/>
+    </attribute>
+    <attribute id="FORM_STATUS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FORM_STATUS"/>
+    </attribute>
+    <attribute id="FORM_STATUS_TS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FORM_STATUS_TS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FORM_STATUS_TS"/>
+    </attribute>
+    <attribute id="SUPERSEDED_BY" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDED_BY"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="SUPERSEDED_BY"/>
+    </attribute>
+    <attribute id="SUPERSEDE_TO" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SUPERSEDE_TO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="SUPERSEDE_TO"/>
+    </attribute>
+    <attribute id="RECEIPT_TS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECEIPT_TS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="RECEIPT_TS"/>
+    </attribute>
+    <attribute id="TEMPLATE_VER" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEMPLATE_VER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="TEMPLATE_VER"/>
+    </attribute>
+    <attribute id="BATCH_ID" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BATCH_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="BATCH_ID"/>
+    </attribute>
+    <attribute id="LOCATOR_NUMBER" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LOCATOR_NUMBER"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="LOCATOR_NUMBER"/>
+    </attribute>
+    <attribute id="FBTYP" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBTYP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FBTYP"/>
+    </attribute>
+    <attribute id="FBNUM" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FBNUM"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="FBNUM"/>
+    </attribute>
+    <attribute id="RECORDMODE" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RECORDMODE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="RECORDMODE"/>
+    </attribute>
+    <attribute id="A_AGREE_Q" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_AGREE_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_AGREE_Q"/>
+    </attribute>
+    <attribute id="A_DET_PREV_Q" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DET_PREV_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_DET_PREV_Q"/>
+    </attribute>
+    <attribute id="A_DSP_DATE_REASS" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DSP_DATE_REASS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_DSP_DATE_REASS"/>
+    </attribute>
+    <attribute id="A_DPROP" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DPROP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_DPROP"/>
+    </attribute>
+    <attribute id="A_DTYPE" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_DTYPE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_DTYPE"/>
+    </attribute>
+    <attribute id="A_EVENT_DATE" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_EVENT_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_EVENT_DATE"/>
+    </attribute>
+    <attribute id="A_ILODGE_DATE" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ILODGE_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_ILODGE_DATE"/>
+    </attribute>
+    <attribute id="A_INS_TYPE" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_INS_TYPE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_INS_TYPE"/>
+    </attribute>
+    <attribute id="A_PREV_PAID" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_PREV_PAID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_PREV_PAID"/>
+    </attribute>
+    <attribute id="A_REASS_COMMENT" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_COMMENT"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_REASS_COMMENT"/>
+    </attribute>
+    <attribute id="A_REASS_EVENT" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_EVENT"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_REASS_EVENT"/>
+    </attribute>
+    <attribute id="A_REASS_REASON" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_REASS_REASON"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_REASS_REASON"/>
+    </attribute>
+    <attribute id="A_SEC22_Q" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_SEC22_Q"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_SEC22_Q"/>
+    </attribute>
+    <attribute id="A_TCLASS_LR" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TCLASS_LR"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_TCLASS_LR"/>
+    </attribute>
+    <attribute id="A_TCLASS_TD" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TCLASS_TD"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_TCLASS_TD"/>
+    </attribute>
+    <attribute id="A_TRANS_DATE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_TRANS_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_TRANS_DATE"/>
+    </attribute>
+    <attribute id="A_UNCOND_DATE" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_UNCOND_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_UNCOND_DATE"/>
+    </attribute>
+    <attribute id="A_XTIN_PREV_PAID" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_XTIN_PREV_PAID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_XTIN_PREV_PAID"/>
+    </attribute>
+    <attribute id="A_YOUR_REF" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_YOUR_REF"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="A_YOUR_REF"/>
+    </attribute>
+    <attribute id="C_ASS_ISSUE_DATE" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ASS_ISSUE_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_ASS_ISSUE_DATE"/>
+    </attribute>
+    <attribute id="C_BP" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BP"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_BP"/>
+    </attribute>
+    <attribute id="C_BPNAME" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_BPNAME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_BPNAME"/>
+    </attribute>
+    <attribute id="C_ELN_ID" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ELN_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_ELN_ID"/>
+    </attribute>
+    <attribute id="C_ELN_TXN" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_ELN_TXN"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_ELN_TXN"/>
+    </attribute>
+    <attribute id="C_FBN" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_FBN"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_FBN"/>
+    </attribute>
+    <attribute id="C_LODGE_DATE" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_LODGE_DATE"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_LODGE_DATE"/>
+    </attribute>
+    <attribute id="C_SENDER_ID" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_SENDER_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="C_SENDER_ID"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="166.5386979103697" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="DS_3PSCD_TRM_FORM_DATA_0IDN" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="236.9999988079071"/>
+      <rectangleSize height="30" width="302"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
