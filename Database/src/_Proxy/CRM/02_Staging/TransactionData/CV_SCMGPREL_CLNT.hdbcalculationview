@@ -12,12 +12,11 @@
   <calculationView xsi:type="Calculation:ProjectionView" id="SCMGPREL_CLNT">
     <viewAttributes>
       <viewAttribute id="MANDT"/>
-      <viewAttribute id="POIDID"/>
-      <viewAttribute id="CONTREP"/>
-      <viewAttribute id="SKEY"/>
-      <viewAttribute id="STATE"/>
+      <viewAttribute id="POIDID1"/>
+      <viewAttribute id="POIDID2"/>
+      <viewAttribute id="PPRETYP"/>
       <viewAttribute id="ARCHIVE"/>
-      <viewAttribute id="POIDSTR"/>
+      <viewAttribute id="RELATTR"/>
       <viewAttribute id="Z_CHANGE_TYPE"/>
       <viewAttribute id="Z_CHANGE_TIME"/>
       <viewAttribute id="Z_SOURCE_SYS"/>
@@ -37,59 +36,55 @@
       <descriptions defaultDescription="MANDT"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="MANDT"/>
     </attribute>
-    <attribute id="POIDID" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="POIDID"/>
-      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="POIDID"/>
+    <attribute id="POIDID1" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POIDID1"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="POIDID1"/>
     </attribute>
-    <attribute id="CONTREP" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="CONTREP"/>
-      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="CONTREP"/>
+    <attribute id="POIDID2" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="POIDID2"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="POIDID2"/>
     </attribute>
-    <attribute id="SKEY" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="SKEY"/>
-      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="SKEY"/>
+    <attribute id="PPRETYP" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PPRETYP"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="PPRETYP"/>
     </attribute>
-    <attribute id="STATE" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="STATE"/>
-      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="STATE"/>
-    </attribute>
-    <attribute id="ARCHIVE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ARCHIVE" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ARCHIVE"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="ARCHIVE"/>
     </attribute>
-    <attribute id="POIDSTR" order="7" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="POIDSTR"/>
-      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="POIDSTR"/>
+    <attribute id="RELATTR" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELATTR"/>
+      <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="RELATTR"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="8" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TYPE" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_CHANGE_TYPE"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_CHANGE_TIME"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_SOURCE_SYS" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="11" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="10" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="12" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_SEQ_ID" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
-    <attribute id="Z_CURR_FLAG" order="13" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CURR_FLAG" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CURR_FLAG"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_CURR_FLAG"/>
     </attribute>
-    <attribute id="Z_VALID_FROM" order="14" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_FROM" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_FROM"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_VALID_FROM"/>
     </attribute>
-    <attribute id="Z_VALID_TO" order="15" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_VALID_TO" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_VALID_TO"/>
       <keyMapping columnObjectName="SCMGPREL_CLNT" columnName="Z_VALID_TO"/>
     </attribute>
@@ -102,7 +97,7 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="102.5" y="112"/>
+      <upperLeftCorner x="102" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
