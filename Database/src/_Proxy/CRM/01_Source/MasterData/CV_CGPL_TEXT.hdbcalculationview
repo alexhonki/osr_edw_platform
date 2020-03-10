@@ -15,16 +15,16 @@
       <descriptions defaultDescription="CLIENT"/>
       <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="CLIENT"/>
     </attribute>
-    <attribute id="GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="GUID"/>
+    <attribute id="B_GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="B_GUID"/>
       <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="GUID"/>
     </attribute>
     <attribute id="LANGU" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LANGU"/>
       <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="LANGU"/>
     </attribute>
-    <attribute id="TEXT_GUID" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="TEXT_GUID"/>
+    <attribute id="B_TEXT_GUID" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="B_TEXT_GUID"/>
       <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="TEXT_GUID"/>
     </attribute>
     <attribute id="TEXT1" order="5" displayAttribute="false" attributeHierarchyActive="false">
@@ -44,7 +44,18 @@
       <keyMapping columnObjectName="CDS_CGPL.TAB.CGPL_TEXT" columnName="Z_SOURCE_SYS"/>
     </attribute>
   </attributes>
-  <calculatedAttributes/>
+  <calculatedAttributes>
+    <calculatedAttribute id="GUID" order="9" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="32">
+        <formula>rawtohex(&quot;B_GUID&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+    <calculatedAttribute id="TEXT_GUID" order="10" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <keyCalculation datatype="NVARCHAR" expressionLanguage="COLUMN_ENGINE" length="32">
+        <formula>rawtohex(&quot;B_TEXT_GUID&quot;)</formula>
+      </keyCalculation>
+      </calculatedAttribute>
+  </calculatedAttributes>
   <baseMeasures/>
   <calculatedMeasures/>
   <restrictedMeasures/>
@@ -52,7 +63,9 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="160"/>
     </shape>
   </shapes>
 </layout>
