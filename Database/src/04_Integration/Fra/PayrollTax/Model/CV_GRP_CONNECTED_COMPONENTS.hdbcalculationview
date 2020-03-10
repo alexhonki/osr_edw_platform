@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.platform.fra.prt.model::CV_GRP_CONNECTED_COMPONENTS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Connect Components for Grouping"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.apps.acs.synonym::SAPACS.PRTGRPCC">
+    <resourceUri>osr.apps.acs.synonym::SAPACS.PRTGRPCC</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.apps.acs.synonym::SAPACS.PRTGRPCC">
+  <attributes>
+    <attribute id="GJAHR" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GJAHR"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPCC" columnName="GJAHR"/>
+    </attribute>
+    <attribute id="GRP_DATE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GRP_DATE"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPCC" columnName="GRP_DATE"/>
+    </attribute>
+    <attribute id="ELEMENT" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ELEMENT"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPCC" columnName="ELEMENT"/>
+    </attribute>
+    <attribute id="PARENT_ELEMENT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARENT_ELEMENT"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPCC" columnName="PARENT_ELEMENT"/>
+    </attribute>
+    <attribute id="CREA_UNAME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_UNAME"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPCC" columnName="CREA_UNAME"/>
+    </attribute>
+    <attribute id="CREA_DATE_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREA_DATE_TIME"/>
+      <keyMapping columnObjectName="SAPACS.PRTGRPCC" columnName="CREA_DATE_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
