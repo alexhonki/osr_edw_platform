@@ -136,6 +136,10 @@ ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_POSTMARK&quot;),'YYYYMMDDHH24MISS') END</
         <formula>CASE WHEN &quot;CC_RECEIPT&quot;='19000101000000' THEN '0' 
 ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_RECEIPT&quot;),'YYYYMMDDHH24MISS') END</formula>
       </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_WAERS" datatype="NVARCHAR" length="5" expressionLanguage="SQL">
+        <formula>CASE WHEN &quot;WAERS&quot; = '' THEN 'AUD' ELSE &quot;WAERS&quot; END</formula>
+      </calculatedViewAttribute>
     </calculatedViewAttributes>
     <input node="osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data"/>
   </calculationView>
@@ -252,7 +256,7 @@ ELSE TO_NVARCHAR(TO_TIMESTAMP(&quot;CC_RECEIPT&quot;),'YYYYMMDDHH24MISS') END</f
     </attribute>
     <attribute id="WAERS" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="WAERS"/>
-      <keyMapping columnObjectName="Projection_1" columnName="WAERS"/>
+      <keyMapping columnObjectName="Projection_1" columnName="CC_WAERS"/>
     </attribute>
     <attribute id="ERNAM" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ERNAM"/>

@@ -182,7 +182,7 @@ FORM.A_BEN_LAST_NAME,
 FORM.A_BEN_DOB,
 FORM.C_TEE_NO_BEN
 FROM 
-"osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS DFMCA_RETURN
+"osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS" AS DFMCA_RETURN
 INNER JOIN
 "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_01_LV"() AS FORM
 ON DFMCA_RETURN.CASE_GUID = FORM.RETURN_ID
@@ -277,7 +277,7 @@ FORM.A_BEN_LAST_NAME,
 FORM.A_BEN_DOB,
 FORM.C_TEE_NO_BEN
 FROM 
-"osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS DFMCA_RETURN
+"osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS" AS DFMCA_RETURN
 INNER JOIN
 "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_3DOC_01"() AS FORM
 ON DFMCA_RETURN.CASE_GUID = FORM.RETURN_ID
