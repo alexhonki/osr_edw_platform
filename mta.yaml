@@ -89,6 +89,11 @@ modules:
         properties:
           key: logical-OSR-EDW-SOURCE-BDM-grantor
           service: '~{OSR-EDW-SOURCE-BDM-grantor-service}'
+      - name: OSR-EDW-SOURCE-DNRME-grantor
+        group: SERVICE_REPLACEMENTS
+        properties:
+          key: logical-OSR-EDW-SOURCE-DNRME-grantor
+          service: '~{OSR-EDW-SOURCE-DNRME-grantor-service}'
       - name: acs-ext-access-grantor
       - name: edw-ext-access-grantor
       - name: OSR-EDW-SOURCE-DATA-INFO-grantor
@@ -168,6 +173,12 @@ resources:
       OSR-EDW-SOURCE-BDM-grantor-service: '${service-name}'
     parameters:
       service-name: OSR_EDW_SOURCE_BDM-deploy
+    type: org.cloudfoundry.existing-service
+  - name: OSR-EDW-SOURCE-DNRME-grantor
+    properties:
+      OSR-EDW-SOURCE-DNRME-grantor-service: '${service-name}'
+    parameters:
+      service-name: OSR_EDW_SOURCE_DNRME-deploy
     type: org.cloudfoundry.existing-service
   - name: OSR_EDW_PLATFORM-dws
     properties:
