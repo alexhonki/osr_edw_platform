@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.td.dnrme.proxy::CV_ATS_MATCH" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_ATS_MATCH"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.td.dnrme.synonym::CDS_ATS.TAB.ATS_MATCH">
+    <resourceUri>osr.edw.source.td.dnrme.synonym::CDS_ATS.TAB.ATS_MATCH</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.td.dnrme.synonym::CDS_ATS.TAB.ATS_MATCH">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="ERROR"/>
+    </attribute>
+    <attribute id="COMPLIANCE_ID" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMPLIANCE_ID"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COMPLIANCE_ID"/>
+    </attribute>
+    <attribute id="ASSESSMENT_NO" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSESSMENT_NO"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="ASSESSMENT_NO"/>
+    </attribute>
+    <attribute id="DEALING_NO" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALING_NO"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="DEALING_NO"/>
+    </attribute>
+    <attribute id="DATE_ASSESSMENT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DATE_ASSESSMENT"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="DATE_ASSESSMENT"/>
+    </attribute>
+    <attribute id="SOLD_TO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOLD_TO"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="SOLD_TO"/>
+    </attribute>
+    <attribute id="DEALING_NO_LINKED" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALING_NO_LINKED"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="DEALING_NO_LINKED"/>
+    </attribute>
+    <attribute id="STATUS" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="STATUS"/>
+    </attribute>
+    <attribute id="FLAG_DATA_MATCHED" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLAG_DATA_MATCHED"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="FLAG_DATA_MATCHED"/>
+    </attribute>
+    <attribute id="BW_DELTA_PROCESS_RECORD_MODE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BW_DELTA_PROCESS_RECORD_MODE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="BW_DELTA_PROCESS_RECORD_MODE"/>
+    </attribute>
+    <attribute id="ACTION_TASK" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ACTION_TASK"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="ACTION_TASK"/>
+    </attribute>
+    <attribute id="REASON_CODE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REASON_CODE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="REASON_CODE"/>
+    </attribute>
+    <attribute id="CREATED_BY_USER_NAME" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATED_BY_USER_NAME"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CREATED_BY_USER_NAME"/>
+    </attribute>
+    <attribute id="CREATED_DATE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATED_DATE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CREATED_DATE"/>
+    </attribute>
+    <attribute id="ORIGINAL_ASSESSMENT_NO" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORIGINAL_ASSESSMENT_NO"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="ORIGINAL_ASSESSMENT_NO"/>
+    </attribute>
+    <attribute id="ASSESSMENT_TYPE" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSESSMENT_TYPE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="ASSESSMENT_TYPE"/>
+    </attribute>
+    <attribute id="MATCH_OVERALL_EXACT" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_OVERALL_EXACT"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="MATCH_OVERALL_EXACT"/>
+    </attribute>
+    <attribute id="MATCH_OVERALL_ADVISED" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_OVERALL_ADVISED"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="MATCH_OVERALL_ADVISED"/>
+    </attribute>
+    <attribute id="MATCH_OVERALL_NONE" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_OVERALL_NONE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="MATCH_OVERALL_NONE"/>
+    </attribute>
+    <attribute id="MATCH_OVERALL_PARTIAL" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_OVERALL_PARTIAL"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="MATCH_OVERALL_PARTIAL"/>
+    </attribute>
+    <attribute id="CALENDAR_DAY" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CALENDAR_DAY"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CALENDAR_DAY"/>
+    </attribute>
+    <attribute id="RISK_GROUPING" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RISK_GROUPING"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="RISK_GROUPING"/>
+    </attribute>
+    <attribute id="FLAG_DATA_SELECTION" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLAG_DATA_SELECTION"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="FLAG_DATA_SELECTION"/>
+    </attribute>
+    <attribute id="CAM_POSTAL_CODE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAM_POSTAL_CODE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CAM_POSTAL_CODE"/>
+    </attribute>
+    <attribute id="COUNTRY_KEY" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COUNTRY_KEY"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNTRY_KEY"/>
+    </attribute>
+    <attribute id="SOURCE_FIELD_VALUE" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SOURCE_FIELD_VALUE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="SOURCE_FIELD_VALUE"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_VALID_TO"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ROWNUMBER" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ROWNUMBER"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="ROWNUMBER"/>
+    </measure>
+    <measure id="PARTITION" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PARTITION"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="PARTITION"/>
+    </measure>
+    <measure id="CONSIDERATION" order="14" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CONSIDERATION"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CONSIDERATION"/>
+    </measure>
+    <measure id="CONSIDERATION_NRW" order="20" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CONSIDERATION_NRW"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CONSIDERATION_NRW"/>
+    </measure>
+    <measure id="RISK_RANKING" order="27" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RISK_RANKING"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="RISK_RANKING"/>
+    </measure>
+    <measure id="CALENDAR_YEAR_MONTH" order="28" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CALENDAR_YEAR_MONTH"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CALENDAR_YEAR_MONTH"/>
+    </measure>
+    <measure id="CALENDAR_YEAR_WEEK" order="29" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="CALENDAR_YEAR_WEEK"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="CALENDAR_YEAR_WEEK"/>
+    </measure>
+    <measure id="COUNT_ADVISED_LOT_PLAN" order="31" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="COUNT_ADVISED_LOT_PLAN"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNT_ADVISED_LOT_PLAN"/>
+    </measure>
+    <measure id="COUNT_EXACT_LOT_PLAN" order="32" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="COUNT_EXACT_LOT_PLAN"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNT_EXACT_LOT_PLAN"/>
+    </measure>
+    <measure id="COUNT_ADVISED_PURCHASER" order="33" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="COUNT_ADVISED_PURCHASER"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNT_ADVISED_PURCHASER"/>
+    </measure>
+    <measure id="COUNT_EXACT_PURCHASER" order="34" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="COUNT_EXACT_PURCHASER"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNT_EXACT_PURCHASER"/>
+    </measure>
+    <measure id="COUNT_ADVISED_VENDOR" order="35" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="COUNT_ADVISED_VENDOR"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNT_ADVISED_VENDOR"/>
+    </measure>
+    <measure id="COUNT_EXACT_VENDOR" order="36" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="COUNT_EXACT_VENDOR"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="COUNT_EXACT_VENDOR"/>
+    </measure>
+    <measure id="Z_CHANGE_TIME" order="46" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_CHANGE_TIME"/>
+    </measure>
+    <measure id="Z_RUN_ROW_NO" order="48" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_RUN_ROW_NO"/>
+    </measure>
+    <measure id="Z_RUN_SEQ_ID" order="49" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.ATS_MATCH" columnName="Z_RUN_SEQ_ID"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
