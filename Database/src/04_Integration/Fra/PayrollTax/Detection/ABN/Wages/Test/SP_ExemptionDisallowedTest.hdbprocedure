@@ -2,7 +2,7 @@ PROCEDURE "osr.edw.platform.fra.prt.dt.abn.wages.test::SP_ExemptionDisallowedTes
 ( 
 	IN iv_abn				NVARCHAR(11),
 	IN iv_gjahr				NVARCHAR(4),
-	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.ws",
+	OUT lt_workset			"osr.edw.platform.fra.prt.dt.abn::Types.wages.data_irv",
 	OUT et_result       	"osr.edw.platform.fra.prt.dt.abn::Types.wages.result",
 	OUT et_text             "osr.edw.platform.fra.prt.dt.abn::Types.wages.text"
 )
@@ -21,7 +21,8 @@ BEGIN
 			"ABN",
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
-			"GJAHR"
+			"GJAHR",
+			'' as "GROUP_ID"
 		FROM
 		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
 		;
@@ -32,7 +33,9 @@ BEGIN
 			"ABN",
 			"PERIOD_CATEGORY",
 			"PERIOD_KEY",
-			"GJAHR"
+			"GJAHR",
+			'' as "GROUP_ID"
+			
 		FROM
 		"osr.edw.platform.fra.prt.dt.abn.wages::CV_ABN_WAGES_KEYS"
 		WHERE "ABN"     = :iv_abn

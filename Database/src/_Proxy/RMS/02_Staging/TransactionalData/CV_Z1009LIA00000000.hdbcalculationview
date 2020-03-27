@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1009LIA00000000" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.rms.proxy::CV_Z1009LIA00000000" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CV_Z1009LIA00000000"/>
 <localVariables/>
 <variableMappings/>
@@ -8,308 +8,426 @@
     <resourceUri>osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000000.active_data</resourceUri>
   </DataSource>
 </dataSources>
-<calculationViews/>
-<logicalModel id="osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000000.active_data">
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Z1009LIA00000000">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="RECORD_ID"/>
+      <viewAttribute id="PARENT_ID"/>
+      <viewAttribute id="OBJECT_ID"/>
+      <viewAttribute id="BUNDLE_ID"/>
+      <viewAttribute id="VERSION"/>
+      <viewAttribute id="FORM_NUMBER"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="INITIAL_FLAGS"/>
+      <viewAttribute id="C_PAYABLE_TXN"/>
+      <viewAttribute id="C_PAY_RECEIVED"/>
+      <viewAttribute id="C_UTI"/>
+      <viewAttribute id="C_UTI_TOTAL"/>
+      <viewAttribute id="C_PENALTY_TAX"/>
+      <viewAttribute id="C_PENALTY_TOTAL"/>
+      <viewAttribute id="C_TOTAL_LIABILITY"/>
+      <viewAttribute id="C_DUE_DATE"/>
+      <viewAttribute id="C_NON_COMP_PER"/>
+      <viewAttribute id="C_UTI_START_DATE"/>
+      <viewAttribute id="C_NO_OF_UTI_DAYS"/>
+      <viewAttribute id="C_DAILY_UTI_AMT"/>
+      <viewAttribute id="C_LEG_ID"/>
+      <viewAttribute id="C_LEG_DESC"/>
+      <viewAttribute id="C_BSB"/>
+      <viewAttribute id="C_BANK_ACCOUNT_NO"/>
+      <viewAttribute id="C_BANK_ACCOUNT_NAME"/>
+      <viewAttribute id="C_BANK_NAME"/>
+      <viewAttribute id="C_BANK_BRANCH"/>
+      <viewAttribute id="A_UTI_REMITT"/>
+      <viewAttribute id="A_UTI_REASON"/>
+      <viewAttribute id="A_PT_INCREASE"/>
+      <viewAttribute id="A_PT_REMITT"/>
+      <viewAttribute id="A_PT_REASON"/>
+      <viewAttribute id="A_REFUND_OPTION"/>
+      <viewAttribute id="A_BK_DET_CORRECT"/>
+      <viewAttribute id="A_BSB_NEW"/>
+      <viewAttribute id="A_BANK_ACCOUNT_NO_NEW"/>
+      <viewAttribute id="A_BANK_ACCOUNT_NAME_NEW"/>
+      <viewAttribute id="A_BANK_NAME_NEW"/>
+      <viewAttribute id="A_BANK_BRANCH_NEW"/>
+      <viewAttribute id="A_SOURCE"/>
+      <viewAttribute id="A_ORIG_TOT_DUTY"/>
+      <viewAttribute id="A_ORIG_UTI"/>
+      <viewAttribute id="A_ORIG_PENALTY"/>
+      <viewAttribute id="A_ORIG_FEES"/>
+      <viewAttribute id="A_LOW_AMT_PAY"/>
+      <viewAttribute id="A_CONT_NAME"/>
+      <viewAttribute id="A_CONT_NO"/>
+      <viewAttribute id="A_CONFIRM"/>
+      <viewAttribute id="C_TOTAL_ORIG"/>
+      <viewAttribute id="C_CONFIRM_DATE"/>
+      <viewAttribute id="A_EMAIL_ADDRESS"/>
+      <viewAttribute id="A_MOBILE_NO"/>
+      <viewAttribute id="A_FIRST_INSTRUMENT"/>
+      <viewAttribute id="A_SEC_INSTRUMENT"/>
+      <viewAttribute id="A_POSTAGE_INC"/>
+      <viewAttribute id="A_POSTAGE_RED"/>
+      <viewAttribute id="C_POSTAGE_FEES"/>
+      <viewAttribute id="C_POSTAGE_TOTAL"/>
+      <viewAttribute id="A_TITLE"/>
+      <viewAttribute id="A_ORIG_GROSS"/>
+      <viewAttribute id="A_ORIG_PAID_PAY"/>
+      <viewAttribute id="C_LEG_ID_1"/>
+      <viewAttribute id="C_LEG_DESC_1"/>
+      <viewAttribute id="A_CURRENCY"/>
+      <viewAttribute id="C_CURRENCY"/>
+      <viewAttribute id="A_A_UTI"/>
+      <viewAttribute id="A_DATE_PAID"/>
+      <viewAttribute id="A_ORIG_DUE_DATE"/>
+      <viewAttribute id="A_ORIG_AFAD"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_TIMESTAMP_LC" datatype="NVARCHAR" length="14" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;TIMESTAMP&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMESTAMP_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_TIMESTAMP_LC&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_C_DUE_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;C_DUE_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_C_UTI_START_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;C_UTI_START_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_A_ORIG_DUE_DATE_TS" datatype="TIMESTAMP" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;A_ORIG_DUE_DATE&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.rms.synonym::CDS_TRM.DSO.Z1009LIA00000000.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Z1009LIA00000000">
   <attributes>
     <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="CLIENT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="CLIENT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="CLIENT"/>
     </attribute>
     <attribute id="RECORD_ID" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="RECORD_ID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="RECORD_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="RECORD_ID"/>
     </attribute>
     <attribute id="PARENT_ID" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="PARENT_ID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="PARENT_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="PARENT_ID"/>
     </attribute>
     <attribute id="OBJECT_ID" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OBJECT_ID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="OBJECT_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="OBJECT_ID"/>
     </attribute>
     <attribute id="BUNDLE_ID" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="BUNDLE_ID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="BUNDLE_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="BUNDLE_ID"/>
     </attribute>
     <attribute id="VERSION" order="6" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="VERSION"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="VERSION"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="VERSION"/>
     </attribute>
     <attribute id="FORM_NUMBER" order="7" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="FORM_NUMBER"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="FORM_NUMBER"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="FORM_NUMBER"/>
     </attribute>
-    <attribute id="TIMESTAMP" order="8" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TIMESTAMP" order="8" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="TIMESTAMP"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="TIMESTAMP"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="TIMESTAMP"/>
     </attribute>
-    <attribute id="INITIAL_FLAGS" order="9" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="TIMESTAMP_LC" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP_LC"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="CC_TIMESTAMP_LC"/>
+    </attribute>
+    <attribute id="TIMESTAMP_TS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP_TS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="CC_TIMESTAMP_TS"/>
+    </attribute>
+    <attribute id="INITIAL_FLAGS" order="11" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="INITIAL_FLAGS"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="INITIAL_FLAGS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="INITIAL_FLAGS"/>
     </attribute>
-    <attribute id="C_PAYABLE_TXN" order="10" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_PAYABLE_TXN" order="12" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_PAYABLE_TXN"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_PAYABLE_TXN"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_PAYABLE_TXN"/>
     </attribute>
-    <attribute id="C_PAY_RECEIVED" order="11" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_PAY_RECEIVED" order="13" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_PAY_RECEIVED"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_PAY_RECEIVED"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_PAY_RECEIVED"/>
     </attribute>
-    <attribute id="C_UTI" order="12" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_UTI" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_UTI"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_UTI"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_UTI"/>
     </attribute>
-    <attribute id="C_UTI_TOTAL" order="13" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_UTI_TOTAL" order="15" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_UTI_TOTAL"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_UTI_TOTAL"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_UTI_TOTAL"/>
     </attribute>
-    <attribute id="C_PENALTY_TAX" order="14" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_PENALTY_TAX" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_PENALTY_TAX"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_PENALTY_TAX"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_PENALTY_TAX"/>
     </attribute>
-    <attribute id="C_PENALTY_TOTAL" order="15" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_PENALTY_TOTAL" order="17" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_PENALTY_TOTAL"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_PENALTY_TOTAL"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_PENALTY_TOTAL"/>
     </attribute>
-    <attribute id="C_TOTAL_LIABILITY" order="16" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_TOTAL_LIABILITY" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_TOTAL_LIABILITY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_TOTAL_LIABILITY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_TOTAL_LIABILITY"/>
     </attribute>
-    <attribute id="C_DUE_DATE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_DUE_DATE" order="19" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_DUE_DATE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_DUE_DATE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_DUE_DATE"/>
     </attribute>
-    <attribute id="C_NON_COMP_PER" order="18" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_DUE_DATE_TS" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_DUE_DATE_TS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="CC_C_DUE_DATE_TS"/>
+    </attribute>
+    <attribute id="C_NON_COMP_PER" order="21" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_NON_COMP_PER"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_NON_COMP_PER"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_NON_COMP_PER"/>
     </attribute>
-    <attribute id="C_UTI_START_DATE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_UTI_START_DATE" order="22" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_UTI_START_DATE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_UTI_START_DATE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_UTI_START_DATE"/>
     </attribute>
-    <attribute id="C_NO_OF_UTI_DAYS" order="20" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_UTI_START_DATE_TS" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="C_UTI_START_DATE_TS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="CC_C_UTI_START_DATE_TS"/>
+    </attribute>
+    <attribute id="C_NO_OF_UTI_DAYS" order="24" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_NO_OF_UTI_DAYS"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_NO_OF_UTI_DAYS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_NO_OF_UTI_DAYS"/>
     </attribute>
-    <attribute id="C_DAILY_UTI_AMT" order="21" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_DAILY_UTI_AMT" order="25" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_DAILY_UTI_AMT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_DAILY_UTI_AMT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_DAILY_UTI_AMT"/>
     </attribute>
-    <attribute id="C_LEG_ID" order="22" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_LEG_ID" order="26" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_LEG_ID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_LEG_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_LEG_ID"/>
     </attribute>
-    <attribute id="C_LEG_DESC" order="23" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_LEG_DESC" order="27" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_LEG_DESC"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_LEG_DESC"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_LEG_DESC"/>
     </attribute>
-    <attribute id="C_BSB" order="24" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_BSB" order="28" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_BSB"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_BSB"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_BSB"/>
     </attribute>
-    <attribute id="C_BANK_ACCOUNT_NO" order="25" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_BANK_ACCOUNT_NO" order="29" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_BANK_ACCOUNT_NO"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_BANK_ACCOUNT_NO"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_BANK_ACCOUNT_NO"/>
     </attribute>
-    <attribute id="C_BANK_ACCOUNT_NAME" order="26" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_BANK_ACCOUNT_NAME" order="30" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_BANK_ACCOUNT_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_BANK_ACCOUNT_NAME"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_BANK_ACCOUNT_NAME"/>
     </attribute>
-    <attribute id="C_BANK_NAME" order="27" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_BANK_NAME" order="31" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_BANK_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_BANK_NAME"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_BANK_NAME"/>
     </attribute>
-    <attribute id="C_BANK_BRANCH" order="28" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_BANK_BRANCH" order="32" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_BANK_BRANCH"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_BANK_BRANCH"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_BANK_BRANCH"/>
     </attribute>
-    <attribute id="A_UTI_REMITT" order="29" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_UTI_REMITT" order="33" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_UTI_REMITT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_UTI_REMITT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_UTI_REMITT"/>
     </attribute>
-    <attribute id="A_UTI_REASON" order="30" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_UTI_REASON" order="34" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_UTI_REASON"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_UTI_REASON"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_UTI_REASON"/>
     </attribute>
-    <attribute id="A_PT_INCREASE" order="31" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_PT_INCREASE" order="35" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_PT_INCREASE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_PT_INCREASE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_PT_INCREASE"/>
     </attribute>
-    <attribute id="A_PT_REMITT" order="32" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_PT_REMITT" order="36" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_PT_REMITT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_PT_REMITT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_PT_REMITT"/>
     </attribute>
-    <attribute id="A_PT_REASON" order="33" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_PT_REASON" order="37" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_PT_REASON"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_PT_REASON"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_PT_REASON"/>
     </attribute>
-    <attribute id="A_REFUND_OPTION" order="34" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_REFUND_OPTION" order="38" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_REFUND_OPTION"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_REFUND_OPTION"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_REFUND_OPTION"/>
     </attribute>
-    <attribute id="A_BK_DET_CORRECT" order="35" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_BK_DET_CORRECT" order="39" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BK_DET_CORRECT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_BK_DET_CORRECT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_BK_DET_CORRECT"/>
     </attribute>
-    <attribute id="A_BSB_NEW" order="36" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_BSB_NEW" order="40" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BSB_NEW"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_BSB_NEW"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_BSB_NEW"/>
     </attribute>
-    <attribute id="A_BANK_ACCOUNT_NO_NEW" order="37" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_BANK_ACCOUNT_NO_NEW" order="41" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BANK_ACCOUNT_NO_NEW"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_BANK_ACCOUNT_NO_NEW"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_BANK_ACCOUNT_NO_NEW"/>
     </attribute>
-    <attribute id="A_BANK_ACCOUNT_NAME_NEW" order="38" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_BANK_ACCOUNT_NAME_NEW" order="42" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BANK_ACCOUNT_NAME_NEW"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_BANK_ACCOUNT_NAME_NEW"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_BANK_ACCOUNT_NAME_NEW"/>
     </attribute>
-    <attribute id="A_BANK_NAME_NEW" order="39" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_BANK_NAME_NEW" order="43" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BANK_NAME_NEW"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_BANK_NAME_NEW"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_BANK_NAME_NEW"/>
     </attribute>
-    <attribute id="A_BANK_BRANCH_NEW" order="40" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_BANK_BRANCH_NEW" order="44" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_BANK_BRANCH_NEW"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_BANK_BRANCH_NEW"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_BANK_BRANCH_NEW"/>
     </attribute>
-    <attribute id="A_SOURCE" order="41" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_SOURCE" order="45" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_SOURCE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_SOURCE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_SOURCE"/>
     </attribute>
-    <attribute id="A_ORIG_TOT_DUTY" order="42" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_TOT_DUTY" order="46" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_TOT_DUTY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_TOT_DUTY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_TOT_DUTY"/>
     </attribute>
-    <attribute id="A_ORIG_UTI" order="43" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_UTI" order="47" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_UTI"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_UTI"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_UTI"/>
     </attribute>
-    <attribute id="A_ORIG_PENALTY" order="44" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_PENALTY" order="48" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_PENALTY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_PENALTY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_PENALTY"/>
     </attribute>
-    <attribute id="A_ORIG_FEES" order="45" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_FEES" order="49" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_FEES"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_FEES"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_FEES"/>
     </attribute>
-    <attribute id="A_LOW_AMT_PAY" order="46" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_LOW_AMT_PAY" order="50" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_LOW_AMT_PAY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_LOW_AMT_PAY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_LOW_AMT_PAY"/>
     </attribute>
-    <attribute id="A_CONT_NAME" order="47" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_CONT_NAME" order="51" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_CONT_NAME"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_CONT_NAME"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_CONT_NAME"/>
     </attribute>
-    <attribute id="A_CONT_NO" order="48" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_CONT_NO" order="52" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_CONT_NO"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_CONT_NO"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_CONT_NO"/>
     </attribute>
-    <attribute id="A_CONFIRM" order="49" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_CONFIRM" order="53" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_CONFIRM"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_CONFIRM"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_CONFIRM"/>
     </attribute>
-    <attribute id="C_TOTAL_ORIG" order="50" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_TOTAL_ORIG" order="54" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_TOTAL_ORIG"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_TOTAL_ORIG"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_TOTAL_ORIG"/>
     </attribute>
-    <attribute id="C_CONFIRM_DATE" order="51" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_CONFIRM_DATE" order="55" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_CONFIRM_DATE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_CONFIRM_DATE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_CONFIRM_DATE"/>
     </attribute>
-    <attribute id="A_EMAIL_ADDRESS" order="52" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_EMAIL_ADDRESS" order="56" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_EMAIL_ADDRESS"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_EMAIL_ADDRESS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_EMAIL_ADDRESS"/>
     </attribute>
-    <attribute id="A_MOBILE_NO" order="53" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_MOBILE_NO" order="57" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_MOBILE_NO"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_MOBILE_NO"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_MOBILE_NO"/>
     </attribute>
-    <attribute id="A_FIRST_INSTRUMENT" order="54" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_FIRST_INSTRUMENT" order="58" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_FIRST_INSTRUMENT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_FIRST_INSTRUMENT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_FIRST_INSTRUMENT"/>
     </attribute>
-    <attribute id="A_SEC_INSTRUMENT" order="55" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_SEC_INSTRUMENT" order="59" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_SEC_INSTRUMENT"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_SEC_INSTRUMENT"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_SEC_INSTRUMENT"/>
     </attribute>
-    <attribute id="A_POSTAGE_INC" order="56" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_POSTAGE_INC" order="60" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_POSTAGE_INC"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_POSTAGE_INC"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_POSTAGE_INC"/>
     </attribute>
-    <attribute id="A_POSTAGE_RED" order="57" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_POSTAGE_RED" order="61" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_POSTAGE_RED"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_POSTAGE_RED"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_POSTAGE_RED"/>
     </attribute>
-    <attribute id="C_POSTAGE_FEES" order="58" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_POSTAGE_FEES" order="62" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_POSTAGE_FEES"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_POSTAGE_FEES"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_POSTAGE_FEES"/>
     </attribute>
-    <attribute id="C_POSTAGE_TOTAL" order="59" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_POSTAGE_TOTAL" order="63" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_POSTAGE_TOTAL"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_POSTAGE_TOTAL"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_POSTAGE_TOTAL"/>
     </attribute>
-    <attribute id="A_TITLE" order="60" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_TITLE" order="64" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_TITLE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_TITLE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_TITLE"/>
     </attribute>
-    <attribute id="A_ORIG_GROSS" order="61" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_GROSS" order="65" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_GROSS"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_GROSS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_GROSS"/>
     </attribute>
-    <attribute id="A_ORIG_PAID_PAY" order="62" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_PAID_PAY" order="66" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_PAID_PAY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_PAID_PAY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_PAID_PAY"/>
     </attribute>
-    <attribute id="C_LEG_ID_1" order="63" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_LEG_ID_1" order="67" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_LEG_ID_1"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_LEG_ID_1"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_LEG_ID_1"/>
     </attribute>
-    <attribute id="C_LEG_DESC_1" order="64" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_LEG_DESC_1" order="68" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_LEG_DESC_1"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_LEG_DESC_1"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_LEG_DESC_1"/>
     </attribute>
-    <attribute id="A_CURRENCY" order="65" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_CURRENCY" order="69" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_CURRENCY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_CURRENCY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_CURRENCY"/>
     </attribute>
-    <attribute id="C_CURRENCY" order="66" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="C_CURRENCY" order="70" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="C_CURRENCY"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="C_CURRENCY"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="C_CURRENCY"/>
     </attribute>
-    <attribute id="A_A_UTI" order="67" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_A_UTI" order="71" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_A_UTI"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_A_UTI"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_A_UTI"/>
     </attribute>
-    <attribute id="A_DATE_PAID" order="68" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_DATE_PAID" order="72" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_DATE_PAID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_DATE_PAID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_DATE_PAID"/>
     </attribute>
-    <attribute id="A_ORIG_DUE_DATE" order="69" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_DUE_DATE" order="73" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_DUE_DATE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_DUE_DATE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_DUE_DATE"/>
     </attribute>
-    <attribute id="A_ORIG_AFAD" order="70" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="A_ORIG_DUE_DATE_TS" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="A_ORIG_DUE_DATE_TS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="CC_A_ORIG_DUE_DATE_TS"/>
+    </attribute>
+    <attribute id="A_ORIG_AFAD" order="75" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="A_ORIG_AFAD"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="A_ORIG_AFAD"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="A_ORIG_AFAD"/>
     </attribute>
-    <attribute id="Z_RUN_SEQ_ID" order="71" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_SEQ_ID" order="76" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="Z_RUN_SEQ_ID"/>
     </attribute>
-    <attribute id="Z_CHANGE_TIME" order="72" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TIME" order="77" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TIME"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="Z_CHANGE_TIME"/>
     </attribute>
-    <attribute id="Z_SOURCE_SYS" order="73" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_SOURCE_SYS" order="78" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_SOURCE_SYS"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="Z_SOURCE_SYS"/>
     </attribute>
-    <attribute id="Z_RUN_ROW_NO" order="74" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_RUN_ROW_NO" order="79" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_RUN_ROW_NO"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="Z_RUN_ROW_NO"/>
     </attribute>
-    <attribute id="Z_CHANGE_TYPE" order="75" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Z_CHANGE_TYPE" order="80" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Z_CHANGE_TYPE"/>
-      <keyMapping columnObjectName="CDS_TRM.DSO.Z1009LIA00000000.active_data" columnName="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="Z1009LIA00000000" columnName="Z_CHANGE_TYPE"/>
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -319,8 +437,15 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="40" y="85"/>
+      <upperLeftCorner x="100.50000000000003" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Z1009LIA00000000" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000003" y="217"/>
+      <rectangleSize height="30" width="177"/>
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario>
+</Calculation:scenario> 

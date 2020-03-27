@@ -2,7 +2,7 @@ FUNCTION "osr.edw.platform.fra.prt.dt.abn.ui::TF_ASIC_ORG_DETAIL"( IN IP_ALERT_I
 RETURNS TABLE
 (
 DB_KEY					VARBINARY(16),
-DB_KEY_DASH				NVARCHAR(32),
+DB_KEY_DASH				NVARCHAR(36),
 ALERT_ID				NVARCHAR(20),
 ABN						NVARCHAR(20),
 GJAHR					NVARCHAR(4),
@@ -16,10 +16,10 @@ REGN_END_DT				DAYDATE ,
 DEREGISTRATION_CODE		NVARCHAR(4),
 PLACE_OF_INCORP			NVARCHAR(30)
 )
-LANGUAGE SQLSCRIPT 
-SQL SECURITY INVOKER AS 
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER AS
 
-BEGIN 
+BEGIN
 
 IF :IP_ALERT_ID IS NULL OR :IP_ALERT_ID = '?' OR :IP_ALERT_ID = 'NULL' OR :IP_ALERT_ID = '' THEN
 
@@ -30,7 +30,7 @@ ALERT_INFO =
                     "ALERT_ID",
                     "ABN" ,
                     "GJAHR"
-                FROM 
+                FROM
                 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
 ;
 
@@ -43,9 +43,9 @@ ALERT_INFO =
                                 "ALERT_ID",
                                 "ABN" ,
                                 "GJAHR"
-                FROM 
+                FROM
                                 "osr.edw.platform.fra.prt.dt.abn::TF_ALERT_PT_ABN_FY"()
-                WHERE 
+                WHERE
                                 "ALERT_ID" = :IP_ALERT_ID
 ;
 

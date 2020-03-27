@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.staging.td.crm.proxy::CV_CRMD_SRV_SUBJECT" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CRMD_SRV_SUBJECT"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMD_SRV_SUBJECT.active_data">
+    <resourceUri>osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMD_SRV_SUBJECT.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="CRMD_SRV_SUBJECT">
+    <viewAttributes>
+      <viewAttribute id="CLIENT"/>
+      <viewAttribute id="GUID"/>
+      <viewAttribute id="GUID_REF"/>
+      <viewAttribute id="USERNAME"/>
+      <viewAttribute id="TIMESTAMP"/>
+      <viewAttribute id="KATALOGART"/>
+      <viewAttribute id="CODEGRUPPE"/>
+      <viewAttribute id="CODE"/>
+      <viewAttribute id="DEFECTCLASS"/>
+      <viewAttribute id="QUALITY"/>
+      <viewAttribute id="DEFQUANTITY"/>
+      <viewAttribute id="GUID_HIERARCHY"/>
+      <viewAttribute id="SORT"/>
+      <viewAttribute id="EXT_CODE"/>
+      <viewAttribute id="ASP_ID"/>
+      <viewAttribute id="CAT_ID"/>
+      <viewAttribute id="KATALOG_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TYPE"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+      <viewAttribute id="Z_RUN_ROW_NO"/>
+      <viewAttribute id="Z_RUN_SEQ_ID"/>
+      <viewAttribute id="Z_CURR_FLAG"/>
+      <viewAttribute id="Z_VALID_FROM"/>
+      <viewAttribute id="Z_VALID_TO"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_TIMESTAMP_LC" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>TO_NVARCHAR(UTCTOLOCAL(TO_TIMESTAMP(&quot;TIMESTAMP&quot;), 'AUSQLD'),'YYYYMMDDHH24MISS')</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_TIMESTAMP_TS" datatype="VARCHAR" length="13" expressionLanguage="SQL">
+        <formula>TO_TIMESTAMP(&quot;CC_TIMESTAMP_LC&quot;)</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="osr.edw.staging.td.crm.synonym::CDS_CRM.DSO.CRMD_SRV_SUBJECT.active_data"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="CRMD_SRV_SUBJECT">
+  <attributes>
+    <attribute id="CLIENT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CLIENT"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="CLIENT"/>
+    </attribute>
+    <attribute id="GUID" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="GUID"/>
+    </attribute>
+    <attribute id="GUID_REF" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_REF"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="GUID_REF"/>
+    </attribute>
+    <attribute id="USERNAME" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="USERNAME"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="USERNAME"/>
+    </attribute>
+    <attribute id="TIMESTAMP" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TIMESTAMP"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="TIMESTAMP"/>
+    </attribute>
+    <attribute id="Z_TIMESTAMP_LC" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC_TIMESTAMP_LC"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="CC_TIMESTAMP_LC"/>
+    </attribute>
+    <attribute id="Z_TIMESTAMP_TS" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CC_TIMESTAMP_TS"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="CC_TIMESTAMP_TS"/>
+    </attribute>
+  
+    <attribute id="KATALOGART" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KATALOGART"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="KATALOGART"/>
+    </attribute>
+    <attribute id="CODEGRUPPE" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CODEGRUPPE"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="CODEGRUPPE"/>
+    </attribute>
+    <attribute id="CODE" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CODE"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="CODE"/>
+    </attribute>
+    <attribute id="DEFECTCLASS" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFECTCLASS"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="DEFECTCLASS"/>
+    </attribute>
+    <attribute id="QUALITY" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QUALITY"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="QUALITY"/>
+    </attribute>
+    <attribute id="DEFQUANTITY" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEFQUANTITY"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="DEFQUANTITY"/>
+    </attribute>
+    <attribute id="GUID_HIERARCHY" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GUID_HIERARCHY"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="GUID_HIERARCHY"/>
+    </attribute>
+    <attribute id="SORT" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SORT"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="SORT"/>
+    </attribute>
+    <attribute id="EXT_CODE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXT_CODE"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="EXT_CODE"/>
+    </attribute>
+    <attribute id="ASP_ID" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASP_ID"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="ASP_ID"/>
+    </attribute>
+    <attribute id="CAT_ID" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CAT_ID"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="CAT_ID"/>
+    </attribute>
+    <attribute id="KATALOG_TYPE" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KATALOG_TYPE"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="KATALOG_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TYPE" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TYPE"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_CHANGE_TYPE"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+    <attribute id="Z_RUN_ROW_NO" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_ROW_NO"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_RUN_ROW_NO"/>
+    </attribute>
+    <attribute id="Z_RUN_SEQ_ID" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_RUN_SEQ_ID"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_RUN_SEQ_ID"/>
+    </attribute>
+    <attribute id="Z_CURR_FLAG" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CURR_FLAG"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_CURR_FLAG"/>
+    </attribute>
+    <attribute id="Z_VALID_FROM" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_FROM"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_VALID_FROM"/>
+    </attribute>
+    <attribute id="Z_VALID_TO" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_VALID_TO"/>
+      <keyMapping columnObjectName="CRMD_SRV_SUBJECT" columnName="Z_VALID_TO"/>
+    </attribute></attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="119.5" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="CRMD_SRV_SUBJECT" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92.00000000000001" y="217"/>
+      <rectangleSize height="30" width="215"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

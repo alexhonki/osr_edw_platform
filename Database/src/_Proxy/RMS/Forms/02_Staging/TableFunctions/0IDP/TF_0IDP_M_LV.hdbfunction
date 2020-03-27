@@ -216,7 +216,7 @@ FORM.A_REASS_REASON,
 FORM.A_REASS_COMMENT,
 FORM.C_SENDER_ID
 FROM 
-"osr.edw.staging.td.rms.synonym::CDS_PSCD.DSO.DFMCA_RETURN.active_data" AS DFMCA_RETURN
+"osr.edw.staging.td.rms.proxy::CV_DFMCA_RETURNS" AS DFMCA_RETURN
 INNER JOIN
 "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDP_M_LV"() AS FORM
 ON DFMCA_RETURN.CASE_GUID = FORM.RETURN_ID
