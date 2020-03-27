@@ -95,7 +95,7 @@ A_EVENT_DATE,
 A_DISP_DATE_REASS,
 C_SENDER_ID,
 C_ELN_ID
-FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDN_001_M" ( )
+FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDN_001_M_LV" ( )
 UNION
 -- BRF+ IDN Form Data
 SELECT
@@ -142,7 +142,7 @@ A_EVENT_DATE,
 A_DISP_DATE_REASS,
 C_SENDER_ID,
 C_ELN_ID
-FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDN_000_M" ( )
+FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDN_000_M_LV" ( )
 UNION 
 SELECT
 RETURN_ID,
@@ -188,7 +188,7 @@ A_EVENT_DATE,
 A_DISP_DATE_REASS,
 C_SENDER_ID,
 C_ELN_ID
-FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDN_ITD1_000_M" ( )
+FROM "osr.edw.staging.rms.forms.tf.proxy::TF_FORM_0IDN_ITD1_000_M_LV" ( )
 ;
 
 END;
