@@ -40,7 +40,7 @@ SELECT
 "osr.edw.staging.td.asic.proxy::TF_DR_REL"(:IV_GRP_DATE) AS "REL"
  INNER JOIN
  "osr.edw.platform.fra.prt.model::TF_GRP_GROUP_VERTEX"(:IV_GRP_DATE) AS "CC"
- ON "REL"."PARENT_ID" = "CC"."GRAPH_VERTEX_ID"
+ ON "REL"."CHILD_ID" = "CC"."GRAPH_VERTEX_ID"
 ;
 
 
