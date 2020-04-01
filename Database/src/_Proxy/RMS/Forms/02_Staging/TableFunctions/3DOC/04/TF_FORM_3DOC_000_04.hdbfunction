@@ -49,6 +49,7 @@ A_TENURE_ID,
 A_TENURE_VALUE
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_3DOC.active_data"
+WHERE LENGTH("A_TENURE_TYPE" || "A_TENURE_ID") > 0 OR  "A_TENURE_VALUE" <> 0
 ;
 
 END;
