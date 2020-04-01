@@ -3,6 +3,7 @@ RETURNS TABLE (
 	"GRP_DATE"				DATE,
     "CHILD_ID"				NVARCHAR(10),
 	"PARENT_ID"				NVARCHAR(10),
+	"REL_TYPE"				NVARCHAR(2),
 	"GRAPH_ID"				NVARCHAR(10)
 	
 )
@@ -15,6 +16,7 @@ SELECT
 "GRP_DATE",
 "CHILD_ID",
 "PARENT_ID",
+'DR' AS "REL_TYPE",
 "GRAPH_ID"
 FROM
 "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_DR_REL"(:IV_GRP_DATE)
@@ -24,6 +26,7 @@ SELECT
 "GRP_DATE",
 "CHILD_ID",
 "PARENT_ID",
+'SH' AS "REL_TYPE",
 "GRAPH_ID"
  FROM
  "osr.edw.platform.fra.prt.model::TF_GRP_GRAPH_SH_REL"(:IV_GRP_DATE)
