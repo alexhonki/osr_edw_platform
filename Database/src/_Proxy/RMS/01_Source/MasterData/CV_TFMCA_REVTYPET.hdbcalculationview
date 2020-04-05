@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TFMCA_REVTYPET" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TFMCA_REVTYPET"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_REVTYPET">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_REVTYPET</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TFMCA_REVTYPET">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="SPRAS"/>
+      <viewAttribute id="ABTYP"/>
+      <viewAttribute id="ABTYPT"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.source.md.rms.synonym::CDS_PSCD.TAB.TFMCA_REVTYPET"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="TFMCA_REVTYPET">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="TFMCA_REVTYPET" columnName="MANDT"/>
+    </attribute>
+    <attribute id="SPRAS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPRAS"/>
+      <keyMapping columnObjectName="TFMCA_REVTYPET" columnName="SPRAS"/>
+    </attribute>
+    <attribute id="ABTYP" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABTYP"/>
+      <keyMapping columnObjectName="TFMCA_REVTYPET" columnName="ABTYP"/>
+    </attribute>
+    <attribute id="ABTYPT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ABTYPT"/>
+      <keyMapping columnObjectName="TFMCA_REVTYPET" columnName="ABTYPT"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="TFMCA_REVTYPET" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="TFMCA_REVTYPET" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="112.99999999999997" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="TFMCA_REVTYPET" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999999" y="217"/>
+      <rectangleSize height="30" width="202"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
