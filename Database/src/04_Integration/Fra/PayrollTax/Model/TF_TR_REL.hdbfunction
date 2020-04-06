@@ -2,11 +2,11 @@ FUNCTION "osr.edw.platform.fra.prt.model::TF_TR_REL"(IV_KEY_DATE DATE )
        RETURNS TABLE (
        		"CHILD_ID"				NVARCHAR(32), -- Beneficiary --06/04/2020 Changed length from 12 to 32 due to upgrade being stricter in field length
        		"PARENT_ID"				NVARCHAR(32), -- Trust --06/04/2020 Changed length from 12 to 32 due to upgrade being stricter in field length
-       		"BNFCRY_ABN"			NVARCHAR(12),
-       		"TRUST_ABN"				NVARCHAR(12),
+       		"BNFCRY_ABN"			NVARCHAR(32), -- changed field length from 12 to 32 due to upgrade being stricter in field length
+       		"TRUST_ABN"				NVARCHAR(32), -- changed field length from 12 to 32 due to upgrade being stricter in field length
        		"GJAHR"					NVARCHAR(4),
        		"ORG_NUMBER"			NVARCHAR(9), -- ACN if exists
-			"PERSON_NUM"			NVARCHAR(9), -- If IND / no ABN
+			"PERSON_NUM"			NVARCHAR(12), -- If IND / no ABN -- changed field length from 9 to 12 due to upgrade being stricter in field length
 			"START_DT"				DATE,
 			"END_DT"				DATE,
 			"TR_BENFCRY_COUNT"		INTEGER,
