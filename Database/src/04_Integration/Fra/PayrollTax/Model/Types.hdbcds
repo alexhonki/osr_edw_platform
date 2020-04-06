@@ -8,15 +8,15 @@ context Types {
         MEMBER         : Integer;
     };
     table type GroupRelT {
-        "CHILD_ID"     : String(10);
-        "PARENT_ID"    : String(10);
+        "CHILD_ID"     : String(32);
+        "PARENT_ID"    : String(32);
         "REL_TYPE"     : String(6);
         "INTEREST_PCT" : Decimal(5, 2);
     };
     table type GroupT {
         GJAHR      : String(4);
         GRP_DATE   : LocalDate;
-        ORG_ID     : String(10);
+        ORG_ID     : String(32);
         GROUP_ID   : String(32);
         GROUP_TYPE : String(4);
     };
