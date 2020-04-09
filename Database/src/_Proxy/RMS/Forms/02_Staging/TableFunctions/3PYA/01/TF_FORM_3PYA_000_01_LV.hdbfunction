@@ -48,6 +48,7 @@ LOCATOR_NUMBER,
 A_GM_NAME
 FROM 
 "osr.edw.source.td.rms.synonym::CDS_TRM.DSO.DS_3PSCD_TRM_FORM_DATA_3PYA.active_data"
+WHERE LENGTH(A_GM) > 0 OR LENGTH(A_GM_NAME) > 0
 ;
 
 END;
