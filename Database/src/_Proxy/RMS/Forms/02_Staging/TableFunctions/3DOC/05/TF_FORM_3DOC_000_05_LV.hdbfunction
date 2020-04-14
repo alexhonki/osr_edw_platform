@@ -159,6 +159,6 @@ A_FOREIGN_PERSON_Q,
 '' AS A_EE_NATIONALITY
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_3DOC.active_data"
-;
+WHERE A_TRANSFEREE_TYP <> '';
 
 END;
