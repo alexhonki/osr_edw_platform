@@ -53,6 +53,7 @@ A_BEN_LAST_NAME,
 C_TEE_NO_BEN
 FROM
 "osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_3DOC.active_data"
+WHERE LENGTH("A_BEN_FIRST_NAME" || "A_BEN_MID_NAME" || "A_BEN_LAST_NAME") > 0 
 ;
 
 END;
