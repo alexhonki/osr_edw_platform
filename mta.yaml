@@ -3,25 +3,6 @@ ID: OSR_EDW_PLATFORM
 description: OSR EDW Platform
 version: 0.0.1
 modules:
-  - name: OSR_EDW_PLATFORM-DWF
-    type: dwf
-    path: DWF
-    requires:
-      - name: OSR_EDW_PLATFORM-dws
-  - name: OSR_EDW_PLATFORM-Backend
-    type: nodejs
-    path: Backend
-    requires:
-      - name: OSR_EDW_PLATFORM-container
-      - name: OSR_EDW_PLATFORM-dws
-    properties:
-      API_END_POINT: '${xs-api-url}'
-    provides:
-      - name: OSR_EDW_PLATFORM-Backend-API
-        properties:
-          service_url: '${default-url}'
-    build-parameters:
-      timeout: 30m
   - name: OSR_EDW_PLATFORM-Database
     type: hdb
     path: Database
@@ -180,10 +161,6 @@ resources:
     parameters:
       service-name: OSR_EDW_SOURCE_DNRME-deploy
     type: org.cloudfoundry.existing-service
-  - name: OSR_EDW_PLATFORM-dws
-    properties:
-      dwf-edw-client-name: '${service-name}'
-    type: com.sap.xs.dwf-edw-client
   - name: OSR_EDW_PLATFORM-container
     properties:
       hdi-container-name: '${service-name}'
