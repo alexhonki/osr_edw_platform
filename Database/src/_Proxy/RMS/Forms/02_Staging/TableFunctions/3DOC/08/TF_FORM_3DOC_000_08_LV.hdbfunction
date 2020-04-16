@@ -129,6 +129,7 @@ C_TEE_NO_TRUST,
 '' AS A_EE_TEE_UNIT_OF
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_3DOC.active_data"
+WHERE A_TRUSTEE_NAM_EE <> ''
 ;
 
 END;
