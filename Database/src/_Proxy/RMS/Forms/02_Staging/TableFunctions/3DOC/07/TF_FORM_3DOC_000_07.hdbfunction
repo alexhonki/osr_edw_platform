@@ -99,6 +99,7 @@ A_TRUSTEE_NAM_OR AS A_TRUSTEE_NAME_OR,
 '' AS C_OR_TEE_RPTR_PROG_IND
 FROM 
 "osr.edw.staging.td.rms.synonym::CDS_TRM4.DSO.DS_3PSCD_TRM_FORM_DATA_3DOC.active_data"
+WHERE A_TRUSTEE_NAM_OR <> ''
 ;
 
 END;
