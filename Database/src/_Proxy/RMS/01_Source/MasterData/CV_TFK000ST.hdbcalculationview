@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.rms.proxy::CV_TFK000ST" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_TFK000ST"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFK000ST">
+    <resourceUri>osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFK000ST</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="TFK000ST">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="SPRAS"/>
+      <viewAttribute id="SPPOS"/>
+      <viewAttribute id="SPPOT"/>
+      <viewAttribute id="Z_CHANGE_TIME"/>
+      <viewAttribute id="Z_SOURCE_SYS"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="osr.edw.source.md.rms.synonym::CDS_FICA.TAB.TFK000ST"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="TFK000ST">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="TFK000ST" columnName="MANDT"/>
+    </attribute>
+    <attribute id="SPRAS" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPRAS"/>
+      <keyMapping columnObjectName="TFK000ST" columnName="SPRAS"/>
+    </attribute>
+    <attribute id="SPPOS" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPPOS"/>
+      <keyMapping columnObjectName="TFK000ST" columnName="SPPOS"/>
+    </attribute>
+    <attribute id="SPPOT" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SPPOT"/>
+      <keyMapping columnObjectName="TFK000ST" columnName="SPPOT"/>
+    </attribute>
+    <attribute id="Z_CHANGE_TIME" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <keyMapping columnObjectName="TFK000ST" columnName="Z_CHANGE_TIME"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="TFK000ST" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="TFK000ST" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
