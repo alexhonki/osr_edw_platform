@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.md.dnrme.proxy::CV_CODE_ATS_MATCH_ZRCODE" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_CODE_ATS_MATCH_ZRCODE"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.md.dnrme.synonym::CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE">
+    <resourceUri>osr.edw.source.md.dnrme.synonym::CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.md.dnrme.synonym::CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE">
+  <attributes>
+    <attribute id="PATH" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PATH"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="PATH"/>
+    </attribute>
+    <attribute id="NAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="NAME"/>
+    </attribute>
+    <attribute id="ERROR" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERROR"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="ERROR"/>
+    </attribute>
+    <attribute id="REASON_CODES" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="REASON_CODES"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="REASON_CODES"/>
+    </attribute>
+    <attribute id="DESCRIPTION" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DESCRIPTION"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="DESCRIPTION"/>
+    </attribute>
+    <attribute id="Z_SOURCE_SYS" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_SOURCE_SYS"/>
+      <keyMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="Z_SOURCE_SYS"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="PARTITION" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PARTITION"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="PARTITION"/>
+    </measure>
+    <measure id="Z_CHANGE_TIME" order="7" aggregationType="min" measureType="simple">
+      <descriptions defaultDescription="Z_CHANGE_TIME"/>
+      <measureMapping columnObjectName="CDS_ATS.TAB.CODE_ATS_MATCH_ZRCODE" columnName="Z_CHANGE_TIME"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
