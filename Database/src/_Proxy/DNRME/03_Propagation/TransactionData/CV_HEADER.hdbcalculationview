@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.propagation.td.dnrme.proxy::CV_HEADER" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_HEADER"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.propagation.td.dnrme.synonym::CDS_DNRME.DSO.HEADER.active_data">
+    <resourceUri>osr.edw.propagation.td.dnrme.synonym::CDS_DNRME.DSO.HEADER.active_data</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.propagation.td.dnrme.synonym::CDS_DNRME.DSO.HEADER.active_data">
+  <attributes>
+    <attribute id="DEALING_NO" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALING_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DEALING_NO"/>
+    </attribute>
+    <attribute id="DEALING_TYPE_CODE" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DEALING_TYPE_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DEALING_TYPE_CODE"/>
+    </attribute>
+    <attribute id="PREVIOUSLY_PROCESSED" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PREVIOUSLY_PROCESSED"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="PREVIOUSLY_PROCESSED"/>
+    </attribute>
+    <attribute id="STATUS_INDICATOR" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STATUS_INDICATOR"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STATUS_INDICATOR"/>
+    </attribute>
+    <attribute id="DT_TM_LODGED" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DT_TM_LODGED"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DT_TM_LODGED"/>
+    </attribute>
+    <attribute id="LODGER_OFFICE_CODE" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LODGER_OFFICE_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="LODGER_OFFICE_CODE"/>
+    </attribute>
+    <attribute id="LODGER_CODE" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LODGER_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="LODGER_CODE"/>
+    </attribute>
+    <attribute id="CONSIDERATION" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONSIDERATION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CONSIDERATION"/>
+    </attribute>
+    <attribute id="NOTICE_BEGIN_STREET_NO" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_BEGIN_STREET_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_BEGIN_STREET_NO"/>
+    </attribute>
+    <attribute id="NOTICE_END_STREET_NO" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_END_STREET_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_END_STREET_NO"/>
+    </attribute>
+    <attribute id="NOTICE_UNIT_NO" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_UNIT_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_UNIT_NO"/>
+    </attribute>
+    <attribute id="NOTICE_STREET_NAME" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_STREET_NAME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_STREET_NAME"/>
+    </attribute>
+    <attribute id="NOTICE_STREET_TYPE" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_STREET_TYPE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_STREET_TYPE"/>
+    </attribute>
+    <attribute id="NOTICE_TOWN" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_TOWN"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_TOWN"/>
+    </attribute>
+    <attribute id="NOTICE_STATE" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_STATE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_STATE"/>
+    </attribute>
+    <attribute id="NOTICE_COUNTRY_CODE" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_COUNTRY_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_COUNTRY_CODE"/>
+    </attribute>
+    <attribute id="NOTICE_POSTCODE" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_POSTCODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_POSTCODE"/>
+    </attribute>
+    <attribute id="NOTICE_CARE_OF" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_CARE_OF"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_CARE_OF"/>
+    </attribute>
+    <attribute id="NOTICE_LOCALISATION" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NOTICE_LOCALISATION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="NOTICE_LOCALISATION"/>
+    </attribute>
+    <attribute id="DT_POSSESSION" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DT_POSSESSION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DT_POSSESSION"/>
+    </attribute>
+    <attribute id="DT_POSSESSION_DEFAULTED" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DT_POSSESSION_DEFAULTED"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DT_POSSESSION_DEFAULTED"/>
+    </attribute>
+    <attribute id="DT_SETTLEMENT" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DT_SETTLEMENT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DT_SETTLEMENT"/>
+    </attribute>
+    <attribute id="CONTACT_PHONE_NO" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONTACT_PHONE_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CONTACT_PHONE_NO"/>
+    </attribute>
+    <attribute id="CONTACT_EMAIL_ADR" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CONTACT_EMAIL_ADR"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CONTACT_EMAIL_ADR"/>
+    </attribute>
+    <attribute id="TRUST_NAME" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRUST_NAME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="TRUST_NAME"/>
+    </attribute>
+    <attribute id="RESIDENT" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RESIDENT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="RESIDENT"/>
+    </attribute>
+    <attribute id="FOREIGN_OWNER" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FOREIGN_OWNER"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="FOREIGN_OWNER"/>
+    </attribute>
+    <attribute id="WRITTEN_AGREEMENT" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WRITTEN_AGREEMENT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="WRITTEN_AGREEMENT"/>
+    </attribute>
+    <attribute id="DT_AGREEMENT" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DT_AGREEMENT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DT_AGREEMENT"/>
+    </attribute>
+    <attribute id="DT_AGREEMENT_DEFAULTED" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DT_AGREEMENT_DEFAULTED"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DT_AGREEMENT_DEFAULTED"/>
+    </attribute>
+    <attribute id="FULL_UNENCUMBERED_VALUE" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULL_UNENCUMBERED_VALUE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="FULL_UNENCUMBERED_VALUE"/>
+    </attribute>
+    <attribute id="PARTIES_RELATED" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PARTIES_RELATED"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="PARTIES_RELATED"/>
+    </attribute>
+    <attribute id="RELATED_PARTIES_TEXT" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RELATED_PARTIES_TEXT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="RELATED_PARTIES_TEXT"/>
+    </attribute>
+    <attribute id="GST_PAYABLE" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GST_PAYABLE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="GST_PAYABLE"/>
+    </attribute>
+    <attribute id="GST_MARGIN_SCHEME" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GST_MARGIN_SCHEME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="GST_MARGIN_SCHEME"/>
+    </attribute>
+    <attribute id="PLANT_MACHINERY" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PLANT_MACHINERY"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="PLANT_MACHINERY"/>
+    </attribute>
+    <attribute id="LIVESTOCK" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LIVESTOCK"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="LIVESTOCK"/>
+    </attribute>
+    <attribute id="CROPS" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CROPS"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CROPS"/>
+    </attribute>
+    <attribute id="LICENCE" order="39" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LICENCE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="LICENCE"/>
+    </attribute>
+    <attribute id="CHATTELS" order="40" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CHATTELS"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CHATTELS"/>
+    </attribute>
+    <attribute id="OTHER_INCLUSIONS_TEXT" order="41" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTHER_INCLUSIONS_TEXT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="OTHER_INCLUSIONS_TEXT"/>
+    </attribute>
+    <attribute id="VACANT" order="42" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VACANT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="VACANT"/>
+    </attribute>
+    <attribute id="DWELLING" order="43" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DWELLING"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DWELLING"/>
+    </attribute>
+    <attribute id="MULTI_UNIT" order="44" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MULTI_UNIT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MULTI_UNIT"/>
+    </attribute>
+    <attribute id="FLATS" order="45" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FLATS"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="FLATS"/>
+    </attribute>
+    <attribute id="BOARDING_HOUSE" order="46" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BOARDING_HOUSE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="BOARDING_HOUSE"/>
+    </attribute>
+    <attribute id="FARMING" order="47" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FARMING"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="FARMING"/>
+    </attribute>
+    <attribute id="INDUSTRIAL" order="48" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="INDUSTRIAL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="INDUSTRIAL"/>
+    </attribute>
+    <attribute id="COMMERCIAL" order="49" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="COMMERCIAL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="COMMERCIAL"/>
+    </attribute>
+    <attribute id="OTHER_LAND_USE_TEXT" order="50" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTHER_LAND_USE_TEXT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="OTHER_LAND_USE_TEXT"/>
+    </attribute>
+    <attribute id="CASH_PORTION" order="51" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CASH_PORTION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CASH_PORTION"/>
+    </attribute>
+    <attribute id="VENDOR_TERMS" order="52" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VENDOR_TERMS"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="VENDOR_TERMS"/>
+    </attribute>
+    <attribute id="ASSUM_LIABILITIES" order="53" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ASSUM_LIABILITIES"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ASSUM_LIABILITIES"/>
+    </attribute>
+    <attribute id="OTHER_PRICE_TEXT" order="54" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTHER_PRICE_TEXT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="OTHER_PRICE_TEXT"/>
+    </attribute>
+    <attribute id="OTHER_PRICE" order="55" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OTHER_PRICE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="OTHER_PRICE"/>
+    </attribute>
+    <attribute id="STAMPS_REGISTER" order="56" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAMPS_REGISTER"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STAMPS_REGISTER"/>
+    </attribute>
+    <attribute id="APPROVED_PERSON_NO" order="57" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="APPROVED_PERSON_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="APPROVED_PERSON_NO"/>
+    </attribute>
+    <attribute id="STAMPS_REGION" order="58" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAMPS_REGION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STAMPS_REGION"/>
+    </attribute>
+    <attribute id="STAMP_NO" order="59" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STAMP_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STAMP_NO"/>
+    </attribute>
+    <attribute id="TRANS_NO" order="60" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRANS_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="TRANS_NO"/>
+    </attribute>
+    <attribute id="TRANS_YR" order="61" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TRANS_YR"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="TRANS_YR"/>
+    </attribute>
+    <attribute id="DUTY_AMT" order="62" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUTY_AMT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DUTY_AMT"/>
+    </attribute>
+    <attribute id="MULTIPLE_STAMPS_FG" order="63" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MULTIPLE_STAMPS_FG"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MULTIPLE_STAMPS_FG"/>
+    </attribute>
+    <attribute id="SRO_CLIENT_NO" order="64" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SRO_CLIENT_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="SRO_CLIENT_NO"/>
+    </attribute>
+    <attribute id="DUTY_ASSESSMENT_NO" order="65" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DUTY_ASSESSMENT_NO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="DUTY_ASSESSMENT_NO"/>
+    </attribute>
+    <attribute id="EXEMPTION" order="66" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EXEMPTION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="EXEMPTION"/>
+    </attribute>
+    <attribute id="UTI_AMT" order="67" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UTI_AMT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="UTI_AMT"/>
+    </attribute>
+    <attribute id="CYCLE_ID" order="68" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CYCLE_ID"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="CYCLE_ID"/>
+    </attribute>
+    <attribute id="Z_COUNTER" order="69" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_COUNTER"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="Z_COUNTER"/>
+    </attribute>
+    <attribute id="Z_DATETIME" order="70" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Z_DATETIME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="Z_DATETIME"/>
+    </attribute>
+    <attribute id="STD_PHONE" order="71" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_PHONE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_PHONE"/>
+    </attribute>
+    <attribute id="STD_EMAIL" order="72" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_EMAIL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_EMAIL"/>
+    </attribute>
+    <attribute id="STD_FIRM" order="73" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_FIRM"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_FIRM"/>
+    </attribute>
+    <attribute id="STD_ADDR_COUNTRY_NAME" order="74" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_COUNTRY_NAME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_COUNTRY_NAME"/>
+    </attribute>
+    <attribute id="STD_ADDR_SINGLE_ADDRESS" order="75" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_SINGLE_ADDRESS"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_SINGLE_ADDRESS"/>
+    </attribute>
+    <attribute id="MATCH_FIRM" order="76" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_FIRM"/>
+    </attribute>
+    <attribute id="MATCH_FIRM_STD" order="77" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_FIRM_STD"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_FIRM_STD"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_NAME" order="78" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_NAME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_NAME"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_TYPE" order="79" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_TYPE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_TYPE"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_PREFIX" order="80" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_PREFIX"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_PREFIX"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_POSTFIX" order="81" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_POSTFIX"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_POSTFIX"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_NUMBER" order="82" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_NUMBER"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_NUMBER"/>
+    </attribute>
+    <attribute id="STD_ADDR_LOCALITY" order="83" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_LOCALITY"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_LOCALITY"/>
+    </attribute>
+    <attribute id="STD_ADDR_REGION" order="84" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_REGION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_REGION"/>
+    </attribute>
+    <attribute id="STD_ADDR_POSTCODE1" order="85" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_POSTCODE1"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_POSTCODE1"/>
+    </attribute>
+    <attribute id="STD_ADDR_POSTCODE2" order="86" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_POSTCODE2"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_POSTCODE2"/>
+    </attribute>
+    <attribute id="ADDR_ASMT_TYPE" order="87" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_ASMT_TYPE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_ASMT_TYPE"/>
+    </attribute>
+    <attribute id="ADDR_ASMT_LEVEL" order="88" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_ASMT_LEVEL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_ASMT_LEVEL"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_COUNTRY" order="89" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_COUNTRY"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_COUNTRY"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_POSTCODE1" order="90" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_POSTCODE1"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_POSTCODE1"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_REGION" order="91" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_REGION"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_REGION"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_LOCALITY" order="92" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_LOCALITY"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_LOCALITY"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_LOCALITY2" order="93" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_LOCALITY2"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_LOCALITY2"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_BUILDING" order="94" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_BUILDING"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_BUILDING"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_NAME" order="95" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_NAME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_PRIM_NAME"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_NAME2" order="96" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_NAME2"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_PRIM_NAME2"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_TYPE" order="97" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_TYPE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_PRIM_TYPE"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_DIR" order="98" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_DIR"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_PRIM_DIR"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_PRIM_NUMBER" order="99" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_PRIM_NUMBER"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_PRIM_NUMBER"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_BLOCK" order="100" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_BLOCK"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_BLOCK"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_STAIRWELL" order="101" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_STAIRWELL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_STAIRWELL"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_WING" order="102" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_WING"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_WING"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_FLOOR" order="103" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_FLOOR"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_FLOOR"/>
+    </attribute>
+    <attribute id="MATCH_ADDR_UNIT" order="104" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_ADDR_UNIT"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_ADDR_UNIT"/>
+    </attribute>
+    <attribute id="ADDR_SCRIPT_CODE" order="105" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_SCRIPT_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_SCRIPT_CODE"/>
+    </attribute>
+    <attribute id="MATCH_PHONE" order="106" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_PHONE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_PHONE"/>
+    </attribute>
+    <attribute id="MATCH_EMAIL_USER" order="107" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_EMAIL_USER"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_EMAIL_USER"/>
+    </attribute>
+    <attribute id="MATCH_EMAIL_DOMAIN" order="108" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATCH_EMAIL_DOMAIN"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="MATCH_EMAIL_DOMAIN"/>
+    </attribute>
+    <attribute id="FIRM_EXTRA" order="109" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRM_EXTRA"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="FIRM_EXTRA"/>
+    </attribute>
+    <attribute id="FIRM_INFO_CODE" order="110" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRM_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="FIRM_INFO_CODE"/>
+    </attribute>
+    <attribute id="STD_ADDR_POSTCODE_FULL" order="111" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_POSTCODE_FULL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_POSTCODE_FULL"/>
+    </attribute>
+    <attribute id="STD_ADDR_ADDRESS_DELIVERY" order="112" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_ADDRESS_DELIVERY"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_ADDRESS_DELIVERY"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_ADDRESS" order="113" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_ADDRESS"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_ADDRESS"/>
+    </attribute>
+    <attribute id="STD_ADDR_BUILDING_NAME" order="114" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_BUILDING_NAME"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_BUILDING_NAME"/>
+    </attribute>
+    <attribute id="STD_ADDR_PRIM_NAME_FULL" order="115" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_PRIM_NAME_FULL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_PRIM_NAME_FULL"/>
+    </attribute>
+    <attribute id="ADDR_INFO_CODE" order="116" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_INFO_CODE"/>
+    </attribute>
+    <attribute id="ADDR_ASMT_INFO" order="117" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_ASMT_INFO"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_ASMT_INFO"/>
+    </attribute>
+    <attribute id="PHONE_EXTRA" order="118" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PHONE_EXTRA"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="PHONE_EXTRA"/>
+    </attribute>
+    <attribute id="PHONE_INFO_CODE" order="119" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PHONE_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="PHONE_INFO_CODE"/>
+    </attribute>
+    <attribute id="EMAIL_EXTRA" order="120" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMAIL_EXTRA"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="EMAIL_EXTRA"/>
+    </attribute>
+    <attribute id="EMAIL_INFO_CODE" order="121" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EMAIL_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="EMAIL_INFO_CODE"/>
+    </attribute>
+    <attribute id="Cleanse_TABLE_ID" order="122" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cleanse_TABLE_ID"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="Cleanse_TABLE_ID"/>
+    </attribute>
+    <attribute id="Cleanse_ROW_ID" order="123" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Cleanse_ROW_ID"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="Cleanse_ROW_ID"/>
+    </attribute>
+    <attribute id="STD_ADDR_COUNTRY_2CHAR" order="124" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STD_ADDR_COUNTRY_2CHAR"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="STD_ADDR_COUNTRY_2CHAR"/>
+    </attribute>
+    <attribute id="ADDR_LATITUDE" order="125" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_LATITUDE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_LATITUDE"/>
+    </attribute>
+    <attribute id="ADDR_LONGITUDE" order="126" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ADDR_LONGITUDE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="ADDR_LONGITUDE"/>
+    </attribute>
+    <attribute id="GEO_SIDE_OF_STREET" order="127" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GEO_SIDE_OF_STREET"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="GEO_SIDE_OF_STREET"/>
+    </attribute>
+    <attribute id="GEO_INFO_CODE" order="128" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GEO_INFO_CODE"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="GEO_INFO_CODE"/>
+    </attribute>
+    <attribute id="GEO_ASMT_LEVEL" order="129" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="GEO_ASMT_LEVEL"/>
+      <keyMapping columnObjectName="CDS_DNRME.DSO.HEADER.active_data" columnName="GEO_ASMT_LEVEL"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

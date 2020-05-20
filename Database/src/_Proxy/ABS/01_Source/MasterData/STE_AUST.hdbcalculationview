@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="osr.edw.source.abs.proxy::STE_AUST" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="STE_AUST"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="osr.edw.source.abs.synonym::STE_AUST">
+    <resourceUri>osr.edw.source.abs.synonym::STE_AUST</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="osr.edw.source.abs.synonym::STE_AUST">
+  <attributes>
+    <attribute id="STE_CODE16" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STE_CODE16"/>
+      <keyMapping columnObjectName="STE_AUST" columnName="STE_CODE16"/>
+    </attribute>
+    <attribute id="STE_NAME16" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="STE_NAME16"/>
+      <keyMapping columnObjectName="STE_AUST" columnName="STE_NAME16"/>
+    </attribute>
+    <attribute id="AREASQKM16" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="AREASQKM16"/>
+      <keyMapping columnObjectName="STE_AUST" columnName="AREASQKM16"/>
+    </attribute>
+    <attribute id="SHAPE" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SHAPE"/>
+      <keyMapping columnObjectName="STE_AUST" columnName="SHAPE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
